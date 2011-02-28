@@ -6,7 +6,7 @@ class CreateDoctors < ActiveRecord::Migration
       t.string :firstname, :null => false
       t.string :lastname, :null => false
       t.string :gender
-      t.boolean :is_active, :default => 1
+      t.boolean :is_active, :default => true
       t.string :speciality
       t.timestamps
     end
