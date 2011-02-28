@@ -1,0 +1,24 @@
+<h1>Doctors <%= link_to "+", new_doctor_url, :class => "g-button" %></h1>
+
+<ul id="list-items">
+	<% @doctors.each do |doctor| %>
+		<% unless doctor.is_active
+			cclass = "disabled-list"
+		   else
+			cclass = ""
+		   end
+		%>
+		<li class="<%=cclass%>">
+			<h2><%= link_to doctor.fullname, doctor %> <%= "(Inactive)" unless doctor.is_active %></h2>			
+
+			<span class="hidden"><%=doctor.id%></span>
+			<span><%=doctor.uid%></span>
+			<span><strong>Specialty:</strong> <%=doctor.speciality%></span>
+
+			<div class="list-item-button"><%=link_to "Delete", doctor, :method => :delete, :confirm => "Are you sure?", :class => "g-button red" %></div>
+			<div class="list-item-button"><%=link_to "Edit", edit_doctor_path(doctor), :class => "g-button" %></div>
+		</li>
+	<% end %>
+</ul>
+
+<%= link_to "Create new doctor", new_doctor_url, :class => "g-button" %>

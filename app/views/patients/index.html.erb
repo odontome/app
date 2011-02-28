@@ -1,0 +1,20 @@
+<h1>Patients <%= link_to "+", new_patient_url, :class => "g-button" %></h1>
+
+<ul id="list-items">
+	<% @patients.each do |patient| %>
+		<li>
+			<h2><%=link_to patient.fullname, patient%></h2>			
+			<span class="hidden"><%=patient.id%></span>
+			<span><%=patient.uid%></span>
+			<span><strong>Age:</strong> <%=patient.age%></span>
+			<span><strong>Allergies:</strong> <%#=patient.chart.allergies%>TODO!</span>
+			<span><strong>Last visit:</strong> <%#=patient.chart.last_visit_at%>TODO!</span>
+			<% if current_user_is_admin? %>
+				<div class="list-item-button"><%= link_to "Delete", patient, :method => :delete, :confirm => "Are you sure? All data associated with this patient will be lost forever. THERE IS NO GOING BACK!", :class => "g-button red"%></div>
+			<% end %>
+			<div class="list-item-button"><%= link_to "Edit", edit_patient_path(patient), :class => "g-button"%></div>
+		</li>
+	<% end %>
+</ul>
+
+TODO! PAGINATION!

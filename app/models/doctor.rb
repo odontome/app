@@ -1,0 +1,17 @@
+class Doctor < ActiveRecord::Base
+  belongs_to :practice
+  #has_many :appointments, :dependent => :destroy 
+  
+  validates_presence_of :practice_id, :firstname, :lastname
+  validates :uid, :uniqueness => {:scope => :practice_id}
+  validates_length_of :speciality, :within => 0..50
+
+  before_validation(:on => :create) do
+    set_practice_id
+  end
+  
+  def fullname
+    [firstname, lastname].join(' ')
+  end
+  
+end

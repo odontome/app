@@ -1,0 +1,59 @@
+<%= form_for(@patient) do |f| %>
+
+  <% if @patient.errors.any? %>
+    <div class="error">
+      <% @patient.errors.full_messages.each do |msg| %>
+        <%= msg %><br />
+	  <% end %>
+    </div>
+  <% end %>
+
+	<fieldset>
+	  <legend>Personal information</legend>
+
+	  <p>
+	    <%= f.label "First name"%><br />
+	    <%= f.text_field :firstname %>
+	  </p>
+	  <p>
+	    <%= f.label "Last name"%><br />
+	    <%= f.text_field :lastname %>
+	  </p>
+	  <p>
+	    <%= f.label "Date of birth"%> <%= f.date_select :date_of_birth, :start_year => Time.now.year - 80, :end_year => Time.now.year - 3 %>
+	  </p>
+	  <p>
+	    <%= f.label "Unique identifier"%><br />
+	    <%= f.text_field :uid %>
+		<sub>(Only if your wish for your clinic to have a custom identification system)</sub>
+	  </p>
+	</fieldset>
+
+	<fieldset>
+	  <legend>Contact information</legend>
+	  <p>
+	    <%= f.label "Email"%><br />
+	    <%= f.text_field :email %>
+	  </p>
+	  <p>
+	    <%= f.label "Telephone"%><br />
+	    <%= f.text_field :telephone %>
+	  </p>
+	  <p>
+	    <%= f.label "Mobile"%><br />
+	    <%= f.text_field :mobile %>
+	  </p>
+	  <p>
+	    <%= f.label "Emergency Telephone"%><br />
+	    <%= f.text_field :emergency_telephone %>
+	  </p>
+	  <p>
+	    <%= f.label "Address"%><br />
+	    <%= f.text_area :address, :maxlength => 100, :rows => 2 %>
+	  </p>
+	</fieldset>
+	
+
+  <%= f.submit("Save", :class => "g-button") %> or <%= link_to "Cancel", patients_path%>
+
+<% end %>

@@ -1,0 +1,18 @@
+<% if current_user %>
+	<% unless current_user.roles.include?("superadmin") %>
+		<ul id="navigation">
+			<li><%= link_to "Agenda", agenda_url %></li>
+			<li><%= link_to "Patients", patients_url %></li>
+			<li><%= link_to "My practice", practice_url %></li>
+			<li><%= link_to "Logout", logout_url, :confirm => "Are you sure?" %></li>
+		</ul>
+		<div id="search-box">
+			<%= text_field_tag("patient-search") %>
+		</div>
+	<% else %>
+	<ul id="navigation">
+		<li><%= link_to "Practices", practices_url %></li>
+		<li><%= link_to "Logout", logout_url %></li>
+	</ul>
+	<% end %>
+<% end %>

@@ -1,0 +1,16 @@
+<h1>My practice</h1>
+
+<p>This is more like a "dashboard" of my practice, where I can manage my users and treatments as well as some statistics. This section is still missing some nice graphics to engage the users to fill in the information on their treatmeants, doctors and users.</p>
+
+<ul id="list-items">
+	<li>
+		<h2><%=link_to "My doctors", doctors_url %></h2>
+		<span>The people who do the things to your patients.</span>
+		<div class="list-item"><%= @practice.doctors.count %> doctors</div>
+	</li>
+	<li>
+		<h2><%=link_to "My users", users_url %></h2>
+		<span>Everyone who has access to your odonto.me.</span>
+		<div class="list-item"><%= @practice.users.count %> users</div>
+	</li>
+</ul>

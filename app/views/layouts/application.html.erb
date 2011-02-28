@@ -1,0 +1,28 @@
+<!doctype html>  
+
+<head>
+  <title>Odontome</title>
+  <%= stylesheet_link_tag "application", "default-theme/jquery-ui-1.7.2.custom", "tipTip", "autosuggest" %>
+  <%= javascript_include_tag :defaults %>
+  <%= javascript_include_tag "jquery.min", "jquery-ui.min", "jquery.tipTip.min", "jquery.limit-1.2.min", "jquery.labelify", "jquery.autosuggest.min", "application" %>
+  <link rel="shortcut icon" href="/favicon.ico">  
+</head>
+
+<body>
+
+	<div id="container">
+		<div id="header">
+			<%= image_tag "logo.png", :title => "Home", :class => "logo" %>
+			<%= render :partial => "layouts/navigation" %>
+		</div>
+	
+		<div id="content">
+			<%= yield %>
+		</div>
+		
+		<div id="footer" align="right">
+			<!-- Footer goes here -->
+		</div>
+
+</body>
+</html>

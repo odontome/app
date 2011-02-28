@@ -1,0 +1,44 @@
+<%= form_for(@doctor) do |f| %>
+
+  <% if @doctor.errors.any? %>
+    <div class="error">
+      <% @doctor.errors.full_messages.each do |msg| %>
+        <%= msg %><br />
+	  <% end %>
+    </div>
+  <% end %>
+
+  <p>
+    <%= f.label "First name"%><br />
+    <%= f.text_field :firstname %>
+  </p>
+  <p>
+    <%= f.label "Last name"%><br />
+    <%= f.text_field :lastname %>
+  </p>
+  <p>
+    <%= f.label "Unique identifier"%><br />
+    <%= f.text_field :uid %>
+	<sub>(Only if your wish for your clinic to have a custom identification system)</sub>
+  </p>
+  <p>
+	<%= f.label "Gender"%>
+	<%= f.select(:gender, [['Male','male'],['Female','female']]) %>
+  </p>
+  <p>
+    <%= f.label "Speciality"%><br />
+    <%= f.text_field :speciality %>
+  </p>
+
+  <%= f.submit("Save", :class => "g-button") %> 
+
+  <% if controller.action_name == "edit" %>
+	  <% if @doctor.is_active %>
+			<%=link_to "Suspend (TODO!)", @doctor, :method => :delete, :confirm => "Are you sure?", :class => "g-button red" %>
+	  <% else %>
+			<%=link_to "Activate (TODO!)", @doctor, :method => :delete, :confirm => "Are you sure?", :class => "g-button red" %>
+	  <% end %>
+  <% end %>
+  or <%= link_to "Cancel", doctors_path %>
+
+<% end %>

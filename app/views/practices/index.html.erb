@@ -1,0 +1,29 @@
+<h1>Listing practices</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Locale</th>
+    <th>Timezone</th>
+    <th>Status</th>
+    <th>Created</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @practices.each do |practice| %>
+  <tr>
+    <td><%= practice.id %></td>
+    <td><%= practice.name %></td>
+    <td><%= practice.locale %></td>
+    <td><%= practice.timezone %></td>
+    <td><%= practice.status %></td>
+    <td><%= practice.created_at %></td>
+    <td><%= link_to 'Show', practice %></td>
+    <td><%= link_to 'Edit', edit_practice_path(practice) %></td>
+    <td><%= link_to 'Destroy', practice, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>

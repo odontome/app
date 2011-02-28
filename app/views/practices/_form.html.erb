@@ -1,0 +1,23 @@
+<%= form_for(@practice) do |practice_form| %>
+
+  <% if @practice.errors.any? %>
+    <div class="error">
+      <% @practice.errors.full_messages.each do |msg| %>
+        <%= msg %><br />
+	  <% end %>
+    </div>
+  <% end %>
+
+  <p>
+    <%= practice_form.label "Practice Name"%><br />
+    <%= practice_form.text_field :name %>
+	<sub>("Great Smiles Dentists" or "John Peterson's")</sub>
+  </p>
+
+  <%= render :partial => 'users/form',
+             :locals => {:form => practice_form} %>
+
+  <%= practice_form.submit("Register", :class => "g-button") %>
+  Already have an account? <%= link_to "Sign In", signin_url %>
+
+<% end %>

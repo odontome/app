@@ -1,0 +1,28 @@
+<h1>Doctor <%=@doctor.fullname%></h1>
+<p>
+	<label>First name:</label> <%= @doctor.firstname %>
+</p>
+<p>
+	<label>Last name:</label> <%= @doctor.lastname %>
+</p>
+<p>
+	<label>Unique Identifier:</label> <%= @doctor.uid%>
+</p>
+<p>
+	<label>Gender:</label> <%= @doctor.gender.titleize%>
+</p>
+<p>
+	<label>Speciality:</label> <%= @doctor.speciality%>
+</p>
+<p>
+	<label>Status:</label> 
+	<% if @doctor.is_active %>
+		Active
+    <% else %>
+		Suspended
+    <% end %>
+</p>
+<p>
+	<%=link_to "Edit", edit_doctor_path(@doctor), :class => "g-button" %>
+	<%=link_to "Delete", doctor_path(@doctor), :method => :delete, :confirm => "Are you sure?", :class => "g-button red" %>
+</p>
