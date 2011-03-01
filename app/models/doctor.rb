@@ -1,6 +1,10 @@
 class Doctor < ActiveRecord::Base
   belongs_to :practice
   #has_many :appointments, :dependent => :destroy 
+
+  scope :mine, lambda { 
+    where("doctors.doctor_id = ? ", UserSession.find.user.practice_id)
+  }  
   
   validates_presence_of :practice_id, :firstname, :lastname
   validates :uid, :uniqueness => {:scope => :practice_id}

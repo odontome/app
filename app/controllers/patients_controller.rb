@@ -6,7 +6,7 @@ class PatientsController < ApplicationController
   end
 
   def show
-    @patient = Patient.find(params[:id])
+    @patient = Patient.mine.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -18,7 +18,7 @@ class PatientsController < ApplicationController
   end
 
   def edit
-    @patient = Patient.find(params[:id])
+    @patient = Patient.mine.find(params[:id])
   end
 
   def create
@@ -33,14 +33,25 @@ class PatientsController < ApplicationController
     end
   end
 
+  def update
+    @patient = Patient.mine.find(params[:id])
+
+    respond_to do |format|
+      if @patient.update_attributes(params[:patient])
+        format.html { redirect_to(@patient, :notice => 'Patient was successfully updated.') }
+      else
+        format.html { render :action => "edit" }
+      end
+    end
+  end
+
   def destroy
-    @patient = Patient.find(params[:id])
+    @patient = Patient.mine.find(params[:id])
     @patient.destroy
 
     respond_to do |format|
       format.html { redirect_to(patients_url) }
     end
   end
-
 
 end

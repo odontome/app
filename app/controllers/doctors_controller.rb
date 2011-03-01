@@ -2,11 +2,11 @@ class DoctorsController < ApplicationController
   before_filter :require_user
   
   def index
-    @doctors = Doctor.all
+    @doctors = Doctor.mine
   end
 
   def show
-    @doctor = Doctor.find(params[:id])
+    @doctor = Doctor.mine.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -18,7 +18,7 @@ class DoctorsController < ApplicationController
   end
 
   def edit
-    @doctor = Doctor.find(params[:id])
+    @doctor = Doctor.mine.find(params[:id])
   end
 
   def create
@@ -33,26 +33,20 @@ class DoctorsController < ApplicationController
     end
   end
 
-  def activation
-    @doctor = Doctor.find(params[:id])
-    if @doctor.is_acticve
-      @doctor.is_acticve = false
-    else
-      @doctor.is_acticve = true
-    end
+  def update
+    @doctor = Doctor.mine.find(params[:id])
 
     respond_to do |format|
-      if @doctor.save
-        format.html { redirect_to(doctors_url, :notice => 'Doctor status was successfully updated.') }
+      if @doctor.update_attributes(params[:doctor])
+        format.html { redirect_to(@doctor, :notice => 'Doctor was successfully updated.') }
       else
-        format.html { render :action => "show" }
+        format.html { render :action => "edit" }
       end
     end
   end
 
-
   def destroy
-    @doctor = Doctor.find(params[:id])
+    @doctor = Doctor.mine.find(params[:id])
     @doctor.destroy
 
     respond_to do |format|

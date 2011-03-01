@@ -4,6 +4,10 @@ class User < ActiveRecord::Base
        c.validate_email_field = false
   end
 
+  scope :mine, lambda { 
+    where("users.practice_id = ? ", UserSession.find.user.practice_id)
+  }  
+
   validates :firstname, :presence => true
   validates :lastname, :presence => true
   validates :email, :presence => true, :uniqueness => true
