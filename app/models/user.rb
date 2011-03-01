@@ -18,4 +18,23 @@ class User < ActiveRecord::Base
 
   belongs_to :practice
   
+  before_validation(:on => :create) do
+    set_practice_id
+  end
+
+  before_destroy :check_if_admin
+
+  def fullname
+    [firstname, lastname].join(' ')
+  end
+
+  
+  private
+  def check_if_admin
+    if self.roles.include?("admin")
+      self.errors[:base] << "Can't delete admin user"
+      false
+    end
+  end  
+  
 end

@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20110301123149) do
     t.string   "speciality"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "email"
   end
 
   create_table "patients", :force => true do |t|
@@ -49,6 +50,14 @@ ActiveRecord::Schema.define(:version => 20110301123149) do
     t.datetime "date_of_birth",       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "allergies"
+    t.text     "past_illnesses"
+    t.text     "surgeries"
+    t.text     "medications"
+    t.string   "cigarettes_per_day"
+    t.string   "drinks_per_day"
+    t.text     "drugs_use"
+    t.text     "family_diseases"
   end
 
   create_table "practices", :force => true do |t|
@@ -71,6 +80,9 @@ ActiveRecord::Schema.define(:version => 20110301123149) do
     t.integer  "practice_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "current_login_at"
+    t.datetime "last_login_at"
+    t.integer  "login_count",       :default => 0,      :null => false
   end
 
 end

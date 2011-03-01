@@ -9,13 +9,13 @@ class Patient < ActiveRecord::Base
 
   validates :uid, :uniqueness => {:scope => :practice_id}
   validates_presence_of :practice_id, :firstname, :lastname, :date_of_birth
-  validates_length_of :uid, :within => 0..25
-  validates_length_of :firstname, :within => 0..25
-  validates_length_of :lastname, :within => 0..25
-  validates_length_of :address, :within => 0..100
-  validates_length_of :telephone, :within => 0..20
-  validates_length_of :mobile, :within => 0..20
-  validates_length_of :emergency_telephone, :within => 0..20
+  validates_length_of :uid, :within => 0..25, :allow_blank => true
+  validates_length_of :firstname, :within => 1..25
+  validates_length_of :lastname, :within => 1..25
+  validates_length_of :address, :within => 0..100, :allow_blank => true
+  validates_length_of :telephone, :within => 0..20, :allow_blank => true
+  validates_length_of :mobile, :within => 0..20, :allow_blank => true
+  validates_length_of :emergency_telephone, :within => 0..20, :allow_blank => true
   validates_format_of :email, :with => Authlogic::Regex.email
 
   before_validation(:on => :create) do

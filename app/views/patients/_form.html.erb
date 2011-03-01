@@ -12,19 +12,16 @@
 	  <legend>Personal information</legend>
 
 	  <p>
-	    <%= f.label "First name"%><br />
-	    <%= f.text_field :firstname %>
+	    <%= f.text_field :firstname, :placeholder => "First name", :title => "First name"  %>
 	  </p>
 	  <p>
-	    <%= f.label "Last name"%><br />
-	    <%= f.text_field :lastname %>
+	    <%= f.text_field :lastname, :placeholder => "Last name", :title => "Last name" %>
 	  </p>
 	  <p>
-	    <%= f.label "Date of birth"%> <%= f.date_select :date_of_birth, :start_year => Time.now.year - 80, :end_year => Time.now.year - 3 %>
+	    <%= f.label "Date of birth"%> <%= f.date_select :date_of_birth, :start_year => Time.now.year - 80, :end_year => Time.now.year - 3, :title => "Date of birth" %>
 	  </p>
 	  <p>
-	    <%= f.label "Unique identifier"%><br />
-	    <%= f.text_field :uid %>
+	    <%= f.text_field :uid, :placeholder => "Unique identifier", :title => "Unique identifier" %>
 		<sub>(Only if your wish for your clinic to have a custom identification system)</sub>
 	  </p>
 	</fieldset>
@@ -32,24 +29,46 @@
 	<fieldset>
 	  <legend>Contact information</legend>
 	  <p>
-	    <%= f.label "Email"%><br />
-	    <%= f.text_field :email %>
+	    <%= f.text_field :email, :placeholder => "Email", :title => "Email" %>
 	  </p>
 	  <p>
-	    <%= f.label "Telephone"%><br />
-	    <%= f.text_field :telephone %>
+	    <%= f.text_field :telephone, :placeholder => "Telephone", :title => "Telephone" %>
 	  </p>
 	  <p>
-	    <%= f.label "Mobile"%><br />
-	    <%= f.text_field :mobile %>
+	    <%= f.text_field :mobile, :placeholder => "Mobile", :title => "Mobile" %>
 	  </p>
 	  <p>
-	    <%= f.label "Emergency Telephone"%><br />
-	    <%= f.text_field :emergency_telephone %>
+	    <%= f.text_field :emergency_telephone, :placeholder => "Emergency Telephone", :title => "Emergency Telephone" %>
 	  </p>
 	  <p>
-	    <%= f.label "Address"%><br />
-	    <%= f.text_area :address, :maxlength => 100, :rows => 2 %>
+	    <%= f.text_area :address, :maxlength => 100, :rows => 2, :placeholder => "Address", :title => "Address" %>
+	  </p>
+	</fieldset>
+	<fieldset>
+	  <legend>Medical history</legend>
+	  <p>
+	    <%= f.text_area :allergies, :rows => 2, :placeholder => "Allergies", :title => "Allergies" %>
+	  </p>
+	  <p>
+	    <%= f.text_area :past_illnesses, :rows => 2, :placeholder => "Past illnesses", :title => "Past illnesses" %>
+	  </p>
+	  <p>
+	    <%= f.text_area :surgeries, :rows => 2, :placeholder => "Past Surgeries", :title => "Past Surgeries" %>
+	  </p>
+	  <p>
+	    <%= f.text_area :medications, :rows => 4, :placeholder => "Current medications", :title => "Current medications" %>
+	  </p>
+	  <p>
+	    <%= f.text_field :cigarettes_per_day, :placeholder => "Cigarettes per day", :title => "Cigarettes per day" %>
+	  </p>
+	  <p>
+	    <%= f.text_field :drinks_per_day, :placeholder => "Drinks per day", :title => "Drinks per day" %>
+	  </p>
+	  <p>
+	    <%= f.text_area :drugs_use, :rows => 2, :placeholder => "Illicit drug use (include type, amount and administration methods", :title => "Illicit drug use (include type, amount and administration methods" %>
+	  </p>
+	  <p>
+	    <%= f.text_area :family_diseases, :rows => 4, :placeholder => "Family diseases including deaths and allergies", :title => "Family diseases including deaths and allergies" %>
 	  </p>
 	</fieldset>
 	

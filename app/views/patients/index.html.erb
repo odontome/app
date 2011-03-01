@@ -4,7 +4,6 @@
 	<% @patients.each do |patient| %>
 		<li>
 			<h2><%=link_to patient.fullname, patient%></h2>			
-			<span class="hidden"><%=patient.id%></span>
 			<span><%=patient.uid%></span>
 			<span><strong>Age:</strong> <%=patient.age%></span>
 			<span><strong>Allergies:</strong> <%#=patient.chart.allergies%>TODO!</span>

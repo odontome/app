@@ -7,10 +7,6 @@ class DoctorsController < ApplicationController
 
   def show
     @doctor = Doctor.mine.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-    end
   end
 
   def new
