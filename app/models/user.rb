@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   private
   def check_if_admin
     if self.roles.include?("admin")
-      self.errors[:base] << "Can't delete admin user"
+      self.errors[:base] << _("Can't delete admin user")
       false
     end
   end  

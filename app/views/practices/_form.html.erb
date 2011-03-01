@@ -9,32 +9,31 @@
   <% end %>
 
   <p>
-    <%= practice_form.label "Practice Name"%><br />
-    <%= practice_form.text_field :name, :placeholder => "Practice Name", :title => "Practice Name" %>
-	<sub>("Great Smiles Dentists" or "John Peterson's")</sub>
+    <%= practice_form.text_field :name, :placeholder => _("Practice Name"), :title => _("Practice Name") %>
+	<sub><%=_('("Great Smiles Dentists" or "John Peterson\'s")')%></sub>
   </p>
 
 	<%= practice_form.fields_for :users do |user_form| %>
 
 	  <p>
-	    <%= user_form.text_field :firstname, :placeholder => "First name", :title => "First name" %>
+	    <%= user_form.text_field :firstname, :placeholder => _("First name"), :title => _("First name") %>
 	  </p>
 	  <p>
-	    <%= user_form.text_field :lastname, :placeholder => "Last name", :title => "Last name"  %>
+	    <%= user_form.text_field :lastname, :placeholder => _("Last name"), :title => _("Last name")  %>
 	  </p>
 	  <p>
-	    <%= user_form.text_field :email, :placeholder => "Email", :title => "Email" %>
+	    <%= user_form.text_field :email, :placeholder => _("Email"), :title => _("Email") %>
 	  </p>
 		<p>
-		  <%= user_form.password_field :password, :placeholder => "Password", :title => "Password" %>
+		  <%= user_form.password_field :password, :placeholder => _("Password"), :title => _("Password") %>
 		</p>
 		<p>
-		  <%= user_form.password_field :password_confirmation, :placeholder => "Confirm your password", :title => "Confirm your password"  %>
+		  <%= user_form.password_field :password_confirmation, :placeholder => _("Confirm your password"), :title => _("Confirm your password") %>
 		</p>
 
 	<% end %>
 	
   <%= practice_form.submit("Register", :class => "g-button") %>
-  Already have an account? <%= link_to "Sign In", signin_url %>
+  Already have an account? <%= link_to _("Sign In"), signin_url %>
 
 <% end %>

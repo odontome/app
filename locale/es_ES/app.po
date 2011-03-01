@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-03-01 18:54+0100\n"
+"POT-Creation-Date: 2011-03-01 21:18+0100\n"
 "PO-Revision-Date: 2011-03-01 18:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
+#: app/controllers/doctors_controller.rb:25
+msgid "Doctor was successfully created."
+msgstr ""
+
+#: app/controllers/doctors_controller.rb:37
+msgid "Doctor was successfully updated."
+msgstr ""
+
+#: app/controllers/user_sessions_controller.rb:14
+msgid "Login successful!"
+msgstr ""
+
+#: app/controllers/patients_controller.rb:29
+msgid "Patient was successfully created."
+msgstr ""
+
+#: app/controllers/patients_controller.rb:41
+msgid "Patient was successfully updated."
+msgstr ""
+
+#: app/controllers/practices_controller.rb:46
+msgid "Practice was successfully created."
+msgstr ""
+
+#: app/controllers/practices_controller.rb:60
+msgid "Practice was successfully updated."
+msgstr ""
+
+#: app/controllers/users_controller.rb:29
+msgid "User was successfully created."
+msgstr ""
+
+#: app/controllers/users_controller.rb:41
+msgid "User was successfully updated."
+msgstr ""
+
 #: app/controllers/application_controller.rb:40
 msgid "You must be logged in to access this page"
-msgstr ""
+msgstr "Debes haber hecho login para acceder esta página"
+
+#: app/controllers/application_controller.rb:49
+#, fuzzy
+msgid "You must be logged out to access this page"
+msgstr "Debes haber hecho login para acceder esta página"

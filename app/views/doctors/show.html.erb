@@ -1,31 +1,31 @@
 <h1><%=@doctor.fullname%></h1>
 <p>
-	<label>First name:</label> <%= @doctor.firstname %>
+	<label><%=_("First name:")%></label> <%= @doctor.firstname %>
 </p>
 <p>
-	<label>Last name:</label> <%= @doctor.lastname %>
+	<label><%=_("Last name:")%></label> <%= @doctor.lastname %>
 </p>
 <p>
-	<label>Unique Identifier:</label> <%= @doctor.uid%>
+	<label><%=_("Unique Identifier:")%></label> <%= @doctor.uid%>
 </p>
 <p>
-	<label>Email:</label> <%= @doctor.email%>
+	<label><%=_("Email:")%></label> <%= @doctor.email%>
 </p>
 <p>
-	<label>Gender:</label> <%= @doctor.gender.titleize%>
+	<label><%=_("Gender:")%></label> <%= @doctor.gender.titleize%>
 </p>
 <p>
-	<label>Speciality:</label> <%= @doctor.speciality%>
+	<label><%=_("Speciality:")%></label> <%= @doctor.speciality%>
 </p>
 <p>
-	<label>Status:</label> 
+	<label><%=_("Status:")%></label> 
 	<% if @doctor.is_active %>
-		Active
+		<%=_("Active")%>
     <% else %>
-		Suspended
+		<%=_("Suspended")%>
     <% end %>
 </p>
 <p>
-	<%=link_to "Edit", edit_doctor_path(@doctor), :class => "g-button" %>
-	<%=link_to "Delete", doctor_path(@doctor), :method => :delete, :confirm => "Are you sure?", :class => "g-button red" %>
+	<%=link_to _("Edit"), edit_doctor_path(@doctor), :class => "g-button" %>
+	<%=link_to _("Delete"), doctor_path(@doctor), :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %>
 </p>

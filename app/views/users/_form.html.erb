@@ -1,28 +1,28 @@
 <%= form_for(@user) do |f| %>
 
 	<fieldset>
-	  <legend>Personal information</legend>
+	  <legend><%=_("Personal information")%></legend>
 	  <p>
-	    <%= f.text_field :firstname, :placeholder => "First name", :title => "First name" %>
+	    <%= f.text_field :firstname, :placeholder => _("First name"), :title => _("First name") %>
 	  </p>
 	  <p>
-	    <%= f.text_field :lastname, :placeholder => "Last name", :title => "Last name"  %>
+	    <%= f.text_field :lastname, :placeholder => _("Last name"), :title => _("Last name")  %>
 	  </p>
 	</fieldset>
 	<fieldset>
-	  <legend>Account information</legend>
+	  <legend><%=_("Account information")%></legend>
 	  <p>
-	    <%= f.text_field :email, :placeholder => "Email", :title => "Email" %>
+	    <%= f.text_field :email, :placeholder => _("Email"), :title => _("Email") %>
 	  </p>
 		<p>
-		  <%= f.password_field :password, :placeholder => "Password", :title => "Password" %>
+		  <%= f.password_field :password, :placeholder => _("Password"), :title => _("Password") %>
 		</p>
 		<p>
-		  <%= f.password_field :password_confirmation, :placeholder => "Confirm your password", :title => "Confirm your password"  %>
+		  <%= f.password_field :password_confirmation, :placeholder => _("Confirm your password"), :title => _("Confirm your password") %>
 		</p>
 	</fieldset>
 
-  <%= f.submit("Save", :class => "g-button") %> or <%= link_to "Cancel", users_path %>
+  <%= f.submit(_("Save"), :class => "g-button") %> <%=_("or")%> <%= link_to _("Cancel"), users_path %>
 
 
 <% end %>

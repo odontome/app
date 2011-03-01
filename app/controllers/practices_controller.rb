@@ -43,7 +43,7 @@ class PracticesController < ApplicationController
 
     respond_to do |format|
       if @practice.save
-        format.html { redirect_to(practice_path, :notice => 'Practice was successfully created.') }
+        format.html { redirect_to(practice_path, :notice => _('Practice was successfully created.')) }
       else
         format.html { render :action => "new", :as => :signup }
       end
@@ -57,7 +57,7 @@ class PracticesController < ApplicationController
 
     respond_to do |format|
       if @practice.update_attributes(params[:practice])
-        format.html { redirect_to(@practice, :notice => 'Practice was successfully updated.') }
+        format.html { redirect_to(@practice, :notice => _('Practice was successfully updated.')) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

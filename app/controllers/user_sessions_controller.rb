@@ -11,7 +11,7 @@ class UserSessionsController < ApplicationController
 
     respond_to do |format|
       if @user_session.save
-        format.html { redirect_to(root_url, :notice => 'Login successful!') }
+        format.html { redirect_to(root_url, :notice => _('Login successful!')) }
       else
         format.html { render :action => "new" }
       end
