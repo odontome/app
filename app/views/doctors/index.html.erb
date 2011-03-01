@@ -11,7 +11,6 @@
 		<li class="<%=cclass%>">
 			<h2><%= link_to doctor.fullname, doctor %> <%= "(Inactive)" unless doctor.is_active %></h2>			
 
-			<span class="hidden"><%=doctor.id%></span>
 			<span><%=doctor.uid%></span>
 			<span><strong>Specialty:</strong> <%=doctor.speciality%></span>
 

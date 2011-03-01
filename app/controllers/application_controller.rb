@@ -2,9 +2,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   helper :all
   filter_parameter_logging :password, :password_confirmation
-  helper_method :current_session, :current_user, :current_user_is_admin?
+  helper_method :current_session, :current_user, :current_user_is_admin?, :user_is_admin?
 
   before_filter :find_practice_object
+  before_filter :set_gettext_locale
   
   private
     def current_user_session
@@ -23,6 +24,10 @@ class ApplicationController < ActionController::Base
       end
     end
   
+    def user_is_admin?(user)
+      return true if user.roles.include?("admin")
+    end
+
     def current_user_is_superadmin?
       if current_user
         return true if current_user.roles.include?("superadmin")
@@ -32,7 +37,7 @@ class ApplicationController < ActionController::Base
     def require_user
       unless current_user
         store_location
-        flash[:notice] = "You must be logged in to access this page"
+        flash[:notice] = _("You must be logged in to access this page")
         redirect_to signin_path
         return false
       end

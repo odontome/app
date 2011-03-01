@@ -1,24 +1,28 @@
-<%= form.fields_for :users do |user_form| %>
+<%= form_for(@user) do |f| %>
 
-	<p>
-	  <%= user_form.label "First Name" %><br />
-	  <%= user_form.text_field :firstname %>
-	</p>
-	<p>
-	  <%= user_form.label "Last Name" %><br />
-	  <%= user_form.text_field :lastname %>
-	</p>
-	<p>
-	  <%= user_form.label "Email" %><br />
-	  <%= user_form.text_field :email %>
-	</p>
-	<p>
-	  <%= user_form.label "Password" %><br />
-	  <%= user_form.password_field :password %>
-	</p>
-	<p>
-	  <%= user_form.label "Password Confirmation" %><br />
-	  <%= user_form.password_field :password_confirmation %>
-	</p>
+	<fieldset>
+	  <legend>Personal information</legend>
+	  <p>
+	    <%= f.text_field :firstname, :placeholder => "First name", :title => "First name" %>
+	  </p>
+	  <p>
+	    <%= f.text_field :lastname, :placeholder => "Last name", :title => "Last name"  %>
+	  </p>
+	</fieldset>
+	<fieldset>
+	  <legend>Account information</legend>
+	  <p>
+	    <%= f.text_field :email, :placeholder => "Email", :title => "Email" %>
+	  </p>
+		<p>
+		  <%= f.password_field :password, :placeholder => "Password", :title => "Password" %>
+		</p>
+		<p>
+		  <%= f.password_field :password_confirmation, :placeholder => "Confirm your password", :title => "Confirm your password"  %>
+		</p>
+	</fieldset>
+
+  <%= f.submit("Save", :class => "g-button") %> or <%= link_to "Cancel", users_path %>
+
 
 <% end %>

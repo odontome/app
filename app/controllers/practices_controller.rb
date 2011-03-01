@@ -27,6 +27,8 @@ class PracticesController < ApplicationController
   def new
     @practice = Practice.new
     @practice.users.build
+    @user = User.new
+    
   end
 
   # GET /practices/1/edit
@@ -41,7 +43,7 @@ class PracticesController < ApplicationController
 
     respond_to do |format|
       if @practice.save
-        format.html { redirect_to(@practice, :notice => 'Practice was successfully created.') }
+        format.html { redirect_to(practice_path, :notice => 'Practice was successfully created.') }
       else
         format.html { render :action => "new", :as => :signup }
       end

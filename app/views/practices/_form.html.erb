@@ -10,13 +10,30 @@
 
   <p>
     <%= practice_form.label "Practice Name"%><br />
-    <%= practice_form.text_field :name %>
+    <%= practice_form.text_field :name, :placeholder => "Practice Name", :title => "Practice Name" %>
 	<sub>("Great Smiles Dentists" or "John Peterson's")</sub>
   </p>
 
-  <%= render :partial => 'users/form',
-             :locals => {:form => practice_form} %>
+	<%= practice_form.fields_for :users do |user_form| %>
 
+	  <p>
+	    <%= user_form.text_field :firstname, :placeholder => "First name", :title => "First name" %>
+	  </p>
+	  <p>
+	    <%= user_form.text_field :lastname, :placeholder => "Last name", :title => "Last name"  %>
+	  </p>
+	  <p>
+	    <%= user_form.text_field :email, :placeholder => "Email", :title => "Email" %>
+	  </p>
+		<p>
+		  <%= user_form.password_field :password, :placeholder => "Password", :title => "Password" %>
+		</p>
+		<p>
+		  <%= user_form.password_field :password_confirmation, :placeholder => "Confirm your password", :title => "Confirm your password"  %>
+		</p>
+
+	<% end %>
+	
   <%= practice_form.submit("Register", :class => "g-button") %>
   Already have an account? <%= link_to "Sign In", signin_url %>
 

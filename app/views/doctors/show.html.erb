@@ -1,4 +1,4 @@
-<h1>Doctor <%=@doctor.fullname%></h1>
+<h1><%=@doctor.fullname%></h1>
 <p>
 	<label>First name:</label> <%= @doctor.firstname %>
 </p>
@@ -7,6 +7,9 @@
 </p>
 <p>
 	<label>Unique Identifier:</label> <%= @doctor.uid%>
+</p>
+<p>
+	<label>Email:</label> <%= @doctor.email%>
 </p>
 <p>
 	<label>Gender:</label> <%= @doctor.gender.titleize%>

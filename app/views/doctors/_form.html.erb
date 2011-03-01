@@ -9,25 +9,24 @@
   <% end %>
 
   <p>
-    <%= f.label "First name"%><br />
-    <%= f.text_field :firstname %>
+    <%= f.text_field :firstname, :placeholder => "First name", :title => "First name" %>
   </p>
   <p>
-    <%= f.label "Last name"%><br />
-    <%= f.text_field :lastname %>
+    <%= f.text_field :lastname, :placeholder => "Last name", :title => "Last name"  %>
   </p>
   <p>
-    <%= f.label "Unique identifier"%><br />
-    <%= f.text_field :uid %>
+    <%= f.text_field :uid, :placeholder => "Unique identifier", :title => "Unique identifier" %>
 	<sub>(Only if your wish for your clinic to have a custom identification system)</sub>
   </p>
   <p>
-	<%= f.label "Gender"%>
-	<%= f.select(:gender, [['Male','male'],['Female','female']]) %>
+    <%= f.text_field :email, :placeholder => "Email", :title => "Email" %>
   </p>
   <p>
-    <%= f.label "Speciality"%><br />
-    <%= f.text_field :speciality %>
+	<%= f.label "Gender"%>
+	<%= f.select(:gender, [['Male','male'],['Female','female']], :title => "Gender") %>
+  </p>
+  <p>
+    <%= f.text_field :speciality, :placeholder => "Speciality", :title => "Specialities of the doctor" %>
   </p>
 
   <%= f.submit("Save", :class => "g-button") %> 
