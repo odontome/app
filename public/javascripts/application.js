@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(function(){
 	// Labelify all text inputs and textareas
 	$("input:text").labelify();
 	$("textarea").labelify();

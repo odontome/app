@@ -1,4 +1,5 @@
 Odontome::Application.routes.draw do
+  resources :appointments
   resources :practices
   resources :patients
   resources :users

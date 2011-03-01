@@ -1,1 +1,73 @@
+<link rel="stylesheet" type="text/css" href="/stylesheets/fullcalendar.css" />
+<script type="text/javascript" src="/javascripts/jquery.fullcalendar.min.js"></script>
+
 <h1>Agenda</h1>
+
+<script type="text/javascript">
+
+	$(document).ready(function() {
+	
+		var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+		
+		// Init the dialog options
+		var dialogOpts = {
+				        modal: true,
+				        autoOpen: false,
+				        width: 490,
+				        height: 340,
+						close: function(event, ui) { 
+							$(this).html("Please wait..."); 
+						}
+			        };
+				
+		$("#event-dialog").dialog(dialogOpts); // end dialog
+		
+		$("#calendar").fullCalendar({
+			defaultView: "agendaWeek",
+			minTime: 8,
+			maxTime: 21,
+			height: 620,
+			header: {
+				left: "prev,next today",
+				center: "title",
+				right: "month,agendaWeek,agendaDay"
+			},
+			editable: true,
+			events: "/appointments",
+			allDaySlot: false,
+			allDayDefault: false,
+			dayClick: function(dayDate, allDay, jsEvent, view){
+				if (view.name != "month"){		
+					var url = "/appointments/new";
+					$("#event-dialog").load(url, {startsAt: dayDate}).dialog("open");
+				} else {
+					$("#calendar").fullCalendar( 'changeView', 'agendaDay' );
+					$("#calendar").fullCalendar('gotoDate', dayDate);
+				}
+			},
+			eventClick: function(calEvent, jsEvent, view) {
+				var url = "/appointments/edit/" + calEvent.id;
+				$("#event-dialog").load(url, {patient: calEvent.patientId}).dialog("open");
+			},
+			eventDrop: function(calEvent, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
+				// update the event with the new data
+				$.post("/appointments/update/" + calEvent.id, {startsAt: calEvent.start, endsAt:calEvent.end, type:"drop"});
+			},
+			eventResize: function(calEvent, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) {
+				// update the event with the new data
+				$.post("/appointments/update/" + calEvent.id, {startsAt: calEvent.start, endsAt:calEvent.end, type:"resize"});
+			},
+			eventRender: function(event, element) {
+				// Append the name of the patient    
+				element.find('.fc-event-time').append(" " + event.patient);
+		    }
+			
+		});	
+	});	
+</script>
+
+<div id="calendar"></div>
+<div id="event-dialog" class="hidden">Please wait...</div>
