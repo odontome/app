@@ -15,7 +15,7 @@ class Doctor < ActiveRecord::Base
   end
   
   def fullname
-    [firstname, lastname].join(' ')
+    [(self.gender === "female") ? "Dr." : "Dr.", firstname, lastname].join(' ')
   end
   
 end
