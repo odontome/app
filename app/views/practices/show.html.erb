@@ -5,12 +5,16 @@
 <ul id="list-items">
 	<li>
 		<h2><%=link_to _("My doctors"), doctors_url %></h2>
-		<span><%=_('The people who do the things to your patients.')%>:</span>
+		<span><%=_('The people who do the things to your patients.')%></span>
 		<div class="list-item"><%= @practice.doctors.count %> <%=_('doctors')%></div>
 	</li>
 	<li>
 		<h2><%=link_to _("My users"), users_url %></h2>
-		<span><%=_('Everyone who has access to your odonto.me.')%>:</span>
+		<span><%=_('Everyone who has access to your odonto.me.')%></span>
 		<div class="list-item"><%= @practice.users.count %> <%=_('users')%></div>
+	</li>
+	<li>
+		<h2><%=link_to _("My practice settings"), practice_settings_url %></h2>
+		<span><%=_('Change here your practice name, select your language and more')%></span>
 	</li>
 </ul>

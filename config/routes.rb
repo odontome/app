@@ -3,19 +3,15 @@ Odontome::Application.routes.draw do
   resources :practices
   resources :patients
   resources :users
-  resources :doctors do
-    member do
-      post 'activation'
-    end
-  end
+  resources :doctors
   resource :user_session
 
   match "/signin" => "user_sessions#new", :as => :signin
   match "/logout" => "user_sessions#destroy", :as => :logout
   match "/signup" => "practices#new", :as => :signup
   match "/agenda" => "agenda#show", :as => :agenda
-
   match "/practice" => "practices#show", :as => :practice
+  match "/practice/settings" => "practices#settings", :as => :practice_settings
 
   root :to => "welcome#index"
 

@@ -1,0 +1,35 @@
+<h1><%=_('Practice Settings')%></h1>
+
+<%= form_for(@practice, :url => "/practices/#{@practice.id}", :method => :update) do |f| %>
+
+  <% if @practice.errors.any? %>
+    <div class="error">
+      <% @practice.errors.full_messages.each do |msg| %>
+        <%= msg %><br />
+	  <% end %>
+    </div>
+  <% end %>
+
+	<fieldset>
+		<legend><%=_("Practice information")%></legend>
+	  <p>
+	    <%= f.text_field :name, :placeholder => _("Practice Name"), :title => _("Practice Name") %>
+			<sub><%=_('("Great Smiles Dentists" or "John Peterson\'s")')%></sub>
+	  </p>
+	</fieldset>
+	<fieldset>
+		<legend><%=_("Language and Time")%></legend>
+	  <p>
+			<%= f.label _("Preferred language") %>
+			<%= f.select(:locale, [[_('English'),'en'],[_('Español'),'es']], :title => _("Preferred language")) %>
+	  </p>
+	  <p>
+			<%= f.label _("Time zone") %>
+			<%= f.time_zone_select :timezone, ActiveSupport::TimeZone.all, :default => Time.zone.name, :title => _("Time zone") %></p>
+	  </p>
+	</fieldset>
+
+	
+  <%= f.submit(_("Save"), :class => "g-button") %>
+
+<% end %>
