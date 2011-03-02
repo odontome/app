@@ -42,7 +42,11 @@
 			dayClick: function(dayDate, allDay, jsEvent, view){
 				if (view.name != "month"){		
 					var url = "/appointments/new";
-					$("#event-dialog").load(url, {startsAt: dayDate}).dialog("open");
+					var dayDate = Math.round((dayDate).getTime() / 1000);
+					
+					$.get(url, {"starts_at": dayDate}, function(data) {
+					  $("#event-dialog").html(data).dialog("open");
+					});
 				} else {
 					$("#calendar").fullCalendar( 'changeView', 'agendaDay' );
 					$("#calendar").fullCalendar('gotoDate', dayDate);

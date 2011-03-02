@@ -1,16 +1,4 @@
-<cfoutput>
-	#startRemoteFormTag(controller="appointments", action="create")#
-		<p>#textFieldTag(name="appointment[patientId]")#</p>
-		
-		<p>#select(objectName="appointment", property="doctorId", options=doctors, textField="fullName")#</p>
-		
-		<p>#textArea(objectName="appointment", property="notes", title="Additional notes")#</p>
-		
-		#hiddenField(objectName="appointment", property="startsAt")#
-		
-		#submitTag(class="g-button")# or <a href="##" onclick="$('##event-dialog').dialog('close');">Cancel</a>
-	#endRemoteFormTag()#
-</cfoutput>
+<%=debug params %>
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -19,11 +7,7 @@
 		
 		// Limit the notes
 		$('#appointment-notes').limit('255');
-		
-		// Labelify all text inputs and textareas
-		$("input:text").labelify();
-		$("textarea").labelify();
-		
+				
 		// tipTip all text inputs and textareas
 		$('input').tipTip();	
 		$('textarea').tipTip();			
