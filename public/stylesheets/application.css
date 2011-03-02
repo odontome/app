@@ -147,9 +147,9 @@ big {
 		
 	-webkit-background-size: 100% 40px;
 	
-	-webkit-box-shadow: 0 2px 10px 1px rgba(0,0,0,.6); 
-	-moz-box-shadow: 0 2px 10px 1px rgba(0,0,0,.6); 
-	box-shadow: 0 2px 10px 1px rgba(0,0,0,.6); 
+	-webkit-box-shadow: 0 2px 10px 1px rgba(0,0,0,.2); 
+	-moz-box-shadow: 0 2px 10px 1px rgba(0,0,0,.2); 
+	box-shadow: 0 2px 10px 1px rgba(0,0,0,.2); 
 	
 }
 /* @end */
