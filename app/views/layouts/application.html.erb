@@ -9,20 +9,19 @@
 </head>
 
 <body>
-
 	<div id="container">
-		<div id="header">
+		<header>
 			<%= image_tag "logo.png", :title => _("Home"), :class => "logo" %>
 			<%= render :partial => "layouts/navigation" %>
-		</div>
+		</header>
 	
 		<div id="content">
 			<%= yield %>
 		</div>
 		
-		<div id="footer" align="right">
+		<footer>
 			<!-- Footer goes here -->
-		</div>
+		</footer>
 	</div>
 </body>
 </html>

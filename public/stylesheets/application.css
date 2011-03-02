@@ -41,11 +41,11 @@ big {
 }
 
 /* @group Header */
-#header {
+header {
 	height: 65px;
 	margin-bottom: 25px;
 }
-	#header img.logo {
+	header img.logo {
 		float: left;
 		margin-left: 40px;
 		border: 0px;
@@ -155,8 +155,10 @@ big {
 /* @end */
 
 /* @group Footer */
-#footer {
+footer {
 	clear: both;
+	height: 50px;
+	margin: 10px auto;
 }
 /* @end */
 
@@ -224,7 +226,7 @@ big {
 }
 
 .disabled-list {
-	opacity: 0.6;
+	opacity: 0.5;
 }
 /* @end */
 
