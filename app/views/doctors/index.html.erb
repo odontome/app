@@ -12,7 +12,7 @@
 			<h2><%= link_to doctor.fullname, doctor %> <%= _('Inactive') unless doctor.is_active %></h2>			
 
 			<span><%=doctor.uid%></span>
-			<span><strong><%=_('Specialty')%>:</strong> <%=doctor.speciality%></span>
+			<span><strong><%=_('Speciality')%>:</strong> <%=doctor.speciality%></span>
 
 			<div class="list-item-button"><%=link_to _('Delete'), doctor, :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %></div>
 			<div class="list-item-button"><%=link_to _('Edit'), edit_doctor_path(doctor), :class => "g-button" %></div>

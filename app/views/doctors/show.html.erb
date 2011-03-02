@@ -1,24 +1,24 @@
 <h1><%=@doctor.fullname%></h1>
 <p>
-	<label><%=_("First name:")%></label> <%= @doctor.firstname %>
+	<label><%=_("First name")%>:</label> <%= @doctor.firstname %>
 </p>
 <p>
-	<label><%=_("Last name:")%></label> <%= @doctor.lastname %>
+	<label><%=_("Last name")%>:</label> <%= @doctor.lastname %>
 </p>
 <p>
-	<label><%=_("Unique Identifier:")%></label> <%= @doctor.uid%>
+	<label><%=_("Unique identifier")%>:</label> <%= @doctor.uid%>
 </p>
 <p>
-	<label><%=_("Email:")%></label> <%= @doctor.email%>
+	<label><%=_("Email")%>:</label> <%= @doctor.email%>
 </p>
 <p>
-	<label><%=_("Gender:")%></label> <%= @doctor.gender.titleize%>
+	<label><%=_("Gender")%>:</label> <%= @doctor.gender.titleize%>
 </p>
 <p>
-	<label><%=_("Speciality:")%></label> <%= @doctor.speciality%>
+	<label><%=_("Speciality")%>:</label> <%= @doctor.speciality%>
 </p>
 <p>
-	<label><%=_("Status:")%></label> 
+	<label><%=_("Status")%>:</label> 
 	<% if @doctor.is_active %>
 		<%=_("Active")%>
     <% else %>

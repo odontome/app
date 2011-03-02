@@ -14,7 +14,7 @@
 	<label><%=_('Email')%>:</label> <%= @user.email%>
 </p>
 <p>
-	<label><%=_('Last login')%>:</label> <% if @user.last_login_at %><%= @user.last_login_at %> (<%= time_ago_in_words(@user.last_login_at)%> ago)<% else %><%=_('never')%><% end %>
+	<label><%=_('Last seen')%>:</label> <% if @user.last_login_at %><%= @user.last_login_at %> ( <%= time_ago_in_words(@user.last_login_at)%> <%=_('ago')%>)<% else %><%=_('never')%><% end %>
 </p>
 <p>
 	<label><%=_('Number of signins')%>:</label> <% if @user.login_count.to_i > 1 %><%= @user.login_count %><% else %>none<% end %>

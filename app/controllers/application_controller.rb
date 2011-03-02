@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password, :password_confirmation
   helper_method :current_session, :current_user, :current_user_is_admin?, :user_is_admin?
 
+  before_filter :set_gettext_locale
   before_filter :find_practice_object
   before_filter :set_gettext_locale
   
