@@ -1,8 +1,4 @@
-$(function(){
-	// Labelify all text inputs and textareas
-	$("input:text").labelify();
-	$("textarea").labelify();
-	
+$(function(){	
 	// tipTip all form fields
 	$('input').tipTip();	
 	$('textarea').tipTip();
