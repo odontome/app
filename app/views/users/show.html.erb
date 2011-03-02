@@ -1,29 +1,29 @@
 <h1><%=@user.fullname%></h1>
 <fieldset>
-  <legend>Personal information</legend>
+  <legend><%=_("Personal information")%></legend>
 	<p>
-		<label>First name:</label> <%= @user.firstname %>
+		<label><%=_('First name')%>:</label> <%= @user.firstname %>
 	</p>
 	<p>
-		<label>Last name:</label> <%= @user.lastname %>
+		<label><%=_('Last name')%>:</label> <%= @user.lastname %>
 	</p>
 </fieldset>
 <fieldset>
-<legend>Account information</legend>
+<legend><%=_("Account information")%></legend>
 <p>
-	<label>Email:</label> <%= @user.email%>
+	<label><%=_('Email')%>:</label> <%= @user.email%>
 </p>
 <p>
-	<label>Last login:</label> <% if @user.last_login_at %><%= @user.last_login_at %> (<%= time_ago_in_words(@user.last_login_at)%> ago)<% else %>never<% end %>
+	<label><%=_('Last login')%>:</label> <% if @user.last_login_at %><%= @user.last_login_at %> (<%= time_ago_in_words(@user.last_login_at)%> ago)<% else %><%=_('never')%><% end %>
 </p>
 <p>
-	<label>Number of signins:</label> <% if @user.login_count.to_i > 1 %><%= @user.login_count %><% else %>none<% end %>
+	<label><%=_('Number of signins')%>:</label> <% if @user.login_count.to_i > 1 %><%= @user.login_count %><% else %>none<% end %>
 </p>
 </fieldset>
 
 <p>
-		<%=link_to "Edit", edit_user_path(@user), :class => "g-button" %>
+		<%=link_to _("Edit"), edit_user_path(@user), :class => "g-button" %>
 	<% unless user_is_admin?(@user) %>
-		<%=link_to "Delete", user_path(@user), :method => :delete, :confirm => "Are you sure?", :class => "g-button red" %>
+		<%=link_to _("Delete"), user_path(@user), :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %>
 	<% end %>
 </p>

@@ -18,7 +18,7 @@ class Doctor < ActiveRecord::Base
   before_destroy :check_if_is_deleteable
   
   def fullname
-    [(self.gender === "female") ? "Dr." : "Dr.", firstname, lastname].join(' ')
+    [(self.gender === "female") ? _("Dr.") : _("Dr."), firstname, lastname].join(' ')
   end
   
   def is_deleteable
@@ -30,7 +30,7 @@ class Doctor < ActiveRecord::Base
   
   def check_if_is_deleteable
     if self.is_deleteable
-      self.errors[:base] << "Can't delete Doctor with registered appointmens"
+      self.errors[:base] << _("Can't delete Doctor with registered appointmens")
       false
     end
     

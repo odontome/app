@@ -1,4 +1,4 @@
-<h1>Users <%= link_to "+", new_user_url, :class => "g-button" %></h1>
+<h1><%=_('Users')%> <%= link_to "+", new_user_url, :class => "g-button" %></h1>
 
 
 <ul id="list-items">
@@ -6,16 +6,16 @@
 		<li>
 			<h2><%= link_to user.fullname, user %> <% if user_is_admin?(user) %> (admin)<%end%></h2>
 
-			<span><strong>E-mail:</strong> <%=user.email%></span>
-			<span><strong>Last seen:</strong> <% if user.last_login_at %><%= time_ago_in_words(user.last_login_at) %><% else %>never<% end %></span>	
+			<span><strong><%=_('Email')%>:</strong> <%=user.email%></span>
+			<span><strong><%=_('Last seen')%>:</strong> <% if user.last_login_at %><%= time_ago_in_words(user.last_login_at) %><% else %><%=_('never')%><% end %></span>	
 
 			<% unless user_is_admin?(user) %>
-				<div class="list-item-button"><%= link_to "Delete", user, :method => :delete, :confirm => "Are you sure?", :class => "g-button red" %></div>
+				<div class="list-item-button"><%= link_to _("Delete"), user, :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %></div>
 			<% end %>
-			<div class="list-item-button"><%= link_to "Edit", edit_user_path(user), :class => "g-button" %></div>
+			<div class="list-item-button"><%= link_to _("Edit"), edit_user_path(user), :class => "g-button" %></div>
 		</li>
 
 	<% end %>
 </ul>
 
-<%= link_to "Create new user", new_user_path, :class => "g-button" %>
+<%= link_to _("Create new user"), new_user_path, :class => "g-button" %>

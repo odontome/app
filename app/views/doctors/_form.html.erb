@@ -9,35 +9,35 @@
   <% end %>
 
   <p>
-    <%= f.text_field :firstname, :placeholder => "First name", :title => "First name" %>
+    <%= f.text_field :firstname, :placeholder => _("First name"), :title => _("First name") %>
   </p>
   <p>
-    <%= f.text_field :lastname, :placeholder => "Last name", :title => "Last name"  %>
+    <%= f.text_field :lastname, :placeholder => _("Last name"), :title => _("Last name")  %>
   </p>
   <p>
-    <%= f.text_field :uid, :placeholder => "Unique identifier", :title => "Unique identifier" %>
-	<sub>(Only if your wish for your clinic to have a custom identification system)</sub>
+    <%= f.text_field :uid, :placeholder => _("Unique identifier"), :title => _("Unique identifier") %>
+	<sub><%=_('(Only if your wish for your clinic to have a custom identification system)')%></sub>
   </p>
   <p>
-    <%= f.text_field :email, :placeholder => "Email", :title => "Email" %>
+    <%= f.text_field :email, :placeholder => _("Email"), :title => _("Email") %>
   </p>
   <p>
-	<%= f.label "Gender"%>
-	<%= f.select(:gender, [['Male','male'],['Female','female']], :title => "Gender") %>
+	<%= f.label _("Gender") %>
+	<%= f.select(:gender, [[_('Male'),'male'],[_('Female'),'female']], :title => _("Gender")) %>
   </p>
   <p>
-    <%= f.text_field :speciality, :placeholder => "Speciality", :title => "Specialities of the doctor" %>
+    <%= f.text_field :speciality, :placeholder => _("Speciality"), :title => _("Specialities of the doctor") %>
   </p>
 
-  <%= f.submit("Save", :class => "g-button") %> 
+  <%= f.submit(_("Save"), :class => "g-button") %> 
 
   <% if controller.action_name == "edit" %>
 	  <% if @doctor.is_active %>
-			<%=link_to "Suspend (TODO!)", @doctor, :method => :delete, :confirm => "Are you sure?", :class => "g-button red" %>
+			<%=link_to _('Suspend'), @doctor, :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %>
 	  <% else %>
-			<%=link_to "Activate (TODO!)", @doctor, :method => :delete, :confirm => "Are you sure?", :class => "g-button red" %>
+			<%=link_to _('Activate'), @doctor, :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %>
 	  <% end %>
   <% end %>
-  or <%= link_to "Cancel", doctors_path %>
+  <%=_("or")%> <%= link_to _("Cancel"), doctors_path %>
 
 <% end %>
