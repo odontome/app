@@ -1,0 +1,31 @@
+<cfoutput>
+	#startRemoteFormTag(controller="appointments", action="create")#
+		<p>#textFieldTag(name="appointment[patientId]")#</p>
+		
+		<p>#select(objectName="appointment", property="doctorId", options=doctors, textField="fullName")#</p>
+		
+		<p>#textArea(objectName="appointment", property="notes", title="Additional notes")#</p>
+		
+		#hiddenField(objectName="appointment", property="startsAt")#
+		
+		#submitTag(class="g-button")# or <a href="##" onclick="$('##event-dialog').dialog('close');">Cancel</a>
+	#endRemoteFormTag()#
+</cfoutput>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		// Setup autocomplete for patients
+		$("#appointment-patientId").autoSuggest("/patients/search", {startText: "Enter the patient name or UID", minChars: 2, selectionLimit: 1, selectedValuesProp: "data", selectedItemProp: "name", searchObjProps: "value,name", emptyText: "No results, a new patient will be created"});
+		
+		// Limit the notes
+		$('#appointment-notes').limit('255');
+		
+		// Labelify all text inputs and textareas
+		$("input:text").labelify();
+		$("textarea").labelify();
+		
+		// tipTip all text inputs and textareas
+		$('input').tipTip();	
+		$('textarea').tipTip();			
+	});	
+</script>
