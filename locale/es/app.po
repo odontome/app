@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-03-02 18:11+0100\n"
+"POT-Creation-Date: 2011-03-02 18:26+0100\n"
 "PO-Revision-Date: 2011-03-01 18:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,6 +62,10 @@ msgstr "Agenda"
 #: app/views/patients/_form.html.erb:50 app/views/patients/index.html.erb:9
 msgid "Allergies"
 msgstr "Alergias"
+
+#: app/views/practices/_form.html.erb:37
+msgid "Already have an account?"
+msgstr "¿Tienes ya una cuenta?"
 
 #: app/views/doctors/_form.html.erb:36 app/views/doctors/_form.html.erb:38
 #: app/views/doctors/index.html.erb:17 app/views/doctors/show.html.erb:30
@@ -222,6 +226,10 @@ msgstr "Última entrada"
 msgid "Last visit"
 msgstr "Última visita"
 
+#: app/views/user_sessions/new.html.erb:20
+msgid "Login"
+msgstr "Acceder"
+
 #: app/controllers/user_sessions_controller.rb:14
 msgid "Login successful!"
 msgstr "¡Has entrado con éxito!"
@@ -311,6 +319,14 @@ msgstr "La clínica ha sido actualizada con éxito."
 msgid "Practices"
 msgstr "Clínicas"
 
+#: app/views/practices/_form.html.erb:36
+msgid "Register"
+msgstr "Registrarse"
+
+#: app/views/user_sessions/new.html.erb:18
+msgid "Remember me"
+msgstr "Recordarme"
+
 #: app/views/doctors/_form.html.erb:32 app/views/patients/_form.html.erb:76
 #: app/views/users/_form.html.erb:25
 msgid "Save"
@@ -319,7 +335,7 @@ msgstr "Guardar"
 #: app/views/practices/_form.html.erb:37
 #: app/views/user_sessions/new.html.erb:1
 msgid "Sign in"
-msgstr "Entrar"
+msgstr "Accede"
 
 #: app/views/practices/new.html.erb:1 app/views/user_sessions/new.html.erb:21
 msgid "Sign up"

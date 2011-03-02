@@ -33,7 +33,7 @@
 
 	<% end %>
 	
-  <%= practice_form.submit("Register", :class => "g-button") %>
-  Already have an account? <%= link_to _("Sign in"), signin_url %>
+  <%= practice_form.submit(_("Register"), :class => "g-button") %>
+  <%=_("Already have an account?")%> <%= link_to _("Sign in"), signin_url %>
 
 <% end %>

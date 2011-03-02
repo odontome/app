@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-03-02 18:11+0100\n"
+"POT-Creation-Date: 2011-03-02 18:26+0100\n"
 "PO-Revision-Date: 2011-03-01 18:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,6 +58,10 @@ msgstr ""
 
 #: app/views/patients/_form.html.erb:50 app/views/patients/index.html.erb:9
 msgid "Allergies"
+msgstr ""
+
+#: app/views/practices/_form.html.erb:37
+msgid "Already have an account?"
 msgstr ""
 
 #: app/views/doctors/_form.html.erb:36 app/views/doctors/_form.html.erb:38
@@ -219,6 +223,10 @@ msgstr ""
 msgid "Last visit"
 msgstr ""
 
+#: app/views/user_sessions/new.html.erb:20
+msgid "Login"
+msgstr ""
+
 #: app/controllers/user_sessions_controller.rb:14
 msgid "Login successful!"
 msgstr ""
@@ -306,6 +314,14 @@ msgstr ""
 
 #: app/views/layouts/_navigation.html.erb:14
 msgid "Practices"
+msgstr ""
+
+#: app/views/practices/_form.html.erb:36
+msgid "Register"
+msgstr ""
+
+#: app/views/user_sessions/new.html.erb:18
+msgid "Remember me"
 msgstr ""
 
 #: app/views/doctors/_form.html.erb:32 app/views/patients/_form.html.erb:76
