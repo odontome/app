@@ -2,7 +2,13 @@ class PatientsController < ApplicationController
   before_filter :require_user
   
   def index
-    @patients = Patient.mine
+    # this is the most frequent scenario, a simple list of patients
+    if (params[:q] === nil)
+      @patients = Patient.mine
+    # otherwise, this is a search for patients
+    else
+      @patients = Patient.mine.where(t[:uid].matches("%1").or(t[:first_name].matches("%Ra%")).or(t[:last_name].matches("%Riera%")))
+    end
   end
 
   def show

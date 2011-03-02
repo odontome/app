@@ -1,15 +1,38 @@
-<%=debug params %>
+<%= form_for(@appointment, :remote => true) do |f| %>
+	<p>		
+		<%= text_field_tag "appointment[patient_id]" %>
+	</p>
+
+	<p>
+		<%= f.label _("Doctor") %>
+		<%= f.select(:doctor_id, options_from_collection_for_select(@doctors, "id", "fullname"), :title => _("Select a doctor")) %>
+	</p>
+
+	<p>
+		<%= f.text_area :notes, :placeholder => _("Additional notes"), :rows => 2, :title => _("Additional notes"), :limit => 255  %>
+	</p>
+
+	<%= f.hidden_field :starts_at%>
+
+	<%= f.submit(_("Save"), :class => "g-button") %> <%= _("or") %> <a id="close_dialog" href="#">Cancel</a>
+
+<% end %>
+
 
 <script type="text/javascript">
 	$(document).ready(function() {
 		// Setup autocomplete for patients
-		$("#appointment-patientId").autoSuggest("/patients/search", {startText: "Enter the patient name or UID", minChars: 2, selectionLimit: 1, selectedValuesProp: "data", selectedItemProp: "name", searchObjProps: "value,name", emptyText: "No results, a new patient will be created"});
+		$("#appointment_patient_id").autoSuggest("/patients", {startText: "<%=_('Enter the patient name or UID')%>", minChars: 2, selectionLimit: 1, selectedValuesProp: "data", selectedItemProp: "name", searchObjProps: "value,name", emptyText: "<%=_('No results, a new patient will be created')%>"});
 		
 		// Limit the notes
 		$('#appointment-notes').limit('255');
 				
 		// tipTip all text inputs and textareas
 		$('input').tipTip();	
-		$('textarea').tipTip();			
+		$('textarea').tipTip();
+		
+		$('#close_dialog').click(function() {
+		  $('#event-dialog').dialog('close');
+		});
 	});	
 </script>

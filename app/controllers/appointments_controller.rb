@@ -15,7 +15,9 @@ class AppointmentsController < ApplicationController
   end
   
   def new
-    
+    @appointment = Appointment.new
+    @appointment.starts_at = params[:starts_at]
+    @doctors = Doctor.mine
   end
 
 end
