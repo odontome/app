@@ -57,11 +57,9 @@ class PracticesController < ApplicationController
 
     respond_to do |format|
       if @practice.update_attributes(params[:practice])
-        format.html { redirect_to(@practice, :notice => _('Practice was successfully updated.')) }
-        format.xml  { head :ok }
+        format.html { redirect_to(practice_url, :notice => _('Practice was successfully updated.')) }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @practice.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -77,4 +75,9 @@ class PracticesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  def settings
+    @practice = Practice.find(current_user.practice_id)
+  end
+
 end
