@@ -2,7 +2,7 @@ html,body {
 	font-family: "Helvetica Neue", Helvetica, Arial;
 	font-size: 14px;
 	color: #333333;
-	background: url(/images/layout/background.jpg) top center #333;
+	background: url(/images/layout/background.jpg) top center fixed #333;
 	margin: 0px;
 	padding-top: 10px;
 	height: 100%;
