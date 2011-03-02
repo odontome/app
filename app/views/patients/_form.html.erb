@@ -29,16 +29,16 @@
 	<fieldset>
 	  <legend><%=_("Contact information")%></legend>
 	  <p>
-	    <%= f.text_field :email, :placeholder => _("Email"), :title => _("Email") %>
+	    <%= f.email_field :email, :placeholder => _("Email"), :title => _("Email") %>
 	  </p>
 	  <p>
-	    <%= f.text_field :telephone, :placeholder => _("Telephone"), :title => _("Telephone") %>
+	    <%= f.telephone_field :telephone, :placeholder => _("Telephone"), :title => _("Telephone") %>
 	  </p>
 	  <p>
-	    <%= f.text_field :mobile, :placeholder => _("Mobile"), :title => _("Mobile") %>
+	    <%= f.telephone_field :mobile, :placeholder => _("Mobile"), :title => _("Mobile") %>
 	  </p>
 	  <p>
-	    <%= f.text_field :emergency_telephone, :placeholder => _("Emergency telephone"), :title => _("Emergency telephone") %>
+	    <%= f.telephone_field :emergency_telephone, :placeholder => _("Emergency telephone"), :title => _("Emergency telephone") %>
 	  </p>
 	  <p>
 	    <%= f.text_area :address, :maxlength => 100, :rows => 2, :placeholder => _("Address"), :title => _("Address") %>
