@@ -1,27 +1,17 @@
-// <cfoutput>
-// 	<cfsavecontent variable="payment">
-// 	<tr>
-// 		<td>#LSDateFormat(balance.createdAt)# - #balance.notes#</td>
-// 		<td align="center"></td>
-// 		<td align="center">#LSCurrencyFormat(balance.amount)#</td>
-// 	</tr>
-// 	</cfsavecontent>
-// 	
-// 	#pageInsertHTML(selector="tbody", content="#payment#", position="after")#
-// 	
-// 	<cfsavecontent variable="newTotal">
-// 	<tr>
-// 		<td></td>
-// 		<td align="center"></td>
-// 		<td align="center"><big>#LSCurrencyFormat(total)#</big></td>
-// 	</tr>
-// 	</cfsavecontent>
-// 	
-// 	#pageReplaceHTML(selector="tfoot", content="#newTotal#")#
-// </cfoutput>
+	// <cfsavecontent variable="newTotal">
+	// <tr>
+	// 	<td></td>
+	// 	<td align="center"></td>
+	// 	<td align="center"><big>#LSCurrencyFormat(total)#</big></td>
+	// </tr>
+	// </cfsavecontent>
+	// 
+	// #pageReplaceHTML(selector="tfoot", content="#newTotal#")#
+
+$("tbody").append("<%=escape_javascript(render :partial => 'show', :locals => {:balance => @balance})%>");
 
 // Clear the fields
-$('input:text').val("");
+$('[type=number],textarea').val("");
 
 // Highlight the new total
-$("tfoot").effect("highlight", {}, 3000);
+// $("tfoot").effect("highlight", {}, 3000);

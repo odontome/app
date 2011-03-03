@@ -1,22 +1,21 @@
 class BalancesController < ApplicationController
   before_filter :require_user
   
+  # provides
+  respond_to :html, :js
+  
   def index
-    @balance = Balance.where("patient_id = ?", params[:patient_id]).order("created_at desc")
+    @balances = Balance.where("patient_id = ?", params[:patient_id])
     render :layout => nil
   end
 
   def create
     @balance = Balance.new(params[:balance])
     @balance.patient_id = params[:patient_id] #FIXME yeah this sucks
+    # don't know how to handle errors here, I guess they go in the create.js.erb
+    @balance.save
     
-    respond_to do |format|
-      if @balance.save
-        #format.html { redirect_to(doctors_url, :notice => _('Doctor was successfully created.')) }
-      else
-        #format.html { render :action => "new" }
-      end
-    end
+    respond_with(@balance)
   end
 
 end

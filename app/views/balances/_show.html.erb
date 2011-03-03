@@ -1,0 +1,5 @@
+<tr>
+	<td><%=l balance.created_at, :format => :long %> - <%=balance.notes %></td>			
+	<td align="center"><% if (balance.amount < 0)%> <%=balance.amount %> <% end %></td>
+	<td align="center"><% if (balance.amount > 0)%> <%=balance.amount %> <% end %></td>
+</tr>

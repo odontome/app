@@ -7,12 +7,8 @@
 		</tr>
 	</thead>
 	<tbody>
-	<% @balance.each do |balance| %>
-		<tr>
-			<td><%=balance.created_at %> - <%=balance.notes %></td>			
-			<td align="center"><% if (balance.amount < 0)%> <%=balance.amount %> <% end %></td>
-			<td align="center"><% if (balance.amount > 0)%> <%=balance.amount %> <% end %></td>
-		</tr>
+	<% @balances.each do |balance| %>
+		<%= render :partial => "show", :locals => {:balance => balance}%>
 	<% end %>
 	</tbody>
 	<tfoot>
@@ -22,15 +18,7 @@
 	</tfoot>
 </table>
 
-<% form_tag(patient_balances_path, :method => "post", :remote => true) do %>
-	<p>
-	    <%= number_field_tag "balance[amount]", nil, {:placeholder => _("Amount"), :title => _("Amount") } %>
-	</p>
-	<p>
-	    <%= text_area_tag "balance[notes]", nil, {:rows => 2, :placeholder => _("Optional notes"), :title => _("Optional notes")}  %>
-	</p>
-	<%= submit_tag(_("Save"), :class => "g-button") %>
-<% end %>
+<%= render "new" %>
 
 
 <script type="text/javascript">
