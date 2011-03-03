@@ -6,8 +6,8 @@
 			<h2><%=link_to patient.fullname, patient%></h2>			
 			<span><%=patient.uid%></span>
 			<span><strong><%=_('Age')%>:</strong> <%=patient.age%></span>
-			<span><strong><%=_('Allergies')%>:</strong> <%#=patient.chart.allergies%>TODO!</span>
-			<span><strong><%=_('Last visit')%>:</strong> <%#=patient.chart.last_visit_at%>TODO!</span>
+			<span><strong><%=_('Allergies')%>:</strong> <%unless patient.allergies.blank?%><%=patient.allergies%><%else%><%=_('none')%><%end%></span>
+			<span><strong><%=_('Last visit')%>:</strong> <%#=patient.last_visit_at%>TODO!</span>
 			<% if current_user_is_admin? %>
 				<div class="list-item-button"><%= link_to _("Delete"), patient, :method => :delete, :confirm => "Are you sure? All data associated with this patient will be lost forever. THERE IS NO GOING BACK!", :class => "g-button red"%></div>
 			<% end %>

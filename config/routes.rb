@@ -3,7 +3,9 @@ Odontome::Application.routes.draw do
   resources :practices
   resources :patients
   resources :users
-  resources :doctors
+  resources :doctors do
+      resources :appointments
+  end
   resource :user_session
 
   match "/signin" => "user_sessions#new", :as => :signin
