@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-03-02 18:26+0100\n"
+"POT-Creation-Date: 2011-03-03 17:02+0100\n"
 "PO-Revision-Date: 2011-03-01 18:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: app/views/practices/_form.html.erb:13
+#: app/views/practices/settings.html.erb:17
 msgid "(\"Great Smiles Dentists\" or \"John Peterson's\")"
 msgstr ""
 
@@ -44,16 +45,16 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
+#: app/views/appointments/new.html.erb:12
+msgid "Additional notes"
+msgstr ""
+
 #: app/views/patients/_form.html.erb:44 app/views/patients/show.html.erb:20
 msgid "Address"
 msgstr ""
 
 #: app/views/patients/index.html.erb:8 app/views/patients/show.html.erb:11
 msgid "Age"
-msgstr ""
-
-#: app/views/agenda/show.html.erb:4 app/views/layouts/_navigation.html.erb:4
-msgid "Agenda"
 msgstr ""
 
 #: app/views/patients/_form.html.erb:50 app/views/patients/index.html.erb:9
@@ -75,13 +76,17 @@ msgstr ""
 msgid "Can't delete Doctor with registered appointmens"
 msgstr ""
 
-#: app/models/user.rb:35
+#: app/models/user.rb:38
 msgid "Can't delete admin user"
 msgstr ""
 
 #: app/views/doctors/_form.html.erb:41 app/views/patients/_form.html.erb:76
 #: app/views/users/_form.html.erb:25
 msgid "Cancel"
+msgstr ""
+
+#: app/views/practices/show.html.erb:18
+msgid "Change here your practice name, select your language and more"
 msgstr ""
 
 #: app/views/patients/_form.html.erb:62
@@ -100,6 +105,10 @@ msgstr ""
 msgid "Create new doctor"
 msgstr ""
 
+#: app/views/patients/index.html.erb:21 app/views/patients/new.html.erb:1
+msgid "Create new patient"
+msgstr ""
+
 #: app/views/users/index.html.erb:21
 msgid "Create new user"
 msgstr ""
@@ -112,10 +121,18 @@ msgstr ""
 msgid "Date of birth"
 msgstr ""
 
+#: app/views/agenda/show.html.erb:4 app/views/layouts/_navigation.html.erb:4
+msgid "Datebook"
+msgstr ""
+
 #: app/views/doctors/index.html.erb:17 app/views/doctors/show.html.erb:30
 #: app/views/patients/index.html.erb:12 app/views/users/index.html.erb:13
 #: app/views/users/show.html.erb:27
 msgid "Delete"
+msgstr ""
+
+#: app/views/appointments/new.html.erb:7
+msgid "Doctor"
 msgstr ""
 
 #: app/controllers/doctors_controller.rb:25
@@ -132,10 +149,6 @@ msgstr ""
 
 #: app/views/user_sessions/new.html.erb:21
 msgid "Don't have an account?"
-msgstr ""
-
-#: app/models/doctor.rb:21
-msgid "Dr."
 msgstr ""
 
 #: app/views/patients/_form.html.erb:65
@@ -172,6 +185,18 @@ msgstr ""
 msgid "Emergency telephone"
 msgstr ""
 
+#: app/views/practices/settings.html.erb:24
+msgid "English"
+msgstr ""
+
+#: app/views/appointments/new.html.erb:25
+msgid "Enter the patient name or UID"
+msgstr ""
+
+#: app/views/practices/settings.html.erb:24
+msgid "Español"
+msgstr ""
+
 #: app/views/practices/show.html.erb:13
 msgid "Everyone who has access to your odonto.me."
 msgstr ""
@@ -196,7 +221,7 @@ msgstr ""
 msgid "Gender"
 msgstr ""
 
-#: app/views/layouts/application.html.erb:15
+#: app/views/layouts/application.html.erb:14
 msgid "Home"
 msgstr ""
 
@@ -206,6 +231,10 @@ msgstr ""
 
 #: app/views/doctors/index.html.erb:12
 msgid "Inactive"
+msgstr ""
+
+#: app/views/practices/settings.html.erb:21
+msgid "Language and Time"
 msgstr ""
 
 #: app/views/doctors/_form.html.erb:15 app/views/doctors/show.html.erb:6
@@ -227,7 +256,7 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: app/controllers/user_sessions_controller.rb:14
+#: app/controllers/user_sessions_controller.rb:15
 msgid "Login successful!"
 msgstr ""
 
@@ -257,8 +286,16 @@ msgstr ""
 msgid "My practice"
 msgstr ""
 
+#: app/views/practices/show.html.erb:17
+msgid "My practice settings"
+msgstr ""
+
 #: app/views/practices/show.html.erb:12
 msgid "My users"
+msgstr ""
+
+#: app/views/appointments/new.html.erb:25
+msgid "No results, a new patient will be created"
 msgstr ""
 
 #: app/views/users/show.html.erb:20
@@ -278,11 +315,11 @@ msgstr ""
 msgid "Past illnesses"
 msgstr ""
 
-#: app/controllers/patients_controller.rb:29
+#: app/controllers/patients_controller.rb:35
 msgid "Patient was successfully created."
 msgstr ""
 
-#: app/controllers/patients_controller.rb:41
+#: app/controllers/patients_controller.rb:47
 msgid "Patient was successfully updated."
 msgstr ""
 
@@ -296,24 +333,38 @@ msgstr ""
 msgid "Personal information"
 msgstr ""
 
-#: app/views/agenda/show.html.erb:73
+#: app/views/agenda/show.html.erb:22 app/views/agenda/show.html.erb:77
 msgid "Please wait..."
 msgstr ""
 
 #: app/views/practices/_form.html.erb:12
+#: app/views/practices/settings.html.erb:16
 msgid "Practice Name"
+msgstr ""
+
+#: app/views/practices/settings.html.erb:1
+msgid "Practice Settings"
+msgstr ""
+
+#: app/views/practices/settings.html.erb:14
+msgid "Practice information"
 msgstr ""
 
 #: app/controllers/practices_controller.rb:46
 msgid "Practice was successfully created."
 msgstr ""
 
-#: app/controllers/practices_controller.rb:60
+#: app/controllers/practices_controller.rb:59
 msgid "Practice was successfully updated."
 msgstr ""
 
 #: app/views/layouts/_navigation.html.erb:14
 msgid "Practices"
+msgstr ""
+
+#: app/views/practices/settings.html.erb:23
+#: app/views/practices/settings.html.erb:24
+msgid "Preferred language"
 msgstr ""
 
 #: app/views/practices/_form.html.erb:36
@@ -324,9 +375,14 @@ msgstr ""
 msgid "Remember me"
 msgstr ""
 
-#: app/views/doctors/_form.html.erb:32 app/views/patients/_form.html.erb:76
-#: app/views/users/_form.html.erb:25
+#: app/views/appointments/new.html.erb:17 app/views/doctors/_form.html.erb:32
+#: app/views/patients/_form.html.erb:76
+#: app/views/practices/settings.html.erb:33 app/views/users/_form.html.erb:25
 msgid "Save"
+msgstr ""
+
+#: app/views/appointments/new.html.erb:8
+msgid "Select a doctor"
 msgstr ""
 
 #: app/views/practices/_form.html.erb:37
@@ -373,6 +429,11 @@ msgid ""
 "users and doctors."
 msgstr ""
 
+#: app/views/practices/settings.html.erb:27
+#: app/views/practices/settings.html.erb:28
+msgid "Time zone"
+msgstr ""
+
 #: app/views/doctors/_form.html.erb:18 app/views/doctors/show.html.erb:9
 #: app/views/patients/_form.html.erb:24 app/views/patients/show.html.erb:10
 msgid "Unique identifier"
@@ -390,11 +451,11 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
-#: app/controllers/application_controller.rb:41
+#: app/controllers/application_controller.rb:86
 msgid "You must be logged in to access this page"
 msgstr ""
 
-#: app/controllers/application_controller.rb:50
+#: app/controllers/application_controller.rb:95
 msgid "You must be logged out to access this page"
 msgstr ""
 
@@ -406,16 +467,24 @@ msgstr ""
 msgid "doctors"
 msgstr ""
 
+#: app/models/doctor.rb:21
+msgid "female_doctor_prefix|Dr."
+msgstr ""
+
 #: lib/email_format_validator.rb:4
 msgid "is not formatted properly"
+msgstr ""
+
+#: app/models/doctor.rb:21
+msgid "male_doctor_prefix|Dr."
 msgstr ""
 
 #: app/views/users/index.html.erb:10 app/views/users/show.html.erb:17
 msgid "never"
 msgstr ""
 
-#: app/views/doctors/_form.html.erb:41 app/views/patients/_form.html.erb:76
-#: app/views/users/_form.html.erb:25
+#: app/views/appointments/new.html.erb:17 app/views/doctors/_form.html.erb:41
+#: app/views/patients/_form.html.erb:76 app/views/users/_form.html.erb:25
 msgid "or"
 msgstr ""
 

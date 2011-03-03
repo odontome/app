@@ -28,6 +28,9 @@ class User < ActiveRecord::Base
     [firstname, lastname].join(' ')
   end
 
+  def preferred_language
+    return Practice.find(self.practice_id).locale
+  end
   
   private
   def check_if_admin
