@@ -50,11 +50,10 @@ class PracticesController < ApplicationController
     end
   end
 
-  # PUT /practices/1
-  # PUT /practices/1.xml
   def update
     @practice = Practice.find(params[:id])
-
+    session[:locale] = params[:practice][:locale]
+    
     respond_to do |format|
       if @practice.update_attributes(params[:practice])
         format.html { redirect_to(practice_url, :notice => _('Practice was successfully updated.')) }
@@ -64,8 +63,6 @@ class PracticesController < ApplicationController
     end
   end
 
-  # DELETE /practices/1
-  # DELETE /practices/1.xml
   def destroy
     @practice = Practice.find(params[:id])
     @practice.destroy
