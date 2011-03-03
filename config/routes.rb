@@ -1,7 +1,12 @@
 Odontome::Application.routes.draw do
   resources :appointments
   resources :practices
-  resources :patients
+  resources :patients do
+    member do
+      get 'appointments'
+    end
+    resources :balances
+  end
   resources :users
   resources :doctors
   resource :user_session
