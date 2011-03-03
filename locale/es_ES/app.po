@@ -220,7 +220,7 @@ msgstr "Apellidos"
 
 #: app/views/users/index.html.erb:10 app/views/users/show.html.erb:17
 msgid "Last seen"
-msgstr "Última entrada"
+msgstr "Último acceso"
 
 #: app/views/patients/index.html.erb:10
 msgid "Last visit"

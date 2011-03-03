@@ -1,13 +1,58 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+
+  include FastGettext::Translation
+
   helper :all
   filter_parameter_logging :password, :password_confirmation
   helper_method :current_session, :current_user, :current_user_is_admin?, :user_is_admin?
 
-  before_filter :set_gettext_locale
+  before_filter :set_locale
   before_filter :find_practice_object
-  before_filter :set_gettext_locale
-  
+
+
+  def set_locale
+    FastGettext.text_domain = 'app'
+    if current_user
+      session[:locale] = I18n.locale = FastGettext.set_locale(session[:locale])
+    else
+      I18n.locale = FastGettext.set_locale(compatible_language_from(AVAILABLE_LOCALES))
+    end
+  end
+
+  # Returns a sorted array based on user preference in HTTP_ACCEPT_LANGUAGE.
+  # Browsers send this HTTP header, so don't think this is holy.
+  def user_preferred_languages
+    @user_preferred_languages ||= env['HTTP_ACCEPT_LANGUAGE'].split(',').collect do |l|
+      l += ';q=1.0' unless l =~ /;q=\d+\.\d+$/
+      l.split(';q=')
+    end.sort do |x,y|
+      raise "Not correctly formatted" unless x.first =~ /^[a-z\-]+$/i
+      y.last.to_f <=> x.last.to_f
+    end.collect do |l|
+      l.first.downcase.gsub(/-[a-z]+$/i) { |x| x.upcase }
+    end
+  rescue # Just rescue anything if the browser messed up badly.
+    []
+  end
+
+  # Finds the locale specifically requested by the browser.
+  def preferred_language_from(array)
+    (user_preferred_languages & array.collect { |i| i.to_s }).first
+  end
+
+  # Returns the first of the user_preferred_languages that is compatible
+  # with the available locales. Ignores region.
+  def compatible_language_from(array)
+    user_preferred_languages.map do |x|
+      x = x.to_s.split("-")[0]
+      array.find do |y|
+        y.to_s.split("-")[0] == x
+      end
+    end.compact.first
+  end
+
+
   private
     def current_user_session
       return @current_user_session if defined?(@current_user_session)
