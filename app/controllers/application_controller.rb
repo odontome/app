@@ -1,8 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  include FastGettext::Translation
-
   helper :all
   filter_parameter_logging :password, :password_confirmation
   helper_method :current_session, :current_user, :current_user_is_admin?, :user_is_admin?
@@ -12,7 +10,6 @@ class ApplicationController < ActionController::Base
 
 
   def set_locale
-    FastGettext.text_domain = 'app'
     if current_user
       session[:locale] = I18n.locale = FastGettext.set_locale(session[:locale])
     else
