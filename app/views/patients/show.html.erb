@@ -2,7 +2,8 @@
 	
 	<ul>
 		<li><a href="#chart"><%=_("Chart")%></a></li>
-		<li><a href="/patients/1/appointments"><span><%=_("Appointments")%></span></a></li>
+		<li><a href="<%=appointments_patient_path(@patient) %>"><span><%=_("Appointments")%></span></a></li>
+		<li><a href="<%=patient_balances_path(@patient) %>"><span><%=_("Balance")%></span></a></li>
 	</ul>
 	
 	<div id="chart">
@@ -58,8 +59,6 @@
 	<div style="clear:both"></div>
 </div>
 
-<div id="balance-dialog" class="hidden"><%=_("Please wait...")%></div>
-
 <!-- TODO: moved this to the application.css -->
 <style>
 /* @group Theme overwrite */
@@ -86,7 +85,7 @@
 		
 		// Jump to the balance tab
 		// $("#balance").click(function() {
-		// 			$("#tabs").tabs( "select" , 4 );
+		// 			$("#tabs").tabs( "select" , 3);
 		// 		});
 	});
 </script>
