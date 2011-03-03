@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(:version => 20110303204655) do
     t.string   "telephone"
     t.string   "mobile"
     t.string   "emergency_telephone"
-    t.datetime "date_of_birth",       :null => false
+    t.date     "date_of_birth",       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "allergies"

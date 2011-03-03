@@ -8,7 +8,9 @@ Odontome::Application.routes.draw do
     resources :balances
   end
   resources :users
-  resources :doctors
+  resources :doctors do
+      resources :appointments
+  end
   resource :user_session
 
   match "/signin" => "user_sessions#new", :as => :signin

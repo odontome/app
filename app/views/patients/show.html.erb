@@ -14,7 +14,7 @@
 			<p><label><%=_('Unique identifier')%>:</label> <%=@patient.uid%></p>
 			<p><label><%=_('Name')%>:</label> <%=@patient.fullname%></p>
 			<p><label><%=_('Age')%>:</label> <%=@patient.age%></p>
-			<p><label><%=_('Date of birth')%>:</label> <%=@patient.date_of_birth%></p>
+			<p><label><%=_('Date of birth')%>:</label> <%=l @patient.date_of_birth, :format => :long %></p>
 			
 			<h2><%=_('Contact information')%></h2>
 			
