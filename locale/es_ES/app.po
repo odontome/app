@@ -20,7 +20,7 @@ msgstr ""
 #: app/views/practices/_form.html.erb:13
 #: app/views/practices/settings.html.erb:17
 msgid "(\"Great Smiles Dentists\" or \"John Peterson's\")"
-msgstr "(\"Grandes Sonrisas Odontología\" or \"Práctica de María Navarro\")"
+msgstr "(\"Grandes Sonrisas Odontología\" o \"Práctica de María Navarro\")"
 
 #: app/views/doctors/_form.html.erb:19
 msgid ""
@@ -134,7 +134,7 @@ msgstr "Fecha de nacimiento"
 
 #: app/views/agenda/show.html.erb:4 app/views/layouts/_navigation.html.erb:4
 msgid "Datebook"
-msgstr ""
+msgstr "Agenda"
 
 #: app/views/doctors/index.html.erb:17 app/views/doctors/show.html.erb:30
 #: app/views/patients/index.html.erb:12 app/views/users/index.html.erb:13
