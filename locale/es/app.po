@@ -72,7 +72,7 @@ msgstr "¿Tienes ya una cuenta?"
 #: app/views/layouts/_navigation.html.erb:7 app/views/users/index.html.erb:13
 #: app/views/users/show.html.erb:27
 msgid "Are you sure?"
-msgstr "Estás seguro?"
+msgstr "¿Estás seguro?"
 
 #: app/models/doctor.rb:33
 msgid "Can't delete Doctor with registered appointmens"
@@ -139,7 +139,7 @@ msgstr "¿No tienes una cuenta?"
 
 #: app/models/doctor.rb:21
 msgid "Dr."
-msgstr "Dra."
+msgstr "Dr."
 
 #: app/views/patients/_form.html.erb:65
 msgid "Drinks per day"
