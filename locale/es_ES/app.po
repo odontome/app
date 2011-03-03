@@ -98,7 +98,7 @@ msgstr "Cambia aquí el nombre de tu clínica, selecciona tu idioma y otras cosa
 
 #: app/views/patients/show.html.erb:4
 msgid "Chart"
-msgstr ""
+msgstr "Historia"
 
 #: app/views/patients/_form.html.erb:62
 msgid "Cigarettes per day"
