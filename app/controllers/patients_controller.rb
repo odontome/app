@@ -9,6 +9,7 @@ class PatientsController < ApplicationController
     else
       @patients = Patient.mine.where(t[:uid].matches("%1").or(t[:first_name].matches("%Ra%")).or(t[:last_name].matches("%Riera%")))
     end
+    
   end
 
   def show
@@ -58,6 +59,10 @@ class PatientsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(patients_url) }
     end
+  end
+  
+  def appointments 
+    @appointments = Patient.mine.appointments
   end
 
 end
