@@ -18,7 +18,7 @@
 	    <%= f.text_field :lastname, :placeholder => _("Last name"), :title => _("Last name") %>
 	  </p>
 	  <p>
-	    <%= f.label "Date of birth"%> <%= f.date_select :date_of_birth, :start_year => Time.now.year - 80, :end_year => Time.now.year - 3, :title => _("Date of birth") %>
+	    <%= f.label _("Date of birth")%> <%= f.date_select :date_of_birth, :start_year => Time.now.year - 80, :end_year => Time.now.year - 3, :title => _("Date of birth") %>
 	  </p>
 	  <p>
 	    <%= f.text_field :uid, :placeholder => _("Unique identifier"), :title => _("Unique identifier") %>

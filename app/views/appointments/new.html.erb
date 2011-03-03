@@ -22,7 +22,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		// Setup autocomplete for patients
-		$("#appointment_patient_id").autoSuggest("/patients", {startText: "<%=_('Enter the patient name or UID')%>", minChars: 2, selectionLimit: 1, selectedValuesProp: "data", selectedItemProp: "name", searchObjProps: "value,name", emptyText: "<%=_('No results, a new patient will be created')%>"});
+		$("#appointment_patient_id").autoSuggest("/patients", {startText: "<%=_('Enter the patient name or Unique Identifier')%>", minChars: 2, selectionLimit: 1, selectedValuesProp: "data", selectedItemProp: "name", searchObjProps: "value,name", emptyText: "<%=_('No results, a new patient will be created')%>"});
 		
 		// Limit the notes
 		$('#appointment-notes').limit('255');
