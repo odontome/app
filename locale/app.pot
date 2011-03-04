@@ -7,15 +7,23 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-03-03 23:59+0100\n"
+"POT-Creation-Date: 2011-03-04 15:23+0100\n"
 "PO-Revision-Date: 2011-03-01 18:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: app/views/practices/settings.html.erb:39
+msgid "\"#{PLANS[@practice.plan_id][:description]}\""
+msgstr ""
+
+#: app/views/practices/settings.html.erb:38
+msgid "\"#{PLANS[@practice.plan_id][:name]}\""
+msgstr ""
 
 #: app/views/practices/_form.html.erb:13
 #: app/views/practices/settings.html.erb:17
@@ -31,6 +39,10 @@ msgstr ""
 msgid ""
 "(Only if your wish for your practice to have a custom identification system "
 "for patients)"
+msgstr ""
+
+#: config/plans.yml:9
+msgid "A greeat value plan for up to 1000 users"
 msgstr ""
 
 #: app/views/users/_form.html.erb:13 app/views/users/show.html.erb:12
@@ -49,11 +61,11 @@ msgstr ""
 msgid "Additional notes"
 msgstr ""
 
-#: app/views/patients/_form.html.erb:44 app/views/patients/show.html.erb:24
+#: app/views/patients/_form.html.erb:44 app/views/patients/show.html.erb:25
 msgid "Address"
 msgstr ""
 
-#: app/views/patients/index.html.erb:8 app/views/patients/show.html.erb:15
+#: app/views/patients/index.html.erb:8 app/views/patients/show.html.erb:16
 msgid "Age"
 msgstr ""
 
@@ -65,6 +77,10 @@ msgstr ""
 msgid "Already have an account?"
 msgstr ""
 
+#: app/views/balances/_new.html.erb:3
+msgid "Amount"
+msgstr ""
+
 #: app/views/patients/show.html.erb:5
 msgid "Appointments"
 msgstr ""
@@ -74,6 +90,10 @@ msgstr ""
 #: app/views/layouts/_navigation.html.erb:7 app/views/users/index.html.erb:13
 #: app/views/users/show.html.erb:27
 msgid "Are you sure?"
+msgstr ""
+
+#: app/views/patients/show.html.erb:6
+msgid "Balance"
 msgstr ""
 
 #: app/models/doctor.rb:33
@@ -105,7 +125,7 @@ msgstr ""
 msgid "Confirm your password"
 msgstr ""
 
-#: app/views/patients/_form.html.erb:30 app/views/patients/show.html.erb:18
+#: app/views/patients/_form.html.erb:30 app/views/patients/show.html.erb:19
 msgid "Contact information"
 msgstr ""
 
@@ -125,7 +145,7 @@ msgstr ""
 msgid "Current medications"
 msgstr ""
 
-#: app/views/patients/_form.html.erb:21 app/views/patients/show.html.erb:16
+#: app/views/patients/_form.html.erb:21 app/views/patients/show.html.erb:17
 msgid "Date of birth"
 msgstr ""
 
@@ -182,14 +202,14 @@ msgid "Editing user"
 msgstr ""
 
 #: app/views/doctors/_form.html.erb:22 app/views/doctors/show.html.erb:12
-#: app/views/patients/_form.html.erb:32 app/views/patients/show.html.erb:20
+#: app/views/patients/_form.html.erb:32 app/views/patients/show.html.erb:21
 #: app/views/practices/_form.html.erb:25
 #: app/views/user_sessions/new.html.erb:12 app/views/users/_form.html.erb:15
 #: app/views/users/index.html.erb:9 app/views/users/show.html.erb:14
 msgid "Email"
 msgstr ""
 
-#: app/views/patients/_form.html.erb:41 app/views/patients/show.html.erb:23
+#: app/views/patients/_form.html.erb:41 app/views/patients/show.html.erb:24
 msgid "Emergency telephone"
 msgstr ""
 
@@ -198,7 +218,8 @@ msgid "English"
 msgstr ""
 
 #: app/views/appointments/new.html.erb:25
-msgid "Enter the patient name or UID"
+#: app/views/layouts/_navigation.html.erb:23
+msgid "Enter the patient name or Unique Identifier"
 msgstr ""
 
 #: app/views/practices/settings.html.erb:24
@@ -207,6 +228,10 @@ msgstr ""
 
 #: app/views/practices/show.html.erb:13
 msgid "Everyone who has access to your odonto.me."
+msgstr ""
+
+#: app/views/balances/index.html.erb:5
+msgid "Expenses"
 msgstr ""
 
 #: app/views/patients/_form.html.erb:71
@@ -221,6 +246,15 @@ msgstr ""
 #: app/views/patients/_form.html.erb:15 app/views/practices/_form.html.erb:19
 #: app/views/users/_form.html.erb:6 app/views/users/show.html.erb:5
 msgid "First name"
+msgstr ""
+
+#: config/plans.yml:14
+msgid ""
+"For practices that have more than 1000 users. You can register up to 5000!"
+msgstr ""
+
+#: config/plans.yml:3
+msgid "Free Plan"
 msgstr ""
 
 #: app/views/doctors/_form.html.erb:25 app/views/doctors/_form.html.erb:26
@@ -240,8 +274,12 @@ msgstr ""
 msgid "Inactive"
 msgstr ""
 
+#: app/views/balances/index.html.erb:6
+msgid "Income"
+msgstr ""
+
 #: app/views/practices/settings.html.erb:21
-msgid "Language and Time"
+msgid "Language and Dates"
 msgstr ""
 
 #: app/views/doctors/_form.html.erb:15 app/views/doctors/show.html.erb:6
@@ -279,7 +317,7 @@ msgstr ""
 msgid "Medical history"
 msgstr ""
 
-#: app/views/patients/_form.html.erb:38 app/views/patients/show.html.erb:22
+#: app/views/patients/_form.html.erb:38 app/views/patients/show.html.erb:23
 msgid "Mobile"
 msgstr ""
 
@@ -300,7 +338,7 @@ msgstr ""
 msgid "My users"
 msgstr ""
 
-#: app/views/patients/show.html.erb:14
+#: app/views/patients/show.html.erb:15
 msgid "Name"
 msgstr ""
 
@@ -308,12 +346,22 @@ msgstr ""
 msgid "No results, a new patient will be created"
 msgstr ""
 
-#: app/views/patients/show.html.erb:48
+#: app/views/balances/index.html.erb:4 app/views/patients/show.html.erb:49
 msgid "Notes"
 msgstr ""
 
 #: app/views/users/show.html.erb:20
 msgid "Number of signins"
+msgstr ""
+
+#: app/views/balances/_new.html.erb:6
+msgid "Optional notes"
+msgstr ""
+
+#: config/plans.yml:4
+msgid ""
+"Our free plan in which you can use everything in odonto.me for up to 500 "
+"patients"
 msgstr ""
 
 #: app/views/practices/_form.html.erb:28
@@ -342,13 +390,16 @@ msgstr ""
 msgid "Patients"
 msgstr ""
 
-#: app/views/patients/_form.html.erb:12 app/views/patients/show.html.erb:11
+#: app/views/patients/_form.html.erb:12 app/views/patients/show.html.erb:12
 #: app/views/users/_form.html.erb:4 app/views/users/show.html.erb:3
 msgid "Personal information"
 msgstr ""
 
+#: app/views/practices/settings.html.erb:32
+msgid "Plans and payments"
+msgstr ""
+
 #: app/views/agenda/show.html.erb:22 app/views/agenda/show.html.erb:77
-#: app/views/patients/show.html.erb:61
 msgid "Please wait..."
 msgstr ""
 
@@ -382,6 +433,10 @@ msgstr ""
 msgid "Preferred language"
 msgstr ""
 
+#: config/plans.yml:13
+msgid "Premium Plan"
+msgstr ""
+
 #: app/views/practices/_form.html.erb:36
 msgid "Register"
 msgstr ""
@@ -390,9 +445,9 @@ msgstr ""
 msgid "Remember me"
 msgstr ""
 
-#: app/views/appointments/new.html.erb:17 app/views/doctors/_form.html.erb:32
-#: app/views/patients/_form.html.erb:76
-#: app/views/practices/settings.html.erb:33 app/views/users/_form.html.erb:25
+#: app/views/appointments/new.html.erb:17 app/views/balances/_new.html.erb:8
+#: app/views/doctors/_form.html.erb:32 app/views/patients/_form.html.erb:76
+#: app/views/practices/settings.html.erb:49 app/views/users/_form.html.erb:25
 msgid "Save"
 msgstr ""
 
@@ -418,6 +473,10 @@ msgstr ""
 msgid "Speciality"
 msgstr ""
 
+#: config/plans.yml:8
+msgid "Standard Plan"
+msgstr ""
+
 #: app/views/doctors/show.html.erb:21
 msgid "Status"
 msgstr ""
@@ -430,7 +489,7 @@ msgstr ""
 msgid "Suspended"
 msgstr ""
 
-#: app/views/patients/_form.html.erb:35 app/views/patients/show.html.erb:21
+#: app/views/patients/_form.html.erb:35 app/views/patients/show.html.erb:22
 msgid "Telephone"
 msgstr ""
 
@@ -450,8 +509,12 @@ msgid "Time zone"
 msgstr ""
 
 #: app/views/doctors/_form.html.erb:18 app/views/doctors/show.html.erb:9
-#: app/views/patients/_form.html.erb:24 app/views/patients/show.html.erb:13
+#: app/views/patients/_form.html.erb:24 app/views/patients/show.html.erb:14
 msgid "Unique identifier"
+msgstr ""
+
+#: app/views/practices/settings.html.erb:40
+msgid "Upgrade plan"
 msgstr ""
 
 #: app/controllers/users_controller.rb:29
@@ -486,6 +549,10 @@ msgstr ""
 msgid "female_doctor_prefix|Dr."
 msgstr ""
 
+#: app/controllers/plans_controller.rb:5
+msgid "free_plan_name|Free Plan"
+msgstr ""
+
 #: lib/email_format_validator.rb:4
 msgid "is not formatted properly"
 msgstr ""
@@ -509,4 +576,8 @@ msgstr ""
 
 #: app/views/practices/show.html.erb:14
 msgid "users"
+msgstr ""
+
+#: app/views/patients/appointments.html.erb:11
+msgid "with"
 msgstr ""

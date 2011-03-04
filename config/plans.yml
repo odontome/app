@@ -1,0 +1,14 @@
+free: 
+    id: 1
+    name: _('Free Plan')
+    description: _('Our free plan in which you can use everything in odonto.me for up to 500 patients')
+
+standard:
+    id: 2
+    name: _('Standard Plan')
+    description: _('A greeat value plan for up to 1000 patients')
+
+premium:
+    id: 3
+    name: _('Premium Plan')
+    description: _('For practices that have more than 1000 patients. You can register up to 5000!')

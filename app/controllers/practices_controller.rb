@@ -1,7 +1,7 @@
 class PracticesController < ApplicationController
 
   before_filter :require_no_user, :only => [:new, :create]
-  before_filter :require_superadmin, :only => [:index, :destroy]
+  before_filter :require_superadmin, :only => [:index, :destroy, :edit]
 
   # GET /practices
   # GET /practices.xml
@@ -74,7 +74,9 @@ class PracticesController < ApplicationController
   end
 
   def settings
-    @practice = Practice.find(current_user.practice_id)
+    @practice = Practice.includes(:plan).find(current_user.practice_id)
+    @plan_number_of_patients = Plan.find(@practice.plan_id).number_of_patients
+    @practice_users_count = @practice.users.count
   end
 
 end
