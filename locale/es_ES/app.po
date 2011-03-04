@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-03-04 15:23+0100\n"
+"POT-Creation-Date: 2011-03-04 17:36+0100\n"
 "PO-Revision-Date: 2011-03-01 18:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: app/views/practices/settings.html.erb:39
-msgid "\"#{PLANS[@practice.plan_id][:description]}\""
+#: app/views/practices/settings.html.erb:41
+msgid "\"#{extract_text_from_gettext(values['description'])}\""
 msgstr ""
 
-#: app/views/practices/settings.html.erb:38
-msgid "\"#{PLANS[@practice.plan_id][:name]}\""
+#: app/views/practices/settings.html.erb:39
+msgid "\"#{extract_text_from_gettext(values['name'])}\""
 msgstr ""
 
 #: app/views/practices/_form.html.erb:13
@@ -82,7 +82,7 @@ msgstr "¿Tienes ya una cuenta?"
 
 #: app/views/balances/_new.html.erb:3
 msgid "Amount"
-msgstr ""
+msgstr "Cantidad"
 
 #: app/views/patients/show.html.erb:5
 msgid "Appointments"
@@ -96,9 +96,8 @@ msgid "Are you sure?"
 msgstr "¿Estás seguro?"
 
 #: app/views/patients/show.html.erb:6
-#, fuzzy
 msgid "Balance"
-msgstr "Cancelar"
+msgstr ""
 
 #: app/models/doctor.rb:33
 msgid "Can't delete Doctor with registered appointmens"
@@ -237,7 +236,7 @@ msgstr "Todos quienes tienen acceso a tu odonto.me"
 
 #: app/views/balances/index.html.erb:5
 msgid "Expenses"
-msgstr ""
+msgstr "Egresos"
 
 #: app/views/patients/_form.html.erb:71
 msgid "Family diseases including deaths and allergies"
@@ -256,7 +255,8 @@ msgstr "Nombre"
 #: config/plans.yml:14
 msgid ""
 "For practices that have more than 1000 patients. You can register up to 5000!"
-msgstr "Para clínicas que tienen más de 1000 pacientes. Puedes registrar ¡hasta 5000!"
+msgstr ""
+"Para clínicas que tienen más de 1000 pacientes. Puedes registrar ¡hasta 5000!"
 
 #: config/plans.yml:3
 msgid "Free Plan"
@@ -281,7 +281,7 @@ msgstr "Inactivo"
 
 #: app/views/balances/index.html.erb:6
 msgid "Income"
-msgstr ""
+msgstr "Ingresos"
 
 #: app/views/practices/settings.html.erb:21
 msgid "Language and Dates"
@@ -360,9 +360,12 @@ msgid "Number of signins"
 msgstr "Número de entradas"
 
 #: app/views/balances/_new.html.erb:6
-#, fuzzy
 msgid "Optional notes"
-msgstr "Notas adicionales"
+msgstr "Notas opcionales"
+
+#: app/views/practices/settings.html.erb:43
+msgid "Order this plan"
+msgstr "Incorporar este plan"
 
 #: config/plans.yml:4
 msgid ""
@@ -405,7 +408,7 @@ msgstr "Información personal"
 
 #: app/views/practices/settings.html.erb:32
 msgid "Plans and payments"
-msgstr ""
+msgstr "Planes y pagos"
 
 #: app/views/agenda/show.html.erb:22 app/views/agenda/show.html.erb:77
 msgid "Please wait..."
@@ -455,7 +458,7 @@ msgstr "Recordarme"
 
 #: app/views/appointments/new.html.erb:17 app/views/balances/_new.html.erb:8
 #: app/views/doctors/_form.html.erb:32 app/views/patients/_form.html.erb:76
-#: app/views/practices/settings.html.erb:49 app/views/users/_form.html.erb:25
+#: app/views/practices/settings.html.erb:55 app/views/users/_form.html.erb:25
 msgid "Save"
 msgstr "Guardar"
 
@@ -523,10 +526,6 @@ msgstr "Huso horario"
 msgid "Unique identifier"
 msgstr "Identificador único"
 
-#: app/views/practices/settings.html.erb:40
-msgid "Upgrade plan"
-msgstr ""
-
 #: app/controllers/users_controller.rb:29
 msgid "User was successfully created."
 msgstr "El ususario ha sido creado con éxito."
@@ -560,13 +559,13 @@ msgstr "doctores"
 msgid "female_doctor_prefix|Dr."
 msgstr "Dra."
 
-#: app/controllers/plans_controller.rb:5
-msgid "free_plan_name|Free Plan"
-msgstr "Plan Gratuito"
-
 #: lib/email_format_validator.rb:4
 msgid "is not formatted properly"
 msgstr "no tiene un formato adecuado"
+
+#: app/views/practices/settings.html.erb:45
+msgid "left"
+msgstr "más"
 
 #: app/models/doctor.rb:21
 msgid "male_doctor_prefix|Dr."
@@ -585,10 +584,11 @@ msgstr "ninguna"
 msgid "or"
 msgstr "o"
 
+#: app/views/practices/settings.html.erb:45
 #: app/views/practices/show.html.erb:14
 msgid "users"
 msgstr "usuarios"
 
 #: app/views/patients/appointments.html.erb:11
 msgid "with"
-msgstr ""
+msgstr "con"

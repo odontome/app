@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-03-04 15:23+0100\n"
+"POT-Creation-Date: 2011-03-04 17:36+0100\n"
 "PO-Revision-Date: 2011-03-01 18:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: app/views/practices/settings.html.erb:39
-msgid "\"#{PLANS[@practice.plan_id][:description]}\""
+#: app/views/practices/settings.html.erb:41
+msgid "\"#{extract_text_from_gettext(values['description'])}\""
 msgstr ""
 
-#: app/views/practices/settings.html.erb:38
-msgid "\"#{PLANS[@practice.plan_id][:name]}\""
+#: app/views/practices/settings.html.erb:39
+msgid "\"#{extract_text_from_gettext(values['name'])}\""
 msgstr ""
 
 #: app/views/practices/_form.html.erb:13
@@ -42,7 +42,7 @@ msgid ""
 msgstr ""
 
 #: config/plans.yml:9
-msgid "A greeat value plan for up to 1000 users"
+msgid "A greeat value plan for up to 1000 patients"
 msgstr ""
 
 #: app/views/users/_form.html.erb:13 app/views/users/show.html.erb:12
@@ -250,7 +250,7 @@ msgstr ""
 
 #: config/plans.yml:14
 msgid ""
-"For practices that have more than 1000 users. You can register up to 5000!"
+"For practices that have more than 1000 patients. You can register up to 5000!"
 msgstr ""
 
 #: config/plans.yml:3
@@ -358,6 +358,10 @@ msgstr ""
 msgid "Optional notes"
 msgstr ""
 
+#: app/views/practices/settings.html.erb:43
+msgid "Order this plan"
+msgstr ""
+
 #: config/plans.yml:4
 msgid ""
 "Our free plan in which you can use everything in odonto.me for up to 500 "
@@ -447,7 +451,7 @@ msgstr ""
 
 #: app/views/appointments/new.html.erb:17 app/views/balances/_new.html.erb:8
 #: app/views/doctors/_form.html.erb:32 app/views/patients/_form.html.erb:76
-#: app/views/practices/settings.html.erb:49 app/views/users/_form.html.erb:25
+#: app/views/practices/settings.html.erb:55 app/views/users/_form.html.erb:25
 msgid "Save"
 msgstr ""
 
@@ -513,10 +517,6 @@ msgstr ""
 msgid "Unique identifier"
 msgstr ""
 
-#: app/views/practices/settings.html.erb:40
-msgid "Upgrade plan"
-msgstr ""
-
 #: app/controllers/users_controller.rb:29
 msgid "User was successfully created."
 msgstr ""
@@ -549,12 +549,12 @@ msgstr ""
 msgid "female_doctor_prefix|Dr."
 msgstr ""
 
-#: app/controllers/plans_controller.rb:5
-msgid "free_plan_name|Free Plan"
-msgstr ""
-
 #: lib/email_format_validator.rb:4
 msgid "is not formatted properly"
+msgstr ""
+
+#: app/views/practices/settings.html.erb:45
+msgid "left"
 msgstr ""
 
 #: app/models/doctor.rb:21
@@ -574,6 +574,7 @@ msgstr ""
 msgid "or"
 msgstr ""
 
+#: app/views/practices/settings.html.erb:45
 #: app/views/practices/show.html.erb:14
 msgid "users"
 msgstr ""
