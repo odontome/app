@@ -16,3 +16,10 @@
 	</ul>
 	<% end %>
 <% end %>
+
+<script>
+	$(function(){			
+		// Patient search box (should be moved to the application.js when possible)
+		$("#patient-search").autoSuggest("/patients/search", {startText: "<%=_('Enter the patient name or Unique Identifier')%>", minChars: 2, selectionLimit: 1, selectedValuesProp: "data", selectedItemProp: "name", searchObjProps: "value,name", resultClick: function(data){ window.location.href = "/patients/show/" + data.attributes.data; }});
+	});
+</script>
