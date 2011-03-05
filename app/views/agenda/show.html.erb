@@ -23,7 +23,7 @@
 						}
 			        };
 				
-		$("#event-dialog").dialog(dialogOpts); // end dialog
+		$("#event_dialog").dialog(dialogOpts); // end dialog
 		
 		$("#calendar").fullCalendar({
 			defaultView: "agendaWeek",
@@ -45,7 +45,7 @@
 					var dayDate = Math.round((dayDate).getTime() / 1000);
 					
 					$.get(url, {"starts_at": dayDate}, function(data) {
-					  $("#event-dialog").html(data).dialog("open");
+					  $("#event_dialog").html(data).dialog("open");
 					});
 				} else {
 					$("#calendar").fullCalendar( 'changeView', 'agendaDay' );
@@ -54,7 +54,7 @@
 			},
 			eventClick: function(calEvent, jsEvent, view) {
 				var url = "/appointments/edit/" + calEvent.id;
-				$("#event-dialog").load(url, {patient: calEvent.patientId}).dialog("open");
+				$("#event_dialog").load(url, {patient: calEvent.patientId}).dialog("open");
 			},
 			eventDrop: function(calEvent, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
 				// update the event with the new data
@@ -74,4 +74,4 @@
 </script>
 
 <div id="calendar"></div>
-<div id="event-dialog" class="hidden"><%=_('Please wait...')%></div>
+<div id="event_dialog" class="hidden"><%=_('Please wait...')%></div>
