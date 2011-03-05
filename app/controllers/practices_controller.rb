@@ -2,7 +2,8 @@ class PracticesController < ApplicationController
 
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_superadmin, :only => [:index, :destroy, :edit]
-
+  before_filter :verify_correct_plan_id_or_redirect_to_free, :only => [:new]
+  
   # GET /practices
   # GET /practices.xml
   def index
@@ -28,6 +29,7 @@ class PracticesController < ApplicationController
     @practice = Practice.new
     @practice.users.build
     @user = User.new
+    @plan_description = PLANS[params[:id]]['description']
     
   end
 
@@ -77,6 +79,19 @@ class PracticesController < ApplicationController
     @practice = Practice.includes(:plan).find(current_user.practice_id)
     @plan_number_of_patients = Plan.find(@practice.plan_id).number_of_patients
     @practice_users_count = @practice.users.count
+  end
+
+  private
+  def verify_correct_plan_id_or_redirect_to_free
+    if params[:id].nil?
+      redirect_to "/signup/free" 
+    else
+      if PLANS.include?(params[:id])
+        @plan_name = PLANS[params[:id]]['name']
+      else
+        redirect_to "/signup/free"
+      end
+  	end
   end
 
 end

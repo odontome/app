@@ -7,7 +7,7 @@ class Patient < ActiveRecord::Base
     where("patients.practice_id = ? ", UserSession.find.user.practice_id)
   }  
 
-  validates :uid, :uniqueness => {:scope => :practice_id}
+  validates_uniqueness_of :uid, :scope => :practice_id, :allow_nil => true
   validates_presence_of :practice_id, :firstname, :lastname, :date_of_birth
   validates_length_of :uid, :within => 0..25, :allow_blank => true
   validates_length_of :firstname, :within => 1..25

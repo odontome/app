@@ -6,7 +6,7 @@ free:
 standard:
     id: 2
     name: _('Standard Plan')
-    description: _('A greeat value plan for up to 1000 patients')
+    description: _('A great value plan for up to 1000 patients')
 
 premium:
     id: 3

@@ -7,21 +7,29 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-03-04 17:36+0100\n"
+"POT-Creation-Date: 2011-03-05 20:31+0100\n"
 "PO-Revision-Date: 2011-03-01 18:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: app/views/practices/settings.html.erb:41
+#: app/views/practices/new.html.erb:2
+msgid "\"#{extract_text_from_gettext(@plan_description)}\""
+msgstr ""
+
+#: app/views/practices/new.html.erb:1
+msgid "\"#{extract_text_from_gettext(@plan_name)}\""
+msgstr ""
+
+#: app/views/practices/settings.html.erb:46
 msgid "\"#{extract_text_from_gettext(values['description'])}\""
 msgstr ""
 
-#: app/views/practices/settings.html.erb:39
+#: app/views/practices/settings.html.erb:44
 msgid "\"#{extract_text_from_gettext(values['name'])}\""
 msgstr ""
 
@@ -45,7 +53,7 @@ msgstr ""
 "personalizado para pacientes)"
 
 #: config/plans.yml:9
-msgid "A greeat value plan for up to 1000 patients"
+msgid "A great value plan for up to 1000 patients"
 msgstr "Excelente opción para registrar hasta 1000 pacientes"
 
 #: app/views/users/_form.html.erb:13 app/views/users/show.html.erb:12
@@ -97,7 +105,7 @@ msgstr "¿Estás seguro?"
 
 #: app/views/patients/show.html.erb:6
 msgid "Balance"
-msgstr ""
+msgstr "Balance"
 
 #: app/models/doctor.rb:33
 msgid "Can't delete Doctor with registered appointmens"
@@ -363,7 +371,7 @@ msgstr "Número de entradas"
 msgid "Optional notes"
 msgstr "Notas opcionales"
 
-#: app/views/practices/settings.html.erb:43
+#: app/views/practices/settings.html.erb:48
 msgid "Order this plan"
 msgstr "Incorporar este plan"
 
@@ -406,7 +414,7 @@ msgstr "Pacientes"
 msgid "Personal information"
 msgstr "Información personal"
 
-#: app/views/practices/settings.html.erb:32
+#: app/views/practices/settings.html.erb:36
 msgid "Plans and payments"
 msgstr "Planes y pagos"
 
@@ -427,11 +435,11 @@ msgstr "Preferencias de la clínica"
 msgid "Practice information"
 msgstr "Información de la clínica"
 
-#: app/controllers/practices_controller.rb:46
+#: app/controllers/practices_controller.rb:48
 msgid "Practice was successfully created."
 msgstr "La clínica ha sido creada con éxito."
 
-#: app/controllers/practices_controller.rb:59
+#: app/controllers/practices_controller.rb:61
 msgid "Practice was successfully updated."
 msgstr "La clínica ha sido actualizada con éxito."
 
@@ -458,7 +466,7 @@ msgstr "Recordarme"
 
 #: app/views/appointments/new.html.erb:17 app/views/balances/_new.html.erb:8
 #: app/views/doctors/_form.html.erb:32 app/views/patients/_form.html.erb:76
-#: app/views/practices/settings.html.erb:55 app/views/users/_form.html.erb:25
+#: app/views/practices/settings.html.erb:32 app/views/users/_form.html.erb:25
 msgid "Save"
 msgstr "Guardar"
 
@@ -471,9 +479,13 @@ msgstr "Selecciona un doctor"
 msgid "Sign in"
 msgstr "Accede"
 
-#: app/views/practices/new.html.erb:1 app/views/user_sessions/new.html.erb:21
+#: app/views/user_sessions/new.html.erb:21
 msgid "Sign up"
-msgstr "Regístrate"
+msgstr "Date de alta"
+
+#: app/views/practices/new.html.erb:1
+msgid "Signing up to"
+msgstr "Alta en"
 
 #: app/views/doctors/_form.html.erb:29
 msgid "Specialities of the doctor"
@@ -563,7 +575,7 @@ msgstr "Dra."
 msgid "is not formatted properly"
 msgstr "no tiene un formato adecuado"
 
-#: app/views/practices/settings.html.erb:45
+#: app/views/practices/settings.html.erb:50
 msgid "left"
 msgstr "más"
 
@@ -584,7 +596,10 @@ msgstr "ninguna"
 msgid "or"
 msgstr "o"
 
-#: app/views/practices/settings.html.erb:45
+#: app/views/practices/settings.html.erb:50
+msgid "patients"
+msgstr "pacientes"
+
 #: app/views/practices/show.html.erb:14
 msgid "users"
 msgstr "usuarios"

@@ -7,21 +7,29 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-03-04 17:36+0100\n"
+"POT-Creation-Date: 2011-03-05 20:31+0100\n"
 "PO-Revision-Date: 2011-03-01 18:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: app/views/practices/settings.html.erb:41
+#: app/views/practices/new.html.erb:2
+msgid "\"#{extract_text_from_gettext(@plan_description)}\""
+msgstr ""
+
+#: app/views/practices/new.html.erb:1
+msgid "\"#{extract_text_from_gettext(@plan_name)}\""
+msgstr ""
+
+#: app/views/practices/settings.html.erb:46
 msgid "\"#{extract_text_from_gettext(values['description'])}\""
 msgstr ""
 
-#: app/views/practices/settings.html.erb:39
+#: app/views/practices/settings.html.erb:44
 msgid "\"#{extract_text_from_gettext(values['name'])}\""
 msgstr ""
 
@@ -42,7 +50,7 @@ msgid ""
 msgstr ""
 
 #: config/plans.yml:9
-msgid "A greeat value plan for up to 1000 patients"
+msgid "A great value plan for up to 1000 patients"
 msgstr ""
 
 #: app/views/users/_form.html.erb:13 app/views/users/show.html.erb:12
@@ -358,7 +366,7 @@ msgstr ""
 msgid "Optional notes"
 msgstr ""
 
-#: app/views/practices/settings.html.erb:43
+#: app/views/practices/settings.html.erb:48
 msgid "Order this plan"
 msgstr ""
 
@@ -399,7 +407,7 @@ msgstr ""
 msgid "Personal information"
 msgstr ""
 
-#: app/views/practices/settings.html.erb:32
+#: app/views/practices/settings.html.erb:36
 msgid "Plans and payments"
 msgstr ""
 
@@ -420,11 +428,11 @@ msgstr ""
 msgid "Practice information"
 msgstr ""
 
-#: app/controllers/practices_controller.rb:46
+#: app/controllers/practices_controller.rb:48
 msgid "Practice was successfully created."
 msgstr ""
 
-#: app/controllers/practices_controller.rb:59
+#: app/controllers/practices_controller.rb:61
 msgid "Practice was successfully updated."
 msgstr ""
 
@@ -451,7 +459,7 @@ msgstr ""
 
 #: app/views/appointments/new.html.erb:17 app/views/balances/_new.html.erb:8
 #: app/views/doctors/_form.html.erb:32 app/views/patients/_form.html.erb:76
-#: app/views/practices/settings.html.erb:55 app/views/users/_form.html.erb:25
+#: app/views/practices/settings.html.erb:32 app/views/users/_form.html.erb:25
 msgid "Save"
 msgstr ""
 
@@ -464,8 +472,12 @@ msgstr ""
 msgid "Sign in"
 msgstr ""
 
-#: app/views/practices/new.html.erb:1 app/views/user_sessions/new.html.erb:21
+#: app/views/user_sessions/new.html.erb:21
 msgid "Sign up"
+msgstr ""
+
+#: app/views/practices/new.html.erb:1
+msgid "Signing up to"
 msgstr ""
 
 #: app/views/doctors/_form.html.erb:29
@@ -553,7 +565,7 @@ msgstr ""
 msgid "is not formatted properly"
 msgstr ""
 
-#: app/views/practices/settings.html.erb:45
+#: app/views/practices/settings.html.erb:50
 msgid "left"
 msgstr ""
 
@@ -574,7 +586,10 @@ msgstr ""
 msgid "or"
 msgstr ""
 
-#: app/views/practices/settings.html.erb:45
+#: app/views/practices/settings.html.erb:50
+msgid "patients"
+msgstr ""
+
 #: app/views/practices/show.html.erb:14
 msgid "users"
 msgstr ""

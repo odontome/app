@@ -28,9 +28,14 @@
 			<%= f.time_zone_select :timezone, ActiveSupport::TimeZone.all, :default => Time.zone.name, :title => _("Time zone") %></p>
 	  </p>
 	</fieldset>
+	
+	<%= f.submit(_("Save"), :class => "g-button") %>
+	
+	<hr />
+	
+	<h1><%=_("Plans and payments")%></h1>
+	
 	<fieldset>
-		<legend><%=_("Plans and payments")%></legend>
-
 		<ul id="list-items">
 			<% PLANS.each do |plan, values| %>
 					<% current_plan = true if @practice.plan_id == values['id']%>
@@ -42,7 +47,7 @@
 						<% unless current_plan %>
 							<div style="float:right;position: relative;top: -13px;"><%= link_to _("Order this plan"), @practice, :class => "g-button green"%></div>
 						<% else %>
-							<div class="list-item"><%= @practice_users_count %> <%=_('users')%><br />(<%= (@plan_number_of_patients - @practice_users_count).to_s + " " + _("left")%>)</div>
+							<div class="list-item"><%= @practice_users_count %> <%=_('patients')%><br />(<%= (@plan_number_of_patients - @practice_users_count).to_s + " " + _("left")%>)</div>
 						<% end %>
 					</li>
 			<% end %>
@@ -51,7 +56,5 @@
 
 	</fieldset>
 
-	
-  <%= f.submit(_("Save"), :class => "g-button") %>
 
 <% end %>
