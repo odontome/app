@@ -59,10 +59,10 @@
 	    <%= f.text_area :medications, :rows => 4, :placeholder => _("Current medications"), :title => _("Current medications") %>
 	  </p>
 	  <p>
-	    <%= f.text_field :cigarettes_per_day, :placeholder => _("Cigarettes per day"), :title => _("Cigarettes per day") %>
+	    <%= f.number_field :cigarettes_per_day, :placeholder => _("Cigarettes per day"), :title => _("Cigarettes per day") %>
 	  </p>
 	  <p>
-	    <%= f.text_field :drinks_per_day, :placeholder => _("Drinks per day"), :title => _("Drinks per day") %>
+	    <%= f.number_field :drinks_per_day, :placeholder => _("Drinks per day"), :title => _("Drinks per day") %>
 	  </p>
 	  <p>
 	    <%= f.text_area :drugs_use, :rows => 2, :placeholder => _("Illicit drugs use (include type, amount and administration methods)"), :title => _("Illicit drugs use (include type, amount and administration methods)") %>

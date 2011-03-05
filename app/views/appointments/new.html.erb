@@ -1,6 +1,6 @@
 <%= form_for(@appointment, :remote => true) do |f| %>
 	<p>		
-		<%= text_field_tag "appointment[patient_id]" %>
+		<%= text_field_tag "appointment[patient_id]", nil, :title => _("Enter the patient name or Unique Identifier") %>
 	</p>
 
 	<p>
@@ -25,14 +25,14 @@
 		$("#appointment_patient_id").autoSuggest("/patients", {startText: "<%=_('Enter the patient name or Unique Identifier')%>", minChars: 2, selectionLimit: 1, selectedValuesProp: "data", selectedItemProp: "name", searchObjProps: "value,name", emptyText: "<%=_('No results, a new patient will be created')%>"});
 		
 		// Limit the notes
-		$('#appointment-notes').limit('255');
+		$('#appointment_notes').limit('255');
 				
 		// tipTip all text inputs and textareas
 		$('input').tipTip();	
 		$('textarea').tipTip();
 		
 		$('#close_dialog').click(function() {
-		  $('#event-dialog').dialog('close');
+		  $('#event_dialog').dialog('close');
 		});
 	});	
 </script>
