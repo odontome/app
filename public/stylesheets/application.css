@@ -2,9 +2,8 @@ html,body {
 	font-family: "Myriad Pro", Helvetica, Arial;
 	font-size: 14px;
 	color: #333333;
-	background: url(/images/layout/background.jpg) top center fixed #333;
-	margin: 0px;
-	padding-top: 10px;
+background: url(/images/layout/background.jpg) repeat;	
+	margin-top: 10px;
 	height: 100%;
 }
 
@@ -142,14 +141,14 @@ header {
 			linear,
 			left top, left bottom,
 			from(#fff),
-			color-stop(2%, #fff)
+			color-stop(2%, #F7F5F0)
 		);
 		
 	background: 
 		-moz-repeating-linear-gradient(
 			top,
 			#fff,
-			#fff 38px,
+			#F7F5F0 38px,
 			#fff 40px
 		);
 		
@@ -157,7 +156,7 @@ header {
 		repeating-linear-gradient(
 			top,
 			#fff,
-			#fff 38px,
+			#F7F5F0 38px,
 			#fff 40px
 		);		
 		
