@@ -1,7 +1,7 @@
 class Patient < ActiveRecord::Base
   has_many :appointments
-  #has_one :chart
   belongs_to :practice
+  has_many :balances
 
   scope :mine, lambda { 
     where("patients.practice_id = ? ", UserSession.find.user.practice_id)
@@ -21,9 +21,6 @@ class Patient < ActiveRecord::Base
   before_validation(:on => :create) do
     set_practice_id
   end
-
-  #after_create :setup_chart
-  
 
   def fullname
     [firstname, lastname].join(' ')

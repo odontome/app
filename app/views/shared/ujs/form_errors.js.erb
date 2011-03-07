@@ -1,0 +1,27 @@
+// to hold the form element IDs
+var errorIDs = new Array();
+
+// to hold the error messages
+var errorMessages = new Array();
+
+// Loop through all the error objects to story as JS objects
+<% item.errors.each do |error_object| %>
+    <% if params[:from_modal] %>
+    	errorIDs.push("#<%= item.class.name.downcase %>_<%= error_object %>");
+    <% else %>
+    	errorIDs.push("#<%= item.class.name.downcase %>_<%= error_object %>");
+    <% end %>
+<% end %>
+
+// Loop through all the error messages to store for use
+<% item.errors.full_messages.each do |msg| %>
+    errorMessages.push("<%= msg %>");
+<% end %>
+
+// Attach the messages to the error form objects and show some visibles
+$.each(errorIDs, function(index, value){
+    $(errorIDs[index]).attr("title", errorMessages[index]).addClass("error_field");
+});
+
+// For now
+alert("There was a problem saving your request");

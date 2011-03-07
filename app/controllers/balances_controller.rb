@@ -12,10 +12,20 @@ class BalancesController < ApplicationController
   def create
     @balance = Balance.new(params[:balance])
     @balance.patient_id = params[:patient_id] #FIXME yeah this sucks
-    # don't know how to handle errors here, I guess they go in the create.js.erb
-    @balance.save
     
-    respond_with(@balance)
+    respond_to do |format|
+      if @balance.save
+          format.js  { } #create.js.erb
+      else
+          format.js  {
+            render :template => "shared/ujs/form_errors.js.erb", 
+            :locals =>{
+              :item => @balance, 
+              :notice => _("There was an error creating this entry")
+            }
+          }
+      end
+    end
   end
 
 end
