@@ -24,8 +24,6 @@ class PatientNotesController < ApplicationController
   end
 
   def destroy
-    #FIXME : Ask Fran why the FUCKKKK I can't do this?
-    #@note = PatientNote.where("id = ? AND patient_id = ?", params[:id], params[:patient_id])
     @note = PatientNote.find_by_id_and_patient_id(params[:id],params[:patient_id])
     @note.destroy
 
