@@ -1,0 +1,7 @@
+$("<%=escape_javascript(render :partial => 'show', :locals => {:note => @note})%>").addClass("hidden").prependTo(".notes").fadeIn("slow");
+
+// Scroll to the top of the annotations
+$('html, body').animate({scrollTop: $(".notes").offset().top}, 1000);
+
+// Clear the form
+$('#patient_note_notes').val("");

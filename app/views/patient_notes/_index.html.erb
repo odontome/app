@@ -1,0 +1,3 @@
+<% notes.each do |note| %>
+	<%= render :partial => "patient_notes/show", :locals => {:note => note}%>
+<% end %>

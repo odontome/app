@@ -14,7 +14,8 @@ class PatientsController < ApplicationController
 
   def show
     @patient = Patient.mine.find(params[:id])
-
+    @patient_notes = @patient.patient_notes
+    
     respond_to do |format|
       format.html # show.html.erb
     end

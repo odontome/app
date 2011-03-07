@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  
+  belongs_to :practice
+  
   acts_as_authentic do |c|
        c.login_field = "email"
        c.validate_email_field = false
@@ -16,8 +19,6 @@ class User < ActiveRecord::Base
   validates_presence_of :password_confirmation, :on => :create
   validates :password, :presence => true
 
-  belongs_to :practice
-  
   before_validation(:on => :create) do
     set_practice_id
   end

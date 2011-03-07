@@ -49,11 +49,10 @@
 		<h2 class="clear"><%=_("Notes")%></h2>
 		
 		<div class="notes">
-			<!-- #includePartial(partial="/chartnotes/index", chartnotes=notes)# -->
+			<%= render :partial => "patient_notes/index", :locals => {:notes => @patient_notes} %>
 		</div>
 		
-		<!-- #includePartial("/chartnotes/new")# -->
-
+		<%= render "patient_notes/new" %>
 	</div>
 
 	<div style="clear:both"></div>

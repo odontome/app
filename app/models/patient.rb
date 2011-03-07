@@ -1,7 +1,8 @@
 class Patient < ActiveRecord::Base
   has_many :appointments
-  belongs_to :practice
   has_many :balances
+  has_many :patient_notes
+  belongs_to :practice
 
   scope :mine, lambda { 
     where("patients.practice_id = ? ", UserSession.find.user.practice_id)
