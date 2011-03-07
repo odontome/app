@@ -30,7 +30,6 @@ class PracticesController < ApplicationController
     @practice.users.build
     @user = User.new
     @plan_description = PLANS[params[:id]]['description']
-    
   end
 
   # GET /practices/1/edit
@@ -42,7 +41,7 @@ class PracticesController < ApplicationController
   # POST /practices.xml
   def create
     @practice = Practice.new(params[:practice])
-
+    # Create first user as admin
     respond_to do |format|
       if @practice.save
         format.html { redirect_to(practice_path, :notice => _('Practice was successfully created.')) }

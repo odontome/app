@@ -23,6 +23,8 @@ class User < ActiveRecord::Base
     set_practice_id
   end
 
+  before_create :set_admin_role_for_first_user
+
   before_destroy :check_if_admin
 
   def fullname
@@ -40,5 +42,9 @@ class User < ActiveRecord::Base
       false
     end
   end  
+  
+  def set_admin_role_for_first_user
+    self.roles = "admin" if User.where("practice_id = ?", self.practice_id).count == 0
+  end
   
 end
