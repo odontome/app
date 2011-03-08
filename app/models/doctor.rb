@@ -7,9 +7,10 @@ class Doctor < ActiveRecord::Base
   }  
   
   validates_presence_of :practice_id, :firstname, :lastname
-  validates :uid, :uniqueness => {:scope => :practice_id}
+  validates_uniqueness_of :uid, :scope => :practice_id, :allow_nil => true, :allow_blank => true
+  validates_length_of :uid, :within => 0..25, :allow_blank => true
   validates_length_of :speciality, :within => 0..50, :allow_blank => true
-  validates_format_of :email, :with => Authlogic::Regex.email
+  validates_format_of :email, :with => Authlogic::Regex.email, :allow_blank => true
 
   before_validation(:on => :create) do
     set_practice_id
