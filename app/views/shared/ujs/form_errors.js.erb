@@ -7,9 +7,9 @@ var errorMessages = new Array();
 // Loop through all the error objects to story as JS objects
 <% item.errors.each do |error_object| %>
     <% if params[:from_modal] %>
-    	errorIDs.push("#<%= item.class.name.downcase %>_<%= error_object %>");
+    	errorIDs.push("#<%= item.class.to_s.underscore.downcase %>_<%= error_object %>");
     <% else %>
-    	errorIDs.push("#<%= item.class.name.downcase %>_<%= error_object %>");
+    	errorIDs.push("#<%= item.class.to_s.underscore.downcase %>_<%= error_object %>");
     <% end %>
 <% end %>
 
@@ -24,4 +24,4 @@ $.each(errorIDs, function(index, value){
 });
 
 // For now
-alert("There was a problem saving your request");
+alert("<%=_('There was a problem. Please try again')%>");

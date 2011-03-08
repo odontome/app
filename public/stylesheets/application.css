@@ -424,9 +424,11 @@ textarea {
 	min-height: 70px;
 }
 
-.error_field {
+.error_field, .field_with_errors input {
 	color: #ff0000;
+	background-color: #ffeded;
 }
+
 
 .required {
 	/*background: url('/images/icons/required.gif') right center no-repeat;*/
