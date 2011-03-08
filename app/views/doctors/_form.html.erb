@@ -29,7 +29,7 @@
     <%= f.text_field :speciality, :placeholder => _("Speciality"), :title => _("Specialities of the doctor") %>
   </p>
 
-  <%= f.submit(_("Save"), :class => "g-button") %> 
+  <%= f.submit(_("Save"), :class => "g-button", :disable_with => _("Please wait...")) %> 
 
   <% if controller.action_name == "edit" %>
 	  <% if @doctor.is_active %>

@@ -5,5 +5,5 @@
 	<p>
 	    <%= text_area_tag "balance[notes]", nil, {:rows => 2, :placeholder => _("Optional notes"), :title => _("Optional notes")}  %>
 	</p>
-	<%= submit_tag(_("Save"), :class => "g-button") %>
+	<%= submit_tag(_("Save"), :class => "g-button", :disable_with => _("Please wait...")) %>
 <% end %>

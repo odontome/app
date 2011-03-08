@@ -73,6 +73,6 @@
 	</fieldset>
 	
 
-  <%= f.submit(_("Save"), :class => "g-button") %> <%=_('or')%> <%= link_to _("Cancel"), patients_path%>
+  <%= f.submit(_("Save"), :class => "g-button", :disable_with => _("Please wait...")) %> <%=_('or')%> <%= link_to _("Cancel"), patients_path%>
 
 <% end %>
