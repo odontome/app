@@ -11,7 +11,7 @@
 <body>
 	<div id="container">
 		<header>
-			<%= image_tag "logo.png", :title => _("Home"), :class => "logo" %>
+			<%= link_to (image_tag "logo.png", :title => _("Home"), :class => "logo"), root_path %>
 			<%= render :partial => "layouts/navigation" %>
 		</header>
 	
