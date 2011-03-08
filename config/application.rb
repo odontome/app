@@ -43,7 +43,9 @@ module Odontome
 
   class ActiveRecord::Base
      def set_practice_id
-       self.practice_id = UserSession.find.user.practice_id
+       if UserSession.find
+         self.practice_id = UserSession.find.user.practice_id
+      end
      end
   end
 
