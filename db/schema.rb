@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110307010751) do
+ActiveRecord::Schema.define(:version => 20110308143134) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "practice_id",               :null => false
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(:version => 20110307010751) do
   end
 
   create_table "doctors", :force => true do |t|
-    t.integer  "uid"
+    t.string   "uid"
     t.integer  "practice_id",                   :null => false
     t.string   "firstname",                     :null => false
     t.string   "lastname",                      :null => false
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(:version => 20110307010751) do
   end
 
   create_table "patients", :force => true do |t|
-    t.integer  "uid"
+    t.string   "uid"
     t.integer  "practice_id",         :null => false
     t.string   "firstname",           :null => false
     t.string   "lastname",            :null => false

@@ -1,15 +1,20 @@
 class PatientsController < ApplicationController
   before_filter :require_user
   
+  # provides
+  respond_to :html, :json
+  
   def index
     # this is the most frequent scenario, a simple list of patients
     if (params[:q] === nil)
       @patients = Patient.mine
     # otherwise, this is a search for patients
     else
-      @patients = Patient.mine.where(t[:uid].matches("%1").or(t[:first_name].matches("%Ra%")).or(t[:last_name].matches("%Riera%")))
+      ActiveRecord::Base.include_root_in_json = false
+      @patients = Patient.mine.find(:all, :limit => 10, :select => "id,uid,firstname,lastname", :conditions => "uid LIKE '%"+params[:q]+"%' OR firstname LIKE '%"+params[:q]+"%' OR lastname LIKE '%"+params[:q]+"%'")
     end
     
+    respond_with(@patients, :methods => :fullname)
   end
 
   def show
