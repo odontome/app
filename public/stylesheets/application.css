@@ -1,8 +1,8 @@
 html,body {
-	font-family: "Myriad Pro", Helvetica, Arial;
+	font-family: "Helvetica Neue", Helvetica, Arial;
 	font-size: 14px;
 	color: #333333;
-background: url(/images/layout/background.jpg) top center fixed;	
+	background: url(/images/layout/background.jpg) top center fixed;	
 	margin-top: 10px;
 	height: 100%;
 }
@@ -53,11 +53,14 @@ header {
 }
 	header img.logo {
 		float: left;
-		margin-left: 40px;
+		margin: 10px 0 0 40px;
 		border: 0px;
 	}
 	
 	/* @group Navigation */
+	navigation {
+		float: right;
+	}
 	#navigation {
 		float: left;
 		margin-right: 20px;
@@ -66,13 +69,13 @@ header {
 		#navigation li {
 			font-family: Helvetica;
 			font-weight: "bold";
-			font-size: 17px;
+			font-size: 14px;
 			padding: 5px 10px 6px;
 			display: block;
 			float: left;
 			/*margin-right: 20px;*/
-			line-height: 25px;
-			height: 20px;
+			line-height: 30px;
+			height: 30px;
 		}
 			#navigation li a {
 				text-shadow: 0px 2px 2px #000;
@@ -90,10 +93,11 @@ header {
 			float: left;
 			font-size: 12px;
 		}
-			#search-box input, #search-box input ul {
-				width: 220px;
-				height: 15px;
+			#search-box {
+				max-width: 220px;
+				max-height: 30px;
 				border: #fff;
+				overflow: hidden;
 			}
 	
 	/* @end */
@@ -140,24 +144,24 @@ header {
 		-webkit-gradient(
 			linear,
 			left top, left bottom,
-			from(#fff),
+			from(#F7F5F0),
 			color-stop(2%, #F7F5F0)
 		);
 		
 	background: 
 		-moz-repeating-linear-gradient(
 			top,
-			#fff,
+			#F7F5F0,
 			#F7F5F0 38px,
-			#fff 40px
+			#F7F5F0 40px
 		);
 		
 	background: 
 		repeating-linear-gradient(
 			top,
-			#fff,
+			#F7F5F0,
 			#F7F5F0 38px,
-			#fff 40px
+			#F7F5F0 40px
 		);		
 		
 	-webkit-background-size: 100% 40px;
@@ -256,6 +260,12 @@ footer {
 	clear: both;
 }
 
+/* @end */
+
+/* @group Datebook */
+.fc-widget-content {
+	background: #fff;
+}
 /* @end */
 
 /* @group Patients */
@@ -429,10 +439,21 @@ textarea {
 	background-color: #ffeded;
 }
 
+input[disabled] {
+	opacity: .5;
+}
+
 
 .required {
-	/*background: url('/images/icons/required.gif') right center no-repeat;*/
+	background: url('/images/icons/required.gif') right center no-repeat #fff;
 }
+/* @end */
+
+/* @group UI widgets */
+#modal_dialog {
+	background: #fff;
+}
+
 /* @end */
 
 /* @group Flash messages */
