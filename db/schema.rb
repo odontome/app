@@ -10,12 +10,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110308143134) do
+ActiveRecord::Schema.define(:version => 20110314150118) do
 
   create_table "appointments", :force => true do |t|
-    t.integer  "practice_id",               :null => false
-    t.integer  "doctor_id",                 :null => false
-    t.integer  "patient_id",                :null => false
+    t.integer  "practice_id"
+    t.integer  "doctor_id"
+    t.integer  "patient_id"
     t.string   "notes"
     t.string   "status",      :limit => 50
     t.datetime "starts_at"
@@ -34,9 +34,9 @@ ActiveRecord::Schema.define(:version => 20110308143134) do
 
   create_table "doctors", :force => true do |t|
     t.string   "uid"
-    t.integer  "practice_id",                   :null => false
-    t.string   "firstname",                     :null => false
-    t.string   "lastname",                      :null => false
+    t.integer  "practice_id"
+    t.string   "firstname"
+    t.string   "lastname"
     t.string   "gender"
     t.boolean  "is_active",   :default => true
     t.string   "speciality"
@@ -54,15 +54,15 @@ ActiveRecord::Schema.define(:version => 20110308143134) do
 
   create_table "patients", :force => true do |t|
     t.string   "uid"
-    t.integer  "practice_id",         :null => false
-    t.string   "firstname",           :null => false
-    t.string   "lastname",            :null => false
+    t.integer  "practice_id"
+    t.string   "firstname"
+    t.string   "lastname"
     t.text     "address"
     t.string   "email"
     t.string   "telephone"
     t.string   "mobile"
     t.string   "emergency_telephone"
-    t.date     "date_of_birth",       :null => false
+    t.date     "date_of_birth"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "allergies"
@@ -76,8 +76,7 @@ ActiveRecord::Schema.define(:version => 20110308143134) do
   end
 
   create_table "plans", :force => true do |t|
-    t.integer  "number_of_patients",                               :null => false
-    t.decimal  "price",              :precision => 4, :scale => 2, :null => false
+    t.integer  "number_of_patients"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -89,23 +88,23 @@ ActiveRecord::Schema.define(:version => 20110308143134) do
     t.string   "status",     :default => "unconfirmed"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "plan_id",    :default => 1,             :null => false
+    t.integer  "plan_id",    :default => 1
   end
 
   create_table "users", :force => true do |t|
-    t.string   "firstname",                             :null => false
-    t.string   "lastname",                              :null => false
-    t.string   "email",                                 :null => false
-    t.string   "crypted_password",                      :null => false
+    t.string   "firstname"
+    t.string   "lastname"
+    t.string   "email"
+    t.string   "crypted_password"
     t.string   "password_salt"
     t.string   "persistence_token"
-    t.string   "roles",             :default => "user", :null => false
+    t.string   "roles",             :default => "user"
     t.integer  "practice_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "current_login_at"
     t.datetime "last_login_at"
-    t.integer  "login_count",       :default => 0,      :null => false
+    t.integer  "login_count",       :default => 0
   end
 
 end

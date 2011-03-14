@@ -30,6 +30,8 @@
 	</fieldset>
 	
 	<%= f.submit(_("Save"), :class => "g-button") %>
+
+<% end %>
 	
 	<hr />
 	
@@ -41,11 +43,21 @@
 					<% current_plan = true if @practice.plan_id == values['id']%>
 					<li>
 						<% if current_plan %><strong><% end %>
-						<%=_("#{extract_text_from_gettext(values['name'])}")%> <strong><%= "(#{_('Current plan')})" if current_plan %></strong><br />
+						<%=_("#{extract_text_from_gettext(values['name'])}")%> 
+						<%= "— $" + values['price'].to_s unless values['id'].to_i == 1 %>
+						<strong><%= "(#{_('Current plan')})" if current_plan %></strong><br />
 						<% if current_plan %></strong><% end %>
 						<sub><%=_("#{extract_text_from_gettext(values['description'])}")%></sub>
 						<% unless current_plan %>
-							<div style="float:right;position: relative;top: -13px;"><%= link_to _("Order this plan"), @practice, :class => "g-button green"%></div>
+							<div class="pp_subscribe_button">
+								<% unless values['id'].to_i == 1 %>
+									<% if @practice.plan_id > 1 %>
+										<%= render "/paypal/#{values['button_partial']}" + "_change" %>
+									<% else %>
+										<%= render "/paypal/#{values['button_partial']}" %>
+									<% end %>
+								<% end %>
+							</div>
 						<% else %>
 							<div class="list-item"><%= @practice_users_count %> <%=_('patients')%><br />(<%= (@plan_number_of_patients - @practice_users_count).to_s + " " + _("left")%>)</div>
 						<% end %>
@@ -54,6 +66,3 @@
 		</ul>
 
 	</fieldset>
-
-
-<% end %>

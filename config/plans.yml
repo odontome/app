@@ -7,8 +7,12 @@ standard:
     id: 2
     name: _('Standard Plan')
     description: _('A great value plan for up to 1000 patients')
+    button_partial: standard_button
+    price: 9.99
 
 premium:
     id: 3
     name: _('Premium Plan')
     description: _('For practices that have more than 1000 patients. You can register up to 5000!')
+    button_partial: premium_button
+    price: 19.99

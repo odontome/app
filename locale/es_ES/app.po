@@ -561,7 +561,7 @@ msgstr "Debes salir de odonto.me para poder acceder esta página"
 
 #: app/views/users/show.html.erb:17
 msgid "ago"
-msgstr "."
+msgstr " "
 
 #: app/views/practices/show.html.erb:9
 msgid "doctors"
