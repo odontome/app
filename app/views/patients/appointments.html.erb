@@ -1,6 +1,6 @@
 <ul id="list-items">
 	<% @appointments.each do |appointment| %>
-		<% unless appointment.ends_at > Time.now()
+		<% if appointment.ends_at === Time.now
 			cclass = "disabled-list"
 		   else
 			cclass = ""
@@ -9,8 +9,9 @@
 	
 		<li class="<%=cclass%>">
 			<h2>(<%=appointment.status%>) <%=appointment.starts_at %> <span><%= _("with") %> <%= appointment.doctor.fullname %></h2>			
-			<span><%=patient.uid%></span>
+			<span></span>
 			<% if appointment.notes.length > 0%><span><%=notes%></span><% end %>
 		</li>
 	<% end %>
 </ul>
+

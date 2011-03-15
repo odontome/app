@@ -68,7 +68,7 @@ class PatientsController < ApplicationController
   end
   
   def appointments 
-    @appointments = Appointment.where("patient_id = ?", params[:id]).includes(:doctors).order( "starts_at desc")
+    @appointments = Appointment.where("patient_id = ?", params[:id]).includes(:doctor).order( "starts_at desc")
     
     render :layout => nil
   end

@@ -12,9 +12,9 @@
 		<%= f.text_area :notes, :placeholder => _("Additional notes"), :rows => 2, :title => _("Additional notes"), :limit => 255  %>
 	</p>
 
-	<%= f.hidden_field :starts_at%>
+	<%= f.hidden_field :starts_at %>
 
-	<%= f.submit(_("Save"), :class => "g-button") %> <%= _("or") %> <a id="close_dialog" href="#">Cancel</a>
+	<%= f.submit(_("Save"), :class => "g-button", :disable_with => _("Please wait...")) %> <%= _("or") %> <a id="close_dialog" href="#">Cancel</a>
 
 <% end %>
 
@@ -22,7 +22,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		// Setup autocomplete for patients
-		$("#appointment_patient_id").autoSuggest("/patients", {startText: "<%=_('Enter the patient name or Unique Identifier')%>", minChars: 2, selectionLimit: 1, selectedValuesProp: "data", selectedItemProp: "name", searchObjProps: "value,name", emptyText: "<%=_('No results, a new patient will be created')%>"});
+		$("#appointment_patient_id").autoSuggest("/patients.json", {startText: "<%=_('Enter the patient name or Unique Identifier')%>", minChars: 2, selectionLimit: 1, selectedValuesProp: "id", selectedItemProp: "fullname", searchObjProps: "uid,fullname", emptyText: "<%=_('No results, a new patient will be created')%>", asHtmlID: "patient_id"});
 		
 		// Limit the notes
 		$('#appointment_notes').limit('255');
@@ -32,7 +32,7 @@
 		$('textarea').tipTip();
 		
 		$('#close_dialog').click(function() {
-		  $('#event_dialog').dialog('close');
+		  $('#modal_dialog').dialog('close');
 		});
 	});	
 </script>
