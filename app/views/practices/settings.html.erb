@@ -50,16 +50,18 @@
 						<sub><%=_("#{extract_text_from_gettext(values['description'])}")%></sub>
 						<% unless current_plan %>
 							<div class="pp_subscribe_button">
-								<% unless values['id'].to_i == 1 %>
+								<% if values['id'].to_i > 1 %>
 									<% if @practice.plan_id > 1 %>
-										<%= render "/paypal/#{values['button_partial']}" + "_change" %>
+										<%= render "/paypal/#{values['button_partial']}" + "_change" if @practice_users_count <= values['number_of_patients'].to_i  %>
 									<% else %>
 										<%= render "/paypal/#{values['button_partial']}" %>
 									<% end %>
+								<% elsif @practice_users_count <= values['number_of_patients'].to_i %>
+										<%= link_to _("Change to this Plan"), change_to_free_plan_url, :class => "g-button green", :style => "margin: 10px 10px 0 0;" %>
 								<% end %>
 							</div>
 						<% else %>
-							<div class="list-item"><%= @practice_users_count %> <%=_('patients')%><br />(<%= (@plan_number_of_patients - @practice_users_count).to_s + " " + _("left")%>)</div>
+							<div class="list-item"><%= @practice_users_count %> <%=_('patients')%><br />(<%= (values['number_of_patients'].to_i - @practice_users_count).to_s + " " + _("left")%>)</div>
 						<% end %>
 					</li>
 			<% end %>

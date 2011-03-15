@@ -2,6 +2,7 @@ free:
     id: 1
     name: _('Free Plan')
     description: _('Our free plan in which you can use everything in odonto.me for up to 500 patients')
+    number_of_patients: 500
 
 standard:
     id: 2
@@ -9,6 +10,7 @@ standard:
     description: _('A great value plan for up to 1000 patients')
     button_partial: standard_button
     price: 9.99
+    number_of_patients: 1000
 
 premium:
     id: 3
@@ -16,3 +18,4 @@ premium:
     description: _('For practices that have more than 1000 patients. You can register up to 5000!')
     button_partial: premium_button
     price: 19.99
+    number_of_patients: 5000

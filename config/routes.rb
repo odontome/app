@@ -21,6 +21,7 @@ Odontome::Application.routes.draw do
   match "/agenda" => "agenda#show", :as => :agenda
   match "/practice" => "practices#show", :as => :practice
   match "/practice/settings" => "practices#settings", :as => :practice_settings
+  match "/practice/change_to_free_plan" => "practices#change_to_free_plan", :as => :change_to_free_plan
 
   root :to => "welcome#index"
 
