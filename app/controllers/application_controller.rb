@@ -108,6 +108,8 @@ class ApplicationController < ActionController::Base
       if current_user
         redirect_back_or_default("/") unless current_user_is_superadmin?
         return false
+      else
+        return false
       end
     end
     

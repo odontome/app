@@ -1,5 +1,6 @@
 class PracticesController < ApplicationController
 
+  before_filter :require_user, :only =>  [:index, :destroy, :edit, :settings, :show]
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_superadmin, :only => [:index, :destroy, :edit]
   before_filter :verify_correct_plan_id_or_redirect_to_free, :only => [:new]
@@ -41,7 +42,7 @@ class PracticesController < ApplicationController
   # POST /practices.xml
   def create
     @practice = Practice.new(params[:practice])
-    # Create first user as admin
+    
     respond_to do |format|
       if @practice.save
         format.html { redirect_to(practice_path, :notice => _('Practice was successfully created.')) }

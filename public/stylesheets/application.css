@@ -403,6 +403,13 @@ button.g-button, a.g-button, input[type=submit].g-button {
 	text-shadow: none;
 }
 
+.pp_subscribe_button {
+	right: -10px;
+	position: relative;
+	top: -22px;
+	float: right;
+}
+
 /* @end */
 
 /* @group Forms */

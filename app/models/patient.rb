@@ -9,7 +9,7 @@ class Patient < ActiveRecord::Base
   }  
 
   validates_uniqueness_of :uid, :scope => :practice_id, :allow_nil => true, :allow_blank => true
-  validates_presence_of :practice_id, :firstname, :lastname
+  validates_presence_of :practice_id, :firstname, :lastname, :date_of_birth
   validates_length_of :uid, :within => 0..25, :allow_blank => true
   validates_length_of :firstname, :within => 1..25
   validates_length_of :lastname, :within => 1..25
