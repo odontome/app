@@ -13,12 +13,6 @@ class PaypalController < ApplicationController
        practice.save!
        logger.info("sign_up_user: #{practice_id}")
      else
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
        logger.error("sign_up_user: practice_id #{practice_id} on IPN not found")
      end
   end
@@ -32,12 +26,6 @@ class PaypalController < ApplicationController
        practice.save!
        logger.info("cancel_subscription: #{practice_id}")
      else
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
        logger.error("cancel_subscription: practice_id #{practice_id} on IPN not found")
      end
   end
@@ -52,12 +40,6 @@ class PaypalController < ApplicationController
        practice.cancel!
        logger.info("subscription_expired: #{practice_id}")
      else
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
        logger.error("subscription_expired: practice_id #{practice_id} on IPN not found")
      end
   end
@@ -70,12 +52,6 @@ class PaypalController < ApplicationController
        practice.save!
        logger.info("subscription_failed: #{practice_id}")
      else
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
        logger.error("subscription_failed: practice_id #{practice_id} on IPN not found")
      end
   end
@@ -88,12 +64,6 @@ class PaypalController < ApplicationController
        practice.save!
        logger.info("subscription_payment: #{practice_id}")
      else
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
-       # PROBAR ESTO!!!!!
        logger.error("subscription_payment: practice_id #{practice_id} on IPN not found")
      end
   end
