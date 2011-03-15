@@ -106,10 +106,10 @@ class PaypalController < ApplicationController
     request.params.each_pair {|key, value| query = query + '&' + key + '=' + 
       value if key != 'register/pay_pal_ipn.html/pay_pal_ipn' }
 
-    paypal_url = 'www.paypal.com'
-    if ENV['RAILS_ENV'] == 'development'
+    #paypal_url = 'www.paypal.com'
+    #if ENV['RAILS_ENV'] == 'development'
       paypal_url = 'www.sandbox.paypal.com'
-    end
+    #end
 
     # Verify all this with paypal
     http = Net::HTTP.start(paypal_url, 80)
