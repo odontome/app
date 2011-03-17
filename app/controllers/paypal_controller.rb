@@ -10,6 +10,7 @@ class PaypalController < ApplicationController
      unless practice.nil?
        practice.status = "active"
        practice.plan_id = plan_id
+       practice.set_number_of_patients(plan_id)
        practice.save!
        logger.info("sign_up_user: #{practice_id}")
      else

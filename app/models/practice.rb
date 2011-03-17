@@ -13,9 +13,25 @@ class Practice < ActiveRecord::Base
   accepts_nested_attributes_for :users, :limit => 1
   validates_presence_of :plan_id
 
+  before_create do
+    set_number_of_patients(1)
+  end
+
   def cancel!
     self.status = "cancelled"
     self.cancelled_at = Time.now
   end
-
+  
+  def set_number_of_patients(plan_id)
+    PLANS.each do |plan, values|
+      if values['id'].to_i == plan_id
+          # if we manually set an account to have say 10.000 patients don't touch it no matter what plan is beign paid
+          if self.number_of_patients && self.number_of_patients < values['number_of_patients'].to_i
+            self.number_of_patients = values['number_of_patients'].to_i
+          end
+          break
+      end
+    end
+  end
+  
 end
