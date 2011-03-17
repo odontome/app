@@ -9,6 +9,7 @@ class Practice < ActiveRecord::Base
 
   has_many :users, :dependent => :destroy 
   has_many :doctors, :dependent => :destroy 
+  has_many :patients, :dependent => :destroy 
   belongs_to :plan
   accepts_nested_attributes_for :users, :limit => 1
   validates_presence_of :plan_id
@@ -27,6 +28,8 @@ class Practice < ActiveRecord::Base
       if values['id'].to_i == plan_id
           # if we manually set an account to have say 10.000 patients don't touch it no matter what plan is beign paid
           if self.number_of_patients && self.number_of_patients < values['number_of_patients'].to_i
+            self.number_of_patients = values['number_of_patients'].to_i
+          elsif self.number_of_patients.nil?
             self.number_of_patients = values['number_of_patients'].to_i
           end
           break

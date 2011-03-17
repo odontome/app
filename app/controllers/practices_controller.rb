@@ -77,7 +77,7 @@ class PracticesController < ApplicationController
 
   def settings
     @practice = Practice.includes(:plan).find(current_user.practice_id)
-    @practice_users_count = @practice.users.count
+    @practice_patients_count = @practice.patients.count
   end
 
   private

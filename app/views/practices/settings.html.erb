@@ -52,16 +52,16 @@
 							<div class="pp_subscribe_button">
 								<% if values['id'].to_i > 1 %>
 									<% if @practice.plan_id > 1 %>
-										<%= render :partial => "/paypal/#{values['button_partial']}" + "_change", :locals => { :custom => @practice.id} if @practice_users_count <= values['number_of_patients'].to_i  %>
+										<%= render :partial => "/paypal/#{values['button_partial']}" + "_change", :locals => { :custom => @practice.id} if @practice_patients_count <= values['number_of_patients'].to_i  %>
 									<% else %>
 										<%= render :partial => "/paypal/#{values['button_partial']}", :locals => { :custom => @practice.id} %>
 									<% end %>
-								<% elsif @practice_users_count <= values['number_of_patients'].to_i %>
+								<% elsif @practice_patients_count <= values['number_of_patients'].to_i %>
 										<%= link_to _("Change to this Plan"), change_to_free_plan_url, :class => "g-button green", :style => "margin: 10px 10px 0 0;" %>
 								<% end %>
 							</div>
 						<% else %>
-							<div class="list-item"><%= @practice_users_count %> <%=_('patients')%><br />(<%= (values['number_of_patients'].to_i - @practice_users_count).to_s + " " + _("left")%>)</div>
+							<div class="list-item"><%= @practice.number_of_patients %> <%=_('patients')%><br />(<%= (values['number_of_patients'].to_i - @practice_patients_count).to_s + " " + _("left")%>)</div>
 						<% end %>
 					</li>
 			<% end %>
