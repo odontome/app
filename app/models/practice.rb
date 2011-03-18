@@ -18,7 +18,7 @@ class Practice < ActiveRecord::Base
     set_number_of_patients(1)
   end
 
-  def cancel!
+  def set_as_cancelled
     self.status = "cancelled"
     self.cancelled_at = Time.now
   end
