@@ -20,7 +20,6 @@ class AppointmentsController < ApplicationController
     @doctors = Doctor.mine
   end
   
-  # FIXME this could be improved greatly, in a more DRY fashion
   def create
     @appointment = Appointment.new(params[:appointment])
     @appointment.starts_at = Time.at(params[:appointment][:starts_at].to_i)
@@ -33,7 +32,7 @@ class AppointmentsController < ApplicationController
       @patient = Patient.new()
       @patient.fullname = params[:appointment][:patient_id]
       # set the practice_id manually because validation (and callbacks apparently as well) are skipped
-      @patient.practice_id = @patient.set_practice_id
+      @patient.practice_id = UserSession.find.user.practice_id
       # skip validation when saving this patient
       @patient.save!(:validate => false)
       @appointment.patient_id = @patient.id
@@ -44,14 +43,33 @@ class AppointmentsController < ApplicationController
           format.js  { } #create.js.erb
       else
           format.js  {
+            render_ujs_error(@appointment, _("There was an error creating this appointment"))
+          }
+      end
+    end
+  end
+  
+  def edit
+    @appointment = Appointment.mine.find(params[:id])
+    @patient = Patient.mine.find(params[:patient_id])
+    @doctors = Doctor.mine
+  end
+  
+  def destroy
+    @appointment = Appointment.mine.find(params[:id])
+
+    respond_to do |format|
+      if @appointment.destroy
+          format.js  { } #destroy.js.erb
+      else
+          format.js  {
             render :template => "shared/ujs/form_errors.js.erb", 
             :locals =>{
               :item => @appointment, 
-              :notice => _("There was an error creating this appointment")
+              :notice => _("There was an error deleting this appointment")
             }
           }
       end
     end
   end
-
 end

@@ -18,11 +18,7 @@ class BalancesController < ApplicationController
           format.js  { } #create.js.erb
       else
           format.js  {
-            render :template => "shared/ujs/form_errors.js.erb", 
-            :locals =>{
-              :item => @balance, 
-              :notice => _("There was an error creating this entry")
-            }
+            render_ujs_error(@balance, _("There was an error creating this entry"))
           }
       end
     end
