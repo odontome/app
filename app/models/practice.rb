@@ -26,6 +26,10 @@ class Practice < ActiveRecord::Base
   def set_number_of_patients(plan_id)
     PLANS.each do |plan, values|
       if values['id'].to_i == plan_id
+          puts "=================="
+          puts self.number_of_patients
+          puts values['number_of_patients']
+          puts "=================="
           # if we manually set an account to have say 10.000 patients don't touch it no matter what plan is beign paid
           if self.number_of_patients && self.number_of_patients < values['number_of_patients'].to_i
             self.number_of_patients = values['number_of_patients'].to_i
