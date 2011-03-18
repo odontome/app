@@ -10,7 +10,7 @@ class PaypalController < ApplicationController
      unless practice.nil?
        practice.status = "active"
        practice.plan_id = plan_id
-       practice.set_number_of_patients(practice.plan_id)
+       practice.set_plan_id_and_number_of_patients(practice.plan_id)
        practice.save!
        
        logger.info("sign_up_user: #{practice_id}")
@@ -19,7 +19,7 @@ class PaypalController < ApplicationController
      end
   end
 
-  # This will be called if someone cancels a payment
+  # This will be called if someone cancels a plan
   # Or when we cancel it on Paypal administration
   def cancel_subscription(practice_id, plan_id)
     practice = Practice.find_by_id(practice_id.to_i)
@@ -39,7 +39,7 @@ class PaypalController < ApplicationController
   def subscription_expired(practice_id, plan_id)
     practice = Practice.find_by_id(practice_id.to_i)
      unless practice.nil?
-       practice.cancel!
+       practice.set_as_cancelled
        logger.info("subscription_expired: #{practice_id}")
      else
        logger.error("subscription_expired: practice_id #{practice_id} on IPN not found")
