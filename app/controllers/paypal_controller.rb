@@ -40,6 +40,7 @@ class PaypalController < ApplicationController
     practice = Practice.find_by_id(practice_id.to_i)
      unless practice.nil?
        practice.set_as_cancelled
+       
        logger.info("subscription_expired: #{practice_id}")
      else
        logger.error("subscription_expired: practice_id #{practice_id} on IPN not found")
