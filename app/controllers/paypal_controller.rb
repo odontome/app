@@ -10,8 +10,9 @@ class PaypalController < ApplicationController
      unless practice.nil?
        practice.status = "active"
        practice.plan_id = plan_id
-       practice.set_number_of_patients(plan_id)
+       practice.set_number_of_patients(practice.plan_id)
        practice.save!
+       
        logger.info("sign_up_user: #{practice_id}")
      else
        logger.error("sign_up_user: practice_id #{practice_id} on IPN not found")
