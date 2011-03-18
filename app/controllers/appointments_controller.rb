@@ -9,8 +9,7 @@ class AppointmentsController < ApplicationController
   layout nil
   
   def index
-     #@appointments = Appointment.where("starts_at > ? AND ends_at < ? AND practice_id = ?", params[:start], params[:end], UserSession.find.user.practice_id).includes(:patients).order( "starts_at desc")
-     @appointments = Appointment.all
+     @appointments = Appointment.find_for_calendar(params[:start], params[:end])
      
      respond_with(@appointments)
   end
@@ -24,7 +23,7 @@ class AppointmentsController < ApplicationController
   # FIXME this could be improved greatly, in a more DRY fashion
   def create
     @appointment = Appointment.new(params[:appointment])
-    #@appointment.ends_at = @appointment.starts_at + 6000
+    @appointment.starts_at = Time.at(params[:appointment][:starts_at].to_i)
     
     # if this value is set, then use it has the patient id
     if (params[:as_values_patient_id] != "")
@@ -33,7 +32,10 @@ class AppointmentsController < ApplicationController
     else
       @patient = Patient.new()
       @patient.fullname = params[:appointment][:patient_id]
-      @patient.save
+      # set the practice_id manually because validation (and callbacks apparently as well) are skipped
+      @patient.practice_id = @patient.set_practice_id
+      # skip validation when saving this patient
+      @patient.save!(:validate => false)
       @appointment.patient_id = @patient.id
     end 
     

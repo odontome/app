@@ -154,9 +154,10 @@ footer {
 }
 
 #list-items li {
-	background: #ffffff;
+	background: #fff;
 	border: solid 1px rgb(153, 153, 153);
 	-webkit-border-radius: 2px 2px;
+	-moz-border-radius: 2px 2px;
 	padding: 10px;
 	margin: 5px 0px;
 	display: block;
@@ -212,6 +213,10 @@ footer {
 
 .disabled-list {
 	opacity: 0.5;
+}
+
+.invalid-list {
+	background: #ffeded !important;
 }
 /* @end */
 

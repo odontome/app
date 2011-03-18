@@ -2,8 +2,16 @@
 
 <ul id="list-items">
 	<% @patients.each do |patient| %>
-		<li>
-			<h2><%=link_to patient.fullname, patient%></h2>			
+	
+		<% if patient.invalid?
+			cclass = "invalid-list"
+		   else
+			cclass = ""
+		   end
+		%>
+	
+		<li class="<%=cclass%>">
+			<h2><%= link_to patient.fullname, patient %></h2>			
 			<span><%=patient.uid%></span>
 			<span><strong><%=_('Age')%>:</strong> <%=patient.age%></span>
 			<span><strong><%=_('Allergies')%>:</strong> <%unless patient.allergies.blank?%><%=patient.allergies%><%else%><%=_('none')%><%end%></span>
