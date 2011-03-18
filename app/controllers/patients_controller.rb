@@ -21,8 +21,12 @@ class PatientsController < ApplicationController
     @patient = Patient.mine.find(params[:id])
     @patient_notes = @patient.patient_notes
     
-    respond_to do |format|
-      format.html # show.html.erb
+    if @patient.invalid?
+      redirect_to edit_patient_path(@patient)
+    else 
+      respond_to do |format|
+        format.html # show.html.erb
+      end
     end
   end
 

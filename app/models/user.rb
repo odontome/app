@@ -17,13 +17,10 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, :on => :create
   validates_presence_of :password_confirmation, :on => :create
   validates :password, :presence => true
-
-  before_validation(:on => :create) do
-    set_practice_id
-  end
-
+  
+  # callbacks
+  before_validation :set_practice_id, :on => :create
   before_create :set_admin_role_for_first_user
-
   before_destroy :check_if_admin
 
   def fullname

@@ -126,50 +126,16 @@ header {
 	margin: auto;
 	padding: 25px;
 	color: #212121;
-	
-	-webkit-border-bottom-left-radius: 20px 500px;
-	-webkit-border-bottom-right-radius: 500px 30px;
-	-webkit-border-top-right-radius: 5px 100px;
-	
-	-moz-border-radius-bottomleft: 20px 500px;
-	-moz-border-radius-bottomright: 500px 30px;
-	-moz-border-radius-topright: 5px 100px;	
-	
-	border-radius-bottomleft: 20px 500px;
-	border-radius-bottomright: 500px 30px;
-	border-radius-topright: 5px 100px;
-	
-	background: #ededed;
-	background: 
-		-webkit-gradient(
-			linear,
-			left top, left bottom,
-			from(#F7F5F0),
-			color-stop(2%, #F7F5F0)
-		);
 		
-	background: 
-		-moz-repeating-linear-gradient(
-			top,
-			#F7F5F0,
-			#F7F5F0 38px,
-			#F7F5F0 40px
-		);
-		
-	background: 
-		repeating-linear-gradient(
-			top,
-			#F7F5F0,
-			#F7F5F0 38px,
-			#F7F5F0 40px
-		);		
-		
-	-webkit-background-size: 100% 40px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px	;
+	border-radius: 5px;
+	
+	background: #F7F5F0;
 	
 	-webkit-box-shadow: 0 2px 10px 1px rgba(0,0,0,.6); 
 	-moz-box-shadow: 0 2px 10px 1px rgba(0,0,0,.6); 
 	box-shadow: 0 2px 10px 1px rgba(0,0,0,.6); 
-	
 }
 /* @end */
 
@@ -188,9 +154,10 @@ footer {
 }
 
 #list-items li {
-	background: #ffffff;
+	background: #fff;
 	border: solid 1px rgb(153, 153, 153);
 	-webkit-border-radius: 2px 2px;
+	-moz-border-radius: 2px 2px;
 	padding: 10px;
 	margin: 5px 0px;
 	display: block;
@@ -246,6 +213,10 @@ footer {
 
 .disabled-list {
 	opacity: 0.5;
+}
+
+.invalid-list {
+	background: #ffeded !important;
 }
 /* @end */
 
