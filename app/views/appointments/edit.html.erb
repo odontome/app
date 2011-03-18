@@ -2,8 +2,11 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		
+		var selectedPatient = [{id: "<%=@patient.id%>", uid: "<%=@patient.uid%>", fullname: "<%=escape_javascript @patient.fullname%>"}];
+				
 		// Setup autocomplete for patients
-		$("#appointment_patient_id").autoSuggest("/patients.json", {startText: "<%=_('Enter the patient name or Unique Identifier')%>", minChars: 2, selectionLimit: 1, selectedValuesProp: "id", selectedItemProp: "fullname", searchObjProps: "uid,fullname", emptyText: "<%=_('No results, a new patient will be created')%>", asHtmlID: "patient_id"});
+		$("#appointment_patient_id").autoSuggest("/patients.json", {minChars: 2, selectionLimit: 1, selectedValuesProp: "id", selectedItemProp: "fullname", searchObjProps: "uid,fullname", asHtmlID: "patient_id", preFill: selectedPatient});
 		
 		// Limit the notes
 		$('#appointment_notes').limit('255');

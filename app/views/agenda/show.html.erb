@@ -1,5 +1,5 @@
-<link rel="stylesheet" type="text/css" href="/stylesheets/fullcalendar.css" />
-<script type="text/javascript" src="/javascripts/jquery.fullcalendar.min.js"></script>
+<%= stylesheet_link_tag "fullcalendar" %>
+<%= javascript_include_tag "jquery.fullcalendar.min" %>
 
 <h1><%=_('Datebook')%></h1>
 
@@ -17,7 +17,7 @@
 				        modal: true,
 				        autoOpen: false,
 				        width: 490,
-				        height: 340,
+				        height: 320,
 						close: function(event, ui) { 
 							$(this).html("<%=_('Please wait...')%>"); 
 						}
@@ -48,13 +48,15 @@
 					  $("#modal_dialog").html(data).dialog("open");
 					});
 				} else {
-					$("#calendar").fullCalendar( 'changeView', 'agendaDay' );
+					$("#calendar").fullCalendar('changeView', 'agendaDay');
 					$("#calendar").fullCalendar('gotoDate', dayDate);
 				}
 			},
 			eventClick: function(calEvent, jsEvent, view) {
-				var url = "/appointments/edit/" + calEvent.id;
-				$("#modal_dialog").load(url, {patient: calEvent.patientId}).dialog("open");
+				var url = "/appointments/" + calEvent.id + "/edit?patient_id=" + calEvent.patient_id;
+				$.get(url, function(data) {
+				  $("#modal_dialog").html(data).dialog("open");
+				});
 			},
 			eventDrop: function(calEvent, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
 				// update the event with the new data

@@ -55,6 +55,10 @@ class AppointmentsController < ApplicationController
     @doctors = Doctor.mine
   end
   
+  def update
+    
+  end
+  
   def destroy
     @appointment = Appointment.mine.find(params[:id])
 
@@ -63,11 +67,7 @@ class AppointmentsController < ApplicationController
           format.js  { } #destroy.js.erb
       else
           format.js  {
-            render :template => "shared/ujs/form_errors.js.erb", 
-            :locals =>{
-              :item => @appointment, 
-              :notice => _("There was an error deleting this appointment")
-            }
+            render_ujs_error(@appointment, _("There was an error deleting this appointment"))
           }
       end
     end
