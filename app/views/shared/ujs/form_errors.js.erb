@@ -23,5 +23,5 @@ $.each(errorIDs, function(index, value){
     $(errorIDs[index]).attr("title", errorMessages[index]).addClass("error_field");
 });
 
-// For now
-alert("<%=_('There was a problem. Please try again')%>");
+// Display all the error messages
+$("<div id='modal_dialog' title='<%=notice %>'><ul><% item.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %></ul></div>").dialog({modal:true});
