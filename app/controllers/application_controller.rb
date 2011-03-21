@@ -119,5 +119,13 @@ class ApplicationController < ActionController::Base
         @practice = current_user.practice unless current_user_is_superadmin?
       end
     end
+    
+    def render_ujs_error(object, message)
+      render :template => "shared/ujs/form_errors.js.erb", 
+        :locals =>{
+        :item => object, 
+        :notice => message
+      }
+    end
 
 end

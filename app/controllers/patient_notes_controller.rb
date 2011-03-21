@@ -13,11 +13,7 @@ class PatientNotesController < ApplicationController
           format.js  { } #create.js.erb
       else
           format.js  {
-            render :template => "shared/ujs/form_errors.js.erb", 
-            :locals =>{
-              :item => @note, 
-              :notice => _("There was an error creating this note")
-            }
+            render_ujs_error(@note, _("There was an error creating this note"))
           }
       end
     end

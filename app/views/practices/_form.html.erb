@@ -1,12 +1,6 @@
 <%= form_for(@practice) do |practice_form| %>
 
-  <% if @practice.errors.any? %>
-    <div class="error">
-      <% @practice.errors.full_messages.each do |msg| %>
-        <%= msg %><br />
-	  <% end %>
-    </div>
-  <% end %>
+  <%= render "shared/error_messages", :target => @practice %>
 
   <p>
     <%= practice_form.text_field :name, :placeholder => _("Practice Name"), :title => _("Practice Name") %>

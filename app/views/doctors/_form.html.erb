@@ -1,12 +1,6 @@
 <%= form_for(@doctor) do |f| %>
 
-  <% if @doctor.errors.any? %>
-    <div class="error">
-      <% @doctor.errors.full_messages.each do |msg| %>
-        <%= msg %><br />
-	  <% end %>
-    </div>
-  <% end %>
+  <%= render "shared/error_messages", :target => @doctor %>
 
   <p>
     <%= f.text_field :firstname, :placeholder => _("First name"), :title => _("First name") %>
