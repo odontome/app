@@ -370,15 +370,19 @@ button.g-button, a.g-button, input[type=submit].g-button {
 .g-button.green {
 	border-color: rgb(51,103,22) !important;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(205,238,179)), to(rgb(163,202,131))) !important;
-	color: #336716;
+	color: #336716 !important;
 	text-shadow: none;
 }
 
 .pp_subscribe_button {
-	right: -10px;
+	right: 0;
 	position: relative;
-	top: -22px;
+	top: -14px;
 	float: right;
+}
+
+.pp_subscribe_button .g-button.green{
+	font-size: 14px !important;
 }
 
 /* @end */

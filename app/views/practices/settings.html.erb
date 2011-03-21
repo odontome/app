@@ -57,7 +57,7 @@
 										<%= render :partial => "/paypal/#{values['button_partial']}", :locals => { :custom => @practice.id} %>
 									<% end %>
 								<% elsif @practice_patients_count <= values['number_of_patients'].to_i %>
-										<%= link_to _("Change to this Plan"), change_to_free_plan_url, :class => "g-button green", :style => "margin: 10px 10px 0 0;" %>
+										<%= link_to _("Change to this Plan"), change_to_free_plan_url, :class => "g-button green" %>
 								<% end %>
 							</div>
 						<% else %>
