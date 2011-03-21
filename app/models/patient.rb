@@ -23,7 +23,7 @@ class Patient < ActiveRecord::Base
   
   # callbacks
   before_validation :set_practice_id, :on => :create
-
+    
   def fullname
     [firstname, lastname].join(' ')
   end
@@ -42,13 +42,29 @@ class Patient < ActiveRecord::Base
     end
   end
   
-  def setup_chart
-    chart = Chart.create!(:user_id => self.id)
-  end
-  
   # this functions checks if the user was created from the datebook (skipped all validation, so most of the data is invalid)
   def invalid?
     return date_of_birth.nil?
+  end
+  
+  def self.find_or_create_from(patient_id_or_name)
+    # remove any possible commas from this value
+    patient_id_or_name.gsub!(",", "")
+    
+    # Check if we are dealing with an integer or a string
+    if (patient_id_or_name.to_i == 0)
+      # instantiate a new patient
+      patient = Patient.new()
+      patient.fullname = patient_id_or_name
+      # set the practice_id manually because validation (and callbacks apparently as well) are skipped
+      patient.practice_id = UserSession.find.user.practice_id
+      # skip validation when saving this patient
+      patient.save!(:validate => false)
+      # now use the recently created patient id
+      patient_id_or_name = patient.id
+    end
+
+    return patient_id_or_name
   end
 
 end

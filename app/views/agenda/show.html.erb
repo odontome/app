@@ -53,18 +53,33 @@
 				}
 			},
 			eventClick: function(calEvent, jsEvent, view) {
-				var url = "/appointments/" + calEvent.id + "/edit?patient_id=" + calEvent.patient_id;
+				var url = "/appointments/" + calEvent.id + "/edit?patient_id=" + calEvent.patient_id + "&type=edit";
+				
 				$.get(url, function(data) {
 				  $("#modal_dialog").html(data).dialog("open");
 				});
 			},
 			eventDrop: function(calEvent, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
 				// update the event with the new data
-				$.post("/appointments/update/" + calEvent.id, {startsAt: calEvent.start, endsAt:calEvent.end, type:"drop"});
+				$.ajax({ 
+				    type: "PUT", 
+				    url: "/appointments/" + calEvent.id,
+				    data: { "appointment[starts_at]": JSON.stringify(calEvent.start), 
+							"appointment[ends_at]": JSON.stringify(calEvent.end), 
+							type: "drop"
+						  }
+				});
 			},
 			eventResize: function(calEvent, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) {
 				// update the event with the new data
-				$.post("/appointments/update/" + calEvent.id, {startsAt: calEvent.start, endsAt:calEvent.end, type:"resize"});
+				$.ajax({ 
+				    type: "PUT", 
+				    url: "/appointments/" + calEvent.id,
+				    data: { "appointment[starts_at]": JSON.stringify(calEvent.start), 
+							"appointment[ends_at]": JSON.stringify(calEvent.end), 
+							type: "resize"
+						  }
+				});
 			},
 			eventRender: function(event, element) {
 				// Append the name of the patient    

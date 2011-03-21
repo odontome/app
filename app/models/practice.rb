@@ -6,12 +6,15 @@ class Practice < ActiveRecord::Base
   # payment_due - set by paypal when the card couldn't be charged. Paypal tries 3 times before sending "cancelled"
   # expiring - set when user or us cancel the subscription on paypal. Account will be here until the month expires
   # cancelled - account terminated. User or admin wants to close it or payment in paypal have had stopped. Will be here for 30 days, then it should be deleted from DB.
-
+  
+  # associations
   has_many :users, :dependent => :destroy 
   has_many :doctors, :dependent => :destroy 
   has_many :patients, :dependent => :destroy 
   belongs_to :plan
   accepts_nested_attributes_for :users, :limit => 1
+  
+  # validations
   validates_presence_of :plan_id
 
   before_create do
