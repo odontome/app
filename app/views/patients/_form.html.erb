@@ -1,12 +1,6 @@
 <%= form_for(@patient) do |f| %>
 
-  <% if @patient.errors.any? %>
-    <div class="error">
-      <% @patient.errors.full_messages.each do |msg| %>
-        <%= msg %><br />
-	  <% end %>
-    </div>
-  <% end %>
+  	<%= render "shared/error_messages", :target => @patient%>
 
 	<fieldset>
 	  <legend><%=_("Personal information")%></legend>

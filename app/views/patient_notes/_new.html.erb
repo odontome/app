@@ -1,6 +1,6 @@
 <% form_tag(patient_patient_notes_path(@patient), :method => :post, :remote => true) do %>
 	<p>
-	    <%= text_area_tag "patient_note[notes]", nil, {:rows => 2, :placeholder => _("Patient notes"), :title => _("Patient notes")}  %>
+	    <%= text_area_tag "patient_note[notes]", nil, {:rows => 2, :placeholder => _("Type something related to this patient"), :title => _("Type something related to this patient")}  %>
 	</p>
 	<%= submit_tag(_("Annotate"), :class => "g-button", :disable_with => _("Please wait...")) %>
 <% end %>

@@ -1,5 +1,7 @@
 <%= form_for(@user) do |f| %>
-
+	
+	<%= render "shared/error_messages", :target => @user%>
+	
 	<fieldset>
 	  <legend><%=_("Personal information")%></legend>
 	  <p>
