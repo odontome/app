@@ -22,7 +22,7 @@ class AppointmentsController < ApplicationController
   
   def create
     @appointment = Appointment.new(params[:appointment])
-    @appointment.starts_at = Time.at(params[:appointment][:starts_at].to_i)
+    #@appointment.starts_at = Time.at(params[:appointment][:starts_at].to_i)
 
     # if "as_values_patient_id" is not empty use that, otherwise use "patient_id"
     @appointment.patient_id = Patient.find_or_create_from((params[:as_values_patient_id] != "") ? (params[:as_values_patient_id]) : (params[:appointment][:patient_id]))
