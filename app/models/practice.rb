@@ -14,7 +14,6 @@ class Practice < ActiveRecord::Base
   accepts_nested_attributes_for :users, :limit => 1
   validates_presence_of :plan_id
 
-
   before_create do
     set_number_of_patients(1)
   end

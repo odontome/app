@@ -37,10 +37,11 @@ class PaypalController < ApplicationController
   # at the end of the cycle when Cancelled
   # or when billing attemps failed 3 times
   def subscription_expired(practice_id, plan_id)
-    p = Practice.find_by_id(practice_id.to_i)
-     unless p.nil?
-       p.set_as_cancelled
-       logger.info("subscription_expired: #{practice_id}") 
+    practice = Practice.find_by_id(practice_id.to_i)
+     unless practice.nil?
+       practice.set_as_cancelled
+       practice.save!
+       logger.info("subscription_expired: #{practice_id}")
      else
        logger.error("subscription_expired: practice_id #{practice_id} on IPN not found")
      end
