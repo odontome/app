@@ -17,23 +17,19 @@ class Practice < ActiveRecord::Base
   # validations
   validates_presence_of :plan_id
 
-  before_create do
-    set_number_of_patients(1)
-  end
-
   def set_as_cancelled
     self.status = "cancelled"
     self.cancelled_at = Time.now
   end
   
-  def self.set_plan_id_and_number_of_patients(plan_id)
+  def set_plan_id_and_number_of_patients=(plan_id)
     PLANS.each do |plan, values|
-      if values['id'].to_i == plan_id
+      if values['id'].to_i == plan_id.to_i
           # if we manually set an account to have say 10.000 patients don't touch it no matter what plan is beign paid
           if self.number_of_patients < values['number_of_patients'].to_i
             self.number_of_patients = values['number_of_patients'].to_i
           end
-          if plan_id > 1
+          if plan_id.to_i > 1
             self.status = "active"
           else
             self.status = "free"
