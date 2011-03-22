@@ -6,8 +6,25 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password, :password_confirmation
   helper_method :current_session, :current_user, :current_user_is_admin?, :user_is_admin?
 
+  before_filter :check_account_status
   before_filter :set_locale
-  before_filter :find_practice_object
+  
+  #TODO: ask Raul if he used this
+  #before_filter :find_practice_object
+  
+  
+  def check_account_status
+    if current_user 
+      if current_user.practice.status == "cancelled"
+        current_user_session.destroy
+        redirect_to signin_url, :alert => _("Your account has been cancelled and is no longer possible to access it. Please contact us if you need assistance.")
+      elsif current_user.practice.status == "expiring"
+        flash[:alert] = _("Your account is in the process of being cancelled and is about to expire. Please be aware that when the current billing cycle ends your account will be deleted. You can however change your practice to the Free Plan if you have less than the allowed patients for that plan or subscribe again a new plan.")
+      elsif current_user.practice.status == "payment_due"
+        flash[:alert] = _("Your account is Pending Payment. We have unsuccesfully tried to bill your Paypal account and we'll try again soon. Please be aware that after 3 failed billing attemps your account will be closed. Please check your account with Paypal, maybe your card has expired.")
+      end
+    end
+  end
 
 
   def set_locale
@@ -112,13 +129,13 @@ class ApplicationController < ActionController::Base
         return false
       end
     end
-    
-    def find_practice_object
-      if current_user
-        # superadmins doesn't have a Related Practice
-        @practice = current_user.practice unless current_user_is_superadmin?
-      end
-    end
+
+    #def find_practice_object
+    #  if current_user
+    #    # superadmins doesn't have a Related Practice
+    #    @practice = current_user.practice unless current_user_is_superadmin?
+    #  end
+    #end
     
     def render_ujs_error(object, message)
       render :template => "shared/ujs/form_errors.js.erb", 

@@ -9,10 +9,8 @@ class PaypalController < ApplicationController
     practice = Practice.find_by_id(practice_id.to_i)
      unless practice.nil?
        practice.status = "active"
-       practice.plan_id = plan_id
        practice.set_plan_id_and_number_of_patients(practice.plan_id)
        practice.save!
-       
        logger.info("sign_up_user: #{practice_id}")
      else
        logger.error("sign_up_user: practice_id #{practice_id} on IPN not found")

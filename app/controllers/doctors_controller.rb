@@ -22,7 +22,7 @@ class DoctorsController < ApplicationController
 
     respond_to do |format|
       if @doctor.save
-        format.html { redirect_to(doctors_url, :notice => _('Doctor was successfully created.')) }
+        format.html { redirect_to(doctors_url, :notice => _('The new doctor was successfully created in your practice.')) }
       else
         format.html { render :action => "new" }
       end
@@ -34,7 +34,7 @@ class DoctorsController < ApplicationController
 
     respond_to do |format|
       if @doctor.update_attributes(params[:doctor])
-        format.html { redirect_to(@doctor, :notice => _('Doctor was successfully updated.')) }
+        format.html { redirect_to(@doctor, :notice => _('Your practice\'s doctor was successfully updated.')) }
       else
         format.html { render :action => "edit" }
       end

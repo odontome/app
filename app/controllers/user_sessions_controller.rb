@@ -7,12 +7,15 @@ class UserSessionsController < ApplicationController
   end
   
   def create
-    @user_session = UserSession.new(params[:user_session])
+    #@user_session = UserSession.new(params[:user_session])
+    @user_session = UserSession.with_scope(:find_options => {:include => :practice}) do
+      UserSession.new(params[:user_session])
+    end
 
     respond_to do |format|
       if @user_session.save
         session[:locale] = @user_session.user.preferred_language
-        format.html { redirect_to(root_url, :notice => _('Login successful!')) }
+        format.html { redirect_to(root_url) }
       else
         format.html { render :action => "new" }
       end
