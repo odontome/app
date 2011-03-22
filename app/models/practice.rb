@@ -36,6 +36,7 @@ class Practice < ActiveRecord::Base
             self.number_of_patients = values['number_of_patients'].to_i
           end
           self.plan_id = plan_id
+          self.status = "free" if plan_id == 1
           break
       end
     end
