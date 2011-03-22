@@ -439,10 +439,10 @@ input[disabled] {
 /* @end */
 
 /* @group Flash messages */
-.info, .success, .error, .validation {
+.notice, .info, .success, .error, .validation {
     border: 1px solid;
     margin: 10px 0px;
-    padding:15px 10px 15px 50px;
+    padding:15px 10px 15px 15px;
     background-repeat: no-repeat;
     background-position: 10px center;
 }
@@ -450,11 +450,11 @@ input[disabled] {
     color: #00529B;
     background-color: #BDE5F8;
 }
-.success {
+.notice, .success {
     color: #4F8A10;
     background-color: #DFF2BF;
 }
-.error {
+.error, .alert {
     color: #D8000C;
     background-color: #FFBABA;
 }

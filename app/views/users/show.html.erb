@@ -17,7 +17,7 @@
 	<label><%=_('Last seen')%>:</label> <% if @user.last_login_at %><%= l @user.last_login_at, :format => :long %> ( <%= time_ago_in_words(@user.last_login_at)%> <%=_('ago')%>)<% else %><%=_('never')%><% end %>
 </p>
 <p>
-	<label><%=_('Number of signins')%>:</label> <% if @user.login_count.to_i > 1 %><%= @user.login_count %><% else %>none<% end %>
+	<label><%=_('Number of signins')%>:</label> <% if @user.login_count.to_i > 1 %><%= @user.login_count %><% else %><%=_("none")%><% end %>
 </p>
 </fieldset>
 

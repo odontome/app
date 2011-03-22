@@ -38,33 +38,58 @@
 	<h1><%=_("Plans and payments")%></h1>
 	
 	<fieldset>
+		<%=_("Number of patients in your account")%>: <%= @practice_patients_count %>
 		<ul id="list-items">
 			<% PLANS.each do |plan, values| %>
 					<% current_plan = true if @practice.plan_id == values['id']%>
 					<li>
-						<% if current_plan %><strong><% end %>
+						<% if current_plan %><strong><%= _('Current') %>:<% end %>
 						<%=_("#{extract_text_from_gettext(values['name'])}")%> 
 						<%= "— $" + values['price'].to_s unless values['id'].to_i == 1 %>
-						<strong><%= "(#{_('Current plan')})" if current_plan %></strong><br />
+						<strong>
+						<% if current_plan %>
+							— <%= @practice.number_of_patients %> <%=_('patients')%> (<%= (@practice.number_of_patients - @practice_patients_count).to_s + " " + _("left")%>)
+						<% end %>
+						</strong><br />
+						
+						
 						<% if current_plan %></strong><% end %>
 						<sub><%=_("#{extract_text_from_gettext(values['description'])}")%></sub>
-						<% unless current_plan %>
-							<div class="pp_subscribe_button">
+
+						<div class="pp_subscribe_button">
+							<% if !current_plan %>
+								<% if values['id'].to_i == 1 %>
+										<%= link_to _("Change to this Plan"), change_to_free_plan_url, :class => "g-button green" %>
+								<% end %>
 								<% if values['id'].to_i > 1 %>
 									<% if @practice.plan_id > 1 %>
 										<%= render :partial => "/paypal/#{values['button_partial']}" + "_change", :locals => { :custom => @practice.id} if @practice_patients_count <= values['number_of_patients'].to_i  %>
 									<% else %>
 										<%= render :partial => "/paypal/#{values['button_partial']}", :locals => { :custom => @practice.id} %>
 									<% end %>
-								<% elsif @practice_patients_count <= values['number_of_patients'].to_i %>
-										<%= link_to _("Change to this Plan"), change_to_free_plan_url, :class => "g-button green" %>
 								<% end %>
-							</div>
-						<% else %>
-							<div class="list-item"><%= @practice.number_of_patients %> <%=_('patients')%><br />(<%= (values['number_of_patients'].to_i - @practice_patients_count).to_s + " " + _("left")%>)</div>
-						<% end %>
+							<% elsif values['id'].to_i > 1 %>
+								<% if @practice.status == "expiring" %>
+									<div class="list-item"><br /><%=_("Plan being cancelled")%></div>
+								<% else %>
+									<%= render :partial => "/paypal/unsubscribe_button", :locals => { :custom => @practice.id} %>
+								<% end %>
+							<% end %>
+						</div>
 					</li>
 			<% end %>
-		</ul>
+			<hr />
 
+			<li>
+				<%=_('Account Cancellation')%><br />
+				<sub>
+						<%=_('We\'ll be very sorry if you decide to leave Odonto.me. We hope that everything was ok and if not, please contact us so we can help you.')%>
+						<br />
+						<i><%=_("Please make sure that you Unsubscribed first from your current plan.")%></i>
+				</sub>
+				<div class="pp_subscribe_button">
+					<%= link_to _("Close account"), practice_close_url, :method => :post, :confirm => "Are you sure? All your account data will be lost forever. THERE IS NO GOING BACK!", :class => "g-button red"%>
+				</div>
+			</li>
+		</ul>
 	</fieldset>

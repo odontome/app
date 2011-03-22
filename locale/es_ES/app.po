@@ -387,10 +387,10 @@ msgstr "Notas opcionales"
 
 #: config/plans.yml:4
 msgid ""
-"Our free plan in which you can use everything in odonto.me for up to 500 "
+"Our free plan in which you can use everything in Odonto.me for up to 500 "
 "patients"
 msgstr ""
-"Nuestro plan gratuito en el que puedes usar todo odonto.me con hasta 500 "
+"Nuestro plan gratuito en el que puedes usar todo Odonto.me con hasta 500 "
 "pacientes"
 
 #: app/views/practices/_form.html.erb:22
