@@ -10,6 +10,7 @@ class PaypalController < ApplicationController
      unless practice.nil?
        practice.set_plan_id_and_number_of_patients(plan_id)
        practice.save!
+     
        logger.info("sign_up_user: Practice #{practice_id} to Plan #{plan_id}")
      else
        logger.error("sign_up_user: Practice #{practice_id} on IPN not found")

@@ -44,5 +44,6 @@ class Practice < ActiveRecord::Base
       end
     end
   end
-  
+
+
 end
