@@ -32,9 +32,12 @@ class Practice < ActiveRecord::Base
           # if we manually set an account to have say 10.000 patients don't touch it no matter what plan is beign paid
           if self.number_of_patients < values['number_of_patients'].to_i
             self.number_of_patients = values['number_of_patients'].to_i
-          elsif plan_id == 1
-            self.number_of_patients = values['number_of_patients'].to_i
+          end
+          if plan_id > 1
+            self.status = "active"
+          else
             self.status = "free"
+            self.number_of_patients = values['number_of_patients'].to_i
           end
           self.plan_id = plan_id
           break

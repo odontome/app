@@ -8,7 +8,6 @@ class PaypalController < ApplicationController
   def sign_up_user(practice_id, plan_id)
     practice = Practice.find_by_id(practice_id.to_i)
      unless practice.nil?
-       practice.status = "active"
        practice.set_plan_id_and_number_of_patients(plan_id)
        practice.save!
        logger.info("sign_up_user: Practice #{practice_id} to Plan #{plan_id}")

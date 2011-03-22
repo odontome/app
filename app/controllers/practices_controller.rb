@@ -65,7 +65,6 @@ class PracticesController < ApplicationController
     elsif current_user.practice.status == "expiring"
       # "expiring" means that confirmation of cancellation has been received from Paypal.
       practice = Practice.find(current_user.practice_id)
-      practice.status = "free"
       practice.set_plan_id_and_number_of_patients(1)
       practice.save
       flash.discard
