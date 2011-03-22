@@ -26,7 +26,7 @@ class Practice < ActiveRecord::Base
     self.cancelled_at = Time.now
   end
   
-  def set_plan_id_and_number_of_patients(plan_id)
+  def self.set_plan_id_and_number_of_patients(plan_id)
     PLANS.each do |plan, values|
       if values['id'].to_i == plan_id
           # if we manually set an account to have say 10.000 patients don't touch it no matter what plan is beign paid
@@ -44,6 +44,5 @@ class Practice < ActiveRecord::Base
       end
     end
   end
-
 
 end
