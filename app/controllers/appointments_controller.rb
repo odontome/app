@@ -9,7 +9,7 @@ class AppointmentsController < ApplicationController
   layout nil
   
   def index
-     @appointments = Appointment.find_for_calendar(params[:start], params[:end])
+     @appointments = Appointment.find_between(params[:start], params[:end])
      
      respond_with(@appointments)
   end
@@ -23,20 +23,9 @@ class AppointmentsController < ApplicationController
   def create
     @appointment = Appointment.new(params[:appointment])
     @appointment.starts_at = Time.at(params[:appointment][:starts_at].to_i)
-    
-    # if this value is set, then use it has the patient id
-    if (params[:as_values_patient_id] != "")
-      @appointment.patient_id = params[:as_values_patient_id]
-    # otherwise, we need to create a new patient and pass the id back
-    else
-      @patient = Patient.new()
-      @patient.fullname = params[:appointment][:patient_id]
-      # set the practice_id manually because validation (and callbacks apparently as well) are skipped
-      @patient.practice_id = UserSession.find.user.practice_id
-      # skip validation when saving this patient
-      @patient.save!(:validate => false)
-      @appointment.patient_id = @patient.id
-    end 
+
+    # if "as_values_patient_id" is not empty use that, otherwise use "patient_id"
+    @appointment.patient_id = Patient.find_or_create_from((params[:as_values_patient_id] != "") ? (params[:as_values_patient_id]) : (params[:appointment][:patient_id]))
     
     respond_to do |format|
       if @appointment.save
@@ -56,7 +45,22 @@ class AppointmentsController < ApplicationController
   end
   
   def update
+    @appointment = Appointment.mine.find(params[:id])
     
+    # if "as_values_patient_id" is not empty use that, otherwise use "patient_id"
+    if params[:type] == "edit"
+      params[:appointment][:patient_id] = Patient.find_or_create_from((params[:as_values_patient_id] != "") ? (params[:as_values_patient_id]) : (params[:appointment][:patient_id]))
+    end
+    
+    respond_to do |format|
+      if @appointment.update_attributes(params[:appointment])
+        format.js { } # update.js.erb
+      else
+        format.js  { 
+          render_ujs_error(@appointment, _("There was an error updating this appointment"))
+        }
+      end
+    end
   end
   
   def destroy
@@ -64,7 +68,7 @@ class AppointmentsController < ApplicationController
 
     respond_to do |format|
       if @appointment.destroy
-          format.js  { } #destroy.js.erb
+          format.js { render :action => :create } # reuses create.js.erb
       else
           format.js  {
             render_ujs_error(@appointment, _("There was an error deleting this appointment"))

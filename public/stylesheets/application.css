@@ -1,5 +1,5 @@
 html,body {
-	font-family: "Helvetica Neue", Helvetica, Arial;
+	font-family: 'Myriad Pro', Helvetica, Arial, sans-serif;
 	font-size: 14px;
 	color: #333333;
 	background: url(/images/layout/background.jpg) top center fixed;	
@@ -14,6 +14,10 @@ table.balance {
 		padding: 5px;
 		border-bottom: 1px solid #cecece;
 	}
+
+h1 {
+	color: #303030;
+}
 
 h1 a {
 	font-size: 14px;
