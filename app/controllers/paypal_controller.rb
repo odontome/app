@@ -9,11 +9,11 @@ class PaypalController < ApplicationController
     practice = Practice.find_by_id(practice_id.to_i)
      unless practice.nil?
        practice.status = "active"
-       practice.set_plan_id_and_number_of_patients(practice.plan_id)
+       practice.set_plan_id_and_number_of_patients(plan_id)
        practice.save!
-       logger.info("sign_up_user: #{practice_id}")
+       logger.info("sign_up_user: Practice #{practice_id} to Plan #{plan_id}")
      else
-       logger.error("sign_up_user: practice_id #{practice_id} on IPN not found")
+       logger.error("sign_up_user: Practice #{practice_id} on IPN not found")
      end
   end
 
@@ -24,9 +24,9 @@ class PaypalController < ApplicationController
      unless practice.nil?
        practice.status = "expiring"
        practice.save!
-       logger.info("cancel_subscription: #{practice_id}")
+       logger.info("cancel_subscription: Practice #{practice_id} to plan #{plan_id}")
      else
-       logger.error("cancel_subscription: practice_id #{practice_id} on IPN not found")
+       logger.error("cancel_subscription: Practice #{practice_id} on IPN not found")
      end
   end
 
@@ -39,9 +39,9 @@ class PaypalController < ApplicationController
      unless practice.nil?
        practice.set_as_cancelled
        practice.save!
-       logger.info("subscription_expired: #{practice_id}")
+       logger.info("subscription_expired: Practice #{practice_id} in plan #{plan_id}")
      else
-       logger.error("subscription_expired: practice_id #{practice_id} on IPN not found")
+       logger.error("subscription_expired: Practice #{practice_id} on IPN not found")
      end
   end
 
@@ -51,9 +51,9 @@ class PaypalController < ApplicationController
      unless practice.nil?
        practice.status = "payment_due"
        practice.save!
-       logger.info("subscription_failed: #{practice_id}")
+       logger.info("subscription_failed: Practice #{practice_id} in plan #{plan_id}")
      else
-       logger.error("subscription_failed: practice_id #{practice_id} on IPN not found")
+       logger.error("subscription_failed: Practice #{practice_id} on IPN not found")
      end
   end
 
@@ -63,9 +63,9 @@ class PaypalController < ApplicationController
      unless practice.nil?
        practice.status = "active"
        practice.save!
-       logger.info("subscription_payment: #{practice_id}")
+       logger.info("subscription_payment: Practice #{practice_id} to plan #{plan_id}")
      else
-       logger.error("subscription_payment: practice_id #{practice_id} on IPN not found")
+       logger.error("subscription_payment: Practice #{practice_id} on IPN not found")
      end
   end
 
