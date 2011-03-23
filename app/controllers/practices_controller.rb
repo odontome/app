@@ -65,10 +65,13 @@ class PracticesController < ApplicationController
     redirect_to practice_settings_url
   end
 
+  def cancel
+  end
+
   def close
     if current_user.practice.status == "active"
       # "active" means that the account has an active plan in Paypal
-      flash[:alert] = _("Please Unsubscribe first from your current plan to close your account so Paypal won't charge you on the next billing cycle. Please try again once your plan it's cancelled.")
+      flash[:alert] = _("Please Unsubscribe first from your current plan to close your account so Paypal won't charge you on the next billing cycle. Please try again once your plan is cancelled. You'll find a message here saying so.")
       redirect_to practice_settings_url
     else
       @practice = current_user.practice

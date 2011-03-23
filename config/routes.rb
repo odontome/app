@@ -21,6 +21,7 @@ Odontome::Application.routes.draw do
   match "/agenda" => "agenda#show", :as => :agenda
   match "/practice" => "practices#show", :as => :practice
   match "/practice/settings" => "practices#settings", :as => :practice_settings
+  match "/practice/cancel" => "practices#cancel", :as => :practice_cancel
   match "/practice/change_to_free_plan" => "practices#change_to_free_plan", :as => :change_to_free_plan
   match "/practice/close" => "practices#close", :as => :practice_close, :via => :post
   match "/paypal_ipn" => "paypal#paypal_ipn", :as => :paypal_ipn, :via => :post
