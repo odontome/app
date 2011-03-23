@@ -10,11 +10,11 @@ class Patient < ActiveRecord::Base
   }  
   
   scope :search, lambda { |q|
-    order("firstname")
-    .select("id,uid,firstname,lastname")
+    select("id,uid,firstname,lastname")
     .where("uid LIKE '%"+q+"%' OR firstname LIKE '%"+q+"%' OR lastname LIKE '%"+q+"%'")
     .mine
     .limit(10)
+    .order("firstname")
   }
   
   # validations
