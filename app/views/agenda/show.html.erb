@@ -53,7 +53,7 @@
 				}
 			},
 			eventClick: function(calEvent, jsEvent, view) {
-				var url = "/appointments/" + calEvent.id + "/edit?patient_id=" + calEvent.patient_id + "&type=edit";
+				var url = "/appointments/" + calEvent.id + "/edit?patient_id=" + calEvent.patient_id;
 				
 				$.get(url, function(data) {
 				  $("#modal_dialog").html(data).dialog("open");

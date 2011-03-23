@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110322195716) do
+ActiveRecord::Schema.define(:version => 20110323023441) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "practice_id"
@@ -38,11 +38,12 @@ ActiveRecord::Schema.define(:version => 20110322195716) do
     t.string   "firstname"
     t.string   "lastname"
     t.string   "gender"
-    t.boolean  "is_active",   :default => true
+    t.boolean  "is_active",                :default => true
     t.string   "speciality"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email"
+    t.string   "color",       :limit => 7, :default => "#3366CC"
   end
 
   create_table "patient_notes", :force => true do |t|

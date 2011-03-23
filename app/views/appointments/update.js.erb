@@ -1,4 +1,4 @@
-<% if params[:type] === "edit" %>
+<% if params[:type] != "drop" && params[:type] != "resize" %>
 	$("#calendar").fullCalendar("refetchEvents");
 	$("#modal_dialog").dialog("close");
 <% end %>

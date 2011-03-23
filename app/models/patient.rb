@@ -9,6 +9,14 @@ class Patient < ActiveRecord::Base
     where("patients.practice_id = ? ", UserSession.find.user.practice_id)
   }  
   
+  scope :search, lambda { |q|
+    select("id,uid,firstname,lastname")
+    .where("uid LIKE '%"+q+"%' OR firstname LIKE '%"+q+"%' OR lastname LIKE '%"+q+"%'")
+    .mine
+    .limit(10)
+    .order("firstname")
+  }
+  
   # validations
   validates_uniqueness_of :uid, :scope => :practice_id, :allow_nil => true, :allow_blank => true
   validates_presence_of :practice_id, :firstname, :lastname, :date_of_birth
