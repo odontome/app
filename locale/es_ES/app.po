@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-03-21 16:50+0100\n"
+"POT-Creation-Date: 2011-03-23 12:12+0100\n"
 "PO-Revision-Date: 2011-03-01 18:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,19 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: app/views/practices/new.html.erb:2
-msgid "\"#{extract_text_from_gettext(@plan_description)}\""
-msgstr ""
-
-#: app/views/practices/new.html.erb:1
-msgid "\"#{extract_text_from_gettext(@plan_name)}\""
-msgstr ""
-
-#: app/views/practices/settings.html.erb:50
+#: app/views/practices/settings.html.erb:57
 msgid "\"#{extract_text_from_gettext(values['description'])}\""
 msgstr ""
 
-#: app/views/practices/settings.html.erb:46
+#: app/views/practices/settings.html.erb:47
 msgid "\"#{extract_text_from_gettext(values['name'])}\""
 msgstr ""
 
@@ -56,11 +48,15 @@ msgstr ""
 msgid "A great value plan for up to 1000 patients"
 msgstr "Excelente opción para registrar hasta 1000 pacientes"
 
+#: app/views/practices/settings.html.erb:84
+msgid "Account Cancellation"
+msgstr "Cancelación de la Cuenta"
+
 #: app/views/users/_form.html.erb:15 app/views/users/show.html.erb:12
 msgid "Account information"
 msgstr "Datos de Cuenta"
 
-#: app/views/doctors/_form.html.erb:32
+#: app/views/doctors/_form.html.erb:36
 msgid "Activate"
 msgstr "Activar"
 
@@ -92,6 +88,13 @@ msgstr "¿Tienes ya una cuenta?"
 msgid "Amount"
 msgstr "Cantidad"
 
+#: app/controllers/practices_controller.rb:80
+msgid ""
+"An error has ocurred. We couldn't close your account. Please contact us."
+msgstr ""
+"Ha ocurrido un error. No hemos podido cerrar tu cuenta. Por favor "
+"contáctamos."
+
 #: app/views/patient_notes/_new.html.erb:5
 msgid "Annotate"
 msgstr "Apuntar"
@@ -100,8 +103,24 @@ msgstr "Apuntar"
 msgid "Appointments"
 msgstr "Citas"
 
-#: app/views/appointments/_form.html.erb:19
-#: app/views/doctors/_form.html.erb:30 app/views/doctors/_form.html.erb:32
+#: locale/model_attributes.rb:11
+msgid "Appointment|Ends at"
+msgstr "Termina"
+
+#: locale/model_attributes.rb:8
+msgid "Appointment|Notes"
+msgstr "Notas"
+
+#: locale/model_attributes.rb:10
+msgid "Appointment|Starts at"
+msgstr "Empieza"
+
+#: locale/model_attributes.rb:9
+msgid "Appointment|Status"
+msgstr "Estado"
+
+#: app/views/appointments/_form.html.erb:18
+#: app/views/doctors/_form.html.erb:34 app/views/doctors/_form.html.erb:36
 #: app/views/doctors/index.html.erb:17 app/views/doctors/show.html.erb:30
 #: app/views/layouts/_navigation.html.erb:13 app/views/users/index.html.erb:13
 #: app/views/users/show.html.erb:27
@@ -112,15 +131,27 @@ msgstr "¿Estás seguro?"
 msgid "Balance"
 msgstr "Balance"
 
+#: locale/model_attributes.rb:3
+msgid "Balance|Amount"
+msgstr "Monto"
+
+#: locale/model_attributes.rb:4
+msgid "Balance|Notes"
+msgstr "Notas"
+
+#: app/views/doctors/_form.html.erb:26
+msgid "Calendar color"
+msgstr "Color del calendario"
+
 #: app/models/doctor.rb:35
 msgid "Can't delete Doctor with registered appointmens"
 msgstr "No es posible borrar un Doctor con citas registradas"
 
-#: app/models/user.rb:37
+#: app/models/user.rb:35
 msgid "Can't delete admin user"
 msgstr "No es posible borrar al administrador"
 
-#: app/views/doctors/_form.html.erb:35 app/views/patients/_form.html.erb:70
+#: app/views/doctors/_form.html.erb:39 app/views/patients/_form.html.erb:70
 #: app/views/users/_form.html.erb:27
 msgid "Cancel"
 msgstr "Cancelar"
@@ -130,7 +161,7 @@ msgid "Change here your practice name, select your language and more"
 msgstr ""
 "Cambia aquí el nombre de tu clínica, selecciona tu idioma y otras cosas"
 
-#: app/views/practices/settings.html.erb:60
+#: app/views/practices/settings.html.erb:62
 msgid "Change to this Plan"
 msgstr "Cambiar a este Plan"
 
@@ -141,6 +172,10 @@ msgstr "Historia"
 #: app/views/patients/_form.html.erb:56
 msgid "Cigarettes per day"
 msgstr "Cigarrillos por día"
+
+#: app/views/practices/settings.html.erb:91
+msgid "Close account"
+msgstr "Cerrar cuenta"
 
 #: app/views/practices/_form.html.erb:25 app/views/users/_form.html.erb:23
 msgid "Confirm your password"
@@ -162,6 +197,10 @@ msgstr "Crear nuevo paciente"
 msgid "Create new user"
 msgstr "Crear nuevo usuario"
 
+#: app/views/practices/settings.html.erb:46
+msgid "Current"
+msgstr "Actual"
+
 #: app/views/patients/_form.html.erb:53
 msgid "Current medications"
 msgstr "Medicamentos que toma"
@@ -180,7 +219,7 @@ msgstr "Agenda"
 msgid "Delete"
 msgstr "Eliminar"
 
-#: app/views/appointments/_form.html.erb:19
+#: app/views/appointments/_form.html.erb:18
 msgid "Delete appointment"
 msgstr "Eliminar cita"
 
@@ -188,17 +227,37 @@ msgstr "Eliminar cita"
 msgid "Doctor"
 msgstr "Doctor"
 
-#: app/controllers/doctors_controller.rb:25
-msgid "Doctor was successfully created."
-msgstr "El Doctor ha sido creado correctamente"
-
-#: app/controllers/doctors_controller.rb:37
-msgid "Doctor was successfully updated."
-msgstr "El Doctor ha sido actualizado correctamente"
-
 #: app/views/doctors/index.html.erb:1
 msgid "Doctors"
 msgstr "Doctores"
+
+#: locale/model_attributes.rb:19
+msgid "Doctor|Email"
+msgstr "Email"
+
+#: locale/model_attributes.rb:14
+msgid "Doctor|Firstname"
+msgstr "Nombre"
+
+#: locale/model_attributes.rb:16
+msgid "Doctor|Gender"
+msgstr "Sexo"
+
+#: locale/model_attributes.rb:17
+msgid "Doctor|Is active"
+msgstr "Está activo"
+
+#: locale/model_attributes.rb:15
+msgid "Doctor|Lastname"
+msgstr "Apellidos"
+
+#: locale/model_attributes.rb:18
+msgid "Doctor|Speciality"
+msgstr "Especialidad"
+
+#: locale/model_attributes.rb:13
+msgid "Doctor|Uid"
+msgstr "Identificador"
 
 #: app/views/user_sessions/new.html.erb:21
 msgid "Don't have an account?"
@@ -327,10 +386,6 @@ msgstr "Última visita"
 msgid "Login"
 msgstr "Acceder"
 
-#: app/controllers/user_sessions_controller.rb:15
-msgid "Login successful!"
-msgstr "¡Has entrado con éxito!"
-
 #: app/views/layouts/_navigation.html.erb:13
 #: app/views/layouts/_navigation.html.erb:18
 msgid "Logout"
@@ -377,6 +432,10 @@ msgstr "No se ha encontrado nada, se creará un nuevo paciente"
 msgid "Notes"
 msgstr "Notas"
 
+#: app/views/practices/settings.html.erb:41
+msgid "Number of patients in your account"
+msgstr "Número de pacientes en tu cuenta"
+
 #: app/views/users/show.html.erb:20
 msgid "Number of signins"
 msgstr "Número de entradas"
@@ -406,31 +465,113 @@ msgstr "Operaciones"
 msgid "Past illnesses"
 msgstr "Enfermedades sufridas"
 
-#: app/controllers/patients_controller.rb:46
-msgid "Patient was successfully created."
-msgstr "El paciente ha sido creado con éxito."
-
-#: app/controllers/patients_controller.rb:58
-msgid "Patient was successfully updated."
-msgstr "El paciente ha sido actualizado con éxito."
+#: locale/model_attributes.rb:6
+msgid "PatientNote|Notes"
+msgstr "Notas"
 
 #: app/views/layouts/_navigation.html.erb:6
 #: app/views/patients/index.html.erb:1
 msgid "Patients"
 msgstr "Pacientes"
 
+#: locale/model_attributes.rb:24
+msgid "Patient|Address"
+msgstr "Dirección"
+
+#: locale/model_attributes.rb:30
+msgid "Patient|Allergies"
+msgstr "Alergias"
+
+#: locale/model_attributes.rb:34
+msgid "Patient|Cigarettes per day"
+msgstr "Cigarrillos por día"
+
+#: locale/model_attributes.rb:29
+msgid "Patient|Date of birth"
+msgstr "Fecha de nacimiento"
+
+#: locale/model_attributes.rb:35
+msgid "Patient|Drinks per day"
+msgstr "Bebidas alcohólicas por día"
+
+#: locale/model_attributes.rb:36
+msgid "Patient|Drugs use"
+msgstr "Uso de drogas"
+
+#: locale/model_attributes.rb:25
+msgid "Patient|Email"
+msgstr "Email"
+
+#: locale/model_attributes.rb:28
+msgid "Patient|Emergency telephone"
+msgstr "Teléfono para emergencias"
+
+#: locale/model_attributes.rb:37
+msgid "Patient|Family diseases"
+msgstr "Enfermedades familiares"
+
+#: locale/model_attributes.rb:22
+msgid "Patient|Firstname"
+msgstr "Nombre"
+
+#: locale/model_attributes.rb:23
+msgid "Patient|Lastname"
+msgstr "Apellidos"
+
+#: locale/model_attributes.rb:33
+msgid "Patient|Medications"
+msgstr "Medicaciones"
+
+#: locale/model_attributes.rb:27
+msgid "Patient|Mobile"
+msgstr "Móvil"
+
+#: locale/model_attributes.rb:31
+msgid "Patient|Past illnesses"
+msgstr "Enfermedades sufridas"
+
+#: locale/model_attributes.rb:32
+msgid "Patient|Surgeries"
+msgstr "Operaciones"
+
+#: locale/model_attributes.rb:26
+msgid "Patient|Telephone"
+msgstr "Teléfono"
+
+#: locale/model_attributes.rb:21
+msgid "Patient|Uid"
+msgstr "Identificador"
+
 #: app/views/patients/_form.html.erb:6 app/views/patients/show.html.erb:12
 #: app/views/users/_form.html.erb:6 app/views/users/show.html.erb:3
 msgid "Personal information"
 msgstr "Información personal"
 
+#: app/views/practices/settings.html.erb:73
+msgid "Plan being cancelled"
+msgstr "Plan en cancelación"
+
 #: app/views/practices/settings.html.erb:38
 msgid "Plans and payments"
 msgstr "Planes y pagos"
 
-#: app/views/agenda/show.html.erb:22 app/views/agenda/show.html.erb:79
-#: app/views/appointments/_form.html.erb:17 app/views/balances/_new.html.erb:8
-#: app/views/doctors/_form.html.erb:26 app/views/patient_notes/_new.html.erb:5
+#: app/controllers/practices_controller.rb:70
+msgid ""
+"Please Unsubscribe first from your current plan to close your account so "
+"Paypal won't charge you on the next billing cycle. Please try again once "
+"your plan it's cancelled."
+msgstr ""
+"Por favor Cancela antes la suscrpción a tu plan actual para que Paypal no "
+"haga nuevos cargos. Intenta por favor de nuevo cuando tu plan haya sido "
+"cancelado."
+
+#: app/views/practices/settings.html.erb:88
+msgid "Please make sure that you Unsubscribed first from your current plan."
+msgstr "Por favor asegúrate de Cancelar antes la suscripción a tu plan actual."
+
+#: app/views/agenda/show.html.erb:22 app/views/agenda/show.html.erb:94
+#: app/views/appointments/_form.html.erb:15 app/views/balances/_new.html.erb:8
+#: app/views/doctors/_form.html.erb:30 app/views/patient_notes/_new.html.erb:5
 #: app/views/patients/_form.html.erb:70 app/views/practices/_form.html.erb:30
 #: app/views/users/_form.html.erb:27
 msgid "Please wait..."
@@ -449,17 +590,33 @@ msgstr "Preferencias de la clínica"
 msgid "Practice information"
 msgstr "Información de la clínica"
 
-#: app/controllers/practices_controller.rb:48
-msgid "Practice was successfully created."
-msgstr "La clínica ha sido creada con éxito."
-
-#: app/controllers/practices_controller.rb:61
-msgid "Practice was successfully updated."
-msgstr "La clínica ha sido actualizada con éxito."
-
 #: app/views/layouts/_navigation.html.erb:17
 msgid "Practices"
 msgstr "Clínicas"
+
+#: locale/model_attributes.rb:54
+msgid "Practice|Cancelled at"
+msgstr "Cancelada en"
+
+#: locale/model_attributes.rb:51
+msgid "Practice|Locale"
+msgstr ""
+
+#: locale/model_attributes.rb:50
+msgid "Practice|Name"
+msgstr "Nombre"
+
+#: locale/model_attributes.rb:55
+msgid "Practice|Number of patients"
+msgstr "Número de pacientes"
+
+#: locale/model_attributes.rb:53
+msgid "Practice|Status"
+msgstr "Estado"
+
+#: locale/model_attributes.rb:52
+msgid "Practice|Timezone"
+msgstr "Huso horario"
 
 #: app/views/practices/settings.html.erb:23
 #: app/views/practices/settings.html.erb:24
@@ -478,8 +635,8 @@ msgstr "Registrarse"
 msgid "Remember me"
 msgstr "Recordarme"
 
-#: app/views/appointments/_form.html.erb:17 app/views/balances/_new.html.erb:8
-#: app/views/doctors/_form.html.erb:26 app/views/patients/_form.html.erb:70
+#: app/views/appointments/_form.html.erb:15 app/views/balances/_new.html.erb:8
+#: app/views/doctors/_form.html.erb:30 app/views/patients/_form.html.erb:70
 #: app/views/practices/settings.html.erb:32 app/views/users/_form.html.erb:27
 msgid "Save"
 msgstr "Guardar"
@@ -498,8 +655,8 @@ msgid "Sign up"
 msgstr "Date de alta"
 
 #: app/views/practices/new.html.erb:1
-msgid "Signing up to"
-msgstr "Alta en"
+msgid "Signing up to Odonto.me"
+msgstr "Crear una cuenta en Odonto.me"
 
 #: app/views/doctors/_form.html.erb:23
 msgid "Specialities of the doctor"
@@ -525,7 +682,7 @@ msgstr "Estado"
 msgid "Subscribe with Paypal"
 msgstr "Suscribirse con Paypal"
 
-#: app/views/doctors/_form.html.erb:30
+#: app/views/doctors/_form.html.erb:34
 msgid "Suspend"
 msgstr "Suspender"
 
@@ -537,11 +694,23 @@ msgstr "Suspendido"
 msgid "Telephone"
 msgstr "Teléfono"
 
+#: app/controllers/doctors_controller.rb:25
+msgid "The new doctor was successfully created in your practice."
+msgstr "El nuevo doctor ha sido dado de alta en tu clínica."
+
+#: app/controllers/patients_controller.rb:45
+msgid "The new patient was successfully created in your practice."
+msgstr "El nuevo paciente ha sido dado de alta en tu clínica."
+
+#: app/controllers/users_controller.rb:29
+msgid "The new user was successfully created."
+msgstr "El nuevo usuario ha sido dado de alta en tu clínica."
+
 #: app/views/practices/show.html.erb:8
 msgid "The people who do the things to your patients."
 msgstr "La gente que trata a tus pacientes"
 
-#: app/controllers/appointments_controller.rb:46
+#: app/controllers/appointments_controller.rb:35
 msgid "There was an error creating this appointment"
 msgstr "Ha habido un error creando la cita"
 
@@ -553,9 +722,13 @@ msgstr "Ha habido un error creando esta entrada"
 msgid "There was an error creating this note"
 msgstr "Ha habido un error creando esta nota"
 
-#: app/controllers/appointments_controller.rb:70
+#: app/controllers/appointments_controller.rb:74
 msgid "There was an error deleting this appointment"
 msgstr "Ha habido un error eliminando esta cita"
+
+#: app/controllers/appointments_controller.rb:60
+msgid "There was an error updating this appointment"
+msgstr "Ha habido un error actualizando ésta cita"
 
 #: app/views/practices/show.html.erb:3
 msgid ""
@@ -579,30 +752,192 @@ msgstr "Escribe algo relacionado a este paciente"
 msgid "Unique identifier"
 msgstr "Identificador único"
 
-#: app/controllers/users_controller.rb:29
-msgid "User was successfully created."
-msgstr "El ususario ha sido creado con éxito."
-
-#: app/controllers/users_controller.rb:41
-msgid "User was successfully updated."
-msgstr "El ususario ha sido actualizado con éxito."
+#: app/views/paypal/_unsubscribe_button.html.erb:2
+msgid "Unsubscribe"
+msgstr "Cancelar suscripción"
 
 #: app/views/users/index.html.erb:1
 msgid "Users"
 msgstr "Usuarios"
 
-#: app/controllers/application_controller.rb:83
+#: locale/model_attributes.rb:42
+msgid "User|Crypted password"
+msgstr ""
+
+#: locale/model_attributes.rb:46
+msgid "User|Current login at"
+msgstr "Entrada actual"
+
+#: locale/model_attributes.rb:41
+msgid "User|Email"
+msgstr "Email"
+
+#: locale/model_attributes.rb:39
+msgid "User|Firstname"
+msgstr "Nombre"
+
+#: locale/model_attributes.rb:47
+msgid "User|Last login at"
+msgstr "Última entrada"
+
+#: locale/model_attributes.rb:40
+msgid "User|Lastname"
+msgstr "Apellidos"
+
+#: locale/model_attributes.rb:48
+msgid "User|Login count"
+msgstr "Contador de entradas"
+
+#: locale/model_attributes.rb:43
+msgid "User|Password salt"
+msgstr ""
+
+#: locale/model_attributes.rb:44
+msgid "User|Persistence token"
+msgstr ""
+
+#: locale/model_attributes.rb:45
+msgid "User|Roles"
+msgstr "Roles"
+
+#: app/controllers/practices_controller.rb:52
+msgid ""
+"We are sorry. Your account cannot be changed to the Free Plan because your "
+"practice exceeds the number of patients allowed by it. You'll have to delete "
+"some patients first and Unsubscribe your current plan."
+msgstr ""
+"Lo sentimos pero tu cuenta no puede ser cambiada al Plan Gratuito porque tu "
+"clínica excede actualmente el número de pacientes permitidos en ese plan. "
+"Debes antes eliminar los pacientes necesarios y Cancelar la subscripción a "
+"tu plan actual."
+
+#: app/controllers/practices_controller.rb:55
+msgid ""
+"We are sorry. Your account cannot be changed to the Free Plan. You have to "
+"first Unsubscribe from your current plan through your Practice Settings or "
+"Paypal."
+msgstr ""
+"Lo sentimos pero tu cuenta no puede ser cambiada al Plan Gratuito. Debes "
+"antes Cancelar la suscripción a tu plan actual a través de las preferencias "
+"o directamente en Paypal."
+
+#: app/views/practices/settings.html.erb:86
+msgid ""
+"We'll be very sorry if you decide to leave Odonto.me. We hope that "
+"everything was ok and if not, please contact us so we can help you."
+msgstr ""
+"No nos gustaría perder tu clínica en Odonto.me. Esperamos que todo haya ido "
+"bien y si no fuera así, por favor contáctanos para que podamos ayudarte."
+
+#: app/controllers/application_controller.rb:100
 msgid "You must be logged in to access this page"
 msgstr ""
 "Debes haber entrado con tu usuario y contraseña para acceder esta página"
 
-#: app/controllers/application_controller.rb:92
+#: app/controllers/application_controller.rb:109
 msgid "You must be logged out to access this page"
 msgstr "Debes salir de odonto.me para poder acceder esta página"
+
+#: app/controllers/application_controller.rb:20
+msgid ""
+"Your account has been cancelled and is no longer possible to access it. "
+"Please contact us if you need assistance."
+msgstr ""
+"Tu cuenta ha sido cancelada y ya no es posible accederla. Por favor "
+"contáctanos si necesitas ayuda."
+
+#: app/controllers/application_controller.rb:24
+msgid ""
+"Your account is Pending Payment. We have unsuccesfully tried to bill your "
+"Paypal account and we'll try again soon. Please be aware that after 3 failed "
+"billing attemps your account will be closed. Please check your account with "
+"Paypal, maybe your card has expired."
+msgstr ""
+"No ha sido posible hacer el cargo a tu cuenta Paypal. Por favor, ten en "
+"cuenta que después de tres intentos tu cuenta será cerrada. Revisa tu cuenta "
+"Paypal ya que puede ser que tu tarjeta haya expirado, por ejemplo."
+
+#: app/controllers/application_controller.rb:22
+msgid ""
+"Your account is in the process of being cancelled and is going to expire at "
+"the end of your current billing cycle. Please be aware that your account "
+"will be deleted. You can however change your practice to the Free Plan if "
+"you have less than the allowed patients for that plan or subscribe again a "
+"new plan."
+msgstr ""
+"Tu cuenta está en proceso de ser cancelada y será cerrada al final de tu "
+"ciclo de facturación. Ten en cuenta que todos los datos de tu cuenta se "
+"perderán. Puedes sin embargo cambiarla al Plan Gratuito si tienes menos de "
+"los pacientes permitidos en ese plan o suscribir un nuevo plan."
+
+#: app/controllers/practices_controller.rb:78
+msgid ""
+"Your account is now beign closed and is no longer possible to access it. "
+"Please contact us if you need assistance."
+msgstr ""
+"Tu cuenta está ahora siendo cerrada y ya no es posible accederla. Por favor "
+"contáctanos si necesitas ayuda."
+
+#: app/controllers/practices_controller.rb:30
+msgid ""
+"Your practice is now active! You can start to set everything up in here."
+msgstr "¡Tu cuenta está activa! Ya puedes comenzar a configurarla aquí."
+
+#: app/controllers/practices_controller.rb:43
+msgid "Your practice settings were successfully updated."
+msgstr "Las preferencias para tu clínica han sido actualizadas con éxito."
+
+#: app/controllers/practices_controller.rb:62
+msgid "Your practice's account has been changed to the Free Plan!"
+msgstr "¡El Plan de tu cuenta ha sido cambiado a Gratuito!"
+
+#: app/controllers/doctors_controller.rb:37
+msgid "Your practice's doctor was successfully updated."
+msgstr "El doctor de tu clínica ha sido actualizada con éxito."
+
+#: app/controllers/patients_controller.rb:57
+msgid "Your practice's patient was successfully updated."
+msgstr "El paciente de tu clínica ha sido actualizada con éxito."
+
+#: app/controllers/users_controller.rb:41
+msgid "Your practice's user was successfully updated."
+msgstr "El usuario de tu clínica ha sido actualizada con éxito."
+
+#: app/controllers/paypal_controller.rb:123
+msgid "Your subscription is now active! Thanks for subscribing to Odonto.me"
+msgstr "¡Tu suscripción ha sido activada! Gracias por suscribirte a Odonto.me"
+
+#: app/controllers/paypal_controller.rb:125
+msgid ""
+"Your subscription is now being proccessed. We'll send you an email when "
+"payment confirmation is received. Or refresh this page to check!"
+msgstr ""
+"Tu suscripción se está procesando. Te enciaremos un email cuando recibamos "
+"la confirmación de pago de Paypal. ¡O refresca esta página para comprobar!"
+
+#: app/controllers/paypal_controller.rb:117
+msgid ""
+"Your subscription process has been cancelled and your Paypal account won't "
+"be charged."
+msgstr ""
+"El proceso de suscripción ha sido cancelado y tu cuenta Paypal no será "
+"facturada "
 
 #: app/views/users/show.html.erb:17
 msgid "ago"
 msgstr " "
+
+#: locale/model_attributes.rb:7
+msgid "appointment"
+msgstr "citas"
+
+#: locale/model_attributes.rb:2
+msgid "balance"
+msgstr "balance"
+
+#: locale/model_attributes.rb:12
+msgid "doctor"
+msgstr "doctor"
 
 #: app/views/practices/show.html.erb:9
 msgid "doctors"
@@ -616,7 +951,7 @@ msgstr "Dra."
 msgid "is not formatted properly"
 msgstr "no tiene un formato adecuado"
 
-#: app/views/practices/settings.html.erb:64
+#: app/views/practices/settings.html.erb:51
 msgid "left"
 msgstr "más"
 
@@ -628,19 +963,35 @@ msgstr ""
 msgid "never"
 msgstr "nunca"
 
-#: app/views/patients/index.html.erb:17
+#: app/views/patients/index.html.erb:17 app/views/users/show.html.erb:20
 msgid "none"
 msgstr "ninguna"
 
-#: app/views/appointments/_form.html.erb:21
-#: app/views/doctors/_form.html.erb:35 app/views/patients/_form.html.erb:70
+#: app/views/appointments/_form.html.erb:22
+#: app/views/doctors/_form.html.erb:39 app/views/patients/_form.html.erb:70
 #: app/views/users/_form.html.erb:27
 msgid "or"
 msgstr "o"
 
-#: app/views/practices/settings.html.erb:64
+#: locale/model_attributes.rb:20
+msgid "patient"
+msgstr "pacientes"
+
+#: locale/model_attributes.rb:5
+msgid "patient note"
+msgstr "nota sobre paciente"
+
+#: app/views/practices/settings.html.erb:51
 msgid "patients"
 msgstr "pacientes"
+
+#: locale/model_attributes.rb:49
+msgid "practice"
+msgstr "clínica"
+
+#: locale/model_attributes.rb:38
+msgid "user"
+msgstr "usuario"
 
 #: app/views/practices/show.html.erb:14
 msgid "users"

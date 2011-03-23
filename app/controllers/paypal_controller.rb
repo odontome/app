@@ -122,7 +122,7 @@ class PaypalController < ApplicationController
     if current_user.practice.status == "active"
       flash[:notice] = _("Your subscription is now active! Thanks for subscribing to Odonto.me")
     else
-      flash[:notice] = _("Your subscription is being proccessed. When we receive confirmation of payment from Paypal we'll send you an email. Also, you can refresh this page and check if your subscription is active!")
+      flash[:notice] = _("Your subscription is now being proccessed. We'll send you an email when payment confirmation is received. Or refresh this page to check!")
     end
       redirect_to practice_settings_url
   end

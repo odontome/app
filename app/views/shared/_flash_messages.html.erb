@@ -2,7 +2,7 @@
     <%= content_tag :div, msg, :class => [key, "notice"], :id => "notice_#{key}" %>
 		<% if key.to_s != "alert" %>
 	    <%= content_tag :script, :type => "text/javascript" do -%>
-			$("#notice_<%=key%>").delay(10000).fadeOut(1500);
+			$("#notice_<%=key%>").delay(15000).fadeOut(1500);
 	    <% end %>
     <% end %>
 <% end %>
