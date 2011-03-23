@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
         current_user_session.destroy
         redirect_to signin_url, :alert => _("Your account has been cancelled and is no longer possible to access it. Please contact us if you need assistance.")
       elsif current_user.practice.status == "expiring"
-        flash[:alert] = _("Your account is in the process of being cancelled and is about to expire. Please be aware that when the current billing cycle ends your account will be deleted. You can however change your practice to the Free Plan if you have less than the allowed patients for that plan or subscribe again a new plan.")
+        flash[:alert] = _("Your account is in the process of being cancelled and is going to expire at the end of your current billing cycle. Please be aware that your account will be deleted. You can however change your practice to the Free Plan if you have less than the allowed patients for that plan or subscribe again a new plan.")
       elsif current_user.practice.status == "payment_due"
         flash[:alert] = _("Your account is Pending Payment. We have unsuccesfully tried to bill your Paypal account and we'll try again soon. Please be aware that after 3 failed billing attemps your account will be closed. Please check your account with Paypal, maybe your card has expired.")
       end

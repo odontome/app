@@ -1,7 +1,6 @@
 class PaypalController < ApplicationController
 
-  protect_from_forgery :except => :paypal_ipn
-
+  protect_from_forgery :except => [:paypal_ipn, :cancel, :success]
 
   # This will be called when soemone first subscribes
   # When received we make sure the practice is "active"
@@ -113,4 +112,19 @@ class PaypalController < ApplicationController
       render :text => 'ERROR'
     end
   end
+
+  def cancel
+    flash[:notice] = _("Your subscription process has been cancelled and your Paypal account won't be charged.")
+    redirect_to practice_settings_url
+  end
+
+  def success
+    if current_user.practice.status == "active"
+      flash[:notice] = _("Your subscription is now active! Thanks for subscribing to Odonto.me")
+    else
+      flash[:notice] = _("Your subscription is being proccessed. When we receive confirmation of payment from Paypal we'll send you an email. Also, you can refresh this page and check if your subscription is active!")
+    end
+      redirect_to practice_settings_url
+  end
+
 end

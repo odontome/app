@@ -23,7 +23,9 @@ Odontome::Application.routes.draw do
   match "/practice/settings" => "practices#settings", :as => :practice_settings
   match "/practice/change_to_free_plan" => "practices#change_to_free_plan", :as => :change_to_free_plan
   match "/practice/close" => "practices#close", :as => :practice_close, :via => :post
-  match "/paypal_ipn" => "paypal#paypal_ipn", :as => :paypal_ipn#, :via => :post
+  match "/paypal_ipn" => "paypal#paypal_ipn", :as => :paypal_ipn, :via => :post
+  match "/paypal/cancel" => "paypal#cancel"
+  match "/paypal/success" => "paypal#success"
 
   root :to => "welcome#index"
 

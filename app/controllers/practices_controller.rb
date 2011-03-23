@@ -6,19 +6,10 @@ class PracticesController < ApplicationController
   
   def index
     @practices = Practice.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @practices }
-    end
   end
 
   def show
-    @practice = Practice.find(current_user.practice_id)
-
-    respond_to do |format|
-      format.html # show.html.erb
-    end
+    @practice = current_user.practice
   end
 
   def new
@@ -28,7 +19,7 @@ class PracticesController < ApplicationController
   end
 
   def edit
-    @practice = Practice.find(params[:id])
+    @practice = current_user.practice
   end
 
   def create
@@ -44,7 +35,7 @@ class PracticesController < ApplicationController
   end
 
   def update
-    @practice = Practice.find(params[:id])
+    @practice = current_user.practice
     session[:locale] = params[:practice][:locale]
     
     respond_to do |format|
@@ -79,7 +70,7 @@ class PracticesController < ApplicationController
       flash[:alert] = _("Please Unsubscribe first from your current plan to close your account so Paypal won't charge you on the next billing cycle. Please try again once your plan it's cancelled.")
       redirect_to practice_settings_url
     else
-      @practice = Practice.find_by_id(current_user.practice_id)
+      @practice = current_user.practice
       @practice.set_as_cancelled
       if @practice.save
         current_user_session.destroy
@@ -103,7 +94,7 @@ class PracticesController < ApplicationController
   end
 
   def settings
-    @practice = Practice.includes(:plan).find(current_user.practice_id)
+    @practice = current_user.practice
     @practice_patients_count = @practice.patients.count
   end
 
