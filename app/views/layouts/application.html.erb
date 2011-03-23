@@ -11,18 +11,11 @@
 	<div id="container">
 		<header>
 			<%= link_to (image_tag "logo.png", :title => _("Home"), :class => "logo"), root_path %>
-			<%= render :partial => "layouts/navigation" %>
+			<%= render "layouts/navigation" %>
 		</header>
 	
 		<div id="content">
-			<% flash.each do |key, msg| %>
-			    <%= content_tag :div, msg, :class => [key, "notice"], :id => "notice_#{key}" %>
-					<% if key.to_s != "alert" %>
-				    <%= content_tag :script, :type => "text/javascript" do -%>
-								$("#notice_<%=key%>").delay(10000).fadeOut(1500);
-				    <% end %>
-			    <% end %>
-			<% end %>
+			<%= render "shared/flash_messages" %>
 			<%= yield %>
 		</div>
 		
