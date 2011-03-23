@@ -11,9 +11,10 @@ class User < ActiveRecord::Base
     where("users.practice_id = ? ", UserSession.find.user.practice_id)
   }  
 
-  validates_presence_of :firstname, :lastname, :password, :email, :roles
+  validates_presence_of :firstname, :lastname, :email, :roles
   validates_uniqueness_of :email
   validates_format_of :email, :with => Authlogic::Regex.email
+  validates_presence_of :password, :on => :create
   validates_confirmation_of :password, :on => :create
   
   # callbacks

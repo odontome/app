@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_filter :require_user
+  before_filter :require_practice_admin, :only => [:destroy]
   
   def index
     @users = User.mine

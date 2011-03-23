@@ -9,7 +9,7 @@
 			<span><strong><%=_('Email')%>:</strong> <%=user.email%></span>
 			<span><strong><%=_('Last seen')%>:</strong> <% if user.last_login_at %><%= time_ago_in_words(user.last_login_at) %><% else %><%=_('never')%><% end %></span>	
 
-			<% unless user_is_admin?(user) %>
+			<% if user_is_admin?(current_user) && !user_is_admin?(user) %>
 				<div class="list-item-button"><%= link_to _("Delete"), user, :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %></div>
 			<% end %>
 			<div class="list-item-button"><%= link_to _("Edit"), edit_user_path(user), :class => "g-button" %></div>

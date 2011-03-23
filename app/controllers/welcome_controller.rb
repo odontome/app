@@ -1,5 +1,6 @@
 class WelcomeController < ApplicationController
   def index
+    flash.keep 
     if current_user
       if current_user_is_superadmin?
         home_url = practices_url

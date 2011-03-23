@@ -23,7 +23,7 @@
 
 <p>
 		<%=link_to _("Edit"), edit_user_path(@user), :class => "g-button" %>
-	<% unless user_is_admin?(@user) %>
+	<% if user_is_admin?(current_user) %>
 		<%=link_to _("Delete"), user_path(@user), :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %>
 	<% end %>
 </p>

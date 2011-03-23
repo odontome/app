@@ -1,5 +1,6 @@
 class PatientsController < ApplicationController
   before_filter :require_user
+  before_filter :require_practice_admin, :only => [:destroy]
   
   # provides
   respond_to :html, :json

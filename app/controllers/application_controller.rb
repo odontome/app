@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   helper :all
   filter_parameter_logging :password, :password_confirmation
-  helper_method :current_session, :current_user, :current_user_is_admin?, :user_is_admin?
+  helper_method :current_session, :current_user, :user_is_admin?
 
   before_filter :check_account_status
   before_filter :set_locale
@@ -78,12 +78,6 @@ class ApplicationController < ActionController::Base
       @current_user = current_user_session && current_user_session.user
     end
   
-    def current_user_is_admin?
-      if current_user
-        return true if current_user.roles.include?("admin")
-      end
-    end
-  
     def user_is_admin?(user)
       return true if user.roles.include?("admin")
     end
@@ -116,8 +110,9 @@ class ApplicationController < ActionController::Base
       session[:return_to] = request.request_uri
     end
     
-    def redirect_back_or_default(default)
-      redirect_to(session[:return_to] || default)
+    def redirect_back_or_default(default, message=nil)
+      return_to = session[:return_to] || default
+      redirect_to(return_to, :alert => message)
       session[:return_to] = nil
     end
 
@@ -130,13 +125,17 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    #def find_practice_object
-    #  if current_user
-    #    # superadmins doesn't have a Related Practice
-    #    @practice = current_user.practice unless current_user_is_superadmin?
-    #  end
-    #end
-    
+    def require_practice_admin
+      if current_user
+        unless user_is_admin?(current_user)
+          redirect_back_or_default("/", _('Sorry, you need to be an administrator of your practice to do that.'))
+          return false
+        end
+      else
+        return false
+      end
+    end
+
     def render_ujs_error(object, message)
       render :template => "shared/ujs/form_errors.js.erb", 
         :locals =>{
