@@ -10,7 +10,7 @@ class PatientsController < ApplicationController
       @patients = Patient.order("firstname").mine
     # otherwise, this is a search for patients
     else
-      @patients = Patient.order("firstname").mine.select("id,uid,firstname,lastname").where("uid LIKE '%"+params[:q]+"%' OR firstname LIKE '%"+params[:q]+"%' OR lastname LIKE '%"+params[:q]+"%'").limit(10)
+      @patients = Patient.search(params[:q])
     end
     
     respond_with(@patients, :methods => :fullname)
