@@ -23,9 +23,15 @@
     <%= f.text_field :speciality, :placeholder => _("Speciality"), :title => _("Specialities of the doctor") %>
   </p>
   <p>
-    <%= f.text_field :color, :placeholder => _("Calendar color"), :title => _("Calendar color") %>
+	<%= f.label _("Calendar color") %>
+	<%= f.select(:color, [[_('Blue'),"#3366CC"],    
+    [_('Orange'), "#FF8600" ],
+    [_('Purple'),"#622EB4"],
+    [_('Red'),"#FD0000"],
+    [_('Black'),"#000000"],
+    [_('Green'),"#00B600"],
+    [_('Pink'),"#FF66CC"]], :title => _("Calendar color"), :selected => @doctor.color) %>
   </p>
-
 
   <%= f.submit(_("Save"), :class => "g-button", :disable_with => _("Please wait...")) %> 
 
