@@ -27,6 +27,7 @@ Odontome::Application.routes.draw do
   match "/paypal_ipn" => "paypal#paypal_ipn", :as => :paypal_ipn, :via => :post
   match "/paypal/cancel" => "paypal#cancel"
   match "/paypal/success" => "paypal#success"
+  match "/set_session_time_zone"  => "welcome#set_session_time_zone"
 
   root :to => "welcome#index"
 

@@ -1,3 +1,8 @@
+<script type="text/javascript">
+	var timezone = determine_timezone().timezone;
+	$.get('/set_session_time_zone', {"detected_timezone": timezone.olson_tz})
+</script>
+
 <%= form_for(@practice) do |practice_form| %>
 
   <%= render "shared/error_messages", :target => @practice %>
