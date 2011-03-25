@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :check_account_status
   before_filter :set_locale
+  before_filter :set_timezone  
   
   #TODO: ask Raul if he used this
   #before_filter :find_practice_object
@@ -34,6 +35,13 @@ class ApplicationController < ActionController::Base
       I18n.locale = FastGettext.set_locale(compatible_language_from(AVAILABLE_LOCALES))
     end
   end
+  
+  def set_timezone
+    if current_user
+      Time.zone = current_user.practice.timezone
+    end
+  end
+  
 
   # Returns a sorted array based on user preference in HTTP_ACCEPT_LANGUAGE.
   # Browsers send this HTTP header, so don't think this is holy.

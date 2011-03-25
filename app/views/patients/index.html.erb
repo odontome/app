@@ -1,5 +1,6 @@
 <h1><%=_('Patients')%> <%= link_to "+", new_patient_url, :class => "g-button" %></h1>
 
+
 <ul id="list-items">
 	<% @patients.each do |patient| %>
 	
@@ -24,6 +25,12 @@
 	<% end %>
 </ul>
 
-<p>TODO! PAGINATION!</p>
+<ul class='pagination'>
+  <%- Patient.pagination_letters.each do |letter| -%>
+    <li class="<%="active" if letter==params[:letter] || letter=="A" && params[:letter].nil?%>"><%= link_to(letter, patients_path(:letter => letter)) %></li>
+  <%- end -%>
+</ul>
 
+<p>
 <%= link_to _("Create new patient"), new_patient_url, :class => "g-button" %>
+</p>

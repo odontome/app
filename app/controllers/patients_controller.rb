@@ -8,7 +8,7 @@ class PatientsController < ApplicationController
   def index
     # this is the most frequent scenario, a simple list of patients
     if (params[:q] === nil)
-      @patients = Patient.order("firstname").mine
+      @patients = Patient.order("firstname").mine.alphabetical_group(params[:letter] || "A" )
     # otherwise, this is a search for patients
     else
       @patients = Patient.search(params[:q])

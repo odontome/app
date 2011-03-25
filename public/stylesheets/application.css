@@ -471,7 +471,7 @@ input[disabled] {
 .pagination li {
 	border:0; margin:0; padding:0;
 	list-style:none;
-	margin-right:2px;
+	margin-right:4px;
 	display:block;
 	float:left;
 }
@@ -480,7 +480,6 @@ input[disabled] {
 }
 .pagination a {
 	border:solid 1px #9aafe5;
-	margin-right:2px;
 }
 .pagination .previous-off, .pagination .next-off {
 	border:solid 1px #DEDEDE;
@@ -494,14 +493,17 @@ input[disabled] {
 .pagination .next a, .pagination .previous a {
 	font-weight:bold;
 } 
-.pagination .active{
+.pagination li.active{
 	background:#2e6ab1;
-	color:#FFFFFF;
-	font-weight:bold;
 	display:block;
 	float:left;
-	padding:4px 6px;
 }
+
+.pagination li.active a{
+	color:#FFFFFF;
+	font-weight:bold;
+}
+
 .pagination a:link, .pagination a:visited {
 	color:#0e509e;
 	display:block;
