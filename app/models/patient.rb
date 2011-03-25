@@ -1,8 +1,7 @@
 class Patient < ActiveRecord::Base
 
   paginate_alphabetically :by => :firstname, :show_all_letters => true
-
-  has_many :appointments
+  has_many :appointments, :dependent => :destroy 
   has_many :balances, :dependent => :destroy 
   has_many :patient_notes, :dependent => :destroy 
   has_many :doctors, :through => :appointments
@@ -22,7 +21,8 @@ class Patient < ActiveRecord::Base
   
   # validations
   validates_uniqueness_of :uid, :scope => :practice_id, :allow_nil => true, :allow_blank => true
-  validates_presence_of :practice_id, :firstname, :lastname, :date_of_birth
+  validates_presence_of :practice_id, :firstname, :lastname, :date_of_birth, :past_illnesses, :allergies,:past_illnesses, :surgeries, :medications, :drugs_use, :family_diseases
+  validates_numericality_of :cigarettes_per_day, :drinks_per_day, :only_integer => true, :greater_than_or_equal_to => 0
   validates_length_of :uid, :within => 0..25, :allow_blank => true
   validates_length_of :firstname, :within => 1..25
   validates_length_of :lastname, :within => 1..25

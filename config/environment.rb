@@ -6,6 +6,8 @@ Odontome::Application.initialize!
 
 # FastGettext stuff
 AVAILABLE_LOCALES = ['es-ES', 'en-US'] # only allow these locales to be set (optional)
+
+# YAML config files
 PLANS = YAML.load_file(File.join(Rails.root, "config", "plans.yml"))
 
 # Don't include the root object in the JSON 

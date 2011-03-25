@@ -420,7 +420,7 @@ textarea {
 	min-height: 70px;
 }
 
-.error_field, .field_with_errors input {
+.error_field, .field_with_errors input, .field_with_errors textarea {
 	color: #ff0000;
 	background-color: #ffeded;
 }
