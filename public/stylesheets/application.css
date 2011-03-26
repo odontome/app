@@ -511,6 +511,15 @@ input[disabled] {
 	padding:3px 6px;
 	text-decoration:none;
 }
+
+.pagination span {
+	color:#333;
+	display:block;
+	float:left;
+	padding:3px 6px;
+	text-decoration:none;
+}
+
 .pagination a:hover{
 	border:solid 1px #0e509e
 }

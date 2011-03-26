@@ -25,11 +25,7 @@
 	<% end %>
 </ul>
 
-<ul class='pagination'>
-  <%- Patient.pagination_letters.each do |letter| -%>
-    <li class="<%="active" if letter==params[:letter] || letter=="A" && params[:letter].nil?%>"><%= link_to(letter, patients_path(:letter => letter)) %></li>
-  <%- end -%>
-</ul>
+<%= alphabetically_paginate(@patients) %>
 
 <p>
 <%= link_to _("Create new patient"), new_patient_url, :class => "g-button" %>

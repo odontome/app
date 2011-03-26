@@ -1,6 +1,6 @@
 class Patient < ActiveRecord::Base
 
-  paginate_alphabetically :by => :firstname, :show_all_letters => true
+  paginate_alphabetically :by => :firstname
   has_many :appointments, :dependent => :destroy 
   has_many :balances, :dependent => :destroy 
   has_many :patient_notes, :dependent => :destroy 

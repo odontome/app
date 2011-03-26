@@ -9,6 +9,9 @@ class PatientsController < ApplicationController
     # this is the most frequent scenario, a simple list of patients
     if (params[:q] === nil)
       @patients = Patient.order("firstname").mine.alphabetical_group(params[:letter] || "A" )
+      if @patients.empty?
+        @patients = Patient.order("firstname").mine.limit(1).order("firstname")
+      end
     # otherwise, this is a search for patients
     else
       @patients = Patient.search(params[:q])

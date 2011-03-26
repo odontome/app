@@ -47,6 +47,12 @@ module Odontome
          self.practice_id = UserSession.find.user.practice_id
       end
      end
+     
+     # overwrite for the alphabetical pagination plugin
+     def alphabetical_group(letter = nil)
+       letter ||= first_letter
+       where(["LOWER(#{@attribute.to_s}) LIKE ?", "#{letter.downcase}%"]).order(@attribute)
+     end
   end
 
 end
