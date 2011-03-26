@@ -1,5 +1,5 @@
 html,body {
-	font-family: 'Myriad Pro', Helvetica, Arial, sans-serif;
+	font-family: Helvetica, Arial, sans-serif;
 	font-size: 14px;
 	color: #333333;
 	background: url(/images/layout/background.jpg) top center fixed;	
@@ -15,8 +15,9 @@ table.balance {
 		border-bottom: 1px solid #cecece;
 	}
 
-h1 {
+h1,h2,h3,h4,h5,h6 {
 	color: #303030;
+	font-family: 'Myriad Pro', Helvetica, Arial, sans-serif;
 }
 
 h1 a {
