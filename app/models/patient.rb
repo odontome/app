@@ -58,6 +58,7 @@ class Patient < ActiveRecord::Base
     return date_of_birth.nil?
   end
   
+  # this function tries to find a patient by an ID or it's NAME, otherwise it creates one
   def self.find_or_create_from(patient_id_or_name)
     # remove any possible commas from this value
     patient_id_or_name.gsub!(",", "")
@@ -65,7 +66,7 @@ class Patient < ActiveRecord::Base
     # Check if we are dealing with an integer or a string
     if (patient_id_or_name.to_i == 0)
       # instantiate a new patient
-      patient = Patient.new()
+      patient = new()
       patient.fullname = patient_id_or_name
       # set the practice_id manually because validation (and callbacks apparently as well) are skipped
       patient.practice_id = UserSession.find.user.practice_id
@@ -76,6 +77,16 @@ class Patient < ActiveRecord::Base
     end
 
     return patient_id_or_name
+  end
+  
+  # this function tries to find the patients by letter, if not returns the first letter found
+  def self.find_alphabeticaly(letter)
+    patients = order("firstname").mine.alphabetical_group(letter)
+    if patients.empty?
+      patients = order("firstname").mine.limit(1).order("firstname")
+    end
+    
+    return patients
   end
 
 end
