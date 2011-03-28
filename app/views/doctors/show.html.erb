@@ -28,4 +28,5 @@
 <p>
 	<%=link_to _("Edit"), edit_doctor_path(@doctor), :class => "g-button" %>
 	<%=link_to _("Delete"), doctor_path(@doctor), :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %>
+	<%=_("or")%> <%=link_to _("Return to the listing"), doctors_url %>
 </p>

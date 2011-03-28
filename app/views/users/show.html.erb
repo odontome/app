@@ -22,8 +22,9 @@
 </fieldset>
 
 <p>
-		<%=link_to _("Edit"), edit_user_path(@user), :class => "g-button" %>
+	<%=link_to _("Edit"), edit_user_path(@user), :class => "g-button" %>
 	<% if user_is_admin?(current_user) %>
 		<%=link_to _("Delete"), user_path(@user), :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %>
 	<% end %>
+	<%=_("or")%> <%=link_to _("Return to the listing"), users_url %>
 </p>
