@@ -1,15 +1,5 @@
 <h1><%=@user.fullname%></h1>
-<fieldset>
-  <legend><%=_("Personal information")%></legend>
-	<p>
-		<label><%=_('First name')%>:</label> <%= @user.firstname %>
-	</p>
-	<p>
-		<label><%=_('Last name')%>:</label> <%= @user.lastname %>
-	</p>
-</fieldset>
-<fieldset>
-<legend><%=_("Account information")%></legend>
+
 <p>
 	<label><%=_('Email')%>:</label> <%= @user.email%>
 </p>
@@ -19,7 +9,6 @@
 <p>
 	<label><%=_('Number of signins')%>:</label> <% if @user.login_count.to_i > 1 %><%= @user.login_count %><% else %><%=_("none")%><% end %>
 </p>
-</fieldset>
 
 <p>
 	<%=link_to _("Edit"), edit_user_path(@user), :class => "g-button" %>
