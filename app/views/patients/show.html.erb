@@ -11,10 +11,9 @@
 		<div class="bodycontent">	
 			<h2><%=_('Personal information')%></h2>
 			
-			<p><label><%=_('Unique identifier')%>:</label> <%=@patient.uid%></p>
+			<% if @patient.uid %><p><label><%=_('Unique identifier')%>:</label> <%=@patient.uid%></p><% end %>
 			<p><label><%=_('Name')%>:</label> <%=@patient.fullname%></p>
-			<p><label><%=_('Age')%>:</label> <%=@patient.age%></p>
-			<p><label><%=_('Date of birth')%>:</label> <%=l @patient.date_of_birth, :format => :long %></p>
+			<p><label><%=_('Age')%>:</label> <%=@patient.age%> (<%=l @patient.date_of_birth, :format => :long %>)</p>
 			
 			<h2><%=_('Contact information')%></h2>
 			
@@ -26,28 +25,18 @@
 		</div>
 		
 		<div class="sidecontent">
-			<div id="patient-portrait">
-				<div id="photo-show-container" class="hidden">
-					<!-- #includePartial("showPhoto")# -->								
-				</div>
-				
-				<div id="photo-edit-container" class="hidden">
-					<!-- #includePartial("takePhoto")# -->
-				</div>
-			</div>
+			<h2><%=_('Medical history')%></h2>
 			
-			<!-- TODO: add the balance button for the patient 
-				 which only should be shown if he has a negative balance
-			<cfif patientTab GT 0>
-				<p><button id="balance" class="g-button red"><strong>Balance:</strong> #LSCurrencyFormat(patientTab)#</button></p>
-			</cfif>
-			
-			-->
-			
+			<p><label><%=_('Allergies')%>:</label> <%=@patient.allergies%></p>
+			<p><label><%=_('Past Illnesses')%>:</label> <%=@patient.past_illnesses%></p>
+			<p><label><%=_('Past surgeries')%>:</label> <%=@patient.surgeries%></p>
+			<p><label><%=_('Current medications')%>:</label> <%=@patient.medications%></p>
+			<p><label><%=_('Cigarettes per day')%>:</label> <%=@patient.cigarettes_per_day%></p>
+			<p><label><%=_('Drinks per day')%>:</label> <%=@patient.drinks_per_day%></p>
+			<p><label><%=_('Drugs use')%>:</label> <%=@patient.drugs_use%></p>
+			<p><label><%=_('Family history')%>:</label> <%=@patient.family_diseases%></p>
 		</div>
-		
-		<!-- <h2 class="clear"><%=_("Notes")%></h2> -->
-		
+				
 		<div class="notes clear">
 			<%= render :partial => "patient_notes/index", :locals => {:notes => @patient_notes} %>
 		</div>
