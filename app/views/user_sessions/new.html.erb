@@ -9,7 +9,7 @@
 	  </div>
 	<% end %>
   <p>
-    <%= f.email_field :email, :placeholder => _("Email"), :title => _("Email") %>
+    <%= f.email_field :email, :placeholder => _("Email"), :title => _("Email"), :autocapitalize => "off", :autocorrect => "off" %>
   </p>
 	<p>
 	  <%= f.password_field :password, :placeholder => _("Password"), :title => _("Password") %>
