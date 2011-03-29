@@ -27,7 +27,9 @@
 		<div class="sidecontent">
 			<h2><%=_('Medical history')%></h2>
 			
-			<p><label><%=_('Allergies')%>:</label> <%=@patient.allergies%></p>
+			<% if @patient.allergies %>
+				<p class="error_field"><label><%=_('Allergic to')%>:</label> <%=@patient.allergies%></p>
+			<% end %>
 			<p><label><%=_('Past Illnesses')%>:</label> <%=@patient.past_illnesses%></p>
 			<p><label><%=_('Past surgeries')%>:</label> <%=@patient.surgeries%></p>
 			<p><label><%=_('Current medications')%>:</label> <%=@patient.medications%></p>
@@ -58,7 +60,9 @@
 
 <script type="text/javascript">
 	$(function() {
-		$("#tabs").tabs({cache: true});
+		$("#tabs").tabs({
+			cache: true
+		});
 		
 		// <cfif patient.photoPath IS "">
 		// 			$("#photo-edit-container").toggle();

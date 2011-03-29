@@ -2,7 +2,7 @@ html,body {
 	font-family: Helvetica, Arial, sans-serif;
 	font-size: 14px;
 	color: #333333;
-	background: url(/images/layout/background.jpg) top center fixed;	
+	background: #27282C url(/images/layout/background.png) repeat;	
 	margin-top: 10px;
 	height: 100%;
 }
@@ -429,7 +429,6 @@ textarea {
 input[disabled] {
 	opacity: .5;
 }
-
 
 .required {
 	background: url('/images/icons/required.gif') right center no-repeat #fff;
