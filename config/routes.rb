@@ -18,7 +18,6 @@ Odontome::Application.routes.draw do
   match "/signin" => "user_sessions#new", :as => :signin
   match "/logout" => "user_sessions#destroy", :as => :logout
   match "/signup" => "practices#new", :as => :signup
-  match "/signup/:id" => "practices#new"
   match "/agenda" => "agenda#show", :as => :agenda
   match "/practice" => "practices#show", :as => :practice
   match "/practice/settings" => "practices#settings", :as => :practice_settings
