@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110323023441) do
+ActiveRecord::Schema.define(:version => 20110401130152) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "practice_id"
@@ -91,6 +91,14 @@ ActiveRecord::Schema.define(:version => 20110323023441) do
     t.integer  "plan_id",                          :default => 1
     t.datetime "cancelled_at"
     t.integer  "number_of_patients",               :default => 500
+  end
+
+  create_table "treatments", :force => true do |t|
+    t.integer  "practice_id"
+    t.string   "name",        :limit => 100
+    t.float    "price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
