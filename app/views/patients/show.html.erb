@@ -27,7 +27,7 @@
 		<div class="sidecontent">
 			<h2><%=_('Medical history')%></h2>
 			
-			<% if @patient.allergies %>
+			<% if @patient.allergies != "" %>
 				<p class="error_field"><label><%=_('Allergic to')%>:</label> <%=@patient.allergies%></p>
 			<% end %>
 			<p><label><%=_('Past Illnesses')%>:</label> <%=@patient.past_illnesses%></p>
