@@ -46,4 +46,8 @@ Odontome::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+  # Email configuration
+  config.action_mailer.delivery_method = :smtp
+  
 end
