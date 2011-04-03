@@ -41,7 +41,7 @@
 		</div>
 				
 		<div class="notes clear">
-			<%= render :partial => "notes/index", :locals => {:notes => @patient_notes} %>
+			<%= render :partial => "notes/index", :locals => {:notes => @patient_notes, :noteable => @patient} %>
 		</div>
 		
 		<%= render :partial => "notes/new", :locals => {:noteable => @patient} %>

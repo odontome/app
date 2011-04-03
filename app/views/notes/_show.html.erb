@@ -1,5 +1,5 @@
 <div id="note<%=note.id%>" class="note">
-	<div class="delete"></div>
+	<div class="delete"><%= link_to image_tag("icons/delete.png"), [noteable, note], :confirm => 'Are you sure?', :method => :delete, :remote => true %></div>
 	<div class="timestamp"><%=l note.created_at, :format => :long %></div>
 	<div class="content"><%=note.notes%></div>
 </div>

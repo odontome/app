@@ -21,7 +21,7 @@ class NotesController < ApplicationController
 
   def destroy
     @noteable = find_noteable
-    @note = @noteable.find(params[:id])
+    @note = @noteable.notes.find(params[:id])
     @note.destroy
 
     respond_to do |format|
