@@ -8,13 +8,14 @@
 	
 	<div id="chart">
 		
-		<h1><%=@patient.fullname%> <% if @patient.uid %> (<%=@patient.uid%>) <% end %> <%= link_to _("Edit"), edit_patient_path(@patient), :class => "g-button"%></h1>
+		<h1><%=@patient.fullname%> <%= link_to _("Edit"), edit_patient_path(@patient), :class => "g-button"%></h1>
 		
 		
 		
 		<div class="bodycontent">	
 			<h2><%=_('Personal information')%></h2>
 			
+			<% if @patient.uid %><p><label><%=_('Unique identifier')%>:</label> <%=@patient.uid%></p><% end %>
 			<p><label><%=_('Age')%>:</label> <%=@patient.age%> (<%=l @patient.date_of_birth, :format => :long %>)</p>
 						
 			<p><label><%=_('Email')%>:</label> <%=@patient.email%></p>
