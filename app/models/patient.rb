@@ -5,7 +5,7 @@ class Patient < ActiveRecord::Base
   # associations
   has_many :appointments, :dependent => :destroy 
   has_many :balances, :dependent => :destroy 
-  has_many :patient_notes, :dependent => :destroy 
+  has_many :notes, :as => :noteable, :dependent => :destroy   
   has_many :doctors, :through => :appointments
   belongs_to :practice
 

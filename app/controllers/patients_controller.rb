@@ -19,7 +19,7 @@ class PatientsController < ApplicationController
 
   def show
     @patient = Patient.mine.find(params[:id])
-    @patient_notes = @patient.patient_notes.order("created_at DESC")
+    @patient_notes = @patient.notes.order("created_at DESC")
     
     if @patient.invalid?
       redirect_to edit_patient_path(@patient)
