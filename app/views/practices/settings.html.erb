@@ -33,6 +33,9 @@
 
 <% end %>
 	
+
+<% unless $beta_mode %>
+
 	<hr />
 	
 	<h1><%=_("Plans and payments")%></h1>
@@ -80,5 +83,8 @@
 			<% end %>
 		</ul>
 	</fieldset>
+
+<% end %>
+
 	<hr />
 	<small><%=_('If you need to, you can')%> <%=link_to _('Close your account here'), practice_cancel_url %></small>

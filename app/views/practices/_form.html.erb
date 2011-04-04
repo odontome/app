@@ -15,12 +15,6 @@
 	<%= practice_form.fields_for :users do |user_form| %>
 
 	  <p>
-	    <%= user_form.text_field :firstname, :placeholder => _("First name"), :title => _("First name") %>
-	  </p>
-	  <p>
-	    <%= user_form.text_field :lastname, :placeholder => _("Last name"), :title => _("Last name")  %>
-	  </p>
-	  <p>
 	    <%= user_form.email_field :email, :placeholder => _("Email"), :title => _("Email") %>
 	  </p>
 		<p>
@@ -30,6 +24,12 @@
 		  <%= user_form.password_field :password_confirmation, :placeholder => _("Confirm your password"), :title => _("Confirm your password") %>
 		</p>
 
+	<% end %>
+
+	<% if $beta_mode %>
+  <p>
+    <%= practice_form.text_field :invitation_code, :placeholder => _("Invitation Code for this Beta"), :title => _("Invitation Code for this Beta") %>
+  </p>
 	<% end %>
 	
   <%= practice_form.submit(_("Register"), :class => "g-button", :disable_with => _("Please wait...")) %>
