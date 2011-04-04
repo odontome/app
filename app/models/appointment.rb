@@ -22,9 +22,17 @@ class Appointment < ActiveRecord::Base
   
   # callbacks
   before_validation :set_practice_id, :on => :create
+  before_save :fix_dates
   before_create :set_ends_at
   
   private
+  
+  def fix_dates 
+    self.starts_at = self.starts_at + (self.starts_at.gmt_offset).seconds
+    if self.ends_at != nil  
+      self.ends_at = self.ends_at + (self.ends_at.gmt_offset).seconds
+    end
+  end
   
   def set_ends_at
      self.ends_at = self.starts_at + 60.minutes
