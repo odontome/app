@@ -1,8 +1,11 @@
 <h1><%=_('My practice')%></h1>
 
-<p><%=_('This is more like a "dashboard" of my practice, where I can manage my users and doctors.')%></p>
-
 <ul id="list-items">
+	<li>
+		<h2><%=link_to _("My treatments"), treatments_url %></h2>
+		<span><%=_('Everything that you do to your patients.')%></span>
+		<div class="list-item"><%= @practice.treatments.count %> <%=_('treatments')%></div>
+	</li>
 	<li>
 		<h2><%=link_to _("My doctors"), doctors_url %></h2>
 		<span><%=_('The people who do the things to your patients.')%></span>

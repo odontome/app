@@ -15,9 +15,7 @@ class Doctor < ActiveRecord::Base
   validates_format_of :email, :with => Authlogic::Regex.email, :allow_blank => true
   
   # callbacks
-  before_validation(:on => :create) do
-    set_practice_id
-  end
+  before_validation :set_practice_id, :on => :create
   before_destroy :check_if_is_deleteable
   
   # constants

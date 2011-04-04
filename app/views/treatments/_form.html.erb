@@ -1,0 +1,16 @@
+<%= form_for(@treatment) do |f| %>
+
+  <%= render "shared/error_messages", :target => @treatment %>
+
+  <p>
+    <%= f.text_field :name, :placeholder => _("Name"), :title => _("Name") %>
+  </p>
+  <p>
+    <%= f.number_field :price, :placeholder => _("Price"), :title => _("Price")  %>
+  </p>
+
+  <%= f.submit(_("Save"), :class => "g-button", :disable_with => _("Please wait...")) %> 
+
+  <%=_("or")%> <%= link_to _("Cancel"), treatments_path %>
+
+<% end %>

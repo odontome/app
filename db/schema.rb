@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110330115626) do
+ActiveRecord::Schema.define(:version => 20110403010041) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "practice_id"
@@ -46,11 +46,12 @@ ActiveRecord::Schema.define(:version => 20110330115626) do
     t.string   "color",       :limit => 7, :default => "#3366CC"
   end
 
-  create_table "patient_notes", :force => true do |t|
-    t.integer  "patient_id"
-    t.string   "notes",      :limit => 500
+  create_table "notes", :force => true do |t|
+    t.string   "notes",         :limit => 500
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "noteable_id"
+    t.string   "noteable_type"
   end
 
   create_table "patients", :force => true do |t|
@@ -92,6 +93,14 @@ ActiveRecord::Schema.define(:version => 20110330115626) do
     t.datetime "cancelled_at"
     t.integer  "number_of_patients",               :default => 500
     t.string   "invitation_code"
+  end
+
+  create_table "treatments", :force => true do |t|
+    t.integer  "practice_id"
+    t.string   "name",        :limit => 100
+    t.float    "price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|

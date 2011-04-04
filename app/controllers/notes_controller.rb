@@ -1,12 +1,12 @@
-class PatientNotesController < ApplicationController
+class NotesController < ApplicationController
   before_filter :require_user
   
   # provides
   respond_to :js
 
   def create
-    @note = PatientNote.new(params[:patient_note])
-    @note.patient_id = params[:patient_id] #FIXME yeah this sucks
+    @noteable = find_noteable
+    @note = @noteable.notes.build(params[:note])
     
     respond_to do |format|
       if @note.save
@@ -20,12 +20,24 @@ class PatientNotesController < ApplicationController
   end
 
   def destroy
-    @note = PatientNote.find_by_id_and_patient_id(params[:id],params[:patient_id])
+    @noteable = find_noteable
+    @note = @noteable.notes.find(params[:id])
     @note.destroy
 
     respond_to do |format|
       format.js { }
     end
+  end
+  
+  private
+  
+  def find_noteable
+    params.each do |name, value|
+      if name =~ /(.+)_id$/
+        return $1.classify.constantize.find(value)
+      end
+    end
+    nil
   end
 
 end
