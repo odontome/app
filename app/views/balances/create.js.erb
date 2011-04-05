@@ -1,13 +1,3 @@
-	// <cfsavecontent variable="newTotal">
-	// <tr>
-	// 	<td></td>
-	// 	<td align="center"></td>
-	// 	<td align="center"><big>#LSCurrencyFormat(total)#</big></td>
-	// </tr>
-	// </cfsavecontent>
-	// 
-	// #pageReplaceHTML(selector="tfoot", content="#newTotal#")#
-
 $("tbody").append("<%=escape_javascript(render :partial => 'show', :locals => {:balance => @balance})%>");
 
 // Clear the fields
