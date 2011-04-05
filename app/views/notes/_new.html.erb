@@ -4,3 +4,10 @@
 	</p>
 	<%= submit_tag(_("Annotate"), :class => "g-button", :disable_with => _("Please wait...")) %>
 <% end %>
+
+<script type="text/javascript">
+	$(document).ready(function() {		
+		// Limit the notes
+		$('#note_notes').limit('500');
+	});	
+</script>
