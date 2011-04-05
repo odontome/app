@@ -1,7 +1,8 @@
-$("tbody").append("<%=escape_javascript(render :partial => 'show', :locals => {:balance => @balance})%>");
+$("#patient_balance > tbody").append("<%=escape_javascript(render :partial => 'show', :locals => {:balance => @balance})%>");
 
 // Clear the fields
 $('[type=number],textarea').val("");
 
 // Highlight the new total
-// $("tfoot").effect("highlight", {}, 3000);
+$("tfoot td:last-child").html("<big><%=escape_javascript(number_to_currency(@total))%></big>");
+$("tfoot").effect("highlight", {}, 3000);

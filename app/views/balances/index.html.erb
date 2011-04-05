@@ -1,4 +1,4 @@
-<table class="ui-tabs ui-widget ui-widget-content ui-corner-all balance">
+<table id="patient_balance" class="ui-tabs ui-widget ui-widget-content ui-corner-all balance">
 	<thead>
 		<tr>
 			<th><%=_("Notes")%></th>
@@ -14,7 +14,7 @@
 	<tfoot>
 		<td></td>
 		<td></td>
-		<td align="center"><!-- <cfoutput><big>#LSCurrencyFormat(total)#</big></cfoutput> --></td>
+		<td align="center"><big><%=number_to_currency(@total) %></big></td>
 	</tfoot>
 </table>
 

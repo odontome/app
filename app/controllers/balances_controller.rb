@@ -6,6 +6,7 @@ class BalancesController < ApplicationController
   
   def index
     @balances = Balance.where("patient_id = ?", params[:patient_id])
+    @total = Balance.where("patient_id = ?", params[:patient_id]).sum(:amount)
     render :layout => nil
   end
 
@@ -15,6 +16,7 @@ class BalancesController < ApplicationController
     
     respond_to do |format|
       if @balance.save
+          @total = Balance.where("patient_id = ?", params[:patient_id]).sum(:amount)
           format.js  { } #create.js.erb
       else
           format.js  {
