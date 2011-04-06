@@ -61,23 +61,7 @@
 <script type="text/javascript">
 	$(function() {
 		$("#tabs").tabs({
-			cache: true
+			spinner: "<img src='/images/icons/indicator.gif' />"
 		});
-		
-		// <cfif patient.photoPath IS "">
-		// 			$("#photo-edit-container").toggle();
-		// 		<cfelse>
-		// 			$("#photo-show-container").toggle();
-		// 		</cfif>
-		
-		// $("#retake-snapshot").click(function() {
-		// 			$("#photo-edit-container").toggle();
-		// 			$("#photo-show-container").toggle();
-		// 		});
-		
-		// Jump to the balance tab
-		// $("#balance").click(function() {
-		// 			$("#tabs").tabs( "select" , 3);
-		// 		});
 	});
 </script>
