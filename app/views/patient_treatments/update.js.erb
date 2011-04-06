@@ -1,0 +1,6 @@
+<% if params[:patient_treatment][:is_completed] != nil %>
+	// For some reason I need to pass them one by one
+	$('li#treatment<%=@treatment.id%>').toggleClass("ui-selected");
+	$('li#treatment<%=@treatment.id%>').toggleClass("disabled-list");
+	$('li#treatment<%=@treatment.id%>').toggleClass("checked");
+<% end %>
