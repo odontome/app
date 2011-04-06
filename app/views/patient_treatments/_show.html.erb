@@ -11,17 +11,19 @@
 	<% if treatment.is_completed? %>
 		<span><%=_("Completed at")%> <%=l treatment.updated_at, :format => :long %></span>
 	<% end %>
-	
+		
 	<div class="list-item">
-		<% form_tag([patient, treatment], :method => :put, :remote => true) do %>
+		<%= form_tag([patient, treatment], :method => :put, :remote => true) do %>
 			<%= hidden_field_tag("patient_treatment[is_completed]", 0)%>
 			<%= check_box_tag("patient_treatment[is_completed]", 1, treatment.is_completed, :title => _("Is this completed?"), :onchange => "$(this).trigger('submit.rails');") %>
 		<% end %>
 	</div>
 	
 	<div class="list-item">
-		<% form_tag([patient, treatment], :method => :put, :remote => true) do %>
+		<%= form_tag([patient, treatment], :method => :put, :remote => true) do %>
 			<%= select_tag("patient_treatment[doctor_id]", options_from_collection_for_select(doctors, "id", "fullname", :selected => treatment.doctor_id), :title => _("Select a doctor"), :onchange => "$(this).trigger('submit.rails');") %>
 		<% end %>
 	</div>
+	
+	<div class="list-item-button"><%=link_to _('Delete'), [patient,treatment], :method => :delete, :confirm => _("Are you sure? A chargeback will be applied to the patient's balance if this treatment was completed"), :class => "g-button red", :remote => true %></div>
 </li>

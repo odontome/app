@@ -59,7 +59,7 @@ class PatientTreatmentsController < ApplicationController
     @treatment.destroy
 
     respond_to do |format|
-      format.html { redirect_to(treatments_url) }
+      format.js { } # destroy.js.erb
     end
   end
 
