@@ -478,3 +478,9 @@ input[disabled] {
 	border:solid 1px #0e509e
 }
 /* @end */
+
+/* @group Overwrites to the jQuery UI */
+.ui-tabs { 
+	border: 0px !important;
+}
+/* @end */
