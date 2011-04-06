@@ -28,9 +28,12 @@ class Appointment < ActiveRecord::Base
   private
   
   def fix_dates 
-    self.starts_at = self.starts_at + (self.starts_at.gmt_offset).seconds
-    if self.ends_at != nil  
-      self.ends_at = self.ends_at + (self.ends_at.gmt_offset).seconds
+    # only when the date was modified (not the case when editing the info)
+    if self.changes[:starts_at] != nil
+      self.starts_at = self.starts_at + (self.starts_at.gmt_offset).seconds
+      if self.ends_at != nil  
+        self.ends_at = self.ends_at + (self.ends_at.gmt_offset).seconds
+      end
     end
   end
   
