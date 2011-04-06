@@ -1,0 +1,15 @@
+
+
+Configuration
+=============
+
+Sign up for a free account on http://www.prefinery.com and create a new web beta.  Once you 
+do this, you'll configure Prefinery Ruby API as follows:
+
+You should have something like this in config/initializers/prefinery.rb.
+
+  Prefinery.configure do |config|
+    config.subdomain = 'compulsivo'
+    config.api_key = '8cc4aae2a2fc0e1278a2079ea95b219e26f6beba'
+  end
+

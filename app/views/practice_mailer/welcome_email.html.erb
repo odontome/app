@@ -16,6 +16,7 @@
 		        .content a {font-family: Georgia;font-size: 13px;color: #2679b9;font-style: italic;}
 		        .content a.center {font-size: 12px;text-align: center;display: block;color: #999999;padding: 8px 0 12px 0;text-decoration: none;}
 		        .content img.inline {border: 1px solid #dedede;padding: 4px;}
+		        .content li {font-family: 'Lucida Grande';font-size: 12px;color: #333333;}
 		--></style>
   </head>
   <body>
@@ -57,7 +58,8 @@
 										</p>
 								
 										<p>
-											<%=_('If you haven\'t already, you can go to')%> <%=link_to "http://odonto.me", "http://odonto.me" %> <%=_('and login with your email address and password to start setting up your practice in My practice|http://odonto.me/practice/settings.')%>
+											<%=_('If you haven\'t already, you can go to')%> <%=link_to "http://my.odonto.me", "http://my.odonto.me" %> <%=_('and login with your email address and password to start setting up your practice in')%> 
+											<%= link_to _('My practice'), "http://my.odonto.me/practice" %>
 										</p>
 
 										<ul>

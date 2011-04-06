@@ -1,0 +1,82 @@
+Prefinery Ruby API
+==================
+
+The official Ruby library for interacting with the Prefinery REST API. 
+
+Prefinery (http://www.prefinery.com) helps you launch a private beta in minutes.  
+Prefinery collects email addresses, generates invitation codes, and sends 
+invitations for your web beta.  Your customers never leave your site and 
+e-mail invitations are sent from your address.
+
+The Prefinery Ruby API gets Prefinery integrated into your Rails website in seconds.
+
+
+Installation
+============
+
+  script/plugin install git://github.com/compulsivo/prefinery-ruby-api.git
+
+
+Configuration
+=============
+
+Sign up for a free account on http://www.prefinery.com and create a new web beta.  Once you 
+do this, you'll configure Prefinery Ruby API as follows:
+
+You should have something like this in config/initializers/prefinery.rb.
+
+  Prefinery.configure do |config|
+    config.subdomain = 'compulsivo'
+    config.api_key = '8cc4aae2a2fc0e1278a2079ea95b219e26f6beba'
+  end
+
+Documentation
+=============
+
+See lib/prefinery.rb
+
+Also, documentation on the REST API can be found at http://app.prefinery.com/api
+
+
+Examples
+========
+
+List testers
+
+ Prefinery::Tester.find(:all, :params => { :beta_id => 74 })
+ Prefinery::Tester.find(:all, :params => { :beta_id => 74, :email => "justin@prefinery.com" })
+
+Show a single tester
+
+ tester = Prefinery::Tester.find(1259, :params => { :beta_id => 74 })
+
+Creating a tester
+
+ tester = Prefinery::Tester.new(:beta_id => 74)
+ tester.email = 'justin@prefinery.com'
+ tester.profile = {:first_name => 'Justin', :last_name => 'Britten'}
+ tester.save
+
+Updating a tester
+
+ tester = Prefinery::Tester.find(1259, :params => { :beta_id => 74 })
+ tester.profile = {:city => 'Austin', :state => 'TX'}
+ tester.save
+
+
+Helpers
+=======
+
+To include Prefinery's invitation javascript on your site's signup page:
+
+<%= prefinery_invitation_javascript(:beta_id => 74) %>
+
+To place a link on your site's signup page which will launch the Prefinery invitation widget:
+
+<%= link_to_prefinery_invitation 'Sign up for the beta now!', '#' %>
+
+
+License
+=======
+
+Copyright (c) 2009 Compulsivo, Inc. Released under the MIT license

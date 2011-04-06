@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(:version => 20110404021303) do
     t.integer  "plan_id",                          :default => 1
     t.datetime "cancelled_at"
     t.integer  "number_of_patients",               :default => 500
+    t.string   "invitation_code"
   end
 
   create_table "treatments", :force => true do |t|

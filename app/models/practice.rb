@@ -16,7 +16,12 @@ class Practice < ActiveRecord::Base
   accepts_nested_attributes_for :users, :limit => 1
   
   # validations
-  validates_presence_of :plan_id
+  validates_presence_of :plan_id, :name
+  validates_presence_of :invitation_code, :if => :beta_mode_on?
+  validate :correctness_of_invitation_code, :on => :create
+
+  #callbacks
+  before_validation :set_first_user_data, :on => :create
 
   def set_as_cancelled
     self.status = "cancelled"
@@ -40,6 +45,26 @@ class Practice < ActiveRecord::Base
           break
       end
     end
+  end
+
+  private
+  
+  def set_first_user_data
+    self.users.first.firstname = 'Administrator'
+    self.users.first.lastname = 'User'
+  end
+
+  def beta_mode_on?
+    #validations pass when false (or something)
+    false if $beta_mode
+  end
+
+  def correctness_of_invitation_code
+    tester = Prefinery::Tester.new(:beta_id => 1529)
+    tester.email = self.users.first.email
+    tester.status = 'active'
+    tester.invitation_code = self.invitation_code
+    errors.add(:invitation_code, _("seems to be invalid or its maximum allowed testers has been reached. Please check it or go to http://odonto.me to request access to this private beta.")) unless tester.save
   end
 
 end
