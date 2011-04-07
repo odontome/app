@@ -1,0 +1,6 @@
+<%=_("Created at")%>,<%=_("Notes")%>,<%=_("Amount")%>
+<%= CSV.generate do |csv|
+  @balances.each do |balance|
+    csv << [ l( balance[:created_at], :format => :short), balance[:notes], balance[:amount]]
+  end
+end %>

@@ -1,13 +1,21 @@
-class BalancesController < ApplicationController
+class BalancesController < ApplicationController  
   before_filter :require_user
   
   # provides
-  respond_to :html, :js
+  respond_to :html, :js, :csv
   
   def index
-    @balances = Balance.where("patient_id = ?", params[:patient_id])
+    @patient = Patient.mine.find(params[:patient_id])
+    @balances = Balance.where("patient_id = ?", @patient.id)
     @total = Balance.where("patient_id = ?", params[:patient_id]).sum(:amount)
-    render :layout => nil
+    
+    respond_to do |format|
+      format.html { render :layout => nil }
+      format.csv { 
+            headers["Content-Type"] = "text/csv"
+            headers["Content-disposition"] = "attachment; filename=#{@patient.fullname}.csv"
+      } 
+    end
   end
 
   def create
