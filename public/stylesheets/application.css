@@ -7,6 +7,15 @@ body {
 	height: 100%;
 }
 
+/* @group HTML5 fallbacks */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+/* end */
+
+
 table.balance {
 	width: 100%;
 }
@@ -251,6 +260,7 @@ footer {
 
 /* @group Notes */
 .note {
+	background: rgb(253, 242, 149);
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(254, 244, 156)), to(rgb(253, 242, 149)));
     background-color: rgb;
     -webkit-box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.3);
@@ -321,6 +331,7 @@ button.g-button, a.g-button, input[type=submit].g-button {
 
 .g-button.red {
 	border-color: rgb(224,0,52) !important;
+	background: -moz-linear-gradient(center bottom,rgb(224,0,52),rgb(250,147,171));
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(250,147,171)), to(rgb(224,0,52))) !important;
 	color: #ffffff;
 	text-shadow: none;
@@ -328,6 +339,7 @@ button.g-button, a.g-button, input[type=submit].g-button {
 
 .g-button.green {
 	border-color: rgb(51,103,22) !important;
+	background: -moz-linear-gradient(center bottom,rgb(163,202,52),rgb(250,238,179)) !important;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(205,238,179)), to(rgb(163,202,131))) !important;
 	color: #336716 !important;
 	text-shadow: none;
