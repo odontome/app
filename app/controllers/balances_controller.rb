@@ -1,4 +1,6 @@
 class BalancesController < ApplicationController  
+  require 'csv'
+  
   before_filter :require_user
   
   # provides
