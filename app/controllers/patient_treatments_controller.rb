@@ -6,7 +6,7 @@ class PatientTreatmentsController < ApplicationController
   
   def index
     @patient = Patient.find(params[:patient_id])
-    @treatments = PatientTreatment.order("tooth_number, updated_at ASC").where("patient_id = ?", params[:patient_id])
+    @treatments = PatientTreatment.order("tooth_number, name, is_completed").where("patient_id = ?", params[:patient_id])
     @doctors = Doctor.order("firstname")
     @all_treatments = Treatment.mine.where("price IS NOT NULL").order("name")
     
