@@ -1,6 +1,7 @@
 class PatientTreatment < ActiveRecord::Base
    
   # associations
+  has_many :notes, :as => :noteable, :dependent => :destroy
   belongs_to :patient
   belongs_to :doctor
   

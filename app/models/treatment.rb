@@ -14,4 +14,8 @@ class Treatment < ActiveRecord::Base
   
   # callbacks
   before_validation :set_practice_id, :on => :create
+  
+  def invalid?
+    return price.nil?
+  end
 end

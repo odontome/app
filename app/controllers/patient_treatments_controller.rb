@@ -1,4 +1,4 @@
-class PatientTreatmentsController < ApplicationController
+class PatientTreatmentsController < ApplicationController  
   before_filter :require_user
   
   # provides
@@ -8,7 +8,7 @@ class PatientTreatmentsController < ApplicationController
     @patient = Patient.find(params[:patient_id])
     @treatments = PatientTreatment.order("tooth_number, updated_at ASC").where("patient_id = ?", params[:patient_id])
     @doctors = Doctor.order("firstname")
-    @all_treatments = Treatment.mine.order("name")
+    @all_treatments = Treatment.mine.where("price IS NOT NULL").order("name")
     
     render :layout => nil
   end
@@ -24,10 +24,12 @@ class PatientTreatmentsController < ApplicationController
     @doctors = Doctor.order("firstname")
     
     # FIXME (more of a enhance me) find the treatment passed and assign it
-    treatment_used = Treatment.mine.find(params[:treatment_id])
-    @treatment.patient_id = params[:patient_id]
-    @treatment.name = treatment_used.name
-    @treatment.price = treatment_used.price
+    if params[:treatment_id] != nil
+      treatment_used = Treatment.mine.find(params[:treatment_id])
+      @treatment.patient_id = params[:patient_id]
+      @treatment.name = treatment_used.name
+      @treatment.price = treatment_used.price
+    end
 
     respond_to do |format|
       if @treatment.save
