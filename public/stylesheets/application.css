@@ -495,4 +495,7 @@ input[disabled] {
 .ui-tabs { 
 	border: 0px !important;
 }
+ .ui-tabs-panel {
+	padding: 1em 0.7em !important;
+}
 /* @end */
