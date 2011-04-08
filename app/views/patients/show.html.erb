@@ -14,7 +14,7 @@
 		<div class="bodycontent">	
 			<h2><%=_('Personal information')%></h2>
 			
-			<% if @patient.uid %><p><label><%=_('Unique identifier')%>:</label> <%=@patient.uid%></p><% end %>
+			<% if @patient.uid != "" %><p><label><%=_('Unique identifier')%>:</label> <%=@patient.uid%></p><% end %>
 			<p><label><%=_('Age')%>:</label> <%=@patient.age%> (<%=l @patient.date_of_birth, :format => :long %>)</p>
 						
 			<p><label><%=_('Email')%>:</label> <%=@patient.email%></p>
