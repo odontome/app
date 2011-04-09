@@ -10,10 +10,6 @@ class ApplicationController < ActionController::Base
   before_filter :set_locale
   before_filter :set_timezone  
   
-  #TODO: ask Raul if he used this
-  #before_filter :find_practice_object
-  
-  
   def check_account_status
     if current_user 
       if current_user.practice.status == "cancelled"
