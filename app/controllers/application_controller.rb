@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
     if current_user
       session[:locale] = I18n.locale = FastGettext.set_locale(session[:locale])
     else
-      I18n.locale = FastGettext.set_locale(compatible_language_from(AVAILABLE_LOCALES))
+      session[:locale] = I18n.locale = FastGettext.set_locale(compatible_language_from(AVAILABLE_LOCALES))
     end
   end
   

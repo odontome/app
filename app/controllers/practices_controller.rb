@@ -25,6 +25,8 @@ class PracticesController < ApplicationController
 
   def create
     @practice = Practice.new(params[:practice])
+    @practice.locale = session[:locale]
+    @practice.timezone = session[:time_zone_name]
     
     respond_to do |format|
       if @practice.save

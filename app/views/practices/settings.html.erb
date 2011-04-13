@@ -25,7 +25,11 @@
 	  </p>
 	  <p>
 			<%= f.label _("Time zone") %>
-			<%= f.time_zone_select :timezone, ActiveSupport::TimeZone.all, :default => Time.zone.name, :title => _("Time zone") %></p>
+			<%= f.time_zone_select :timezone, [ ActiveSupport::TimeZone[@practice.timezone]] %>
+	  </p>
+	  <p>
+			<%= f.label _("Preferred currency unit") %>
+			<%= f.select(:currency_unit, %w[$ € £]) %>
 	  </p>
 	</fieldset>
 	

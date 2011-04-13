@@ -22,6 +22,7 @@ class Practice < ActiveRecord::Base
 
   #callbacks
   before_validation :set_first_user_data, :on => :create
+  after_create :populate_default_treatments
 
   def set_as_cancelled
     self.status = "cancelled"
@@ -65,6 +66,13 @@ class Practice < ActiveRecord::Base
     tester.status = 'active'
     tester.invitation_code = self.invitation_code
     errors.add(:invitation_code, _("seems to be invalid or its maximum allowed testers has been reached. Please check it or go to http://odonto.me to request access to this private beta.")) unless tester.save
+  end
+  
+  def populate_default_treatments
+    puts self.locale
+    TREATMENTS[self.locale||'en_US']['treatments'].each do |treatment|
+      self.treatments << Treatment.new(:name => treatment, :price => 0)
+    end
   end
 
 end
