@@ -13,7 +13,7 @@
 			<h2><%= link_to treatment.name, treatment %></h2>			
 
 			<% if !treatment.invalid? %>
-				<span><%= number_to_currency(treatment.price)%></span>
+				<span><%= number_to_currency(treatment.price, :unit => @current_user.practice.currency_unit)%></span>
 			  <% else %>
 			  	<span><%=_("Specify a price to use this treatment")%></span>
 			<% end %>
