@@ -1,4 +1,4 @@
-<h1><%=_('Practice Settings')%></h1>
+<h1><%=_('Practice settings')%></h1>
 
 <%= form_for(@practice, :url => "/practices/#{@practice.id}", :method => :update) do |f| %>
 
@@ -90,5 +90,6 @@
 
 <% end %>
 
-	<hr />
-	<small><%=_('If you need to, you can')%> <%=link_to _('Close your account here'), practice_cancel_url %></small>
+<hr />
+
+<p><%=_('If you need to, you can')%> <%=link_to _('Close your account here'), practice_cancel_url %></p>

@@ -1,0 +1,11 @@
+<ul id="list-items">
+	<% @treatments.each do |treatment| %>
+		
+		<%= render :partial => "patient_treatments/show", :locals => {:treatment => treatment, :patient => @patient, :doctors => @doctors} %>
+		
+	<% end %>
+</ul>
+
+<hr />
+
+<%= render :partial => "/patient_treatments/new", :locals => {:treatments => @all_treatments, :doctors => @doctors} %>

@@ -1,4 +1,4 @@
-class AgendaController < ApplicationController
+class DatebookController < ApplicationController
   before_filter :require_user
   
   def show

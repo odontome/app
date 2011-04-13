@@ -5,7 +5,7 @@ class WelcomeController < ApplicationController
       if current_user_is_superadmin?
         home_url = practices_url
       else
-        home_url = agenda_url
+        home_url = datebook_url
       end
       redirect_to home_url
     else

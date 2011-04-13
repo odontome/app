@@ -7,6 +7,7 @@ Odontome::Application.routes.draw do
     end
     resources :balances
     resources :notes
+    resources :patient_treatments
   end
   resources :treatments
   resources :users
@@ -18,7 +19,7 @@ Odontome::Application.routes.draw do
   match "/signin" => "user_sessions#new", :as => :signin
   match "/logout" => "user_sessions#destroy", :as => :logout
   match "/signup" => "practices#new", :as => :signup
-  match "/agenda" => "agenda#show", :as => :agenda
+  match "/datebook" => "datebook#show", :as => :datebook
   match "/practice" => "practices#show", :as => :practice
   match "/practice/settings" => "practices#settings", :as => :practice_settings
   match "/practice/cancel" => "practices#cancel", :as => :practice_cancel

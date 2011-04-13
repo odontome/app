@@ -13,10 +13,15 @@
 	
 		<li class="<%=cclass%>">
 			<h2><%= link_to patient.fullname, patient %></h2>			
-			<span><%=patient.uid%></span>
-			<span><strong><%=_('Age')%>:</strong> <%=patient.age%></span>
-			<span><strong><%=_('Allergies')%>:</strong> <%unless patient.allergies.blank?%><%=patient.allergies%><%else%><%=_('none')%><%end%></span>
-			<span><strong><%=_('Last visit')%>:</strong> <%#=patient.last_visit_at%>TODO!</span>
+			
+			<% if !patient.invalid? %>
+				<span><%=patient.uid%></span>
+				<span><strong><%=_('Age')%>:</strong> <%=patient.age%></span>
+				<span><strong><%=_('Allergies')%>:</strong> <%unless patient.allergies.blank?%><%=patient.allergies%><%else%><%=_('none')%><%end%></span>
+			<% else %>
+				<span><%=_("Complete this patient information to continue")%></span>
+			<% end %>
+			
 			<% if user_is_admin?(current_user) %>
 				<div class="list-item-button"><%= link_to _("Delete"), patient, :method => :delete, :confirm => "Are you sure? All data associated with this patient will be lost forever. THERE IS NO GOING BACK!", :class => "g-button red"%></div>
 			<% end %>

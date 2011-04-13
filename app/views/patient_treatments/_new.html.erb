@@ -1,0 +1,32 @@
+
+<%= form_tag(patient_patient_treatments_path, :method => :post, :remote => true) do %>
+	<table>
+		<tr>
+			<td>
+	<p>
+		<%= select_tag("treatment_id", options_from_collection_for_select(treatments, "id", "name"), :title => _("Select a treatment")) %> 
+	</p>
+	</td>
+	<td>
+	<p>
+		<%= select_tag("patient_treatment[tooth_number]", options_for_select(PatientTreatment::TEETH), :title => _("Tooth number")) %>
+	</p></td>
+	<td>
+	<p>
+		<%= select_tag("patient_treatment[doctor_id]", options_from_collection_for_select(doctors, "id", "fullname"), :title => _("Select a doctor")) %> 
+	</p></td>
+	<td>
+	
+	<%= submit_tag(_("Add treatment"), :class => "g-button", :disable_with => _("Please wait...")) %>	</td>
+	
+	</tr>
+	</table>
+	
+<% end %>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		// tipTip all form fields
+		$('input,select').tipTip();
+	});
+</script>

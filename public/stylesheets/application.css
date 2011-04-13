@@ -7,6 +7,15 @@ body {
 	height: 100%;
 }
 
+/* @group HTML5 fallbacks */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+/* end */
+
+
 table.balance {
 	width: 100%;
 }
@@ -249,109 +258,59 @@ footer {
 }
 /* @end */
 
-/* @group Patients */
+/* @group Notes */
+.note {
+	background: rgb(253, 242, 149);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(254, 244, 156)), to(rgb(253, 242, 149)));
+    background-color: rgb;
+    -webkit-box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.3);
+    margin-bottom: 10px;
+}
+.note:hover .delete {
+    display: block;
+} 
 
-	/* @group Charts */
-		.note {
-			background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(254, 244, 156)), to(rgb(253, 242, 149)));
-		    background-color: rgb;
-		    -webkit-box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.3);
-		    margin-bottom: 10px;
+.note > .delete {
+    display: none;
+    height: 30px;
+    position: absolute;
+    margin-top: -15px;
+    margin-left: -15px;
+    width: 30px;
+}
+.note > .content {
+	padding: 10px;
+	font-family: "Marker Felt";
+	font-size: 18px;
+}
+.note > .timestamp {
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    font-size: 10px;
+    background-color: #feea3d;
+    border-bottom: 1px solid #bca902;
+    padding: 2px 4px;
+    text-align: right;
+}
+	
+/* @end */
+
+/* @group Patients */
+	
+	#balance {
+		font-size: 120%;
+		margin: 0px auto;
+		display: block;
+	}
+	
+	/* @group Treatments */
+		#progressbar {
+			margin: 10px 0;
+			border: 1px solid #ccc !important;
 		}
-		.note:hover .delete {
-		    display: block;
-		} 
-		
-		.note > .delete {
-		    display: none;
-		    height: 30px;
-		    position: absolute;
-		    margin-top: -15px;
-		    margin-left: -15px;
-		    width: 30px;
-		}
-		.note > .content {
-			padding: 10px;
-			font-family: "Marker Felt";
-			font-size: 18px;
-		}
-		.note > .timestamp {
-		    left: 0px;
-		    right: 0px;
-		    bottom: 0px;
-		    font-size: 10px;
-		    background-color: #feea3d;
-		    border-bottom: 1px solid #bca902;
-		    padding: 2px 4px;
-		    text-align: right;
-		}
-		
-		div.patient-portrait:hover button {
-			display: block;
-		}
-		
-		div.patient-portrait a { 
-			background: #fff; 
-			display: block;
-			width: auto; 
-			padding: 10px 10px 15px;
-			margin-bottom: 30px; 
-			text-align: center; 
-			font-family: "Marker Felt", sans-serif; 
-			text-decoration: none; 
-			color: #333; 
-			font-size: 18px; 
-			-webkit-box-shadow: 0 3px 6px rgba(0,0,0,.25); 
-			-moz-box-shadow: 0 3px 6px rgba(0,0,0,.25);
-			-webkit-transform: rotate(-2deg); 
-			-webkit-transition: -webkit-transform .15s linear; 
-			-moz-transform: rotate(-2deg);
-		}
-		
-		div.patient-portrait a:after {
-			content: attr(title);
-		}
-		
-		div.patient-portrait button {
-			margin: -200px 100px;
-			position: absolute;
-			z-index: 10000;
-			display: none;
-		}
-		
-		#balance {
-			font-size: 120%;
-			margin: 0px auto;
-			display: block;
-		}		
 	/* @end */
 	
-	/* @group Image Files */
-		ul.polaroids { margin: 0 0 18px -30px; }
-		
-		ul.polaroids li { display: inline; }
-		
-		ul.polaroids a { background: #fff; display: inline; float: left; margin: 0 0 27px 30px; width: auto; padding: 10px 10px 15px; text-align: center; font-family: "Marker Felt", sans-serif; text-decoration: none; color: #333; font-size: 18px; -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.25); -moz-box-shadow: 0 3px 6px rgba(0,0,0,.25); -webkit-transform: rotate(-2deg); -webkit-transition: -webkit-transform .15s linear; -moz-transform: rotate(-2deg); }
-		
-		ul.polaroids img { display: block; width: 140px; margin-bottom: 12px; }
-		
-		ul.polaroids a:after { content: attr(title); }
-		
-		ul.polaroids li:nth-child(even) a { -webkit-transform: rotate(2deg);  -moz-transform: rotate(2deg); }
-		
-		ul.polaroids li:nth-child(3n) a { -webkit-transform: none; position: relative; top: -5px;  -moz-transform: none; }
-		
-		ul.polaroids li:nth-child(5n) a { -webkit-transform: rotate(5deg); position: relative; right: 5px;  -moz-transform: rotate(5deg); }
-		
-		ul.polaroids li:nth-child(8n) a { position: relative; right: 5px; top: 8px; }
-		
-		ul.polaroids li:nth-child(11n) a { position: relative; left: -5px; top: 3px; }
-		
-		ul.polaroids li.messy a { margin-top: -375px; margin-left: 160px; -webkit-transform: rotate(-5deg); -moz-transform: rotate(-5deg); }
-		
-		ul.polaroids li a:hover { -webkit-transform: scale(1.25); -moz-transform: scale(1.25); -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.5); -moz-box-shadow: 0 3px 6px rgba(0,0,0,.5); position: relative; z-index: 5; }
-	/* @end */
-
 /* @end */
 
 /* @group G buttons */
@@ -372,6 +331,7 @@ button.g-button, a.g-button, input[type=submit].g-button {
 
 .g-button.red {
 	border-color: rgb(224,0,52) !important;
+	background: -moz-linear-gradient(center bottom,rgb(224,0,52),rgb(250,147,171));
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(250,147,171)), to(rgb(224,0,52))) !important;
 	color: #ffffff;
 	text-shadow: none;
@@ -379,6 +339,7 @@ button.g-button, a.g-button, input[type=submit].g-button {
 
 .g-button.green {
 	border-color: rgb(51,103,22) !important;
+	background: -moz-linear-gradient(center bottom,rgb(163,202,52),rgb(250,238,179)) !important;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(205,238,179)), to(rgb(163,202,131))) !important;
 	color: #336716 !important;
 	text-shadow: none;
@@ -527,5 +488,14 @@ input[disabled] {
 
 .pagination a:hover{
 	border:solid 1px #0e509e
+}
+/* @end */
+
+/* @group Overwrites to the jQuery UI */
+.ui-tabs { 
+	border: 0px !important;
+}
+ .ui-tabs-panel {
+	padding: 1em 0.7em !important;
 }
 /* @end */

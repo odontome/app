@@ -1,17 +1,8 @@
-	// <cfsavecontent variable="newTotal">
-	// <tr>
-	// 	<td></td>
-	// 	<td align="center"></td>
-	// 	<td align="center"><big>#LSCurrencyFormat(total)#</big></td>
-	// </tr>
-	// </cfsavecontent>
-	// 
-	// #pageReplaceHTML(selector="tfoot", content="#newTotal#")#
-
-$("tbody").append("<%=escape_javascript(render :partial => 'show', :locals => {:balance => @balance})%>");
+$("#patient_balance > tbody").append("<%=escape_javascript(render :partial => 'show', :locals => {:balance => @balance})%>");
 
 // Clear the fields
 $('[type=number],textarea').val("");
 
 // Highlight the new total
-// $("tfoot").effect("highlight", {}, 3000);
+$("tfoot td:last-child").html("<big><%=escape_javascript(link_to number_to_currency(@total), patient_balances_path(:format => :csv), :class => 'g-button', :title => _('Download balance in CSV'))%></big>");
+$("tfoot").effect("highlight", {}, 3000);

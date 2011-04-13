@@ -1,9 +1,9 @@
-<table class="ui-tabs ui-widget ui-widget-content ui-corner-all balance">
+<table id="patient_balance" class="ui-tabs ui-widget ui-widget-content ui-corner-all balance">
 	<thead>
 		<tr>
-			<th><%=_("Notes")%></th>
-			<th><%=_("Expenses")%></th>
-			<th><%=_("Income")%></th>			
+			<th width="70%"><%=_("Notes")%></th>
+			<th width="15%"><%=_("Expenses")%></th>
+			<th width="15%"><%=_("Income")%></th>			
 		</tr>
 	</thead>
 	<tbody>
@@ -12,20 +12,17 @@
 	<% end %>
 	</tbody>
 	<tfoot>
-		<td></td>
-		<td></td>
-		<td align="center"><!-- <cfoutput><big>#LSCurrencyFormat(total)#</big></cfoutput> --></td>
+		<td colspan="3" align="right"><big><%=link_to number_to_currency(@total), patient_balances_path(:format => :csv), :class => "g-button", :title => _("Download balance in CSV") %></big></td>
 	</tfoot>
 </table>
 
 <%= render "new" %>
-
 
 <script type="text/javascript">
 	$(document).ready(function() {
 		// Limit the notes
 		$('#balance_notes').limit('255');
 		// tipTip all form fields
-		$('input,textarea').tipTip();
+		$('input,textarea,big a').tipTip();
 	});
 </script>
