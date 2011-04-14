@@ -1,6 +1,6 @@
 <h1><%=@treatment.name%></h1>
 <p>
-	<label><%=_("Price")%>:</label> <%= @treatment.price%>
+	<label><%=_("Price")%>:</label> <%= number_to_currency @treatment.price%>
 </p>
 <p>
 	<%=link_to _("Edit"), edit_treatment_path(@treatment), :class => "g-button" %>
