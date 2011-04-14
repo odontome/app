@@ -45,7 +45,7 @@ module Odontome
      def set_practice_id
        if UserSession.find
          self.practice_id = UserSession.find.user.practice_id
-      end
+       end
      end
      
      # overwrite for the alphabetical pagination plugin

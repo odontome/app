@@ -2,10 +2,14 @@
 	<p>		
 		<%= text_field_tag "appointment[patient_id]", nil, :title => _("Enter the patient name or Unique Identifier") %>
 	</p>
-
+	
 	<p>
-		<%= f.label _("Doctor") %>
-		<%= f.select(:doctor_id, options_from_collection_for_select(@doctors, "id", "fullname", :selected => @appointment.doctor_id), :title => _("Select a doctor")) %>
+		<% if @doctors.empty? %>
+			<%=_("Please")%> <%=link_to 'create a doctor', doctors_path%> <%=_("before trying to write down appointments")%>
+		<% else %>
+			<%= f.label _("Doctor") %>
+			<%= f.select(:doctor_id, options_from_collection_for_select(@doctors, "id", "fullname", :selected => @appointment.doctor_id), :title => _("Select a doctor")) %>
+		<% end %>
 	</p>
 
 	<p>
