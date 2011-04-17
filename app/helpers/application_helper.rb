@@ -11,4 +11,8 @@ module ApplicationHelper
       content_tag :span, letter
     end
   end
+  
+  def number_to_currency_with_currency(number)
+    number_to_currency(number, :unit => @current_user.practice.currency_unit)
+  end
 end

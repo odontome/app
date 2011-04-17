@@ -7,7 +7,7 @@
 
 <li id="treatment<%=treatment.id%>" class="<%=cclass%>">
 	<h2><% if treatment.tooth_number != 0 %>#<%=treatment.tooth_number%> - <%end%> <%=treatment.name %></h2>
-	<span><%=number_to_currency(treatment.price)%></span>
+	<span><%=number_to_currency_with_currency(treatment.price)%></span>
 	<% if treatment.is_completed? %>
 		<span><%=_("Completed at")%> <%=l treatment.updated_at, :format => :long %></span>
 	<% end %>
