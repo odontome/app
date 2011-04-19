@@ -65,6 +65,7 @@ GEM
     rack (1.2.1)
     rack-mount (0.6.13)
       rack (>= 1.0.0)
+    rack-ssl-enforcer (0.2.2)
     rack-test (0.5.7)
       rack (>= 1.0)
     rails (3.0.5)
@@ -99,5 +100,6 @@ DEPENDENCIES
   jquery-rails (>= 0.2.6)
   mail
   paginate_alphabetically!
+  rack-ssl-enforcer
   rails (= 3.0.5)
   sqlite3-ruby

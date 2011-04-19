@@ -39,6 +39,10 @@ module Odontome
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+    
+    # To configure the SSL Enforcer gem
+    config.middleware.use Rack::SslEnforcer
+    config.middleware.use Rack::SslEnforcer, :only => "/login", :strict => true
   end
 
   class ActiveRecord::Base
