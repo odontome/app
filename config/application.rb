@@ -41,7 +41,7 @@ module Odontome
     config.filter_parameters += [:password]
     
     # To configure the SSL Enforcer gem
-    config.middleware.use Rack::SslEnforcer, :only => "/signup", :strict => true
+    config.middleware.use Rack::SslEnforcer, :only => ["/signup", "/signin", "/users/new", /^\/users\/(.+)\/edit/], :mixed => true
   end
 
   class ActiveRecord::Base
