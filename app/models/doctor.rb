@@ -2,6 +2,7 @@ class Doctor < ActiveRecord::Base
   belongs_to :practice
   has_many :appointments
   has_many :patients, :through => :appointments
+  has_many :patient_treatments
 
   scope :mine, lambda { 
     where("doctors.practice_id = ? ", UserSession.find.user.practice_id)
@@ -32,15 +33,14 @@ class Doctor < ActiveRecord::Base
   end
   
   def is_deleteable
-    return false if self.appointments.count > 0
+    return true if self.appointments.count == 0 && self.patient_treatments.count == 0
   end
-
 
   private
   
   def check_if_is_deleteable
-    if self.is_deleteable
-      self.errors[:base] << _("Can't delete Doctor with registered appointmens")
+    unless self.is_deleteable
+      self.errors[:base] << _("Can't delete a doctor with registered appointments or patient's treatments, please use 'Suspend' instead.")
       false
     end
     

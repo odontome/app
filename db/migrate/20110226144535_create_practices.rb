@@ -3,7 +3,7 @@ class CreatePractices < ActiveRecord::Migration
     create_table :practices do |t|
       t.string :name
       t.string :locale, :default => "en_US"
-      t.string :timezone
+      t.string :timezone, :default => "UTC"
       t.string :status, :default => "unconfirmed"
 
       t.timestamps
