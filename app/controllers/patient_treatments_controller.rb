@@ -5,9 +5,9 @@ class PatientTreatmentsController < ApplicationController
   respond_to :js
   
   def index
-    @patient = Patient.find(params[:patient_id])
+    @patient = Patient.mine.find(params[:patient_id])
     @treatments = PatientTreatment.order("tooth_number, name, is_completed").where("patient_id = ?", params[:patient_id])
-    @doctors = Doctor.order("firstname")
+    @doctors = Doctor.mine.valid.order("firstname")
     @all_treatments = Treatment.mine.where("price IS NOT NULL").order("name")
     
     render :layout => nil
@@ -20,8 +20,8 @@ class PatientTreatmentsController < ApplicationController
   def create
     @treatment = PatientTreatment.new(params[:patient_treatment])
     # this data is required to pass it down to the partial later on
-    @patient = Patient.find(params[:patient_id])
-    @doctors = Doctor.order("firstname")
+    @patient = Patient.mine.find(params[:patient_id])
+    @doctors = Doctor.mine.valid.order("firstname")
     
     # FIXME (more of a enhance me) find the treatment passed and assign it
     if params[:treatment_id] != nil

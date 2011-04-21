@@ -4,9 +4,13 @@ class Doctor < ActiveRecord::Base
   has_many :patients, :through => :appointments
   has_many :patient_treatments
 
-  scope :mine, lambda { 
+  scope :mine, lambda {
     where("doctors.practice_id = ? ", UserSession.find.user.practice_id)
-  }  
+  } 
+  
+  scope :valid, lambda {
+    where("doctors.is_active = ?", true)
+  }
   
   # validations
   validates_presence_of :practice_id, :firstname, :lastname

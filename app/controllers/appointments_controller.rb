@@ -17,7 +17,7 @@ class AppointmentsController < ApplicationController
   def new
     @appointment = Appointment.new
     @appointment.starts_at = params[:starts_at]
-    @doctors = Doctor.mine
+    @doctors = Doctor.mine.valid
   end
   
   def create
@@ -41,7 +41,7 @@ class AppointmentsController < ApplicationController
   def edit
     @appointment = Appointment.mine.find(params[:id])
     @patient = Patient.mine.find(params[:patient_id])
-    @doctors = Doctor.mine
+    @doctors = Doctor.mine.valid
   end
   
   def update

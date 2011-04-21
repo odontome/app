@@ -43,7 +43,14 @@ class DoctorsController < ApplicationController
 
   def destroy
     @doctor = Doctor.mine.find(params[:id])
-    @doctor.destroy
+    
+    # Check if this doctor can be deleted, otherwise toggle his validness
+    if @doctor.is_deleteable
+      @doctor.destroy
+    else 
+      @doctor.is_active = !@doctor.is_active
+      @doctor.save
+    end
 
     respond_to do |format|
       format.html { redirect_to(doctors_url) }
