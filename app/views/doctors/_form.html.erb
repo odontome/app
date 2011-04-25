@@ -33,7 +33,7 @@
 	  <% if @doctor.is_active %>
 			<%=link_to _('Suspend'), @doctor, :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %>
 	  <% else %>
-			<%=link_to _('Activate'), @doctor, :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %>
+			<%=link_to _('Activate'), @doctor, :method => :delete, :confirm => _("Are you sure?"), :class => "g-button green" %>
 	  <% end %>
   <% end %>
   <%=_("or")%> <%= link_to _("Cancel"), doctors_path %>

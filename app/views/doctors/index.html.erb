@@ -16,9 +16,11 @@
 
 				<span><%=doctor.uid%></span>
 				<span><strong><%=_('Speciality')%>:</strong> <%=doctor.speciality%></span>
-
+				
 				<% if doctor.is_deleteable %>
-				<div class="list-item-button"><%=link_to _('Delete'), doctor, :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %></div>
+					<div class="list-item-button"><%=link_to _('Delete'), doctor, :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %></div>
+				<% else %>
+					<div class="list-item-button"><%=link_to (doctor.is_active) ? _('Suspend') : _('Activate'), doctor, :method => :delete, :confirm => _("Are you sure?"), :class => "g-button #{(doctor.is_active) ? 'red' : 'green'}" %></div>
 				<% end %>
 
 				<div class="list-item-button"><%=link_to _('Edit'), edit_doctor_path(doctor), :class => "g-button" %></div>
