@@ -15,3 +15,7 @@ TREATMENTS = YAML.load_file(File.join(Rails.root, "config", "treatments.yml"))
 
 # Don't include the root object in the JSON 
 ActiveRecord::Base.include_root_in_json = false
+
+# Appointment notifications configuration
+$appointment_notificacion_hours = 48 # if the appointment is in the next {hours} it will send a notification
+$appointment_notificacion_time = 3 # UTC hours. Example: "3" for 3am-UTC

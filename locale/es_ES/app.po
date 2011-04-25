@@ -252,8 +252,8 @@ msgid "Close account"
 msgstr "Cerrar cuenta"
 
 #: app/views/practices/settings.html.erb:90
-msgid "Close your account here"
-msgstr "Cerrar cuenta aquí"
+msgid "close your account here"
+msgstr "cerrar tu cuenta aquí"
 
 #: app/views/patients/index.html.erb:24
 msgid "Complete this patient information to continue"
