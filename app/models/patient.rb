@@ -16,11 +16,11 @@ class Patient < ActiveRecord::Base
   
   scope :search, lambda { |q|
     select("id,uid,firstname,lastname")
-    .where("uid LIKE '%"+q+"%' OR firstname LIKE '%"+q+"%' OR lastname LIKE '%"+q+"%'")
+    .where("uid LIKE '%"+q+"%' OR lower(firstname) LIKE '%"+q.downcase+"%' OR lower(lastname) LIKE '%"+q.downcase+"%'")
     .mine
     .limit(10)
     .order("firstname")
-  }
+  }  
   
   # validations
   validates_uniqueness_of :uid, :scope => :practice_id, :allow_nil => true, :allow_blank => true
