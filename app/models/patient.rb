@@ -3,11 +3,11 @@ class Patient < ActiveRecord::Base
   paginate_alphabetically :by => :firstname
   
   # associations
-  has_many :appointments, :dependent => :destroy 
-  has_many :balances, :dependent => :destroy 
-  has_many :notes, :as => :noteable, :dependent => :destroy   
+  has_many :appointments, :dependent => :delete_all
+  has_many :balances, :dependent => :delete_all 
+  has_many :notes, :as => :noteable, :dependent => :delete_all   
   has_many :doctors, :through => :appointments
-  has_many :patient_treatments, :dependent => :destroy 
+  has_many :patient_treatments, :dependent => :delete_all
   belongs_to :practice
 
   scope :mine, lambda { 
