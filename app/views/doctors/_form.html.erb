@@ -30,12 +30,9 @@
   <%= f.submit(_("Save"), :class => "g-button", :disable_with => _("Please wait...")) %> 
 
   <% if controller.action_name == "edit" %>
-	  <% if @doctor.is_active %>
-			<%=link_to _('Suspend'), @doctor, :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %>
-	  <% else %>
-			<%=link_to _('Activate'), @doctor, :method => :delete, :confirm => _("Are you sure?"), :class => "g-button green" %>
-	  <% end %>
+	  <%= link_to_suspend_or_delete @doctor %>
   <% end %>
+
   <%=_("or")%> <%= link_to _("Cancel"), doctors_path %>
 
 <% end %>
