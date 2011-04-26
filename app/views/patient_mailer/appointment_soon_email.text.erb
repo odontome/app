@@ -2,13 +2,13 @@
 
 <%=_('Hello') + ' ' + @patient_firstname %>,
 <%=_('We are sending you this email on behalf of') %> 
-<%=@practice_name %> 
+<%=@practice_name %>.
 
 <%=_('You have a scheduled appointment this coming')%> 
-<%= @start_time.to_date.strftime('%A (%B, %e)')%>.
+<%= @start_time.to_date.strftime('%A (%B, %e)')%> <%=_('with')%> <%=@doctor_firstname%> <%=@doctor_lastname%>.
 
 <%=_('It starts at:')%> <%=@start_time.to_datetime.strftime('%r')%>
 <%=_('and ends at:')%> <%=@end_time.to_datetime.strftime('%r')%>
 
 <%=_('See you soon!')%>
-<%=@practice_name%>
+<%=@practice_name%>.

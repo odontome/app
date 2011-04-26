@@ -4,7 +4,7 @@
 	<%=_('You have a dental appointment soon!')%>
 </p>
 <p>
-	<%=_('We are sending you this email on behalf of')%> <strong><%=@practice_name%></strong> <%=_('because you have a scheduled appointment this coming')%> <strong><%= @start_time.to_date.strftime('%A (%B, %e)')%></strong>
+	<%=_('We are sending you this email on behalf of')%> <strong><%=@practice_name%></strong> <%=_('because you have a scheduled appointment this coming')%> <strong><%= @start_time.to_date.strftime('%A (%B, %e)')%></strong> <%=_('with')%> <%=@doctor_firstname%> <%=@doctor_lastname%>.
 </p>
 <p>
 	<%=_('It starts at:')%> <strong><%=@start_time.to_datetime.strftime('%r')%></strong><br/ >
