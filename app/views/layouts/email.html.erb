@@ -17,15 +17,17 @@
 		        .content a.center {font-size: 12px;text-align: center;display: block;color: #999999;padding: 8px 0 12px 0;text-decoration: none;}
 		        .content img.inline {border: 1px solid #dedede;padding: 4px;}
 		        .content li {font-family: 'Lucida Grande';font-size: 12px;color: #333333;}
+						p.footer {font-family: 'Lucida Grande';font-size: 10px;color: #FFF;text-align:center;padding: 0;}
+						p.footer a {color: #FFF;}
 		--></style>
   </head>
   <body>
-
 		<p>
 			&nbsp;
 		</p>
 		<table cellspacing="0" cellpadding="0" width="100%">
 			<tbody>
+				<% unless @no_logo %>
 				<tr>
 					<td align="center">
 						<table cellspacing="0" cellpadding="0" width="600">
@@ -47,6 +49,7 @@
 						</table>
 					</td>
 				</tr>
+				<% end %>
 				<tr>
 					<td align="center">
 						<table class="body" cellspacing="10" cellpadding="0" width="600">
@@ -62,6 +65,8 @@
 				</tr>
 			</tbody>
 		</table>
-
+		<% if @no_logo %>
+      <p class="footer"><%=_('Sent by')%> <a href="http://odonto.me">Odonto.me</a></p>
+		<% end %>
   </body>
 </html>
