@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-04-26 18:00+0200\n"
+"POT-Creation-Date: 2011-04-27 11:53+0200\n"
 "PO-Revision-Date: 2011-03-01 18:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -490,7 +490,7 @@ msgstr "Verde"
 #: app/views/patient_mailer/appointment_soon_email.html.erb:3
 #: app/views/patient_mailer/appointment_soon_email.text.erb:3
 msgid "Hello"
-msgstr ""
+msgstr "Hola"
 
 #: app/views/practice_mailer/welcome_email.html.erb:2
 #: app/views/practice_mailer/welcome_email.text.erb:1
@@ -1295,7 +1295,7 @@ msgstr ""
 #: app/views/patient_mailer/appointment_soon_email.html.erb:4
 #: app/views/patient_mailer/appointment_soon_email.text.erb:1
 msgid "You have a dental appointment soon!"
-msgstr "¡Tienes pronto una cita dental!"
+msgstr "¡Tienes una cita dental pronto!"
 
 #: app/views/patient_mailer/appointment_soon_email.text.erb:7
 msgid "You have a scheduled appointment this coming"

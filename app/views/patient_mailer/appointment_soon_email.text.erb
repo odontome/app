@@ -5,10 +5,10 @@
 <%=@practice_name %>.
 
 <%=_('You have a scheduled appointment this coming')%> 
-<%= @start_time.to_date.strftime('%A (%B, %e)')%> <%=_('with')%> <%=@doctor_firstname%> <%=@doctor_lastname%>.
+<%= I18n.localize(@start_time.to_date, :format => :day_and_date)%> <%=_('with')%> <%=@doctor_firstname%> <%=@doctor_lastname%>.
 
-<%=_('It starts at:')%> <%=@start_time.to_datetime.strftime('%r')%>
-<%=_('and ends at:')%> <%=@end_time.to_datetime.strftime('%r')%>
+<%=_('It starts at:')%> <%= I18n.localize(@start_time.to_time, :format => :just_the_time)%>
+<%=_('and ends at:')%> <%= I18n.localize(@end_time.to_time, :format => :just_the_time)%>
 
 <%=_('See you soon!')%>
 <%=@practice_name%>.
