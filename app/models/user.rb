@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   before_validation :set_practice_id, :on => :create
   before_create :set_admin_role_for_first_user
   before_destroy :check_if_admin
+  before_update :check_if_is_editeable_by_non_admins
 
   def fullname
     [firstname, lastname].join(' ')
@@ -34,6 +35,7 @@ class User < ActiveRecord::Base
     reset_perishable_token!
     NotifierMailer.deliver_password_reset_instructions(self).deliver
   end
+
   
   private
   def check_if_admin
@@ -45,6 +47,13 @@ class User < ActiveRecord::Base
   
   def set_admin_role_for_first_user
     self.roles = "admin" if User.where("practice_id = ?", self.practice_id).count == 0
+  end
+
+  def check_if_is_editeable_by_non_admins #normal users can't edit admins
+    if self.roles.include?("admin") && !UserSession.find.user.roles.include?("admin")
+      self.errors[:base] << _("Sorry, you can't update an admin user")
+      false 
+    end
   end
   
 end

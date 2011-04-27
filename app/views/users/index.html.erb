@@ -12,7 +12,9 @@
 			<% if user_is_admin?(current_user) && !user_is_admin?(user) %>
 				<div class="list-item-button"><%= link_to _("Delete"), user, :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %></div>
 			<% end %>
-			<div class="list-item-button"><%= link_to _("Edit"), edit_user_path(user), :class => "g-button" %></div>
+			<% if is_editeable_by_current_user(user) %>
+				<div class="list-item-button"><%= link_to _("Edit"), edit_user_path(user), :class => "g-button" %></div>
+			<% end %>
 		</li>
 
 	<% end %>
