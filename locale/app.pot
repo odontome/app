@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-04-27 18:03+0200\n"
+"POT-Creation-Date: 2011-04-27 18:43+0200\n"
 "PO-Revision-Date: 2011-03-01 18:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,7 +49,8 @@ msgstr ""
 msgid "A great value plan for up to 1000 patients"
 msgstr ""
 
-#: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:4
+#: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:6
+#: app/views/notifier_mailer/deliver_password_reset_instructions.text.erb:4
 msgid "A request to reset it was just made."
 msgstr ""
 
@@ -483,6 +484,7 @@ msgid "Green"
 msgstr ""
 
 #: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:3
+#: app/views/notifier_mailer/deliver_password_reset_instructions.text.erb:1
 #: app/views/patient_mailer/appointment_soon_email.html.erb:3
 #: app/views/patient_mailer/appointment_soon_email.text.erb:3
 msgid "Hello"
@@ -497,14 +499,22 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:5
+#: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:7
 msgid "If you did make this request, please follow the link below."
 msgstr ""
 
-#: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:4
+#: app/views/notifier_mailer/deliver_password_reset_instructions.text.erb:6
+msgid "If you did make this request, please use the link below."
+msgstr ""
+
+#: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:6
 msgid ""
 "If you did not make\n"
 "\t  this request, simply ignore this email."
+msgstr ""
+
+#: app/views/notifier_mailer/deliver_password_reset_instructions.text.erb:5
+msgid "If you did not make this request, simply ignore this email."
 msgstr ""
 
 #: app/views/practice_mailer/welcome_email.html.erb:6
@@ -531,6 +541,10 @@ msgstr ""
 msgid "Income"
 msgstr ""
 
+#: app/controllers/password_resets_controller.rb:12
+msgid "Instructions to reset your password have been emailed to you"
+msgstr ""
+
 #: app/views/practices/_form.html.erb:31
 msgid "Invitation Code for this Beta"
 msgstr ""
@@ -539,7 +553,8 @@ msgstr ""
 msgid "Is this completed?"
 msgstr ""
 
-#: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:4
+#: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:6
+#: app/views/notifier_mailer/deliver_password_reset_instructions.text.erb:3
 msgid "It seems that you've forgotten your password."
 msgstr ""
 
@@ -664,6 +679,10 @@ msgstr ""
 msgid "No results, a new patient will be created"
 msgstr ""
 
+#: app/controllers/password_resets_controller.rb:15
+msgid "No user was found with email address"
+msgstr ""
+
 #: app/views/balances/index.csv.erb:1 app/views/balances/index.html.erb:4
 msgid "Notes"
 msgstr ""
@@ -724,7 +743,7 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: app/mailers/notifier_mailer.rb:12
+#: app/mailers/notifier_mailer.rb:11
 msgid "Password reset instructions"
 msgstr ""
 
@@ -971,10 +990,7 @@ msgstr ""
 msgid "Remember me"
 msgstr ""
 
-#: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:8
-msgid "Reset Password!"
-msgstr ""
-
+#: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:10
 #: app/views/password_resets/new.html.erb:1
 #: app/views/password_resets/new.html.erb:9
 msgid "Reset password"
@@ -1016,6 +1032,8 @@ msgid "Select a treatment"
 msgstr ""
 
 #: app/views/layouts/email.html.erb:69
+#: app/views/notifier_mailer/deliver_password_reset_instructions.text.erb:10
+#: app/views/patient_mailer/appointment_soon_email.text.erb:16
 msgid "Sent by"
 msgstr ""
 
@@ -1292,6 +1310,10 @@ msgid ""
 "everything was ok and if not, please contact us so we can help you."
 msgstr ""
 
+#: app/controllers/password_resets_controller.rb:40
+msgid "We're sorry, but we could not locate your account"
+msgstr ""
+
 #: app/views/datebook/show.html.erb:41
 msgid "Wed"
 msgstr ""
@@ -1362,6 +1384,10 @@ msgstr ""
 msgid ""
 "Your account is now beign closed and is no longer possible to access it. "
 "Please contact us if you need assistance."
+msgstr ""
+
+#: app/controllers/password_resets_controller.rb:27
+msgid "Your password was successfully updated"
 msgstr ""
 
 #: app/controllers/practices_controller.rb:34
