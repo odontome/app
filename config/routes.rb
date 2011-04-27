@@ -15,6 +15,7 @@ Odontome::Application.routes.draw do
       resources :appointments
   end
   resource :user_session
+  resources :password_resets, :only => [ :new, :create, :edit, :update ]
 
   match "/signin" => "user_sessions#new", :as => :signin
   match "/logout" => "user_sessions#destroy", :as => :logout

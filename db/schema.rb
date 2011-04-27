@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110408131545) do
+ActiveRecord::Schema.define(:version => 20110427141515) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "practice_id"
@@ -129,6 +129,10 @@ ActiveRecord::Schema.define(:version => 20110408131545) do
     t.datetime "current_login_at"
     t.datetime "last_login_at"
     t.integer  "login_count",       :default => 0
+    t.string   "perishable_token",  :default => "",     :null => false
   end
+
+  add_index "users", ["email"], :name => "index_users_on_email"
+  add_index "users", ["perishable_token"], :name => "index_users_on_perishable_token"
 
 end

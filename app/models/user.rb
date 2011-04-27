@@ -29,6 +29,11 @@ class User < ActiveRecord::Base
   def preferred_language
     return Practice.find(self.practice_id).locale
   end
+
+  def deliver_password_reset_instructions!
+    reset_perishable_token!
+    NotifierMailer.deliver_password_reset_instructions(self).deliver
+  end
   
   private
   def check_if_admin

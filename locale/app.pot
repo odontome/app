@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-04-27 11:53+0200\n"
+"POT-Creation-Date: 2011-04-27 18:03+0200\n"
 "PO-Revision-Date: 2011-03-01 18:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,6 +47,10 @@ msgstr ""
 
 #: config/plans.yml:10
 msgid "A great value plan for up to 1000 patients"
+msgstr ""
+
+#: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:4
+msgid "A request to reset it was just made."
 msgstr ""
 
 #: app/views/practices/cancel.html.erb:1
@@ -197,7 +201,7 @@ msgid ""
 "please use 'Suspend' instead."
 msgstr ""
 
-#: app/models/user.rb:36
+#: app/models/user.rb:41
 msgid "Can't delete admin user"
 msgstr ""
 
@@ -385,6 +389,7 @@ msgid "Editing user"
 msgstr ""
 
 #: app/views/doctors/_form.html.erb:16 app/views/doctors/show.html.erb:6
+#: app/views/password_resets/new.html.erb:7
 #: app/views/patients/_form.html.erb:26 app/views/patients/show.html.erb:23
 #: app/views/practices/_form.html.erb:18
 #: app/views/user_sessions/new.html.erb:12 app/views/users/_form.html.erb:17
@@ -452,6 +457,10 @@ msgid ""
 "For practices that have more than 1000 patients. You can register up to 5000!"
 msgstr ""
 
+#: app/views/user_sessions/new.html.erb:18
+msgid "Forgot your password?"
+msgstr ""
+
 #: config/plans.yml:3
 msgid "Free Plan"
 msgstr ""
@@ -473,6 +482,7 @@ msgstr ""
 msgid "Green"
 msgstr ""
 
+#: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:3
 #: app/views/patient_mailer/appointment_soon_email.html.erb:3
 #: app/views/patient_mailer/appointment_soon_email.text.erb:3
 msgid "Hello"
@@ -485,6 +495,16 @@ msgstr ""
 
 #: app/views/layouts/application.html.erb:14
 msgid "Home"
+msgstr ""
+
+#: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:5
+msgid "If you did make this request, please follow the link below."
+msgstr ""
+
+#: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:4
+msgid ""
+"If you did not make\n"
+"\t  this request, simply ignore this email."
 msgstr ""
 
 #: app/views/practice_mailer/welcome_email.html.erb:6
@@ -517,6 +537,10 @@ msgstr ""
 
 #: app/views/patient_treatments/_show.html.erb:18
 msgid "Is this completed?"
+msgstr ""
+
+#: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:4
+msgid "It seems that you've forgotten your password."
 msgstr ""
 
 #: app/views/patient_mailer/appointment_soon_email.html.erb:10
@@ -694,9 +718,14 @@ msgid ""
 "patients"
 msgstr ""
 
+#: app/views/password_resets/edit.html.erb:6
 #: app/views/practices/_form.html.erb:21
 #: app/views/user_sessions/new.html.erb:15 app/views/users/_form.html.erb:20
 msgid "Password"
+msgstr ""
+
+#: app/mailers/notifier_mailer.rb:12
+msgid "Password reset instructions"
 msgstr ""
 
 #: app/views/patients/show.html.erb:36
@@ -843,6 +872,10 @@ msgid ""
 "clicking the Feedback tab."
 msgstr ""
 
+#: app/views/password_resets/edit.html.erb:3
+msgid "Please enter the new password below and then press Update password."
+msgstr ""
+
 #: app/views/practices/cancel.html.erb:2
 msgid "Please make sure that you Unsubscribed first from your current plan."
 msgstr ""
@@ -934,8 +967,17 @@ msgstr ""
 msgid "Register"
 msgstr ""
 
-#: app/views/user_sessions/new.html.erb:18
+#: app/views/user_sessions/new.html.erb:23
 msgid "Remember me"
+msgstr ""
+
+#: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:8
+msgid "Reset Password!"
+msgstr ""
+
+#: app/views/password_resets/new.html.erb:1
+#: app/views/password_resets/new.html.erb:9
+msgid "Reset password"
 msgstr ""
 
 #: app/views/doctors/show.html.erb:27 app/views/treatments/show.html.erb:8
@@ -1167,6 +1209,14 @@ msgstr ""
 msgid "Unsubscribe"
 msgstr ""
 
+#: app/views/password_resets/edit.html.erb:7
+msgid "Update password"
+msgstr ""
+
+#: app/views/password_resets/edit.html.erb:1
+msgid "Update your password"
+msgstr ""
+
 #: app/views/users/index.html.erb:1
 msgid "Users"
 msgstr ""
@@ -1228,6 +1278,12 @@ msgid ""
 "We are sorry. Your account cannot be changed to the Free Plan. You have to "
 "first Unsubscribe from your current plan through your Practice Settings or "
 "Paypal."
+msgstr ""
+
+#: app/views/password_resets/new.html.erb:3
+msgid ""
+"We will send you instructions on how to change your password after you enter "
+"your email below and press Reset password."
 msgstr ""
 
 #: app/views/practices/cancel.html.erb:2

@@ -50,4 +50,7 @@ Odontome::Application.configure do
   # To configure the SSL Enforcer gem
   config.middleware.use Rack::SslEnforcer, :only => ["/signup", "/signin", "/users/new", /^\/users\/(.+)\/edit/, "/set_session_time_zone"], :mixed => true
 
+  # Configure the host for emails
+  config.action_mailer.default_url_options = { :host => "my.odonto.me" }
+
 end
