@@ -7,7 +7,6 @@ class UserSessionsController < ApplicationController
   end
   
   def create
-    #@user_session = UserSession.new(params[:user_session])
     @user_session = UserSession.with_scope(:find_options => {:include => :practice}) do
       UserSession.new(params[:user_session])
     end
