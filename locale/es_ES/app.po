@@ -513,7 +513,7 @@ msgstr "Inicio"
 
 #: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:5
 msgid "If you did make this request, please follow the link below."
-msgstr "Si has hecho esta solicitud haz click en el enlace de abajo."
+msgstr "Si la has hecho, haz click en el enlace de abajo."
 
 #: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:4
 msgid ""
@@ -555,7 +555,7 @@ msgstr "¿Está completado?"
 
 #: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:4
 msgid "It seems that you've forgotten your password."
-msgstr "Parece que has olvidado tu password"
+msgstr "Parece que has olvidado tu contraseña."
 
 #: app/views/patient_mailer/appointment_soon_email.html.erb:10
 #: app/views/patient_mailer/appointment_soon_email.text.erb:10
@@ -993,8 +993,8 @@ msgid "Remember me"
 msgstr "Recordarme"
 
 #: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:8
-msgid "Reset Password!"
-msgstr "¡Reiniciar Contraseña!"
+msgid "Reset password"
+msgstr "Reiniciar contraseña"
 
 #: app/views/password_resets/new.html.erb:1
 #: app/views/password_resets/new.html.erb:9

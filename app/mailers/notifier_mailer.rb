@@ -2,7 +2,6 @@ class NotifierMailer < ActionMailer::Base
 
   layout 'email'
   default :from => "hello@odonto.me"
-  default :host => "http://my.odonto.me"
   
   def deliver_password_reset_instructions(user)
     @user = user
