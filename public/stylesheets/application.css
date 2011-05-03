@@ -79,6 +79,10 @@ p {
 	margin-bottom: 15px;
 }
 
+a {
+	color: rgb(48, 168, 217);
+}
+
 /* @group Header */
 
 header nav {
@@ -221,6 +225,10 @@ footer {
 #list-items li:last-child {
 	margin-bottom: 0;
 	border-bottom: 0;
+}
+
+#list-items li:hover {
+	background-color: #ccc;
 }
 
 #list-items li:hover div {
@@ -632,7 +640,7 @@ sub {
 
 /* @group Pagination */
 .pagination {
-	border:0; margin:0; padding:0; min-height: 30px;
+	border:0; margin:0; padding:0;
 }
 .pagination li {
 	border:0; margin:0; padding:0;
@@ -645,7 +653,7 @@ sub {
 	clear: right !important;
 }
 .pagination a {
-	border:solid 1px #9aafe5;
+	
 }
 .pagination .previous-off, .pagination .next-off {
 	border:solid 1px #DEDEDE;
@@ -654,7 +662,6 @@ sub {
 	float:left;
 	font-weight:bold;
 	margin-right:2px;
-	padding:3px 4px;
 }
 .pagination .next a, .pagination .previous a {
 	font-weight:bold;
@@ -687,7 +694,7 @@ sub {
 }
 
 .pagination a:hover{
-	border:solid 1px #0e509e
+	font-weight: bold;
 }
 /* @end */
 

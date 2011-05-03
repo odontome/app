@@ -1,0 +1,40 @@
+#container {
+	width: 340px;
+	height: 340px;
+	margin: -150px 0 0 -150px;
+	position: absolute;
+	top: 45%;
+	left: 50%;
+}
+
+#content {
+	-webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.25);
+	-webkit-box-reflect:below 2px
+		-webkit-gradient(
+			linear,
+			0% 0%,
+			0% 100%,
+			from(rgba(0, 0, 0, 0)),
+			color-stop(0.3, rgba(0, 0, 0, 0)),
+			to(rgba(0, 0, 0, .3))
+		);
+	background: rgb(240, 240, 240)
+		-webkit-gradient(
+			linear,
+			0% 0%,
+			0% 100%,
+			from(rgb(240, 240, 240)),
+			to(rgb(220, 220, 220))
+		);
+	border-radius: 5px;
+	text-shadow: 0 1px 0 rgb(240, 240, 240);
+}
+
+input[type="text"],input[type="email"],input[type="password"] {
+	width: 300px;
+}
+
+.logo {
+	display: block;
+	margin: 0 auto;
+}

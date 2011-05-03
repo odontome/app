@@ -1,0 +1,21 @@
+<!doctype html>  
+<html>
+<head>
+  <title><%= _("Odonto.me, beautiful dental practice management")%></title>
+  <%= stylesheet_link_tag "application", "default-theme/jquery-ui-1.7.2.custom", "tipTip", "login" %>
+  <%= javascript_include_tag "jquery.min", "jquery.tipTip.min", "rails", "application", "uservoice" %>
+  <link rel="shortcut icon" href="/favicon.ico">  
+</head>
+
+<body>
+	<div id="container">
+		<%= link_to (image_tag "logofull.png", :title => _("Home"), :class => "logo"), root_path %>
+		
+		<%= render "shared/flash_messages" %>
+		
+		<div id="content">
+			<%= yield %>
+		</div>
+	</div>
+</body>
+</html>
