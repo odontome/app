@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110427141515) do
+ActiveRecord::Schema.define(:version => 20110502165016) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "practice_id"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20110427141515) do
     t.datetime "ends_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "notified",                  :default => false
   end
 
   create_table "balances", :force => true do |t|
