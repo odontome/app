@@ -32,7 +32,9 @@
   </p>
 	<% end %>
 	
-  <%= practice_form.submit(_("Register"), :class => "g-button", :disable_with => _("Please wait...")) %>
-  <%=_("Already have an account?")%> <%= link_to _("Sign in"), signin_url %>
+	<div id="toolbar">
+		<%= practice_form.submit(_("Register"), :class => "g-button action", :disable_with => _("Please wait...")) %>
+  		<%=_("Already have an account?")%> <%= link_to _("Sign in"), signin_url %>
+	</div>
 
 <% end %>

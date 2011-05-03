@@ -33,7 +33,7 @@
 	  	</p>
 	</fieldset>
 	
-	<%= f.submit(_("Save"), :class => "g-button") %> <%= _("or") %> <%= link_to _("Cancel"),  practice_url%>
+	<%= f.submit(_("Save"), :class => "g-button action") %> <%= _("or") %> <%= link_to _("Cancel"),  practice_url%>
 
 <% end %>
 	
@@ -85,6 +85,7 @@
 
 <% end %>
 
-<hr />
 
-<p><%=_('If you need to, you can')%> <%=link_to _('close your account here'), practice_cancel_url %></p>
+<div id="toolbar">
+	<p><%=_('If you need to, you can')%> <%=link_to _('close your account here'), practice_cancel_url %></p>
+</div>

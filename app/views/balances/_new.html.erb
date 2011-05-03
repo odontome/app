@@ -1,3 +1,4 @@
+<div id="toolbar">
 <% form_tag(patient_balances_path, :method => "post", :remote => true) do %>
 	<p>
 	    <%= number_field_tag "balance[amount]", nil, {:placeholder => _("Amount"), :title => _("Amount") } %>
@@ -7,3 +8,4 @@
 	</p>
 	<%= submit_tag(_("Save"), :class => "g-button", :disable_with => _("Please wait...")) %>
 <% end %>
+</div>

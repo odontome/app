@@ -23,8 +23,9 @@
 		  <%= f.password_field :password_confirmation, :placeholder => _("Confirm your password"), :title => _("Confirm your password") %>
 		</p>
 	</fieldset>
-
-  <%= f.submit(_("Save"), :class => "g-button", :disable_with => _("Please wait...")) %> <%=_("or")%> <%= link_to _("Cancel"), users_path %>
-
+	
+	<div id="toolbar">
+  		<%= f.submit(_("Save"), :class => "g-button action", :disable_with => _("Please wait...")) %> <%=_("or")%> <%= link_to _("Cancel"), users_path %>
+	</div>
 
 <% end %>

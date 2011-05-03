@@ -3,6 +3,8 @@
 		<%= text_field_tag "appointment[patient_id]", nil, :title => _("Enter the patient name or Unique Identifier") %>
 	</p>
 	
+	<div class="clear"></div>
+	
 	<p>
 		<% if @doctors.empty? %>
 			<%=_("Please")%> <%=link_to 'create a doctor', doctors_path%> <%=_("before trying to write down appointments")%>
@@ -15,14 +17,15 @@
 	<p>
 		<%= f.text_area :notes, :placeholder => _("Additional notes"), :rows => 2, :title => _("Additional notes"), :limit => 255  %>
 	</p>
-
-	<%= f.submit(_("Save"), :class => "g-button", :disable_with => _("Please wait...")) %> 
 	
-	<% if controller.action_name == "edit" %> 
-		<%=link_to _('Delete appointment'), @appointment, :method => :delete, :remote => :true, :confirm => _("Are you sure?"), :class => "g-button red" %> 
-	<% else %>
-		<%= f.hidden_field :starts_at %>
-	<% end %> 
-	<%= _("or") %> <a id="close_dialog" href="#"><%=_("Cancel")%></a>
-
+	<div id="toolbar">
+		<%= f.submit(_("Save"), :class => "g-button action", :disable_with => _("Please wait...")) %> 
+	
+		<% if controller.action_name == "edit" %> 
+			<%=link_to _('Delete appointment'), @appointment, :method => :delete, :remote => :true, :confirm => _("Are you sure?"), :class => "g-button red" %> 
+		<% else %>
+			<%= f.hidden_field :starts_at %>
+		<% end %> 
+		<%= _("or") %> <a id="close_dialog" href="#"><%=_("Cancel")%></a>
+	</div>
 <% end %>

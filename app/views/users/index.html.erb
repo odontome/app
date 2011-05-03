@@ -1,5 +1,4 @@
-<h1><%=_('Users')%> <%= link_to "+", new_user_url, :class => "g-button" %></h1>
-
+<h1><%=_('Users')%> <%= link_to "+", new_user_url, :class => "g-button dark" %></h1>
 
 <ul id="list-items">
 	<% @users.each do |user| %>
@@ -13,11 +12,13 @@
 				<div class="list-item-button"><%= link_to _("Delete"), user, :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %></div>
 			<% end %>
 			<% if is_editeable_by_current_user(user) %>
-				<div class="list-item-button"><%= link_to _("Edit"), edit_user_path(user), :class => "g-button" %></div>
+				<div class="list-item-button"><%= link_to _("Edit"), edit_user_path(user), :class => "g-button light" %></div>
 			<% end %>
 		</li>
 
 	<% end %>
 </ul>
 
-<%= link_to _("Create new user"), new_user_path, :class => "g-button" %>
+<div id="toolbar">
+	<%= link_to _("Create new user"), new_user_path, :class => "g-button action" %>
+</div>

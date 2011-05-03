@@ -1,27 +1,29 @@
-<h1><%=_('Doctors')%> <%= link_to "+", new_doctor_url, :class => "g-button" %></h1>
+<h1><%=_('Doctors')%> <%= link_to "+", new_doctor_url, :class => "g-button dark" %></h1>
+
+<% if @doctors.empty? %>
+	<div class="info"><%=("You currently don't have any doctors in your practice. Remember that you need at least one doctor in order to create appointments.")%></div>
+<% end %>
 
 <ul id="list-items">
-	<% if @doctors.empty? %>
-		<p><%=("You currently don't have any doctors in your practice. Remember that you need at least one doctor in order to create appointments.")%></p>
-	<% else %>
-		<% @doctors.each do |doctor| %>
-			<% unless doctor.is_active
-				cclass = "disabled-list"
-			   else
-				cclass = ""
-			   end
-			%>
-			<li class="<%=cclass%>">
-				<h2><%= link_to doctor.fullname, doctor %> <%= _('Inactive') unless doctor.is_active %></h2>			
+	<% @doctors.each do |doctor| %>
+		<% unless doctor.is_active
+			cclass = "disabled-list"
+		   else
+			cclass = ""
+		   end
+		%>
+		<li class="<%=cclass%>">
+			<h2><%= link_to doctor.fullname, doctor %></h2>			
 
-				<span><%=doctor.uid%></span>
-				<span><strong><%=_('Speciality')%>:</strong> <%=doctor.speciality%></span>
-				
-				<div class="list-item-button"><%=link_to_suspend_or_delete doctor %></div>
-				<div class="list-item-button"><%=link_to _('Edit'), edit_doctor_path(doctor), :class => "g-button" %></div>
-			</li>
-		<% end %>
+			<span><%=doctor.uid%></span>
+			<span><strong><%=_('Speciality')%>:</strong> <%=doctor.speciality%></span>
+			
+			<div class="list-item-button"><%=link_to_suspend_or_delete doctor %></div>
+			<div class="list-item-button"><%=link_to _('Edit'), edit_doctor_path(doctor), :class => "g-button light" %></div>
+		</li>
 	<% end %>
 </ul>
 
-<%= link_to _("Create new doctor"), new_doctor_url, :class => "g-button" %>
+<div id="toolbar">
+	<%= link_to _("Create new doctor"), new_doctor_url, :class => "g-button action" %>
+</div>

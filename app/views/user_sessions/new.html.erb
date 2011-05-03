@@ -14,12 +14,22 @@
 	<p>
 	  <%= f.password_field :password, :placeholder => _("Password"), :title => _("Password") %>
 	</p>
-  <p>
-		<%= link_to _('Forgot your password?'), new_password_reset_path %>
+  	
+	<p>
+		<%= f.check_box :remember_me %> <%= f.label _("Remember me") %>
 	</p>
-    <%= f.submit(_("Login"), :class => "g-button") %>
- 	<%=_("Don't have an account?")%> <%= link_to _("Sign up"), signup_url %>
-  <p>
-	  <%= f.check_box :remember_me %><%= f.label _("Remember me") %>
-  </p>
+
+	<p>
+		
+	</p>
+	
+	<div id="toolbar">
+    	<%= f.submit(_("Login"), :class => "g-button action") %>
+ 		<% if !@user_session.errors.any? %>
+			<%=_("Don't have an account?")%> <%= link_to _("Sign up"), signup_url %>
+		<% else %>
+			<%= link_to _('Forgot your password?'), new_password_reset_path %>
+		<% end %>
+ 	</div>
+
 <% end %>

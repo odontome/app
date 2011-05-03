@@ -30,6 +30,7 @@
 			minTime: 8,
 			maxTime: 21,
 			height: 620,
+			firstDay: 1,
 			header: {
 				left: "prev,next today",
 				center: "title",
@@ -107,8 +108,8 @@
 <div id="calendar"></div>
 <div id="modal_dialog" class="hidden"><%=_('Please wait...')%></div>
 
-<br />
-
-<% @doctors.each do |doctor| %>
-	<span class="fc-button fc-button-month fc-state-default fc-corner-left"><span class="fc-button-inner"><span class="fc-button-content"><span style="color: <%= doctor.color %>">&#x25CF;</span> <%= doctor.fullname %></span><span class="fc-button-effect"><span></span></span></span></span>
-<% end %>
+<div id="toolbar">
+	<% @doctors.each do |doctor| %>
+		<span class="fc-button fc-button-month fc-state-default fc-corner-left"><span class="fc-button-inner"><span class="fc-button-content"><span style="color: <%= doctor.color %>">&#x25CF;</span> <%= doctor.fullname %></span><span class="fc-button-effect"><span></span></span></span></span>
+	<% end %>
+</div>

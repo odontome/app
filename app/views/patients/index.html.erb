@@ -1,40 +1,42 @@
-<h1><%=_('Patients')%> <%= link_to "+", new_patient_url, :class => "g-button" %></h1>
+<h1><%=_('Patients')%> <%= link_to "+", new_patient_url, :class => "g-button dark" %></h1>
+
+<% if @patients.empty? %>
+	<div class="info">
+		<%=("Your practice doesn't have any patients at the moment, let's change that.")%>
+	</div>
+<% end %>
 
 <ul id="list-items">
-	<% if @patients.empty? %>
-		<p><%=("Your practice doesn't have any patients at the moment, let's change that.")%></p>
-	<% else %>
-		<% @patients.each do |patient| %>
-	
-			<% if patient.invalid?
-				cclass = "invalid-list"
-			   else
-				cclass = ""
-			   end
-			%>
-	
-			<li class="<%=cclass%>">
-				<h2><%= link_to patient.fullname, patient %></h2>			
+	<% @patients.each do |patient| %>
+
+		<% if patient.invalid?
+			cclass = "invalid-list"
+		   else
+			cclass = ""
+		   end
+		%>
+
+		<li class="<%=cclass%>">
+			<h2><%= link_to patient.fullname, patient %></h2>			
+		
+			<% if !patient.invalid? %>
+				<span><%=patient.uid%></span>
+				<span><strong><%=_('Age')%>:</strong> <%=patient.age%></span>
+				<span><strong><%=_('Allergies')%>:</strong> <%unless patient.allergies.blank?%><%=patient.allergies%><%else%><%=_('none')%><%end%></span>
+			<% else %>
+				<span><%=_("Complete this patient information to continue")%></span>
+			<% end %>
 			
-				<% if !patient.invalid? %>
-					<span><%=patient.uid%></span>
-					<span><strong><%=_('Age')%>:</strong> <%=patient.age%></span>
-					<span><strong><%=_('Allergies')%>:</strong> <%unless patient.allergies.blank?%><%=patient.allergies%><%else%><%=_('none')%><%end%></span>
-				<% else %>
-					<span><%=_("Complete this patient information to continue")%></span>
-				<% end %>
-			
-				<% if user_is_admin?(current_user) %>
-					<div class="list-item-button"><%= link_to _("Delete"), patient, :method => :delete, :confirm => "Are you sure? All data associated with this patient will be lost forever. THERE IS NO GOING BACK!", :class => "g-button red"%></div>
-				<% end %>
-				<div class="list-item-button"><%= link_to _("Edit"), edit_patient_path(patient), :class => "g-button"%></div>
-			</li>
-		<% end %>
+			<% if user_is_admin?(current_user) %>
+				<div class="list-item-button"><%= link_to _("Delete"), patient, :method => :delete, :confirm => "Are you sure? All data associated with this patient will be lost forever. THERE IS NO GOING BACK!", :class => "g-button red"%></div>
+			<% end %>
+			<div class="list-item-button"><%= link_to _("Edit"), edit_patient_path(patient), :class => "g-button light"%></div>
+		</li>
 	<% end %>
 </ul>
 
-<%= alphabetically_paginate(@patients) %>
-
-<p>
-<%= link_to _("Create new patient"), new_patient_url, :class => "g-button" %>
-</p>
+<div id="toolbar">
+	<%= alphabetically_paginate(@patients) %>
+	<div class="clear"></div>
+	<%= link_to _("Create new patient"), new_patient_url, :class => "g-button action" %>
+</div>

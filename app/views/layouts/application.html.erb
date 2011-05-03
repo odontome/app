@@ -1,7 +1,7 @@
 <!doctype html>  
 <html>
 <head>
-  <title>Odonto.me</title>
+  <title><%= _("Odonto.me, beautiful dental practice management")%></title>
   <%= stylesheet_link_tag "application", "default-theme/jquery-ui-1.7.2.custom", "tipTip", "autosuggest" %>
   <%= javascript_include_tag "jquery.min", "jquery-ui.min", "jquery.tipTip.min", "jquery.limit-1.2.min", "jquery.autosuggest.min", "rails", "application", "uservoice" %>
   <link rel="shortcut icon" href="/favicon.ico">  
@@ -11,17 +11,18 @@
 <body>
 	<div id="container">
 		<header>
-			<%= link_to (image_tag "logo.png", :title => _("Home"), :class => "logo"), root_path %>
+			<%= link_to (image_tag "logo.png", :title => _("Home"), :class => "logo", :height => 20), root_path %>
 			<%= render "layouts/navigation" %>
 		</header>
-	
+		
+		<%= render "shared/flash_messages" %>
+		
 		<div id="content">
-			<%= render "shared/flash_messages" %>
 			<%= yield %>
 		</div>
 		
 		<footer>
-			<!-- Footer goes here -->
+			<%= render "shared/footer"%>
 		</footer>
 	</div>
 </body>

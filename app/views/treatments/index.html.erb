@@ -1,31 +1,33 @@
-<h1><%=_('Treatments')%> <%= link_to "+", new_treatment_url, :class => "g-button" %></h1>
+<h1><%=_('Treatments')%> <%= link_to "+", new_treatment_url, :class => "g-button dark" %></h1>
+
+<% if @treatments.empty? %>
+	<div class="info"><%=("Your practice doesn't have any treatments, remember that you need at least one treatment in order to have a treatment history for your patients.")%></div>
+<% end %>
 
 <ul id="list-items">
-	<% if @treatments.empty? %>
-		<p><%=("Your practice doesn't have any treatments, remember that you need at least one treatment in order to have a treatment history for your patients.")%></p>
-	<% else %>
-		<% @treatments.each do |treatment| %>
-	
-			<% if treatment.invalid?
-				cclass = "invalid-list"
-			   else
-				cclass = ""
-			   end %>
+	<% @treatments.each do |treatment| %>
 
-			<li class="<%=cclass%>">
-				<h2><%= link_to treatment.name, treatment %></h2>			
+		<% if treatment.invalid?
+			cclass = "invalid-list"
+		   else
+			cclass = ""
+		   end %>
 
-				<% if !treatment.invalid? %>
-					<span><%= number_to_currency_with_currency(treatment.price)%></span>
-				  <% else %>
-				  	<span><%=_("Specify a price to use this treatment")%></span>
-				<% end %>
+		<li class="<%=cclass%>">
+			<h2><%= link_to treatment.name, treatment %></h2>			
 
-				<div class="list-item-button"><%=link_to _('Delete'), treatment, :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %></div>
-				<div class="list-item-button"><%=link_to _('Edit'), edit_treatment_path(treatment), :class => "g-button" %></div>
-			</li>
-		<% end %>
+			<% if !treatment.invalid? %>
+				<span><%= number_to_currency_with_currency(treatment.price)%></span>
+			  <% else %>
+			  	<span><%=_("Specify a price to use this treatment")%></span>
+			<% end %>
+
+			<div class="list-item-button"><%=link_to _('Delete'), treatment, :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %></div>
+			<div class="list-item-button"><%=link_to _('Edit'), edit_treatment_path(treatment), :class => "g-button light" %></div>
+		</li>
 	<% end %>
 </ul>
 
-<%= link_to _("Create new treatment"), new_treatment_url, :class => "g-button" %>
+<div id="toolbar">
+	<%= link_to _("Create new treatment"), new_treatment_url, :class => "g-button action" %>
+</div>

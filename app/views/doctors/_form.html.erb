@@ -27,12 +27,13 @@
 	<%= f.select(:color, Doctor::COLORS, :title => _("Calendar color"), :selected => @doctor.color) %>
   </p>
 
-  <%= f.submit(_("Save"), :class => "g-button", :disable_with => _("Please wait...")) %> 
+	<div id="toolbar">
+		<%= f.submit(_("Save"), :class => "g-button action", :disable_with => _("Please wait...")) %> 
 
-  <% if controller.action_name == "edit" %>
-	  <%= link_to_suspend_or_delete @doctor %>
-  <% end %>
+		<% if controller.action_name == "edit" %>
+			<%= link_to_suspend_or_delete @doctor %>
+		<% end %>
 
-  <%=_("or")%> <%= link_to _("Cancel"), doctors_path %>
-
+		<%=_("or")%> <%= link_to _("Cancel"), doctors_path %>
+	</div>
 <% end %>
