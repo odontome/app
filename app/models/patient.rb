@@ -87,7 +87,9 @@ class Patient < ActiveRecord::Base
     patients = order("firstname").mine.alphabetical_group(letter)
     if patients.empty?
       letter = order("firstname").mine.limit(1).select("firstname")
-      patients = order("firstname").mine.alphabetical_group(letter[0].firstname[0])
+      if !letter.empty?
+        patients = order("firstname").mine.alphabetical_group(letter[0].firstname[0])
+      end
     end
     
     return patients
