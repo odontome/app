@@ -1,9 +1,12 @@
 <h1><%=@treatment.name%></h1>
-<p>
-	<label><%=_("Price")%>:</label> <%= number_to_currency_with_currency @treatment.price%>
-</p>
-<p>
-	<%=link_to _("Edit"), edit_treatment_path(@treatment), :class => "g-button" %>
+
+<div class="info">
+	<p>
+		<label><%=_("Price")%>:</label> <%= number_to_currency_with_currency @treatment.price%>
+	</p>
+</div>
+<div id="toolbar">
+	<%=link_to _("Edit"), edit_treatment_path(@treatment), :class => "g-button action" %>
 	<%=link_to _("Delete"), treatment_path(@treatment), :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %>
 	<%=_("or")%> <%=link_to _("Return to the listing"), treatments_url %>
-</p>
+</div>

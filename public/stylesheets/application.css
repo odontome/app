@@ -640,7 +640,7 @@ fieldset {
 }
 
 legend {
-	font-size: 22px;
+	font-weight: bold;
 }
 
 label {
@@ -685,7 +685,6 @@ sub {
     padding: 10px;
 }
 .info {
-    color: #00529B;
     background: none;
     border: none;
     color: #999;
