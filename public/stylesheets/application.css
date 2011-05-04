@@ -49,7 +49,7 @@ h1 {
 			#eee,
 			#ccc
 		);
-	padding: 0 20px;
+	padding: 0 10px;
 	line-height: 48px;
 	border-bottom: 1px solid #999;
 	color: #333;
@@ -680,8 +680,9 @@ sub {
 /* @group Flash messages */
 .notice, .info, .success, .error, .validation {
     border: 1px solid;
-    margin: 10px 0px;
-    padding:15px 10px 15px 30px;
+    border-radius: 5px;
+    margin: 5px 0px;
+    padding: 10px;
 }
 .info {
     color: #00529B;

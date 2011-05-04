@@ -17,6 +17,8 @@ class PracticesController < ApplicationController
     @practice = Practice.new
     @practice.users.build
     @user = User.new
+    
+    render :layout => "user_sessions"
   end
 
   def edit
@@ -33,7 +35,7 @@ class PracticesController < ApplicationController
         PracticeMailer.welcome_email(@practice).deliver
         format.html { redirect_to(practice_path, :notice => _('Your practice is now active! You can start to set everything up in here.')) }
       else
-        format.html { render :action => "new", :as => :signup }
+        format.html { render :action => "new", :as => :signup, :layout => "user_sessions" }
       end
     end
   end

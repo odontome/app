@@ -1,8 +1,7 @@
 <h1><%= _('Update your password') %></h1>
 
-<p><%= _('Please enter the new password below and then press Update password.')%></p>
-
 <% form_tag password_reset_path, :method => :put do %>
+  <p><%= _('Please enter the new password below and then press Update password.')%></p>
   <p><%= password_field_tag _('Password') %></p>
-  <%= submit_tag _('Update password'), :class => "g-button" %>
+  <%= submit_tag _('Update password'), :class => "g-button action" %> <%=_("or")%> <%= link_to _("sign in"), signin_path %>
 <% end %>
