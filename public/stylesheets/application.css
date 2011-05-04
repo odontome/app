@@ -747,7 +747,7 @@ sub {
 }
 
 .pagination span {
-	color:#333;
+	color:#999;
 	display:block;
 	float:left;
 	padding:3px 6px;
