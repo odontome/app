@@ -5,6 +5,8 @@
 	position: absolute;
 	top: 45%;
 	left: 50%;
+	background: url(/images/logofull.png) top center no-repeat;
+	padding-top: 50px;
 }
 
 #content {
