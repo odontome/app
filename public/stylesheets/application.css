@@ -33,6 +33,8 @@ table.balance {
 h1 {
 	-webkit-box-shadow: 
 		inset 0 1px 0 rgba(255, 255, 255, 0.6);
+	-moz-box-shadow: 
+		inset 0 1px 0 rgba(255, 255, 255, 0.6);
 	background: 
 		-webkit-gradient(
 			linear,
@@ -40,6 +42,12 @@ h1 {
 			0% 100%,
 			from(#eee),
 			to(#ccc)
+		);
+	background: 
+		-moz-linear-gradient(
+			top,
+			#eee,
+			#ccc
 		);
 	padding: 0 20px;
 	line-height: 48px;
@@ -96,6 +104,9 @@ header {
 	-webkit-box-shadow: 
 		0 0 2px 1px rgba(0, 0, 0, 0.25),
 		inset 0 1px 0 rgba(255, 255, 255, 0.6);
+	-moz-box-shadow: 
+		0 0 2px 1px rgba(0, 0, 0, 0.25),
+		inset 0 1px 0 rgba(255, 255, 255, 0.6);
 	background: 
 		-webkit-gradient(
 			linear,
@@ -103,6 +114,12 @@ header {
 			0% 100%,
 			from(#eee),
 			to(#ccc)
+		);
+	background: 
+		-moz-linear-gradient(
+			top,
+			#eee,
+			#ccc
 		);
 	padding: 10px 20px;
 	color: #333;
@@ -125,6 +142,10 @@ header {
 					inset 0 0 0 1px rgb(100, 100, 100),
 					inset 0 2px 0 rgba(255, 255, 255, 0.35),
 					inset 0 0 0 2px rgba(255, 255, 255, 0.1);	
+				-moz-box-shadow: 
+					inset 0 0 0 1px rgb(100, 100, 100),
+					inset 0 2px 0 rgba(255, 255, 255, 0.35),
+					inset 0 0 0 2px rgba(255, 255, 255, 0.1);	
 				background: 
 					-webkit-gradient(
 						linear,
@@ -133,6 +154,12 @@ header {
 						from(rgba(255, 255, 255, 0.5)),
 						color-stop(0.6, rgba(255, 255, 255, 0.1)),
 						to(rgba(255, 255, 255, 0))
+					);
+				background: 
+					-moz-linear-gradient(
+						top,
+						rgba(255, 255, 255, 0.5),
+						rgba(255, 255, 255, 0)
 					);
 				border-radius: 5px;
 				font: bold 12px/24px 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -176,7 +203,9 @@ header {
 }
 #content {
 	-webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.25);
-	background: rgb(240, 240, 240)
+	-moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.25);
+	background-color: rgb(240, 240, 240);
+	background:  
 		-webkit-gradient(
 			linear,
 			0% 0%,
@@ -184,6 +213,7 @@ header {
 			from(rgb(240, 240, 240)),
 			to(rgb(220, 220, 220))
 		);
+	background: -moz-linear-gradient(top, rgb(240, 240, 240), rgb(220, 220, 220));
 	border-radius: 5px;
 	clear: both;
 	margin-top: 30px;
@@ -209,6 +239,7 @@ footer {
 /* @group List items */
 #list-items li {
 	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
 	background: 
 		-webkit-gradient(
 			linear,
@@ -271,8 +302,8 @@ li h2 a {
 .disabled-list {
 	opacity: 0.6;
 	background-color: #999 !important;
-	-moz-box-shadow: inset 0 0 5px #666 !important;
 	-webkit-box-shadow: inset 0 0 5px #666 !important;
+	-moz-box-shadow: inset 0 0 5px #666 !important;
 	box-shadow: inner 0 0 5px #666;
 }
 
@@ -316,6 +347,7 @@ li h2 a {
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(254, 244, 156)), to(rgb(253, 242, 149)));
     background-color: rgb;
     -webkit-box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.3);
     margin-bottom: 10px;
 }
 .note:hover .delete {
@@ -386,6 +418,7 @@ li h2 a {
 /* @group G buttons */
 input, button, select {
 	-webkit-appearance: none;
+	-moz-appearance: none;
 }
 input[type=checkbox] {
 	-webkit-appearance: checkbox;
@@ -395,7 +428,11 @@ input[type=checkbox] {
 	-webkit-box-shadow: 
 		inset 0 0 0 1px rgb(100, 100, 100),
 		inset 0 2px 0 rgba(255, 255, 255, 0.35),
-		inset 0 0 0 2px rgba(255, 255, 255, 0.1);	
+		inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+	-moz-box-shadow:
+		inset 0 0 0 1px rgb(100, 100, 100),
+		inset 0 2px 0 rgba(255, 255, 255, 0.35),
+		inset 0 0 0 2px rgba(255, 255, 255, 0.1);
 	background: 
 		-webkit-gradient(
 			linear,
@@ -404,6 +441,12 @@ input[type=checkbox] {
 			from(rgba(255, 255, 255, 0.5)),
 			color-stop(0.6, rgba(255, 255, 255, 0.1)),
 			to(rgba(255, 255, 255, 0))
+		);
+	background: 
+		-moz-linear-gradient(
+			top,
+			rgba(255, 255, 255, 0.5),
+			rgba(255, 255, 255, 0)
 		);
 	border-radius: 5px;
 	font: bold 12px/24px 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -417,6 +460,10 @@ a.g-button {
 
 .g-button.red {
 	-webkit-box-shadow: 
+		inset 0 0 0 1px #87080d,
+		inset 0 2px 0 rgba(255, 255, 255, 0.35),
+		inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+	-moz-box-shadow: 
 		inset 0 0 0 1px #87080d,
 		inset 0 2px 0 rgba(255, 255, 255, 0.35),
 		inset 0 0 0 2px rgba(255, 255, 255, 0.1);	
@@ -435,8 +482,8 @@ a.g-button {
 
 .g-button.green {
 	border-color: rgb(51,103,22) !important;
-	background: -moz-linear-gradient(center bottom,rgb(163,202,52),rgb(250,238,179)) !important;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(205,238,179)), to(rgb(163,202,131))) !important;
+	background: -moz-linear-gradient(center bottom,rgb(163,202,52),rgb(250,238,179)) !important;
 	color: #336716 !important;
 	text-shadow: none;
 }
@@ -515,6 +562,10 @@ input[type=text], input[type=tel], input[type=email], input[type=number], input[
 		inset 0 0 0 1px #5e5e5e,
 		inset 0 2px 2px rgba(0, 0, 0, 0.4),
 		0 1px 0 rgba(255, 255, 255, 0.35);
+	-moz-box-shadow: 
+		inset 0 0 0 1px #5e5e5e,
+		inset 0 2px 2px rgba(0, 0, 0, 0.4),
+		0 1px 0 rgba(255, 255, 255, 0.35);
 	background: rgb(255, 255, 255);
 	border-radius: 3px;
 	color: rgb(20, 20, 20);
@@ -528,6 +579,10 @@ input[type=text], input[type=tel], input[type=email], input[type=number], input[
 
 input[type=search] {
 	-webkit-box-shadow: 
+		inset 0 0 0 1px rgba(0, 0, 0, 0.4),
+		inset 0 2px 2px rgba(0, 0, 0, 0.4),
+		0 1px 0 rgba(255, 255, 255, 0.35);
+	-moz-box-shadow: 
 		inset 0 0 0 1px rgba(0, 0, 0, 0.4),
 		inset 0 2px 2px rgba(0, 0, 0, 0.4),
 		0 1px 0 rgba(255, 255, 255, 0.35);
@@ -549,6 +604,10 @@ input[type=search]::-webkit-search-cancel-button {
 
 select {
 	-webkit-box-shadow: 
+		inset 0 0 0 1px rgb(100, 100, 100),
+		inset 0 2px 0 rgba(255, 255, 255, 0.35),
+		inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+	-moz-box-shadow: 
 		inset 0 0 0 1px rgb(100, 100, 100),
 		inset 0 2px 0 rgba(255, 255, 255, 0.35),
 		inset 0 0 0 2px rgba(255, 255, 255, 0.1);	

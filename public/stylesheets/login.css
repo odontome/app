@@ -9,6 +9,8 @@
 
 #content {
 	-webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.25);
 	-webkit-box-reflect:below 2px
 		-webkit-gradient(
 			linear,
@@ -18,14 +20,16 @@
 			color-stop(0.3, rgba(0, 0, 0, 0)),
 			to(rgba(0, 0, 0, .3))
 		);
-	background: rgb(240, 240, 240)
-		-webkit-gradient(
+	background-color: rgb(240, 240, 240);
+	background: -webkit-gradient(
 			linear,
 			0% 0%,
 			0% 100%,
 			from(rgb(240, 240, 240)),
 			to(rgb(220, 220, 220))
 		);
+	background: -moz-linear-gradient(top, rgb(240, 240, 240), rgb(220, 220, 220));
+		
 	border-radius: 5px;
 	text-shadow: 0 1px 0 rgb(240, 240, 240);
 }
