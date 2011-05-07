@@ -29,6 +29,12 @@ table.balance {
 		padding: 5px;
 		border-bottom: 1px solid #cecece;
 	}
+	table.balance tfoot td {
+		padding: 15px;
+	}
+		table.balance tfoot td a {
+			font-size: 30px !important;
+		}
 
 h1 {
 	-webkit-box-shadow: 
