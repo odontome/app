@@ -1,10 +1,11 @@
 <h1><%= _('Reset password') %></h1>
 
-<p><%=_('We will send you instructions on how to change your password after you enter your email below and press Reset password.')%></p>
-
 <% form_tag password_resets_path do %>
-<p>
-  <%= text_field_tag :email, nil, :placeholder => _("Email"), :title => _("Email"), :autocapitalize => "off", :autocorrect => "off" %>
-</p>
-<%= submit_tag(_("Reset password"), :class => "g-button") %>
+	<p><%=_('We will send you instructions on how to change your password after you enter your email below and press Reset password.')%></p>
+
+	<p>
+	  <%= text_field_tag :email, nil, :placeholder => _("Email"), :title => _("Email"), :autocapitalize => "off", :autocorrect => "off" %>
+	</p>
+	
+	<%= submit_tag(_("Reset password"), :class => "g-button action") %> <%=_("or")%> <%= link_to _("go back"), signin_path %>
 <% end %>

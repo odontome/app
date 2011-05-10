@@ -16,6 +16,6 @@ class Treatment < ActiveRecord::Base
   before_validation :set_practice_id, :on => :create
   
   def invalid?
-    return price.nil?
+    return price.nil? || price == 0
   end
 end

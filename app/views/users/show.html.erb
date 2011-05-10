@@ -1,21 +1,23 @@
 <h1><%=@user.fullname%></h1>
 
-<p>
-	<label><%=_('Email')%>:</label> <%= @user.email%>
-</p>
-<p>
-	<label><%=_('Last seen')%>:</label> <% if @user.last_login_at %><%= l @user.last_login_at, :format => :long %> ( <%= time_ago_in_words(@user.last_login_at)%> <%=_('ago')%>)<% else %><%=_('never')%><% end %>
-</p>
-<p>
-	<label><%=_('Number of signins')%>:</label> <% if @user.login_count.to_i > 1 %><%= @user.login_count %><% else %><%=_("none")%><% end %>
-</p>
+<div class="info">
+	<p>
+		<label><%=_('Email')%>:</label> <%= @user.email%>
+	</p>
+	<p>
+		<label><%=_('Last seen')%>:</label> <% if @user.last_login_at %><%= l @user.last_login_at, :format => :long %> ( <%= time_ago_in_words(@user.last_login_at)%> <%=_('ago')%>)<% else %><%=_('never')%><% end %>
+	</p>
+	<p>
+		<label><%=_('Number of signins')%>:</label> <% if @user.login_count.to_i > 1 %><%= @user.login_count %><% else %><%=_("none")%><% end %>
+	</p>
+</div>
 
-<p>
+<div id="toolbar">
 	<% if is_editeable_by_current_user(@user) %>
-		<%=link_to _("Edit"), edit_user_path(@user), :class => "g-button" %>
+		<%=link_to _("Edit"), edit_user_path(@user), :class => "g-button action" %>
 	<% end %>
 	<% if user_is_admin?(current_user) && !user_is_admin?(@user) %>
 		<%=link_to _("Delete"), user_path(@user), :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %>
 	<% end %>
 	<% if is_editeable_by_current_user(@user) %><%=_("or")%><% end %> <%=link_to _("Return to the listing"), users_url %>
-</p>
+</div>

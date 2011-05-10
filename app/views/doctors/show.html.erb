@@ -1,28 +1,32 @@
 <h1><%=@doctor.fullname%></h1>
-<p>
-	<label><%=_("Unique identifier")%>:</label> <%= @doctor.uid%>
-</p>
-<p>
-	<label><%=_("Email")%>:</label> <%= @doctor.email%>
-</p>
-<p>
-	<label><%=_("Gender")%>:</label> <%= @doctor.gender.titleize%>
-</p>
-<p>
-	<label><%=_("Speciality")%>:</label> <%= @doctor.speciality%>
-</p>
-<p>
-	<label><%=_("Status")%>:</label> 
-	<% if @doctor.is_active %>
-		<%=_("Active")%>
-    <% else %>
-		<%=_("Suspended")%>
-    <% end %>
-</p>
-<p>
-	<%=link_to _("Edit"), edit_doctor_path(@doctor), :class => "g-button" %>
+
+<div class="info">
+	<p>
+		<label><%=_("Unique identifier")%>:</label> <%= @doctor.uid%>
+	</p>
+	<p>
+		<label><%=_("Email")%>:</label> <%= @doctor.email%>
+	</p>
+	<p>
+		<label><%=_("Gender")%>:</label> <%= @doctor.gender.titleize%>
+	</p>
+	<p>
+		<label><%=_("Speciality")%>:</label> <%= @doctor.speciality%>
+	</p>
+	<p>
+		<label><%=_("Status")%>:</label> 
+		<% if @doctor.is_active %>
+			<%=_("Active")%>
+	    <% else %>
+			<%=_("Suspended")%>
+	    <% end %>
+	</p>
+</div>
+	
+<div id="toolbar">
+	<%=link_to _("Edit"), edit_doctor_path(@doctor), :class => "g-button action" %>
 	
 	<%= link_to_suspend_or_delete @doctor %>
 	
 	<%=_("or")%> <%=link_to _("Return to the listing"), doctors_url %>
-</p>
+</div>
