@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-04-27 18:43+0200\n"
+"POT-Creation-Date: 2011-05-19 13:51+0200\n"
 "PO-Revision-Date: 2011-03-01 18:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -66,11 +66,11 @@ msgstr ""
 msgid "Activate"
 msgstr ""
 
-#: app/views/doctors/show.html.erb:17
+#: app/views/doctors/show.html.erb:19
 msgid "Active"
 msgstr ""
 
-#: app/views/patient_treatments/_new.html.erb:20
+#: app/views/patient_treatments/_new.html.erb:14
 msgid "Add treatment"
 msgstr ""
 
@@ -85,7 +85,7 @@ msgid ""
 "Users"
 msgstr ""
 
-#: app/views/appointments/_form.html.erb:16
+#: app/views/appointments/_form.html.erb:18
 msgid "Additional notes"
 msgstr ""
 
@@ -93,7 +93,7 @@ msgstr ""
 msgid "Address"
 msgstr ""
 
-#: app/views/patients/index.html.erb:21 app/views/patients/show.html.erb:22
+#: app/views/patients/index.html.erb:24 app/views/patients/show.html.erb:22
 msgid "Age"
 msgstr ""
 
@@ -101,24 +101,24 @@ msgstr ""
 msgid "Allergic to"
 msgstr ""
 
-#: app/views/patients/_form.html.erb:44 app/views/patients/index.html.erb:22
+#: app/views/patients/_form.html.erb:44 app/views/patients/index.html.erb:25
 msgid "Allergies"
 msgstr ""
 
-#: app/views/practices/_form.html.erb:36
+#: app/views/practices/_form.html.erb:37
 msgid "Already have an account?"
 msgstr ""
 
-#: app/views/balances/_new.html.erb:3 app/views/balances/index.csv.erb:1
+#: app/views/balances/_new.html.erb:4 app/views/balances/index.csv.erb:1
 msgid "Amount"
 msgstr ""
 
-#: app/controllers/practices_controller.rb:87
+#: app/controllers/practices_controller.rb:89
 msgid ""
 "An error has ocurred. We couldn't close your account. Please contact us."
 msgstr ""
 
-#: app/views/notes/_new.html.erb:5
+#: app/views/notes/_new.html.erb:6
 msgid "Annotate"
 msgstr ""
 
@@ -134,6 +134,10 @@ msgstr ""
 msgid "Appointment|Notes"
 msgstr ""
 
+#: locale/model_attributes.rb:7
+msgid "Appointment|Notified"
+msgstr ""
+
 #: locale/model_attributes.rb:5
 msgid "Appointment|Starts at"
 msgstr ""
@@ -142,19 +146,20 @@ msgstr ""
 msgid "Appointment|Status"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "Apr"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:38
+#: app/views/datebook/show.html.erb:39
 msgid "April"
 msgstr ""
 
 #: app/helpers/doctors_helper.rb:4 app/helpers/doctors_helper.rb:6
-#: app/views/appointments/_form.html.erb:22
-#: app/views/layouts/_navigation.html.erb:13
-#: app/views/treatments/index.html.erb:24 app/views/treatments/show.html.erb:7
-#: app/views/users/index.html.erb:13 app/views/users/show.html.erb:16
+#: app/views/appointments/_form.html.erb:25
+#: app/views/shared/_navigation.html.erb:13
+#: app/views/treatments/index.html.erb:25
+#: app/views/treatments/show.html.erb:10 app/views/users/index.html.erb:12
+#: app/views/users/show.html.erb:20
 msgid "Are you sure?"
 msgstr ""
 
@@ -164,11 +169,11 @@ msgid ""
 "treatment was completed"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "Aug"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:38
+#: app/views/datebook/show.html.erb:39
 msgid "August"
 msgstr ""
 
@@ -176,11 +181,11 @@ msgstr ""
 msgid "Balance"
 msgstr ""
 
-#: locale/model_attributes.rb:8
+#: locale/model_attributes.rb:9
 msgid "Balance|Amount"
 msgstr ""
 
-#: locale/model_attributes.rb:9
+#: locale/model_attributes.rb:10
 msgid "Balance|Notes"
 msgstr ""
 
@@ -202,15 +207,15 @@ msgid ""
 "please use 'Suspend' instead."
 msgstr ""
 
-#: app/models/user.rb:41
+#: app/models/user.rb:43
 msgid "Can't delete admin user"
 msgstr ""
 
-#: app/views/appointments/_form.html.erb:26
-#: app/views/doctors/_form.html.erb:36 app/views/patients/_form.html.erb:70
-#: app/views/practices/cancel.html.erb:4
+#: app/views/appointments/_form.html.erb:29
+#: app/views/doctors/_form.html.erb:37 app/views/patients/_form.html.erb:70
+#: app/views/practices/cancel.html.erb:6
 #: app/views/practices/settings.html.erb:36
-#: app/views/treatments/_form.html.erb:14 app/views/users/_form.html.erb:27
+#: app/views/treatments/_form.html.erb:15 app/views/users/_form.html.erb:28
 msgid "Cancel"
 msgstr ""
 
@@ -238,11 +243,11 @@ msgstr ""
 msgid "Cigarettes per day"
 msgstr ""
 
-#: app/views/practices/cancel.html.erb:4
+#: app/views/practices/cancel.html.erb:6
 msgid "Close account"
 msgstr ""
 
-#: app/views/patients/index.html.erb:24
+#: app/views/patients/index.html.erb:27
 msgid "Complete this patient information to continue"
 msgstr ""
 
@@ -258,19 +263,23 @@ msgstr ""
 msgid "Contact information"
 msgstr ""
 
-#: app/views/doctors/index.html.erb:27 app/views/doctors/new.html.erb:1
+#: app/views/shared/_footer.html.erb:1
+msgid "Contact us"
+msgstr ""
+
+#: app/views/doctors/index.html.erb:28 app/views/doctors/new.html.erb:1
 msgid "Create new doctor"
 msgstr ""
 
-#: app/views/patients/index.html.erb:39 app/views/patients/new.html.erb:1
+#: app/views/patients/index.html.erb:41 app/views/patients/new.html.erb:1
 msgid "Create new patient"
 msgstr ""
 
-#: app/views/treatments/index.html.erb:31 app/views/treatments/new.html.erb:1
+#: app/views/treatments/index.html.erb:32 app/views/treatments/new.html.erb:1
 msgid "Create new treatment"
 msgstr ""
 
-#: app/views/users/index.html.erb:21
+#: app/views/users/index.html.erb:23
 msgid "Create new user"
 msgstr ""
 
@@ -290,31 +299,31 @@ msgstr ""
 msgid "Date of birth"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:4 app/views/layouts/_navigation.html.erb:5
+#: app/views/datebook/show.html.erb:4 app/views/shared/_navigation.html.erb:5
 msgid "Datebook"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "Dec"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:38
+#: app/views/datebook/show.html.erb:39
 msgid "December"
 msgstr ""
 
 #: app/helpers/doctors_helper.rb:4
 #: app/views/patient_treatments/_show.html.erb:28
-#: app/views/patients/index.html.erb:28 app/views/treatments/index.html.erb:24
-#: app/views/treatments/show.html.erb:7 app/views/users/index.html.erb:13
-#: app/views/users/show.html.erb:16
+#: app/views/patients/index.html.erb:31 app/views/treatments/index.html.erb:25
+#: app/views/treatments/show.html.erb:10 app/views/users/index.html.erb:12
+#: app/views/users/show.html.erb:20
 msgid "Delete"
 msgstr ""
 
-#: app/views/appointments/_form.html.erb:22
+#: app/views/appointments/_form.html.erb:25
 msgid "Delete appointment"
 msgstr ""
 
-#: app/views/appointments/_form.html.erb:10
+#: app/views/appointments/_form.html.erb:12
 msgid "Doctor"
 msgstr ""
 
@@ -322,39 +331,39 @@ msgstr ""
 msgid "Doctors"
 msgstr ""
 
-#: locale/model_attributes.rb:18
+#: locale/model_attributes.rb:19
 msgid "Doctor|Color"
 msgstr ""
 
-#: locale/model_attributes.rb:17
+#: locale/model_attributes.rb:18
 msgid "Doctor|Email"
 msgstr ""
 
-#: locale/model_attributes.rb:12
+#: locale/model_attributes.rb:13
 msgid "Doctor|Firstname"
 msgstr ""
 
-#: locale/model_attributes.rb:14
+#: locale/model_attributes.rb:15
 msgid "Doctor|Gender"
 msgstr ""
 
-#: locale/model_attributes.rb:15
+#: locale/model_attributes.rb:16
 msgid "Doctor|Is active"
 msgstr ""
 
-#: locale/model_attributes.rb:13
+#: locale/model_attributes.rb:14
 msgid "Doctor|Lastname"
 msgstr ""
 
-#: locale/model_attributes.rb:16
+#: locale/model_attributes.rb:17
 msgid "Doctor|Speciality"
 msgstr ""
 
-#: locale/model_attributes.rb:11
+#: locale/model_attributes.rb:12
 msgid "Doctor|Uid"
 msgstr ""
 
-#: app/views/user_sessions/new.html.erb:21
+#: app/views/user_sessions/new.html.erb:27
 msgid "Don't have an account?"
 msgstr ""
 
@@ -370,10 +379,10 @@ msgstr ""
 msgid "Drugs use"
 msgstr ""
 
-#: app/views/doctors/index.html.erb:21 app/views/doctors/show.html.erb:23
-#: app/views/patients/index.html.erb:30 app/views/patients/show.html.erb:12
-#: app/views/treatments/index.html.erb:25 app/views/treatments/show.html.erb:6
-#: app/views/users/index.html.erb:15 app/views/users/show.html.erb:14
+#: app/views/doctors/index.html.erb:22 app/views/doctors/show.html.erb:27
+#: app/views/patients/index.html.erb:33 app/views/patients/show.html.erb:12
+#: app/views/treatments/index.html.erb:26 app/views/treatments/show.html.erb:9
+#: app/views/users/index.html.erb:15 app/views/users/show.html.erb:17
 msgid "Edit"
 msgstr ""
 
@@ -389,12 +398,12 @@ msgstr ""
 msgid "Editing user"
 msgstr ""
 
-#: app/views/doctors/_form.html.erb:16 app/views/doctors/show.html.erb:6
+#: app/views/doctors/_form.html.erb:16 app/views/doctors/show.html.erb:8
 #: app/views/password_resets/new.html.erb:7
 #: app/views/patients/_form.html.erb:26 app/views/patients/show.html.erb:23
 #: app/views/practices/_form.html.erb:18
-#: app/views/user_sessions/new.html.erb:12 app/views/users/_form.html.erb:17
-#: app/views/users/index.html.erb:9 app/views/users/show.html.erb:4
+#: app/views/user_sessions/new.html.erb:10 app/views/users/_form.html.erb:17
+#: app/views/users/index.html.erb:8 app/views/users/show.html.erb:5
 msgid "Email"
 msgstr ""
 
@@ -408,7 +417,7 @@ msgstr ""
 
 #: app/views/appointments/_form.html.erb:3
 #: app/views/appointments/new.html.erb:6
-#: app/views/layouts/_navigation.html.erb:27
+#: app/views/shared/_navigation.html.erb:27
 msgid "Enter the patient name or Unique Identifier"
 msgstr ""
 
@@ -436,11 +445,11 @@ msgstr ""
 msgid "Family history"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "Feb"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:38
+#: app/views/datebook/show.html.erb:39
 msgid "February"
 msgstr ""
 
@@ -458,7 +467,7 @@ msgid ""
 "For practices that have more than 1000 patients. You can register up to 5000!"
 msgstr ""
 
-#: app/views/user_sessions/new.html.erb:18
+#: app/views/user_sessions/new.html.erb:29
 msgid "Forgot your password?"
 msgstr ""
 
@@ -466,16 +475,16 @@ msgstr ""
 msgid "Free Plan"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:41
+#: app/views/datebook/show.html.erb:42
 msgid "Fri"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:40
+#: app/views/datebook/show.html.erb:41
 msgid "Friday"
 msgstr ""
 
 #: app/views/doctors/_form.html.erb:19 app/views/doctors/_form.html.erb:20
-#: app/views/doctors/show.html.erb:9
+#: app/views/doctors/show.html.erb:11
 msgid "Gender"
 msgstr ""
 
@@ -533,15 +542,11 @@ msgstr ""
 msgid "Illicit drugs use (include type, amount and administration methods)"
 msgstr ""
 
-#: app/views/doctors/index.html.erb:15
-msgid "Inactive"
-msgstr ""
-
 #: app/views/balances/index.html.erb:6
 msgid "Income"
 msgstr ""
 
-#: app/controllers/password_resets_controller.rb:12
+#: app/controllers/password_resets_controller.rb:14
 msgid "Instructions to reset your password have been emailed to you"
 msgstr ""
 
@@ -563,27 +568,27 @@ msgstr ""
 msgid "It starts at:"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "Jan"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:38
+#: app/views/datebook/show.html.erb:39
 msgid "January"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "Jul"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:38
+#: app/views/datebook/show.html.erb:39
 msgid "July"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "Jun"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:38
+#: app/views/datebook/show.html.erb:39
 msgid "June"
 msgstr ""
 
@@ -596,16 +601,16 @@ msgstr ""
 msgid "Last name"
 msgstr ""
 
-#: app/views/users/index.html.erb:10 app/views/users/show.html.erb:7
+#: app/views/users/index.html.erb:9 app/views/users/show.html.erb:8
 msgid "Last seen"
 msgstr ""
 
-#: app/views/user_sessions/new.html.erb:20
+#: app/views/user_sessions/new.html.erb:25
 msgid "Login"
 msgstr ""
 
-#: app/views/layouts/_navigation.html.erb:13
-#: app/views/layouts/_navigation.html.erb:18
+#: app/views/shared/_navigation.html.erb:13
+#: app/views/shared/_navigation.html.erb:18
 msgid "Logout"
 msgstr ""
 
@@ -613,15 +618,15 @@ msgstr ""
 msgid "Male"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "Mar"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:38
+#: app/views/datebook/show.html.erb:39
 msgid "March"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:38 app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:39 app/views/datebook/show.html.erb:40
 msgid "May"
 msgstr ""
 
@@ -633,11 +638,11 @@ msgstr ""
 msgid "Mobile"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:41
+#: app/views/datebook/show.html.erb:42
 msgid "Mon"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:40
+#: app/views/datebook/show.html.erb:41
 msgid "Monday"
 msgstr ""
 
@@ -649,9 +654,8 @@ msgstr ""
 msgid "My doctors"
 msgstr ""
 
-#: app/views/layouts/_navigation.html.erb:7
 #: app/views/practice_mailer/welcome_email.html.erb:7
-#: app/views/practices/show.html.erb:1
+#: app/views/practices/show.html.erb:1 app/views/shared/_navigation.html.erb:7
 msgid "My practice"
 msgstr ""
 
@@ -679,43 +683,48 @@ msgstr ""
 msgid "No results, a new patient will be created"
 msgstr ""
 
-#: app/controllers/password_resets_controller.rb:15
-msgid "No user was found with email address"
+#: app/controllers/password_resets_controller.rb:17
+msgid "No user was found with that email address"
 msgstr ""
 
 #: app/views/balances/index.csv.erb:1 app/views/balances/index.html.erb:4
 msgid "Notes"
 msgstr ""
 
-#: locale/model_attributes.rb:21
+#: locale/model_attributes.rb:22
 msgid "Note|Noteable type"
 msgstr ""
 
-#: locale/model_attributes.rb:20
+#: locale/model_attributes.rb:21
 msgid "Note|Notes"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "Nov"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:38
+#: app/views/datebook/show.html.erb:39
 msgid "November"
 msgstr ""
 
-#: app/views/users/show.html.erb:10
+#: app/views/users/show.html.erb:11
 msgid "Number of signins"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "Oct"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:38
+#: app/views/datebook/show.html.erb:39
 msgid "October"
 msgstr ""
 
-#: app/views/balances/_new.html.erb:6
+#: app/views/layouts/application.html.erb:4
+#: app/views/layouts/user_sessions.html.erb:4
+msgid "Odonto.me, beautiful dental practice management"
+msgstr ""
+
+#: app/views/balances/_new.html.erb:7
 msgid "Optional notes"
 msgstr ""
 
@@ -737,9 +746,9 @@ msgid ""
 "patients"
 msgstr ""
 
-#: app/views/password_resets/edit.html.erb:6
+#: app/views/password_resets/edit.html.erb:5
 #: app/views/practices/_form.html.erb:21
-#: app/views/user_sessions/new.html.erb:15 app/views/users/_form.html.erb:20
+#: app/views/user_sessions/new.html.erb:13 app/views/users/_form.html.erb:20
 msgid "Password"
 msgstr ""
 
@@ -763,92 +772,91 @@ msgstr ""
 msgid "Past surgeries"
 msgstr ""
 
-#: locale/model_attributes.rb:26
+#: locale/model_attributes.rb:27
 msgid "PatientTreatment|Is completed"
 msgstr ""
 
-#: locale/model_attributes.rb:24
+#: locale/model_attributes.rb:25
 msgid "PatientTreatment|Name"
 msgstr ""
 
-#: locale/model_attributes.rb:25
+#: locale/model_attributes.rb:26
 msgid "PatientTreatment|Price"
 msgstr ""
 
-#: locale/model_attributes.rb:23
+#: locale/model_attributes.rb:24
 msgid "PatientTreatment|Tooth number"
 msgstr ""
 
-#: app/views/layouts/_navigation.html.erb:6
-#: app/views/patients/index.html.erb:1
+#: app/views/patients/index.html.erb:1 app/views/shared/_navigation.html.erb:6
 msgid "Patients"
 msgstr ""
 
-#: locale/model_attributes.rb:31
+#: locale/model_attributes.rb:32
 msgid "Patient|Address"
 msgstr ""
 
-#: locale/model_attributes.rb:37
+#: locale/model_attributes.rb:38
 msgid "Patient|Allergies"
 msgstr ""
 
-#: locale/model_attributes.rb:41
+#: locale/model_attributes.rb:42
 msgid "Patient|Cigarettes per day"
 msgstr ""
 
-#: locale/model_attributes.rb:36
+#: locale/model_attributes.rb:37
 msgid "Patient|Date of birth"
 msgstr ""
 
-#: locale/model_attributes.rb:42
+#: locale/model_attributes.rb:43
 msgid "Patient|Drinks per day"
 msgstr ""
 
-#: locale/model_attributes.rb:43
+#: locale/model_attributes.rb:44
 msgid "Patient|Drugs use"
 msgstr ""
 
-#: locale/model_attributes.rb:32
+#: locale/model_attributes.rb:33
 msgid "Patient|Email"
 msgstr ""
 
-#: locale/model_attributes.rb:35
+#: locale/model_attributes.rb:36
 msgid "Patient|Emergency telephone"
 msgstr ""
 
-#: locale/model_attributes.rb:44
+#: locale/model_attributes.rb:45
 msgid "Patient|Family diseases"
 msgstr ""
 
-#: locale/model_attributes.rb:29
+#: locale/model_attributes.rb:30
 msgid "Patient|Firstname"
 msgstr ""
 
-#: locale/model_attributes.rb:30
+#: locale/model_attributes.rb:31
 msgid "Patient|Lastname"
 msgstr ""
 
-#: locale/model_attributes.rb:40
+#: locale/model_attributes.rb:41
 msgid "Patient|Medications"
 msgstr ""
 
-#: locale/model_attributes.rb:34
+#: locale/model_attributes.rb:35
 msgid "Patient|Mobile"
 msgstr ""
 
-#: locale/model_attributes.rb:38
+#: locale/model_attributes.rb:39
 msgid "Patient|Past illnesses"
 msgstr ""
 
-#: locale/model_attributes.rb:39
+#: locale/model_attributes.rb:40
 msgid "Patient|Surgeries"
 msgstr ""
 
-#: locale/model_attributes.rb:33
+#: locale/model_attributes.rb:34
 msgid "Patient|Telephone"
 msgstr ""
 
-#: locale/model_attributes.rb:28
+#: locale/model_attributes.rb:29
 msgid "Patient|Uid"
 msgstr ""
 
@@ -869,12 +877,12 @@ msgstr ""
 msgid "Plans and payments"
 msgstr ""
 
-#: app/views/appointments/_form.html.erb:8
-#: app/views/patient_treatments/index.html.erb:14
+#: app/views/appointments/_form.html.erb:10
+#: app/views/patient_treatments/index.html.erb:11
 msgid "Please"
 msgstr ""
 
-#: app/controllers/practices_controller.rb:77
+#: app/controllers/practices_controller.rb:79
 msgid ""
 "Please Unsubscribe first from your current plan to close your account so "
 "Paypal won't charge you on the next billing cycle. Please try again once "
@@ -891,20 +899,20 @@ msgid ""
 "clicking the Feedback tab."
 msgstr ""
 
-#: app/views/password_resets/edit.html.erb:3
+#: app/views/password_resets/edit.html.erb:4
 msgid "Please enter the new password below and then press Update password."
 msgstr ""
 
-#: app/views/practices/cancel.html.erb:2
+#: app/views/practices/cancel.html.erb:4
 msgid "Please make sure that you Unsubscribed first from your current plan."
 msgstr ""
 
-#: app/views/appointments/_form.html.erb:19 app/views/balances/_new.html.erb:8
-#: app/views/datebook/show.html.erb:22 app/views/datebook/show.html.erb:108
-#: app/views/doctors/_form.html.erb:30 app/views/notes/_new.html.erb:5
-#: app/views/patient_treatments/_new.html.erb:20
-#: app/views/patients/_form.html.erb:70 app/views/practices/_form.html.erb:35
-#: app/views/treatments/_form.html.erb:12 app/views/users/_form.html.erb:27
+#: app/views/appointments/_form.html.erb:22 app/views/balances/_new.html.erb:9
+#: app/views/datebook/show.html.erb:22 app/views/datebook/show.html.erb:109
+#: app/views/doctors/_form.html.erb:31 app/views/notes/_new.html.erb:6
+#: app/views/patient_treatments/_new.html.erb:14
+#: app/views/patients/_form.html.erb:70 app/views/practices/_form.html.erb:36
+#: app/views/treatments/_form.html.erb:13 app/views/users/_form.html.erb:28
 msgid "Please wait..."
 msgstr ""
 
@@ -921,39 +929,39 @@ msgstr ""
 msgid "Practice settings"
 msgstr ""
 
-#: app/views/layouts/_navigation.html.erb:17
+#: app/views/shared/_navigation.html.erb:17
 msgid "Practices"
 msgstr ""
 
-#: locale/model_attributes.rb:50
+#: locale/model_attributes.rb:51
 msgid "Practice|Cancelled at"
 msgstr ""
 
-#: locale/model_attributes.rb:53
+#: locale/model_attributes.rb:54
 msgid "Practice|Currency unit"
 msgstr ""
 
-#: locale/model_attributes.rb:52
+#: locale/model_attributes.rb:53
 msgid "Practice|Invitation code"
 msgstr ""
 
-#: locale/model_attributes.rb:47
+#: locale/model_attributes.rb:48
 msgid "Practice|Locale"
 msgstr ""
 
-#: locale/model_attributes.rb:46
+#: locale/model_attributes.rb:47
 msgid "Practice|Name"
 msgstr ""
 
-#: locale/model_attributes.rb:51
+#: locale/model_attributes.rb:52
 msgid "Practice|Number of patients"
 msgstr ""
 
-#: locale/model_attributes.rb:49
+#: locale/model_attributes.rb:50
 msgid "Practice|Status"
 msgstr ""
 
-#: locale/model_attributes.rb:48
+#: locale/model_attributes.rb:49
 msgid "Practice|Timezone"
 msgstr ""
 
@@ -970,8 +978,12 @@ msgstr ""
 msgid "Premium Plan"
 msgstr ""
 
-#: app/views/treatments/_form.html.erb:9 app/views/treatments/show.html.erb:3
+#: app/views/treatments/_form.html.erb:9 app/views/treatments/show.html.erb:5
 msgid "Price"
+msgstr ""
+
+#: app/views/shared/_footer.html.erb:1
+msgid "Privacy policy"
 msgstr ""
 
 #: app/models/doctor.rb:29
@@ -982,37 +994,37 @@ msgstr ""
 msgid "Red"
 msgstr ""
 
-#: app/views/practices/_form.html.erb:35
+#: app/views/practices/_form.html.erb:36
 msgid "Register"
 msgstr ""
 
-#: app/views/user_sessions/new.html.erb:23
+#: app/views/user_sessions/new.html.erb:17
 msgid "Remember me"
 msgstr ""
 
 #: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:10
 #: app/views/password_resets/new.html.erb:1
-#: app/views/password_resets/new.html.erb:9
+#: app/views/password_resets/new.html.erb:10
 msgid "Reset password"
 msgstr ""
 
-#: app/views/doctors/show.html.erb:27 app/views/treatments/show.html.erb:8
-#: app/views/users/show.html.erb:18
+#: app/views/doctors/show.html.erb:31 app/views/treatments/show.html.erb:11
+#: app/views/users/show.html.erb:22
 msgid "Return to the listing"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:41
+#: app/views/datebook/show.html.erb:42
 msgid "Sat"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:40
+#: app/views/datebook/show.html.erb:41
 msgid "Saturday"
 msgstr ""
 
-#: app/views/appointments/_form.html.erb:19 app/views/balances/_new.html.erb:8
-#: app/views/doctors/_form.html.erb:30 app/views/patients/_form.html.erb:70
+#: app/views/appointments/_form.html.erb:22 app/views/balances/_new.html.erb:9
+#: app/views/doctors/_form.html.erb:31 app/views/patients/_form.html.erb:70
 #: app/views/practices/settings.html.erb:36
-#: app/views/treatments/_form.html.erb:12 app/views/users/_form.html.erb:27
+#: app/views/treatments/_form.html.erb:13 app/views/users/_form.html.erb:28
 msgid "Save"
 msgstr ""
 
@@ -1021,13 +1033,13 @@ msgstr ""
 msgid "See you soon!"
 msgstr ""
 
-#: app/views/appointments/_form.html.erb:11
-#: app/views/patient_treatments/_new.html.erb:16
+#: app/views/appointments/_form.html.erb:13
+#: app/views/patient_treatments/_new.html.erb:11
 #: app/views/patient_treatments/_show.html.erb:24
 msgid "Select a doctor"
 msgstr ""
 
-#: app/views/patient_treatments/_new.html.erb:7
+#: app/views/patient_treatments/_new.html.erb:5
 msgid "Select a treatment"
 msgstr ""
 
@@ -1037,25 +1049,28 @@ msgstr ""
 msgid "Sent by"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "Sep"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:38
+#: app/views/datebook/show.html.erb:39
 msgid "September"
 msgstr ""
 
-#: app/views/practices/_form.html.erb:36
-#: app/views/user_sessions/new.html.erb:1
+#: app/views/practices/_form.html.erb:37
 msgid "Sign in"
 msgstr ""
 
-#: app/views/user_sessions/new.html.erb:21
+#: app/views/user_sessions/new.html.erb:27
 msgid "Sign up"
 msgstr ""
 
 #: app/views/practices/new.html.erb:3
 msgid "Signing up to Odonto.me"
+msgstr ""
+
+#: app/models/user.rb:54
+msgid "Sorry, you can't update an admin user"
 msgstr ""
 
 #: app/controllers/application_controller.rb:135
@@ -1066,12 +1081,12 @@ msgstr ""
 msgid "Specialities of the doctor"
 msgstr ""
 
-#: app/views/doctors/_form.html.erb:23 app/views/doctors/index.html.erb:18
-#: app/views/doctors/show.html.erb:12
+#: app/views/doctors/_form.html.erb:23 app/views/doctors/index.html.erb:19
+#: app/views/doctors/show.html.erb:14
 msgid "Speciality"
 msgstr ""
 
-#: app/views/treatments/index.html.erb:21
+#: app/views/treatments/index.html.erb:22
 msgid "Specify a price to use this treatment"
 msgstr ""
 
@@ -1079,7 +1094,7 @@ msgstr ""
 msgid "Standard Plan"
 msgstr ""
 
-#: app/views/doctors/show.html.erb:15
+#: app/views/doctors/show.html.erb:17
 msgid "Status"
 msgstr ""
 
@@ -1090,11 +1105,11 @@ msgstr ""
 msgid "Subscribe with Paypal"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:41
+#: app/views/datebook/show.html.erb:42
 msgid "Sun"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:40
+#: app/views/datebook/show.html.erb:41
 msgid "Sunday"
 msgstr ""
 
@@ -1102,12 +1117,16 @@ msgstr ""
 msgid "Suspend"
 msgstr ""
 
-#: app/views/doctors/show.html.erb:19
+#: app/views/doctors/show.html.erb:21
 msgid "Suspended"
 msgstr ""
 
 #: app/views/patients/_form.html.erb:29 app/views/patients/show.html.erb:24
 msgid "Telephone"
+msgstr ""
+
+#: app/views/shared/_footer.html.erb:1
+msgid "Terms of service"
 msgstr ""
 
 #: app/views/practice_mailer/welcome_email.html.erb:25
@@ -1127,7 +1146,7 @@ msgstr ""
 msgid "The new doctor was successfully created in your practice."
 msgstr ""
 
-#: app/controllers/patients_controller.rb:46
+#: app/controllers/patients_controller.rb:53
 msgid "The new patient was successfully created in your practice."
 msgstr ""
 
@@ -1178,11 +1197,11 @@ msgstr ""
 msgid "There was an error updating this entry"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:41
+#: app/views/datebook/show.html.erb:42
 msgid "Thu"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:40
+#: app/views/datebook/show.html.erb:41
 msgid "Thursday"
 msgstr ""
 
@@ -1190,7 +1209,7 @@ msgstr ""
 msgid "Time zone"
 msgstr ""
 
-#: app/views/patient_treatments/_new.html.erb:12
+#: app/views/patient_treatments/_new.html.erb:8
 msgid "Tooth number"
 msgstr ""
 
@@ -1202,23 +1221,23 @@ msgstr ""
 msgid "Treatments"
 msgstr ""
 
-#: locale/model_attributes.rb:55
+#: locale/model_attributes.rb:56
 msgid "Treatment|Name"
 msgstr ""
 
-#: locale/model_attributes.rb:56
+#: locale/model_attributes.rb:57
 msgid "Treatment|Price"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:41
+#: app/views/datebook/show.html.erb:42
 msgid "Tue"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:40
+#: app/views/datebook/show.html.erb:41
 msgid "Tuesday"
 msgstr ""
 
-#: app/views/doctors/_form.html.erb:12 app/views/doctors/show.html.erb:3
+#: app/views/doctors/_form.html.erb:12 app/views/doctors/show.html.erb:5
 #: app/views/patients/_form.html.erb:18 app/views/patients/show.html.erb:18
 msgid "Unique identifier"
 msgstr ""
@@ -1227,7 +1246,7 @@ msgstr ""
 msgid "Unsubscribe"
 msgstr ""
 
-#: app/views/password_resets/edit.html.erb:7
+#: app/views/password_resets/edit.html.erb:6
 msgid "Update password"
 msgstr ""
 
@@ -1239,43 +1258,47 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
-#: locale/model_attributes.rb:61
+#: locale/model_attributes.rb:62
 msgid "User|Crypted password"
 msgstr ""
 
-#: locale/model_attributes.rb:65
+#: locale/model_attributes.rb:66
 msgid "User|Current login at"
 msgstr ""
 
-#: locale/model_attributes.rb:60
+#: locale/model_attributes.rb:61
 msgid "User|Email"
 msgstr ""
 
-#: locale/model_attributes.rb:58
+#: locale/model_attributes.rb:59
 msgid "User|Firstname"
 msgstr ""
 
-#: locale/model_attributes.rb:66
+#: locale/model_attributes.rb:67
 msgid "User|Last login at"
 msgstr ""
 
-#: locale/model_attributes.rb:59
+#: locale/model_attributes.rb:60
 msgid "User|Lastname"
 msgstr ""
 
-#: locale/model_attributes.rb:67
+#: locale/model_attributes.rb:68
 msgid "User|Login count"
 msgstr ""
 
-#: locale/model_attributes.rb:62
+#: locale/model_attributes.rb:63
 msgid "User|Password salt"
 msgstr ""
 
-#: locale/model_attributes.rb:63
-msgid "User|Persistence token"
+#: locale/model_attributes.rb:69
+msgid "User|Perishable token"
 msgstr ""
 
 #: locale/model_attributes.rb:64
+msgid "User|Persistence token"
+msgstr ""
+
+#: locale/model_attributes.rb:65
 msgid "User|Roles"
 msgstr ""
 
@@ -1284,41 +1307,53 @@ msgstr ""
 msgid "We are sending you this email on behalf of"
 msgstr ""
 
-#: app/controllers/practices_controller.rb:56
+#: app/controllers/practices_controller.rb:58
 msgid ""
 "We are sorry. Your account cannot be changed to the Free Plan because your "
 "practice exceeds the number of patients allowed by it. You'll have to delete "
 "some patients first and Unsubscribe your current plan."
 msgstr ""
 
-#: app/controllers/practices_controller.rb:59
+#: app/controllers/practices_controller.rb:61
 msgid ""
 "We are sorry. Your account cannot be changed to the Free Plan. You have to "
 "first Unsubscribe from your current plan through your Practice Settings or "
 "Paypal."
 msgstr ""
 
-#: app/views/password_resets/new.html.erb:3
+#: app/controllers/patients_controller.rb:37 app/models/patient.rb:107
+msgid ""
+"We are very sorry, but you have reached the patients limit for this private "
+"beta. Please contact us if you need assistance."
+msgstr ""
+
+#: app/controllers/patients_controller.rb:39 app/models/patient.rb:109
+msgid ""
+"We are very sorry, but you have reached your patients limit. Please upgrade "
+"your account in My Practice settings"
+msgstr ""
+
+#: app/views/password_resets/new.html.erb:4
 msgid ""
 "We will send you instructions on how to change your password after you enter "
 "your email below and press Reset password."
 msgstr ""
 
-#: app/views/practices/cancel.html.erb:2
+#: app/views/practices/cancel.html.erb:4
 msgid ""
 "We'll be very sorry if you decide to leave Odonto.me. We hope that "
 "everything was ok and if not, please contact us so we can help you."
 msgstr ""
 
-#: app/controllers/password_resets_controller.rb:40
+#: app/controllers/password_resets_controller.rb:42
 msgid "We're sorry, but we could not locate your account"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:41
+#: app/views/datebook/show.html.erb:42
 msgid "Wed"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:40
+#: app/views/datebook/show.html.erb:41
 msgid "Wednesday"
 msgstr ""
 
@@ -1380,26 +1415,27 @@ msgid ""
 "new plan."
 msgstr ""
 
-#: app/controllers/practices_controller.rb:85
+#: app/controllers/practices_controller.rb:87
 msgid ""
 "Your account is now beign closed and is no longer possible to access it. "
 "Please contact us if you need assistance."
 msgstr ""
 
-#: app/controllers/password_resets_controller.rb:27
-msgid "Your password was successfully updated"
+#: app/controllers/password_resets_controller.rb:29
+msgid ""
+"Your password was successfully changed. You can now use it to login here."
 msgstr ""
 
-#: app/controllers/practices_controller.rb:34
+#: app/controllers/practices_controller.rb:36
 msgid ""
 "Your practice is now active! You can start to set everything up in here."
 msgstr ""
 
-#: app/controllers/practices_controller.rb:47
+#: app/controllers/practices_controller.rb:49
 msgid "Your practice settings were successfully updated."
 msgstr ""
 
-#: app/controllers/practices_controller.rb:66
+#: app/controllers/practices_controller.rb:68
 msgid "Your practice's account has been changed to the Free Plan!"
 msgstr ""
 
@@ -1407,7 +1443,7 @@ msgstr ""
 msgid "Your practice's doctor was successfully updated."
 msgstr ""
 
-#: app/controllers/patients_controller.rb:58
+#: app/controllers/patients_controller.rb:65
 msgid "Your practice's patient was successfully updated."
 msgstr ""
 
@@ -1435,7 +1471,7 @@ msgid ""
 "be charged."
 msgstr ""
 
-#: app/views/users/show.html.erb:7
+#: app/views/users/show.html.erb:8
 msgid "ago"
 msgstr ""
 
@@ -1466,7 +1502,7 @@ msgstr ""
 msgid "assistant) or change your first and last name (you"
 msgstr ""
 
-#: locale/model_attributes.rb:7
+#: locale/model_attributes.rb:8
 msgid "balance"
 msgstr ""
 
@@ -1474,7 +1510,7 @@ msgstr ""
 msgid "because you have a scheduled appointment this coming"
 msgstr ""
 
-#: app/views/appointments/_form.html.erb:8
+#: app/views/appointments/_form.html.erb:10
 msgid "before trying to write down appointments"
 msgstr ""
 
@@ -1482,11 +1518,11 @@ msgstr ""
 msgid "close your account here"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:50
+#: app/views/datebook/show.html.erb:51
 msgid "day"
 msgstr ""
 
-#: locale/model_attributes.rb:10
+#: locale/model_attributes.rb:11
 msgid "doctor"
 msgstr ""
 
@@ -1498,12 +1534,16 @@ msgstr ""
 msgid "female_doctor_prefix|Dr."
 msgstr ""
 
-#: app/views/patient_treatments/index.html.erb:14
+#: app/views/patient_treatments/index.html.erb:11
 msgid "for your treatments before using this"
 msgstr ""
 
 #: app/views/practice_mailer/welcome_email.text.erb:18
 msgid "from the links on the top of the page."
+msgstr ""
+
+#: app/views/password_resets/new.html.erb:10
+msgid "go back"
 msgstr ""
 
 #: lib/email_format_validator.rb:4
@@ -1518,36 +1558,39 @@ msgstr ""
 msgid "male_doctor_prefix|Dr."
 msgstr ""
 
-#: app/views/datebook/show.html.erb:48
+#: app/views/datebook/show.html.erb:49
 msgid "month"
 msgstr ""
 
-#: app/views/users/index.html.erb:10 app/views/users/show.html.erb:7
+#: app/views/users/index.html.erb:9 app/views/users/show.html.erb:8
 msgid "never"
 msgstr ""
 
-#: app/views/patients/index.html.erb:22 app/views/users/show.html.erb:10
+#: app/views/patients/index.html.erb:25 app/views/users/show.html.erb:11
 msgid "none"
 msgstr ""
 
-#: locale/model_attributes.rb:19
+#: locale/model_attributes.rb:20
 msgid "note"
 msgstr ""
 
-#: app/views/appointments/_form.html.erb:26
-#: app/views/doctors/_form.html.erb:36 app/views/doctors/show.html.erb:27
-#: app/views/patients/_form.html.erb:70 app/views/practices/cancel.html.erb:4
+#: app/views/appointments/_form.html.erb:29
+#: app/views/doctors/_form.html.erb:37 app/views/doctors/show.html.erb:31
+#: app/views/password_resets/edit.html.erb:6
+#: app/views/password_resets/new.html.erb:10
+#: app/views/patients/_form.html.erb:70 app/views/practices/cancel.html.erb:6
 #: app/views/practices/settings.html.erb:36
-#: app/views/treatments/_form.html.erb:14 app/views/treatments/show.html.erb:8
-#: app/views/users/_form.html.erb:27 app/views/users/show.html.erb:18
+#: app/views/treatments/_form.html.erb:15
+#: app/views/treatments/show.html.erb:11 app/views/users/_form.html.erb:28
+#: app/views/users/show.html.erb:22
 msgid "or"
 msgstr ""
 
-#: locale/model_attributes.rb:27
+#: locale/model_attributes.rb:28
 msgid "patient"
 msgstr ""
 
-#: locale/model_attributes.rb:22
+#: locale/model_attributes.rb:23
 msgid "patient treatment"
 msgstr ""
 
@@ -1555,7 +1598,7 @@ msgstr ""
 msgid "patients"
 msgstr ""
 
-#: locale/model_attributes.rb:45
+#: locale/model_attributes.rb:46
 msgid "practice"
 msgstr ""
 
@@ -1573,15 +1616,19 @@ msgstr ""
 msgid "setting up your practice in My practice"
 msgstr ""
 
+#: app/views/password_resets/edit.html.erb:6
+msgid "sign in"
+msgstr ""
+
 #: app/views/practice_mailer/welcome_email.text.erb:21
 msgid "this email or by clicking the Feedback tab."
 msgstr ""
 
-#: app/views/datebook/show.html.erb:47
+#: app/views/datebook/show.html.erb:48
 msgid "today"
 msgstr ""
 
-#: locale/model_attributes.rb:54
+#: locale/model_attributes.rb:55
 msgid "treatment"
 msgstr ""
 
@@ -1589,7 +1636,7 @@ msgstr ""
 msgid "treatments"
 msgstr ""
 
-#: locale/model_attributes.rb:57
+#: locale/model_attributes.rb:58
 msgid "user"
 msgstr ""
 
@@ -1597,12 +1644,12 @@ msgstr ""
 msgid "users"
 msgstr ""
 
-#: app/views/datebook/show.html.erb:49
+#: app/views/datebook/show.html.erb:50
 msgid "week"
 msgstr ""
 
 #: app/views/patient_mailer/appointment_soon_email.html.erb:7
 #: app/views/patient_mailer/appointment_soon_email.text.erb:8
-#: app/views/patients/appointments.html.erb:14
+#: app/views/patients/appointments.html.erb:15
 msgid "with"
 msgstr ""
