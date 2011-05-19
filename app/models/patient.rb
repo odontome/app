@@ -75,7 +75,12 @@ class Patient < ActiveRecord::Base
       # set the practice_id manually because validation (and callbacks apparently as well) are skipped
       patient.practice_id = UserSession.find.user.practice_id
       # skip validation when saving this patient
-      patient.save!(:validate => false)
+      begin
+        patient.save!(:validate => false)
+        rescue ActiveRecord::RecordNotSaved
+          patient.id = ""
+      end
+      
       # now use the recently created patient id
       patient_id_or_name = patient.id
     end
@@ -95,13 +100,11 @@ class Patient < ActiveRecord::Base
     
     return patients
   end
-  
+
   
   private
   
   def check_for_patients_limit
-    puts "#{Practice.find(self.practice.id).number_of_patients} | #{Patient.mine.count} <==========================="
-    
     unless Practice.find(self.practice.id).number_of_patients > Patient.mine.count
       if $beta_mode
         self.errors[:base] << _("We are very sorry, but you have reached the patients limit for this private beta. Please contact us if you need assistance.")
@@ -110,7 +113,6 @@ class Patient < ActiveRecord::Base
       end
       false
     end
-
   end
 
 end
