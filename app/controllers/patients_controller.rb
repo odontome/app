@@ -32,6 +32,13 @@ class PatientsController < ApplicationController
 
   def new
     @patient = Patient.new
+    unless current_user.practice.number_of_patients > Patient.mine.count
+      if $beta_mode
+        @patient.errors[:base] << _("We are very sorry, but you have reached the patients limit for this private beta. Please contact us if you need assistance.")
+      else
+        @patient..errors[:base] << _("We are very sorry, but you have reached your patients limit. Please upgrade your account in My Practice settings")
+      end
+    end
   end
 
   def edit

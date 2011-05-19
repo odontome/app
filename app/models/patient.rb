@@ -37,6 +37,7 @@ class Patient < ActiveRecord::Base
   
   # callbacks
   before_validation :set_practice_id, :on => :create
+  before_create :check_for_patients_limit
     
   def fullname
     [firstname, lastname].join(' ')
@@ -93,6 +94,23 @@ class Patient < ActiveRecord::Base
     end
     
     return patients
+  end
+  
+  
+  private
+  
+  def check_for_patients_limit
+    puts "#{Practice.find(self.practice.id).number_of_patients} | #{Patient.mine.count} <==========================="
+    
+    unless Practice.find(self.practice.id).number_of_patients > Patient.mine.count
+      if $beta_mode
+        self.errors[:base] << _("We are very sorry, but you have reached the patients limit for this private beta. Please contact us if you need assistance.")
+      else
+        self.errors[:base] << _("We are very sorry, but you have reached your patients limit. Please upgrade your account in My Practice settings")
+      end
+      false
+    end
+
   end
 
 end
