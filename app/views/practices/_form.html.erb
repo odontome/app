@@ -34,7 +34,8 @@
 	
 	<div id="toolbar">
 		<%= practice_form.submit(_("Register"), :class => "g-button action", :disable_with => _("Please wait...")) %>
-  		<%=_("Already have an account?")%> <%= link_to _("Sign in"), signin_url %>
+		<%=_("Already have an account?")%> <%= link_to _("Sign in"), signin_url %>
+		<div id="register_agreenment"><%=_('You agree to our')%> <%= link_to _('Terms of Service'), "/terms", :target => "_blank" %> <%=_('and to our')%> <%= link_to _('Privacy Policy'), "/privacy", :target => "_blank" %> <%=_('when you register')%></div>
 	</div>
 
 <% end %>

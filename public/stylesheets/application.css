@@ -95,9 +95,15 @@ p {
 	margin-bottom: 15px;
 }
 
+#simple_body #content p{
+	margin: 0 0 20px;
+}
+
 a {
 	color: rgb(48, 168, 217);
 }
+
+.underline {text-decoration:underline;}
 
 /* @group Header */
 
@@ -226,6 +232,11 @@ header {
 	clear: both;
 	margin-top: 30px;
 }
+
+#simple_body #main_text {
+	padding: 20px;
+}
+
 /* @end */
 
 /* @group Footer */

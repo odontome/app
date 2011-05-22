@@ -1,4 +1,7 @@
 class WelcomeController < ApplicationController
+  
+  layout 'simple'
+
   def index
     flash.keep 
     if current_user
@@ -16,6 +19,12 @@ class WelcomeController < ApplicationController
   def set_session_time_zone
     session[:time_zone_name] = params[:detected_timezone]
     render :nothing => true
+  end
+
+  def privacy
+  end
+
+  def terms
   end
 
 end

@@ -30,6 +30,8 @@ Odontome::Application.routes.draw do
   match "/paypal/cancel" => "paypal#cancel"
   match "/paypal/success" => "paypal#success"
   match "/set_session_time_zone"  => "welcome#set_session_time_zone"
+  match "/privacy"  => "welcome#privacy"
+  match "/terms"  => "welcome#terms"
 
   root :to => "welcome#index"
 
