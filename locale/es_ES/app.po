@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-05-19 13:51+0200\n"
+"POT-Creation-Date: 2011-05-22 20:20+0200\n"
 "PO-Revision-Date: 2011-03-01 18:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -734,6 +734,7 @@ msgid "October"
 msgstr "Octubre"
 
 #: app/views/layouts/application.html.erb:4
+#: app/views/layouts/simple.html.erb:4
 #: app/views/layouts/user_sessions.html.erb:4
 msgid "Odonto.me, beautiful dental practice management"
 msgstr "Odonto.me, gestión preciosa de clínicas dentales"
@@ -1003,8 +1004,8 @@ msgstr "Plan Premium"
 msgid "Price"
 msgstr "Precio"
 
-#: app/views/shared/_footer.html.erb:1
-msgid "Privacy policy"
+#: app/views/practices/_form.html.erb:38 app/views/shared/_footer.html.erb:1
+msgid "Privacy Policy"
 msgstr "Política de Privacidad"
 
 #: app/models/doctor.rb:29
@@ -1146,9 +1147,9 @@ msgstr "Suspendido"
 msgid "Telephone"
 msgstr "Teléfono"
 
-#: app/views/shared/_footer.html.erb:1
-msgid "Terms of service"
-msgstr "Políticas de uso"
+#: app/views/practices/_form.html.erb:38 app/views/shared/_footer.html.erb:1
+msgid "Terms of Service"
+msgstr "Condiciones del Servicio"
 
 #: app/views/practice_mailer/welcome_email.html.erb:25
 msgid "Thanks for signing up"
@@ -1351,18 +1352,17 @@ msgstr ""
 "antes Cancelar la suscripción a tu plan actual a través de las preferencias "
 "o directamente en Paypal."
 
-#: app/controllers/patients_controller.rb:37 app/models/patient.rb:107
+#: app/controllers/patients_controller.rb:37 app/models/patient.rb:110
 msgid ""
 "We are very sorry, but you have reached the patients limit for this private "
 "beta. Please contact us if you need assistance."
 msgstr ""
-"Lo sentimos mucho, pero has llegado al límite de pacientes para esta beta pública. "
-" Por favor contacta con nosotros si necesitas cualquier asistencia."
-
+"Lo sentimos mucho, pero has llegado al límite de pacientes para esta beta "
+"pública.  Por favor contacta con nosotros si necesitas cualquier asistencia."
 "Tu cuenta ha sido cancelada y ya no es posible accederla. Por favor "
 "contáctanos si necesitas ayuda."
 
-#: app/controllers/patients_controller.rb:39 app/models/patient.rb:109
+#: app/controllers/patients_controller.rb:39 app/models/patient.rb:112
 msgid ""
 "We are very sorry, but you have reached your patients limit. Please upgrade "
 "your account in My Practice settings"
@@ -1401,6 +1401,10 @@ msgstr "Miércoles"
 #: app/mailers/practice_mailer.rb:8
 msgid "Welcome to Odonto.me!"
 msgstr "¡Bienvenido a Odonto.me!"
+
+#: app/views/practices/_form.html.erb:38
+msgid "You agree to our"
+msgstr "Aceptas nuestras"
 
 #: app/views/practice_mailer/welcome_email.text.erb:7
 msgid "You can start by customizing your settings like"
@@ -1479,7 +1483,9 @@ msgstr ""
 #: app/controllers/password_resets_controller.rb:29
 msgid ""
 "Your password was successfully changed. You can now use it to login here."
-msgstr "Tu contraseña ha sido cambiada con éxito. Puedes ahora usarla aquí para acceder."
+msgstr ""
+"Tu contraseña ha sido cambiada con éxito. Puedes ahora usarla aquí para "
+"acceder."
 
 #: app/controllers/practices_controller.rb:36
 msgid ""
@@ -1550,6 +1556,10 @@ msgid ""
 msgstr ""
 "y entrar con tu dirección de email y contraseña para comenzar a personalizar "
 "tu clínica en"
+
+#: app/views/practices/_form.html.erb:38
+msgid "and to our"
+msgstr "y nuestra"
 
 #: locale/model_attributes.rb:2
 msgid "appointment"
@@ -1716,11 +1726,12 @@ msgstr "usuarios"
 msgid "week"
 msgstr "semana"
 
+#: app/views/practices/_form.html.erb:38
+msgid "when you register"
+msgstr ""
+
 #: app/views/patient_mailer/appointment_soon_email.html.erb:7
 #: app/views/patient_mailer/appointment_soon_email.text.erb:8
 #: app/views/patients/appointments.html.erb:15
 msgid "with"
 msgstr "con"
-
-#~ msgid "Inactive"
-#~ msgstr "Inactivo"

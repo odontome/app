@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-05-19 13:51+0200\n"
+"POT-Creation-Date: 2011-05-22 20:20+0200\n"
 "PO-Revision-Date: 2011-03-01 18:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -720,6 +720,7 @@ msgid "October"
 msgstr ""
 
 #: app/views/layouts/application.html.erb:4
+#: app/views/layouts/simple.html.erb:4
 #: app/views/layouts/user_sessions.html.erb:4
 msgid "Odonto.me, beautiful dental practice management"
 msgstr ""
@@ -982,8 +983,8 @@ msgstr ""
 msgid "Price"
 msgstr ""
 
-#: app/views/shared/_footer.html.erb:1
-msgid "Privacy policy"
+#: app/views/practices/_form.html.erb:38 app/views/shared/_footer.html.erb:1
+msgid "Privacy Policy"
 msgstr ""
 
 #: app/models/doctor.rb:29
@@ -1125,8 +1126,8 @@ msgstr ""
 msgid "Telephone"
 msgstr ""
 
-#: app/views/shared/_footer.html.erb:1
-msgid "Terms of service"
+#: app/views/practices/_form.html.erb:38 app/views/shared/_footer.html.erb:1
+msgid "Terms of Service"
 msgstr ""
 
 #: app/views/practice_mailer/welcome_email.html.erb:25
@@ -1321,13 +1322,13 @@ msgid ""
 "Paypal."
 msgstr ""
 
-#: app/controllers/patients_controller.rb:37 app/models/patient.rb:107
+#: app/controllers/patients_controller.rb:37 app/models/patient.rb:110
 msgid ""
 "We are very sorry, but you have reached the patients limit for this private "
 "beta. Please contact us if you need assistance."
 msgstr ""
 
-#: app/controllers/patients_controller.rb:39 app/models/patient.rb:109
+#: app/controllers/patients_controller.rb:39 app/models/patient.rb:112
 msgid ""
 "We are very sorry, but you have reached your patients limit. Please upgrade "
 "your account in My Practice settings"
@@ -1359,6 +1360,10 @@ msgstr ""
 
 #: app/mailers/practice_mailer.rb:8
 msgid "Welcome to Odonto.me!"
+msgstr ""
+
+#: app/views/practices/_form.html.erb:38
+msgid "You agree to our"
 msgstr ""
 
 #: app/views/practice_mailer/welcome_email.text.erb:7
@@ -1488,6 +1493,10 @@ msgstr ""
 msgid ""
 "and login with your email address and password to start setting up your "
 "practice in"
+msgstr ""
+
+#: app/views/practices/_form.html.erb:38
+msgid "and to our"
 msgstr ""
 
 #: locale/model_attributes.rb:2
@@ -1646,6 +1655,10 @@ msgstr ""
 
 #: app/views/datebook/show.html.erb:50
 msgid "week"
+msgstr ""
+
+#: app/views/practices/_form.html.erb:38
+msgid "when you register"
 msgstr ""
 
 #: app/views/patient_mailer/appointment_soon_email.html.erb:7
