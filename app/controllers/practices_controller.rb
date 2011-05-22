@@ -33,7 +33,8 @@ class PracticesController < ApplicationController
     respond_to do |format|
       if @practice.save
         PracticeMailer.welcome_email(@practice).deliver
-        format.html { redirect_to(practice_path, :notice => _('Your practice is now active! You can start to set everything up in here.')) }
+        flash[:notice] = _('Your practice is now active! You can start to set everything up in here.')
+        format.html { redirect_to practice_path }
       else
         format.html { render :action => "new", :as => :signup, :layout => "user_sessions" }
       end
