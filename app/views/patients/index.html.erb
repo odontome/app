@@ -1,4 +1,4 @@
-<h1><%=_('Patients')%> (<%=current_user.practice.number_of_patients-Patient.mine.count %> <%=_('left')%>)<%= link_to "+", new_patient_url, :class => "g-button dark" %></h1>
+<h1><%=_('Patients')%> <%= link_to "+", new_patient_url, :class => "g-button dark" %></h1>
 
 <% if @patients.empty? %>
 	<div class="info">
