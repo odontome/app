@@ -1624,7 +1624,7 @@ msgstr "no tiene un formato adecuado"
 #: app/views/patients/index.html.erb:1
 #: app/views/practices/settings.html.erb:55
 msgid "left"
-msgstr "más"
+msgstr "restantes"
 
 #: app/models/doctor.rb:36
 msgid "male_doctor_prefix|Dr."
