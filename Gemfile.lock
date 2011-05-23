@@ -13,7 +13,7 @@ GIT
 
 GIT
   remote: git://github.com/ricardochimal/taps.git
-  revision: f5e01bc5347915b34e8745a5bdda87b237c93427
+  revision: f5e01bc
   specs:
     taps (0.3.23)
       rack (>= 1.0.1)
