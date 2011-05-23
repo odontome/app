@@ -1,8 +1,8 @@
 free: 
     id: 1
     name: _('Free Plan')
-    description: _('Our free plan in which you can use everything in Odonto.me for up to 500 patients')
-    number_of_patients: 500
+    description: _('Our free plan in which you can use everything in Odonto.me for up to 200 patients')
+    number_of_patients: 200
 
 standard:
     id: 2
