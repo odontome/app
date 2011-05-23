@@ -23,13 +23,14 @@ class Practice < ActiveRecord::Base
 
   #callbacks
   before_validation :set_first_user_data, :on => :create
+  before_create :set_initial_plan_id_and_number_of_patients
   after_create :populate_default_treatments
 
   def set_as_cancelled
     self.status = "cancelled"
     self.cancelled_at = Time.now
   end
-  
+
   def set_plan_id_and_number_of_patients=(plan_id)
     PLANS.each do |plan, values|
       if values['id'].to_i == plan_id.to_i
@@ -51,6 +52,10 @@ class Practice < ActiveRecord::Base
 
   private
   
+  def set_initial_plan_id_and_number_of_patients
+    self.number_of_patients = PLANS['free']['number_of_patients'].to_i
+  end
+
   def set_first_user_data
     self.users.first.firstname = 'Administrator'
     self.users.first.lastname = 'User'
