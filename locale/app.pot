@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-05-22 20:20+0200\n"
+"POT-Creation-Date: 2011-05-23 14:33+0200\n"
 "PO-Revision-Date: 2011-03-01 18:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -743,7 +743,7 @@ msgstr ""
 
 #: config/plans.yml:4
 msgid ""
-"Our free plan in which you can use everything in Odonto.me for up to 500 "
+"Our free plan in which you can use everything in Odonto.me for up to 200 "
 "patients"
 msgstr ""
 
@@ -1559,6 +1559,7 @@ msgstr ""
 msgid "is not formatted properly"
 msgstr ""
 
+#: app/views/patients/index.html.erb:1
 #: app/views/practices/settings.html.erb:55
 msgid "left"
 msgstr ""
@@ -1615,7 +1616,7 @@ msgstr ""
 msgid "preferred language and name in My practice settings"
 msgstr ""
 
-#: app/models/practice.rb:69
+#: app/models/practice.rb:74
 msgid ""
 "seems to be invalid or its maximum allowed testers has been reached. Please "
 "check it or go to http://odonto.me to request access to this private beta."
