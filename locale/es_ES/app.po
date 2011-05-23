@@ -1149,7 +1149,7 @@ msgstr "Teléfono"
 
 #: app/views/practices/_form.html.erb:38 app/views/shared/_footer.html.erb:1
 msgid "Terms of Service"
-msgstr "Condiciones del Servicio"
+msgstr "Acuerdo de Uso"
 
 #: app/views/practice_mailer/welcome_email.html.erb:25
 msgid "Thanks for signing up"
@@ -1404,7 +1404,7 @@ msgstr "¡Bienvenido a Odonto.me!"
 
 #: app/views/practices/_form.html.erb:38
 msgid "You agree to our"
-msgstr "Aceptas nuestras"
+msgstr "Aceptas nuestro"
 
 #: app/views/practice_mailer/welcome_email.text.erb:7
 msgid "You can start by customizing your settings like"
@@ -1729,7 +1729,7 @@ msgstr "semana"
 
 #: app/views/practices/_form.html.erb:38
 msgid "when you register"
-msgstr ""
+msgstr "al registrarte"
 
 #: app/views/patient_mailer/appointment_soon_email.html.erb:7
 #: app/views/patient_mailer/appointment_soon_email.text.erb:8
