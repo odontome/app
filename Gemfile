@@ -10,4 +10,3 @@ gem 'gettext_i18n_rails'
 gem 'paginate_alphabetically', :git => "git://github.com/edendevelopment/paginate_alphabetically.git"
 gem 'rack-ssl-enforcer'
 gem 'taps', :git => "git://github.com/ricardochimal/taps.git"
-gem 'exceptional'

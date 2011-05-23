@@ -56,6 +56,8 @@ GEM
     builder (2.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    exceptional (2.0.32)
+      rack
     fast_gettext (0.5.11)
     gettext (2.1.0)
       locale (>= 2.0.5)
@@ -111,6 +113,7 @@ PLATFORMS
 
 DEPENDENCIES
   authlogic!
+  exceptional
   gettext (>= 1.9.3)
   gettext_i18n_rails
   jquery-rails (>= 0.2.6)
