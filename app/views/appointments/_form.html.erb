@@ -7,7 +7,7 @@
 	
 	<p>
 		<% if @doctors.empty? %>
-			<%=_("Please")%> <%=link_to 'create a doctor', doctors_path%> <%=_("before trying to write down appointments")%>
+			<%=_("Please")%> <%=link_to _('create a doctor'), doctors_path%> <%=_("before trying to write down appointments")%>
 		<% else %>
 			<%= f.label _("Doctor") %>
 			<%= f.select(:doctor_id, options_from_collection_for_select(@doctors, "id", "fullname", :selected => @appointment.doctor_id), :title => _("Select a doctor")) %>
