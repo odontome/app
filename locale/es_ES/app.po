@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-05-23 14:33+0200\n"
+"POT-Creation-Date: 2011-05-24 14:41+0200\n"
 "PO-Revision-Date: 2011-03-01 18:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1418,6 +1418,14 @@ msgstr ""
 "Puedes comenzar personalizando cosas como tu idioma preferido y nombre en "
 "Preferencias para mi clínica"
 
+#: app/views/doctors/index.html.erb:4
+msgid ""
+"You currently don't have any doctors in your practice. Remember that you "
+"need at least one doctor in order to create appointments."
+msgstr ""
+"Aún no tienes doctores registrados en tu clínica. Recuerda que debes tener "
+"al menos uno para poder crear citas."
+
 #: app/views/patient_mailer/appointment_soon_email.html.erb:4
 #: app/views/patient_mailer/appointment_soon_email.text.erb:1
 msgid "You have a dental appointment soon!"
@@ -1486,6 +1494,20 @@ msgid ""
 msgstr ""
 "Tu contraseña ha sido cambiada con éxito. Puedes ahora usarla aquí para "
 "acceder."
+
+#: app/views/patients/index.html.erb:5
+msgid ""
+"Your practice doesn't have any patients at the moment, let's change that."
+msgstr ""
+"Tu clínica no tiene pacientes aún, solucionemos eso."
+
+#: app/views/treatments/index.html.erb:4
+msgid ""
+"Your practice doesn't have any treatments, remember that you need at least "
+"one treatment in order to have a treatment history for your patients."
+msgstr ""
+"Tu clínica no tiene tratamientos, recuerda que debes tener al menos uno "
+"para porder tener una historia de tratamientos de tus pacientes."
 
 #: app/controllers/practices_controller.rb:36
 msgid ""

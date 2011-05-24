@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-05-23 14:33+0200\n"
+"POT-Creation-Date: 2011-05-24 14:41+0200\n"
 "PO-Revision-Date: 2011-03-01 18:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1376,6 +1376,12 @@ msgid ""
 "in My practice settings"
 msgstr ""
 
+#: app/views/doctors/index.html.erb:4
+msgid ""
+"You currently don't have any doctors in your practice. Remember that you "
+"need at least one doctor in order to create appointments."
+msgstr ""
+
 #: app/views/patient_mailer/appointment_soon_email.html.erb:4
 #: app/views/patient_mailer/appointment_soon_email.text.erb:1
 msgid "You have a dental appointment soon!"
@@ -1429,6 +1435,17 @@ msgstr ""
 #: app/controllers/password_resets_controller.rb:29
 msgid ""
 "Your password was successfully changed. You can now use it to login here."
+msgstr ""
+
+#: app/views/patients/index.html.erb:5
+msgid ""
+"Your practice doesn't have any patients at the moment, let's change that."
+msgstr ""
+
+#: app/views/treatments/index.html.erb:4
+msgid ""
+"Your practice doesn't have any treatments, remember that you need at least "
+"one treatment in order to have a treatment history for your patients."
 msgstr ""
 
 #: app/controllers/practices_controller.rb:36
