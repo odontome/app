@@ -66,12 +66,12 @@ class Patient < ActiveRecord::Base
   def self.find_or_create_from(patient_id_or_name)
     # remove any possible commas from this value
     patient_id_or_name.gsub!(",", "")
-    
+        
     # Check if we are dealing with an integer or a string
-    if (patient_id_or_name.to_i == 0)
+    if (patient_id_or_name.nil? == false && patient_id_or_name.to_i == 0)
       # instantiate a new patient
       patient = new()
-      patient.fullname = patient_id_or_name || _('Enter the patient name or Unique Identifier')
+      patient.fullname = patient_id_or_name
       # set the practice_id manually because validation (and callbacks apparently as well) are skipped
       patient.practice_id = UserSession.find.user.practice_id
       # skip validation when saving this patient
