@@ -68,7 +68,7 @@ class Patient < ActiveRecord::Base
     patient_id_or_name.gsub!(",", "")
         
     # Check if we are dealing with an integer or a string
-    if (patient_id_or_name.nil? == false && patient_id_or_name.to_i == 0)
+    if (patient_id_or_name.to_i == 0)
       # instantiate a new patient
       patient = new()
       patient.fullname = patient_id_or_name
