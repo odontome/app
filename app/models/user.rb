@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
   end
 
   def check_if_is_editeable_by_non_admins #normal users can't edit admins
-    if self.roles.include?("admin") && !UserSession.find.user.roles.include?("admin")
+    if UserSession.find && self.roles.include?("admin") && !UserSession.find.user.roles.include?("admin")
       self.errors[:base] << _("Sorry, you can't update an admin user")
       false 
     end
