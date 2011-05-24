@@ -71,7 +71,7 @@ class Patient < ActiveRecord::Base
     if (patient_id_or_name.to_i == 0)
       # instantiate a new patient
       patient = new()
-      patient.fullname = patient_id_or_name
+      patient.fullname = patient_id_or_name || _('Enter the patient name or Unique Identifier')
       # set the practice_id manually because validation (and callbacks apparently as well) are skipped
       patient.practice_id = UserSession.find.user.practice_id
       # skip validation when saving this patient
