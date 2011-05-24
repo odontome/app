@@ -56,6 +56,13 @@ module Odontome
        letter ||= first_letter
        where(["LOWER(#{@attribute.to_s}) LIKE ?", "#{letter.downcase}%"]).order(@attribute)
      end
+     
+     # overwrite for the alphabetical pagination plugin
+     def pagination_letters
+       return ALL_LETTERS if @paginate_alphabetically__show_all_letters
+       mine.sort_by{|obj| obj.send(@attribute).upcase}.group_by {|group| group.send(@attribute)[0].chr.upcase}.keys
+     end
+     
   end
 
 end

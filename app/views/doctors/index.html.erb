@@ -1,7 +1,7 @@
 <h1><%=_('Doctors')%> <%= link_to "+", new_doctor_url, :class => "g-button dark" %></h1>
 
 <% if @doctors.empty? %>
-	<div class="info"><%=("You currently don't have any doctors in your practice. Remember that you need at least one doctor in order to create appointments.")%></div>
+	<div class="info"><%=_("You currently don't have any doctors in your practice. Remember that you need at least one doctor in order to create appointments.")%></div>
 <% end %>
 
 <ul id="list-items">
