@@ -2,3 +2,4 @@ Bleeding edge:
 =============
 - Added a color picker for doctors
 - Doctor listings are now ordered by firstname
+- The autosuggest's suggestions no longer overlap the content
