@@ -39,7 +39,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to(@user, :notice => _('Your practice\'s user was successfully updated.')) }
+        format.html { redirect_to(users_url, :notice => _('Your practice\'s user was successfully updated.')) }
       else
         format.html { render :action => "edit" }
       end

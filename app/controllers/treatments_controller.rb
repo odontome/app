@@ -34,7 +34,7 @@ class TreatmentsController < ApplicationController
 
     respond_to do |format|
       if @treatment.update_attributes(params[:treatment])
-        format.html { redirect_to(@treatment, :notice => _('Your practice\'s treatment was successfully updated.')) }
+        format.html { redirect_to(treatments_url, :notice => _('Your practice\'s treatment was successfully updated.')) }
       else
         format.html { render :action => "edit" }
       end
