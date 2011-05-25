@@ -23,15 +23,6 @@ class Doctor < ActiveRecord::Base
   before_validation :set_practice_id, :on => :create
   before_destroy :check_if_is_deleteable
   
-  # constants
-  COLORS = [[_('Blue'), "#3366CC"],    
-            [_('Orange'), "#FF8600" ],
-            [_('Purple'), "#622EB4"],
-            [_('Red'), "#FD0000"],
-            [_('Black'), "#000000"],
-            [_('Green'), "#00B600"],
-            [_('Pink'), "#FF66CC"]]
-  
   def fullname
     [(self.gender === "female") ? s_('female_doctor_prefix|Dr.') : s_('male_doctor_prefix|Dr.'), firstname, lastname].join(' ')
   end
