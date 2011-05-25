@@ -8,6 +8,6 @@
 	<% if !@all_treatments.empty? %>
 		<%= render :partial => "/patient_treatments/new", :locals => {:treatments => @all_treatments, :doctors => @doctors} %>
 	<% else %>
-		<%=_("Please")%> <%=link_to 'fill the prices', treatments_path%> <%=_("for your treatments before using this")%>
+		<%=_("Please")%> <%=link_to _('fill the prices'), treatments_path%> <%=_("for your treatments before using this")%>
 	<% end %>
 </div>

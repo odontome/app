@@ -28,7 +28,7 @@
 			<% end %>
 			
 			<% if user_is_admin?(current_user) %>
-				<div class="list-item-button"><%= link_to _("Delete"), patient, :method => :delete, :confirm => "Are you sure? All data associated with this patient will be lost forever. THERE IS NO GOING BACK!", :class => "g-button red"%></div>
+				<div class="list-item-button"><%= link_to _("Delete"), patient, :method => :delete, :confirm => _("Are you sure? All data associated with this patient will be lost forever."), :class => "g-button red"%></div>
 			<% end %>
 			<div class="list-item-button"><%= link_to _("Edit"), edit_patient_path(patient), :class => "g-button light"%></div>
 		</li>
