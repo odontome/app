@@ -6,6 +6,7 @@ class Doctor < ActiveRecord::Base
 
   scope :mine, lambda {
     where("doctors.practice_id = ? ", UserSession.find.user.practice_id)
+    .order("doctors.firstname")
   } 
   
   scope :valid, lambda {
