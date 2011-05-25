@@ -789,4 +789,8 @@ sub {
 #calendar {
 	padding: 10px;
 }
+.simpleColorDisplay {
+	float:left;
+	margin-right: 5px;
+}
 /* @end */

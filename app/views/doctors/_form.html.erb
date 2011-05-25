@@ -24,7 +24,7 @@
   </p>
   <p>
 	<%= f.label _("Calendar color") %>
-	<%= f.select(:color, Doctor::COLORS, :title => _("Calendar color"), :selected => @doctor.color) %>
+	<%= f.text_field :color, :placeholder => _("Color"), :title => _("Calendar color"), :class => "color_picker" %>    
   </p>
 
 	<div id="toolbar">
@@ -37,3 +37,14 @@
 		<%=_("or")%> <%= link_to _("Cancel"), doctors_path %>
 	</div>
 <% end %>
+
+<script  type="text/javascript">
+	$(document).ready(function(){
+		$('.color_picker').simpleColor({
+			buttonClass: "g-button",
+			buttonValue: "<%=_('Choose')%>",
+			buttonCancelValue: "<%=_('Cancel')%>"
+			});
+	});
+</script>
+
