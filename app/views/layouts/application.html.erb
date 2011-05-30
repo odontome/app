@@ -11,7 +11,7 @@
 <body>
 	<div id="container">
 		<header>
-			<%= link_to (image_tag "logo.png", :title => _("Home"), :class => "logo", :height => 20), root_path %>
+			<%= link_to (image_tag "logofull.png", :title => _("Home"), :class => "logo"), root_path %>
 			<%= render "shared/navigation" %>
 		</header>
 		
@@ -21,9 +21,9 @@
 			<%= yield %>
 		</div>
 		
-		<footer>
+		<!-- <footer>
 			<%= render "shared/footer"%>
-		</footer>
+		</footer> -->
 	</div>
 </body>
 </html>
