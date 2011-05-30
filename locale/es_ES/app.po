@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-05-25 16:36+0200\n"
+"POT-Creation-Date: 2011-05-30 00:32+0200\n"
 "PO-Revision-Date: 2011-03-01 18:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -154,18 +154,18 @@ msgstr "Empieza"
 msgid "Appointment|Status"
 msgstr "Estado"
 
-#: app/views/datebook/show.html.erb:40
+#: app/views/datebook/show.html.erb:41
 msgid "Apr"
 msgstr "Abr"
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "April"
 msgstr "Abril"
 
 #: app/helpers/doctors_helper.rb:4 app/helpers/doctors_helper.rb:6
 #: app/views/appointments/_form.html.erb:25
 #: app/views/shared/_navigation.html.erb:13
-#: app/views/treatments/index.html.erb:25
+#: app/views/treatments/index.html.erb:29
 #: app/views/treatments/show.html.erb:10 app/views/users/index.html.erb:12
 #: app/views/users/show.html.erb:20
 msgid "Are you sure?"
@@ -179,11 +179,16 @@ msgstr ""
 "¿Estás seguro? Una devolución será aplicada al balance del paciente si éste "
 "tratamiento ha sido completado"
 
-#: app/views/datebook/show.html.erb:40
+#: app/views/patients/index.html.erb:31
+msgid ""
+"Are you sure? All data associated with this patient will be lost forever."
+msgstr ""
+
+#: app/views/datebook/show.html.erb:41
 msgid "Aug"
 msgstr "Ago"
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "August"
 msgstr "Agosto"
 
@@ -199,19 +204,11 @@ msgstr "Monto"
 msgid "Balance|Notes"
 msgstr "Notas"
 
-#: app/models/doctor.rb:31
-msgid "Black"
-msgstr "Negro"
-
-#: app/models/doctor.rb:27
-msgid "Blue"
-msgstr "Azul"
-
 #: app/views/doctors/_form.html.erb:26 app/views/doctors/_form.html.erb:27
 msgid "Calendar color"
 msgstr "Color del calendario"
 
-#: app/models/doctor.rb:47
+#: app/models/doctor.rb:49
 msgid ""
 "Can't delete a doctor with registered appointments or patient's treatments, "
 "please use 'Suspend' instead."
@@ -224,8 +221,8 @@ msgid "Can't delete admin user"
 msgstr "No es posible borrar al administrador"
 
 #: app/views/appointments/_form.html.erb:29
-#: app/views/doctors/_form.html.erb:37 app/views/patients/_form.html.erb:70
-#: app/views/practices/cancel.html.erb:6
+#: app/views/doctors/_form.html.erb:37 app/views/doctors/_form.html.erb:46
+#: app/views/patients/_form.html.erb:70 app/views/practices/cancel.html.erb:6
 #: app/views/practices/settings.html.erb:36
 #: app/views/treatments/_form.html.erb:15 app/views/users/_form.html.erb:28
 msgid "Cancel"
@@ -252,6 +249,10 @@ msgstr "Devolución por"
 msgid "Chart"
 msgstr "Historia"
 
+#: app/views/doctors/_form.html.erb:45
+msgid "Choose"
+msgstr ""
+
 #: app/views/patients/_form.html.erb:56 app/views/patients/show.html.erb:39
 msgid "Cigarettes per day"
 msgstr "Cigarrillos por día"
@@ -259,6 +260,10 @@ msgstr "Cigarrillos por día"
 #: app/views/practices/cancel.html.erb:6
 msgid "Close account"
 msgstr "Cerrar cuenta"
+
+#: app/views/doctors/_form.html.erb:27
+msgid "Color"
+msgstr ""
 
 #: app/views/patients/index.html.erb:27
 msgid "Complete this patient information to continue"
@@ -288,7 +293,7 @@ msgstr "Crear nuevo doctor"
 msgid "Create new patient"
 msgstr "Crear nuevo paciente"
 
-#: app/views/treatments/index.html.erb:32 app/views/treatments/new.html.erb:1
+#: app/views/treatments/index.html.erb:36 app/views/treatments/new.html.erb:1
 msgid "Create new treatment"
 msgstr "Crear nuevo tratamiento"
 
@@ -316,17 +321,17 @@ msgstr "Fecha de nacimiento"
 msgid "Datebook"
 msgstr "Agenda"
 
-#: app/views/datebook/show.html.erb:40
+#: app/views/datebook/show.html.erb:41
 msgid "Dec"
 msgstr "Dic"
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "December"
 msgstr "Diciembre"
 
 #: app/helpers/doctors_helper.rb:4
 #: app/views/patient_treatments/_show.html.erb:28
-#: app/views/patients/index.html.erb:31 app/views/treatments/index.html.erb:25
+#: app/views/patients/index.html.erb:31 app/views/treatments/index.html.erb:29
 #: app/views/treatments/show.html.erb:10 app/views/users/index.html.erb:12
 #: app/views/users/show.html.erb:20
 msgid "Delete"
@@ -394,7 +399,7 @@ msgstr "Uso de drogas"
 
 #: app/views/doctors/index.html.erb:22 app/views/doctors/show.html.erb:27
 #: app/views/patients/index.html.erb:33 app/views/patients/show.html.erb:12
-#: app/views/treatments/index.html.erb:26 app/views/treatments/show.html.erb:9
+#: app/views/treatments/index.html.erb:30 app/views/treatments/show.html.erb:9
 #: app/views/users/index.html.erb:15 app/views/users/show.html.erb:17
 msgid "Edit"
 msgstr "Editar"
@@ -458,11 +463,11 @@ msgstr "Enfermedades en la familia incluyendo fallecimientos y alergias"
 msgid "Family history"
 msgstr "Historia Médica"
 
-#: app/views/datebook/show.html.erb:40
+#: app/views/datebook/show.html.erb:41
 msgid "Feb"
 msgstr "Fec"
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "February"
 msgstr "Febrero"
 
@@ -489,11 +494,11 @@ msgstr "¿Haz olvidado tu contraseña?"
 msgid "Free Plan"
 msgstr "Plan Gratuito"
 
-#: app/views/datebook/show.html.erb:42
+#: app/views/datebook/show.html.erb:43
 msgid "Fri"
 msgstr "Vie"
 
-#: app/views/datebook/show.html.erb:41
+#: app/views/datebook/show.html.erb:42
 msgid "Friday"
 msgstr "Viernes"
 
@@ -502,9 +507,9 @@ msgstr "Viernes"
 msgid "Gender"
 msgstr "Sexo"
 
-#: app/models/doctor.rb:32
-msgid "Green"
-msgstr "Verde"
+#: app/views/datebook/show.html.erb:34
+msgid "H(:mm)"
+msgstr ""
 
 #: app/views/notifier_mailer/deliver_password_reset_instructions.html.erb:3
 #: app/views/notifier_mailer/deliver_password_reset_instructions.text.erb:1
@@ -517,6 +522,14 @@ msgstr "Hola"
 #: app/views/practice_mailer/welcome_email.text.erb:1
 msgid "Hello and Welcome to Odonto.me!"
 msgstr "Hola y ¡Bienvenido a Odonto.me!"
+
+#: app/controllers/treatments_controller.rb:58
+msgid ""
+"Here you have your new list of treatments. Change or delete them and don't "
+"forget to enter your prices!"
+msgstr ""
+"Aquí está tu nueva lista de tratamientos. Puedes cambiarlos o borrarlos ¡y "
+"recuerda introducir tus precios!"
 
 #: app/views/layouts/application.html.erb:14
 msgid "Home"
@@ -582,27 +595,27 @@ msgstr "Parece que has olvidado tu contraseña."
 msgid "It starts at:"
 msgstr "Comienza a las:"
 
-#: app/views/datebook/show.html.erb:40
+#: app/views/datebook/show.html.erb:41
 msgid "Jan"
 msgstr "Ene"
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "January"
 msgstr "Enero"
 
-#: app/views/datebook/show.html.erb:40
+#: app/views/datebook/show.html.erb:41
 msgid "Jul"
 msgstr "Jul"
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "July"
 msgstr "Julio"
 
-#: app/views/datebook/show.html.erb:40
+#: app/views/datebook/show.html.erb:41
 msgid "Jun"
 msgstr "Jun"
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "June"
 msgstr "Junio"
 
@@ -632,15 +645,15 @@ msgstr "Salir"
 msgid "Male"
 msgstr "Hombre"
 
-#: app/views/datebook/show.html.erb:40
+#: app/views/datebook/show.html.erb:41
 msgid "Mar"
 msgstr "Mar"
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "March"
 msgstr "Marzo"
 
-#: app/views/datebook/show.html.erb:39 app/views/datebook/show.html.erb:40
+#: app/views/datebook/show.html.erb:40 app/views/datebook/show.html.erb:41
 msgid "May"
 msgstr "Mayo"
 
@@ -652,11 +665,11 @@ msgstr "Historia Médica"
 msgid "Mobile"
 msgstr "Móvil"
 
-#: app/views/datebook/show.html.erb:42
+#: app/views/datebook/show.html.erb:43
 msgid "Mon"
 msgstr "Lun"
 
-#: app/views/datebook/show.html.erb:41
+#: app/views/datebook/show.html.erb:42
 msgid "Monday"
 msgstr "Lunes"
 
@@ -713,11 +726,11 @@ msgstr ""
 msgid "Note|Notes"
 msgstr "Notas"
 
-#: app/views/datebook/show.html.erb:40
+#: app/views/datebook/show.html.erb:41
 msgid "Nov"
 msgstr "Nov"
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "November"
 msgstr "Noviembre"
 
@@ -725,11 +738,11 @@ msgstr "Noviembre"
 msgid "Number of signins"
 msgstr "Número de entradas"
 
-#: app/views/datebook/show.html.erb:40
+#: app/views/datebook/show.html.erb:41
 msgid "Oct"
 msgstr "Oct"
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "October"
 msgstr "Octubre"
 
@@ -750,10 +763,6 @@ msgstr "O añade los Doctores que verán a tus Pacientes en "
 #: app/views/practice_mailer/welcome_email.html.erb:13
 msgid "Or add the Doctors who will see your Patients in My Doctors."
 msgstr "O añade los Doctores que verán a tus Pacientes en Mis Doctores"
-
-#: app/models/doctor.rb:28
-msgid "Orange"
-msgstr "Naranja"
 
 #: config/plans.yml:4
 msgid ""
@@ -882,10 +891,6 @@ msgstr "Identificador"
 msgid "Personal information"
 msgstr "Información personal"
 
-#: app/models/doctor.rb:33
-msgid "Pink"
-msgstr "Rosa"
-
 #: app/views/practices/settings.html.erb:76
 msgid "Plan being cancelled"
 msgstr "Plan en cancelación"
@@ -930,7 +935,7 @@ msgid "Please make sure that you Unsubscribed first from your current plan."
 msgstr "Por favor asegúrate de Cancelar antes la suscripción a tu plan actual."
 
 #: app/views/appointments/_form.html.erb:22 app/views/balances/_new.html.erb:9
-#: app/views/datebook/show.html.erb:22 app/views/datebook/show.html.erb:109
+#: app/views/datebook/show.html.erb:22 app/views/datebook/show.html.erb:110
 #: app/views/doctors/_form.html.erb:31 app/views/notes/_new.html.erb:6
 #: app/views/patient_treatments/_new.html.erb:14
 #: app/views/patients/_form.html.erb:70 app/views/practices/_form.html.erb:36
@@ -1008,14 +1013,6 @@ msgstr "Precio"
 msgid "Privacy Policy"
 msgstr "Política de Privacidad"
 
-#: app/models/doctor.rb:29
-msgid "Purple"
-msgstr "Morado"
-
-#: app/models/doctor.rb:30
-msgid "Red"
-msgstr "Rojo"
-
 #: app/views/practices/_form.html.erb:36
 msgid "Register"
 msgstr "Registrarse"
@@ -1035,11 +1032,11 @@ msgstr "Reiniciar contraseña"
 msgid "Return to the listing"
 msgstr "Regresar al listado"
 
-#: app/views/datebook/show.html.erb:42
+#: app/views/datebook/show.html.erb:43
 msgid "Sat"
 msgstr "Sáb"
 
-#: app/views/datebook/show.html.erb:41
+#: app/views/datebook/show.html.erb:42
 msgid "Saturday"
 msgstr "Sábado"
 
@@ -1071,11 +1068,11 @@ msgstr "Selecciona un tratamiento"
 msgid "Sent by"
 msgstr "Enviado desde"
 
-#: app/views/datebook/show.html.erb:40
+#: app/views/datebook/show.html.erb:41
 msgid "Sep"
 msgstr "Sep"
 
-#: app/views/datebook/show.html.erb:39
+#: app/views/datebook/show.html.erb:40
 msgid "September"
 msgstr "Septiembre"
 
@@ -1086,10 +1083,6 @@ msgstr "Accede"
 #: app/views/user_sessions/new.html.erb:27
 msgid "Sign up"
 msgstr "Date de alta"
-
-#: app/views/practices/new.html.erb:3
-msgid "Signing up to Odonto.me"
-msgstr "Crear una cuenta en Odonto.me"
 
 #: app/models/user.rb:54
 msgid "Sorry, you can't update an admin user"
@@ -1108,7 +1101,7 @@ msgstr "Especialidades del doctor"
 msgid "Speciality"
 msgstr "Especialidad"
 
-#: app/views/treatments/index.html.erb:22
+#: app/views/treatments/index.html.erb:26
 msgid "Specify a price to use this treatment"
 msgstr "Especifica un precio para poder usar este tratamiento"
 
@@ -1127,11 +1120,11 @@ msgstr "Estado"
 msgid "Subscribe with Paypal"
 msgstr "Suscribirse con Paypal"
 
-#: app/views/datebook/show.html.erb:42
+#: app/views/datebook/show.html.erb:43
 msgid "Sun"
 msgstr "Dom"
 
-#: app/views/datebook/show.html.erb:41
+#: app/views/datebook/show.html.erb:42
 msgid "Sunday"
 msgstr "Domingo"
 
@@ -1168,7 +1161,7 @@ msgstr "El equipo Odonto.me"
 msgid "The new doctor was successfully created in your practice."
 msgstr "El nuevo doctor ha sido dado de alta en tu clínica."
 
-#: app/controllers/patients_controller.rb:53
+#: app/controllers/patients_controller.rb:54
 msgid "The new patient was successfully created in your practice."
 msgstr "El nuevo paciente ha sido dado de alta en tu clínica."
 
@@ -1221,11 +1214,15 @@ msgstr "Ha habido un error actualizando ésta cita"
 msgid "There was an error updating this entry"
 msgstr "Ha habido un error actualizando esta entrada"
 
-#: app/views/datebook/show.html.erb:42
+#: app/views/patients/appointments.html.erb:2
+msgid "This patient doesn't have any scheduled appointments"
+msgstr "Este paciente no tiene ninguna cita programada"
+
+#: app/views/datebook/show.html.erb:43
 msgid "Thu"
 msgstr "Jue"
 
-#: app/views/datebook/show.html.erb:41
+#: app/views/datebook/show.html.erb:42
 msgid "Thursday"
 msgstr "Jueves"
 
@@ -1253,11 +1250,11 @@ msgstr "Nombre"
 msgid "Treatment|Price"
 msgstr "Precio"
 
-#: app/views/datebook/show.html.erb:42
+#: app/views/datebook/show.html.erb:43
 msgid "Tue"
 msgstr "Mar"
 
-#: app/views/datebook/show.html.erb:41
+#: app/views/datebook/show.html.erb:42
 msgid "Tuesday"
 msgstr "Martes"
 
@@ -1352,7 +1349,7 @@ msgstr ""
 "antes Cancelar la suscripción a tu plan actual a través de las preferencias "
 "o directamente en Paypal."
 
-#: app/controllers/patients_controller.rb:37 app/models/patient.rb:110
+#: app/controllers/patients_controller.rb:38 app/models/patient.rb:110
 msgid ""
 "We are very sorry, but you have reached the patients limit for this private "
 "beta. Please contact us if you need assistance."
@@ -1362,13 +1359,17 @@ msgstr ""
 "Tu cuenta ha sido cancelada y ya no es posible accederla. Por favor "
 "contáctanos si necesitas ayuda."
 
-#: app/controllers/patients_controller.rb:39 app/models/patient.rb:112
+#: app/controllers/patients_controller.rb:40 app/models/patient.rb:112
 msgid ""
 "We are very sorry, but you have reached your patients limit. Please upgrade "
 "your account in My Practice settings"
 msgstr ""
 "Lo sentimos mucho, pero has llegado al límite de pacientes en tu cuenta. Por "
 "favor contrata un nuevo plan en Preferencias para mi clínica"
+
+#: app/views/treatments/index.html.erb:6
+msgid "We can load a list of typical treatments for you if you"
+msgstr "Podemos configurar una lista de tratamientos típicos para ti si haces"
 
 #: app/views/password_resets/new.html.erb:4
 msgid ""
@@ -1390,11 +1391,11 @@ msgstr ""
 msgid "We're sorry, but we could not locate your account"
 msgstr "Lo sentimos pero no hemos podido encontrar tu cuenta"
 
-#: app/views/datebook/show.html.erb:42
+#: app/views/datebook/show.html.erb:43
 msgid "Wed"
 msgstr "Mié"
 
-#: app/views/datebook/show.html.erb:41
+#: app/views/datebook/show.html.erb:42
 msgid "Wednesday"
 msgstr "Miércoles"
 
@@ -1500,7 +1501,7 @@ msgid ""
 "Your practice doesn't have any patients at the moment, let's change that."
 msgstr "Tu clínica no tiene pacientes aún, solucionemos eso."
 
-#: app/views/treatments/index.html.erb:4
+#: app/views/treatments/index.html.erb:5
 msgid ""
 "Your practice doesn't have any treatments, remember that you need at least "
 "one treatment in order to have a treatment history for your patients."
@@ -1525,7 +1526,7 @@ msgstr "¡El Plan de tu cuenta ha sido cambiado a Gratuito!"
 msgid "Your practice's doctor was successfully updated."
 msgstr "El doctor de tu clínica ha sido actualizada con éxito."
 
-#: app/controllers/patients_controller.rb:65
+#: app/controllers/patients_controller.rb:66
 msgid "Your practice's patient was successfully updated."
 msgstr "El paciente de tu clínica ha sido actualizada con éxito."
 
@@ -1606,6 +1607,10 @@ msgstr "porque tienes agendada una cita este próximo"
 msgid "before trying to write down appointments"
 msgstr "antes de intentar apuntar citas"
 
+#: app/views/treatments/index.html.erb:6
+msgid "click here"
+msgstr "clic aquí"
+
 #: app/views/practices/settings.html.erb:90
 msgid "close your account here"
 msgstr "cerrar tu cuenta aquí"
@@ -1614,7 +1619,7 @@ msgstr "cerrar tu cuenta aquí"
 msgid "create a doctor"
 msgstr "añade un doctor"
 
-#: app/views/datebook/show.html.erb:51
+#: app/views/datebook/show.html.erb:52
 msgid "day"
 msgstr "día"
 
@@ -1626,9 +1631,13 @@ msgstr "doctor"
 msgid "doctors"
 msgstr "doctores"
 
-#: app/models/doctor.rb:36
+#: app/models/doctor.rb:38
 msgid "female_doctor_prefix|Dr."
 msgstr "Dra."
+
+#: app/views/patient_treatments/index.html.erb:11
+msgid "fill the prices"
+msgstr ""
 
 #: app/views/patient_treatments/index.html.erb:11
 msgid "for your treatments before using this"
@@ -1651,11 +1660,11 @@ msgstr "no tiene un formato adecuado"
 msgid "left"
 msgstr "restantes"
 
-#: app/models/doctor.rb:36
+#: app/models/doctor.rb:38
 msgid "male_doctor_prefix|Dr."
 msgstr ""
 
-#: app/views/datebook/show.html.erb:49
+#: app/views/datebook/show.html.erb:50
 msgid "month"
 msgstr "mes"
 
@@ -1705,7 +1714,7 @@ msgstr ""
 "el idioma y el nombre de tu clínica en Preferencias \n"
 "para mi clínica"
 
-#: app/models/practice.rb:74
+#: app/models/practice.rb:79
 msgid ""
 "seems to be invalid or its maximum allowed testers has been reached. Please "
 "check it or go to http://odonto.me to request access to this private beta."
@@ -1728,7 +1737,7 @@ msgstr "accede"
 msgid "this email or by clicking the Feedback tab."
 msgstr "este correo o pinchando en Feedback."
 
-#: app/views/datebook/show.html.erb:48
+#: app/views/datebook/show.html.erb:49
 msgid "today"
 msgstr "hoy"
 
@@ -1748,7 +1757,7 @@ msgstr "usuario"
 msgid "users"
 msgstr "usuarios"
 
-#: app/views/datebook/show.html.erb:50
+#: app/views/datebook/show.html.erb:51
 msgid "week"
 msgstr "semana"
 
