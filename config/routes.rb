@@ -9,11 +9,7 @@ Odontome::Application.routes.draw do
     resources :notes
     resources :patient_treatments
   end
-  resources :treatments do
-    collection do
-      get 'sample_treatments'
-    end
-  end
+  resources :treatments
   resources :users
   resources :doctors do
       resources :appointments

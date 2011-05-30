@@ -49,15 +49,5 @@ class TreatmentsController < ApplicationController
       format.html { redirect_to(treatments_url) }
     end
   end
-  
-  # This loads the list of treatments fom treatments.yml into the user's practice
-  def sample_treatments
-    # Don't load if already done
-    if Treatment.mine.count == 0 
-      current_user.practice.populate_default_treatments 
-      flash[:notice] = _('Here you have your new list of treatments. Change or delete them and don\'t forget to enter your prices!')
-    end
-    redirect_to treatments_url
-  end
 
 end
