@@ -14,7 +14,7 @@ namespace :odontome do
                                       .joins("LEFT OUTER JOIN practices ON practices.id = appointments.practice_id")
                                       .joins("LEFT OUTER JOIN doctors ON doctors.id = appointments.doctor_id")
                                       .where("appointments.starts_at > ? AND appointments.ends_at < ? AND appointments.notified = ? 
-                                      AND patient_email <> ''", 
+                                      AND patients.email <> ''", 
                                       Time.now, Time.now + $appointment_notificacion_hours.hours, false)
     appointments.each do |appointment|
       PatientMailer.appointment_soon_email(appointment.patient_email, appointment.patient_firstname,
