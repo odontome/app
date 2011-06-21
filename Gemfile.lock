@@ -12,6 +12,13 @@ GIT
     paginate_alphabetically (0.3.3)
 
 GIT
+  remote: git://github.com/mislav/will_paginate.git
+  revision: b1a5bee
+  branch: rails3
+  specs:
+    will_paginate (3.0.pre3)
+
+GIT
   remote: git://github.com/ricardochimal/taps.git
   revision: f5e01bc
   specs:
@@ -120,3 +127,4 @@ DEPENDENCIES
   rails (= 3.0.5)
   sqlite3-ruby
   taps!
+  will_paginate!

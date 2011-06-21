@@ -37,6 +37,9 @@ Odontome::Application.routes.draw do
   match "/privacy"  => "welcome#privacy"
   match "/terms"  => "welcome#terms"
 
+  match "/admin/practices" => "admin#practices", :as => :practices_admin
+
+
   root :to => "welcome#index"
 
   # The priority is based upon order of creation:

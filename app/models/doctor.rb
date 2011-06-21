@@ -1,5 +1,7 @@
 class Doctor < ActiveRecord::Base
-  belongs_to :practice
+
+  # associations
+  belongs_to :practice, :counter_cache => true
   has_many :appointments
   has_many :patients, :through => :appointments
   has_many :patient_treatments
@@ -39,7 +41,6 @@ class Doctor < ActiveRecord::Base
       self.errors[:base] << _("Can't delete a doctor with registered appointments or patient's treatments, please use 'Suspend' instead.")
       false
     end
-    
   end
-  
+
 end

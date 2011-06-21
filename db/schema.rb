@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110517211149) do
+ActiveRecord::Schema.define(:version => 20110621153146) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "practice_id"
@@ -41,12 +41,19 @@ ActiveRecord::Schema.define(:version => 20110517211149) do
     t.string   "firstname"
     t.string   "lastname"
     t.string   "gender"
-    t.boolean  "is_active",                :default => true
+    t.boolean  "is_active",                        :default => true
     t.string   "speciality"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email"
-    t.string   "color",       :limit => 7, :default => "#3366CC"
+    t.string   "color",               :limit => 7, :default => "#3366CC"
+    t.string   "crypted_password"
+    t.string   "password_salt"
+    t.string   "persistence_token"
+    t.string   "single_access_token"
+    t.datetime "current_login_at"
+    t.datetime "last_login_at"
+    t.integer  "login_count",                      :default => 0,         :null => false
   end
 
   create_table "notes", :force => true do |t|
@@ -108,6 +115,10 @@ ActiveRecord::Schema.define(:version => 20110517211149) do
     t.integer  "number_of_patients",               :default => 500
     t.string   "invitation_code"
     t.string   "currency_unit",                    :default => "$"
+    t.integer  "patients_count",                   :default => 0
+    t.integer  "appointments_count",               :default => 0
+    t.integer  "doctors_count",                    :default => 0
+    t.integer  "users_count",                      :default => 0
   end
 
   create_table "treatments", :force => true do |t|

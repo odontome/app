@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   
-  belongs_to :practice
+  belongs_to :practice, :counter_cache => true
   
   acts_as_authentic do |c|
        c.login_field = "email"

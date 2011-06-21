@@ -1,0 +1,7 @@
+<%%=raw jqgrid("Listing <%= plural_name %>", "<%= plural_name %>", "/<%= plural_name %>", 
+[ 
+  <% columns.each_with_index do |attribute, i|-%> 
+  { :field => "<%= attribute %>", :label => "<%= attribute %>" }<% if i < columns.size-1 -%>,<% end %> 
+  <% end -%> 
+  ] , {:autowidth=>true} 
+  ) %>

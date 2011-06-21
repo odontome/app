@@ -1,6 +1,6 @@
 class Appointment < ActiveRecord::Base
   # associations
-  belongs_to :practice
+  belongs_to :practice, :counter_cache => true
   belongs_to :doctor
   belongs_to :patient
   

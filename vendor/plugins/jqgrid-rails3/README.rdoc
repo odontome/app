@@ -1,0 +1,50 @@
+= a plugin base on 2dcJqgrid for rails3 to use jqgrid
+
+This Rails plugin allows you to add jQuery datagrids into your applications.
+
+Following features are supported :
+
+- Ajax enabled
+- Sorting
+- Pagination
+- Search
+- CRUD operations (add, edit, delete and read)
+- Multi-selection (checkboxes)
+- Master-details
+- Themes
+- And more ...
+
+= Install and Uninstall 
+  
+  $ rake jqgrid:install
+  
+  $ rake jqgrid:uninstall
+  
+= Generator
+
+You can now generate a grid using a command like this one :
+
+  $ rails generate jqgrid user id pseudo email firstname
+
+it will create a controller and a view file to the app path,and you must change route to use it ,you can see it in the 
+
+controller.
+
+= Use
+
+You can use it simple,eg; 
+  
+  $ <%=jqgrid_javascripts%>
+  
+  $ <%=jqgrid_stylesheets%> 
+  
+  if you want to use other theme,you cna change it like :
+  
+  $ <%=jqgrid_stylesheets "theme"%>
+  
+  the theme in /public/stylesheets/jqgrid/themes/,you can custom a jquery ui theme,and copy the file into the path
+
+Copyright (c) 2010 Anthony Heukmes, released under the MIT license
+
+
+My gmail account : doinsist@gmail.com
