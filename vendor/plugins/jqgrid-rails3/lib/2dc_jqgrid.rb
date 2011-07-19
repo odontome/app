@@ -3,7 +3,8 @@ module Jqgrid
   def jqgrid_stylesheets(theme="default")
       stylesheet_link_tag "jqgrid/themes/#{theme}/jquery-ui-1.8.custom.css", 
         'jqgrid/ui.jqgrid.css', 
-        :cache => "jqgrid-#{theme}-css"
+        # Heroku don't like it:
+        # :cache => "jqgrid-#{theme}-css"
     end
 
     def jqgrid_javascripts
@@ -14,7 +15,8 @@ module Jqgrid
         #'jqgrid/grid.tbltogrid',
         'jqgrid/jquery.contextmenu.r2.packed.js',
         'jqgrid/jquery.cookie.js',
-        :cache => 'jqgrid-js'
+        # Heroku don't like it:
+        # :cache => 'jqgrid-js'
     end
 
     def jqgrid(title, id, action, columns = [], options = {})
