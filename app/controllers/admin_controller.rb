@@ -22,5 +22,18 @@ class AdminController < ApplicationController
       format.json { render :json => @practices.to_jqgrid_json(index_columns, current_page, rows_per_page, total_entries)}  
     end
   end
+  
+  def newsletter
+  end
+
+  def send_newsletter
+    subject=params[:subject]
+    body=params[:body]
+    User.all.each do |user|
+        NotifierMailer.newsletter(user, subject, body).deliver
+    end
+    flash[:success] = _("Emails has been sent my lord.")
+    redirect_to newsletter_admin_path
+  end
 
 end
