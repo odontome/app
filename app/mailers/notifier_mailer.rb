@@ -1,5 +1,6 @@
 class NotifierMailer < ActionMailer::Base
 
+  helper :mail
   layout 'email'
   default :from => "hello@odonto.me"
   
@@ -10,9 +11,15 @@ class NotifierMailer < ActionMailer::Base
     @edit_password_reset_url = edit_password_reset_url(@user.perishable_token)
     mail(:to => user.email, :subject => _('Password reset instructions'))
   end
-  
+
+  def newsletter(user, subject, body)
+    @user = user
+    @the_body = body
+    mail(:to => user.email, :subject => subject)
+  end
+
   def set_locale(practice_locale)
     I18n.locale = FastGettext.set_locale(practice_locale)
   end
-
+  
 end
