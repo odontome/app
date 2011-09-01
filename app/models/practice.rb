@@ -72,11 +72,9 @@ class Practice < ActiveRecord::Base
   end
 
   def correctness_of_invitation_code
-    tester = Prefinery::Tester.new(:beta_id => 1529)
-    tester.email = self.users.first.email
-    tester.status = 'active'
-    tester.invitation_code = self.invitation_code
-    errors.add(:invitation_code, _("seems to be invalid or its maximum allowed testers has been reached. Please check it or go to http://odonto.me to request access to this private beta.")) unless tester.save
+    unless $betacodes.split(',').include?(self.invitation_code)
+      errors.add(:invitation_code, _("seems to be invalid or its maximum allowed testers has been reached. Please check it or go to http://odonto.me to request access to this private beta."))
+    end
   end
   
 end

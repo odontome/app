@@ -62,7 +62,8 @@ module Odontome
        return ALL_LETTERS if @paginate_alphabetically__show_all_letters
        mine.sort_by{|obj| obj.send(@attribute).upcase}.group_by {|group| group.send(@attribute)[0].chr.upcase}.keys
      end
-     
   end
 
+  $betacodes = "ODNTM2011,DENTALHEROES,TEETHREMOVAL"
+  
 end
