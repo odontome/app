@@ -6,12 +6,6 @@ GIT
       activesupport
 
 GIT
-  remote: git://github.com/edendevelopment/paginate_alphabetically.git
-  revision: 24f0f76
-  specs:
-    paginate_alphabetically (0.3.3)
-
-GIT
   remote: git://github.com/mislav/will_paginate.git
   revision: b1a5bee
   branch: rails3
@@ -122,7 +116,6 @@ DEPENDENCIES
   gettext_i18n_rails
   jquery-rails (>= 0.2.6)
   mail
-  paginate_alphabetically!
   rack-ssl-enforcer
   rails (= 3.0.5)
   sqlite3-ruby

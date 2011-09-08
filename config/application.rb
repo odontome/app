@@ -45,23 +45,13 @@ module Odontome
   end
 
   class ActiveRecord::Base
+  
      def set_practice_id
        if UserSession.find
          self.practice_id = UserSession.find.user.practice_id
        end
      end
      
-     # overwrite for the alphabetical pagination plugin
-     def alphabetical_group(letter = nil)
-       letter ||= first_letter
-       where(["LOWER(#{@attribute.to_s}) LIKE ?", "#{letter.downcase}%"]).order(@attribute)
-     end
-     
-     # overwrite for the alphabetical pagination plugin
-     def pagination_letters
-       return ALL_LETTERS if @paginate_alphabetically__show_all_letters
-       mine.sort_by{|obj| obj.send(@attribute).upcase}.group_by {|group| group.send(@attribute)[0].chr.upcase}.keys
-     end
   end
 
   $betacodes = "ODNTM2011,DENTALHEROES,TEETHREMOVAL"

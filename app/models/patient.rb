@@ -1,7 +1,4 @@
-class Patient < ActiveRecord::Base
-
-  paginate_alphabetically :by => :firstname
-  
+class Patient < ActiveRecord::Base  
   # associations
   has_many :appointments, :dependent => :delete_all
   has_many :balances, :dependent => :delete_all 
@@ -12,7 +9,13 @@ class Patient < ActiveRecord::Base
 
   scope :mine, lambda { 
     where("patients.practice_id = ? ", UserSession.find.user.practice_id)
-  }  
+  }
+  
+  scope :alphabetically, lambda { |letter|
+  	mine
+  	.where("firstname LIKE ?", "#{letter}%")
+  	.order("firstname")
+  }
   
   scope :search, lambda { |q|
     select("id,uid,firstname,lastname")
@@ -21,7 +24,7 @@ class Patient < ActiveRecord::Base
     .limit(10)
     .order("firstname")
   }  
-  
+    
   # validations
   validates_uniqueness_of :uid, :scope => :practice_id, :allow_nil => true, :allow_blank => true
   validates_presence_of :practice_id, :firstname, :lastname, :date_of_birth, :past_illnesses, :surgeries, :medications, :drugs_use, :family_diseases
@@ -87,21 +90,7 @@ class Patient < ActiveRecord::Base
 
     return patient_id_or_name
   end
-  
-  # this function tries to find the patients by letter, if not returns the first letter found
-  def self.find_alphabeticaly(letter)
-    patients = order("firstname").mine.alphabetical_group(letter)
-    if patients.empty?
-      letter = order("firstname").mine.limit(1).select("firstname")
-      if !letter.empty?
-        patients = order("firstname").mine.alphabetical_group(letter[0].firstname[0])
-      end
-    end
     
-    return patients
-  end
-
-  
   private
   
   def check_for_patients_limit

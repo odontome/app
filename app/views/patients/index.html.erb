@@ -36,7 +36,16 @@
 </ul>
 
 <div id="toolbar">
-	<%# alphabetically_paginate(@patients) %>
+	<ul class ="pagination">
+	  <% letter_options.each do |letter| %>
+	    <% if params[:letter] == letter %>
+	      <span class="current"><%= letter %></span>
+	    <% else %>
+	      <li><%= link_to letter, patients_url(:letter => letter)%></li>
+	    <% end %>
+	  <% end %>
+	</ul>
+	
 	<div class="clear"></div>
 	<%= link_to _("Create new patient"), new_patient_url, :class => "g-button action" %>
 </div>
