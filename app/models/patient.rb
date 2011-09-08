@@ -6,7 +6,7 @@ class Patient < ActiveRecord::Base
   has_many :doctors, :through => :appointments
   has_many :patient_treatments, :dependent => :delete_all
   belongs_to :practice, :counter_cache => true
-
+	
   scope :mine, lambda { 
     where("patients.practice_id = ? ", UserSession.find.user.practice_id)
   }

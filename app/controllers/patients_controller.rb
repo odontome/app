@@ -8,7 +8,14 @@ class PatientsController < ApplicationController
   def index
     # this is the most frequent scenario, a simple list of patients
     if (params[:q] === nil)
-      @patients = Patient.alphabetically params[:letter] || "A"
+    	# Always fetch the first letter of the first record, if not present
+    	# just send "A"
+    	if params[:letter].blank?
+    		first_patient = Patient.mine.order("firstname ASC").first
+    		params[:letter] = first_patient.nil? ? "A" : first_patient.firstname[0]
+    	end
+
+      @patients = Patient.alphabetically params[:letter]
     # otherwise, this is a search for patients
     else
       @patients = Patient.search(params[:q])
