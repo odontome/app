@@ -1,13 +1,3 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  name: MyString
-  locale: MyString
-  timezone: MyString
-  status: MyString
-
-two:
-  name: MyString
-  locale: MyString
-  timezone: MyString
-  status: MyString
+demo:
+  id: 1
+  name: Odonto.me demo practice

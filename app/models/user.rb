@@ -17,6 +17,9 @@ class User < ActiveRecord::Base
   validates_presence_of :password, :on => :create
   validates_confirmation_of :password, :on => :create
   
+  validates :firstname, :lastname, :length => { :maximum => 20 }
+  validates :password, :length => { :minimum => 4 }
+  
   # callbacks
   before_validation :set_practice_id, :on => :create
   before_create :set_admin_role_for_first_user
