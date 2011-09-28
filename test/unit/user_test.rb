@@ -1,8 +1,6 @@
 require 'test_helper'
 
-class UserTest < ActiveSupport::TestCase
-  # required to make these tests pass
-  setup :activate_authlogic
+class UserTest < ActiveSupport::TestCase  
   
   test "user attributes must not be empty" do
   	user = User.new

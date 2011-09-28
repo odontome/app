@@ -1,5 +1,4 @@
 require 'test_helper'
-require "authlogic/test_case"
 
 class UserSessionsControllerTest < ActionController::TestCase
 
