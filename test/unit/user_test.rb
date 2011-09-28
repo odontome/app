@@ -62,7 +62,7 @@ class UserTest < ActiveSupport::TestCase
 	test "user fullname shortcut" do
 		user = users(:founder)
 		
-		assert_equal user.fullname, "Raul Riera"
+		assert_equal user.fullname, "#{user.firstname} #{user.lastname}"
 	end
   
 end
