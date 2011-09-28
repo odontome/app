@@ -3,7 +3,7 @@ require 'test_helper'
 class UserTest < ActiveSupport::TestCase  
   
   test "user attributes must not be empty" do
-  	user = User.new
+  	user = User.create
   	assert user.invalid?
   	assert user.errors[:firstname].any?
   	assert user.errors[:lastname].any?
@@ -29,7 +29,7 @@ class UserTest < ActiveSupport::TestCase
   	assert_equal I18n.translate("errors.messages.invalid"), user.errors[:email].join("; ")
   end
   
-  test "user first/last name should be less than 20 chars long each" do
+  test "user name should be less than 20 chars long each" do
 		user = User.new(:firstname => "A really long firstname for a user IMHO",
 										:lastname => "A really long lastname as well if you ask me",
 										:email => "anok@email.com")
