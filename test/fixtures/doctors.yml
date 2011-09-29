@@ -1,0 +1,15 @@
+rebecca:
+  id: 1
+  uid: D001
+  practice_id: 1
+  firstname: Rebecca
+  lastname: Riera,
+  gender: female
+  
+perishable:
+  id: 2
+  uid: D002
+  practice_id: 1
+  firstname: Ismael
+  lastname: Fernandez,
+  gender: male
