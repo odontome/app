@@ -3,7 +3,7 @@ require 'test_helper'
 class UserTest < ActiveSupport::TestCase  
   
   test "user attributes must not be empty" do
-  	user = User.create
+  	user = User.new
   	assert user.invalid?
   	assert user.errors[:firstname].any?
   	assert user.errors[:lastname].any?
