@@ -1,0 +1,30 @@
+one:
+  uid: 0001
+  practice_id: 1
+  firstname: Edwin
+  lastname: Brito
+  address: su casa
+  email: angeloamuratzi@hotmail.com
+  telephone: 7773179398
+  mobile: 62*15*3000
+  emergency_telephone: 7773179398
+  date_of_birth: '1982-12-22'
+  past_illnesses: '-'
+  surgeries: '-'
+  medications: '-'
+  cigarettes_per_day: 0
+  drinks_per_day: 0
+  drugs_use: '-'
+  family_diseases: '-'
+  
+two:
+  uid: 0002
+  practice_id: 1
+  firstname: Miguel
+  lastname: Camacho
+  
+three:
+  uid: 0003
+  practice_id: 3
+  firstname: Daniella
+  lastname: Sanguino

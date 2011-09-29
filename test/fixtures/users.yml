@@ -19,3 +19,14 @@ perishable:
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("123456" + salt) %>
   persistence_token: <%= Authlogic::Random.hex_token %>
   perishable_token: <%= Authlogic::Random.friendly_token %>
+  
+user_in_yet_another_practice: 
+  practice_id: 3
+  firstname: Esteban
+  lastname: Barragan
+  email: contact@bokanova.mx
+  roles: user
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("123456" + salt) %>
+  persistence_token: <%= Authlogic::Random.hex_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>

@@ -1,3 +1,14 @@
 demo:
   id: 1
-  name: Odonto.me demo practice
+  name: Odonto.me demo practice,
+  number_of_patients: 100
+  
+bokanova:
+  id: 2
+  name: Bokanova Dental Center,
+  number_of_patients: 50
+  
+limit_reached:
+  id: 3
+  name: Yet Another Dental Practice
+  number_of_patients: 0
