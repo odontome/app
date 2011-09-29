@@ -1,7 +1,11 @@
 demo:
   id: 1
   name: Odonto.me demo practice,
-  number_of_patients: 100
+  number_of_patients: 100,
+  locale: es_ES,
+  timezone: Mexico City,
+  status: free,
+  currency_unit: $
   
 bokanova:
   id: 2

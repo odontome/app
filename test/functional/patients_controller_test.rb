@@ -49,7 +49,7 @@ class PatientsControllerTest < ActionController::TestCase
   end
   
   test "should update patient" do
-    put :update, id: patients(:one).to_param, user: @new_patient
+    put :update, id: patients(:one).to_param, practice: @new_patient
     assert_redirected_to patient_path(assigns(:patient))
   end
 

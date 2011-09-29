@@ -17,7 +17,7 @@ class Practice < ActiveRecord::Base
   accepts_nested_attributes_for :users, :limit => 1
   
   # validations
-  validates_presence_of :plan_id, :name
+  validates_presence_of :name
   validates_presence_of :invitation_code, :if => :beta_mode_on?
   validate :correctness_of_invitation_code, :on => :create
 
