@@ -28,7 +28,7 @@ class PatientsController < ApplicationController
     @patient = Patient.mine.find(params[:id])
     @patient_notes = @patient.notes.order("created_at DESC")
     
-    if @patient.invalid?
+    if @patient.missing_info?
       redirect_to edit_patient_path(@patient)
     else 
       respond_to do |format|
@@ -57,7 +57,7 @@ class PatientsController < ApplicationController
 
     respond_to do |format|
       if @patient.save
-        format.html { redirect_to(patients_url, :notice => _('The new patient was successfully created in your practice.')) }
+        format.html { redirect_to(@patient, :notice => _('The new patient was successfully created in your practice.')) }
       else
         format.html { render :action => "new" }
       end

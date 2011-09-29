@@ -11,7 +11,7 @@
 <ul id="list-items">
 	<% @treatments.each do |treatment| %>
 
-		<% if treatment.invalid?
+		<% if treatment.missing_info?
 			cclass = "invalid-list"
 		   else
 			cclass = ""
@@ -20,7 +20,7 @@
 		<li class="<%=cclass%>">
 			<h2><%= link_to treatment.name, treatment %></h2>			
 
-			<% if !treatment.invalid? %>
+			<% if !treatment.missing_info? %>
 				<span><%= number_to_currency_with_currency(treatment.price)%></span>
 			  <% else %>
 			  	<span><%=_("Specify a price to use this treatment")%></span>

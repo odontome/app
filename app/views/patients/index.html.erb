@@ -9,7 +9,7 @@
 <ul id="list-items">
 	<% @patients.each do |patient| %>
 
-		<% if patient.invalid?
+		<% if patient.missing_info?
 			cclass = "invalid-list"
 		   else
 			cclass = ""
@@ -19,7 +19,7 @@
 		<li class="<%=cclass%>">
 			<h2><%= link_to patient.fullname, patient %></h2>			
 		
-			<% if !patient.invalid? %>
+			<% if !patient.missing_info? %>
 				<span><%=patient.uid%></span>
 				<span><strong><%=_('Age')%>:</strong> <%=patient.age%></span>
 				<span><strong><%=_('Allergies')%>:</strong> <%unless patient.allergies.blank?%><%=patient.allergies%><%else%><%=_('none')%><%end%></span>
