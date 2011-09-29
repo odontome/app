@@ -38,7 +38,7 @@ class PracticeTest < ActiveSupport::TestCase
 		assert_equal practice.status, "free"
 	end	
 	
-	test "practice is can be set to cancelled" do		
+	test "practice can be set to cancelled" do		
 		practice = Practice.new()
 		practice.users << User.new
 		
