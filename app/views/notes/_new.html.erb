@@ -1,4 +1,4 @@
-<% form_tag([noteable, Note.new], :method => :post, :remote => true) do %>
+<%= form_tag([noteable, Note.new], :method => :post, :remote => true) do %>
 	<p>
 	    <%= text_area_tag "note[notes]", nil, {:rows => 2, :placeholder => _("Type something related to this #{noteable.class}"), :title => _("Type something related to this #{noteable.class}")}  %>
 	</p>
