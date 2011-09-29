@@ -15,7 +15,7 @@ class Treatment < ActiveRecord::Base
   # callbacks
   before_validation :set_practice_id, :on => :create
   
-  def invalid?
+  def missing_info?
     return price.nil? || price == 0
   end
 end

@@ -27,7 +27,8 @@ class Patient < ActiveRecord::Base
     
   # validations
   validates_uniqueness_of :uid, :scope => :practice_id, :allow_nil => true, :allow_blank => true
-  validates_presence_of :practice_id, :firstname, :lastname, :date_of_birth, :past_illnesses, :surgeries, :medications, :drugs_use, :family_diseases
+  validates_presence_of :practice_id, :firstname, :lastname, :date_of_birth, :past_illnesses, :surgeries, :medications, :drugs_use, :family_diseases, :emergency_telephone, :cigarettes_per_day, :drinks_per_day
+  
   validates_numericality_of :cigarettes_per_day, :drinks_per_day, :only_integer => true, :greater_than_or_equal_to => 0
   validates_length_of :uid, :within => 0..25, :allow_blank => true
   validates_length_of :firstname, :within => 1..25
@@ -54,7 +55,7 @@ class Patient < ActiveRecord::Base
   end
 
   def age
-    if !self.invalid?
+    if !self.missing_info?
       (Time.now.year - date_of_birth.year) - (Time.now.yday < date_of_birth.yday ? 1 : 0)
     else
       return 0
@@ -62,7 +63,7 @@ class Patient < ActiveRecord::Base
   end
   
   # this functions checks if the user was created from the datebook (skipped all validation, so most of the data is invalid)
-  def invalid?
+  def missing_info?
     return date_of_birth.nil?
   end
   
