@@ -44,4 +44,15 @@ class AppointmentTest < ActiveSupport::TestCase
 		assert_equal appointment.ends_at, appointment.starts_at + 60.minutes
 	end
 	
+	test "appointment start date should be before the end date" do
+		appointment = Appointment.new(:practice_id => 1,
+																	:doctor_id => 1,
+																	:patient_id => 1,
+																	:starts_at => Time.now + 1800,
+																	:ends_at => Time.now)
+																	
+		assert !appointment.save
+		assert_equal _("Invalid date range"), appointment.errors[:base].join("; ")
+	end
+	
 end
