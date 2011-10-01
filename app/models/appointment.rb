@@ -19,6 +19,7 @@ class Appointment < ActiveRecord::Base
   # validations
   validates_presence_of :practice_id, :doctor_id, :patient_id
   validates_numericality_of :practice_id, :doctor_id, :patient_id
+  validate :ends_at_should_be_later_than_starts_at
   
   # callbacks
   before_validation :set_practice_id, :on => :create
@@ -37,8 +38,18 @@ class Appointment < ActiveRecord::Base
     end
   end
   
+  def ends_at_should_be_later_than_starts_at
+  	if !self.starts_at.nil? && !self.ends_at.nil?
+	  	if self.starts_at >= self.ends_at  
+	  		self.errors[:base] << _("Invalid date range")
+	  	end
+	  end
+  end
+  
   def set_ends_at
-     self.ends_at = self.starts_at + 60.minutes
+  	if self.ends_at.nil?
+    	self.ends_at = self.starts_at + 60.minutes
+    end
   end
 
 end
