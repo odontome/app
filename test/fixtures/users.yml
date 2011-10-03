@@ -8,6 +8,7 @@ founder:
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("123456" + salt) %>
   persistence_token: <%= Authlogic::Random.hex_token %>
   perishable_token: <%= Authlogic::Random.friendly_token %>
+  login_count: 5
 
 perishable: 
   practice_id: 1
@@ -30,3 +31,9 @@ user_in_yet_another_practice:
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("123456" + salt) %>
   persistence_token: <%= Authlogic::Random.hex_token %>
   perishable_token: <%= Authlogic::Random.friendly_token %>
+  
+api_user:
+  practice_id: 1
+  firstname: Api
+  lastname: User
+  authentication_token: dcea6d23634b6e1e2a21e462c7ca24cf25e152d6a1af49303069dc79d44c28e537905ad2c595639afa07654f1f75f380338c916b6f0f8801986e0797f4b19734

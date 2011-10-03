@@ -9,12 +9,12 @@ class Patient < ActiveRecord::Base
 	
   scope :mine, lambda { 
     where("patients.practice_id = ? ", UserSession.find.user.practice_id)
+    .order("firstname")
   }
   
   scope :alphabetically, lambda { |letter|
   	mine
   	.where("firstname LIKE ?", "#{letter}%")
-  	.order("firstname")
   }
   
   scope :search, lambda { |q|

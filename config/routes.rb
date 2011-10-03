@@ -1,4 +1,13 @@
 Odontome::Application.routes.draw do
+
+	namespace :api do
+    namespace :v1 do
+    	resources :authentication
+    	resources :appointments
+      resources :patients
+		end
+	end
+
   resources :appointments
   resources :practices
   resources :patients do

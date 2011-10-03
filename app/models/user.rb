@@ -25,6 +25,7 @@ class User < ActiveRecord::Base
   before_create :set_admin_role_for_first_user
   before_destroy :check_if_admin
   before_update :check_if_is_editeable_by_non_admins
+  before_save :ensure_authentication_token
 
   def fullname
     [firstname, lastname].join(' ')
@@ -38,12 +39,12 @@ class User < ActiveRecord::Base
     reset_perishable_token!
     NotifierMailer.deliver_password_reset_instructions(self).deliver
   end
-
-  
+    
   private
+  
   def check_if_admin
     if self.roles.include?("admin")
-      self.errors[:base] << _("Can't delete admin user")
+      self.errors[:base] << _("Can't delete an admin user")
       false
     end
   end  
@@ -57,6 +58,12 @@ class User < ActiveRecord::Base
       self.errors[:base] << _("Sorry, you can't update an admin user")
       false 
     end
+  end
+  
+  def ensure_authentication_token
+  	if !self.login_count_changed?
+  		self.authentication_token = Authlogic::Random.hex_token
+  	end
   end
   
 end
