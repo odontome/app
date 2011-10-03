@@ -48,7 +48,7 @@ Odontome::Application.configure do
   config.active_support.deprecation = :notify
 
   # To configure the SSL Enforcer gem
-  config.middleware.use Rack::SslEnforcer, :only => ["/signup", "/signin", "/users/new", /^\/users\/(.+)\/edit/, "/set_session_time_zone"], /^\/api\//, :mixed => true
+  config.middleware.use Rack::SslEnforcer, :only => ["/signup", "/signin", "/users/new", /^\/users\/(.+)\/edit/, "/set_session_time_zone", /^\/api\//], :mixed => true
 
   # Configure the host for emails
   config.action_mailer.default_url_options = { :host => "my.odonto.me" }
