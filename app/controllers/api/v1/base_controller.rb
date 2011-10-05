@@ -23,7 +23,7 @@ class Api::V1::BaseController < ActionController::Base
   
   def authorize_admin!
     authenticate_user!
-    unless current_user.roles.include?("admin")
+    unless @current_user.user.roles.include?("admin")
     	error = { :error => _('Sorry, you need to be an administrator of your practice to do that.') }
       render params[:format].to_sym => error, :status => 401
     end
