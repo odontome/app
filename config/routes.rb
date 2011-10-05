@@ -47,8 +47,6 @@ Odontome::Application.routes.draw do
   match "/terms"  => "welcome#terms"
 
   match "/admin/practices" => "admin#practices", :as => :practices_admin
-  match "/admin/newsletter" => "admin#newsletter", :as => :newsletter_admin
-  match "/admin/send_newsletter" => "admin#send_newsletter", :as => :send_newsletter_admin, :via => :post
 
   root :to => "welcome#index"
 

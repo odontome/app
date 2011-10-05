@@ -12,12 +12,6 @@ class NotifierMailer < ActionMailer::Base
     mail(:to => user.email, :subject => _('Password reset instructions'))
   end
 
-  def newsletter(user, subject, body)
-    @user = user
-    @the_body = body
-    mail(:to => user.email, :subject => subject)
-  end
-
   def set_locale(practice_locale)
     I18n.locale = FastGettext.set_locale(practice_locale)
   end
