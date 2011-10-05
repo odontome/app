@@ -1,6 +1,5 @@
 class NotifierMailer < ActionMailer::Base
 
-  helper :mail
   layout 'email'
   default :from => "hello@odonto.me"
   
