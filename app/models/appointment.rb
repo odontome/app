@@ -13,6 +13,7 @@ class Appointment < ActiveRecord::Base
     .joins("LEFT OUTER JOIN patients ON patients.id = appointments.patient_id")
     .joins("LEFT OUTER JOIN doctors ON doctors.id = appointments.doctor_id")
     .where("appointments.starts_at > ? AND appointments.ends_at < ?", Time.at(starts_at.to_i), Time.at(ends_at.to_i))
+    .order("appointments.starts_at")
     .mine
   }
     
