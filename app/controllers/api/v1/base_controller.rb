@@ -13,8 +13,9 @@ class Api::V1::BaseController < ActionController::Base
   	if @current_user && !@current_user.authentication_token.nil?
   		@current_user = UserSession.create(@current_user)
  		else
-  		respond_with({:error => "Token is invalid." }, :status => 401)
+  		render :json => {:error => "Token is invalid." }, :status => 401
   	end
+  	
   end
   
   def current_user!
@@ -24,7 +25,7 @@ class Api::V1::BaseController < ActionController::Base
   def authorize_admin!
     authenticate_user!
     unless @current_user.user.roles.include?("admin")
-      render :json => { :error => _('Sorry, you need to be an administrator of your practice to do that.') }, :status => 403
+      render :json => { :error => 'Sorry, you need to be an administrator of your practice to do that.' }, :status => 403
     end
   end
   

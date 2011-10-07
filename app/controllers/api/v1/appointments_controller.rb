@@ -35,7 +35,7 @@ class Api::V1::AppointmentsController < Api::V1::BaseController
   def find_appointment
   	@appointment = Appointment.mine.find(params[:id])
   	rescue ActiveRecord::RecordNotFound
-  		error = { :error => _("The appointment you were looking for could not be found.")}
+  		error = { :error => "The appointment you were looking for could not be found."}
   		respond_with(error, :status => 404)
   end
   

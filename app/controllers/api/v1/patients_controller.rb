@@ -35,7 +35,7 @@ class Api::V1::PatientsController < Api::V1::BaseController
   def find_patient
   	@patient = Patient.mine.find(params[:id])
   	rescue ActiveRecord::RecordNotFound
-  		error = { :error => _("The patient you were looking for could not be found.")}
+  		error = { :error => "The patient you were looking for could not be found."}
   		respond_with(error, :status => 404)
   end
   
