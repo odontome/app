@@ -9,12 +9,11 @@ class Api::V1::AuthenticationController < Api::V1::BaseController
 			
 			# fetch the user by the password and email	
 			user = User.where(:crypted_password => Authlogic::CryptoProviders::Sha512.encrypt(params[:password] + user_by_email.password_salt)).where(:email => params[:email]).first
-			
-			respond_with user, :only => [:id, :firstname, :lastname, :authentication_token]
 		rescue
 			render :json => { :error => _("Invalid credentials.") }, :status => 404
 		end
 		
+		respond_with user, :only => [:id, :firstname, :lastname, :authentication_token]
 	end
 	
 	def destroy
