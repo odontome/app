@@ -31,7 +31,7 @@ class PaypalController < ApplicationController
   # subscr_eot
   # This will be called if a subscription expires (ours don't),
   # at the end of the cycle when Cancelled
-  # or when billing attemps failed 3 times
+  # or when billing attempts failed 3 times
   def subscription_expired(practice_id, plan_id)
     practice = Practice.find_by_id(practice_id.to_i)
      unless practice.nil?
@@ -122,7 +122,7 @@ class PaypalController < ApplicationController
     if current_user.practice.status == "active"
       flash[:notice] = _("Your subscription is now active! Thanks for subscribing to Odonto.me")
     else
-      flash[:notice] = _("Your subscription is now being proccessed. We'll send you an email when payment confirmation is received. Or refresh this page to check!")
+      flash[:notice] = _("Your subscription is now being processed. We'll send you an email when payment confirmation is received. Or refresh this page to check!")
     end
       redirect_to practice_settings_url
   end
