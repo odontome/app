@@ -1,4 +1,4 @@
-<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+<form action="<%= ENV['RAILS_ENV'] == 'production' ? 'https://www.paypal.com/cgi-bin/webscr' : 'https://www.sandbox.paypal.com/cgi-bin/webscr' %>" method="post">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="hosted_button_id" value="KNGUR9BG6C3DG">
 <input type="hidden" name="custom" value="<%=custom%>">
