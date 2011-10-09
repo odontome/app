@@ -1,0 +1,13 @@
+<h1><%=_('Audits')%></h1>
+
+<ul id="list-items">
+	<% @audits.each do |audit| %>
+		<li>
+			<h2><%= audit.auditable_type %></h2>			
+
+			<span><%= audit.audited_changes.count %> <%= _("modifications")%></span>
+			<span><strong><%= audit.action %> <%=_('by')%>:</strong> <%= audit.username %></span>
+			<span><%= time_ago_in_words audit.created_at %></span>
+		</li>
+	<% end %>
+</ul>

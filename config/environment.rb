@@ -22,3 +22,6 @@ $appointment_notificacion_time = 3 # UTC hours. Example: "3" for 3am-UTC
 
 # Config authlogic
 Authlogic::Session::Base.controller = Authlogic::ControllerAdapters::RailsAdapter.new(self)
+
+# Require the model extensions
+require 'extensions/model_extensions'

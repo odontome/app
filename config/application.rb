@@ -44,15 +44,7 @@ module Odontome
     #config.middleware.use Rack::SslEnforcer, :only => ["/signup", "/signin", "/users/new", /^\/users\/(.+)\/edit/, "/set_session_time_zone"], :mixed => true, , :except_hosts => '0.0.0.0'
   end
 
-  class ActiveRecord::Base
-  
-     def set_practice_id
-       if UserSession.find
-         self.practice_id = UserSession.find.user.practice_id
-       end
-     end
-     
-  end
+
 
   $betacodes = "ODNTM2011,DENTALHEROES,TEETHREMOVAL"
   

@@ -5,6 +5,7 @@ Odontome::Application.routes.draw do
     	resources :authentication
     	resources :appointments
       resources :patients
+      resources :doctors
 		end
 	end
 
@@ -29,7 +30,7 @@ Odontome::Application.routes.draw do
   end
   resource :user_session
   resources :password_resets, :only => [ :new, :create, :edit, :update ]
-
+		
   match "/signin" => "user_sessions#new", :as => :signin
   match "/logout" => "user_sessions#destroy", :as => :logout
   match "/signup" => "practices#new", :as => :signup
@@ -39,6 +40,7 @@ Odontome::Application.routes.draw do
   match "/practice/cancel" => "practices#cancel", :as => :practice_cancel
   match "/practice/change_to_free_plan" => "practices#change_to_free_plan", :as => :change_to_free_plan
   match "/practice/close" => "practices#close", :as => :practice_close, :via => :post
+  match "/practice/audits" => "audits#index", :as => :practice_audits, :via => :get 
   match "/paypal_ipn" => "paypal#paypal_ipn", :as => :paypal_ipn, :via => :post
   match "/paypal/cancel" => "paypal#cancel"
   match "/paypal/success" => "paypal#success"
