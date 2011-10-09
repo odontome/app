@@ -11,7 +11,7 @@ class Api::V1::AuthenticationController < Api::V1::BaseController
 			user = User.where(:crypted_password => Authlogic::CryptoProviders::Sha512.encrypt(params[:password] + user_by_email.password_salt)).where(:email => params[:email]).first
 			
 			# more this here, because otherwise we get a double render error
-			respond_with user, :only => [:id, :firstname, :lastname, :authentication_token]
+			respond_with user, :only => [:id, :firstname, :lastname, :roles, :authentication_token]
 		rescue
 			render :json => { :error => "Invalid credentials." }, :status => 404
 		end
