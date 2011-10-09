@@ -11,6 +11,7 @@ class PracticesController < ApplicationController
 
   def show
     @practice = current_user.practice
+    @is_user_is_admin = current_user.roles.include?("admin")
   end
 
   def new
