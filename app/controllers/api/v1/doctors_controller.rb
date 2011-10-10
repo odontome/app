@@ -3,7 +3,7 @@ class Api::V1::DoctorsController < Api::V1::BaseController
   before_filter :find_doctor, :only => [:show]
   
   def index
-    respond_with Doctor.mine
+    respond_with(Doctor.mine, :methods => "fullname")
   end
   
   def show
