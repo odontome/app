@@ -85,8 +85,8 @@
 				    type: "PUT", 
 				    url: "/appointments/" + JSON.stringify(event.id),
 				    data: { 
-				    	"appointment[starts_at]": event.start.toLocaleString(), 
-							"appointment[ends_at]": event.end.toLocaleString()
+				    	"appointment[starts_at]": JSON.stringify(event.start), 
+							"appointment[ends_at]": JSON.stringify(event.end)
 						  }
 				});
 			},
@@ -96,8 +96,8 @@
 				    type: "PUT", 
 				    url: "/appointments/" + calEvent.id,
 				    data: { 
-				    	"appointment[starts_at]": calEvent.start.toLocaleString(), 
-							"appointment[ends_at]": calEvent.end.toLocaleString(), 
+				    	"appointment[starts_at]": JSON.stringify(calEvent.start), 
+							"appointment[ends_at]": JSON.stringify(calEvent.end), 
 						  }
 				});
 			},
