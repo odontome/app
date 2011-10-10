@@ -21,6 +21,7 @@ class Appointment < ActiveRecord::Base
   validates_presence_of :practice_id, :doctor_id, :patient_id
   validates_numericality_of :practice_id, :doctor_id, :patient_id
   validate :ends_at_should_be_later_than_starts_at
+  validates :notes, :length => { :within => 0..255 }, :allow_blank => true
   
   # callbacks
   before_validation :set_practice_id, :on => :create

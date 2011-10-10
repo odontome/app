@@ -35,6 +35,7 @@ class AppointmentTest < ActiveSupport::TestCase
 	end
 	
 	test "appointment end date should be 60mins by default" do
+		UserSession.create users(:founder)
 		appointment = Appointment.new(:practice_id => 1,
 																	:doctor_id => 1,
 																	:patient_id => 1,
@@ -45,14 +46,19 @@ class AppointmentTest < ActiveSupport::TestCase
 	end
 	
 	test "appointment start date should be before the end date" do
-		appointment = Appointment.new(:practice_id => 1,
-																	:doctor_id => 1,
-																	:patient_id => 1,
-																	:starts_at => Time.now + 1800,
+		appointment = Appointment.new(:starts_at => Time.now + 1800,
 																	:ends_at => Time.now)
 																	
 		assert !appointment.save
 		assert_equal _("Invalid date range"), appointment.errors[:base].join("; ")
+	end
+	
+	test "appointment notes should be within 250 chars" do
+		appointment = Appointment.new(:notes => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula arcu ante, nec eleifend ipsum. Proin vestibulum nisi sit amet diam mattis tempor. Quisque condimentum elit aliquam dolor vehicula a suscipit velit dignissim. Nulla laoreet eros eget metus dapibus congue. Mauris vel arcu nec nunc pretium luctus a id justo. Vestibulum mattis commodo hendrerit. Vivamus interdum tempus enim id imperdiet. Integer et tortor ante. Nam sed tortor odio. Sed vulputate, libero quis pulvinar euismod, mauris neque congue diam, vitae aliquam sapien dolor vitae mi. Duis suscipit ligula ut lorem pretium volutpat.")
+																	
+		assert !appointment.save
+		assert_equal I18n.translate("errors.messages.too_long", :count => 255), appointment.errors[:notes].join("; ")
+		
 	end
 	
 end
