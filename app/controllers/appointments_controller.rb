@@ -11,7 +11,7 @@ class AppointmentsController < ApplicationController
   def index
      @appointments = Appointment.find_between(params[:start], params[:end])
      
-     respond_with(@appointments)
+     respond_with(@appointments, :methods => ["doctor","patient"])
   end
   
   def new

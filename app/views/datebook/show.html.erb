@@ -31,7 +31,7 @@
 			maxTime: 21,
 			height: 620,
 			firstDay: 1,
-			// timeFormat: '<%=_("H(:mm)")%>',
+			timeFormat: 'h:mm t{ - h:mm t} ',
 			header: {
 				left: "prev,next today",
 				center: "title",
@@ -52,7 +52,10 @@
 			    day:      '<%=_("day")%>'
 			},
 			editable: true,
-			events: "/appointments",
+      eventSources: [{
+          url: '/appointments',
+          ignoreTimezone: true
+      }],
 			allDaySlot: false,
 			allDayDefault: false,
 			dayClick: function(dayDate, allDay, jsEvent, view){
@@ -75,14 +78,15 @@
 				  $("#modal_dialog").html(data).dialog("open");
 				});
 			},
-			eventDrop: function(calEvent, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
-				// update the event with the new data
+			
+			eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc){
+				//update the event with the new data
 				$.ajax({ 
 				    type: "PUT", 
-				    url: "/appointments/" + calEvent.id,
-				    data: { "appointment[starts_at]": JSON.stringify(calEvent.start), 
-							"appointment[ends_at]": JSON.stringify(calEvent.end), 
-							type: "drop"
+				    url: "/appointments/" + JSON.stringify(event.id),
+				    data: { 
+				    	"appointment[starts_at]": event.start.toLocaleString(), 
+							"appointment[ends_at]": event.end.toLocaleString()
 						  }
 				});
 			},
@@ -91,9 +95,9 @@
 				$.ajax({ 
 				    type: "PUT", 
 				    url: "/appointments/" + calEvent.id,
-				    data: { "appointment[starts_at]": JSON.stringify(calEvent.start), 
-							"appointment[ends_at]": JSON.stringify(calEvent.end), 
-							type: "resize"
+				    data: { 
+				    	"appointment[starts_at]": calEvent.start.toLocaleString(), 
+							"appointment[ends_at]": calEvent.end.toLocaleString(), 
 						  }
 				});
 			},

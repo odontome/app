@@ -3,7 +3,7 @@ class Api::V1::AppointmentsController < Api::V1::BaseController
   before_filter :find_appointment, :only => [:show, :update, :destroy]
   
   def index
-    respond_with Appointment.find_between(params[:starts_at], params[:ends_at])
+    respond_with(Appointment.find_between(params[:starts_at], params[:ends_at]), :methods => ["doctor","patient"])
   end
   
   def show

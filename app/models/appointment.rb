@@ -10,12 +10,9 @@ class Appointment < ActiveRecord::Base
   scope :mine, lambda { 
     where("appointments.practice_id = ? ", UserSession.find.user.practice_id)
   }
-  
+   
   scope :find_between, lambda { |starts_at, ends_at|
-    select("appointments.id, appointments.starts_at AS start, appointments.ends_at AS end, appointments.notes AS title, appointments.doctor_id, appointments.practice_id, appointments.patient_id, doctors.color, patients.firstname, patients.lastname")
-    .joins("LEFT OUTER JOIN patients ON patients.id = appointments.patient_id")
-    .joins("LEFT OUTER JOIN doctors ON doctors.id = appointments.doctor_id")
-    .where("appointments.starts_at > ? AND appointments.ends_at < ?", Time.at(starts_at.to_i), Time.at(ends_at.to_i))
+    where("appointments.starts_at > ? AND appointments.ends_at < ?", Time.at(starts_at.to_i), Time.at(ends_at.to_i))
     .order("appointments.starts_at")
     .mine
   }
@@ -27,20 +24,25 @@ class Appointment < ActiveRecord::Base
   
   # callbacks
   before_validation :set_practice_id, :on => :create
-  before_save :fix_dates
   before_create :set_ends_at
   
-  private
+  # Overwrite de JSON response to comply with that the event calender wants
+  def as_json(options = {})
+      {
+      	:id => id,
+        :start => starts_at.to_formatted_s(:rfc822),
+        :end => ends_at.to_formatted_s(:rfc822),
+        :title => notes,
+        :doctor_id => doctor_id,
+        :practice_id => practice_id,
+        :patient_id => patient_id,
+        :color => doctor.color,
+        :firstname => patient.firstname,
+        :lastname => patient.lastname
+      }
+	end
   
-  def fix_dates 
-    # only when the date was modified (not the case when editing the info)
-    if self.changes[:starts_at] != nil
-      self.starts_at = self.starts_at + (self.starts_at.gmt_offset).seconds
-      if self.ends_at != nil  
-        self.ends_at = self.ends_at + (self.ends_at.gmt_offset).seconds
-      end
-    end
-  end
+  private
   
   def ends_at_should_be_later_than_starts_at
   	if !self.starts_at.nil? && !self.ends_at.nil?
@@ -55,5 +57,7 @@ class Appointment < ActiveRecord::Base
     	self.ends_at = self.starts_at + 60.minutes
     end
   end
+  
+
 
 end
