@@ -3,7 +3,7 @@ class Api::V1::PatientsController < Api::V1::BaseController
   before_filter :find_patient, :only => [:show, :update, :destroy]
   
   def index
-    respond_with Patient.select("id,uid,firstname,lastname").mine
+    respond_with Patient.mine, :only => [:id, :uid, :firstname, :lastname]
   end
   
   def show
@@ -21,7 +21,7 @@ class Api::V1::PatientsController < Api::V1::BaseController
   end
   
   def update
-  	@patient.update_attributes(params[:patient])
+  	@patient.update_attributes(params[:patient])  	
 		respond_with(@patient)
   end
   
