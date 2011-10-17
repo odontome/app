@@ -38,7 +38,7 @@ class Appointment < ActiveRecord::Base
         :practice_id => practice_id,
         :patient_id => patient_id,
         :color => doctor.color,
-        :doctor_name => doctor.firstname + " " + doctor.lastname,
+        :doctor_name => doctor.fullname,
         :firstname => patient.firstname,
         :lastname => patient.lastname
       }
