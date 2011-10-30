@@ -7,6 +7,30 @@ class Api::V1::DoctorsController < Api::V1::BaseController
   end
   
   def show
+    respond_with(@doctor, :methods => ["fullname"])
+  end
+  
+  def create
+    doctor = Doctor.create(params[:doctor])
+    
+    if doctor.valid?
+      respond_with(doctor, :location => api_v1_doctor_path(doctor))
+    else
+      respond_with(doctor)
+  	end 
+  end
+  
+  def show
+    respond_with(@doctor)
+  end
+  
+  def update
+  	@doctor.update_attributes(params[:@doctor])
+		respond_with(@doctor)
+  end
+  
+  def destroy
+    @doctor.destroy
     respond_with(@doctor)
   end
   
