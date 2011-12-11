@@ -27,7 +27,7 @@ class Appointment < ActiveRecord::Base
   before_validation :set_practice_id, :on => :create
   before_create :set_ends_at
   
-  # Overwrite de JSON response to comply with that the event calender wants
+  # Overwrite de JSON response to comply with that the event calendar wants
   def as_json(options = {})
       {
       	:id => id,
