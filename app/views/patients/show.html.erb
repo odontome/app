@@ -3,7 +3,7 @@
 	<ul>
 		<li><a id="chart_tab" href="#chart"><%=_("Chart")%></a></li>
 		<li><a id="appointments_tab" href="<%=appointments_patient_path(@patient) %>"><span><%=_("Appointments")%></span></a></li>
-		<li><a id="treatments_tab" href="<%=patient_patient_treatments_path(@patient) %>"><span><%=_("Treatmeant history")%></span></a></li>
+		<!--<li><a id="treatments_tab" href="<%=patient_patient_treatments_path(@patient) %>"><span><%=_("Treatmeant history")%></span></a></li>-->
 		<li><a id="balance_tab" href="<%=patient_balances_path(@patient) %>"><span><%=_("Balance")%></span></a></li>
 	</ul>
 	
@@ -27,7 +27,7 @@
 			<p><label><%=_('Address')%>:</label> <%=@patient.address%></p>			
 		</div>
 		
-		<div class="sidecontent">
+		<!-- <div class="sidecontent">
 			<h2><%=_('Medical history')%></h2>
 			
 			<% if @patient.allergies != "" %>
@@ -40,7 +40,7 @@
 			<p><label><%=_('Drinks per day')%>:</label> <%=@patient.drinks_per_day%></p>
 			<p><label><%=_('Drugs use')%>:</label> <%=@patient.drugs_use%></p>
 			<p><label><%=_('Family history')%>:</label> <%=@patient.family_diseases%></p>
-		</div>
+		</div> -->
 				
 		<div class="notes clear">
 			<%= render :partial => "notes/index", :locals => {:notes => @patient_notes, :noteable => @patient} %>
