@@ -170,7 +170,7 @@ li h2 a {
 /* -----------------------------------------
    Balance table
 ----------------------------------------- */
-#patient_balance { background: #fff; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; margin: 0 0 18px; border: 1px solid #ddd; width: 100%; }
+#patient_balance { background: #fff; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; margin: 0 0 18px 0; border: 1px solid #ddd; width: 100%; }
 
 #patient_balance thead, #patient_balance tfoot { background: #f5f5f5; }
 #patient_balance thead tr th,
@@ -179,7 +179,7 @@ li h2 a {
 #patient_balance tr td,
 #patient_balance tfoot tr td { font-size: 12px; line-height: 18px; text-align: left; }
 #patient_balance thead tr th,
-#patient_balance tfoot tr td { padding: 8px 10px 9px; font-size: 14px; font-weight: bold; color: #222; }
+#patient_balance tfoot tr td { padding: 8px 0px 9px; font-size: 14px; font-weight: bold; color: #222; text-align: center; }
 #patient_balance thead tr th:first-child, #patient_balance tfoot tr td:first-child { border-left: none; }
 #patient_balance thead tr th:last-child, #patient_balance tfoot tr td:last-child { border-right: none; }
 

@@ -1,24 +1,28 @@
-<table id="patient_balance">
-	<thead>
-		<tr>
-			<th width="70%"><%=_("Notes")%></th>
-			<th width="15%"><%=_("Expenses")%></th>
-			<th width="15%"><%=_("Income")%></th>			
-		</tr>
-	</thead>
-	<tbody>
-	<% @balances.each do |balance| %>
-		<%= render :partial => "show", :locals => {:balance => balance}%>
-	<% end %>
-	</tbody>
-	<tfoot>
-		<tr>
-			<td colspan="3"><%=link_to number_to_currency_with_currency(@total), patient_balances_path(:format => :csv), :class => "button large nice", :title => _("Download balance in CSV") %></td>
-		</tr>
-	</tfoot>
-</table>
+<div class="row">	
+	<table id="patient_balance">
+		<thead>
+			<tr>
+				<th width="70%"><%=_("Notes")%></th>
+				<th width="15%"><%=_("Expenses")%></th>
+				<th width="15%"><%=_("Income")%></th>			
+			</tr>
+		</thead>
+		<tbody>
+		<% @balances.each do |balance| %>
+			<%= render :partial => "show", :locals => {:balance => balance}%>
+		<% end %>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="3"><%=link_to number_to_currency_with_currency(@total), patient_balances_path(:format => :csv), :class => "button large nice", :title => _("Download balance in CSV") %></td>
+			</tr>
+		</tfoot>
+	</table>
+</div>
 
-<%= render "new" %>
+<div class="row">	
+	<%= render "new" %>
+</div>
 
 <script type="text/javascript">
 	$(document).ready(function() {
