@@ -4,7 +4,7 @@
 body {
 	background: #fefefe;
 	font-family: "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, "Lucida Grande", sans-serif;
-	font-size: 13px;
+	font-size: 14px;
 	line-height: 18px;
 	color: #555;
 	position: relative;
@@ -42,18 +42,15 @@ h4 {
   margin-right: 5px;
   font-size: 24px;
   vertical-align: middle;
-  color: #ccc;
+  color: #bbb !important;
   transition: background-color .25s ease-out;
   -webkit-transition: background-color .25s ease-out;
   -moz-transition: background-color .25s ease-out;
 }
 
-fieldset {
-	border-bottom: none !important;
-	border-left: none !important;
-	border-right: none !important;
+sub {
+	opacity: 0.6;
 }
-
 
 .alert-box.notice { background-color: #7fae00; color: #fff; text-shadow: 0 -1px rgba(0,0,0,0.3); }
 
