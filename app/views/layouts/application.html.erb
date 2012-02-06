@@ -1,29 +1,49 @@
-<!doctype html>  
-<html>
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
 <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width" />
+	
   <title><%= _("Odonto.me, beautiful dental practice management")%></title>
-  <%= stylesheet_link_tag "application", "default-theme/jquery-ui-1.7.2.custom", "tipTip", "autosuggest" %>
-  <%= javascript_include_tag "jquery.min", "jquery-ui.min", "jquery.tipTip.min", "jquery.limit-1.2.min", "jquery.autosuggest.min", "jquery.simple-color.min", "rails", "application", "uservoice" %>
-  <link rel="shortcut icon" href="/favicon.ico">  
-
+  
+  <%= stylesheet_link_tag "foundation", "application", "autosuggest" %>
+  
+  <%= javascript_include_tag "jquery.min", "jquery-ui.min", "jquery.limit-1.2.min", "jquery.autosuggest.min", "jquery.simple-color.min", "rails", "modernizr.foundation", "foundation", "application" %>
+    
+	<link rel="shortcut icon" href="/favicon.ico">
 </head>
 
 <body>
-	<div id="container">
-		<header>
-			<%= link_to (image_tag "logo.png", :title => _("Home"), :class => "logo", :height => 20), root_path %>
-			<%= render "shared/navigation" %>
-		</header>
+
+	<!-- header -->
+	<header>
+		<!-- container -->
+		<div class="container">
+			<div class="row">
+				<div class="four columns">
+					<%= link_to (image_tag "logofull.png", :title => _("Home"), :class => "logo", :width => 190), root_path %>
+				</div>
+				<div class="eight columns hide-on-phones">
+					<%= render "shared/navigation" %>
+				</div>
+			</div>
+		</div>
+	</header>	
+	
+	<div class="container">
+		<%= render "shared/navigation_mobile" %>
 		
 		<%= render "shared/flash_messages" %>
 		
-		<div id="content">
-			<%= yield %>
-		</div>
-		
-		<footer>
-			<%= render "shared/footer"%>
-		</footer>
+		<%= yield %>
 	</div>
-</body>
+	
+	<%= render "shared/footer" %>
+	
+	<!-- at the end in case pictos is not feeling well -->
+	<link href="//get.pictos.cc/fonts/576/2" rel="stylesheet" type="text/css">
+	</body>
 </html>

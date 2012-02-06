@@ -1,24 +1,25 @@
-<h1><%=_('Users')%> <%= link_to "+", new_user_url, :class => "g-button dark" %></h1>
+<div class="row">	
+	
+	<div class="eight columns">
+		<h1><%=_('Users')%></h1>
 
-<ul id="list-items">
-	<% @users.each do |user| %>
-		<li>
-			<h2><%= link_to user.fullname, user %> <% if user_is_admin?(user) %> (admin)<%end%></h2>
-
-			<span><strong><%=_('Email')%>:</strong> <%=user.email%></span>
-			<span><strong><%=_('Last seen')%>:</strong> <% if user.last_login_at %><%= time_ago_in_words(user.last_login_at) %><% else %><%=_('never')%><% end %></span>	
-
-			<% if user_is_admin?(current_user) && !user_is_admin?(user) %>
-				<div class="list-item-button"><%= link_to _("Delete"), user, :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %></div>
+		<ul id="list-items">
+			<% @users.each do |user| %>
+				<li>
+					<h2><%= link_to user.fullname, user %> <% if user_is_admin?(user) %> <span class="label white radius">admin</span><%end%></h2>
+		
+					<span><strong><%=_('Email')%>:</strong> <%=user.email%></span>
+					<span><strong><%=_('Last seen')%>:</strong> <% if user.last_login_at %><%= time_ago_in_words(user.last_login_at) %><% else %><%=_('never')%><% end %></span>	
+				</li>
 			<% end %>
-			<% if is_editeable_by_current_user(user) %>
-				<div class="list-item-button"><%= link_to _("Edit"), edit_user_path(user), :class => "g-button light" %></div>
-			<% end %>
-		</li>
+		</ul>
+	</div>
 
-	<% end %>
-</ul>
-
-<div id="toolbar">
-	<%= link_to _("Create new user"), new_user_path, :class => "g-button action" %>
+	<div class="four columns">
+		<div class="panel">
+			<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi arcSed ut perspiciatis unde omnis iste natus</p>
+			
+			<p><%= link_to _("Create new user"), new_user_path, "data-icon" => "+" %></p>
+		</div>
+	</div>
 </div>

@@ -1,9 +1,17 @@
+body {
+	background: #222;
+	font-family: "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-size: 13px;
+	line-height: 18px;
+	color: #555;
+	-webkit-font-smoothing: antialiased;
+}
+
 #container {
-	width: 340px;
+	width: 350px;
 	height: 340px;
-	margin: -150px 0 0 -150px;
-	position: absolute;
-	top: 45%;
+	margin: 60px auto;
+	top: 35%;
 	left: 50%;
 	background: url(/images/logofull.png) top center no-repeat;
 	padding-top: 50px;
@@ -34,6 +42,8 @@
 		
 	border-radius: 5px;
 	text-shadow: 0 1px 0 rgb(240, 240, 240);
+	margin-top: 20px;
+	padding: 20px;
 }
 
 input[type="text"],input[type="email"],input[type="password"] {

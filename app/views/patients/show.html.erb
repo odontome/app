@@ -1,61 +1,81 @@
-<div id="tabs">
-	
-	<ul>
-		<li><a id="chart_tab" href="#chart"><%=_("Chart")%></a></li>
-		<li><a id="appointments_tab" href="<%=appointments_patient_path(@patient) %>"><span><%=_("Appointments")%></span></a></li>
-		<!--<li><a id="treatments_tab" href="<%=patient_patient_treatments_path(@patient) %>"><span><%=_("Treatmeant history")%></span></a></li>-->
-		<li><a id="balance_tab" href="<%=patient_balances_path(@patient) %>"><span><%=_("Balance")%></span></a></li>
-	</ul>
-	
-	<div id="chart">
-		
-		<h1><big><%=@patient.fullname%></big> <%= link_to _("Edit"), edit_patient_path(@patient), :class => "g-button light"%></h1>
-		
-		<div class="bodycontent">	
-			<h2><%=_('Personal information')%></h2>
+<div class="row">
+	<!-- content -->
+	<div class="eight columns">
+		<!-- tab content -->
+		<ul class="tabs-content">
+			<li id="chartTab" class="active">
 			
-			<% if @patient.uid != "" %>
-				<p><label><%=_('Unique identifier')%>:</label> <%=@patient.uid%></p>
-			<% end %>
-			<p><label><%=_('First name')%>:</label> <%=@patient.firstname%></p>
-			<p><label><%=_('Last name')%>:</label> <%=@patient.lastname%></p>
-			<p><label><%=_('Age')%>:</label> <%=@patient.age%> (<%=l @patient.date_of_birth, :format => :long %>)</p>
-			<p><label><%=_('Email')%>:</label> <%=@patient.email%></p>
-			<p><label><%=_('Telephone')%>:</label> <%=@patient.telephone%></p>
-			<p><label><%=_('Mobile')%>:</label> <%=@patient.mobile%></p>
-			<p><label><%=_('Emergency telephone')%>:</label> <%=@patient.emergency_telephone%></p>
-			<p><label><%=_('Address')%>:</label> <%=@patient.address%></p>			
-		</div>
-		
-		<!-- <div class="sidecontent">
-			<h2><%=_('Medical history')%></h2>
+				<h1><%=@patient.fullname%></h1>
 			
-			<% if @patient.allergies != "" %>
-				<p class="error_field"><label><%=_('Allergic to')%>:</label> <%=@patient.allergies%></p>
-			<% end %>
-			<p><label><%=_('Past Illnesses')%>:</label> <%=@patient.past_illnesses%></p>
-			<p><label><%=_('Past surgeries')%>:</label> <%=@patient.surgeries%></p>
-			<p><label><%=_('Current medications')%>:</label> <%=@patient.medications%></p>
-			<p><label><%=_('Cigarettes per day')%>:</label> <%=@patient.cigarettes_per_day%></p>
-			<p><label><%=_('Drinks per day')%>:</label> <%=@patient.drinks_per_day%></p>
-			<p><label><%=_('Drugs use')%>:</label> <%=@patient.drugs_use%></p>
-			<p><label><%=_('Family history')%>:</label> <%=@patient.family_diseases%></p>
-		</div> -->
-				
-		<div class="notes clear">
-			<%= render :partial => "notes/index", :locals => {:notes => @patient_notes, :noteable => @patient} %>
-		</div>
-		
-		<%= render :partial => "notes/new", :locals => {:noteable => @patient} %>
+				<div class="row">	
+						<ul class="block-grid two-up">
+							<li><span data-icon="b" class="has-tip" title="<%=_('Age')%>" id="age"></span> <%=l @patient.date_of_birth, :format => :long %> (<%=@patient.age%> <%= _("years old") %>)</li>
+							<li><span data-icon="@" class="has-tip" title="<%=_('Email')%>" id="email"></span> <%= mail_to @patient.email%></li>
+							<li><span data-icon="g" class="has-tip" title="<%=_('Telephone')%>" id="phone1"></span> <%=@patient.telephone%></li>
+							<li><span data-icon="c" class="has-tip" title="<%=_('Mobile')%>" id="mobile"></span> <%=@patient.mobile%></li>
+							<li><span data-icon="d" class="has-tip" title="<%=_('Emergency telephone')%>" id="phone2"></span> <%=@patient.emergency_telephone%></li>
+							<li><span data-icon="f" class="has-tip" title="<%=_('Address')%>" id="address"></span> <%=@patient.address%></li>
+						</ul>		
+				</div>
+				<div class="row">
+									
+					<hr />
+					
+					<% if @patient.uid != "" %>
+						<p><strong><%=_('Chart number')%></strong> <%=@patient.uid%></p>
+					<% end %>
+					
+					<% if @patient.allergies != "" %>
+						<p class="error_field"><strong><%=_('Allergic to')%>:</strong> <%=@patient.allergies%></p>
+					<% end %>
+					<p><strong><%=_('Past Illnesses')%>:</strong> <%=@patient.past_illnesses%></p>
+					<p><strong><%=_('Past surgeries')%>:</strong> <%=@patient.surgeries%></p>
+					<p><strong><%=_('Current medications')%>:</strong> <%=@patient.medications%></p>
+					<p><strong><%=_('Cigarettes per day')%>:</strong> <%=@patient.cigarettes_per_day%></p>
+					<p><strong><%=_('Drinks per day')%>:</strong> <%=@patient.drinks_per_day%></p>
+					<p><strong><%=_('Drugs use')%>:</strong> <%=@patient.drugs_use%></p>
+					<p><strong><%=_('Family history')%>:</strong> <%= simple_format @patient.family_diseases%></p>
+				</div>
+			
+				<div class="row">
+					<div class="notes">
+						<%= render :partial => "notes/index", :locals => {:notes => @patient_notes, :noteable => @patient} %>
+					</div>
+					
+					<%= render :partial => "notes/new", :locals => {:noteable => @patient} %>
+				</div>
+			</li>
+			<li id="appointmentsTab"></li>
+			<li id="balanceTab"></li>
+		</ul>
 	</div>
-
-	<div style="clear:both"></div>
+	
+	<!-- side content -->
+	<div class="four columns">
+		<!-- tab navigation -->
+		<dl class="tabs nice vertical">
+			<dd><a href="#chart" class="active" data-icon="a"><%=_("Chart")%></a></dd>
+			<dd><a href="#appointments" data-icon="b"><%=_("Appointments")%></a></dd>
+			<!--<li><a href="<%=patient_patient_treatments_path(@patient) %>"><span><%=_("Treatmeant history")%></span></a></li>-->
+			<dd><a href="#balance" data-icon="p"><%=_("Balance")%></a></dd>
+		</dl>
+		
+		<div class="panel">
+			<ul>
+				<li><%= link_to _("Edit patient's information"), edit_patient_path(@patient), "data-icon" => "x" %></li>
+				
+				<% if user_is_admin?(current_user) %>
+					<li><%= link_to _("Delete patient"), @patient, :method => :delete, :confirm => _("Are you sure? All data associated with this patient will be lost forever."), "data-icon" => "-" %></li>
+				<% end %>
+			</ul>
+		</div>
+	</div>
 </div>
 
-<script type="text/javascript">
-	$(function() {
-		$("#tabs").tabs({
-			spinner: "<img src='/images/icons/indicator.gif' />"
-		});
+<script>
+	$(document).ready(function () {
+		$("#appointmentsTab").load("<%=appointments_patient_path(@patient) %>");
+		$("#balanceTab").load("<%=patient_balances_path(@patient) %>");
+	
 	});
 </script>

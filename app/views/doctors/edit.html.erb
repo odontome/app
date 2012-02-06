@@ -1,3 +1,18 @@
-<h1><%=_('Editing')%> <%=@doctor.fullname%></h1>
-
-<%= render 'form' %>
+<div class="row">
+	<div class="eight columns">
+		<h1><%=_('Editing')%> <%=@doctor.fullname%></h1>
+		
+		<%= render 'form' %>
+	</div>
+	
+	<div class="four columns">
+		<div class="panel">
+			<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi arcSed ut perspiciatis unde omnis iste natus</p>
+			
+			<ul>
+				<li><%= link_to_suspend_or_delete @doctor %></li>
+				<li><%=link_to _("Return to the listing"), doctors_url, "data-icon" => "<" %></li>
+			</ul>
+		</div>
+	</div>
+</div>

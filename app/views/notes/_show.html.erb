@@ -1,5 +1,5 @@
-<div id="note<%=note.id%>" class="note">
-	<div class="delete"><%= link_to image_tag("icons/delete.png"), [noteable, note], :confirm => 'Are you sure?', :method => :delete, :remote => true %></div>
-	<div class="timestamp"><%=l note.created_at, :format => :long %></div>
-	<div class="content"><%=note.notes%></div>
+<div id="note<%=note.id%>" class="alert-box">
+	<p><span class="radius label blue"><%=l note.created_at, :format => :long %></span>
+	<%=note.notes%></p>
+	<%= link_to "×", [noteable, note], :method => :delete, :remote => true, :class => "close has-tip", :title => _("Delete") %>
 </div>

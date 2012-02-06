@@ -1,29 +1,40 @@
-<h1><%=_('Doctors')%> <%= link_to "+", new_doctor_url, :class => "g-button dark" %></h1>
-
-<% if @doctors.empty? %>
-	<div class="info"><%=_("You currently don't have any doctors in your practice. Remember that you need at least one doctor in order to create appointments.")%></div>
-<% end %>
-
-<ul id="list-items">
-	<% @doctors.each do |doctor| %>
-		<% unless doctor.is_active
-			cclass = "disabled-list"
-		   else
-			cclass = ""
-		   end
-		%>
-		<li class="<%=cclass%>">
-			<h2><%= link_to doctor.fullname, doctor %></h2>			
-
-			<span><%=doctor.uid%></span>
-			<span><strong><%=_('Speciality')%>:</strong> <%=doctor.speciality%></span>
-			
-			<div class="list-item-button"><%=link_to_suspend_or_delete doctor %></div>
-			<div class="list-item-button"><%=link_to _('Edit'), edit_doctor_path(doctor), :class => "g-button light" %></div>
-		</li>
+<div class="row">	
+	<% if @doctors.empty? %>
+		<div class="alert-box warning"><%=_("You currently don't have any doctors in your practice. Remember that you need at least one doctor in order to create appointments.")%> <a href="" class="close">&times;</a></div>    
+		</div>
 	<% end %>
-</ul>
-
-<div id="toolbar">
-	<%= link_to _("Create new doctor"), new_doctor_url, :class => "g-button action" %>
+	
+	<div class="eight columns">
+		
+		<h1><%=_('Doctors')%></h1>
+		
+		<ul id="list-items">
+			<% @doctors.each do |doctor| %>
+				<li>
+					<h2>
+						<% if !doctor.is_active %>
+							<span class="red radius label"><%=_("Suspended")%></span>
+						<% end %>
+						<%= link_to doctor.fullname, doctor %>
+					</h2>			
+		
+					<span><%=doctor.uid%></span>
+					<span><strong><%=_('Speciality')%>:</strong> <%=doctor.speciality%></span>
+				</li>
+			<% end %>
+		</ul>
+	</div>
+	
+	<div class="four columns">
+		<div class="panel">
+			<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi arcSed ut perspiciatis unde omnis iste natus</p>
+			
+			<p><%= link_to _("Create new doctor"), new_doctor_url, "data-icon" => "+" %></p>
+		</div>
+	</div>
+	
 </div>
+
+
+
+	

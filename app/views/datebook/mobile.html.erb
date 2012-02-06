@@ -1,30 +1,33 @@
 <%= stylesheet_link_tag "fullcalendar" %>
-<%= javascript_include_tag "fullcalendar/jquery.fullcalendar.min", "fullcalendar/jquery.ui.touch-punch", "fullcalendar/jquery.fullcalendar.ipad" %>
+<%= javascript_include_tag "fullcalendar/jquery.fullcalendar.min", "fullcalendar/jquery.ui.touch" %>
 
 <div class="row">
 
 	<h1><%=_('Datebook')%></h1>
-
-	<script type="text/javascript">
-	
-		$(document).ready(function() {
 		
+	<script type="text/javascript">
+		
+		$(document).ready(function() {
+			
+			// Setup touch dragging for external events
+			$('.ui-draggable').addTouch();
+			
 			var date = new Date();
 			var d = date.getDate();
 			var m = date.getMonth();
 			var y = date.getFullYear();
 								
 			$("#calendar").fullCalendar({
-				defaultView: "agendaWeek",
+				defaultView: "agendaDay",
 				minTime: 8,
 				maxTime: 21,
 				firstDay: 1,
-				height: "700",
+				height: "1200",
 				//timeFormat: 'h:mm t{ - h:mm t} ',
 				header: {
 					left: "prev,next today",
-					center: "title",
-					right: "month,agendaWeek,agendaDay"
+					center: "",
+					right: ""
 				},
 				monthNames: ['<%=_("January")%>', '<%=_("February")%>', '<%=_("March")%>', '<%=_("April")%>', '<%=_("May")%>', '<%=_("June")%>', '<%=_("July")%>', '<%=_("August")%>', '<%=_("September")%>', '<%=_("October")%>', '<%=_("November")%>', '<%=_("December")%>'],
 				monthNamesShort: ['<%=_("Jan")%>', '<%=_("Feb")%>', '<%=_("Mar")%>', '<%=_("Apr")%>', '<%=_("May")%>', '<%=_("Jun")%>', '<%=_("Jul")%>', '<%=_("Aug")%>', '<%=_("Sep")%>', '<%=_("Oct")%>', '<%=_("Nov")%>', '<%=_("Dec")%>'],
@@ -79,6 +82,20 @@
 							  }
 					});
 				},
+				
+				// If we're on an iPad, this is used as our "eventClick"
+				eventMouseover: function()
+				{
+				    if(isTouchDevice)
+				    {
+				        var url = "/appointments/" + calEvent.id + "/edit?patient_id=" + calEvent.patient_id;
+				        
+				        $.get(url, function(data) {
+				          $("#modal_dialog").html(data).reveal();
+				        });
+				    }
+				},
+
 				eventResize: function(calEvent, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) {
 					// update the event with the new data
 					$.ajax({ 
@@ -89,6 +106,10 @@
 								"appointment[ends_at]": JSON.stringify(calEvent.end), 
 							  }
 					});
+				},
+				eventAfterRender: function( event, element, view ) { 
+					// Add touch dragging to event element 
+					element.addTouch();
 				},
 				eventRender: function(event, element) {
 					// Append the name of the patient    
@@ -106,12 +127,9 @@
 	
 </div>
 
-<br />
-
 <div class="row">
-
 	<div class="twelve columns">
-		<ul class="block-grid four-up">		
+		<ul class="block-grid two-up">		
 			<% @doctors.each do |doctor| %>
 				<li><span style="color: <%= doctor.color %>">&#x25CF;</span> <%= doctor.fullname %></li>
 			<% end %>

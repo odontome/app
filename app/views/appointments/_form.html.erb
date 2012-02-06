@@ -1,6 +1,6 @@
 <%= form_for(@appointment, :remote => true) do |f| %>
 	<p>		
-		<%= text_field_tag "appointment[patient_id]", nil, :title => _("Enter the patient name or Unique Identifier") %>
+		<%= text_field_tag "appointment[patient_id]", nil, :title => _("Enter the patient name or Unique Identifier"), :class => "input-text" %>
 	</p>
 	
 	<div class="clear"></div>
@@ -18,14 +18,13 @@
 		<%= f.text_area :notes, :placeholder => _("Additional notes"), :rows => 2, :title => _("Additional notes"), :limit => 255  %>
 	</p>
 	
-	<div id="toolbar">
-		<%= f.submit(_("Save"), :class => "g-button action", :disable_with => _("Please wait...")) %> 
+	<%= f.submit(_("Save"), :class => "button nice white", :disable_with => _("Please wait...")) %> 
+
+	<% if controller.action_name == "edit" %> 
+		<%= link_to _('Delete appointment'), @appointment, :method => :delete, :remote => :true, :confirm => _("Are you sure?"), "data-icon" => "-" %> 
+	<% else %>
+		<%= f.hidden_field :starts_at %>
+	<% end %> 
 	
-		<% if controller.action_name == "edit" %> 
-			<%=link_to _('Delete appointment'), @appointment, :method => :delete, :remote => :true, :confirm => _("Are you sure?"), :class => "g-button red" %> 
-		<% else %>
-			<%= f.hidden_field :starts_at %>
-		<% end %> 
-		<%= _("or") %> <a id="close_dialog" href="#"><%=_("Cancel")%></a>
-	</div>
+	<a class="close-reveal-modal">&#215;</a>
 <% end %>

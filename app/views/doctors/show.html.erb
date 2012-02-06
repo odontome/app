@@ -1,32 +1,38 @@
-<h1><%=@doctor.fullname%></h1>
-
-<div class="info">
-	<p>
-		<label><%=_("Unique identifier")%>:</label> <%= @doctor.uid%>
-	</p>
-	<p>
-		<label><%=_("Email")%>:</label> <%= @doctor.email%>
-	</p>
-	<p>
-		<label><%=_("Gender")%>:</label> <%= @doctor.gender.titleize%>
-	</p>
-	<p>
-		<label><%=_("Speciality")%>:</label> <%= @doctor.speciality%>
-	</p>
-	<p>
-		<label><%=_("Status")%>:</label> 
-		<% if @doctor.is_active %>
-			<%=_("Active")%>
-	    <% else %>
-			<%=_("Suspended")%>
-	    <% end %>
-	</p>
-</div>
+<div class="row">
+	<div class="eight columns">
+		
+		<h1><%=@doctor.fullname%>
+			<% if !@doctor.is_active %>
+				<span class="red radius label"><%=_("Suspended")%></span>
+			<% end %>
+		</h1>
+		
+		<p>
+			<strong><%=_("Unique identifier")%>:</strong> <%= @doctor.uid%>
+		</p>
+		<p>
+			<strong><%=_("Email")%>:</strong> <%= @doctor.email%>
+		</p>
+		<p>
+			<strong><%=_("Gender")%>:</strong> <%= @doctor.gender.titleize%>
+		</p>
+		<p>
+			<strong><%=_("Speciality")%>:</strong> <%= @doctor.speciality%>
+		</p>
+	</div>
 	
-<div id="toolbar">
-	<%=link_to _("Edit"), edit_doctor_path(@doctor), :class => "g-button action" %>
-	
-	<%= link_to_suspend_or_delete @doctor %>
-	
-	<%=_("or")%> <%=link_to _("Return to the listing"), doctors_url %>
+	<div class="four columns">
+		<div class="panel">
+			<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi arcSed ut perspiciatis unde omnis iste natus</p>
+			
+			<ul>
+				<li><%= link_to _("Edit doctor's information"), edit_doctor_path(@doctor), "data-icon" => "x" %></li>
+				<% if user_is_admin?(current_user) %>
+					<li><%= link_to_suspend_or_delete @doctor %></li>
+				<% end %>
+				<li><%=link_to _("Return to the listing"), doctors_url, "data-icon" => "<" %></li>
+			</ul>
+						
+		</div>
+	</div>
 </div>

@@ -7,7 +7,7 @@
 		<div class="list-item"><%= @practice.treatments.count %> <%=_('treatments')%></div>
 	</li> -->
 	<li>
-		<h2><%=link_to _("My doctors"), doctors_url %></h2>
+		<h2><%= link_to _("My doctors"), doctors_url %></h2>
 		<span><%=_('The people who do the things to your patients.')%></span>
 		<div class="list-item"><%= @practice.doctors.count %> <%=_('doctors')%></div>
 	</li>

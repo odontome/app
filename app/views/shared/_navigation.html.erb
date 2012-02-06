@@ -1,31 +1,41 @@
-<nav>
-<% if current_user %>
-	<% unless current_user.roles.include?("superadmin") %>
-		<ul id="navigation">
-			<li><%= link_to _("Datebook"), datebook_url, :class => "dark" %></li>
-			<li><%= link_to _("Patients"), patients_url, :class => "dark" %></li>
-			<li><%= link_to _("My practice"), practice_url, :class => "dark" %></li>
-		</ul>
-		<div id="search-box">
-			<%= text_field_tag("patient_search") %>
-		</div>
-		<ul id="navigation">
-			<li><small><%= link_to _("Logout"), logout_url, :confirm => _("Are you sure?"), :class => "dark" %></small></li>
-		</ul>
-	<% else %>
-		<ul id="navigation">
-			<li><%= link_to _("Practices"), practices_admin_url %></li>
-			<li><%= link_to _("Logout"), logout_url %></li>
-		</ul>
+<!-- nav bar -->
+<ul class="nav-bar">
+  <% if current_user %>
+	  <% unless current_user.roles.include?("superadmin") %>
+			<li>
+				<%= link_to _("Datebook"), datebook_url, :class => "main" %>
+			</li>
+			<li>
+				<%= link_to _("Patients"), patients_url, :class => "main" %>
+			</li>
+			<!--<li>
+				<%= search_field_tag("patient_search") %>
+			</li>-->
+			<li class="has-flyout">
+				<%= link_to _("My practice"), practice_url, :class => "main" %>
+				<a href="#" class="flyout-toggle"><span></span></a>
+				<div class="flyout small">
+					<%= link_to _("My doctors"), doctors_url %> <br />
+					<%= link_to _("My users"), users_url %> <br />
+					<%= link_to _("My practice settings"), practice_settings_url %> <br />
+					<%= link_to _("Logout?"), logout_url %> <br />
+				</div>
+			</li>
+			<li class="show-on-desktops">Welcome, <%= truncate(current_user.fullname, :length => 18) %></li>
+		<% else %>
+			<li>
+				<%= link_to _("Practices"), practices_admin_url, :class => "main" %>
+			</li>
+			<li>
+				<%= link_to _("Logout"), logout_url, :class => "main" %>
+			</li>
+		<% end %>
 	<% end %>
-<% end %>
-</nav>
+</ul>
 
 <script>
-	$(function(){			
+//	$(function(){			
 		// Patient search box (should be moved to the application.js if possible)
-		$("#patient_search").autoSuggest("/patients.json", {startText: "<%=_('Enter the patient name or Unique Identifier')%>", minChars: 2, selectionLimit: 1, selectedValuesProp: "id", selectedItemProp: "fullname", searchObjProps: "uid,fullname", resultClick: function(data){ window.location.href = "/patients/" + data.attributes.id; }});
-	});
-	
+//		$("#patient_search").autoSuggest("/patients.json", {startText: "<%=_('Search')%>", minChars: 2, selectionLimit: 1, selectedValuesProp: "id", selectedItemProp: "fullname", searchObjProps: "uid,fullname", resultClick: function(data){ window.location.href = "/patients/" + data.attributes.id; }});
+//	});
 </script>
-

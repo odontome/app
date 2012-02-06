@@ -1,4 +1,4 @@
-<table id="patient_balance" class="ui-tabs ui-widget ui-widget-content ui-corner-all balance">
+<table id="patient_balance">
 	<thead>
 		<tr>
 			<th width="70%"><%=_("Notes")%></th>
@@ -12,7 +12,7 @@
 	<% end %>
 	</tbody>
 	<tfoot>
-		<td colspan="3" align="right"><%=link_to number_to_currency_with_currency(@total), patient_balances_path(:format => :csv), :class => "g-button light big", :title => _("Download balance in CSV") %></td>
+		<td colspan="3"><%=link_to number_to_currency_with_currency(@total), patient_balances_path(:format => :csv), :class => "button large nice right", :title => _("Download balance in CSV") %></td>
 	</tfoot>
 </table>
 
@@ -22,7 +22,5 @@
 	$(document).ready(function() {
 		// Limit the notes
 		$('#balance_notes').limit('255');
-		// tipTip all form fields
-		$('input,textarea,tfoot td a').tipTip();
 	});
 </script>

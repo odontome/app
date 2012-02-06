@@ -1,7 +1,10 @@
 <% if target.errors.any? %>
-	<ul class="error">
-	<% target.errors.full_messages.each do |msg| %>
-		<li><%= msg %></li>
-	<% end %>
-	</ul>
+	<div class="alert-box error">
+		<ul>
+		<% target.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		<% end %>
+		</ul>
+		<a href="" class="close">&times;</a>
+	</div>
 <% end %>

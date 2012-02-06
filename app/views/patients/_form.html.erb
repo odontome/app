@@ -6,16 +6,16 @@
 	  <legend><%=_("Personal information")%></legend>
 
 	  <p>
-	    <%= f.text_field :firstname, :placeholder => _("First name"), :title => _("First name") %>
+	    <%= f.text_field :firstname, :placeholder => _("First name"), :title => _("First name"), :class => "input-text" %>
 	  </p>
 	  <p>
-	    <%= f.text_field :lastname, :placeholder => _("Last name"), :title => _("Last name") %>
+	    <%= f.text_field :lastname, :placeholder => _("Last name"), :title => _("Last name"), :class => "input-text" %>
 	  </p>
 	  <p>
 	    <%= f.label _("Date of birth")%> <%= f.date_select :date_of_birth, :start_year => Time.now.year - 80, :end_year => Time.now.year - 3, :title => _("Date of birth") %>
 	  </p>
 	  <p>
-	    <%= f.text_field :uid, :placeholder => _("Unique identifier"), :title => _("Unique identifier") %>
+	    <%= f.text_field :uid, :placeholder => _("Unique identifier"), :title => _("Unique identifier"), :class => "input-text" %>
 		<sub><%=_('(Only if your wish for your practice to have a custom identification system for patients)')%></sub>
 	  </p>
 	</fieldset>
@@ -23,16 +23,16 @@
 	<fieldset>
 	  <legend><%=_("Contact information")%></legend>
 	  <p>
-	    <%= f.email_field :email, :placeholder => _("Email"), :title => _("Email") %>
+	    <%= f.email_field :email, :placeholder => _("Email"), :title => _("Email"), :class => "input-text" %>
 	  </p>
 	  <p>
-	    <%= f.telephone_field :telephone, :placeholder => _("Telephone"), :title => _("Telephone") %>
+	    <%= f.telephone_field :telephone, :placeholder => _("Telephone"), :title => _("Telephone"), :class => "input-text" %>
 	  </p>
 	  <p>
-	    <%= f.telephone_field :mobile, :placeholder => _("Mobile"), :title => _("Mobile") %>
+	    <%= f.telephone_field :mobile, :placeholder => _("Mobile"), :title => _("Mobile"), :class => "input-text" %>
 	  </p>
 	  <p>
-	    <%= f.telephone_field :emergency_telephone, :placeholder => _("Emergency telephone"), :title => _("Emergency telephone") %>
+	    <%= f.telephone_field :emergency_telephone, :placeholder => _("Emergency telephone"), :title => _("Emergency telephone"), :class => "input-text" %>
 	  </p>
 	  <p>
 	    <%= f.text_area :address, :maxlength => 100, :rows => 2, :placeholder => _("Address"), :title => _("Address") %>
@@ -53,10 +53,10 @@
 	    <%= f.text_area :medications, :rows => 4, :placeholder => _("Current medications"), :title => _("Current medications") %>
 	  </p>
 	  <p>
-	    <%= f.number_field :cigarettes_per_day, :placeholder => _("Cigarettes per day"), :title => _("Cigarettes per day") %>
+	    <%= f.number_field :cigarettes_per_day, :placeholder => _("Cigarettes per day"), :title => _("Cigarettes per day"), :class => "input-text" %>
 	  </p>
 	  <p>
-	    <%= f.number_field :drinks_per_day, :placeholder => _("Drinks per day"), :title => _("Drinks per day") %>
+	    <%= f.number_field :drinks_per_day, :placeholder => _("Drinks per day"), :title => _("Drinks per day"), :class => "input-text" %>
 	  </p>
 	  <p>
 	    <%= f.text_area :drugs_use, :rows => 2, :placeholder => _("Illicit drugs use (include type, amount and administration methods)"), :title => _("Illicit drugs use (include type, amount and administration methods)") %>
@@ -66,8 +66,6 @@
 	  </p>
 	</fieldset>
 	
-	<div id="toolbar">
-  		<%= f.submit(_("Save"), :class => "g-button action", :disable_with => _("Please wait...")) %> 			<%=_('or')%> <%= link_to _("Cancel"), patients_path%>
-	</div>
+	<%= f.submit(_("Save"), :class => "button nice white", :disable_with => _("Please wait...")) %> <%=_('or')%> <%= link_to _("Cancel"), patients_path%>
 
 <% end %>

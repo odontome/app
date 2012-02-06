@@ -1,20 +1,22 @@
 <%= form_for(@user_session, :url => user_session_path) do |f| %>
 	<% if @user_session.errors.any? %>
-	  <div class="error">
+	  <div class="alert-box error">
 	    <% @user_session.errors.full_messages.each do |msg| %>
 	      <%= msg %><br />
 	    <% end %>
 	  </div>
 	<% end %>
   <p>
-    <%= f.email_field :email, :placeholder => _("Email"), :title => _("Email"), :autocapitalize => "off", :autocorrect => "off" %>
+    <%= f.email_field :email, :placeholder => _("Email"), :title => _("Email"), :autocapitalize => "off", :autocorrect => "off", :class => "input-text" %>
   </p>
 	<p>
-	  <%= f.password_field :password, :placeholder => _("Password"), :title => _("Password") %>
+	  <%= f.password_field :password, :placeholder => _("Password"), :title => _("Password"), :class => "input-text" %>
 	</p>
   	
 	<p>
-		<%= f.check_box :remember_me %> <%= f.label _("Remember me") %>
+		<label for="user_session_remember_me">
+			<%= f.check_box :remember_me %> <%= _("Remember me") %>
+		</label>
 	</p>
 
 	<p>
@@ -22,7 +24,7 @@
 	</p>
 	
 	<div id="toolbar">
-    	<%= f.submit(_("Login"), :class => "g-button action") %>
+    	<%= f.submit(_("Login"), :class => "button nice blue") %>
  		<% if !@user_session.errors.any? %>
 			<%=_("Don't have an account?")%> <%= link_to _("Sign up"), signup_url %>
 		<% else %>

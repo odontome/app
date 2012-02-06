@@ -8,34 +8,35 @@
   <%= render "shared/error_messages", :target => @practice %>
 
   <p>
-    <%= practice_form.text_field :name, :placeholder => _("Practice Name"), :title => _("Practice Name") %>
-	<sub><%=_('("Great Smiles Dentists" or "John Peterson\'s")')%></sub>
+    <%= practice_form.text_field :name, :placeholder => _("Practice Name"), :title => _("Practice Name"), :class => "input-text" %> 
+	<sub><%=_('(Something like "My awesome clinic!")')%></sub>
   </p>
 
 	<%= practice_form.fields_for :users do |user_form| %>
 
 	  <p>
-	    <%= user_form.email_field :email, :placeholder => _("Email"), :title => _("Email") %>
+	    <%= user_form.email_field :email, :placeholder => _("Email"), :title => _("Email"), :class => "input-text" %>
 	  </p>
 		<p>
-		  <%= user_form.password_field :password, :placeholder => _("Password"), :title => _("Password") %>
+		  <%= user_form.password_field :password, :placeholder => _("Password"), :title => _("Password"), :class => "input-text" %>
 		</p>
 		<p>
-		  <%= user_form.password_field :password_confirmation, :placeholder => _("Confirm your password"), :title => _("Confirm your password") %>
+		  <%= user_form.password_field :password_confirmation, :placeholder => _("Confirm your password"), :title => _("Confirm your password"), :class => "input-text" %>
 		</p>
 
 	<% end %>
 
 	<% if $beta_mode %>
   <p>
-    <%= practice_form.text_field :invitation_code, :placeholder => _("Invitation Code for this Beta"), :title => _("Invitation Code for this Beta") %>
+    <%= practice_form.text_field :invitation_code, :placeholder => _("Invitation Code for this Beta"), :title => _("Invitation Code for this Beta"), :class => "input-text" %>
   </p>
 	<% end %>
 	
-	<div id="toolbar">
-		<%= practice_form.submit(_("Register"), :class => "g-button action", :disable_with => _("Please wait...")) %>
-		<%=_("Already have an account?")%> <%= link_to _("Sign in"), signin_url %>
-		<div id="register_agreenment"><%=_('You agree to our')%> <%= link_to _('Terms of Service'), "/terms", :target => "_blank" %> <%=_('and to our')%> <%= link_to _('Privacy Policy'), "/privacy", :target => "_blank" %> <%=_('when you register')%></div>
-	</div>
+		<%= practice_form.submit(_("Register"), :class => "button nice blue", :disable_with => _("Please wait...")) %>
+		<%=_("or")%> <%= link_to _("Sign in"), signin_url %>
+		
+		<hr />
+		
+		<%=_('You agree to our')%> <%= link_to _('Terms of Service'), "/terms", :target => "_blank" %> <%=_('and to our')%> <%= link_to _('Privacy Policy'), "/privacy", :target => "_blank" %> <%=_('when you register')%>
 
 <% end %>

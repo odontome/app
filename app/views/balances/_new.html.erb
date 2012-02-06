@@ -1,11 +1,11 @@
 <div id="toolbar">
 <% form_tag(patient_balances_path, :method => "post", :remote => true) do %>
 	<p>
-	    <%= number_field_tag "balance[amount]", nil, {:placeholder => _("Amount"), :title => _("Amount") } %>
+	    <%= number_field_tag "balance[amount]", nil, {:placeholder => _("Amount"), :title => _("Amount"), :class => "input-text" } %>
 	</p>
 	<p>
 	    <%= text_area_tag "balance[notes]", nil, {:rows => 2, :placeholder => _("Optional notes"), :title => _("Optional notes")}  %>
 	</p>
-	<%= submit_tag(_("Save"), :class => "g-button action", :disable_with => _("Please wait...")) %>
+	<%= submit_tag(_("Save"), :class => "button nice white", :disable_with => _("Please wait...")) %>
 <% end %>
 </div>

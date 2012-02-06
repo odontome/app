@@ -3,39 +3,31 @@
   <%= render "shared/error_messages", :target => @doctor %>
 
   <p>
-    <%= f.text_field :firstname, :placeholder => _("First name"), :title => _("First name") %>
+    <%= f.text_field :firstname, :placeholder => _("First name"), :title => _("First name"), :class => "input-text" %>
   </p>
   <p>
-    <%= f.text_field :lastname, :placeholder => _("Last name"), :title => _("Last name")  %>
+    <%= f.text_field :lastname, :placeholder => _("Last name"), :title => _("Last name"), :class => "input-text"  %>
   </p>
   <p>
-    <%= f.text_field :uid, :placeholder => _("Unique identifier"), :title => _("Unique identifier") %>
+    <%= f.text_field :uid, :placeholder => _("Unique identifier"), :title => _("Unique identifier"), :class => "input-text" %>
 	<sub><%=_('(Only if your wish for your clinic to have a custom identification system)')%></sub>
   </p>
   <p>
-    <%= f.email_field :email, :placeholder => _("Email"), :title => _("Email") %>
+    <%= f.email_field :email, :placeholder => _("Email"), :title => _("Email"), :class => "input-text" %>
   </p>
   <p>
 	<%= f.label _("Gender") %>
 	<%= f.select(:gender, [[_('Male'),'male'],[_('Female'),'female']], :title => _("Gender")) %>
   </p>
   <p>
-    <%= f.text_field :speciality, :placeholder => _("Speciality"), :title => _("Specialities of the doctor") %>
+    <%= f.text_field :speciality, :placeholder => _("Speciality"), :title => _("Specialities of the doctor"), :class => "input-text" %>
   </p>
   <p>
 	<%= f.label _("Calendar color") %>
 	<%= f.text_field :color, :placeholder => _("Color"), :title => _("Calendar color"), :class => "color_picker" %>    
   </p>
 
-	<div id="toolbar">
-		<%= f.submit(_("Save"), :class => "g-button action", :disable_with => _("Please wait...")) %> 
-
-		<% if controller.action_name == "edit" %>
-			<%= link_to_suspend_or_delete @doctor %>
-		<% end %>
-
-		<%=_("or")%> <%= link_to _("Cancel"), doctors_path %>
-	</div>
+	<%= f.submit(_("Save"), :class => "button nice white", :disable_with => _("Please wait...")) %> 
 <% end %>
 
 <script  type="text/javascript">

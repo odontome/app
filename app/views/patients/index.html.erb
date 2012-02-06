@@ -1,51 +1,56 @@
-<h1><%=_('Patients')%> (<%=current_user.practice.number_of_patients-Patient.mine.count %> <%=_('left')%>)<%= link_to "+", new_patient_url, :class => "g-button dark" %></h1>
+<div class="row">	
 
-<% if @patients.empty? %>
-	<div class="info">
-		<%=_("Your practice doesn't have any patients at the moment, let's change that.")%>
-	</div>
-<% end %>
-
-<ul id="list-items">
-	<% @patients.each do |patient| %>
-
-		<% if patient.missing_info?
-			cclass = "invalid-list"
-		   else
-			cclass = ""
-		   end
-		%>
-
-		<li class="<%=cclass%>">
-			<h2><%= link_to patient.fullname, patient %></h2>			
-		
-			<% if !patient.missing_info? %>
-				<span><%=patient.uid%></span>
-				<span><strong><%=_('Age')%>:</strong> <%=patient.age%></span>
-				<span><strong><%=_('Allergies')%>:</strong> <%unless patient.allergies.blank?%><%=patient.allergies%><%else%><%=_('none')%><%end%></span>
-			<% else %>
-				<span><%=_("Complete this patient information to continue")%></span>
-			<% end %>
-			
-			<% if user_is_admin?(current_user) %>
-				<div class="list-item-button"><%= link_to _("Delete"), patient, :method => :delete, :confirm => _("Are you sure? All data associated with this patient will be lost forever."), :class => "g-button red"%></div>
-			<% end %>
-			<div class="list-item-button"><%= link_to _("Edit"), edit_patient_path(patient), :class => "g-button light"%></div>
-		</li>
+	<% if @patients.empty? %>
+		<div class="alert-box warning">
+			<%=_("Your practice doesn't have any patients at the moment, let's change that.")%>
+			<a href="" class="close">&times;</a>
+		</div>
 	<% end %>
-</ul>
 
-<div id="toolbar">
+	<div class="eight columns">
+	
+		<h1><%=_('Patients')%> <small>(<%=current_user.practice.number_of_patients-Patient.mine.count %> <%=_('left')%>)</small></h1>
+		
+		<ul id="list-items">
+			<% @patients.each do |patient| %>
+				
+				<li>
+					<h2>
+						<% if patient.missing_info? %>
+							<span class="red radius label"><%=_("incomplete")%></span>
+						<% end %>
+						<%= link_to patient.fullname, patient %>
+					</h2>			
+				
+					<% if !patient.missing_info? %>
+						<span><%=patient.uid%></span>
+						<span><strong><%=_('Age')%>:</strong> <%=patient.age%></span>
+						<span><strong><%=_('Allergies')%>:</strong> <%unless patient.allergies.blank?%><%=patient.allergies%><%else%><%=_('none')%><%end%></span>
+					<% else %>
+						<span><%=_("Complete this patient information to continue")%></span>
+					<% end %>
+				</li>
+			<% end %>
+		</ul>
+	</div>
+		
+	<div class="four columns">
+		<div class="panel">
+			<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi arcSed ut perspiciatis unde omnis iste natus</p>
+			
+			<p><%= link_to _("Create new patient"), new_patient_url, "data-icon" => "+" %></p>
+		</div>
+	</div>
+</div>
+
+<div class="row">
 	<ul class ="pagination">
 	  <% letter_options.each do |letter| %>
 	    <% if params[:letter] == letter %>
-	      <span class="current"><%= letter %></span>
+	    	<li class="current"><%= link_to letter, patients_url(:letter => letter)%></li>
 	    <% else %>
 	      <li><%= link_to letter, patients_url(:letter => letter)%></li>
 	    <% end %>
 	  <% end %>
 	</ul>
-	
-	<div class="clear"></div>
-	<%= link_to _("Create new patient"), new_patient_url, :class => "g-button action" %>
 </div>

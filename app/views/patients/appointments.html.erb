@@ -1,20 +1,18 @@
 <% if @appointments.empty? %>
-	<div class="info"><%=_("This patient doesn't have any scheduled appointments")%></div>
+	<div class="alert-box warning"><%=_("This patient doesn't have any scheduled appointments")%>
+	<a href="#" class="close">&times;</a></div>
 <% end %>
 
 <ul id="list-items">
 	<% @appointments.each do |appointment| %>
-		<% if appointment.ends_at < Time.now
-			cclass = "disabled-list"
-		   else
-			cclass = ""
-		   end
-		%>
-
-		<li class="<%=cclass%>">
-			<h2><%=l appointment.starts_at, :format => :long %> <span><%= _("with") %> <%= appointment.doctor.fullname %></h2>			
-			<span></span>
-			<% if appointment.notes.length > 0%><span><%=appointment.notes%></span><% end %>
+		<li>
+			<br />
+			<p>
+				<span class="blue radius label"><%=l appointment.starts_at, :format => :long %></span>
+				<span class="white radius label"><%= appointment.doctor.fullname %></span> <br />
+				
+				<%=appointment.notes%>
+			</p>
 		</li>
 	<% end %>
 </ul>
