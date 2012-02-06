@@ -43,8 +43,4 @@ module Odontome
     #config.middleware.use Rack::SslEnforcer, :only => ["/signup", "/signin", "/users/new", /^\/users\/(.+)\/edit/, "/set_session_time_zone"], :mixed => true, , :except_hosts => '0.0.0.0'
   end
 
-
-
-  $betacodes = "ODNTM2011,DENTALHEROES,TEETHREMOVAL"
-  
 end

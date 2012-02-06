@@ -18,8 +18,6 @@ class Practice < ActiveRecord::Base
   
   # validations
   validates_presence_of :name
-  validates_presence_of :invitation_code, :if => :beta_mode_on?
-  validate :correctness_of_invitation_code, :on => :create
 
   #callbacks
   before_validation :set_first_user_data, :on => :create
@@ -66,15 +64,4 @@ class Practice < ActiveRecord::Base
     self.users.first.lastname = 'User'
   end
 
-  def beta_mode_on?
-    #validations pass when false (or something)
-    false if $beta_mode
-  end
-
-  def correctness_of_invitation_code
-    unless $betacodes.split(',').include?(self.invitation_code)
-      errors.add(:invitation_code, _("seems to be invalid or its maximum allowed testers has been reached. Please check it or go to http://odonto.me to request access to this private beta."))
-    end
-  end
-  
 end

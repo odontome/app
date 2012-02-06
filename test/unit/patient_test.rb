@@ -145,30 +145,7 @@ class PatientTest < ActiveSupport::TestCase
 		assert patient.invalid?
 	end
 	
-	test "patient can not be created if the limit has been reached in beta" do
-		$beta_mode = true
-		UserSession.create users(:user_in_yet_another_practice)
-		patient = Patient.new(
-										:practice_id => 3,
-										:firstname => "Daniella",
-										:lastname => "Sanguino",
-										:date_of_birth => "1988-11-16",
-										:past_illnesses => "none",
-										:surgeries => "none",
-										:medications => "none",
-										:drugs_use => "none",
-										:cigarettes_per_day => 0,
-										:drinks_per_day => 0,
-										:family_diseases => "none",
-										:emergency_telephone => "call my mom"
-									)
-		
-		assert !patient.save
-		assert_equal "We are very sorry, but you have reached the patients limit for this private beta. Please contact us if you need assistance.", patient.errors[:base].join("; ")
-	end
-	
 	test "patient can not be created if the limit has been reached" do
-		$beta_mode = false
 		UserSession.create users(:user_in_yet_another_practice)
 		patient = Patient.new(
 										:practice_id => 3,

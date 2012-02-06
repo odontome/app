@@ -25,12 +25,6 @@
 		</p>
 
 	<% end %>
-
-	<% if $beta_mode %>
-  <p>
-    <%= practice_form.text_field :invitation_code, :placeholder => _("Invitation Code for this Beta"), :title => _("Invitation Code for this Beta"), :class => "input-text" %>
-  </p>
-	<% end %>
 	
 		<%= practice_form.submit(_("Register"), :class => "button nice blue", :disable_with => _("Please wait...")) %>
 		<%=_("or")%> <%= link_to _("Sign in"), signin_url %>

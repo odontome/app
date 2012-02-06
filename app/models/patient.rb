@@ -100,11 +100,7 @@ class Patient < ActiveRecord::Base
   
   def check_for_patients_limit
     unless Practice.find(self.practice.id).number_of_patients > Patient.mine.count
-      if $beta_mode
-        self.errors[:base] << _("We are very sorry, but you have reached the patients limit for this private beta. Please contact us if you need assistance.")
-      else
-        self.errors[:base] << _("We are very sorry, but you have reached your patients limit. Please upgrade your account in My Practice settings")
-      end
+      self.errors[:base] << _("We are very sorry, but you have reached your patients limit. Please upgrade your account in My Practice settings")
       false
     end
   end

@@ -10,26 +10,6 @@ class PracticeTest < ActiveSupport::TestCase
 		assert practice.errors[:name].any?
 	end
 	
-	test "practice is invalid without an invitation in beta" do
-		$beta_mode = true
-		
-		practice = Practice.new
-		practice.users << User.new
-		
-		assert practice.invalid?		
-		assert practice.errors[:invitation_code].any?
-	end
-	
-	test "practice is invalid without a valid invitation in beta" do
-		$beta_mode = true
-		
-		practice = Practice.new(:invitation_code => "not a valid code")
-		practice.users << User.new
-		
-		assert practice.invalid?		
-		assert practice.errors[:invitation_code].any?
-	end
-	
 	test "practice is created with a free plan as default" do		
 		practice = Practice.new()
 		practice.users << User.new
