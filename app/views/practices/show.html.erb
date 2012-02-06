@@ -1,30 +1,40 @@
-<h1><%=_('My practice')%></h1>
+<div class="row">
+	<div class="eight columns">
+		<h1><%=_('My practice')%></h1>
 
-<ul id="list-items">
-	<!--<li>
-		<h2><%=link_to _("My treatments"), treatments_url %></h2>
-		<span><%=_('Everything that you do to your patients.')%></span>
-		<div class="list-item"><%= @practice.treatments.count %> <%=_('treatments')%></div>
-	</li> -->
-	<li>
-		<h2><%= link_to _("My doctors"), doctors_url %></h2>
-		<span><%=_('The people who do the things to your patients.')%></span>
-		<div class="list-item"><%= @practice.doctors.count %> <%=_('doctors')%></div>
-	</li>
-	<li>
-		<h2><%=link_to _("My users"), users_url %></h2>
-		<span><%=_('Everyone who has access to your odonto.me.')%></span>
-		<div class="list-item"><%= @practice.users.count %> <%=_('users')%></div>
-	</li>
-	<% if @is_user_is_admin %>
-		<!--<li>
-			<h2><%=link_to _("My audits"), practice_audits_url %></h2>
-			<span><%=_('Everything that is going on in your practice, in one single place. See who did what and when.')%></span>
-			<div class="list-item"></div>
-		</li>-->
-		<li>
-			<h2><%=link_to _("My practice settings"), practice_settings_url %></h2>
-			<span><%=_('Change here your practice name, select your language and more')%></span>
-		</li>
-	<% end %>
-</ul>
+		<ul id="list-items">
+			<!--<li>
+				<h2><%=link_to _("My treatments"), treatments_url %> <span class="label radius blue"><%= @practice.treatments.count %> <%=_('treatments')%></span></h2>
+				<span><%=_('Everything that you do to your patients.')%></span>
+				
+			</li> -->
+			<li>
+				<h2><%= link_to _("My doctors"), doctors_url %> <span class="label radius blue"><%= @practice.doctors.count %> <%=_('doctors')%></span></h2>
+				<span><%=_('The people who do the things to your patients.')%></span>
+				
+			</li>
+			<li>
+				<h2><%=link_to _("My users"), users_url %> <span class="label radius blue"><%= @practice.users.count %> <%=_('users')%></span></h2>
+				<span><%=_('Everyone who has access to your odonto.me.')%></span>
+				
+			</li>
+			<% if @is_user_admin %>
+				<!--<li>
+					<h2><%=link_to _("My audits"), practice_audits_url %></h2>
+					<span><%=_('Everything that is going on in your practice, in one single place. See who did what and when.')%></span>
+					<div class="list-item"></div>
+				</li>-->
+				<li>
+					<h2><%=link_to _("My practice settings"), practice_settings_url %></h2>
+					<span><%=_('Change here your practice name, select your language and more')%></span>
+				</li>
+			<% end %>
+		</ul>
+	</div>
+	
+	<div class="four columns">
+		<div class="panel">
+			<p>asdasdas dasd sad asdasdasdasdasdas dasd sad asdasdasdasdasdas dasd sad asdasdasdasdasdas dasd sad asdasdasdasdasdas dasd sad asdasdasdasdasdas dasd sad asdasdasd</p>
+		</div>
+	</div>	
+</div>

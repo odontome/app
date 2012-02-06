@@ -9,7 +9,7 @@
 			
 				<div class="row">	
 						<ul class="block-grid two-up">
-							<li><span data-icon="b" class="has-tip" title="<%=_('Age')%>" id="age"></span> <%=l @patient.date_of_birth, :format => :long %> (<%=@patient.age%> <%= _("years old") %>)</li>
+							<li><span data-icon="b" class="has-tip" title="<%=_('Age')%>" id="age"></span> <span class="has-tip" title="<%=l @patient.date_of_birth, :format => :long %>"><%=@patient.age%> <%= _("years old") %></span></li>
 							<li><span data-icon="@" class="has-tip" title="<%=_('Email')%>" id="email"></span> <%= mail_to @patient.email%></li>
 							<li><span data-icon="g" class="has-tip" title="<%=_('Telephone')%>" id="phone1"></span> <%=@patient.telephone%></li>
 							<li><span data-icon="c" class="has-tip" title="<%=_('Mobile')%>" id="mobile"></span> <%=@patient.mobile%></li>
@@ -61,6 +61,8 @@
 		</dl>
 		
 		<div class="panel">
+			<p><%= _("Need to update something?") %></p>
+		
 			<ul>
 				<li><%= link_to _("Edit patient's information"), edit_patient_path(@patient), "data-icon" => "x" %></li>
 				

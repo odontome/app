@@ -12,10 +12,10 @@
 			<% @doctors.each do |doctor| %>
 				<li>
 					<h2>
+						<%= link_to doctor.fullname, doctor %>
 						<% if !doctor.is_active %>
 							<span class="red radius label"><%=_("Suspended")%></span>
 						<% end %>
-						<%= link_to doctor.fullname, doctor %>
 					</h2>			
 		
 					<span><%=doctor.uid%></span>
