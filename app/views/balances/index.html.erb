@@ -12,7 +12,9 @@
 	<% end %>
 	</tbody>
 	<tfoot>
-		<td colspan="3"><%=link_to number_to_currency_with_currency(@total), patient_balances_path(:format => :csv), :class => "button large nice right", :title => _("Download balance in CSV") %></td>
+		<tr>
+			<td colspan="3"><%=link_to number_to_currency_with_currency(@total), patient_balances_path(:format => :csv), :class => "button large nice", :title => _("Download balance in CSV") %></td>
+		</tr>
 	</tfoot>
 </table>
 
