@@ -82,20 +82,6 @@
 							  }
 					});
 				},
-				
-				// If we're on an iPad, this is used as our "eventClick"
-				eventMouseover: function()
-				{
-				    if(isTouchDevice)
-				    {
-				        var url = "/appointments/" + calEvent.id + "/edit?patient_id=" + calEvent.patient_id;
-				        
-				        $.get(url, function(data) {
-				          $("#modal_dialog").html(data).reveal();
-				        });
-				    }
-				},
-
 				eventResize: function(calEvent, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) {
 					// update the event with the new data
 					$.ajax({ 
