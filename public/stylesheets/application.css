@@ -75,7 +75,7 @@ tfoot td {
    Shared Styles (header)
 ----------------------------------------- */
 header {
-	background: #222;
+	background: #222 url("../images/dark_leather.png");
 	border-bottom: solid 5px #38b9ed;
 	padding: 15px 0px 0px 0px;
 	margin-bottom: 20px;
