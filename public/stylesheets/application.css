@@ -4,7 +4,7 @@
 body {
 	background: #fefefe;
 	font-family: "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, "Lucida Grande", sans-serif;
-	font-size: 13px;
+	font-size: 14px;
 	line-height: 18px;
 	color: #555;
 	position: relative;
@@ -42,20 +42,21 @@ h4 {
   margin-right: 5px;
   font-size: 24px;
   vertical-align: middle;
-  color: #ccc;
+  color: #bbb !important;
   transition: background-color .25s ease-out;
   -webkit-transition: background-color .25s ease-out;
   -moz-transition: background-color .25s ease-out;
 }
 
-fieldset {
-	border-bottom: none !important;
-	border-left: none !important;
-	border-right: none !important;
+sub {
+	opacity: 0.6;
 }
 
-
 .alert-box.notice { background-color: #7fae00; color: #fff; text-shadow: 0 -1px rgba(0,0,0,0.3); }
+
+tfoot td {
+	text-align: right !important;
+}
 
 /* -----------------------------------------
    Shared Styles (login)
@@ -74,7 +75,7 @@ fieldset {
    Shared Styles (header)
 ----------------------------------------- */
 header {
-	background: #222;
+	background: #222 url("../images/dark_leather.png");
 	border-bottom: solid 5px #38b9ed;
 	padding: 15px 0px 0px 0px;
 	margin-bottom: 20px;
@@ -169,7 +170,7 @@ li h2 a {
 /* -----------------------------------------
    Balance table
 ----------------------------------------- */
-#patient_balance { background: #fff; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; margin: 0 0 18px; border: 1px solid #ddd; width: 100%; }
+#patient_balance { background: #fff; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; margin: 0 0 18px 0; border: 1px solid #ddd; width: 100%; }
 
 #patient_balance thead, #patient_balance tfoot { background: #f5f5f5; }
 #patient_balance thead tr th,
@@ -178,7 +179,7 @@ li h2 a {
 #patient_balance tr td,
 #patient_balance tfoot tr td { font-size: 12px; line-height: 18px; text-align: left; }
 #patient_balance thead tr th,
-#patient_balance tfoot tr td { padding: 8px 10px 9px; font-size: 14px; font-weight: bold; color: #222; }
+#patient_balance tfoot tr td { padding: 8px 0px 9px; font-size: 14px; font-weight: bold; color: #222; text-align: center; }
 #patient_balance thead tr th:first-child, #patient_balance tfoot tr td:first-child { border-left: none; }
 #patient_balance thead tr th:last-child, #patient_balance tfoot tr td:last-child { border-right: none; }
 
