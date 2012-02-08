@@ -5,14 +5,15 @@ namespace :odontome do
       Rails.logger = Logger.new(STDOUT)
     end
     to_update = []
-    appointments = Appointment.where("appointments.starts_at > ? AND appointments.ends_at < ? AND appointments.notified = ? 
+    appointments = Appointment.includes(:patient)
+    .where("appointments.starts_at > ? AND appointments.ends_at < ? AND appointments.notified = ? 
                                       AND patients.email <> ''", 
                                       Time.now, Time.now + $appointment_notificacion_hours.hours, false)
     appointments.each do |appointment|
-      PatientMailer.appointment_soon_email(appointment.patient_email, appointment.patient.firstname,
+      PatientMailer.appointment_soon_email(appointment.patient.email, appointment.patient.firstname,
                                            appointment.patient.lastname, appointment.starts_at, appointment.ends_at, 
                                            appointment.practice.name, appointment.practice.locale,
-                                           appointment.doctor.firstname,appointment.doctor.lastname).deliver
+                                           appointment.doctor.firstname, appointment.doctor.lastname).deliver
 
       to_update << appointment.id
     end
