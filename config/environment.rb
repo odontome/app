@@ -23,10 +23,8 @@ $appointment_notificacion_time = 3 # UTC hours. Example: "3" for 3am-UTC
 # Config authlogic
 Authlogic::Session::Base.controller = Authlogic::ControllerAdapters::RailsAdapter.new(self)
 
-# Overwrite the error messages
-ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
-  %(<div class="form-field error">#{html_tag}</div>).html_safe
-end
+# Require the view extensions
+require 'extensions/view_extensions'
 
 # Require the model extensions
 require 'extensions/model_extensions'
