@@ -5,22 +5,14 @@ namespace :odontome do
       Rails.logger = Logger.new(STDOUT)
     end
     to_update = []
-    appointments = Appointment.select("appointments.id, appointments.starts_at AS start, appointments.ends_at AS end, appointments.notified,
-                                      appointments.patient_id, appointments.practice_id, patients.firstname AS patient_firstname, 
-                                      patients.lastname AS patient_lastname, patients.email AS patient_email,
-                                      practices.name AS practice_name, practices.locale AS practice_locale,
-                                      doctors.firstname AS doctor_firstname, doctors.lastname AS doctor_lastname")
-                                      .joins("LEFT OUTER JOIN patients ON patients.id = appointments.patient_id")
-                                      .joins("LEFT OUTER JOIN practices ON practices.id = appointments.practice_id")
-                                      .joins("LEFT OUTER JOIN doctors ON doctors.id = appointments.doctor_id")
-                                      .where("appointments.starts_at > ? AND appointments.ends_at < ? AND appointments.notified = ? 
+    appointments = Appointment.where("appointments.starts_at > ? AND appointments.ends_at < ? AND appointments.notified = ? 
                                       AND patients.email <> ''", 
                                       Time.now, Time.now + $appointment_notificacion_hours.hours, false)
     appointments.each do |appointment|
-      PatientMailer.appointment_soon_email(appointment.patient_email, appointment.patient_firstname,
-                                           appointment.patient_lastname, appointment.start, appointment.end, 
-                                           appointment.practice_name, appointment.practice_locale,
-                                           appointment.doctor_firstname,appointment.doctor_lastname).deliver
+      PatientMailer.appointment_soon_email(appointment.patient_email, appointment.patient.firstname,
+                                           appointment.patient.lastname, appointment.starts_at, appointment.ends_at, 
+                                           appointment.practice.name, appointment.practice.locale,
+                                           appointment.doctor.firstname,appointment.doctor.lastname).deliver
 
       to_update << appointment.id
     end
