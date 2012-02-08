@@ -6,16 +6,20 @@
 	  <legend><%=_("Personal information")%></legend>
 
 	  <p>
-	    <%= f.text_field :firstname, :placeholder => _("First name"), :title => _("First name"), :class => "input-text" %>
+	  	<%= f.label :firstname %>
+	    <%= f.text_field :firstname, :title => _("First name"), :class => "input-text" %>
 	  </p>
 	  <p>
-	    <%= f.text_field :lastname, :placeholder => _("Last name"), :title => _("Last name"), :class => "input-text" %>
+	  	<%= f.label :lastname %>
+	    <%= f.text_field :lastname, :title => _("Last name"), :class => "input-text" %>
 	  </p>
 	  <p>
-	    <%= f.label :date_of_birth %> <%= f.date_select :date_of_birth, :start_year => Time.now.year - 80, :end_year => Time.now.year - 3, :title => _("Date of birth") %>
+	    <%= f.label :date_of_birth %> 
+	    <%= f.date_select :date_of_birth, :start_year => Time.now.year - 80, :end_year => Time.now.year - 3, :title => _("Date of birth") %>
 	  </p>
 	  <p>
-	    <%= f.text_field :uid, :placeholder => _("Unique identifier"), :title => _("Unique identifier"), :class => "input-text" %>
+	  	<%= f.label :uid %>
+	    <%= f.text_field :uid, :title => _("Unique identifier"), :class => "input-text" %>
 		<sub><%=_('(Only if your wish for your practice to have a custom identification system for patients)')%></sub>
 	  </p>
 	</fieldset>
@@ -23,34 +27,44 @@
 	<fieldset>
 	  <legend><%=_("Contact information")%></legend>
 	  <p>
-	    <%= f.email_field :email, :placeholder => _("Email"), :title => _("Email"), :class => "input-text" %>
+	  	<%= f.label :email %>
+	    <%= f.email_field :email, :title => _("Email"), :class => "input-text" %>
 	  </p>
 	  <p>
-	    <%= f.telephone_field :telephone, :placeholder => _("Telephone"), :title => _("Telephone"), :class => "input-text" %>
+	  	<%= f.label :telephone %>
+	    <%= f.telephone_field :telephone, :title => _("Telephone"), :class => "input-text" %>
 	  </p>
 	  <p>
-	    <%= f.telephone_field :mobile, :placeholder => _("Mobile"), :title => _("Mobile"), :class => "input-text" %>
+	  	<%= f.label :mobile %>
+	    <%= f.telephone_field :mobile, :title => _("Mobile"), :class => "input-text" %>
 	  </p>
 	  <p>
-	    <%= f.telephone_field :emergency_telephone, :placeholder => _("Emergency telephone"), :title => _("Emergency telephone"), :class => "input-text" %>
+	  	<%= f.label :emergency_telephone %>
+	    <%= f.telephone_field :emergency_telephone, :title => _("Emergency telephone"), :class => "input-text" %>
 	  </p>
 	  <p>
-	    <%= f.text_area :address, :maxlength => 100, :rows => 2, :placeholder => _("Address"), :title => _("Address") %>
+	  	<%= f.label :address %>
+	    <%= f.text_area :address, :maxlength => 100, :rows => 2, :title => _("Address") %>
 	  </p>
 	</fieldset>
+	
 	<fieldset>
 	  <legend><%=_("Medical history")%></legend>
 	  <p>
-	    <%= f.text_area :allergies, :rows => 2, :placeholder => _("Allergies"), :title => _("Allergies") %>
+	  	<%= f.label :allergies %>
+	    <%= f.text_area :allergies, :rows => 2, :title => _("Allergies") %>
 	  </p>
 	  <p>
-	    <%= f.text_area :past_illnesses, :rows => 2, :placeholder => _("Past illnesses"), :title => _("Past illnesses") %>
+	  	<%= f.label :past_illnesses %>
+	    <%= f.text_area :past_illnesses, :rows => 2, :title => _("Past illnesses") %>
 	  </p>
 	  <p>
-	    <%= f.text_area :surgeries, :rows => 2, :placeholder => _("Past Surgeries"), :title => _("Past Surgeries") %>
+	  	<%= f.label :surgeries %>
+	    <%= f.text_area :surgeries, :rows => 2, :title => _("Past Surgeries") %>
 	  </p>
 	  <p>
-	    <%= f.text_area :medications, :rows => 4, :placeholder => _("Current medications"), :title => _("Current medications") %>
+	  	<%= f.label :medications %>
+	    <%= f.text_area :medications, :rows => 4, :title => _("Current medications") %>
 	  </p>
 	  <p>
 	  	<%= f.label :cigarettes_per_day %>
@@ -61,13 +75,16 @@
 	    <%= f.number_field :drinks_per_day, :title => _("Drinks per day"), :class => "input-text" %>
 	  </p>
 	  <p>
-	    <%= f.text_area :drugs_use, :rows => 2, :placeholder => _("Illicit drugs use (include type, amount and administration methods)"), :title => _("Illicit drugs use (include type, amount and administration methods)") %>
+	  	<%= f.label :drugs_use %>
+	    <%= f.text_area :drugs_use, :rows => 2, :title => _("Illicit drugs use (include type, amount and administration methods)") %>
+	    <sub><%= _("Illicit drugs use (include type, amount and administration methods)") %></sub>
 	  </p>
 	  <p>
-	    <%= f.text_area :family_diseases, :rows => 4, :placeholder => _("Family diseases including deaths and allergies"), :title => _("Family diseases including deaths and allergies") %>
+	  	<%= f.label :family_diseases %>
+	    <%= f.text_area :family_diseases, :rows => 4, :title => _("Family diseases including deaths and allergies") %>
+	    <sub><%= _("Family diseases including deaths and allergies") %></sub>
 	  </p>
 	</fieldset>
 	
-	<%= f.submit(_("Save"), :class => "button nice white", :disable_with => _("Please wait...")) %> <%=_('or')%> <%= link_to _("Cancel"), patients_path%>
-
+	<%= f.submit(_("Save"), :class => "button nice white", :disable_with => _("Please wait...")) %>
 <% end %>

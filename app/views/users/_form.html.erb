@@ -5,27 +5,30 @@
 	<fieldset>
 	  <legend><%=_("Personal information")%></legend>
 	  <p>
-	    <%= f.text_field :firstname, :placeholder => _("First name"), :title => _("First name") %>
+	  	<%= f.label :firstname %>
+	    <%= f.text_field :firstname, :title => _("First name"), :class => "input-text" %>
 	  </p>
 	  <p>
-	    <%= f.text_field :lastname, :placeholder => _("Last name"), :title => _("Last name")  %>
+	  	<%= f.label :lastname %>
+	    <%= f.text_field :lastname, :title => _("Last name"), :class => "input-text"  %>
 	  </p>
 	</fieldset>
 	<fieldset>
 	  <legend><%=_("Account information")%></legend>
 	  <p>
-	    <%= f.email_field :email, :placeholder => _("Email"), :title => _("Email") %>
+	  	<%= f.label :email %>
+	    <%= f.email_field :email, :title => _("Email"), :class => "input-text" %>
 	  </p>
 		<p>
-		  <%= f.password_field :password, :placeholder => _("Password"), :title => _("Password") %>
+			<%= f.label :password %>
+		  <%= f.password_field :password, :title => _("Password"), :class => "input-text" %>
 		</p>
 		<p>
-		  <%= f.password_field :password_confirmation, :placeholder => _("Confirm your password"), :title => _("Confirm your password") %>
+			<%= f.label :password_confirmation %>
+		  <%= f.password_field :password_confirmation, :title => _("Confirm your password"), :class => "input-text" %>
 		</p>
 	</fieldset>
 	
-	<div id="toolbar">
-  		<%= f.submit(_("Save"), :class => "g-button action", :disable_with => _("Please wait...")) %> <%=_("or")%> <%= link_to _("Cancel"), users_path %>
-	</div>
+  <%= f.submit(_("Save"), :class => "button nice white", :disable_with => _("Please wait...")) %>
 
 <% end %>

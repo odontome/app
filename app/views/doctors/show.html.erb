@@ -22,8 +22,9 @@
 	</div>
 	
 	<div class="four columns">
+
 		<div class="panel">
-			<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi arcSed ut perspiciatis unde omnis iste natus</p>
+			<p><%= _("Doctors who already have appointments or patients assigned to them, can't be deleted for obvious reasons, use the suspend button instead") %></p>
 			
 			<ul>
 				<li><%= link_to _("Edit doctor's information"), edit_doctor_path(@doctor), "data-icon" => "x" %></li>

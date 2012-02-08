@@ -1,15 +1,15 @@
 <div class="row">	
 
-	<% if @patients.empty? %>
-		<div class="alert-box warning">
-			<%=_("Your practice doesn't have any patients at the moment, let's change that.")%>
-			<a href="" class="close">&times;</a>
-		</div>
-	<% end %>
-
 	<div class="eight columns">
 	
-		<h1><%=_('Patients')%> <small>(<%=current_user.practice.number_of_patients-Patient.mine.count %> <%=_('left')%>)</small></h1>
+		<% if @patients.empty? %>
+			<div class="alert-box warning">
+				<%=_("Your practice doesn't have any patients at the moment, let's change that.")%>
+				<a href="" class="close">&times;</a>
+			</div>
+		<% end %>
+	
+		<h1><%=_('Patients')%> <span class="label radius <%= @patients_left_in_plan <= 10 ? 'red' : 'green' %>">(<%= @patients_left_in_plan %> <%=_('left')%>)</span></h1>
 		
 		<ul id="list-items">
 			<% @patients.each do |patient| %>
@@ -23,11 +23,11 @@
 					</h2>			
 				
 					<% if !patient.missing_info? %>
-						<span><%=patient.uid%></span>
+						<span data-icon="a"><strong><%= _("Chart number")%></strong> <%=patient.uid%></span>
 						<span><strong><%=_('Age')%>:</strong> <%=patient.age%></span>
 						<span><strong><%=_('Allergies')%>:</strong> <%unless patient.allergies.blank?%><%=patient.allergies%><%else%><%=_('none')%><%end%></span>
 					<% else %>
-						<span><%=_("Complete this patient information to continue")%></span>
+						<span data-icon="d"><%=_("Complete this patient information to continue")%></span>
 					<% end %>
 				</li>
 			<% end %>
@@ -36,9 +36,11 @@
 		
 	<div class="four columns">
 		<div class="panel">
-			<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi arcSed ut perspiciatis unde omnis iste natus</p>
-			
-			<p><%= link_to _("Create new patient"), new_patient_url, "data-icon" => "+" %></p>
+			<p class="hide-on-phones"><%= _("This is the address book of your practice, in here you will find all of your precious clients. Remember to keep an eye on that quota there, it's very important.") %></p>
+								
+			<ul>
+				<li><%= link_to _("Create new patient"), new_patient_url, "data-icon" => "+" %></li>
+			</ul>
 		</div>
 	</div>
 </div>

@@ -59,19 +59,6 @@ tfoot td {
 }
 
 /* -----------------------------------------
-   Shared Styles (login)
------------------------------------------ */
-.login {
-	background: #222;
-}
-
-.login .row {
-	background: #fefefe;
-	margin-top: 60px;
-	padding: 30px 0;
-}
-
-/* -----------------------------------------
    Shared Styles (header)
 ----------------------------------------- */
 header {
@@ -91,6 +78,7 @@ footer {
 	margin-top: 50px !important;
 	padding: 30px 0;
 	text-align: right;
+	font-size: 90%;
 }
 
 /* -----------------------------------------

@@ -1,91 +1,103 @@
-<h1><%=_('Practice settings')%></h1>
+<div class="row">
 
-<%= form_for(@practice, :url => "/practices/#{@practice.id}", :method => :update) do |f| %>
-
-  <% if @practice.errors.any? %>
-    <div class="error">
-      <% @practice.errors.full_messages.each do |msg| %>
-        <%= msg %><br />
+<div class="eight columns">
+	<h1><%=_('Practice settings')%></h1>
+	
+	<%= form_for(@practice, :url => "/practices/#{@practice.id}", :method => :update) do |f| %>
+	
+	  <% if @practice.errors.any? %>
+	    <div class="error">
+	      <% @practice.errors.full_messages.each do |msg| %>
+	        <%= msg %><br />
+		  <% end %>
+	    </div>
 	  <% end %>
-    </div>
-  <% end %>
-
-	<fieldset>
-		<legend><%=_("Practice information")%></legend>
-	  <p>
-	    <%= f.text_field :name, :placeholder => _("Practice Name"), :title => _("Practice Name") %>
-			<sub><%=_('("Great Smiles Dentists" or "John Peterson\'s")')%></sub>
-	  </p>
-	</fieldset>
-	<fieldset>
-		<legend><%=_("Customization")%></legend>
-	  	<p>
-			<%= f.label _("Preferred language") %>
-			<%= f.select(:locale, [[_('English'),'en_US'],[_('Español'),'es_ES']], :title => _("Preferred language")) %>
-	  	</p>
-	  	<p>
-			<%= f.label _("Time zone") %>
-			<%= f.time_zone_select :timezone, [ ActiveSupport::TimeZone[@practice.timezone]] %>
-	  	</p>
-	  	<p>
-			<%= f.label _("Preferred currency unit") %>
-			<%= f.select(:currency_unit, %w[$ € £ Bs.]) %>
-	  	</p>
-	</fieldset>
 	
-	<%= f.submit(_("Save"), :class => "g-button action") %> <%= _("or") %> <%= link_to _("Cancel"),  practice_url%>
+		<fieldset>
+			<legend><%=_("Practice information")%></legend>
+		  <p>
+		    <%= f.text_field :name, :placeholder => _("Practice Name"), :title => _("Practice Name") %>
+				<sub><%=_('("Great Smiles Dentists" or "John Peterson\'s")')%></sub>
+		  </p>
+		</fieldset>
+		<fieldset>
+			<legend><%=_("Customization")%></legend>
+		  	<p>
+				<%= f.label _("Preferred language") %>
+				<%= f.select(:locale, [[_('English'),'en_US'],[_('Español'),'es_ES']], :title => _("Preferred language")) %>
+		  	</p>
+		  	<p>
+				<%= f.label _("Time zone") %>
+				<%= f.time_zone_select :timezone, [ ActiveSupport::TimeZone[@practice.timezone]] %>
+		  	</p>
+		  	<p>
+				<%= f.label _("Preferred currency unit") %>
+				<%= f.select(:currency_unit, %w[$ € £ Bs.]) %>
+		  	</p>
+		</fieldset>
 
-<% end %>
+		<%= f.submit(_("Save"), :class => "button nice white") %> <%= _("or") %> <%= link_to _("Cancel"),  practice_url%>
+
+	<% end %>
+	</div>
+</div>
 	
 
-<% unless $payments %>
+<% if $payments %>
+<div class="row">
 
-	<hr />
+	<div class="eight columns">
 	
-	<h1><%=_("Plans and payments")%></h1>
+		<h1><%=_("Plans and payments")%></h1>
+		
+		<ul id="list-items">
+			<% PLANS.each do |plan, values| %>
+					<% current_plan = true if @practice.plan_id == values['id']%>
+					<li>
+						<% if current_plan %><strong>(<%= _('Current') %>)<% end %>
+						<%=_("#{extract_text_from_gettext(values['name'])}")%> 
+						<%= "— $" + values['price'].to_s unless values['id'].to_i == 1 %>
+						<% if current_plan %>
+							— <%= @practice.number_of_patients %> <%=_('patients')%> (<%= (@practice.number_of_patients - @practice_patients_count).to_s + " " + _("left")%>)
+						<% end %>
+						<br />
+						
+						<% if current_plan %></strong><% end %>
+						<span><%=_("#{extract_text_from_gettext(values['description'])}")%></span>
 	
-	<ul id="list-items">
-		<% PLANS.each do |plan, values| %>
-				<% current_plan = true if @practice.plan_id == values['id']%>
-				<li>
-					<% if current_plan %><strong>(<%= _('Current') %>)<% end %>
-					<%=_("#{extract_text_from_gettext(values['name'])}")%> 
-					<%= "— $" + values['price'].to_s unless values['id'].to_i == 1 %>
-					<% if current_plan %>
-						— <%= @practice.number_of_patients %> <%=_('patients')%> (<%= (@practice.number_of_patients - @practice_patients_count).to_s + " " + _("left")%>)
-					<% end %>
-					<br />
-					
-					<% if current_plan %></strong><% end %>
-					<span><%=_("#{extract_text_from_gettext(values['description'])}")%></span>
-
-					<div class="pp_subscribe_button">
-						<% if !current_plan %>
-							<% if values['id'].to_i == 1 %>
-									<%= link_to _("Change to this Plan"), change_to_free_plan_url, :class => "g-button green" %>
-							<% end %>
-							<% if values['id'].to_i > 1 %>
-								<% if @practice.plan_id > 1 %>
-									<%= render :partial => "/paypal/#{values['button_partial']}" + "_change", :locals => { :custom => @practice.id} if @practice_patients_count <= values['number_of_patients'].to_i  %>
+						<div class="pp_subscribe_button">
+							<% if !current_plan %>
+								<% if values['id'].to_i == 1 %>
+										<%= link_to _("Change to this Plan"), change_to_free_plan_url, :class => "g-button green" %>
+								<% end %>
+								<% if values['id'].to_i > 1 %>
+									<% if @practice.plan_id > 1 %>
+										<%= render :partial => "/paypal/#{values['button_partial']}" + "_change", :locals => { :custom => @practice.id} if @practice_patients_count <= values['number_of_patients'].to_i  %>
+									<% else %>
+										<%= render :partial => "/paypal/#{values['button_partial']}", :locals => { :custom => @practice.id} %>
+									<% end %>
+								<% end %>
+							<% elsif values['id'].to_i > 1 %>
+								<% if @practice.status == "expiring" %>
+									<div class="list-item"><br /><%=_("Plan being cancelled")%></div>
 								<% else %>
-									<%= render :partial => "/paypal/#{values['button_partial']}", :locals => { :custom => @practice.id} %>
+									<%= render :partial => "/paypal/unsubscribe_button", :locals => { :custom => @practice.id} %>
 								<% end %>
 							<% end %>
-						<% elsif values['id'].to_i > 1 %>
-							<% if @practice.status == "expiring" %>
-								<div class="list-item"><br /><%=_("Plan being cancelled")%></div>
-							<% else %>
-								<%= render :partial => "/paypal/unsubscribe_button", :locals => { :custom => @practice.id} %>
-							<% end %>
-						<% end %>
-					</div>
-				</li>
-		<% end %>
-	</ul>
+						</div>
+					</li>
+			<% end %>
+		</ul>
+	
+	</div>
+</div>
 
 <% end %>
 
-
-<div id="toolbar">
-	<p><%=_('If you need to, you can')%> <%=link_to _('close your account here'), practice_cancel_url %></p>
+<div class="row">
+	<div class="eight columns">
+		<div class="panel">
+			<p><%=_('If you need to, you can')%> <%=link_to _('close your account here'), practice_cancel_url %></p>
+		</div>
+	</div>
 </div>

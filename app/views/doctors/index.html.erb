@@ -1,10 +1,8 @@
 <div class="row">	
-	<% if @doctors.empty? %>
-		<div class="alert-box warning"><%=_("You currently don't have any doctors in your practice. Remember that you need at least one doctor in order to create appointments.")%> <a href="" class="close">&times;</a></div>    
-		</div>
-	<% end %>
-	
 	<div class="eight columns">
+		<% if @doctors.empty? %>
+			<div class="alert-box warning"><%=_("You currently don't have any doctors in your practice. Remember that you need at least one doctor in order to create appointments.")%> <a href="" class="close">&times;</a></div>    
+		<% end %>
 		
 		<h1><%=_('Doctors')%></h1>
 		
@@ -27,7 +25,7 @@
 	
 	<div class="four columns">
 		<div class="panel">
-			<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi arcSed ut perspiciatis unde omnis iste natus</p>
+			<p class="hide-on-phones"><%= _("The backbone of your clinic, this can either be just you or a league of extraordinary doctors.") %></p>
 			
 			<p><%= link_to _("Create new doctor"), new_doctor_url, "data-icon" => "+" %></p>
 		</div>

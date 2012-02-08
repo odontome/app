@@ -85,7 +85,7 @@ class PracticesController < ApplicationController
       if @practice.save
         current_user_session.destroy
         flash.discard
-        redirect_to signin_url, :notice => _("Your account is now beign closed and is no longer possible to access it. Please contact us if you need assistance.")
+        redirect_to signin_url, :notice => _("Your account is now being closed and is no longer possible to access it. Please contact us if you need assistance.")
       else
         @practice.errors[:base] << _("An error has occurred. We couldn't close your account. Please contact us.")
         redirect_to practice_settings_url
