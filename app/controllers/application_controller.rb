@@ -121,10 +121,12 @@ class ApplicationController < ActionController::Base
     end
 
     def require_superadmin
-      if current_user
+    	    	
+      if current_user	
         redirect_back_or_default("/") unless current_user_is_superadmin?
         return false
       else
+      	redirect_back_or_default("/")
         return false
       end
     end
