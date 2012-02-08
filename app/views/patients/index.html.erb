@@ -28,6 +28,9 @@
 						<span><strong><%=_('Allergies')%>:</strong> <%unless patient.allergies.blank?%><%=patient.allergies%><%else%><%=_('none')%><%end%></span>
 					<% else %>
 						<span data-icon="d"><%=_("Complete this patient information to continue")%></span>
+						<% if user_is_admin?(current_user) %>
+							or just <%= link_to _("delete this patient"), patient, :method => :delete, :confirm => _("Are you sure? All data associated with this patient will be lost forever.") %>
+						<% end %>
 					<% end %>
 				</li>
 			<% end %>
