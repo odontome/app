@@ -15,8 +15,9 @@
 							<span class="red radius label"><%=_("Suspended")%></span>
 						<% end %>
 					</h2>			
-		
-					<span><%=doctor.uid%></span>
+					
+					<span style="color: <%= doctor.color %>">&#x25CF;</span>
+					<span><strong><%=_('UID')%>:</strong> <%=doctor.uid%></span>
 					<span><strong><%=_('Speciality')%>:</strong> <%=doctor.speciality%></span>
 				</li>
 			<% end %>

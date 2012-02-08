@@ -1,7 +1,8 @@
 <div class="row">
 	<div class="eight columns">
 		
-		<h1><%=@doctor.fullname%>
+		<h1><span style="color: <%= @doctor.color %>">&#x25CF;</span>
+			<%=@doctor.fullname%>
 			<% if !@doctor.is_active %>
 				<span class="red radius label"><%=_("Suspended")%></span>
 			<% end %>
