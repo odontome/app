@@ -1,17 +1,21 @@
-<%=jqgrid_javascripts%>
-<%=jqgrid_stylesheets "smoothness" %>
-<h1>Listing practices</h1>
-
-<%=raw jqgrid("", "practices", "/admin/practices", 
-[ 
-  { :field => "id", :label => "id" }, 
-  { :field => "name", :label => "name" }, 
-  { :field => "locale", :label => "locale" }, 
-  { :field => "timezone", :label => "timezone" },
-  { :field => "patients_count", :label => "patients" },
-  { :field => "appointments_count", :label => "appointments" },
-  { :field => "doctors_count", :label => "doctors" },
-  { :field => "users_count", :label => "users" } 
-
-  ] , {:autowidth=>true} 
-  ) %>
+<div class="row">
+	<div class="twelve columns">
+		<%=jqgrid_javascripts%>
+		<%=jqgrid_stylesheets "smoothness" %>
+		<h1>Listing practices</h1>
+		
+		<%=raw jqgrid("", "practices", "/admin/practices", 
+		[ 
+		  { :field => "id", :label => "id" }, 
+		  { :field => "name", :label => "name" }, 
+		  { :field => "locale", :label => "locale" }, 
+		  { :field => "timezone", :label => "timezone" },
+		  { :field => "patients_count", :label => "patients" },
+		  { :field => "appointments_count", :label => "appointments" },
+		  { :field => "doctors_count", :label => "doctors" },
+		  { :field => "users_count", :label => "users" } 
+		
+		  ] , {:autowidth=>true} 
+		  ) %>
+	</div>
+</div>
