@@ -4,6 +4,7 @@ ul.as-selections {
 	display: block;
 	padding: 2px 5px;
 	height: 18px;
+	width: 254px;
 }
 
 ul.as-selections.loading {
@@ -11,11 +12,13 @@ ul.as-selections.loading {
 }
 
 ul.as-selections li {
-	float: left;
 	margin: 1px 4px 1px 0;
 }
 
 ul.as-selections li.as-selection-item {
+	z-index: 5555;
+	position: absolute;
+	margin-bottom: -50px;
 	color: #2b3840;
 	text-shadow: 0 1px 1px #fff;
 	background-color: #ddeefe;
@@ -100,20 +103,7 @@ ul.as-selections li.as-original input {
 }
 
 ul.as-list {
-	position: absolute;
-	list-style-type: none;
-	margin: 1px 0 0 0;
-	padding: 0;
-	color: #000;
-	background-color: #fff;
-	background-color: rgba(255,255,255,0.95);
-	z-index: 2;
-	box-shadow: 0 2px 12px #222;
-	-webkit-box-shadow: 0 2px 12px #222;
-	-moz-box-shadow: 0 2px 12px #222;
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
+
 }
 
 li.as-result-item, li.as-message {

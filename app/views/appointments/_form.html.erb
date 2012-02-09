@@ -1,5 +1,6 @@
 <%= form_for(@appointment, :remote => true) do |f| %>
 	<p>		
+		<%= f.label  _("Enter the patient name or Unique Identifier") %>
 		<%= text_field_tag "appointment[patient_id]", nil, :title => _("Enter the patient name or Unique Identifier"), :class => "input-text" %>
 	</p>
 	
