@@ -4,7 +4,7 @@ ul.as-selections {
 	display: block;
 	padding: 2px 5px;
 	height: 18px;
-	width: 254px;
+	width: 96%;
 }
 
 ul.as-selections.loading {
@@ -18,7 +18,7 @@ ul.as-selections li {
 ul.as-selections li.as-selection-item {
 	z-index: 5555;
 	position: absolute;
-	margin-bottom: -50px;
+	margin-bottom: -42px;
 	color: #2b3840;
 	text-shadow: 0 1px 1px #fff;
 	background-color: #ddeefe;
@@ -97,13 +97,16 @@ ul.as-selections li.as-original input {
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 	
-	border: none;
-	outline: none;
+	border-right: 1px solid #bbb !; 
+	border-bottom: 1px solid #bbb !important;
 	height: 18px;
 }
 
 ul.as-list {
-
+	border-radius: 12px;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	background: #fff;
 }
 
 li.as-result-item, li.as-message {
