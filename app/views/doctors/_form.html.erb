@@ -3,17 +3,21 @@
   <%= render "shared/error_messages", :target => @doctor %>
 
   <p>
-    <%= f.text_field :firstname, :placeholder => _("First name"), :title => _("First name"), :class => "input-text" %>
+  	<%= f.label :firstname %>
+    <%= f.text_field :firstname, :title => _("First name"), :class => "input-text" %>
   </p>
   <p>
-    <%= f.text_field :lastname, :placeholder => _("Last name"), :title => _("Last name"), :class => "input-text"  %>
+  	<%= f.label :lastname %>
+    <%= f.text_field :lastname, :title => _("Last name"), :class => "input-text"  %>
   </p>
   <p>
-    <%= f.text_field :uid, :placeholder => _("Unique identifier"), :title => _("Unique identifier"), :class => "input-text" %>
+  	<%= f.label :uid %>
+    <%= f.text_field :uid, :title => _("Unique identifier"), :class => "input-text" %>
 	<sub><%=_('(Only if your wish for your clinic to have a custom identification system)')%></sub>
   </p>
   <p>
-    <%= f.email_field :email, :placeholder => _("Email"), :title => _("Email"), :class => "input-text" %>
+  	<%= f.label :email %>
+    <%= f.email_field :email, :title => _("Email"), :class => "input-text" %>
   </p>
   <p>
 	<%= f.label _("Gender") %>
