@@ -40,7 +40,18 @@
 	<div class="four columns">
 		<div class="panel">
 			<p class="hide-on-phones"><%= _("This is the address book of your practice, in here you will find all of your precious clients. Remember to keep an eye on that quota there, it's very important.") %></p>
-								
+			
+			<hr />
+			
+			<input type="text" id="patient_search" name="patient_search" class="input-text" />
+			
+			<script>
+				$(function(){			
+					 // Patient search box 
+					 $("#patient_search").autoSuggest("/patients.json", {startText: "<%=_('Search patients')%>", minChars: 2, selectionLimit: 1, selectedValuesProp: "id", selectedItemProp: "fullname", searchObjProps: "uid,fullname", resultClick: function(data){ window.location.href = "/patients/" + data.attributes.id; }});
+				});
+			</script>
+			
 			<ul>
 				<li><%= link_to _("Create new patient"), new_patient_url, "data-icon" => "+" %></li>
 			</ul>

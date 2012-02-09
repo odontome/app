@@ -8,9 +8,6 @@
 			<li>
 				<%= link_to _("Patients"), patients_url, :class => "main" %>
 			</li>
-			<!--<li>
-				<%= search_field_tag("patient_search") %>
-			</li>-->
 			<li class="has-flyout">
 				<%= link_to _("My practice"), practice_url, :class => "main" %>
 				<a href="#" class="flyout-toggle"><span></span></a>
@@ -32,10 +29,3 @@
 		<% end %>
 	<% end %>
 </ul>
-
-<script>
-//	$(function(){			
-		// Patient search box (should be moved to the application.js if possible)
-//		$("#patient_search").autoSuggest("/patients.json", {startText: "<%=_('Search')%>", minChars: 2, selectionLimit: 1, selectedValuesProp: "id", selectedItemProp: "fullname", searchObjProps: "uid,fullname", resultClick: function(data){ window.location.href = "/patients/" + data.attributes.id; }});
-//	});
-</script>
