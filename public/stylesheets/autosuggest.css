@@ -11,6 +11,10 @@ ul.as-selections.loading {
 	
 }
 
+.as-input {
+	width: 96% !important;
+}
+
 ul.as-selections li {
 	margin: 1px 4px 1px 0;
 }
