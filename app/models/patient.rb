@@ -74,7 +74,7 @@ class Patient < ActiveRecord::Base
   def self.find_or_create_from(patient_id_or_name)
     # remove any possible commas from this value
     patient_id_or_name.gsub!(",", "")
-        
+      
     # Check if we are dealing with an integer or a string
     if (patient_id_or_name.to_i == 0)
       # instantiate a new patient
@@ -83,15 +83,19 @@ class Patient < ActiveRecord::Base
       # set the practice_id manually because validation (and callbacks apparently as well) are skipped
       patient.practice_id = UserSession.find.user.practice_id
       # skip validation when saving this patient
-      begin
-        patient.save!(:validate => false)
-        rescue ActiveRecord::RecordNotSaved
-          patient.id = ""
-      end
-      
-      # now use the recently created patient id
-      patient_id_or_name = patient.id
+      patient.save!(:validate => false)
+
+      patient_id_or_name = patient.id  
     end
+    
+    # validate that this patient really exists
+    begin
+    	patient_double_check = Patient.find(patient_id_or_name)
+          	
+    	rescue ActiveRecord::RecordNotFound
+    		patient_id_or_name = nil
+    end
+    
 
     return patient_id_or_name
   end
