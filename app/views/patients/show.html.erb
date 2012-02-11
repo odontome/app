@@ -9,12 +9,12 @@
 			
 				<div class="row">	
 						<ul class="block-grid two-up">
-							<li><span data-icon="b" class="has-tip" title="<%=_('Age')%>" id="age"></span> <span class="has-tip" title="<%=l @patient.date_of_birth, :format => :long %>"><%=@patient.age%> <%= _("years old") %></span></li>
-							<li><span data-icon="v" class="has-tip" title="<%=_('Email')%>" id="email"></span> <%= mail_to @patient.email%></li>
-							<li><span data-icon="g" class="has-tip" title="<%=_('Telephone')%>" id="phone1"></span> <%=@patient.telephone%></li>
-							<li><span data-icon="c" class="has-tip" title="<%=_('Mobile')%>" id="mobile"></span> <%=@patient.mobile%></li>
-							<li><span data-icon="d" class="has-tip" title="<%=_('Emergency telephone')%>" id="phone2"></span> <%=@patient.emergency_telephone%></li>
-							<li><span data-icon="f" class="has-tip" title="<%=_('Address')%>" id="address"></span> <%=@patient.address%></li>
+							<li><span data-icon="b" title="<%=_('Age')%>" id="age"></span> <span class="has-tip" title="<%=l @patient.date_of_birth, :format => :long %>"><%=@patient.age%> <%= _("years old") %></span></li>
+							<li><span data-icon="@" title="<%=_('Email')%>" id="email"></span> <%= mail_to @patient.email%></li>
+							<li><span data-icon="g" title="<%=_('Telephone')%>" id="phone1"></span> <%=@patient.telephone%></li>
+							<li><span data-icon="c" title="<%=_('Mobile')%>" id="mobile"></span> <%=@patient.mobile%></li>
+							<li><span data-icon="!" title="<%=_('Emergency telephone')%>" id="phone2"></span> <%=@patient.emergency_telephone%></li>
+							<li><span data-icon="f" title="<%=_('Address')%>" id="address"></span> <%=@patient.address%></li>
 						</ul>		
 				</div>
 				<div class="row">
@@ -57,7 +57,7 @@
 			<dd><a href="#chart" class="active" data-icon="a"><%=_("Chart")%></a></dd>
 			<dd><a href="#appointments" data-icon="b"><%=_("Appointments")%></a></dd>
 			<!--<li><a href="<%=patient_patient_treatments_path(@patient) %>"><span><%=_("Treatmeant history")%></span></a></li>-->
-			<dd><a href="#balance" data-icon="p"><%=_("Balance")%></a></dd>
+			<dd><a href="#balance" data-icon="$"><%=_("Balance")%></a></dd>
 		</dl>
 		
 		<div class="panel">
