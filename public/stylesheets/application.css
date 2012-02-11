@@ -36,18 +36,6 @@ h4 {
 	font-size: 2.0rem;
 }
 
-[data-icon]:before {
-	font-family: 'Pictos Custom';
-  content: attr(data-icon);
-  margin-right: 5px;
-  font-size: 24px;
-  vertical-align: middle;
-  color: #bbb !important;
-  transition: background-color .25s ease-out;
-  -webkit-transition: background-color .25s ease-out;
-  -moz-transition: background-color .25s ease-out;
-}
-
 sub {
 	opacity: 0.6;
 }
@@ -126,6 +114,13 @@ footer {
 }
 
 /* -----------------------------------------
+   Overwrites (forms)
+----------------------------------------- */
+select {
+	display: inline !important;
+}
+
+/* -----------------------------------------
    Lists
 ----------------------------------------- */
 #list-items li {
@@ -175,3 +170,26 @@ li h2 a {
 #patient_balance tbody tr.alt { background: #f9f9f9; }
 #patient_balance tbody tr:nth-child(even) { background: #f9f9f9; }
 #patient_balance tbody tr td { color: #333; padding: 9px 10px; vertical-align: top; border: none; }
+
+/* -----------------------------------------
+   Pictos Font
+----------------------------------------- */
+@font-face {
+  font-family: 'Pictos';
+  src: url('/fonts/pictos_custom.eot');
+  src: url('/fonts/pictos_custom.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[data-icon]:before {
+	font-family: 'Pictos';
+  content: attr(data-icon);
+  margin-right: 5px;
+  font-size: 24px;
+  vertical-align: middle;
+  color: #bbb !important;
+  transition: background-color .25s ease-out;
+  -webkit-transition: background-color .25s ease-out;
+  -moz-transition: background-color .25s ease-out;
+}
