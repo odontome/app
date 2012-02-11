@@ -9,12 +9,12 @@
 			
 				<div class="row">	
 						<ul class="block-grid two-up">
-							<li><span data-icon="b" title="<%=_('Age')%>" id="age"></span> <span class="has-tip" title="<%=l @patient.date_of_birth, :format => :long %>"><%=@patient.age%> <%= _("years old") %></span></li>
-							<li><span data-icon="@" title="<%=_('Email')%>" id="email"></span> <%= mail_to @patient.email%></li>
-							<li><span data-icon="g" title="<%=_('Telephone')%>" id="phone1"></span> <%=@patient.telephone%></li>
-							<li><span data-icon="c" title="<%=_('Mobile')%>" id="mobile"></span> <%=@patient.mobile%></li>
-							<li><span data-icon="!" title="<%=_('Emergency telephone')%>" id="phone2"></span> <%=@patient.emergency_telephone%></li>
-							<li><span data-icon="f" title="<%=_('Address')%>" id="address"></span> <%=@patient.address%></li>
+							<li><span data-icon="b" title="<%=_('Age')%>" id="age"><span class="has-tip" title="<%=l @patient.date_of_birth, :format => :long %>"><%=@patient.age%> <%= _("years old") %></span></span></li>
+							<li><span data-icon="@" title="<%=_('Email')%>" id="email"><%= mail_to @patient.email%></span></li>
+							<li><span data-icon="g" title="<%=_('Telephone')%>" id="phone1"><%=@patient.telephone%></span></li>
+							<li><span data-icon="c" title="<%=_('Mobile')%>" id="mobile"><%=@patient.mobile%></span> </li>
+							<li><span data-icon="!" title="<%=_('Emergency telephone')%>" id="phone2"><%=@patient.emergency_telephone%></span></li>
+							<li><span data-icon="f" title="<%=_('Address')%>" id="address"><%=@patient.address%></span></li>
 						</ul>		
 				</div>
 				<div class="row">
