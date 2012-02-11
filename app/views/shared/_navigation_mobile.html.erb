@@ -7,7 +7,7 @@
 		  <dd class="<%=controller.controller_name == 'patients' ? 'active' : ''%>">
 		  	<%= link_to _("Patients"), patients_url, :class => "main" %>
 		  </dd>
-		  <dd class="<%=controller.controller_name == 'practices' ? 'active' : ''%>">
+		  <dd class="<%=controller.controller_name != 'datebook' && controller.controller_name != 'patients' ? 'active' : ''%>">
 		  	<%= link_to _("My practice"), practice_url, :class => "main" %>
 		  </dd>
 		<% else %>
