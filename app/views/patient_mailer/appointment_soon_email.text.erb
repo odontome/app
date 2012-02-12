@@ -1,11 +1,11 @@
 <%=_('You have a dental appointment soon!')%>
 
-<%=_('Hello') + ' ' + @patient_firstname %>,
+<%=_('Hello') + ' ' + @patient_name %>,
 <%=_('We are sending you this email on behalf of') %> 
 <%=@practice_name %>.
 
 <%=_('You have a scheduled appointment this coming')%> 
-<%=l @start_time.to_date, :format => :day_and_date %> <%=_('with')%> <%=@doctor_firstname %> <%=@doctor_lastname%>.
+<%=l @start_time.to_date, :format => :day_and_date %> <%=_('with')%> <%= @doctor_name %>.
 
 <%=_('It starts at:')%> <%=l @start_time.to_time, :format => :just_the_time %>
 <%=_('and ends at:')%> <%=l @end_time.to_time, :format => :just_the_time %>
