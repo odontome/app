@@ -1,6 +1,5 @@
 class Patient < ActiveRecord::Base  
 	# plugins
-	acts_as_audited
 
   # associations
   has_many :appointments, :dependent => :delete_all

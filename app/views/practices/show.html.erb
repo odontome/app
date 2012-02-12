@@ -11,19 +11,12 @@
 			<li>
 				<h2><%= link_to _("My doctors"), doctors_url %> <span class="label radius blue"><%= @practice.doctors.count %> <%=_('doctors')%></span></h2>
 				<span><%=_('The people who do the things to your patients.')%></span>
-				
 			</li>
 			<li>
 				<h2><%=link_to _("My users"), users_url %> <span class="label radius blue"><%= @practice.users.count %> <%=_('users')%></span></h2>
 				<span><%=_('Everyone who has access to your odonto.me.')%></span>
-				
 			</li>
 			<% if @is_user_admin %>
-				<!--<li>
-					<h2><%=link_to _("My audits"), practice_audits_url %></h2>
-					<span><%=_('Everything that is going on in your practice, in one single place. See who did what and when.')%></span>
-					<div class="list-item"></div>
-				</li>-->
 				<li>
 					<h2><%=link_to _("My practice settings"), practice_settings_url %></h2>
 					<span><%=_('Change here your practice name, select your language and more')%></span>

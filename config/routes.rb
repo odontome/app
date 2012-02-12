@@ -40,7 +40,6 @@ Odontome::Application.routes.draw do
   match "/practice/cancel" => "practices#cancel", :as => :practice_cancel
   match "/practice/change_to_free_plan" => "practices#change_to_free_plan", :as => :change_to_free_plan
   match "/practice/close" => "practices#close", :as => :practice_close, :via => :post
-  match "/practice/audits" => "audits#index", :as => :practice_audits, :via => :get 
   match "/paypal_ipn" => "paypal#paypal_ipn", :as => :paypal_ipn, :via => :post
   match "/paypal/cancel" => "paypal#cancel"
   match "/paypal/success" => "paypal#success"

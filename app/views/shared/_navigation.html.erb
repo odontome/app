@@ -14,7 +14,11 @@
 				<div class="flyout small">
 					<%= link_to _("My doctors"), doctors_url %> <br />
 					<%= link_to _("My users"), users_url %> <br />
-					<%= link_to _("My practice settings"), practice_settings_url %> <br />
+					
+					<% if current_user.roles.include?("admin") %>
+						<%= link_to _("My practice settings"), practice_settings_url %> <br />
+					<% end %>
+					
 					<%= link_to _("Logout?"), logout_url %> <br />
 				</div>
 			</li>

@@ -1,6 +1,5 @@
 class Balance < ActiveRecord::Base
   # plugins
-  acts_as_audited
   
   # associations
   belongs_to :patient

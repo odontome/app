@@ -1,6 +1,5 @@
 class Appointment < ActiveRecord::Base
 	# plugins
-	acts_as_audited
 
   # associations
   belongs_to :practice, :counter_cache => true
