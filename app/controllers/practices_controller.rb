@@ -49,7 +49,7 @@ class PracticesController < ApplicationController
       if @practice.update_attributes(params[:practice])
         format.html { redirect_to(practice_url, :notice => _('Your practice settings were successfully updated.')) }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => "settings" }
       end
     end
   end
