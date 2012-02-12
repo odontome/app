@@ -7,8 +7,8 @@
 <%=_('You have a scheduled appointment this coming')%> 
 <%=l @start_time.to_date, :format => :day_and_date %> <%=_('with')%> <%= @doctor_name %>.
 
-<%=_('It starts at:')%> <%=l @start_time.to_time, :format => :just_the_time %>
-<%=_('and ends at:')%> <%=l @end_time.to_time, :format => :just_the_time %>
+<%=_('It starts at:')%> <%=l @start_time.to_time.in_time_zone(@practice_timezone), :format => :just_the_time %>
+<%=_('and ends at:')%> <%=l @end_time.to_time.in_time_zone(@practice_timezone), :format => :just_the_time %>
 
 <%=_('See you soon!')%>
 <%=@practice_name%>.

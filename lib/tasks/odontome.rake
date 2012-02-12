@@ -10,10 +10,7 @@ namespace :odontome do
                                       AND patients.email <> ''", 
                                       Time.now, Time.now + $appointment_notificacion_hours.hours, false)
     appointments.each do |appointment|
-      PatientMailer.appointment_soon_email(appointment.patient.email, appointment.patient.firstname,
-                                           appointment.patient.lastname, appointment.starts_at, appointment.ends_at, 
-                                           appointment.practice.name, appointment.practice.locale,
-                                           appointment.doctor.firstname, appointment.doctor.lastname).deliver
+      PatientMailer.appointment_soon_email(appointment.patient.email, appointment.patient.fullname, appointment.starts_at, appointment.ends_at, appointment.practice.name, appointment.practice.locale, appointment.practice.timezone, appointment.doctor.fullname).deliver
 
       to_update << appointment.id
     end

@@ -7,8 +7,8 @@
 	<%=_('We are sending you this email on behalf of')%> <strong><%=@practice_name%></strong> <%=_('because you have a scheduled appointment this coming')%> <strong><%=l  @start_time.to_date, :format => :day_and_date %></strong> <%=_('with')%> <%=@doctor_name %>.
 </p>
 <p>
-	<%=_('It starts at:')%> <strong><%=l @start_time.to_time, :format => :just_the_time %></strong><br/ >
-	<%=_('and ends at:')%> <strong><%=l @end_time.to_time, :format => :just_the_time %></strong>
+	<%=_('It starts at:')%> <strong><%=l @start_time.to_time.in_time_zone(@practice_timezone), :format => :just_the_time %></strong><br/ >
+	<%=_('and ends at:')%> <strong><%=l @end_time.to_time.in_time_zone(@practice_timezone), :format => :just_the_time %></strong>
 </p>
 <p>
 	<%=_('See you soon!')%>,<br />
