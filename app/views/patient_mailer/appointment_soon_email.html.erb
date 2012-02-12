@@ -4,11 +4,11 @@
 	<%=_('You have a dental appointment soon!')%>
 </p>
 <p>
-	<%=_('We are sending you this email on behalf of')%> <strong><%=@practice_name%></strong> <%=_('because you have a scheduled appointment this coming')%> <strong><%= I18n.localize(@start_time.to_date, :format => :day_and_date)%></strong> <%=_('with')%> <%=@doctor_firstname%> <%=@doctor_lastname%>.
+	<%=_('We are sending you this email on behalf of')%> <strong><%=@practice_name%></strong> <%=_('because you have a scheduled appointment this coming')%> <strong><%=l  @start_time.to_date, :format => :day_and_date %></strong> <%=_('with')%> <%=@doctor_firstname%> <%=@doctor_lastname%>.
 </p>
 <p>
-	<%=_('It starts at:')%> <strong><%= I18n.localize(@start_time.to_time, :format => :just_the_time)%></strong><br/ >
-	<%=_('and ends at:')%> <strong><%= I18n.localize(@end_time.to_time, :format => :just_the_time)%></strong>
+	<%=_('It starts at:')%> <strong><%=l @start_time.to_time, :format => :just_the_time %></strong><br/ >
+	<%=_('and ends at:')%> <strong><%=l @end_time.to_time, :format => :just_the_time %></strong>
 </p>
 <p>
 	<%=_('See you soon!')%>,<br />
