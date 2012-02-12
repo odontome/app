@@ -61,11 +61,11 @@ header {
    Shared Styles (footer)
 ----------------------------------------- */
 footer {
-	border-top: 1px dashed #ddd;
-	margin-top: 50px !important;
-	padding: 30px 0;
-	text-align: right;
+	margin-top: 70px !important;
+	padding: 50px 0;
+	text-align: center;
 	font-size: 90%;
+	background: url('../images/tiny-tooth.png') center 10px no-repeat;
 }
 
 /* -----------------------------------------
