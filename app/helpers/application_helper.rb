@@ -15,4 +15,12 @@ module ApplicationHelper
   def number_to_currency_with_currency(number)
     number_to_currency(number, :unit => @current_user.practice.currency_unit)
   end
+  
+  def new_tag
+  	content_tag :span, _("new"), :class => "radius red label"
+  end
+  
+  def incomplete_tag
+  	content_tag :span, _("incomplete"), :class => "radius red label"
+  end
 end

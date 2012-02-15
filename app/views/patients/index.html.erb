@@ -17,9 +17,9 @@
 				<li>
 					<h2>
 						<%= link_to patient.fullname, patient %>
-						<% if patient.missing_info? %>
-							<span class="red radius label"><%=_("incomplete")%></span>
-						<% end %>
+						<%= if patient.missing_info? 
+							incomplete_tag
+						end %>
 					</h2>			
 				
 					<% if !patient.missing_info? %>
