@@ -101,40 +101,40 @@
   # Used in distance_of_time_in_words(), distance_of_time_in_words_to_now(), time_ago_in_words()
   datetime:
     distance_in_words:
-      half_a_minute: "medio minuto"
+      half_a_minute: "hace medio minuto"
       less_than_x_seconds:
-        one:  "menos de 1 segundo"
-        other: "menos de %{count} segundos"
+        one:  "hace menos de 1 segundo"
+        other: "hace menos de %{count} segundos"
       x_seconds:
-        one:  "1 segundo"
-        other: "%{count} segundos"
+        one:  "hace 1 segundo"
+        other: "hace %{count} segundos"
       less_than_x_minutes:
-        one:  "menos de 1 minuto"
-        other: "menos de %{count} minutos"
+        one:  "hace menos de 1 minuto"
+        other: "hace menos de %{count} minutos"
       x_minutes:
-        one:  "1 minuto"
-        other: "%{count} minutos"
+        one:  "hace 1 minuto"
+        other: "hace %{count} minutos"
       about_x_hours:
-        one:  "alrededor de 1 hora"
-        other: "alrededor de %{count} horas"
+        one:  "hace alrededor de 1 hora"
+        other: "hace alrededor de %{count} horas"
       x_days:
-        one:  "1 día"
-        other: "%{count} días"
+        one:  "hace 1 día"
+        other: "hace %{count} días"
       about_x_months:
-        one:  "alrededor de 1 mes"
-        other: "alrededor de %{count} meses"
+        one:  "hace alrededor de 1 mes"
+        other: "hace alrededor de %{count} meses"
       x_months:
-        one:  "1 mes"
-        other: "%{count} meses"
+        one:  "hace 1 mes"
+        other: "hace %{count} meses"
       about_x_years:
-        one:  "alrededor de 1 año"
-        other: "alrededor de %{count} años"
+        one:  "hace alrededor de 1 año"
+        other: "hace alrededor de %{count} años"
       over_x_years:
-        one:  "más de 1 año"
-        other: "más de %{count} años"
+        one:  "hace más de 1 año"
+        other: "hace más de %{count} años"
       almost_x_years:
-        one: "casi 1 año"
-        other: "casi %{count} años"
+        one: "hace casi 1 año"
+        other: "hace casi %{count} años"
     prompts:
       year:   "Año"
       month:  "Mes"
