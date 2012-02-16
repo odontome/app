@@ -6,6 +6,9 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
+# this little hack makes gettext work again
+module Gem;def self.all_load_paths;[];end;end
+
 module Odontome
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
