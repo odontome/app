@@ -11,7 +11,8 @@ class Appointment < ActiveRecord::Base
   }
    
   scope :find_between, lambda { |starts_at, ends_at|
-    where("appointments.starts_at > ? AND appointments.ends_at < ?", Time.at(starts_at.to_i), Time.at(ends_at.to_i))
+  	includes(:doctor, :patient)
+    .where("appointments.starts_at > ? AND appointments.ends_at < ?", Time.at(starts_at.to_i), Time.at(ends_at.to_i))
     .order("appointments.starts_at")
     .mine
   }
