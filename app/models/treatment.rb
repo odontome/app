@@ -17,12 +17,12 @@ class Treatment < ActiveRecord::Base
   # validations
   validates_presence_of :practice_id, :name, :price
   validates_length_of :name, :within => 1..100
-  validates_numericality_of :price, :greater_than => 0
+  validates_numericality_of :price
   
   # callbacks
   before_validation :set_practice_id, :on => :create
   
   def missing_info?
-    return price.nil? || price == 0
+    return price.nil? || price <= 0
   end
 end
