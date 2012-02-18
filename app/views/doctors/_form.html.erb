@@ -20,11 +20,12 @@
     <%= f.email_field :email, :title => _("Email"), :class => "input-text" %>
   </p>
   <p>
-	<%= f.label _("Gender") %>
+	<%= f.label :gender %>
 	<%= f.select(:gender, [[_('Male'),'male'],[_('Female'),'female']], :title => _("Gender")) %>
   </p>
   <p>
-    <%= f.text_field :speciality, :placeholder => _("Speciality"), :title => _("Specialities of the doctor"), :class => "input-text" %>
+  	<%= f.label :speciality %>
+    <%= f.text_field :speciality, :title => _("Specialities of the doctor"), :class => "input-text" %>
   </p>
   <p>
 	<%= f.label _("Calendar color") %>
