@@ -1,11 +1,11 @@
 namespace :odontome do
-  desc "Acciones de usuarios"
+  desc "Send appointment reminders to patients"
   task :send_appointments_notifications => :environment do
     if defined?(Rails) && (Rails.env == 'development')
       Rails.logger = Logger.new(STDOUT)
     end
     to_update = []
-    appointments = Appointment.includes(:patient)
+    appointments = Appointment.includes(:doctor, :patient)
     .where("appointments.starts_at > ? AND appointments.ends_at < ? AND appointments.notified = ? 
                                       AND patients.email <> ''", 
                                       Time.now, Time.now + $appointment_notificacion_hours.hours, false)
