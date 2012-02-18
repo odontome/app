@@ -1,37 +1,41 @@
-<h1><%=_('Treatments')%> <%= link_to "+", new_treatment_url, :class => "g-button dark" %></h1>
+<div class="row">
+	<div class="eight columns">
+		<h1><%= _('Treatments') %></h1>
 
-<% if @treatments.empty? %>
-	<div class="info">
-		<%=_("Your practice doesn't have any treatments, remember that you need at least one treatment in order to have a treatment history for your patients.")%> 
-		<%=_("We can load a list of typical treatments for you if you")%> <%=link_to _('click here'), sample_treatments_treatments_path %>
+		<% if @treatments.empty? %>
+			<div class="alert-box warning">
+				<p><%=_("Your practice doesn't have any treatments, remember that you need at least one treatment in order to have a treatment history for your patients.")%></p>
+				<p><%=_("We can load a list of typical treatments for you if you")%> <%=link_to _('click here'), sample_treatments_treatments_path %></p>
+				<a href="" class="close">&times;</a>
+			</div>
+		<% end %>
+
+		<ul id="list-items">
+			<% @treatments.each do |treatment| %>
+				<li>
+					<h2><%= link_to treatment.name, treatment %>
+						<% if treatment.missing_info? 
+							incomplete_tag
+						else %>
+							<small><%= number_to_currency_with_currency(treatment.price)%></small>
+
+						<% end %>
+					</h2>			
 		
-		</div>
-<% end %>
-
-<ul id="list-items">
-	<% @treatments.each do |treatment| %>
-
-		<% if treatment.missing_info?
-			cclass = "invalid-list"
-		   else
-			cclass = ""
-		   end %>
-
-		<li class="<%=cclass%>">
-			<h2><%= link_to treatment.name, treatment %></h2>			
-
-			<% if !treatment.missing_info? %>
-				<span><%= number_to_currency_with_currency(treatment.price)%></span>
-			  <% else %>
-			  	<span><%=_("Specify a price to use this treatment")%></span>
+					<% if treatment.missing_info? %>
+					  	<span data-icon="!"><%=_("Specify a price to use this treatment")%> <%= _("or just") %> <%=link_to _("delete this treatment"), treatment_path(treatment), :method => :delete, :confirm => _("Are you sure?") %></span>
+					<% end %>
+				</li>
 			<% end %>
-
-			<div class="list-item-button"><%=link_to _('Delete'), treatment, :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %></div>
-			<div class="list-item-button"><%=link_to _('Edit'), edit_treatment_path(treatment), :class => "g-button light" %></div>
-		</li>
-	<% end %>
-</ul>
-
-<div id="toolbar">
-	<%= link_to _("Create new treatment"), new_treatment_url, :class => "g-button action" %>
+		</ul>
+	</div>
+	
+	<div class="four columns">
+		<div class="panel">
+			
+			<p><%= _("These are your treatments. Please take some time to fill out the treatment name and price. This information will be valiable for sections in this application.") %></p>
+			
+			<p><%= link_to _("Create new treatment"), new_treatment_url, "data-icon" => "+" %></p>
+		</div>
+	</div>
 </div>

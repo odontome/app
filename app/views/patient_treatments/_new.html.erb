@@ -1,25 +1,48 @@
 <%= form_tag(patient_patient_treatments_path, :method => :post, :remote => true) do %>
-	<table>
-		<tr>
-			<td>
-				<%= select_tag("treatment_id", options_from_collection_for_select(treatments, "id", "name"), :title => _("Select a treatment")) %> 
-			</td>
-			<td>
-			<%= select_tag("patient_treatment[tooth_number]", options_for_select(PatientTreatment::TEETH), :title => _("Tooth number")) %>
-			</td>
-			<td>
-				<%= select_tag("patient_treatment[doctor_id]", options_from_collection_for_select(doctors, "id", "fullname"), :title => _("Select a doctor")) %> 
-			</td>
-			<td>
-				<%= submit_tag(_("Add treatment"), :class => "g-button action", :disable_with => _("Please wait...")) %>
-			</td>
-		</tr>
-	</table>
+
+	<fieldset>
+	  <legend><%=_("Log new treatment")%></legend>
+
+	  <p>
+	  	<label for="treatment_id"><%= _("Treatment name") %></label>
+			<%= select_tag("treatment_id", options_from_collection_for_select(treatments, "id", "name"), :title => _("Select a treatment")) %> 
+		</p>
+				
+		<p>
+			<label for="patient_treatment_doctor_id"><%= _("Performed by") %></label>
+			<%= select_tag("patient_treatment[doctor_id]", options_from_collection_for_select(doctors, "id", "fullname"), :title => _("Select a doctor")) %> 
+		</p>
+		
+		<p>
+			<label for="patient_treatment_notes"><%= _("Additional notes") %></label>
+			<%= text_area_tag "patient_treatment[notes]", nil, :placeholder => _("Additional notes"), :rows => 2, :title => _("Additional notes"), :limit => 500 %>
+		</p>
+		
+	</fieldset>	
+	
+	<%= submit_tag(_("Add treatment"), :class => "nice button white", :disable_with => _("Please wait...")) %>
+
 <% end %>
 
-<script type="text/javascript">
+<%= javascript_tag do %>
 	$(document).ready(function() {
-		// tipTip all form fields
-		$('input,select').tipTip();
-	});
-</script>
+		// Limit the notes
+		$('#patient_treatment_notes').limit('500');
+		
+		// Listen for the click event of the headers
+		$(".treatments > li > h2").live("click", function(){
+			var drawer = $(this).parent().find('.drawer');
+			
+			if (drawer.css('display') == 'none'){
+				// Show the drawer
+				drawer.slideToggle();
+			
+				// Scroll to the drawer
+				$('html, body').animate({scrollTop: drawer.offset().top}, 500);
+			} else {
+				// Show the drawer
+				drawer.slideToggle();
+			}
+		});
+	});	
+<% end %>

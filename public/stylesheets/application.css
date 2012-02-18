@@ -110,19 +110,20 @@ footer {
 	background: #222;
 	border: 1px solid #000;
 	color: #fff;
+	box-shadow: 0px 3px 5px #444;
 }
 
 /* -----------------------------------------
    Overwrites (forms)
 ----------------------------------------- */
-select {
+select, input[type="checkbox"] {
 	display: inline !important;
 }
 
 /* -----------------------------------------
    Lists
 ----------------------------------------- */
-#list-items li {
+#list-items > li {
 	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
 	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
 	border-bottom: 1px dashed #ccc;
@@ -131,22 +132,43 @@ select {
 	margin: 0;
 }
 
-#list-items li:last-child {
+#list-items > li:last-child {
 	margin-bottom: 0;
 	border-bottom: 0;
 }
 
-li h2 {
+li > h2, li > h4 {
 	margin-bottom: 10px;
 }
 
-li h2 a {
+li > h2 > a {
 	font-size: 18px;
 	text-decoration: none;
 }
 
-.invalid-list {
-	background: #ffeded !important;
+.treatments {
+	border-bottom: 1px solid #ccc;
+	
+}
+
+.treatments > li h2 {
+	cursor: pointer;
+}
+
+.drawer {
+	margin-top: 10px;
+	background: #333;
+	border: 1px solid #111;
+	-moz-box-shadow: inset 0 0 20px 5px #222;
+	-webkit-box-shadow: inset 0 0 20px 5px #222;
+	box-shadow: inset 0 0 20px 5px #222;
+	color: #fff;
+	padding: 20px;
+	display: none;
+	min-height: 20px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
 }
 
 /* -----------------------------------------

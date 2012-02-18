@@ -1,13 +1,19 @@
-<ul id="list-items">
-	<% @treatments.each do |treatment| %>
-		<%= render :partial => "patient_treatments/show", :locals => {:treatment => treatment, :patient => @patient, :doctors => @doctors} %>
-	<% end %>
-</ul>
+<div class="row">
+	<ul id="list-items" class="treatments">
+		<% @treatments.each do |treatment| %>
+			<%= render :partial => "patient_treatments/show", :locals => {:treatment => treatment, :patient => @patient, :doctors => @doctors} %>
+		<% end %>
+	</ul>
+</div>
 
-<div id="toolbar">
+
+<div class="row">
 	<% if !@all_treatments.empty? %>
 		<%= render :partial => "/patient_treatments/new", :locals => {:treatments => @all_treatments, :doctors => @doctors} %>
 	<% else %>
-		<%=_("Please")%> <%=link_to _('fill the prices'), treatments_path%> <%=_("for your treatments before using this")%>
+		<div class="alert-box warning">
+			<%=_("Please complete the information about your practice (doctors, treatments, etc) before using this section.")%>
+			<a href="" class="close">&times;</a>
+		</div>
 	<% end %>
 </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120212021511) do
+ActiveRecord::Schema.define(:version => 20120217214734) do
 
   create_table "appointments", :force => true do |t|
     t.integer   "practice_id"
@@ -58,14 +58,14 @@ ActiveRecord::Schema.define(:version => 20120212021511) do
   end
 
   create_table "patient_treatments", :force => true do |t|
-    t.integer   "patient_id"
-    t.integer   "doctor_id"
-    t.integer   "tooth_number"
-    t.string    "name",         :limit => 100
-    t.float     "price"
-    t.boolean   "is_completed"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
+    t.integer  "patient_id"
+    t.integer  "doctor_id"
+    t.string   "name",         :limit => 100
+    t.float    "price"
+    t.boolean  "is_completed"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "notes",        :limit => 500
   end
 
   create_table "patients", :force => true do |t|

@@ -29,7 +29,7 @@
 					<% else %>
 						<span data-icon="!"><%=_("Complete this patient information to continue")%></span>
 						<% if user_is_admin?(current_user) %>
-							or just <%= link_to _("delete this patient"), patient, :method => :delete, :confirm => _("Are you sure? All data associated with this patient will be lost forever.") %>
+							<% _("or just") %> <%= link_to _("delete this patient"), patient, :method => :delete, :confirm => _("Are you sure? All data associated with this patient will be lost forever.") %>
 						<% end %>
 					<% end %>
 				</li>

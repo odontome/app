@@ -1,12 +1,19 @@
-<h1><%=@treatment.name%></h1>
-
-<div class="info">
-	<p>
-		<label><%=_("Price")%>:</label> <%= number_to_currency_with_currency @treatment.price%>
-	</p>
-</div>
-<div id="toolbar">
-	<%=link_to _("Edit"), edit_treatment_path(@treatment), :class => "g-button action" %>
-	<%=link_to _("Delete"), treatment_path(@treatment), :method => :delete, :confirm => _("Are you sure?"), :class => "g-button red" %>
-	<%=_("or")%> <%=link_to _("Return to the listing"), treatments_url %>
+<div class="row">
+	<div class="eight columns">
+		<h1><%=@treatment.name%></h1>
+		
+		<p>
+			<strong><%=_("Price")%>:</strong> <%= number_to_currency_with_currency @treatment.price %>
+		</p>
+	</div>
+	
+	<div class="four columns">		
+		<div class="panel">	
+			<ul>
+				<li><%= link_to _("Edit treatment information"), edit_treatment_path(@treatment), "data-icon" => "x" %></li>
+				<li><%= link_to _("Delete treatment"), treatment_path(@treatment), :method => :delete, :confirm => _("Are you sure?"), "data-icon" => "-" %></li>
+				<li><%= link_to _("Return to the listing"), treatments_url, "data-icon" => "<" %></li>
+			</ul>
+		</div>
+	</div>
 </div>

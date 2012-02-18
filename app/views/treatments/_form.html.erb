@@ -3,16 +3,14 @@
   <%= render "shared/error_messages", :target => @treatment %>
 
   <p>
-    <%= f.text_field :name, :placeholder => _("Name"), :title => _("Name") %>
+  	<%= f.label :name %>
+    <%= f.text_field :name,:title => _("Name") %>
   </p>
   <p>
-    <%= f.number_field :price, :placeholder => _("Price"), :title => _("Price")  %>
+  	<%= f.label :price %>
+    <%= f.number_field :price, :title => _("Price")  %>
   </p>
   
-  <div id="toolbar">
-  	<%= f.submit(_("Save"), :class => "g-button action", :disable_with => _("Please wait...")) %> 
-
-  	<%=_("or")%> <%= link_to _("Cancel"), treatments_path %>
-  </div>  
+  <%= f.submit(_("Save"), :class => "button nice white", :disable_with => _("Please wait...")) %> 
 
 <% end %>

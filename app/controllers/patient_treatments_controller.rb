@@ -6,9 +6,9 @@ class PatientTreatmentsController < ApplicationController
   
   def index
     @patient = Patient.mine.find(params[:patient_id])
-    @treatments = PatientTreatment.order("tooth_number, name, is_completed").where("patient_id = ?", params[:patient_id])
+    @treatments = PatientTreatment.order("created_at").where("patient_id = ?", params[:patient_id])
     @doctors = Doctor.mine.valid.order("firstname")
-    @all_treatments = Treatment.mine.where("price IS NOT NULL").where("price != 0").order("name")
+    @all_treatments = Treatment.mine.valid
     
     render :layout => nil
   end

@@ -46,6 +46,7 @@
 				</div>
 			</li>
 			<li id="appointmentsTab"></li>
+			<li id="treatmentsTab"></li>
 			<li id="balanceTab"></li>
 		</ul>
 	</div>
@@ -54,9 +55,9 @@
 	<div class="four columns">
 		<!-- tab navigation -->
 		<dl class="tabs nice vertical">
-			<dd><a href="#chart" class="active" data-icon="a"><%=_("Chart")%></a></dd>
+			<dd><a href="#chart" class="active" data-icon="j"><%=_("Chart")%></a></dd>
 			<dd><a href="#appointments" data-icon="b"><%=_("Appointments")%></a></dd>
-			<!--<li><a href="<%=patient_patient_treatments_path(@patient) %>"><span><%=_("Treatmeant history")%></span></a></li>-->
+			<dd><a href="#treatments" data-icon="k"><span><%=_("Treatments")%></span> <%= new_tag %></a></dd>
 			<dd><a href="#balance" data-icon="$"><%=_("Balance")%></a></dd>
 		</dl>
 		
@@ -75,8 +76,14 @@
 </div>
 
 <script>
-	$(document).ready(function () {
+	$(document).ready(function () {		
 		$("#appointmentsTab").load("<%=appointments_patient_path(@patient) %>");
+		$("#treatmentsTab").load("<%=patient_patient_treatments_path(@patient) %>");
 		$("#balanceTab").load("<%=patient_balances_path(@patient) %>");
+		
+		// Let's refresh the balance every time someone clicks here
+		$("a[href=#balance]").click(function(){
+			$("#balanceTab").load("<%=patient_balances_path(@patient) %>");
+		});
 	});
 </script>

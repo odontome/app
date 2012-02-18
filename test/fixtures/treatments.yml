@@ -1,0 +1,9 @@
+incomplete:
+  id: 1
+  name: Tooth pull
+  price:
+  
+complete:
+  id: 2
+  name: Tooth pull (expensive)
+  price: 5000
