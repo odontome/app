@@ -39,12 +39,6 @@ sub {
 	opacity: 0.6;
 }
 
-.alert-box.notice { background-color: #7fae00; color: #fff; text-shadow: 0 -1px rgba(0,0,0,0.3); }
-
-tfoot td {
-	text-align: right !important;
-}
-
 /* -----------------------------------------
    Shared Styles (header)
 ----------------------------------------- */
@@ -118,6 +112,25 @@ footer {
 ----------------------------------------- */
 select, input[type="checkbox"] {
 	display: inline !important;
+}
+
+/* -----------------------------------------
+   Overwrites (alert boxes)
+----------------------------------------- */
+.alert-box .notice { 
+	background-color: #7fae00; color: #fff; text-shadow: 0 -1px rgba(0,0,0,0.3); 
+}
+
+.alert-box.warning  a {
+	color: #444 !important;
+	text-shadow: 0 -1px rgba(255, 255, 255, 0.3);
+}
+
+/* -----------------------------------------
+   Overwrites (tables)
+----------------------------------------- */
+tfoot td {
+	text-align: right !important;
 }
 
 /* -----------------------------------------
