@@ -6,7 +6,15 @@ class TreatmentsController < ApplicationController
   end
 
   def show
-    @treatment = Treatment.mine.find(params[:id])
+  	@treatment = Treatment.mine.find(params[:id])
+  	
+  	if @treatment.missing_info?
+  	  redirect_to edit_treatment_path(@treatment)
+  	else 
+  	  respond_to do |format|
+  	    format.html # show.html.erb
+  	  end
+  	end
   end
 
   def new
