@@ -1,9 +1,9 @@
 <% if params[:patient_treatment][:is_completed] != nil %>
-	// For some reason I need to pass them one by one
-	// $('li#treatment<%=@treatment.id%>').toggleClass("checked");
 	
-	// Toggle the completed icon
-	$('li#treatment<%=@treatment.id%> > h2 > span').attr("data-icon", "<%=@treatment.is_completed? == true ? '#' : '' %>");
+	// Close the drawer
+	$('li#treatment<%=@treatment.id%> > .drawer').slideToggle(500, function() {
+	    $('li#treatment<%=@treatment.id%>').replaceWith("<%=escape_javascript(render :partial => 'show', :locals => {:treatment => @treatment, :patient => @patient, :doctors => @doctors})%>");
+	  });
+		
 	
-	// Do something to indicate the balance was updated, maybe a sound
 <% end %>

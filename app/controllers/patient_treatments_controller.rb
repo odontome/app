@@ -43,7 +43,11 @@ class PatientTreatmentsController < ApplicationController
   end
 
   def update
-    @treatment = PatientTreatment.where("patient_id = ?", params[:patient_id]).find(params[:id])
+  	# this data is required to pass it down to the partial later on
+  	@patient = Patient.mine.find(params[:patient_id])
+  	@doctors = Doctor.mine.valid.order("firstname")
+  
+    @treatment = PatientTreatment.where("patient_id = ?", @patient.id).find(params[:id])
     
     respond_to do |format|
       if @treatment.update_attributes(params[:patient_treatment])
