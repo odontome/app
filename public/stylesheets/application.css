@@ -222,7 +222,7 @@ li > h2 > a {
   margin-right: 5px;
   font-size: 24px;
   vertical-align: middle;
-  color: #bbb !important;
+  /*color: #bbb !important;*/
   transition: background-color .25s ease-out;
   -webkit-transition: background-color .25s ease-out;
   -moz-transition: background-color .25s ease-out;
