@@ -117,7 +117,7 @@ select, input[type="checkbox"] {
 /* -----------------------------------------
    Overwrites (alert boxes)
 ----------------------------------------- */
-.alert-box .notice { 
+.alert-box.notice { 
 	background-color: #7fae00; color: #fff; text-shadow: 0 -1px rgba(0,0,0,0.3); 
 }
 
