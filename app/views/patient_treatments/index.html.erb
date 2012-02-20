@@ -6,7 +6,6 @@
 	</ul>
 </div>
 
-
 <div class="row">
 	<% if !@all_treatments.empty? %>
 		<%= render :partial => "/patient_treatments/new", :locals => {:treatments => @all_treatments, :doctors => @doctors} %>
@@ -17,3 +16,26 @@
 		</div>
 	<% end %>
 </div>
+
+<script>
+	$(document).ready(function() {
+		// Limit the notes
+		$('#patient_treatment_notes').limit('500');
+		
+		// Listen for the click event of the headers
+		$(".treatments > li > h2").live("click", function(){
+			var drawer = $(this).parent().find('.drawer');
+			
+			if (drawer.css('display') == 'none'){
+				// Show the drawer
+				drawer.slideToggle();
+			
+				// Scroll to the drawer
+				$('html, body').animate({scrollTop: drawer.offset().top}, 500);
+			} else {
+				// Show the drawer
+				drawer.slideToggle();
+			}
+		});
+	});	
+</script>

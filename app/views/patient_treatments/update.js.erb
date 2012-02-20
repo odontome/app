@@ -5,5 +5,4 @@
 	    $('li#treatment<%=@treatment.id%>').replaceWith("<%=escape_javascript(render :partial => 'show', :locals => {:treatment => @treatment, :patient => @patient, :doctors => @doctors})%>");
 	  });
 		
-	
 <% end %>
