@@ -24,7 +24,7 @@
 					<p><%= hidden_field_tag("patient_treatment[is_completed]", 0)%>
 					<label><%= check_box_tag("patient_treatment[is_completed]", 1, treatment.is_completed, :title => _("Is this completed?")) %> <%= _("Is this completed?") %></label></p>
 					
-					<%= submit_tag(_("Save changes"), :class => "nice button white small", :disable_with => _("Please wait...")) %>
+					<%= submit_tag(_("Save changes"), :class => "nice button white tiny", :disable_with => _("Please wait...")) %>
 					&nbsp;&nbsp;
 					<%=link_to _('Delete treatment'), [patient,treatment], :method => :delete, :confirm => _("Are you sure? A chargeback will be applied to the patient's balance if this treatment was completed"), "data-icon" => "-", :remote => true %>
 				</div>	
