@@ -4,11 +4,11 @@
 
   <p>
   	<%= f.label :name %>
-    <%= f.text_field :name,:title => _("Name") %>
+    <%= f.text_field :name,:title => _("Name"), :class => "input-text" %>
   </p>
   <p>
   	<%= f.label :price %>
-    <%= f.number_field :price, :title => _("Price")  %>
+    <%= f.number_field :price, :title => _("Price"), :class => "input-text"  %>
   </p>
   
   <%= f.submit(_("Save"), :class => "button nice white", :disable_with => _("Please wait...")) %> 
