@@ -1,15 +1,15 @@
-$(document).ready(function () {
+/* Foundation v2.2 http://foundation.zurb.com */
+jQuery(document).ready(function ($) {
 
-	/* Start of my stuff */
-	
 	// This function prevents the session from ending
 	window.iCallServerId = setInterval(function (){ var remoteURL = '/'; $.get(remoteURL); }, 900000);
-
-
-
-	/* End of my stuff */
+	
+	
+	/* Use this js doc for all application specific JS */
 
 	/* TABS --------------------------------- */
+	/* Remove if you don't need :) */
+
 	function activateTab($tab) {
 		var $activeTab = $tab.closest('dl').find('a.active'),
 				contentLocation = $tab.attr("href") + 'Tab';
@@ -20,7 +20,7 @@ $(document).ready(function () {
 
     	//Show Tab Content
 		$(contentLocation).closest('.tabs-content').children('li').hide();
-		$(contentLocation).show();
+		$(contentLocation).css('display', 'block');
 	}
 
 	$('dl.tabs').each(function () {
@@ -43,10 +43,27 @@ $(document).ready(function () {
 	  });
 	});
 
+
 	/* PLACEHOLDER FOR FORMS ------------- */
+	/* Remove this and jquery.placeholder.min.js if you don't need :) */
+
 	$('input, textarea').placeholder();
 
+	/* TOOLTIPS ------------ */
+	$(this).tooltips();
+
+
+
+	/* UNCOMMENT THE LINE YOU WANT BELOW IF YOU WANT IE6/7/8 SUPPORT AND ARE USING .block-grids */
+//	$('.block-grid.two-up>li:nth-child(2n+1)').css({clear: 'left'});
+//	$('.block-grid.three-up>li:nth-child(3n+1)').css({clear: 'left'});
+//	$('.block-grid.four-up>li:nth-child(4n+1)').css({clear: 'left'});
+//	$('.block-grid.five-up>li:nth-child(5n+1)').css({clear: 'left'});
+
+
+
 	/* DROPDOWN NAV ------------- */
+
 	var lockNavBar = false;
 	$('.nav-bar a.flyout-toggle').live('click', function(e) {
 		e.preventDefault();
@@ -61,7 +78,7 @@ $(document).ready(function () {
 	});
   if (Modernizr.touch) {
     $('.nav-bar>li.has-flyout>a.main').css({
-      'padding-right' : '75px',
+      'padding-right' : '75px'
     });
     $('.nav-bar>li.has-flyout>a.flyout-toggle').css({
       'border-left' : '1px dashed #eee'
@@ -74,14 +91,9 @@ $(document).ready(function () {
     })
   }
 
+
+	/* DISABLED BUTTONS ------------- */
+	/* Gives elements with a class of 'disabled' a return: false; */
+  
+
 });
-
-// Google Analytics code
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-
-try {
-var pageTracker = _gat._getTracker("UA-2308620-65");
-pageTracker._setDomainName(".odonto.me");
-pageTracker._trackPageview();
-} catch(err) {}
