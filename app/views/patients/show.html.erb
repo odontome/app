@@ -1,6 +1,30 @@
 <div class="row">
+
+	<!-- side content -->
+	<div class="four columns push-eight">
+		<!-- tab navigation -->
+		<dl class="tabs nice vertical">
+			<dd><a href="#chart" class="active" data-icon="j"><%=_("Chart")%></a></dd>
+			<dd><a href="#appointments" data-icon="b"><%=_("Appointments")%></a></dd>
+			<dd><a href="#treatments" data-icon="k"><span><%=_("Treatments")%></span> <%= new_tag %></a></dd>
+			<dd><a href="#balance" data-icon="$"><%=_("Balance")%></a></dd>
+		</dl>
+		
+		<div class="panel">
+			<p><%= _("Need to update something?") %></p>
+		
+			<ul>
+				<li><%= link_to _("Edit patient's information"), edit_patient_path(@patient), "data-icon" => "x" %></li>
+				
+				<% if user_is_admin?(current_user) %>
+					<li><%= link_to _("Delete patient"), @patient, :method => :delete, :confirm => _("Are you sure? All data associated with this patient will be lost forever."), "data-icon" => "-" %></li>
+				<% end %>
+			</ul>
+		</div>
+	</div>
+	
 	<!-- content -->
-	<div class="eight columns">
+	<div class="eight columns pull-four">
 		
 		<h1><%=@patient.fullname%></h1>
 		
@@ -52,28 +76,6 @@
 		</ul>
 	</div>
 	
-	<!-- side content -->
-	<div class="four columns">
-		<!-- tab navigation -->
-		<dl class="tabs nice vertical">
-			<dd><a href="#chart" class="active" data-icon="j"><%=_("Chart")%></a></dd>
-			<dd><a href="#appointments" data-icon="b"><%=_("Appointments")%></a></dd>
-			<dd><a href="#treatments" data-icon="k"><span><%=_("Treatments")%></span> <%= new_tag %></a></dd>
-			<dd><a href="#balance" data-icon="$"><%=_("Balance")%></a></dd>
-		</dl>
-		
-		<div class="panel">
-			<p><%= _("Need to update something?") %></p>
-		
-			<ul>
-				<li><%= link_to _("Edit patient's information"), edit_patient_path(@patient), "data-icon" => "x" %></li>
-				
-				<% if user_is_admin?(current_user) %>
-					<li><%= link_to _("Delete patient"), @patient, :method => :delete, :confirm => _("Are you sure? All data associated with this patient will be lost forever."), "data-icon" => "-" %></li>
-				<% end %>
-			</ul>
-		</div>
-	</div>
 </div>
 
 <script>
