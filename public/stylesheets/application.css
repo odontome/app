@@ -43,12 +43,12 @@ sub {
    Shared Styles (header)
 ----------------------------------------- */
 header {
-	background: #222 url("../images/dark_leather.png");
-	border-bottom: solid 5px #38b9ed;
+	background: #222 url("../images/stripes.jpg") repeat-x bottom center;
+	/*border-bottom: solid 5px #38b9ed;*/
 	padding: 15px 0px 0px 0px;
 	margin-bottom: 20px;
 	height: 55px;
-	box-shadow: 0 5px 0 #5fffff;
+	/*box-shadow: 0 5px 0 #5fffff;*/
 }
 
 /* -----------------------------------------
@@ -106,6 +106,7 @@ footer {
 	color: #fff;
 	box-shadow: 0px 3px 5px #444;
 }
+
 
 /* -----------------------------------------
    Overwrites (forms)
