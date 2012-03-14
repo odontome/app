@@ -1,6 +1,0 @@
-<form action="<%= ENV['RAILS_ENV'] == 'production' ? 'https://www.paypal.com/cgi-bin/webscr' : 'https://www.sandbox.paypal.com/cgi-bin/webscr' %>" method="post">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="JQ7H3NJU5YG4A">
-<input type="hidden" name="custom" value="<%=custom%>">
-<input type="submit" class="g-button green" name="submit" value="<%=_('Subscribe with Paypal')%>">
-</form>

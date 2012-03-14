@@ -50,37 +50,13 @@
 				
 				<ul id="list-items">
 					<% PLANS.each do |plan, values| %>
+							
+							<% # plan i don't know what it is :)
+								 # values is a hash
+									%>
+							
 							<% current_plan = true if @practice.plan_id == values['id']%>
-							<li>
-								
-								<h4><%=_("#{extract_text_from_gettext(values['name'])}")%>
-								<%= "— $" + values['price'].to_s unless values['id'].to_i == 1 %>
-								<% if current_plan %>
-									— <%= @practice.number_of_patients %> <%=_('patients')%> (<%= (@practice.number_of_patients - @practice_patients_count).to_s + " " + _("left")%>)
-								<% end %> <% if current_plan %><span class="label radius green">(<%= _('Current') %>)</span><% end %></h4>
-								
-								<% if current_plan %></strong><% end %>
-								<p><%=_("#{extract_text_from_gettext(values['description'])}")%></p>
-			
-									<% if !current_plan %>
-										<% if values['id'].to_i == 1 %>
-												<%= link_to _("Change to this Plan"), change_to_free_plan_url, :class => "button nice white" %>
-										<% end %>
-										<% if values['id'].to_i > 1 %>
-											<% if @practice.plan_id > 1 %>
-												<%= render :partial => "/paypal/#{values['button_partial']}" + "_change", :locals => { :custom => @practice.id} if @practice_patients_count <= values['number_of_patients'].to_i  %>
-											<% else %>
-												<%= render :partial => "/paypal/#{values['button_partial']}", :locals => { :custom => @practice.id} %>
-											<% end %>
-										<% end %>
-									<% elsif values['id'].to_i > 1 %>
-										<% if @practice.status == "expiring" %>
-											<div class="list-item"><br /><%=_("Plan being cancelled")%></div>
-										<% else %>
-											<%= render :partial => "/paypal/unsubscribe_button", :locals => { :custom => @practice.id} %>
-										<% end %>
-									<% end %>
-							</li>
+
 					<% end %>
 			</ul>
 				<hr />
