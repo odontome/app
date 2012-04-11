@@ -23,4 +23,12 @@ module ApplicationHelper
   def incomplete_tag
   	content_tag :span, _("incomplete"), :class => "radius red label"
   end
+  
+  def avatar_url(email, size = 48)
+  	email = email || "user_has_no@email.com"
+  	default_url = "#{root_url}images/avatar.jpg"
+  	gravatar_id = Digest::MD5.hexdigest(email.downcase)
+  	"http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}&d=#{CGI.escape(default_url)}"
+  end
+  
 end

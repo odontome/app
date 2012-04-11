@@ -16,7 +16,7 @@ class Patient < ActiveRecord::Base
   
   scope :alphabetically, lambda { |letter|
   	mine
-  	.select("firstname,lastname,uid,id,date_of_birth,allergies")
+  	.select("firstname,lastname,uid,id,date_of_birth,allergies,email")
   	.where("lower(firstname) LIKE ?", "#{letter.downcase}%")
   }
   

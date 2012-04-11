@@ -26,7 +26,10 @@
 	<!-- content -->
 	<div class="eight columns pull-four">
 		
-		<h1><%=@patient.fullname%></h1>
+		<h1>
+			<img src="<%= avatar_url(@patient.email) %>" />
+		 	<%=@patient.fullname%>
+		</h1>
 		
 		<!-- tab content -->
 		<ul class="tabs-content">
