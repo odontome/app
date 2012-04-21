@@ -1,6 +1,7 @@
 namespace :odontome do
   desc "Send appointment reminders to patients"
   task :send_appointments_notifications => :environment do
+=begin
     if defined?(Rails) && (Rails.env == 'development')
       Rails.logger = Logger.new(STDOUT)
     end
@@ -15,5 +16,6 @@ namespace :odontome do
       to_update << appointment.id
     end
     Appointment.where(:id => to_update).update_all(:notified => true)
+=end
   end
 end
