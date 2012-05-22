@@ -79,7 +79,6 @@ GEM
     rack (1.2.5)
     rack-mount (0.6.14)
       rack (>= 1.0.0)
-    rack-ssl-enforcer (0.2.4)
     rack-test (0.5.7)
       rack (>= 1.0)
     rails (3.0.7)
@@ -121,7 +120,6 @@ DEPENDENCIES
   gettext_i18n_rails
   jquery-rails (>= 0.2.6)
   mail
-  rack-ssl-enforcer
   rails (= 3.0.7)
   sqlite3-ruby
   taps!
