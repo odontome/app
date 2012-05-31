@@ -20,9 +20,7 @@ class PatientsController < ApplicationController
     else
       @patients = Patient.search(params[:q])
     end
-    
-    @patients_left_in_plan = current_user.practice.number_of_patients-Patient.mine.count
-    
+        
     respond_with(@patients, :methods => :fullname)
   end
 

@@ -44,7 +44,7 @@ class Patient < ActiveRecord::Base
   
   # callbacks
   before_validation :set_practice_id, :on => :create
-  before_create :check_for_patients_limit
+  #before_create :check_for_patients_limit
   after_create :destroy_nils
     
   def fullname
@@ -112,6 +112,7 @@ class Patient < ActiveRecord::Base
   # this function is a small compromise to bypass that weird situation where a patient is created with everything set to nil
   def destroy_nils
   	Patient.mine.destroy_all(:firstname => nil)
+  	Appointment.mine.destroy_all(:patient_id => nil)
   end
 
 end

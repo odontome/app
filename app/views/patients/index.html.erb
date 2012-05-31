@@ -9,7 +9,7 @@
 			</div>
 		<% end %>
 	
-		<h1><%=_('Patients')%> <span class="label radius <%= @patients_left_in_plan <= 10 ? 'red' : 'green' %>">(<%= @patients_left_in_plan %> <%=_('left')%>)</span></h1>
+		<h1><%=_('Patients')%></h1>
 		
 		<ul id="list-items">
 			<% @patients.each do |patient| %>
