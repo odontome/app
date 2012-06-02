@@ -6,6 +6,7 @@
 		<table id="patient_balance" class="sortable">
 			<thead>
 				<tr>
+					<th>Id</th>
 					<th>Name</th>
 					<th>Patients</th>
 					<th>Appointments</th>
@@ -18,7 +19,8 @@
 			<tbody>
 				<% @practices.each do |practice| %>
 					<tr>
-						<td><%= practice.name %> (<%= practice.id %>)</span></td>
+						<td><%= practice.id %></td>
+						<td><%= practice.name %></td>
 						<td><span class="label round white"><%= practice.patients_count %></span></td>
 						<td><span class="label round white"><%= practice.appointments_count %></span></td>
 						<td><span class="label round white"><%= practice.doctors_count %></span></td>
