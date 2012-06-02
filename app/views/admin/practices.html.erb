@@ -1,21 +1,36 @@
 <div class="row">
 	<div class="twelve columns">
-		<%=jqgrid_javascripts%>
-		<%=jqgrid_stylesheets "smoothness" %>
-		<h1>Listing practices</h1>
 		
-		<%=raw jqgrid("", "practices", "/admin/practices", 
-		[ 
-		  { :field => "id", :label => "id" }, 
-		  { :field => "name", :label => "name" }, 
-		  { :field => "locale", :label => "locale" }, 
-		  { :field => "timezone", :label => "timezone" },
-		  { :field => "patients_count", :label => "patients" },
-		  { :field => "appointments_count", :label => "appointments" },
-		  { :field => "doctors_count", :label => "doctors" },
-		  { :field => "users_count", :label => "users" } 
+		<h1>Following <%= @practices.count %> practices</h1>
 		
-		  ] , {:autowidth=>true} 
-		  ) %>
-	</div>
+		<table id="patient_balance" class="sortable">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Patients</th>
+					<th>Appointments</th>
+					<th>Doctors</th>
+					<th>Users</th>
+					<th>Joined</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<% @practices.each do |practice| %>
+					<tr>
+						<td><%= practice.name %> (<%= practice.id %>)</span></td>
+						<td><span class="label round white"><%= practice.patients_count %></span></td>
+						<td><span class="label round white"><%= practice.appointments_count %></span></td>
+						<td><span class="label round white"><%= practice.doctors_count %></span></td>
+						<td><span class="label round white"><%= practice.users_count %></span></td>
+						<td><%= time_ago_in_words practice.created_at %></td>
+					</tr>
+				<% end %>
+			</tbody>
+					
+		</table>
+		
+	</div>	
 </div>
+
+<script src="/javascripts/sorttable.js"></script>
