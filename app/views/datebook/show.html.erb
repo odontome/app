@@ -3,7 +3,14 @@
 
 <div class="row">
 
-	<h1><%=_('Datebook')%></h1>
+	<h1><%=_('Datebook')%> 
+
+	<% @doctors.each do |doctor| %>
+		<% if doctor.id == params[:doctor_id].to_i %>
+			| <%= doctor.fullname %>
+		<% end %>
+	<% end %>
+	</h1>
 
 	<script type="text/javascript">
 	
