@@ -9,7 +9,12 @@ class AppointmentsController < ApplicationController
   layout nil
   
   def index
-     @appointments = Appointment.find_between(params[:start], params[:end])
+
+    if (params[:doctor_id])
+      @appointments = Appointment.find_from_doctor_and_between(params[:doctor_id], params[:start], params[:end])
+    else
+      @appointments = Appointment.find_between(params[:start], params[:end])
+    end
      
      respond_with(@appointments, :methods => ["doctor","patient"])
   end

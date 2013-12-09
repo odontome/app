@@ -13,6 +13,7 @@
 			var d = date.getDate();
 			var m = date.getMonth();
 			var y = date.getFullYear();
+			var withDoctorIdString = '<% if params[:doctor_id] %>doctor_id=<%=params[:doctor_id]%><% end %>'
 								
 			$("#calendar").fullCalendar({
 				defaultView: "agendaWeek",
@@ -42,7 +43,7 @@
 				},
 				editable: true,
 	      eventSources: [{
-	          url: '/appointments',
+	          url: '/appointments?' + withDoctorIdString,
 	          ignoreTimezone: true
 	      }],
 				allDaySlot: false,
@@ -111,9 +112,10 @@
 <div class="row">
 
 	<div class="twelve columns">
-		<ul class="block-grid four-up">		
+		<ul class="block-grid four-up">	
+			<li><a href="/" class="button nice white"><span style="color: #333333">&#x25CF;</span> All doctors</a></li>
 			<% @doctors.each do |doctor| %>
-				<li><span style="color: <%= doctor.color %>">&#x25CF;</span> <%= doctor.fullname %></li>
+				<li><a href="?doctor_id=<%=doctor.id%>" class="button white nice"><span style="color: <%= doctor.color %>">&#x25CF;</span> <%= doctor.fullname %></a></li>
 			<% end %>
 		</ul>
 	</div>

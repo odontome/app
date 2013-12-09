@@ -16,6 +16,11 @@ class Appointment < ActiveRecord::Base
     .order("appointments.starts_at")
     .mine
   }
+
+  scope :find_from_doctor_and_between, lambda { |doctor_id, starts_at, ends_at|
+    where("appointments.doctor_id = ?", doctor_id)
+    .find_between starts_at, ends_at
+  }
     
   # validations
   validates_presence_of :practice_id, :doctor_id, :patient_id
