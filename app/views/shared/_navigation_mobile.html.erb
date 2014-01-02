@@ -2,21 +2,21 @@
   <% if current_user %>
     <% unless current_user.roles.include?("superadmin") %>
 		  <dd class="<%=controller.controller_name == 'datebook' ? 'active' : ''%>">
-		  	<%= link_to _("Datebook"), datebook_url, :class => "main" %>
+		  	<%= link_to t(:datebook), datebook_url, :class => "main" %>
 		  </dd>
 		  <dd class="<%=controller.controller_name == 'patients' ? 'active' : ''%>">
-		  	<%= link_to _("Patients"), patients_url, :class => "main" %>
+		  	<%= link_to t(:patients), patients_url, :class => "main" %>
 		  </dd>
 		  <dd class="<%=controller.controller_name != 'datebook' && controller.controller_name != 'patients' ? 'active' : ''%>">
-		  	<%= link_to _("My practice"), practice_url, :class => "main" %>
+		  	<%= link_to t(:my_practice), practice_url, :class => "main" %>
 		  </dd>
 		<% else %>
 			<dd class="<%=controller.controller_name == 'practices' ? 'active' : ''%>">
-				<%= link_to _("Practices"), practices_admin_url, :class => "main" %>
+				<%= link_to t(:practices), practices_admin_url, :class => "main" %>
 			</dd>
 		<% end %>
 			<dd>
-				<%= link_to _("Logout?"), logout_url, :class => "main" %>
+				<%= link_to t(:logout), logout_url, :class => "main" %>
 			</dd>
 	<% end %>
 </dl>

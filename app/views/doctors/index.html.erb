@@ -1,10 +1,6 @@
 <div class="row">	
 	<div class="eight columns">
-		<% if @doctors.empty? %>
-			<div class="alert-box warning"><%=_("You currently don't have any doctors in your practice. Remember that you need at least one doctor in order to create appointments.")%> <a href="" class="close">&times;</a></div>    
-		<% end %>
-		
-		<h1><%=_('Doctors')%></h1>
+		<h1><%= t :doctors %></h1>
 		
 		<ul id="list-items">
 			<% @doctors.each do |doctor| %>
@@ -12,23 +8,21 @@
 					<h2>
 						<%= link_to doctor.fullname, doctor %>
 						<% if !doctor.is_active %>
-							<span class="red radius label"><%=_("Suspended")%></span>
+							<span class="red radius label"><%= t :suspended %></span>
 						<% end %>
 					</h2>			
 					
 					<span style="color: <%= doctor.color %>">&#x25CF;</span>
-					<span><strong><%=_('UID')%>:</strong> <%=doctor.uid%></span>
-					<span><strong><%=_('Speciality')%>:</strong> <%=doctor.speciality%></span>
+					<span><strong><%= t :uid %>:</strong> <%=doctor.uid%></span>
+					<span><strong><%= t :speciality %>:</strong> <%=doctor.speciality%></span>
 				</li>
 			<% end %>
 		</ul>
 	</div>
 	
 	<div class="four columns">
-		<div class="panel">
-			<p class="hide-on-phones"><%= _("The backbone of your clinic, this can either be just you or a league of extraordinary doctors.") %></p>
-			
-			<p><%= link_to _("Create new doctor"), new_doctor_url, "data-icon" => "+" %></p>
+		<div class="panel">			
+			<p><%= link_to t(:create_new_doctor), new_doctor_url, "data-icon" => "+" %></p>
 		</div>
 	</div>
 	

@@ -1,25 +1,25 @@
 <div class="row">
 	<div class="eight columns">
-		<h1><%=_('My practice')%></h1>
+		<h1><%= t :my_practice %></h1>
 
 		<ul id="list-items">
 			<li>
-				<h2><%= link_to _("My treatments"), treatments_url %> <span class="label radius blue"><%= @practice.treatments.count %> <%=_('treatments')%></span></h2>
-				<span><%=_('Everything that you do to your patients.')%></span>
+				<h2><%= link_to t(:my_treatments), treatments_url %> <span class="label radius blue"><%= @practice.treatments.count %> <%= (t :treatments).downcase %></span></h2>
+				<span><%= t :my_treatments_summary %></span>
 				
 			</li>
 			<li>
-				<h2><%= link_to _("My doctors"), doctors_url %> <span class="label radius blue"><%= @practice.doctors.count %> <%=_('doctors')%></span></h2>
-				<span><%=_('The people who do the things to your patients.')%></span>
+				<h2><%= link_to t(:my_doctors), doctors_url %> <span class="label radius blue"><%= @practice.doctors.count %> <%= (t :doctors).downcase %></span></h2>
+				<span><%= t :my_doctors_summary %></span>
 			</li>
 			<li>
-				<h2><%=link_to _("My users"), users_url %> <span class="label radius blue"><%= @practice.users.count %> <%=_('users')%></span></h2>
-				<span><%=_('Everyone who has access to your odonto.me.')%></span>
+				<h2><%=link_to t(:my_users), users_url %> <span class="label radius blue"><%= @practice.users.count %> <%= (t :users).downcase %></span></h2>
+				<span><%= t :my_users_summary %></span>
 			</li>
 			<% if @is_user_admin %>
 				<li>
-					<h2><%=link_to _("My practice settings"), practice_settings_url %></h2>
-					<span><%=_('Change here your practice name, select your language and more')%></span>
+					<h2><%=link_to t(:my_practice_settings), practice_settings_url %></h2>
+					<span><%= t :my_practice_settings_summary%></span>
 				</li>
 			<% end %>
 		</ul>
@@ -27,7 +27,7 @@
 	
 	<div class="four columns">
 		<div class="panel hide-on-phones">
-			<p><%= _("This is where the magic happens, your practice. Although it is magical, it still needs a few settings to run, please spend some seconds in creating your doctors, users, etc.") %></p>
+			<p><%= t :my_practice_help %></p>
 		</div>
 	</div>	
 </div>

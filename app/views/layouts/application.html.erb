@@ -7,12 +7,11 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width" />
 	
-  <title>Odonto.me</title>
+  	<title>Odonto.me</title>
   
-  <%= stylesheet_link_tag "foundation", "application", "autosuggest" %>
+	<%= stylesheet_link_tag "application" %>
+	<%= javascript_include_tag "application" %>
   
-  <%= javascript_include_tag "jquery.min", "jquery-ui.min", "jquery.limit-1.2.min", "jquery.autosuggest.min", "jquery.simple-color.min", "rails", "modernizr.foundation", "foundation", "application" %>
-    
 	<link rel="shortcut icon" href="/favicon.ico">
 </head>
 
@@ -24,7 +23,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="four columns">
-					<%= link_to (image_tag "logofull.png", :title => _("Home"), :class => "logo", :width => 190), root_path %>
+					<%= link_to (image_tag "logofull.png", :title => t(:home), :class => "logo", :width => 190), root_path %>
 				</div>
 				<div class="eight columns hide-on-phones">
 					<%= render "shared/navigation" %>
@@ -34,7 +33,7 @@
 	</header>	
 	
 	<div class="container">
-		<%= render "shared/navigation_mobile" %>
+		<%#= render "shared/navigation_mobile" %>
 		
 		<%= render "shared/flash_messages" %>
 		

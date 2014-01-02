@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="eight columns">
-		<h1><%= _("Create new user") %></h1>
+		<h1><%= t :new_user %></h1>
 				
 		<%= render 'form' %>
 	</div>
@@ -8,7 +8,7 @@
 	<div class="four columns">		
 		<div class="panel">	
 			<ul>
-				<li><%=link_to _("Return to the listing"), users_url, "data-icon" => "<" %></li>
+				<li><%=link_to t(:return_to_listing), users_url, "data-icon" => "<" %></li>
 			</ul>
 		</div>
 	</div>

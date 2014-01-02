@@ -32,8 +32,8 @@ class PracticeTest < ActiveSupport::TestCase
 		practice.users << User.new
 		
 		assert practice.invalid?		
-		assert_equal practice.users.first.firstname, "Administrator"
-		assert_equal practice.users.first.lastname, "User"
+		assert_equal practice.users.first.firstname, I18n.t(:administrator)
+		assert_equal practice.users.first.lastname, (I18n.t(:user)).downcase
 	end	
 	
 end

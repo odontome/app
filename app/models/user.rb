@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
   
   def check_if_admin
     if self.roles.include?("admin")
-      self.errors[:base] << _("Can't delete an admin user")
+      self.errors[:base] << I18n.t("errors.messages.unauthorised")
       false
     end
   end  
@@ -53,9 +53,9 @@ class User < ActiveRecord::Base
     self.roles = "admin" if User.where("practice_id = ?", self.practice_id).count == 0
   end
 
-  def check_if_is_editeable_by_non_admins #normal users can't edit admins
+  def check_if_is_editeable_by_non_admins # normal users can't edit admins
     if UserSession.find && self.roles.include?("admin") && !UserSession.find.user.roles.include?("admin")
-      self.errors[:base] << _("Sorry, you can't update an admin user")
+      self.errors[:base] << I18n.t("errors.messages.unauthorised")
       false 
     end
   end

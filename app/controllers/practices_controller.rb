@@ -34,7 +34,7 @@ class PracticesController < ApplicationController
     respond_to do |format|
       if @practice.save
         PracticeMailer.welcome_email(@practice).deliver
-        format.html { redirect_to(practice_path, :notice => _('Your practice is now active! You can start to set everything up in here.')) }
+        format.html { redirect_to(practice_path, :notice => I18n.t(:practice_created_success_message)) }
       else
         format.html { render :action => "new", :as => :signup, :layout => "user_sessions" }
       end
@@ -47,37 +47,20 @@ class PracticesController < ApplicationController
     
     respond_to do |format|
       if @practice.update_attributes(params[:practice])
-        format.html { redirect_to(practice_url, :notice => _('Your practice settings were successfully updated.')) }
+        format.html { redirect_to(practice_url, :notice => t(:practice_updated_success_message)) }
       else
         format.html { render :action => "settings" }
       end
     end
   end
   
-  def change_to_free_plan
-    if current_user.practice.patients.count > PLANS['free']['number_of_patients']
-      flash[:alert] = _("We are sorry. Your account cannot be changed to the Free Plan because your practice exceeds the number of patients allowed by it. You'll have to delete some patients first and Unsubscribe your current plan.")
-    elsif current_user.practice.status == "active"
-      # "active" means that the account has an active plan in Paypal
-      flash[:alert] = _("We are sorry. Your account cannot be changed to the Free Plan. You have to first Unsubscribe from your current plan through your Practice Settings or Paypal.")
-    elsif current_user.practice.status == "expiring"
-      # "expiring" means that confirmation of cancellation has been received from Paypal.
-      practice = Practice.find(current_user.practice_id)
-      practice.set_plan_id_and_number_of_patients(1)
-      practice.save
-      flash.discard
-      flash[:notice] = _("Your practice's account has been changed to the Free Plan!")
-    end
-    redirect_to practice_settings_url
-  end
-
   def cancel
   end
 
   def close
     if current_user.practice.status == "active"
       # "active" means that the account has an active plan in Paypal
-      flash[:alert] = _("Please Unsubscribe first from your current plan to close your account so Paypal won't charge you on the next billing cycle. Please try again once your plan is cancelled. You'll find a message here saying so.")
+      flash[:alert] = I18n.t(:practice_close_active_message)
       redirect_to practice_settings_url
     else
       @practice = current_user.practice
@@ -85,9 +68,9 @@ class PracticesController < ApplicationController
       if @practice.save
         current_user_session.destroy
         flash.discard
-        redirect_to signin_url, :notice => _("Your account is now being closed and is no longer possible to access it. Please contact us if you need assistance.")
+        redirect_to signin_url, :notice => I18n.t(:practice_close_success_message)
       else
-        @practice.errors[:base] << _("An error has occurred. We couldn't close your account. Please contact us.")
+        @practice.errors[:base] << I18n.t(:practice_close_error_message)
         redirect_to practice_settings_url
       end
     end

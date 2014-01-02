@@ -5,7 +5,6 @@ class AdminController < ApplicationController
 
   def practices
     @practices = Practice.select("id, name, created_at, patients_count, appointments_count, doctors_count, users_count")
-
   end
   
 end

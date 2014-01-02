@@ -1,15 +1,7 @@
-/* MAIN */
-  
-  Developed by: Raul Riera
-  Twitter: @raulriera
-  Site: http://raulriera.com
-
 /* TEAM */
   
   Developed by: Raul Riera
   Twitter: @raulriera
 
-/* SITE */
-  
-  Code languages: Ruby, HTML5, CSS3, JavaScript
-  Components: Rails 3, jQuery, ZURB Foundation
+  Logo by: Vanessa Colina
+  Twitter: @vcolinau

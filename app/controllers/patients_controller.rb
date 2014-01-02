@@ -39,9 +39,6 @@ class PatientsController < ApplicationController
 
   def new
     @patient = Patient.new
-    unless current_user.practice.number_of_patients > Patient.mine.count
-      @patient.errors[:base] << _("We are very sorry, but you have reached your patients limit. Please find more information about this at My Practice settings")
-    end
   end
 
   def edit
@@ -53,7 +50,7 @@ class PatientsController < ApplicationController
 
     respond_to do |format|
       if @patient.save
-        format.html { redirect_to(@patient, :notice => _('The new patient was successfully created in your practice.')) }
+        format.html { redirect_to(@patient, :notice => I18n.t(:patient_created_success_message)) }
       else
         format.html { render :action => "new" }
       end
@@ -65,7 +62,7 @@ class PatientsController < ApplicationController
 
     respond_to do |format|
       if @patient.update_attributes(params[:patient])
-        format.html { redirect_to(@patient, :notice => _('Your practice\'s patient was successfully updated.')) }
+        format.html { redirect_to(@patient, :notice => I18n.t(:patient_updated_success_message)) }
       else
         format.html { render :action => "edit" }
       end

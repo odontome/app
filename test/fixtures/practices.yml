@@ -1,18 +1,15 @@
-demo:
+complete:
   id: 1
-  name: Odonto.me demo practice,
-  number_of_patients: 100,
-  locale: es_ES,
-  timezone: Mexico City,
-  status: free,
+  name: Odonto.me demo practice
+  locale: en
+  timezone: Europe/London
+  status: free
   currency_unit: $
-  
-bokanova:
+
+complete_another_language:
   id: 2
-  name: Bokanova Dental Center,
-  number_of_patients: 50
-  
-limit_reached:
-  id: 3
-  name: Yet Another Dental Practice
-  number_of_patients: 0
+  name: Odonto.me clinica demo
+  locale: es
+  timezone: America/Mexico_City
+  status: free
+  currency_unit: $

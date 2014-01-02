@@ -3,33 +3,33 @@
   <% if current_user %>
 	  <% unless current_user.roles.include?("superadmin") %>
 			<li>
-				<%= link_to _("Datebook"), datebook_url, :class => "main" %>
+				<%= link_to t(:datebook), datebook_url, :class => "main" %>
 			</li>
 			<li>
-				<%= link_to _("Patients"), patients_url, :class => "main" %>
+				<%= link_to t(:patients), patients_url, :class => "main" %>
 			</li>
 			<li class="has-flyout">
-				<%= link_to _("My practice"), practice_url, :class => "main" %>
+				<%= link_to t(:my_practice), practice_url, :class => "main" %>
 				<a href="#" class="flyout-toggle"><span></span></a>
 				<div class="flyout small">
-					<%= link_to _("My treatments"), treatments_url %> <br />
-					<%= link_to _("My doctors"), doctors_url %> <br />
-					<%= link_to _("My users"), users_url %> <br />
+					<%= link_to t(:my_treatments), treatments_url %> <br />
+					<%= link_to t(:my_doctors), doctors_url %> <br />
+					<%= link_to t(:my_users), users_url %> <br />
 					
 					<% if current_user.roles.include?("admin") %>
-						<%= link_to _("My practice settings"), practice_settings_url %> <br />
+						<%= link_to t(:my_practice_settings), practice_settings_url %> <br />
 					<% end %>
 					
-					<%= link_to _("Logout?"), logout_url %> <br />
+					<%= link_to t(:logout), logout_url %> <br />
 				</div>
 			</li>
 			<li class="show-on-desktops">Welcome, <%= truncate(current_user.fullname, :length => 18) %></li>
 		<% else %>
 			<li>
-				<%= link_to _("Practices"), practices_admin_url, :class => "main" %>
+				<%= link_to t(:practices), practices_admin_url, :class => "main" %>
 			</li>
 			<li>
-				<%= link_to _("Logout"), logout_url, :class => "main" %>
+				<%= link_to t(:logout), logout_url, :class => "main" %>
 			</li>
 		<% end %>
 	<% end %>

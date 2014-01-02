@@ -1,4 +1,30 @@
-en_US:
-    treatments: ["Apiectomy", "Braces", "Bridge", "Dental Crown", "Dental Examination", "Dentures-Full", "First Consultation", "Hygiene Clean", "Implants", "Tooth Filling", "Root canal", "Tooth Extraction", "Tooth Scale and Polish", "X-ray"]
-es_ES:
-    treatments: ["Blanqueamiento", "Obturación", "Endodoncia", "Extracción", "Implante", "Limpieza dental", "Ortodoncia", "Primera visita", "Radiografía", "Corona", "Prótesis Removible", "Puente Fijo"]
+en:
+  treatments: 
+    - Apiectomy
+    - Braces
+    - Bridge
+    - Dental Crown
+    - Dental Examination
+    - Dentures-Full
+    - First Consultation
+    - Hygiene Clean
+    - Implants
+    - Tooth Filling
+    - Root canal
+    - Tooth Extraction
+    - Tooth Scale and Polish
+    - X-ray
+es:
+  treatments:
+    - Blanqueamiento
+    - Obturación
+    - Endodoncia
+    - Extracción
+    - Implante
+    - Limpieza dental
+    - Ortodoncia
+    - Primera visita
+    - Radiografía
+    - Corona
+    - Prótesis Removible
+    - Puente Fijo

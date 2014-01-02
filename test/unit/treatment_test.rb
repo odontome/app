@@ -15,7 +15,7 @@ class TreatmentTest < ActiveSupport::TestCase
  		treatment.price = 100
  		
  		assert !treatment.save
- 		assert_equal I18n.translate("errors.messages.too_long", :count => 100), treatment.errors[:name].join("; ")
+ 		assert_equal I18n.t("errors.messages.too_long", :count => 100), treatment.errors[:name].join("; ")
  	end
  
  end

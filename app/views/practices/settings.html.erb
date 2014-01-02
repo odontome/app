@@ -1,9 +1,9 @@
 <div class="row">
 
 	<div class="eight columns">
-		<h1><%=_('Practice settings')%></h1>
+		<h1><%= @practice.name %></h1>
 		
-		<%= form_for(@practice, :url => "/practices/#{@practice.id}", :method => :update) do |f| %>
+		<%= form_for(@practice, :url => "/practice/#{@practice.id}", :method => :update) do |f| %>
 		
 		  <% if @practice.errors.any? %>
 		    <div class="alert-box error">
@@ -15,18 +15,18 @@
 		  <% end %>
 		
 			<fieldset>
-				<legend><%=_("Practice information")%></legend>
+				<legend><%= t :practice_information %></legend>
 			  <p>
 			  	<%= f.label :name %>
-			    <%= f.text_field :name, :title => _("Practice Name"), :class => "input-text" %>
-					<sub><%=_('("Great Smiles Dentists" or "John Peterson\'s")')%></sub>
+			    <%= f.text_field :name, :title => t(:practice_name), :class => "input-text" %>
+					<sub><%= t :practice_name_hint %></sub>
 			  </p>
 			</fieldset>
 			<fieldset>
-				<legend><%=_("Customization")%></legend>
+				<legend><%= t :customization %></legend>
 			  	<p>
 					<%= f.label :locale %>
-					<%= f.select(:locale, [[_('English'),'en_US'],['Español','es_ES']], :title => _("Preferred language")) %>
+					<%= f.select(:locale, [[ t(:english), 'en'],[ t(:spanish),'es']] ) %>
 			  	</p>
 			  	<p>
 					<%= f.label :timezone %>
@@ -38,31 +38,14 @@
 			  	</p>
 			</fieldset>
 	
-			<%= f.submit(_("Save"), :class => "button nice white") %> <%= _("or") %> <%= link_to _("Cancel"),  practice_url%>
+			<%= f.submit(t(:save), :class => "button nice white") %> <%= t(:or) %> <%= link_to t(:cancel),  practice_url%>
 	
 		<% end %>
 	</div>
 	
 	<div class="four columns">
-		<div class="panel">
-			<% if $payments %>
-				<h1><%=_("Plans and payments")%></h1>
-				
-				<ul id="list-items">
-					<% PLANS.each do |plan, values| %>
-							
-							<% # plan i don't know what it is :)
-								 # values is a hash
-									%>
-							
-							<% current_plan = true if @practice.plan_id == values['id']%>
-
-					<% end %>
-			</ul>
-				<hr />
-			<% end %>	
-				
-			<p><%=_('If you need to, you can')%> <%=link_to _('close your account here'), practice_cancel_url %></p>
+		<div class="panel">				
+			<p><%= link_to t(:close_your_account), practice_cancel_url, "data-icon" => "-" %></p>
 			
 		</div>
 	</div>

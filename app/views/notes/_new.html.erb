@@ -1,12 +1,12 @@
 <%= form_tag([noteable, Note.new], :method => :post, :remote => true) do %>
 	<fieldset>
-	  <legend><%=_("Chart Notes")%></legend>
+	  <legend><%= t(:chart_notes)%></legend>
 		<p>
-		    <%= text_area_tag "note[notes]", nil, {:rows => 2, :placeholder => _("Special thoughts about this #{noteable.class}") }  %>
+		    <%= text_area_tag "note[notes]", nil, {:rows => 2, :placeholder => t(:notes_about_this, class_name: noteable.class) }  %>
 		</p>
 	</fieldset>
 	
-	<%= submit_tag(_("Annotate"), :class => "button nice white", :disable_with => _("Please wait...")) %>
+	<%= submit_tag( t(:annotate), :class => "button nice white", :disable_with => t(:please_wait)) %>
 <% end %>
 
 <script type="text/javascript">

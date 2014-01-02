@@ -2,15 +2,27 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
-# If you have a Gemfile, require the gems listed there, including any gems
-# you've limited to :test, :development, or :production.
-Bundler.require(:default, Rails.env) if defined?(Bundler)
+if defined?(Bundler)
+  # If you precompile assets before deploying to production, use this line
+  Bundler.require *Rails.groups(:assets => %w(development test))
+  # If you want your assets lazily compiled in production, use this line
+  # Bundler.require(:default, :assets, Rails.env)
+end
 
 # this little hack makes gettext work again
 module Gem;def self.all_load_paths;[];end;end
 
 module Odontome
   class Application < Rails::Application
+    config.i18n.available_locales = ["es", "en"]
+    config.i18n.enforce_available_locales = false
+
+    # Enable the asset pipeline
+    config.assets.enabled = true
+
+    # Version of your assets, change this if you want to expire all your assets
+    config.assets.version = '1.0'
+    
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -44,6 +56,9 @@ module Odontome
     
     # To configure the SSL Enforcer gem
     #config.middleware.use Rack::SslEnforcer, :only => ["/signup", "/signin", "/users/new", /^\/users\/(.+)\/edit/, "/set_session_time_zone"], :mixed => true, , :except_hosts => '0.0.0.0'
+
+    # enable custom error pages
+    config.exceptions_app = self.routes
   end
 
 end

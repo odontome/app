@@ -1,36 +1,31 @@
-<script type="text/javascript">
-	var timezone = determine_timezone().timezone;
-	$.get('/set_session_time_zone', {"detected_timezone": timezone.olson_tz})
-</script>
-
-<%= form_for(@practice) do |practice_form| %>
+<%= form_for(@practice, :url => "/practice", :method => :create) do |practice_form| %>
 
   <%= render "shared/error_messages", :target => @practice %>
 
   <p>
-    <%= practice_form.text_field :name, :placeholder => _("Practice Name"), :title => _("Practice Name"), :class => "input-text" %> 
-	<sub><%=_('(Something like "My awesome clinic!")')%></sub>
+    <%= practice_form.text_field :name, :placeholder => t(:practice_name), :class => "input-text" %> 
+	<sub><%= t :practice_name_hint %></sub>
   </p>
 
 	<%= practice_form.fields_for :users do |user_form| %>
 
 	  <p>
-	    <%= user_form.email_field :email, :placeholder => _("Email"), :title => _("Email"), :class => "input-text" %>
+	    <%= user_form.email_field :email, :placeholder => t(:email), :class => "input-text" %>
 	  </p>
 		<p>
-		  <%= user_form.password_field :password, :placeholder => _("Password"), :title => _("Password"), :class => "input-text" %>
+		  <%= user_form.password_field :password, :placeholder => t(:password), :class => "input-text" %>
 		</p>
 		<p>
-		  <%= user_form.password_field :password_confirmation, :placeholder => _("Confirm your password"), :title => _("Confirm your password"), :class => "input-text" %>
+		  <%= user_form.password_field :password_confirmation, :placeholder => t(:password_confirmation), :class => "input-text" %>
 		</p>
 
 	<% end %>
 	
-		<%= practice_form.submit(_("Register"), :class => "button nice blue", :disable_with => _("Please wait...")) %>
-		<%=_("or")%> <%= link_to _("Sign in"), signin_url %>
+		<%= practice_form.submit(t(:signup), :class => "button nice blue", :disable_with => t(:please_wait)) %>
+		<%= t :or %> <%= link_to t(:signin), signin_url %>
 		
 		<hr />
 		
-		<%=_('You agree to our')%> <%= link_to _('Terms of Service'), "/terms", :target => "_blank" %> <%=_('and to our')%> <%= link_to _('Privacy Policy'), "/privacy", :target => "_blank" %> <%=_('when you register')%>
+		<%= raw t :you_agree_to_our_terms_and_privacy_policy, terms_url: link_to(t(:terms_of_service), "/terms", :target => "_blank"), privacy_url: link_to(t(:privacy_policy), "/privacy", :target => "_blank") %>
 
 <% end %>

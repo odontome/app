@@ -4,35 +4,33 @@
 		<h1><span style="color: <%= @doctor.color %>">&#x25CF;</span>
 			<%=@doctor.fullname%>
 			<% if !@doctor.is_active %>
-				<span class="red radius label"><%=_("Suspended")%></span>
+				<span class="red radius label"><%= t :suspended %></span>
 			<% end %>
 		</h1>
 		
 		<p>
-			<strong><%=_("Unique identifier")%>:</strong> <%= @doctor.uid%>
+			<strong><%= t :uid %>:</strong> <%= @doctor.uid%>
 		</p>
 		<p>
-			<strong><%=_("Email")%>:</strong> <%= @doctor.email%>
+			<strong><%= t :email %>:</strong> <%= @doctor.email%>
 		</p>
 		<p>
-			<strong><%=_("Gender")%>:</strong> <%= @doctor.gender.titleize%>
+			<strong><%= t :gender %>:</strong> <%= @doctor.gender.titleize%>
 		</p>
 		<p>
-			<strong><%=_("Speciality")%>:</strong> <%= @doctor.speciality%>
+			<strong><%= t :speciality %>:</strong> <%= @doctor.speciality%>
 		</p>
 	</div>
 	
 	<div class="four columns">
 
-		<div class="panel">
-			<p><%= _("Doctors who already have appointments or patients assigned to them, can't be deleted for obvious reasons, use the suspend button instead") %></p>
-			
+		<div class="panel">			
 			<ul>
-				<li><%= link_to _("Edit doctor's information"), edit_doctor_path(@doctor), "data-icon" => "x" %></li>
+				<li><%= link_to t(:edit_doctor), edit_doctor_path(@doctor), "data-icon" => "x" %></li>
 				<% if user_is_admin?(current_user) %>
 					<li><%= link_to_suspend_or_delete @doctor %></li>
 				<% end %>
-				<li><%=link_to _("Return to the listing"), doctors_url, "data-icon" => "<" %></li>
+				<li><%= link_to t(:return_to_listing), doctors_url, "data-icon" => "<" %></li>
 			</ul>
 						
 		</div>

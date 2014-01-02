@@ -1,15 +1,15 @@
 <div class="row">	
 	
 	<div class="eight columns">
-		<h1><%=_('Users')%></h1>
+		<h1><%= t(:users)%></h1>
 
 		<ul id="list-items">
 			<% @users.each do |user| %>
 				<li>
 					<h2><%= link_to user.fullname, user %> <% if user_is_admin?(user) %> <span class="label white radius">admin</span><%end%></h2>
 		
-					<span><strong><%=_('Email')%>:</strong> <%=user.email%></span>
-					<span><strong><%=_('Last seen')%>:</strong> <% if user.last_login_at %><%= time_ago_in_words(user.last_login_at) %><% else %><%=_('never')%><% end %></span>	
+					<span><strong><%= t(:email)%>:</strong> <%=user.email%></span>
+					<span><strong><%= t(:last_seen)%>:</strong> <% if user.last_login_at %><%= time_ago_in_words(user.last_login_at) %><% else %><%= t(:never)%><% end %></span>	
 				</li>
 			<% end %>
 		</ul>
@@ -17,9 +17,9 @@
 
 	<div class="four columns">
 		<div class="panel">
-			<p><%= _("These are the people who have access to your practice from Odonto.me, it is wise to not use the same user for everything since you want to keep track of who does what and when.") %></p>
+			<p><%= t(:user_create_help) %></p>
 			
-			<p><%= link_to _("Create new user"), new_user_path, "data-icon" => "+" %></p>
+			<p><%= link_to t(:create_new_user), new_user_path, "data-icon" => "+" %></p>
 		</div>
 	</div>
 </div>

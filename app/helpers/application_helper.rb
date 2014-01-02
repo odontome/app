@@ -17,11 +17,11 @@ module ApplicationHelper
   end
   
   def new_tag
-  	content_tag :span, _("new"), :class => "radius red label"
+  	content_tag :span, t(:new), :class => "radius red label"
   end
   
   def incomplete_tag
-  	content_tag :span, _("incomplete"), :class => "radius red label"
+  	content_tag :span, t(:incomplete), :class => "radius red label"
   end
   
   def avatar_url(email, size = 48)

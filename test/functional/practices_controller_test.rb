@@ -17,7 +17,7 @@ class PracticesControllerTest < ActionController::TestCase
 	end
     
   test "should show practice" do
-    get :show, id: practices(:demo).to_param
+    get :show, id: practices(:complete).to_param
     assert_response :success
   end
   

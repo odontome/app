@@ -1,0 +1,12 @@
+/* ...
+*= require_self
+*= require_tree .
+*/
+
+/* -----------------------------------------
+   Shared Styles
+----------------------------------------- */
+
+.translation_missing {
+	color: #ff0000;
+}

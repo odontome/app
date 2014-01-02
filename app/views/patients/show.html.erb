@@ -4,20 +4,18 @@
 	<div class="four columns push-eight">
 		<!-- tab navigation -->
 		<dl class="tabs nice vertical">
-			<dd><a href="#chart" class="active" data-icon="j"><%=_("Chart")%></a></dd>
-			<dd><a href="#appointments" data-icon="b"><%=_("Appointments")%></a></dd>
-			<dd><a href="#treatments" data-icon="k"><span><%=_("Treatments")%></span></a></dd>
-			<dd><a href="#balance" data-icon="$"><%=_("Balance")%></a></dd>
+			<dd><a href="#chart" class="active" data-icon="j"><%= t :chart %></a></dd>
+			<dd><a href="#appointments" data-icon="b"><%= t :appointments %></a></dd>
+			<dd><a href="#treatments" data-icon="k"><span><%= t :treatments %></span></a></dd>
+			<dd><a href="#balance" data-icon="$"><%= t :balance %></a></dd>
 		</dl>
 		
-		<div class="panel">
-			<p><%= _("Need to update something?") %></p>
-		
+		<div class="panel">		
 			<ul>
-				<li><%= link_to _("Edit patient's information"), edit_patient_path(@patient), "data-icon" => "x" %></li>
+				<li><%= link_to t(:edit_patient), edit_patient_path(@patient), "data-icon" => "x" %></li>
 				
 				<% if user_is_admin?(current_user) %>
-					<li><%= link_to _("Delete patient"), @patient, :method => :delete, :confirm => _("Are you sure? All data associated with this patient will be lost forever."), "data-icon" => "-" %></li>
+					<li><%= link_to t(:delete_patient), @patient, :method => :delete, :confirm => t(:are_you_sure_no_undo), "data-icon" => "-" %></li>
 				<% end %>
 			</ul>
 		</div>
@@ -37,12 +35,12 @@
 			
 				<div class="row">	
 						<ul class="block-grid two-up">
-							<li><span data-icon="b" title="<%=_('Age')%>" id="age"><span class="has-tip" title="<%=l @patient.date_of_birth, :format => :long %>"><%=@patient.age%> <%= _("years old") %></span></span></li>
-							<li><span data-icon="@" title="<%=_('Email')%>" id="email"><%= mail_to @patient.email%></span></li>
-							<li><span data-icon="g" title="<%=_('Telephone')%>" id="phone1"><%=@patient.telephone%></span></li>
-							<li><span data-icon="c" title="<%=_('Mobile')%>" id="mobile"><%=@patient.mobile%></span> </li>
-							<li><span data-icon="!" title="<%=_('Emergency telephone')%>" id="phone2"><%=@patient.emergency_telephone%></span></li>
-							<li><span data-icon="f" title="<%=_('Address')%>" id="address"><%=@patient.address%></span></li>
+							<li><span data-icon="b" title="<%= t :age %>" id="age"><span class="has-tip" title="<%=l @patient.date_of_birth, :format => :long %>"><%=@patient.age%> <%= t(:years_old) %></span></span></li>
+							<li><span data-icon="@" title="<%= t :email %>" id="email"><%= mail_to @patient.email%></span></li>
+							<li><span data-icon="g" title="<%= t :telephone %>" id="phone1"><%=@patient.telephone%></span></li>
+							<li><span data-icon="c" title="<%= t :mobile %>" id="mobile"><%=@patient.mobile%></span> </li>
+							<li><span data-icon="!" title="<%= t :emergency_telephone %>" id="phone2"><%=@patient.emergency_telephone%></span></li>
+							<li><span data-icon="f" title="<%= t :address %>" id="address"><%=@patient.address%></span></li>
 						</ul>		
 				</div>
 				<div class="row">
@@ -50,19 +48,19 @@
 					<hr />
 					
 					<% if @patient.uid != "" %>
-						<p><strong><%=_('Chart number')%></strong> <%=@patient.uid%></p>
+						<p><strong><%= t :chart_number %></strong> <%=@patient.uid%></p>
 					<% end %>
 					
 					<% if @patient.allergies != "" %>
-						<p class="error_field"><strong><%=_('Allergic to')%>:</strong> <%=@patient.allergies%></p>
+						<p class="error_field"><strong><%= t :allergic_to %>:</strong> <%=@patient.allergies%></p>
 					<% end %>
-					<p><strong><%=_('Past Illnesses')%>:</strong> <%=@patient.past_illnesses%></p>
-					<p><strong><%=_('Past surgeries')%>:</strong> <%=@patient.surgeries%></p>
-					<p><strong><%=_('Current medications')%>:</strong> <%=@patient.medications%></p>
-					<p><strong><%=_('Cigarettes per day')%>:</strong> <%=@patient.cigarettes_per_day%></p>
-					<p><strong><%=_('Drinks per day')%>:</strong> <%=@patient.drinks_per_day%></p>
-					<p><strong><%=_('Drugs use')%>:</strong> <%=@patient.drugs_use%></p>
-					<p><strong><%=_('Family history')%>:</strong> <%= simple_format @patient.family_diseases%></p>
+					<p><strong><%= t :past_illnesses %>:</strong> <%=@patient.past_illnesses%></p>
+					<p><strong><%= t :past_surgeries %>:</strong> <%=@patient.surgeries%></p>
+					<p><strong><%= t :current_medications %>:</strong> <%=@patient.medications%></p>
+					<p><strong><%= t :cigarettes_per_day %>:</strong> <%=@patient.cigarettes_per_day%></p>
+					<p><strong><%= t :drinks_per_day %>:</strong> <%=@patient.drinks_per_day%></p>
+					<p><strong><%= t :drugs_use %>:</strong> <%=@patient.drugs_use%></p>
+					<p><strong><%= t :family_history %>:</strong> <%= simple_format @patient.family_diseases%></p>
 				</div>
 			
 				<div class="row">

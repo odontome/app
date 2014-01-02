@@ -13,7 +13,7 @@ class NotesController < ApplicationController
           format.js  { } #create.js.erb
       else
           format.js  {
-            render_ujs_error(@note, _("There was an error creating this note"))
+            render_ujs_error(@note, I18n.t(:note_created_error_message))
           }
       end
     end

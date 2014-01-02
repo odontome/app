@@ -27,7 +27,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to(users_url, :notice => _('The new user was successfully created.')) }
+        format.html { redirect_to(users_url, :notice => I18n.t(:user_created_success_message)) }
       else
         format.html { render :action => "new" }
       end
@@ -39,7 +39,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to(users_url, :notice => _('Your practice\'s user was successfully updated.')) }
+        format.html { redirect_to(users_url, :notice => I18n.t(:user_updated_success_message)) }
       else
         format.html { render :action => "edit" }
       end

@@ -37,7 +37,7 @@ class AppointmentsController < ApplicationController
           format.js  { } #create.js.erb
       else
           format.js  {
-            render_ujs_error(@appointment, _("There was an error creating this appointment"))
+            render_ujs_error(@appointment, I18n.t(:appointment_created_error_message))
           }
       end
     end
@@ -62,7 +62,7 @@ class AppointmentsController < ApplicationController
         format.js { } # update.js.erb
       else
         format.js  { 
-          render_ujs_error(@appointment, _("There was an error updating this appointment"))
+          render_ujs_error(@appointment, I18n.t(:appointment_updated_error_message))
         }
       end
     end
@@ -76,7 +76,7 @@ class AppointmentsController < ApplicationController
           format.js { render :action => :create } # reuses create.js.erb
       else
           format.js  {
-            render_ujs_error(@appointment, _("There was an error deleting this appointment"))
+            render_ujs_error(@appointment, I18n.t(:appointment_deleted_error_message))
           }
       end
     end

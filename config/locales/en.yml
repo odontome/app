@@ -1,0 +1,268 @@
+---
+en:
+  account_cancelled: Account cancelled
+  account_information: Account information
+  account_not_found: An account with the given information was not found. If you think
+    this is a mistake, please contact with us
+  activate: Activate
+  activerecord:
+    attributes:
+      practice:
+        currency_unit: Preferred currency
+        locale: Preferred language
+      treatment:
+        name: Name
+        price: Price
+      user:
+        email: Email
+        firstname: First name
+        lastname: Last name
+        password: Password
+        password_confirmation: Passtword confirmation
+    models:
+      practice: Practice
+      treatment: Treatment
+      user: User
+  address: Address
+  addtional_notes: ''
+  admin_credentials_required: You need to be the administrator of the practice to
+    do this
+  administrator: Administrator
+  age: Age
+  ago: ago
+  allergic_to: Allergic to
+  allergies: Allergies
+  annotate: Annotate
+  appointment_created_error_message: The appointment was created successfully
+  appointment_deleted_error_message: There was a problem deleting the appointment
+  appointment_updated_error_message: There was a problem updating the appointment
+  appointments: appointments
+  are_you_sure: Are you sure?
+  are_you_sure_no_undo: Are you sure? All related data will be deleted, there is no
+    going back
+  balance: Balance
+  balance_created_error_message: There was a problem creating this item
+  body: Body
+  calendar_color: Preferred color
+  cancel: Cancel
+  cancelled_account: Your account has been cancelled and is no longer possible to
+    access it. Please contact us if you need assistance.
+  chart: Chart
+  chart_notes: Chart notes
+  chart_number: Chart number
+  choose: Choose
+  cigarettes_per_day: Cigarettes per day
+  click_here: Click here
+  close_account: Close account
+  close_your_account: Close your account
+  contact_information: Contact information
+  contact_us: Contact us
+  create_new_doctor: Create new doctor
+  create_new_patient: Create new patient
+  create_new_treatment: Create new treatment
+  create_new_user: Create new user
+  current_medications: Current medications
+  customization: Customization
+  date:
+    abbr_day_names:
+    - Sun
+    - Mon
+    - Tue
+    - Wed
+    - Thu
+    - Fri
+    - Sat
+    abbr_month_names:
+    - Jan
+    - Feb
+    - Mar
+    - Apr
+    - May
+    - Jun
+    - Jul
+    - Aug
+    - Sep
+    - Oct
+    - Nov
+    - Dec
+    day_names:
+    - Sunday
+    - Monday
+    - Tuesday
+    - Wednesday
+    - Thursday
+    - Friday
+    - Saturday
+    formats:
+      day_and_date: ! '%A (%e %B)'
+      default: ! '%m/%d/%Y'
+      long: ! '%d %B, %Y'
+      short: ! '%d %b'
+    month_names:
+    - January
+    - February
+    - March
+    - April
+    - May
+    - June
+    - July
+    - August
+    - September
+    - October
+    - November
+    - December
+  datebook: Datebook
+  day: Day
+  delete: Delete
+  delete_appointment: Delete this appointment
+  delete_patient: Delete this patient
+  delete_treatment: Delete this treatment
+  delete_user: Delete this user
+  doctor: Doctor
+  doctor_created_success_message: The doctor was created successfully
+  doctor_updated_success_message: The doctor was updated successfully
+  doctors: Doctors
+  drinks_per_day: Drinks per day
+  drugs_use: Drugs used
+  drugs_use_hint: Please be as descriptive as possible.
+  edit_doctor: Edit this doctor
+  edit_patient: Edit this patient
+  edit_treatment: Edit this treatment
+  edit_user: Edit this user
+  email: Email
+  emergency_telephone: Emergency telephone
+  english: English
+  enter_patient_name_or_uid: Patient name or unique identifier
+  errors:
+    messages:
+      invalid_date_range: The chosen dates are invalid
+      invalid_email_format: Invalid format
+      unauthorised: You don't have permissions to do this
+  family_diseases_hint: Please be as descriptive as possible.
+  family_history: Family history
+  female: Female
+  female_doctor_prefix: D.D.S.
+  forgot_password: Forgot your password?
+  gender: Gender
+  go_back: Go back
+  home: Home
+  incomplete: Incomplete
+  last_seen: Last seen
+  logout: Logout?
+  mailers:
+    notifier:
+      password_reset:
+        subject: Your password reset request
+    patient:
+      appointment_soon_email:
+        subject: Your appointment with %{practice_name} is soon
+    practice:
+      welcome:
+        subject: Welcome to Odonto.me
+  male: Male
+  male_doctor_prefix: D.D.S.
+  medical_history: Medical history
+  mobile: Mobile
+  month: Month
+  my_doctors: My doctors
+  my_doctors_summary: Lorem ipsum not so long
+  my_practice: My practice
+  my_practice_help: Lorem ipsum very very long
+  my_practice_settings: My practice settings
+  my_practice_settings_summary: Lorem ipsum not so long
+  my_treatments: My treatments
+  my_treatments_summary: Lorem ipsum not so long
+  my_users: My users
+  my_users_summary: Lorem ipsum not so long
+  never: Never
+  new: New
+  new_user: New user
+  no_account: Don't have an account?
+  no_doctors: Please create doctors before using this section
+  no_patient_found_new_one_will_be_created: No patient was found, a new one will be
+    created
+  no_patients: You haven't created any patients so far.
+  no_treatments_message: You haven't created any treatments so far.
+  no_user_with_that_email: There doesn't appear to be any users with this email
+  none: none
+  not_logged_in: Not logged in
+  note_created_error_message: There was a problem creating this note
+  notes_about_this: Notes about %{class_name}
+  number_of_signins: Number of signins
+  only_if_clinic_uses_uid: Only if your practice uses an unique identification system
+  or: or
+  or_just: or just
+  password: Password
+  password_confirmation: Password confirmation
+  password_reset_instructions: We will send you instructions on how to change your
+    password after you enter your email below and press Reset password
+  password_reset_instructions_sent_to_email: Instructions on how to reset your password
+    have been sent to your email
+  password_reset_success_message: Your password was reset.
+  past_illnesses: Past illnesses
+  past_surgeries: Past surgeries
+  patient_created_success_message: The patient was created successfully
+  patient_incomplete: Patient incomplete
+  patient_treatment_created_error_message: The item was created successfully
+  patient_treatment_updated_error_message: There was a problem creating this item
+  patient_updated_success_message: The patient was updated successfully
+  patient_without_required_info: Add the missing information, or simply %{delete_url}
+  patients: Patients
+  personal_information: Personal information
+  please_wait: Pleast wait...
+  practice_cancellation: Practice cancellation
+  practice_cancellation_message: Lorem ipsum
+  practice_close_active_message: ''
+  practice_close_error_message: ''
+  practice_close_success_message: ''
+  practice_created_success_message: ''
+  practice_information: Practice information
+  practice_name: Practice name
+  practice_name_hint: Something like "My awesome dental practice"
+  practice_not_completely_setup: Please finish completing the information about your
+    practice (doctors, treatments, etc) before using this section.
+  practice_updated_success_message: Your practice has been updated
+  practices: Practices
+  predefined_treatments_created_success_message: Predefined treatments have been created
+    for you. Feel free to update their name and prices to whatever fits you.
+  price: Price
+  privacy_policy: Privacy policy
+  remember_me: Remember me
+  reset_password: Reset password
+  return_to_listing: Return to listing
+  save: Save
+  select_doctor: ''
+  signin: Sign in
+  signup: Sign up
+  spanish: Spanish
+  speciality: Speciality
+  suspend: Suspend
+  suspended: Suspended
+  telephone: Telephone
+  terms_of_service: Terms of service
+  time:
+    am: am
+    formats:
+      default: ! '%a, %d %b %Y %H:%M:%S %z'
+      just_the_time: ! '%r'
+      long: ! '%B %d, %Y %H:%M'
+      short: ! '%d %b %H:%M'
+    pm: pm
+  today: Today
+  treatment_without_price: Add a price to this treatment, or simply %{delete_url}
+  treatments: Treatments
+  treatments_created_success_message: Treatment created successfully
+  treatments_updated_success_message: Treatment updated successfully
+  uid: Unique identifier
+  use_preloaded_treatments: Would you like to use our list of predefined treatments?
+  user: User
+  user_create_help: Lorem ipsum very very very long
+  user_created_success_message: The user was created successfully
+  user_updated_success_message: The user was updated successfully
+  users: Users
+  week: Week
+  welcome: Welcome to Odonto.me
+  welcome_email_subject: Welcome aboard!
+  years_old: years old
+  you_agree_to_our_terms_and_privacy_policy: You agree to our %{terms_url} and to
+    our %{privacy_url} when you register.

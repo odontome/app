@@ -30,7 +30,7 @@ class TreatmentsController < ApplicationController
 
     respond_to do |format|
       if @treatment.save
-        format.html { redirect_to(treatments_url, :notice => _('The new treatment was successfully created in your practice.')) }
+        format.html { redirect_to(treatments_url, :notice => t(:treatments_created_success_message)) }
       else
         format.html { render :action => "new" }
       end
@@ -42,7 +42,7 @@ class TreatmentsController < ApplicationController
 
     respond_to do |format|
       if @treatment.update_attributes(params[:treatment])
-        format.html { redirect_to(treatments_url, :notice => _('Your practice\'s treatment was successfully updated.')) }
+        format.html { redirect_to(treatments_url, :notice => t(:treatments_updated_success_message)) }
       else
         format.html { render :action => "edit" }
       end
@@ -59,11 +59,11 @@ class TreatmentsController < ApplicationController
   end
   
   # This loads the list of treatments fom treatments.yml into the user's practice
-  def sample_treatments
+  def predefined_treatments
     # Don't load if already done
     if Treatment.mine.count == 0 
       current_user.practice.populate_default_treatments 
-      flash[:notice] = _('Here you have your new list of treatments. Change or delete them and don\'t forget to enter your prices!')
+      flash[:notice] = t(:predefined_treatments_created_success_message)
     end
     redirect_to treatments_url
   end

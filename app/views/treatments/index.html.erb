@@ -1,11 +1,11 @@
 <div class="row">
 	<div class="eight columns">
-		<h1><%= _('Treatments') %></h1>
+		<h1><%= t :treatments %></h1>
 
 		<% if @treatments.empty? %>
 			<div class="alert-box warning">
-				<p><%=_("Your practice doesn't have any treatments, remember that you need at least one treatment in order to have a treatment history for your patients.")%></p>
-				<p><%=_("We can load a list of typical treatments for you if you")%> <%=link_to _('click here'), sample_treatments_treatments_path %></p>
+				<p><%= t(:no_treatments_message)%></p>
+				<p><%= link_to t(:use_preloaded_treatments), predefined_treatments_treatments_path %></p>
 				<a href="" class="close">&times;</a>
 			</div>
 		<% end %>
@@ -23,7 +23,7 @@
 					</h2>			
 		
 					<% if treatment.missing_info? %>
-					  	<span data-icon="!"><%=_("Specify a price to use this treatment")%> <%= _("or just") %> <%=link_to _("delete this treatment"), treatment_path(treatment), :method => :delete, :confirm => _("Are you sure?") %></span>
+					  	<span data-icon="!"><%= raw t :treatment_without_price, delete_url: (link_to (t(:delete_treatment)).downcase, treatment_path(treatment), :method => :delete, :confirm => t(:are_you_sure)) %></span>
 					<% end %>
 				</li>
 			<% end %>
@@ -32,10 +32,8 @@
 	
 	<div class="four columns">
 		<div class="panel">
-			
-			<p><%= _("These are your treatments. Please take some time to fill out the treatment name and price. This information will be valiable for sections in this application.") %></p>
-			
-			<p><%= link_to _("Create new treatment"), new_treatment_url, "data-icon" => "+" %></p>
+						
+			<p><%= link_to t(:create_new_treatment), new_treatment_url, "data-icon" => "+" %></p>
 		</div>
 	</div>
 </div>

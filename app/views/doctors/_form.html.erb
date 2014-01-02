@@ -4,43 +4,42 @@
 
   <p>
   	<%= f.label :firstname %>
-    <%= f.text_field :firstname, :title => _("First name"), :class => "input-text" %>
+    <%= f.text_field :firstname, :class => "input-text" %>
   </p>
   <p>
   	<%= f.label :lastname %>
-    <%= f.text_field :lastname, :title => _("Last name"), :class => "input-text"  %>
+    <%= f.text_field :lastname, :class => "input-text"  %>
   </p>
   <p>
   	<%= f.label :uid %>
-    <%= f.text_field :uid, :title => _("Unique identifier"), :class => "input-text" %>
-	<sub><%=_('(Only if your wish for your clinic to have a custom identification system)')%></sub>
+    <%= f.text_field :uid, :class => "input-text" %>
   </p>
   <p>
   	<%= f.label :email %>
-    <%= f.email_field :email, :title => _("Email"), :class => "input-text" %>
+    <%= f.email_field :email, :class => "input-text" %>
   </p>
   <p>
 	<%= f.label :gender %>
-	<%= f.select(:gender, [[_('Male'),'male'],[_('Female'),'female']], :title => _("Gender")) %>
+	<%= f.select(:gender, [[t(:male),(t(:male)).downcase],[t(:female),(t(:female)).downcase]]) %>
   </p>
   <p>
   	<%= f.label :speciality %>
-    <%= f.text_field :speciality, :title => _("Specialities of the doctor"), :class => "input-text" %>
+    <%= f.text_field :speciality, :class => "input-text" %>
   </p>
   <p>
-	<%= f.label _("Calendar color") %>
-	<%= f.text_field :color, :placeholder => _("Color"), :title => _("Calendar color"), :class => "color_picker" %>    
+	<%= f.label t(:calendar_color) %>
+	<%= f.text_field :color, :placeholder => t(:calendar_color), :class => "color_picker" %>    
   </p>
 
-	<%= f.submit(_("Save"), :class => "button nice white", :disable_with => _("Please wait...")) %> 
+	<%= f.submit(t(:save), :class => "button nice white", :disable_with => t(:please_wait)) %> 
 <% end %>
 
-<script  type="text/javascript">
+<script type="text/javascript">
 	$(document).ready(function(){
 		$('.color_picker').simpleColor({
 			buttonClass: "g-button",
-			buttonValue: "<%=_('Choose')%>",
-			buttonCancelValue: "<%=_('Cancel')%>"
+			buttonValue: "<%= t(:choose)%>",
+			buttonCancelValue: "<%= t(:cancel)%>"
 			});
 	});
 </script>

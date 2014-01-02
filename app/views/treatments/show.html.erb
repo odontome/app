@@ -3,16 +3,16 @@
 		<h1><%=@treatment.name%></h1>
 		
 		<p>
-			<strong><%=_("Price")%>:</strong> <%= number_to_currency_with_currency @treatment.price %>
+			<strong><%= t :price %>:</strong> <%= number_to_currency_with_currency @treatment.price %>
 		</p>
 	</div>
 	
 	<div class="four columns">		
 		<div class="panel">	
 			<ul>
-				<li><%= link_to _("Edit treatment information"), edit_treatment_path(@treatment), "data-icon" => "x" %></li>
-				<li><%= link_to _("Delete treatment"), treatment_path(@treatment), :method => :delete, :confirm => _("Are you sure?"), "data-icon" => "-" %></li>
-				<li><%= link_to _("Return to the listing"), treatments_url, "data-icon" => "<" %></li>
+				<li><%= link_to t(:edit_treatment), edit_treatment_path(@treatment), "data-icon" => "x" %></li>
+				<li><%= link_to t(:delete_treatment), treatment_path(@treatment), :method => :delete, :confirm => t(:are_you_sure), "data-icon" => "-" %></li>
+				<li><%= link_to t(:return_to_listing), treatments_url, "data-icon" => "<" %></li>
 			</ul>
 		</div>
 	</div>

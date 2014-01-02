@@ -17,7 +17,7 @@ class UserTest < ActiveSupport::TestCase
   									:email => users(:founder).email)
   												
   	assert !user.save
-  	assert_equal I18n.translate("activerecord.errors.messages.taken"), user.errors[:email][1]
+  	assert_equal I18n.t("activerecord.errors.messages.taken"), user.errors[:email][1]
   end
   
   test "user is not valid without a valid email address" do
@@ -26,7 +26,7 @@ class UserTest < ActiveSupport::TestCase
   									:email => "notvalid@")
   												
   	assert !user.save
-  	assert_equal I18n.translate("errors.messages.invalid"), user.errors[:email].join("; ")
+  	assert_equal I18n.t("errors.messages.invalid"), user.errors[:email].join("; ")
   end
   
   test "user name should be less than 20 chars long each" do
@@ -35,8 +35,8 @@ class UserTest < ActiveSupport::TestCase
 										:email => "anok@email.com")
   	
   	assert !user.save
-  	assert_equal I18n.translate("errors.messages.too_long", :count => 20), user.errors[:firstname].join("; ")
-  	assert_equal I18n.translate("errors.messages.too_long", :count => 20), user.errors[:lastname].join("; ")
+  	assert_equal I18n.t("errors.messages.too_long", :count => 20), user.errors[:firstname].join("; ")
+  	assert_equal I18n.t("errors.messages.too_long", :count => 20), user.errors[:lastname].join("; ")
   end
   
   test "user password must be at least 4 chars long" do
@@ -45,7 +45,7 @@ class UserTest < ActiveSupport::TestCase
   	user.password_confirmation = "123"
   	
   	assert !user.save
-  	assert_equal I18n.translate("errors.messages.too_short", :count => 4), user.errors[:password][1]
+  	assert_equal I18n.t("errors.messages.too_short", :count => 4), user.errors[:password][1]
   end
     
   test "user password must be confirmed" do
@@ -56,7 +56,7 @@ class UserTest < ActiveSupport::TestCase
   	user.password_confirmation = "111111"
   	
   	assert !user.save
-  	assert_equal I18n.translate("errors.messages.confirmation"), user.errors[:password][1]
+  	assert_equal I18n.t("errors.messages.confirmation"), user.errors[:password][1]
   end
 	
 	test "user fullname shortcut" do

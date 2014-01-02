@@ -19,9 +19,9 @@ class AppointmentTest < ActiveSupport::TestCase
 		appointment.patient_id = "not even close"
 		
 		assert !appointment.save
-		assert_equal I18n.translate("errors.messages.not_a_number"), appointment.errors[:practice_id].join("; ")
-		assert_equal I18n.translate("errors.messages.not_a_number"), appointment.errors[:doctor_id].join("; ")
-		assert_equal I18n.translate("errors.messages.not_a_number"), appointment.errors[:patient_id].join("; ")
+		assert_equal I18n.t("errors.messages.not_a_number"), appointment.errors[:practice_id].join("; ")
+		assert_equal I18n.t("errors.messages.not_a_number"), appointment.errors[:doctor_id].join("; ")
+		assert_equal I18n.t("errors.messages.not_a_number"), appointment.errors[:patient_id].join("; ")
 	end
 	
 	test "appointment practice_id should be set from the session" do
@@ -50,14 +50,14 @@ class AppointmentTest < ActiveSupport::TestCase
 																	:ends_at => Time.now)
 																	
 		assert !appointment.save
-		assert_equal _("Invalid date range"), appointment.errors[:base].join("; ")
+		assert_equal I18n.t("errors.messages.invalid_date_range"), appointment.errors[:base].join("; ")
 	end
 	
 	test "appointment notes should be within 250 chars" do
 		appointment = Appointment.new(:notes => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula arcu ante, nec eleifend ipsum. Proin vestibulum nisi sit amet diam mattis tempor. Quisque condimentum elit aliquam dolor vehicula a suscipit velit dignissim. Nulla laoreet eros eget metus dapibus congue. Mauris vel arcu nec nunc pretium luctus a id justo. Vestibulum mattis commodo hendrerit. Vivamus interdum tempus enim id imperdiet. Integer et tortor ante. Nam sed tortor odio. Sed vulputate, libero quis pulvinar euismod, mauris neque congue diam, vitae aliquam sapien dolor vitae mi. Duis suscipit ligula ut lorem pretium volutpat.")
 																	
 		assert !appointment.save
-		assert_equal I18n.translate("errors.messages.too_long", :count => 255), appointment.errors[:notes].join("; ")
+		assert_equal I18n.t("errors.messages.too_long", :count => 255), appointment.errors[:notes].join("; ")
 		
 	end
 	

@@ -1,9 +1,9 @@
-<% form_tag password_resets_path do %>
-	<p><%=_('We will send you instructions on how to change your password after you enter your email below and press Reset password.')%></p>
+<%= form_tag password_resets_path do %>
+	<p><%= t :password_reset_instructions %></p>
 
 	<p>
-	  <%= text_field_tag :email, nil, :placeholder => _("Email"), :title => _("Email"), :autocapitalize => "off", :autocorrect => "off", :class => "input-text" %>
+	  <%= text_field_tag :email, nil, :placeholder => t(:email), :autocapitalize => "off", :autocorrect => "off", :class => "input-text" %>
 	</p>
 	
-	<%= submit_tag(_("Reset password"), :class => "button nice blue") %> <%=_("or")%> <%= link_to _("go back"), signin_path %>
+	<%= submit_tag( t(:reset_password), :class => "button nice blue") %> <%= t :or %> <%= link_to t(:go_back), signin_path %>
 <% end %>

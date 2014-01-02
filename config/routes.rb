@@ -10,7 +10,6 @@ Odontome::Application.routes.draw do
 	end
 
   resources :appointments
-  resources :practices
   resources :patients do
     member do
       get 'appointments'
@@ -21,7 +20,7 @@ Odontome::Application.routes.draw do
   end
   resources :treatments do
     collection do
-      get 'sample_treatments'
+      get 'predefined_treatments', :as => :predefined_treatments
     end
   end
   resources :users
@@ -31,77 +30,25 @@ Odontome::Application.routes.draw do
   resource :user_session
   resources :password_resets, :only => [ :new, :create, :edit, :update ]
 		
-  match "/signin" => "user_sessions#new", :as => :signin
-  match "/logout" => "user_sessions#destroy", :as => :logout
-  match "/signup" => "practices#new", :as => :signup
-  match "/datebook" => "datebook#show", :as => :datebook
-  match "/practice" => "practices#show", :as => :practice
-  match "/practice/settings" => "practices#settings", :as => :practice_settings
-  match "/practice/cancel" => "practices#cancel", :as => :practice_cancel
-  match "/practice/change_to_free_plan" => "practices#change_to_free_plan", :as => :change_to_free_plan
-  match "/practice/close" => "practices#close", :as => :practice_close, :via => :post
-  match "/set_session_time_zone"  => "welcome#set_session_time_zone"
-  match "/privacy"  => "welcome#privacy"
-  match "/terms"  => "welcome#terms"
+  get "/signin" => "user_sessions#new", :as => :signin
+  get "/logout" => "user_sessions#destroy", :as => :logout
+  get "/signup" => "practices#new", :as => :signup
+  get "/datebook" => "datebook#show", :as => :datebook
+  get "/practice" => "practices#show", :as => :practice
+  post "/practice" => "practices#create"
+  post "/practice/:id" => "practices#update", :as => :practice_update
+  get "/practice/settings" => "practices#settings", :as => :practice_settings
+  get "/practice/cancel" => "practices#cancel", :as => :practice_cancel
+  post "/practice/close" => "practices#close", :as => :practice_close
+  get "/privacy"  => "welcome#privacy"
+  get "/terms"  => "welcome#terms"
 
-  match "/admin/practices" => "admin#practices", :as => :practices_admin
+  get "/admin/practices" => "admin#practices", :as => :practices_admin
+
+  match '/404', :to => 'errors#not_found'
+  match '/422', :to => 'errors#server_error'
+  match '/500', :to => 'errors#server_error'
 
   root :to => "welcome#index"
 
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
-
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  # root :to => "welcome#index"
-
-  # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
 end

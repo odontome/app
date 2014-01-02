@@ -1,4 +1,5 @@
 one:
+  id: 1
   uid: 0001
   practice_id: 1
   firstname: Edwin
@@ -18,13 +19,23 @@ one:
   family_diseases: '-'
   
 two:
+  id: 2
   uid: 0002
   practice_id: 1
   firstname: Miguel
   lastname: Camacho
   
 three:
+  id: 3
   uid: 0003
   practice_id: 3
   firstname: Daniella
   lastname: Sanguino
+
+four:
+  id: 4
+  uid: 0004
+  practice_id: 1
+  firstname: Raul
+  lastname: Riera
+  email: raulriera@hotmail.com

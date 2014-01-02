@@ -36,7 +36,7 @@ class PatientTreatmentsController < ApplicationController
         format.js { } # create.js.erb
       else
         format.js  {
-          render_ujs_error(@treatment, _("There was an error creating this entry"))
+          render_ujs_error(@treatment, I18n.t(:patient_treatment_created_error_message))
         }
       end
     end
@@ -54,7 +54,7 @@ class PatientTreatmentsController < ApplicationController
         format.js { } # update.js.erb
       else
         format.js  {
-          render_ujs_error(@treatment, _("There was an error updating this entry"))
+          render_ujs_error(@treatment, I18n.t(:patient_treatment_updated_error_message))
         }
       end
     end

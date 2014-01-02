@@ -3,7 +3,7 @@ rebecca:
   uid: D001
   practice_id: 1
   firstname: Rebecca
-  lastname: Riera,
+  lastname: Riera
   gender: female
   
 perishable:
@@ -11,5 +11,5 @@ perishable:
   uid: D002
   practice_id: 1
   firstname: Ismael
-  lastname: Fernandez,
+  lastname: Fernandez
   gender: male

@@ -4,12 +4,12 @@
 	
 		<% if @patients.empty? %>
 			<div class="alert-box warning">
-				<%=_("Your practice doesn't have any patients at the moment, let's change that.")%>
+				<%= t :no_patients %>
 				<a href="" class="close">&times;</a>
 			</div>
 		<% end %>
 	
-		<h1><%=_('Patients')%></h1>
+		<h1><%= t :patients %></h1>
 		
 		<ul id="list-items">
 			<% @patients.each do |patient| %>
@@ -23,13 +23,13 @@
 					</h2>			
 				
 					<% if !patient.missing_info? %>
-						<span data-icon="a"><strong><%= _("Chart number")%></strong> <%=patient.uid%></span>
-						<span><strong><%=_('Age')%>:</strong> <%=patient.age%></span>
-						<span><strong><%=_('Allergies')%>:</strong> <%unless patient.allergies.blank?%><%=patient.allergies%><%else%><%=_('none')%><%end%></span>
+						<span data-icon="a"><strong><%= t(:chart_number)%></strong> <%=patient.uid%></span>
+						<span><strong><%= t(:age)%>:</strong> <%=patient.age%></span>
+						<span><strong><%= t(:allergies)%>:</strong> <%unless patient.allergies.blank?%><%=patient.allergies%><%else%><%= t(:none)%><%end%></span>
 					<% else %>
-						<span data-icon="!"><%=_("Complete this patient information to continue")%></span>
+						<span data-icon="!"><%= t :patient_incomplete %></span>
 						<% if user_is_admin?(current_user) %>
-							<% _("or just") %> <%= link_to _("delete this patient"), patient, :method => :delete, :confirm => _("Are you sure? All data associated with this patient will be lost forever.") %>
+						  	<%= raw t :patient_without_required_info, delete_url: (link_to (t(:delete_patient)).downcase, patient, :method => :delete, :confirm => t(:are_you_sure_no_undo)) %>
 						<% end %>
 					<% end %>
 				</li>
@@ -39,21 +39,20 @@
 		
 	<div class="four columns">
 		<div class="panel">
-			<p class="hide-on-phones"><%= _("This is the address book of your practice, in here you will find all of your precious clients. Remember to keep an eye on that quota there, it's very important.") %></p>
-			
-			<hr />
-			
+
+			<!-- 	
 			<input type="text" id="patient_search" name="patient_search" class="input-text" /> <br />
 						
 			<script>
 				$(function(){			
 					 // Patient search box 
-					 $("#patient_search").autoSuggest("/patients.json", {startText: "<%=_('Search patients')%>", minChars: 2, selectionLimit: 1, selectedValuesProp: "id", selectedItemProp: "fullname", searchObjProps: "uid,fullname", resultClick: function(data){ window.location.href = "/patients/" + data.attributes.id; }});
+					 $("#patient_search").autoSuggest("/patients.json", {startText: "Search", minChars: 2, selectionLimit: 1, selectedValuesProp: "id", selectedItemProp: "fullname", searchObjProps: "uid,fullname", resultClick: function(data){ window.location.href = "/patients/" + data.attributes.id; }});
 				});
 			</script>
+		-->
 			
 			<ul>
-				<li><%= link_to _("Create new patient"), new_patient_url, "data-icon" => "+" %></li>
+				<li><%= link_to t(:create_new_patient), new_patient_url, "data-icon" => "+" %></li>
 			</ul>
 		</div>
 	</div>

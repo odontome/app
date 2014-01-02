@@ -4,13 +4,13 @@
 		<h1><%=@user.fullname%></h1>
 
 		<p>
-			<strong><%=_('Email')%>:</strong> <%= @user.email%>
+			<strong><%= t :email %>:</strong> <%= @user.email%>
 		</p>
 		<p>
-			<strong><%=_('Last seen')%>:</strong> <% if @user.last_login_at %><%= l @user.last_login_at, :format => :long %> ( <%= time_ago_in_words(@user.last_login_at)%> <%=_('ago')%>)<% else %><%=_('never')%><% end %>
+			<strong><%= t :last_seen %>:</strong> <% if @user.last_login_at %><%= l @user.last_login_at, :format => :long %> ( <%= time_ago_in_words(@user.last_login_at)%> <%= t :ago %>)<% else %><%= t :never %><% end %>
 		</p>
 		<p>
-			<strong><%=_('Number of signins')%>:</strong> <% if @user.login_count.to_i > 1 %><%= @user.login_count %><% else %><%=_("none")%><% end %>
+			<strong><%= t :number_of_signins %>:</strong> <% if @user.login_count.to_i > 1 %><%= @user.login_count %><% else %><%= t :none %><% end %>
 		</p>
 	</div>
 	
@@ -18,12 +18,12 @@
 		<div class="panel">			
 			<ul>
 				<% if is_editeable_by_current_user(@user) %>
-					<li><%=link_to _("Edit this user's information"), edit_user_path(@user), "data-icon" => "x" %></li>
+					<li><%=link_to t(:edit_user), edit_user_path(@user), "data-icon" => "x" %></li>
 				<% end %>
 				<% if user_is_admin?(current_user) && !user_is_admin?(@user) %>
-					<li><%=link_to _("Delete this user"), user_path(@user), :method => :delete, :confirm => _("Are you sure?"), "data-icon" => "-" %></li>
+					<li><%=link_to t(:delete_user), user_path(@user), :method => :delete, :confirm => t(:are_you_sure), "data-icon" => "-" %></li>
 				<% end %>
-				<li><%=link_to _("Return to the listing"), users_url, "data-icon" => "<" %></li>
+				<li><%=link_to t(:return_to_listing), users_url, "data-icon" => "<" %></li>
 			</ul>
 		</div>
 	</div>

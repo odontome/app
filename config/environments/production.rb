@@ -53,4 +53,12 @@ Odontome::Application.configure do
   # Configure the host for emails
   config.action_mailer.default_url_options = { :host => "my.odonto.me" }
 
+  # Compress JavaScripts and CSS
+  config.assets.compress = true
+
+  # Don't fallback to assets pipeline if a precompiled asset is missed
+  config.assets.compile = false
+
+  # Generate digests for assets URLs
+  config.assets.digest = true
 end

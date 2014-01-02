@@ -5,11 +5,7 @@ class DatebookController < ApplicationController
     @doctors = Doctor.mine.order("firstname")
     
     # Detect if this is coming from a mobile device
-    mobile_device = request.user_agent =~ /Mobile|webOS|Android/
-    # If it is, render a simplified calendar
-    if !mobile_device.nil?
-    	render "mobile"
-    end
+    @is_mobile = request.user_agent =~ /Mobile|webOS|Android/
   end
 
 end

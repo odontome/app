@@ -55,7 +55,7 @@ class Appointment < ActiveRecord::Base
   def ends_at_should_be_later_than_starts_at
   	if !self.starts_at.nil? && !self.ends_at.nil?
 	  	if self.starts_at >= self.ends_at  
-	  		self.errors[:base] << _("Invalid date range")
+	  		self.errors[:base] << I18n.t("errors.messages.invalid_date_range")
 	  	end
 	  end
   end

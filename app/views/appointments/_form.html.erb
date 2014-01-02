@@ -1,28 +1,28 @@
 <%= form_for(@appointment, :remote => true) do |f| %>
 	<p>		
-		<%= f.label  _("Enter the patient name or Unique Identifier") %>
-		<%= text_field_tag "appointment[patient_id]", nil, :title => _("Enter the patient name or Unique Identifier"), :class => "input-text" %>
+		<%= f.label t :enter_patient_name_or_uid %>
+		<%= text_field_tag "appointment[patient_id]", nil, :class => "input-text" %>
 	</p>
 	
 	<div class="clear"></div>
 	
 	<p>
 		<% if @doctors.empty? %>
-			<%=_("Please")%> <%=link_to _('create a doctor'), doctors_path%> <%=_("before trying to write down appointments")%>
+			<%= link_to t(:no_doctors), doctors_path %>
 		<% else %>
-			<%= f.label _("Doctor") %>
-			<%= f.select(:doctor_id, options_from_collection_for_select(@doctors, "id", "fullname", :selected => @appointment.doctor_id), :title => _("Select a doctor")) %>
+			<%= f.label t :doctor %>
+			<%= f.select(:doctor_id, options_from_collection_for_select(@doctors, "id", "fullname", :selected => @appointment.doctor_id), :title => t(:select_doctor)) %>
 		<% end %>
 	</p>
 
 	<p>
-		<%= f.text_area :notes, :placeholder => _("Additional notes"), :rows => 2, :title => _("Additional notes"), :limit => 255  %>
+		<%= f.text_area :notes, :placeholder => t(:addtional_notes), :rows => 2, :limit => 255  %>
 	</p>
 	
-	<%= f.submit(_("Save"), :class => "button nice white", :disable_with => _("Please wait...")) %> 
+	<%= f.submit(t(:save), :class => "button nice white", :disable_with => t(:please_wait)) %> 
 
 	<% if controller.action_name == "edit" %> 
-		<%= link_to _('Delete appointment'), @appointment, :method => :delete, :remote => :true, :confirm => _("Are you sure?"), "data-icon" => "-" %> 
+		<%= link_to t(:delete_appointment), @appointment, :method => :delete, :remote => :true, :confirm => t(:are_you_sure), "data-icon" => "-" %> 
 	<% else %>
 		<%= f.hidden_field :starts_at %>
 	<% end %> 

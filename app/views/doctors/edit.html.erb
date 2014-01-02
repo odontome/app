@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="eight columns">
-		<h1><%=_('Editing')%> <%=@doctor.fullname%></h1>
+		<h1><%=@doctor.fullname%></h1>
 		
 		<%= render 'form' %>
 	</div>
@@ -8,7 +8,7 @@
 	<div class="four columns">
 		<div class="panel">			
 			<ul>
-				<li><%=link_to _("Return to the listing"), doctors_url, "data-icon" => "<" %></li>
+				<li><%=link_to t(:return_to_listing), doctors_url, "data-icon" => "<" %></li>
 			</ul>
 		</div>
 	</div>

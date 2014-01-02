@@ -1,16 +1,25 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.20'
-gem 'sqlite3-ruby', :require => 'sqlite3', :group => :development
+gem 'rails', '3.2.16'
 gem 'mail'
-gem "authlogic", :git => "git://github.com/binarylogic/authlogic.git"
-gem 'jquery-rails', '>= 0.2.6'
-gem 'gettext', '>=1.9.3', :require => false, :group => :development
-gem 'gettext_i18n_rails'
-gem 'taps', :git => "git://github.com/ricardochimal/taps.git"
-gem 'will_paginate', :git => 'git://github.com/mislav/will_paginate.git', :branch => 'rails3'
+gem "authlogic", '~> 3.2'
+gem 'jquery-rails', '>= 3.0.4'
+gem 'taps'
+gem 'will_paginate', '~> 3.0'
+gem 'rails-i18n', '~> 3.0.0'
+
+group :assets do
+	gem 'sass-rails', "  ~> 3.2.3"
+	gem 'coffee-rails', "~> 3.2.1"
+	gem 'uglifier', '>= 1.0.3'
+end
+
+group :development do
+	gem 'sqlite3-ruby', :require => 'sqlite3'
+	gem 'i18n-tasks', '~> 0.2.10'
+end
 
 group :test do
-  # Pretty printed test output
-  gem 'turn'
+	# Pretty printed test output
+	gem 'turn'
 end

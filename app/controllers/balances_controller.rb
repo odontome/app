@@ -30,7 +30,7 @@ class BalancesController < ApplicationController
           format.js  { } #create.js.erb
       else
           format.js  {
-            render_ujs_error(@balance, _("There was an error creating this entry"))
+            render_ujs_error(@balance, I18n.t(:balance_created_error_message))
           }
       end
     end

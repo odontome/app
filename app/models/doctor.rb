@@ -27,7 +27,7 @@ class Doctor < ActiveRecord::Base
   before_destroy :check_if_is_deleteable
   
   def fullname
-    [(self.gender === "female") ? s_('female_doctor_prefix|Dr.') : s_('male_doctor_prefix|Dr.'), firstname, lastname].join(' ')
+    [(self.gender === "female") ? I18n.t(:female_doctor_prefix) : I18n.t(:male_doctor_prefix), firstname, lastname].join(' ')
   end
   
   def is_deleteable
