@@ -71,11 +71,8 @@ class Patient < ActiveRecord::Base
   end
   
   # this function tries to find a patient by an ID or it's NAME, otherwise it creates one
-  def self.find_or_create_from(patient_id_or_name)
-    # remove any possible commas from this value
-    patient_id_or_name.gsub!(",", "")
-      
-    # Check if we are dealing with an integer or a string
+  def self.find_or_create_from(patient_id_or_name)  
+    # Check if we are dealing with an string
     if (patient_id_or_name.to_i == 0)
       # instantiate a new patient
       patient = new()
@@ -85,7 +82,7 @@ class Patient < ActiveRecord::Base
       # skip validation when saving this patient
       patient.save!(:validate => false)
 
-      patient_id_or_name = patient.id  
+      patient_id_or_name = patient.id
     end
     
     # validate that this patient really exists
@@ -95,7 +92,6 @@ class Patient < ActiveRecord::Base
     	rescue ActiveRecord::RecordNotFound
     		patient_id_or_name = nil
     end
-    
 
     return patient_id_or_name
   end

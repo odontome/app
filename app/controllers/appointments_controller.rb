@@ -6,7 +6,7 @@ class AppointmentsController < ApplicationController
   respond_to :html, :json
   
   #layout
-  layout nil
+  layout false
   
   def index
 
@@ -41,6 +41,7 @@ class AppointmentsController < ApplicationController
           }
       end
     end
+
   end
   
   def edit
