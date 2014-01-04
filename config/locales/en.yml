@@ -244,7 +244,7 @@ en:
     am: am
     formats:
       default: ! '%a, %d %b %Y %H:%M:%S %z'
-      just_the_time: ! '%r'
+      just_the_time: ! '%H:%M'
       long: ! '%B %d, %Y %H:%M'
       short: ! '%d %b %H:%M'
     pm: pm

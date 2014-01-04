@@ -194,13 +194,13 @@ es:
   telephone: ''
   terms_of_service: ''
   time:
-    am: ''
     formats:
-      default: ''
-      just_the_time: ''
-      long: ''
-      short: ''
-    pm: ''
+      default: ! "%A, %d de %B de %Y %H:%M:%S %z"
+      short: ! "%d de %b %H:%M"
+      long: ! "%d de %B de %Y %H:%M"
+      just_the_time: ! "%H:%M"
+    am: am
+    pm: pm
   today: ''
   treatment_without_price: ''
   treatments: ''

@@ -15,6 +15,7 @@ class PracticeMailerTest < ActionMailer::TestCase
     assert_equal ['raulriera@hotmail.com'], email.to
     assert_equal I18n.t("mailers.practice.welcome.subject"), email.subject
     #assert_equal read_fixture('welcome_email').join, email.body.to_s
+    assert_match(/Hello and welcome to Odonto.me!/, email.encoded)
   end
 
 end

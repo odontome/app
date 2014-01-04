@@ -2,5 +2,5 @@ first_visit:
   practice_id: 1
   doctor_id: 1
   patient_id: 4
-  starts_at: <%= Time.now %>
-  ends_at: <%= Time.now + 1.hour %>
+  starts_at: 2014-01-04 14:00:00 +0000
+  ends_at: 2014-01-04 15:00:00 +0000
