@@ -3,7 +3,7 @@ class PracticesController < ApplicationController
   before_filter :require_user, :only =>  [:index, :destroy, :edit, :settings, :show, :close]
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_superadmin, :only => [:index, :destroy, :edit]
-  before_filter :require_practice_admin, :only => [:settings, :update, :change_to_free_plan, :close]
+  before_filter :require_practice_admin, :only => [:settings, :update, :close]
   
   def index
     @practices = Practice.all
@@ -28,8 +28,8 @@ class PracticesController < ApplicationController
 
   def create
     @practice = Practice.new(params[:practice])
-    @practice.locale = session[:locale]
-    @practice.timezone = session[:time_zone_name]
+    # @practice.locale = session[:locale]
+    # @practice.timezone = session[:time_zone_name]
     
     respond_to do |format|
       if @practice.save

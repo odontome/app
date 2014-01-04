@@ -16,7 +16,7 @@ class Practice < ActiveRecord::Base
   validates_presence_of :name, :timezone, :locale
 
   # callbacks
-  before_validation :set_timezone_and_locale
+  before_validation :set_timezone_and_locale, :on => :create
   before_validation :set_first_user_data, :on => :create
 
   def set_as_cancelled
