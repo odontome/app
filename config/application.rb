@@ -9,9 +9,6 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-# this little hack makes gettext work again
-module Gem;def self.all_load_paths;[];end;end
-
 module Odontome
   class Application < Rails::Application
     config.i18n.available_locales = ["es", "en"]
