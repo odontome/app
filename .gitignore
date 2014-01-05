@@ -4,3 +4,4 @@ log/*.log
 tmp/**/*
 ssl-cert
 .sass-cache/
+public/assets/
