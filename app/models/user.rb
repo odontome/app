@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
   end
   
   def ensure_authentication_token
-  	if !self.login_count_changed?
+  	if self.crypted_password_changed?
   		self.authentication_token = Authlogic::Random.hex_token
   	end
   end

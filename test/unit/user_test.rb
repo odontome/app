@@ -64,5 +64,16 @@ class UserTest < ActiveSupport::TestCase
 		
 		assert_equal user.fullname, "#{user.firstname} #{user.lastname}"
 	end
-  
+
+  test "user authentication token changes when the password is updated" do
+    user = users(:api_user)
+    initial_token = user.authentication_token
+
+    user.password = "3245435436577"
+    user.password_confirmation = user.password
+
+    assert user.save
+    assert_not_equal initial_token, user.authentication_token
+  end
+ 
 end

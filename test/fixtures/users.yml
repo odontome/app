@@ -1,4 +1,5 @@
 founder: 
+  id: 1
   practice_id: 1
   firstname: Raul
   lastname: Riera
@@ -11,6 +12,7 @@ founder:
   login_count: 5
 
 perishable: 
+  id: 2
   practice_id: 1
   firstname: Esteban
   lastname: Barragan
@@ -22,6 +24,7 @@ perishable:
   perishable_token: <%= Authlogic::Random.friendly_token %>
   
 user_in_yet_another_practice: 
+  id: 3
   practice_id: 3
   firstname: Esteban
   lastname: Barragan
@@ -33,7 +36,9 @@ user_in_yet_another_practice:
   perishable_token: <%= Authlogic::Random.friendly_token %>
   
 api_user:
+  id: 4
   practice_id: 1
   firstname: Api
   lastname: User
+  email: api@bokanova.mx
   authentication_token: dcea6d23634b6e1e2a21e462c7ca24cf25e152d6a1af49303069dc79d44c28e537905ad2c595639afa07654f1f75f380338c916b6f0f8801986e0797f4b19734
