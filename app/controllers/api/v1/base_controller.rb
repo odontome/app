@@ -8,14 +8,18 @@ class Api::V1::BaseController < ActionController::Base
   private
   
   def authenticate_user!
-  	@current_user = User.find_by_authentication_token(params[:token])
-  	 	
-  	if @current_user && !@current_user.authentication_token.nil?
-  		@current_user = UserSession.create(@current_user)
- 		else
-  		render :json => {:error => "Token is invalid." }, :status => 401
-  	end
-  	
+
+    authenticate_or_request_with_http_token do |token, options|
+      @current_user = User.find_by_authentication_token(token)
+
+      if @current_user && !@current_user.authentication_token.nil?
+        @current_user = UserSession.create(@current_user)
+      else
+        render :json => {:error => "Token is invalid." }, :status => 401
+      end
+
+    end
+	
   end
   
   def current_user!
