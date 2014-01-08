@@ -29,10 +29,10 @@ class Api::V1::DoctorsController < Api::V1::BaseController
 		respond_with(@doctor)
   end
   
-  def destroy
-    @doctor.destroy
-    respond_with(@doctor)
-  end
+  # def destroy
+  #   @doctor.destroy
+  #   respond_with(@doctor)
+  # end
   
   private
   
