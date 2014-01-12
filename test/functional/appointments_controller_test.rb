@@ -22,13 +22,12 @@ class AppointmentsControllerTest < ActionController::TestCase
     existing_patient = {
       :practice_id => 1,
       :doctor_id => 1,
-      :patient_id => 4,
       :starts_at => '2014-01-04 14:00:00 +0000',
       :ends_at => '2014-01-04 15:00:00 +0000'
     }
 
     assert_difference 'Appointment.count' do
-      post :create, { appointment: existing_patient, as_values_patient_id: "" }
+      post :create, { appointment: existing_patient, as_values_patient_id: "4," } # see Patient.find_or_create_from
     end
   end
 
@@ -44,7 +43,5 @@ class AppointmentsControllerTest < ActionController::TestCase
       post :create, { appointment: new_patient, as_values_patient_id: "New patient" }
     end
   end
-
-
 
 end

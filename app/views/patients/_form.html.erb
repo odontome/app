@@ -7,11 +7,11 @@
 
 	  <p>
 	  	<%= f.label :firstname %>
-	    <%= f.text_field :firstname, :class => "input-text" %>
+	    <%= f.text_field :firstname, :class => "form-control" %>
 	  </p>
 	  <p>
 	  	<%= f.label :lastname %>
-	    <%= f.text_field :lastname, :class => "input-text" %>
+	    <%= f.text_field :lastname, :class => "form-control" %>
 	  </p>
 	  <p>
 	    <%= f.label :date_of_birth %> 
@@ -19,8 +19,8 @@
 	  </p>
 	  <p>
 	  	<%= f.label :uid %>
-	    <%= f.text_field :uid, :class => "input-text" %>
-		<sub>(<%= t :only_if_clinic_uses_uid %>)</sub>
+	    <%= f.text_field :uid, :class => "form-control" %>
+		<sub class="label label-default"><%= t :only_if_clinic_uses_uid %></sub>
 	  </p>
 	</fieldset>
 
@@ -28,23 +28,23 @@
 	  <legend><%= t :contact_information %></legend>
 	  <p>
 	  	<%= f.label :email %>
-	    <%= f.email_field :email, :class => "input-text" %>
+	    <%= f.email_field :email, :class => "form-control" %>
 	  </p>
 	  <p>
 	  	<%= f.label :telephone %>
-	    <%= f.telephone_field :telephone, :class => "input-text" %>
+	    <%= f.telephone_field :telephone, :class => "form-control" %>
 	  </p>
 	  <p>
 	  	<%= f.label :mobile %>
-	    <%= f.telephone_field :mobile, :class => "input-text" %>
+	    <%= f.telephone_field :mobile, :class => "form-control" %>
 	  </p>
 	  <p>
 	  	<%= f.label :emergency_telephone %>
-	    <%= f.telephone_field :emergency_telephone, :class => "input-text" %>
+	    <%= f.telephone_field :emergency_telephone, :class => "form-control" %>
 	  </p>
 	  <p>
 	  	<%= f.label :address %>
-	    <%= f.text_area :address, :maxlength => 100, :rows => 2 %>
+	    <%= f.text_area :address, :maxlength => 100, :rows => 2, :class => "form-control" %>
 	  </p>
 	</fieldset>
 	
@@ -52,39 +52,39 @@
 	  <legend><%= t :medical_history %></legend>
 	  <p>
 	  	<%= f.label :allergies %>
-	    <%= f.text_area :allergies, :rows => 2 %>
+	    <%= f.text_area :allergies, :rows => 2, :class => "form-control" %>
 	  </p>
 	  <p>
 	  	<%= f.label :past_illnesses %>
-	    <%= f.text_area :past_illnesses, :rows => 2 %>
+	    <%= f.text_area :past_illnesses, :rows => 2, :class => "form-control" %>
 	  </p>
 	  <p>
 	  	<%= f.label :surgeries %>
-	    <%= f.text_area :surgeries, :rows => 2 %>
+	    <%= f.text_area :surgeries, :rows => 2, :class => "form-control" %>
 	  </p>
 	  <p>
 	  	<%= f.label :medications %>
-	    <%= f.text_area :medications, :rows => 4 %>
+	    <%= f.text_area :medications, :rows => 4, :class => "form-control" %>
 	  </p>
 	  <p>
 	  	<%= f.label :cigarettes_per_day %>
-	    <%= f.number_field :cigarettes_per_day, :class => "input-text" %>
+	    <%= f.number_field :cigarettes_per_day, :class => "form-control" %>
 	  </p>
 	  <p>
 	  	<%= f.label :drinks_per_day %>
-	    <%= f.number_field :drinks_per_day, :class => "input-text" %>
+	    <%= f.number_field :drinks_per_day, :class => "form-control" %>
 	  </p>
 	  <p>
 	  	<%= f.label :drugs_use %>
-	    <%= f.text_area :drugs_use, :rows => 2 %>
-	    <sub><%= t :drugs_use_hint %></sub>
+	    <%= f.text_area :drugs_use, :rows => 2, :class => "form-control" %>
+	    <sub class="label label-default"><%= t :drugs_use_hint %></sub>
 	  </p>
 	  <p>
 	  	<%= f.label :family_diseases %>
-	    <%= f.text_area :family_diseases, :rows => 4 %>
-	    <sub><%= t :family_diseases_hint %></sub>
+	    <%= f.text_area :family_diseases, :rows => 4, :class => "form-control" %>
+	    <sub class="label label-default"><%= t :family_diseases_hint %></sub>
 	  </p>
 	</fieldset>
 	
-	<%= f.submit( t(:save), :class => "button nice white", :disable_with => t(:please_wait)) %>
+	<%= f.submit( t(:save), :class => "btn btn-embossed btn-primary", :disable_with => t(:please_wait)) %>
 <% end %>

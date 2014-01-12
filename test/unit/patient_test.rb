@@ -21,10 +21,10 @@ class PatientTest < ActiveSupport::TestCase
 	end
 	
 	test "patient is not valid without an unique uid" do	
-		patient = Patient.new(:uid => 0001,
-										:practice_id => 1,
-										:firstname => "Daniella",
-										:lastname => "Sanguino")
+		patient = Patient.new(:uid => 0001, 
+								:practice_id => 1,
+								:firstname => "Daniella",
+								:lastname => "Sanguino")
 													
 		assert !patient.save
 		assert_equal I18n.t("activerecord.errors.messages.taken"), patient.errors[:uid].join("; ")

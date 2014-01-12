@@ -35,25 +35,20 @@ GEM
       activerecord (>= 3.2)
       activesupport (>= 3.2)
     builder (3.0.4)
-    coffee-rails (3.2.2)
-      coffee-script (>= 2.2.0)
-      railties (~> 3.2.0)
-    coffee-script (2.2.0)
-      coffee-script-source
-      execjs
-    coffee-script-source (1.6.3)
     easy_translate (0.4.0)
       json
       thread
       thread_safe
     erubis (2.7.0)
     execjs (2.0.2)
+    font-awesome-rails (4.0.3.1)
+      railties (>= 3.2, < 5.0)
     highline (1.6.20)
     hike (1.2.3)
     i18n (0.6.9)
-    i18n-tasks (0.2.14)
+    i18n-tasks (0.2.17)
       activesupport
-      easy_translate
+      easy_translate (>= 0.4.0)
       erubis
       highline
       rake
@@ -68,7 +63,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
-    multi_json (1.8.2)
+    multi_json (1.8.4)
     polyglot (0.3.3)
     rack (1.4.5)
     rack-cache (1.2)
@@ -146,7 +141,7 @@ PLATFORMS
 
 DEPENDENCIES
   authlogic (~> 3.2)
-  coffee-rails (~> 3.2.1)
+  font-awesome-rails
   i18n-tasks (~> 0.2.10)
   jquery-rails (>= 3.0.4)
   mail

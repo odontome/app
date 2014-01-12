@@ -1,11 +1,9 @@
 <%= form_for(@appointment, :remote => true) do |f| %>
-	<p>		
+	<p class="field-box">		
 		<%= f.label t :enter_patient_name_or_uid %>
-		<%= text_field_tag "appointment[patient_id]", nil, :class => "input-text" %>
+		<%= text_field_tag "appointment[patient_id]", nil, :class => "form-control", :autocomplete => "off" %>
 	</p>
-	
-	<div class="clear"></div>
-	
+		
 	<p>
 		<% if @doctors.empty? %>
 			<%= link_to t(:no_doctors), doctors_path %>
@@ -16,10 +14,10 @@
 	</p>
 
 	<p>
-		<%= f.text_area :notes, :placeholder => t(:addtional_notes), :rows => 2, :limit => 255  %>
+		<%= f.text_area :notes, :placeholder => t(:addtional_notes), :rows => 2, :maxlength => 255, :class => "form-control"  %>
 	</p>
 	
-	<%= f.submit(t(:save), :class => "button nice white", :disable_with => t(:please_wait)) %> 
+	<%= f.submit(t(:save), :class => "btn btn-embossed btn-primary", :disable_with => t(:please_wait)) %> 
 
 	<% if controller.action_name == "edit" %> 
 		<%= link_to t(:delete_appointment), @appointment, :method => :delete, :remote => :true, :confirm => t(:are_you_sure), "data-icon" => "-" %> 
@@ -27,5 +25,4 @@
 		<%= f.hidden_field :starts_at %>
 	<% end %> 
 	
-	<a class="close-reveal-modal">&#215;</a>
 <% end %>

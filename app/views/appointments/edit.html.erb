@@ -7,8 +7,5 @@
 				
 		// Setup autocomplete for patients
 		$("#appointment_patient_id").autoSuggest("/patients.json", {minChars: 2, selectionLimit: 1, selectedValuesProp: "id", selectedItemProp: "fullname", searchObjProps: "uid,fullname", asHtmlID: "patient_id", preFill: selectedPatient});
-		
-		// Limit the notes
-		$('#appointment_notes').limit('255');
 	});	
 </script>

@@ -8,9 +8,10 @@ gem 'taps'
 gem 'will_paginate', '~> 3.0'
 gem 'rails-i18n', '~> 3.0.0'
 
+gem 'font-awesome-rails'
+
 group :assets do
-	gem 'sass-rails', "  ~> 3.2.3"
-	gem 'coffee-rails', "~> 3.2.1"
+	gem 'sass-rails', '~> 3.2.3'
 	gem 'uglifier', '>= 1.0.3'
 end
 

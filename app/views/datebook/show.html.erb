@@ -1,134 +1,142 @@
-<div class="row">
+<script type="text/javascript">
 
-	<h1><%= t :datebook %> 
-
-	<% @doctors.each do |doctor| %>
-		<% if doctor.id == params[:doctor_id].to_i %>
-			| <%= doctor.fullname %>
-		<% end %>
-	<% end %>
-	</h1>
-
-	<script type="text/javascript">
+	$(document).ready(function() {
 	
-		$(document).ready(function() {
-		
-			var date = new Date();
-			var d = date.getDate();
-			var m = date.getMonth();
-			var y = date.getFullYear();
-			var withDoctorIdString = '<% if params[:doctor_id] %>doctor_id=<%=params[:doctor_id]%><% end %>'
-								
-			$("#calendar").fullCalendar({
-				defaultView: <% if @is_mobile.nil? %>"agendaWeek"<%else%>"agendaDay"<% end %>,
-				minTime: 8,
-				maxTime: 21,
-				firstDay: 1,
-				height: <% if @is_mobile.nil? %>"700"<%else%>"1200"<% end %>,
-				//timeFormat: 'h:mm t{ - h:mm t} ',
-				<% if @is_mobile.nil? %>
-					header: {
-						left: "prev,next today",
-						center: "title",
-						right: "month,agendaWeek,agendaDay"
-					},
-				<% else %>
-					header: {
-						left: "prev,next today",
-						center: "",
-						right: ""
-					},
-				<% end %>
-				monthNames: <%= raw (t "date.month_names") %>,
-				monthNamesShort: <%= raw (t "date.abbr_month_names") %>,
-				dayNames: <%= raw t "date.day_names" %>,
-				dayNamesShort: <%= raw t "date.abbr_day_names" %>,
-				buttonText: {
-				    prev:     '&nbsp;&#9668;&nbsp;',  // left triangle
-				    next:     '&nbsp;&#9658;&nbsp;',  // right triangle
-				    prevYear: '&nbsp;&lt;&lt;&nbsp;', // <<
-				    nextYear: '&nbsp;&gt;&gt;&nbsp;', // >>
-				    today:    '<%= t :today %>',
-				    month:    '<%= t :month %>',
-				    week:     '<%= t :week %>',
-				    day:      '<%= t :day %>'
+		var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+		var withDoctorIdString = '<% if params[:doctor_id] %>doctor_id=<%=params[:doctor_id]%><% end %>'
+							
+		$("#calendar").fullCalendar({
+			defaultView: <% if @is_mobile.nil? %>"agendaWeek"<%else%>"agendaDay"<% end %>,
+			minTime: 8,
+			maxTime: 21,
+			firstDay: 1,
+			height: <% if @is_mobile.nil? %>"700"<%else%>"1200"<% end %>,
+			//timeFormat: 'h:mm t{ - h:mm t} ',
+			<% if @is_mobile.nil? %>
+				header: {
+					left: "month,agendaWeek,agendaDay",
+					center: "title",
+					right: "prev,next today"
 				},
-				editable: true,
-	      eventSources: [{
-	          url: '/appointments?' + withDoctorIdString,
-	          ignoreTimezone: true
-	      }],
-				allDaySlot: false,
-				allDayDefault: false,
-				dayClick: function(dayDate, allDay, jsEvent, view){
-					if (view.name != "month"){		
-						var url = "/appointments/new";
-						var dayDate = Math.round((dayDate).getTime() / 1000);
-						
-						$.get(url, {"starts_at": dayDate}, function(data) {
-						  $("#modal_dialog").foundation('reveal', 'open');
-						});
-					} else {
-						$("#calendar").fullCalendar('changeView', 'agendaDay');
-						$("#calendar").fullCalendar('gotoDate', dayDate);
-					}
+			<% else %>
+				header: {
+					left: "prev,next today",
+					center: "",
+					right: ""
 				},
-				eventClick: function(calEvent, jsEvent, view) {
-					var url = "/appointments/" + calEvent.id + "/edit?patient_id=" + calEvent.patient_id;
-					
-					$.get(url, function(data) {
-					  $("#modal_dialog").foundation('reveal', 'open');
-					});
-				},
-				
-				eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc){
-					//update the event with the new data
-					$.ajax({ 
-					    type: "PUT", 
-					    url: "/appointments/" + JSON.stringify(event.id),
-					    data: { 
-					    	"appointment[starts_at]": JSON.stringify(event.start), 
-								"appointment[ends_at]": JSON.stringify(event.end)
-							  }
-					});
-				},
-				eventResize: function(calEvent, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) {
-					// update the event with the new data
-					$.ajax({ 
-					    type: "PUT", 
-					    url: "/appointments/" + calEvent.id,
-					    data: { 
-					    	"appointment[starts_at]": JSON.stringify(calEvent.start), 
-								"appointment[ends_at]": JSON.stringify(calEvent.end), 
-							  }
-					});
-				},
-				eventRender: function(event, element) {
-					// Append the name of the patient    
-					element.find('.fc-event-time').append(" " + event.firstname + " " + event.lastname);
-			    }
-				
-			});	
-		});	
-	</script>
-	
-	<div id="calendar"></div>
-	<div id="modal_dialog" class="reveal-modal" data-reveal-id="modal_dialog" data-reveal>
-		<%= t :please_wait %>
-	</div>
-	
-</div>
-
-<br />
-
-<div class="row">
-
-	<div class="twelve columns">
-		<ul class="block-grid four-up">	
-			<li><a href="/" class="button nice white"><span style="color: #333333">&#x25CF;</span> All doctors</a></li>
-			<% @doctors.each do |doctor| %>
-				<li><a href="?doctor_id=<%=doctor.id%>" class="button white nice"><span style="color: <%= doctor.color %>">&#x25CF;</span> <%= doctor.fullname %></a></li>
 			<% end %>
-		</ul>
+			monthNames: <%= raw (t "date.month_names").last(12) %>,
+			monthNamesShort: <%= raw (t "date.abbr_month_names") %>,
+			dayNames: <%= raw t "date.day_names" %>,
+			dayNamesShort: <%= raw t "date.abbr_day_names" %>,
+			buttonText: {
+			    prev:     '&nbsp;&#9668;&nbsp;',  // left triangle
+			    next:     '&nbsp;&#9658;&nbsp;',  // right triangle
+			    prevYear: '&nbsp;&lt;&lt;&nbsp;', // <<
+			    nextYear: '&nbsp;&gt;&gt;&nbsp;', // >>
+			    today:    '<%= t :today %>',
+			    month:    '<%= t :month %>',
+			    week:     '<%= t :week %>',
+			    day:      '<%= t :day %>'
+			},
+			editable: true,
+			eventSources: [{
+			  url: '/appointments?' + withDoctorIdString,
+			  ignoreTimezone: true
+			}],
+			allDaySlot: false,
+			allDayDefault: false,
+			dayClick: function(dayDate, allDay, jsEvent, view){
+				if (view.name != "month"){		
+					var url = "/appointments/new";
+					var timestamp = Math.round((dayDate).getTime() / 1000);
+					
+					$.get(url, {"starts_at": timestamp}, function(data) {
+					  $('.modal-title').html($.fullCalendar.formatDate(dayDate, "dd, MMMM · hh:mm tt"));
+	    			  $('.modal-body').html(data);
+					  $(".modal").modal();
+					});
+				} else {
+					$("#calendar").fullCalendar('changeView', 'agendaDay');
+					$("#calendar").fullCalendar('gotoDate', dayDate);
+				}
+			},
+			eventClick: function(calEvent, jsEvent, view) {
+				var url = "/appointments/" + calEvent.id + "/edit?patient_id=" + calEvent.patient_id;
+				
+				$.get(url, function(data) {
+				  $('.modal-title').html($.fullCalendar.formatDate(calEvent.start, "dd, MMMM · hh:mm tt"));
+	    		  $('.modal-body').html(data);
+				  $(".modal").modal();
+				});
+			},
+			
+			eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc){
+				//update the event with the new data
+				$.ajax({ 
+				    type: "PUT", 
+				    url: "/appointments/" + JSON.stringify(event.id),
+				    data: { 
+				    	"appointment[starts_at]": JSON.stringify(event.start), 
+							"appointment[ends_at]": JSON.stringify(event.end)
+						  }
+				});
+			},
+			eventResize: function(calEvent, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) {
+				// update the event with the new data
+				$.ajax({ 
+				    type: "PUT", 
+				    url: "/appointments/" + calEvent.id,
+				    data: { 
+				    	"appointment[starts_at]": JSON.stringify(calEvent.start), 
+							"appointment[ends_at]": JSON.stringify(calEvent.end), 
+						  }
+				});
+			},
+			eventRender: function(event, element) {
+				// Append the name of the patient    
+				element.find('.fc-event-time').append(" " + event.firstname + " " + event.lastname);
+		    }
+			
+		});
+	});	
+</script>
+
+<div id="pad-wrapper">
+    <div class="row-fluid calendar-wrapper">
+        <div class="span12">
+
+			<div id="calendar"></div>
+
+			<div class="modal">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			        <h4 class="modal-title"><%= t :please_wait %></h3>
+			      </div>
+
+			      <div class="modal-body">
+			        <%= t :please_wait %>
+			      </div>
+			    </div>
+			  </div>  
+			</div>
+
+			<br />
+
+			<ul class="nav nav-pills">
+			  <li class="<%= @filtered_by.nil? ? 'active' : ''%>">
+			  	<a href="/"><span style="color: #333333">&#x25CF;</span> <%= t :everyone %></a>
+			  </li>
+				<% @doctors.each do |doctor| %>
+					<li class="<%= @filtered_by.to_i == doctor.id ? 'active' : ''%>"><a href="?doctor_id=<%=doctor.id%>"><span style="color: <%= doctor.color %>">&#x25CF;</span> <%= doctor.fullname %></a></li>
+				<% end %>
+			</ul>
+
+		</div>
 	</div>
 </div>
