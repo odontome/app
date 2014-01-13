@@ -40,21 +40,25 @@ class Api::V1::BaseController < ActionController::Base
       return true
     end
 
+    inject_rate_limit_headers key, count
+
     if count.to_i >= THROTTLE_MAX_REQUESTS
-      ttl = REDIS.ttl(key)
-      time = Time.now.to_i
-      time_till_reset = (time + ttl.to_i).to_s
-
-      # inject these custom headers
-      response.headers["X-Rate-Limit-Limit"] = THROTTLE_MAX_REQUESTS.to_s
-      response.headers["X-Rate-Limit-Remaining"] = (THROTTLE_MAX_REQUESTS - count.to_i).to_s
-      response.headers["X-Rate-Limit-Reset"] = time_till_reset
-
       render :json => {:message => "You have fired too many requests. Please wait for some time."}, :status => 429
       return
     end
     REDIS.incr(key)
     true
+  end
+
+  def inject_rate_limit_headers(key, count)
+    ttl = REDIS.ttl(key)
+    time = Time.now.to_i
+    time_till_reset = (time + ttl.to_i).to_s
+
+    # inject these custom headers
+    response.headers["X-Rate-Limit-Limit"] = THROTTLE_MAX_REQUESTS.to_s
+    response.headers["X-Rate-Limit-Remaining"] = (THROTTLE_MAX_REQUESTS - count.to_i).to_s
+    response.headers["X-Rate-Limit-Reset"] = time_till_reset
   end
   
 end
