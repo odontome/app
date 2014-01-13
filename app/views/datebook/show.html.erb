@@ -56,7 +56,7 @@
 					
 					$.get(url, {"starts_at": timestamp}, function(data) {
 					  $('.modal-title').html($.fullCalendar.formatDate(dayDate, "dd, MMMM · hh:mm tt"));
-	    			  $('.modal-body').html(data);
+	    			  $('.body-container').html(data);
 					  $(".modal").modal();
 					});
 				} else {
@@ -69,7 +69,7 @@
 				
 				$.get(url, function(data) {
 				  $('.modal-title').html($.fullCalendar.formatDate(calEvent.start, "dd, MMMM · hh:mm tt"));
-	    		  $('.modal-body').html(data);
+	    		  $('.body-container').html(data);
 				  $(".modal").modal();
 				});
 			},
@@ -111,7 +111,7 @@
 
 			<div id="calendar"></div>
 
-			<div class="modal">
+			<div class="modal" tabindex="-1">
 			  <div class="modal-dialog">
 			    <div class="modal-content">
 			      <div class="modal-header">
@@ -119,8 +119,8 @@
 			        <h4 class="modal-title"><%= t :please_wait %></h3>
 			      </div>
 
-			      <div class="modal-body">
-			        <%= t :please_wait %>
+			      <div class="body-container">
+			      	<%= t :please_wait %>
 			      </div>
 			    </div>
 			  </div>  

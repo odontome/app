@@ -1,28 +1,32 @@
-<%= form_for(@appointment, :remote => true) do |f| %>
-	<p class="field-box">		
-		<%= f.label t :enter_patient_name_or_uid %>
-		<%= text_field_tag "appointment[patient_id]", nil, :class => "form-control", :autocomplete => "off" %>
-	</p>
-		
-	<p>
-		<% if @doctors.empty? %>
-			<%= link_to t(:no_doctors), doctors_path %>
-		<% else %>
-			<%= f.label t :doctor %>
-			<%= f.select(:doctor_id, options_from_collection_for_select(@doctors, "id", "fullname", :selected => @appointment.doctor_id), :title => t(:select_doctor)) %>
-		<% end %>
-	</p>
+<%= form_for(@appointment, :remote => true, :class => "form-horizontal") do |f| %>
+	<div class="modal-body">
+		<p class="form-group">		
+			<%= f.label t :enter_patient_name_or_uid %>
+			<%= text_field_tag "appointment[patient_id]", nil, :class => "form-control", :autocomplete => "off" %>
+		</p>
+			
+		<p class="form-group">
+			<% if @doctors.empty? %>
+				<%= link_to t(:no_doctors), doctors_path %>
+			<% else %>
+				<%= f.label t :doctor %>
+				<%= f.select(:doctor_id, options_from_collection_for_select(@doctors, "id", "fullname", :selected => @appointment.doctor_id), :title => t(:select_doctor)) %>
+			<% end %>
+		</p>
 
-	<p>
-		<%= f.text_area :notes, :placeholder => t(:addtional_notes), :rows => 2, :maxlength => 255, :class => "form-control"  %>
-	</p>
+		<p>
+			<%= f.text_area :notes, :placeholder => t(:addtional_notes), :rows => 2, :maxlength => 255, :class => "form-control"  %>
+		</p>
+	</div>
 	
-	<%= f.submit(t(:save), :class => "btn btn-embossed btn-primary", :disable_with => t(:please_wait)) %> 
+	<div class="modal-footer">
+		<% if controller.action_name == "edit" %> 
+			<%= link_to t(:delete_appointment), @appointment, :method => :delete, :remote => :true, :confirm => t(:are_you_sure), :class => "btn btn-danger" %> 
+		<% else %>
+			<%= f.hidden_field :starts_at %>
+		<% end %> 
 
-	<% if controller.action_name == "edit" %> 
-		<%= link_to t(:delete_appointment), @appointment, :method => :delete, :remote => :true, :confirm => t(:are_you_sure), "data-icon" => "-" %> 
-	<% else %>
-		<%= f.hidden_field :starts_at %>
-	<% end %> 
+		<%= f.submit(t(:save), :class => "btn btn-primary", :disable_with => t(:please_wait)) %> 
+	</div>
 	
 <% end %>
