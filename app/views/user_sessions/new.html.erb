@@ -1,35 +1,38 @@
-<%= form_for(@user_session, :url => user_session_path) do |f| %>
-	<% if @user_session.errors.any? %>
-	  <div class="alert-box error">
-	    <% @user_session.errors.full_messages.each do |msg| %>
-	      <%= msg %><br />
-	    <% end %>
-	  </div>
-	<% end %>
-  <p>
-    <%= f.email_field :email, :placeholder => t(:email), :autocapitalize => "off", :autocorrect => "off", :class => "input-text" %>
-  </p>
-	<p>
-	  <%= f.password_field :password, :placeholder => t(:password), :class => "input-text" %>
-	</p>
-  	
-	<p>
-		<label for="user_session_remember_me">
-			<%= f.check_box :remember_me %> <%= t :remember_me %>
-		</label>
-	</p>
-
-	<p>
-		
-	</p>
-	
-	<div id="toolbar">
-    	<%= f.submit(t(:signin), :class => "button nice blue") %>
- 		<% if !@user_session.errors.any? %>
-			<%= t :no_account %> <%= link_to t(:signup), signup_url %>
-		<% else %>
-			<%= link_to t(:forgot_password), new_password_reset_path %>
-		<% end %>
- 	</div>
-
+<% if @user_session.errors.any? %>
+    <div class="alert alert-warning">
+    <% @user_session.errors.full_messages.each do |msg| %>
+        <%= msg %><br />
+    <% end %>
+    </div> 
 <% end %>
+
+<%= link_to (image_tag "logofull.png", :title => t(:home)), root_path, :class => "logo" %>
+
+<div class="box">
+    <div class="content-wrap">
+        <%= form_for(@user_session, :url => user_session_path) do |f| %>
+        
+        <h6>Log in</h6>
+
+        <%= f.email_field :email, :placeholder => t(:email), :autocapitalize => "off", :autocorrect => "off", :class => "form-control" %>
+        <%= f.password_field :password, :placeholder => t(:password), :class => "form-control" %>
+        
+        <%= link_to t(:forgot_password), new_password_reset_path, :class => "forgot" %>
+
+        <div class="remember">
+        	<label for="user_session_remember_me">
+	            <%= f.check_box :remember_me %>
+	            <%= t :remember_me %>
+            </label>
+        </div>
+
+        <%= f.submit(t(:signin), :class => "btn btn-primary") %>
+
+        <% end %>
+    </div>
+</div>
+
+<div class="no-account">
+    <p><%= t :no_account %> </p>
+    <%= link_to t(:signup), signup_url %>
+</div>

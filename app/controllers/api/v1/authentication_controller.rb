@@ -15,13 +15,7 @@ class Api::V1::AuthenticationController < Api::V1::BaseController
 		rescue
 			render :json => { :error => "Invalid credentials." }, :status => 404
 		end
-		
-		
-	end
-	
-	def destroy
-		current_user_session.destroy
-		respond_with({:success => "Logged out successfully." })
+			
 	end
 
 end

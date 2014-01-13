@@ -2,7 +2,7 @@ Odontome::Application.routes.draw do
 
 	namespace :api do
     namespace :v1 do
-    	resources :authentication
+    	post "/authentication" => "authentication#create"
     	resources :appointments
       resources :patients
       resources :doctors
