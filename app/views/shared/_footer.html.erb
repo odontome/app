@@ -1,8 +1,16 @@
-<div class="container">
-	<footer class="row">
-		<div class="twelve columns">
-			<%= link_to t(:terms_of_service), "/terms", :target => "_blank" %> · <%= link_to t(:privacy_policy), "/privacy", :target => "_blank" %> · <%= link_to t(:contact_us), "mailto:hello@odonto.me", :target => "_blank" %>
+<div class="bottom-menu">
+	<div class="container">
+		<div class="col-md-2 navbar-brand">
+            <a href="/" class="fui-flat"></a>
+        </div>
+
+        <div class="col-md-10">
+			<ul class="bottom-links">
+				<li><%= link_to t(:terms_of_service), "/terms", :target => "_blank" %></li>
+				<li><%= link_to t(:privacy_policy), "/privacy", :target => "_blank" %></li>
+				<li><%= link_to t(:contact_us), "mailto:hello@odonto.me", :target => "_blank" %></li>
+			</ul>
 		</div>
-	</footer>
+	</div>
 </div>
 

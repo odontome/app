@@ -1,0 +1,112 @@
+/* ...
+
+*= require font-awesome
+*= require bootstrap/bootstrap
+*= require bootstrap/bootstrap-overrides
+*= require lib/bootstrap.datepicker
+*= require lib/fullcalendar
+*= require lib/jquery-ui-1.10.2.custom.css.erb
+*= require lib/jquery.dataTables
+*= require lib/morris
+*= require calendar
+*= require user-list
+*= require ui-elements
+*= require layout
+*= require elements
+*= require icons
+*= require autoSuggest.css
+*= require_self
+
+*/
+
+/* -----------------------------------------
+   Shared Styles
+----------------------------------------- */
+
+.translation_missing {
+	color: #ff0000;
+	text-decoration: line-through;
+}
+
+@media (min-width: 980px) {
+    .pull-right-lg {
+        float: right;
+    }
+}
+
+.dropdown-toggle > .avatar {
+	margin-right: 4px !important;
+	margin-top: -4px !important;
+}
+
+.doctor-pill a {
+	display: block;
+	padding: 8px;
+	border-radius: 5px;
+	text-decoration: none;
+}
+
+.doctor-pill > a:hover,
+.doctor-pill > a:focus {
+  background-color: #f5fafc;
+}
+
+.doctor-pill.active > a,
+.doctor-pill.active > a:hover,
+.doctor-pill.active > a:focus {
+  color: #ffffff;
+  background-color: #428bca;
+}
+
+/* -----------------------------------------
+   Overrides
+----------------------------------------- */
+
+ul.as-selections li.as-original input:focus {
+	border-color: transparent;
+	outline: 0;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	display: block;
+	width: 100%;
+	height: 24px;
+	padding: 1px 12px;
+}
+
+ul.as-selections {
+	display: block;
+	width: 100%;
+	height: 34px;
+	padding: 1px 12px;
+	font-size: 14px;
+	line-height: 1.428571429;
+	color: #555555;
+	vertical-align: middle;
+	background-color: #ffffff;
+	border: 1px solid #cccccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+ul.as-selections:focus {
+	border-color: #66afe9;
+	outline: 0;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+/*@media (max-width: 480px) {
+  .nav-pills > li {
+    float: none;
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-pills > li > a {
+    border-left: none;
+    display: block;
+  }
+}*/

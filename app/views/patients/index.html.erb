@@ -1,71 +1,73 @@
-<div class="row">	
+<div id="pad-wrapper" class="users-list">
 
-	<div class="eight columns">
-	
-		<% if @patients.empty? %>
-			<div class="alert-box warning">
-				<%= t :no_patients %>
-				<a href="" class="close">&times;</a>
-			</div>
-		<% end %>
-	
-		<h1><%= t :patients %></h1>
-		
-		<ul id="list-items">
-			<% @patients.each do |patient| %>
-				
-				<li>
-					<h2>
-						<%= link_to patient.fullname, patient %>
-						<%= if patient.missing_info? 
-							incomplete_tag
-						end %>
-					</h2>			
-				
-					<% if !patient.missing_info? %>
-						<span data-icon="a"><strong><%= t(:chart_number)%></strong> <%=patient.uid%></span>
-						<span><strong><%= t(:age)%>:</strong> <%=patient.age%></span>
-						<span><strong><%= t(:allergies)%>:</strong> <%unless patient.allergies.blank?%><%=patient.allergies%><%else%><%= t(:none)%><%end%></span>
-					<% else %>
-						<span data-icon="!"><%= t :patient_incomplete %></span>
-						<% if user_is_admin?(current_user) %>
-						  	<%= raw t :patient_without_required_info, delete_url: (link_to (t(:delete_patient)).downcase, patient, :method => :delete, :confirm => t(:are_you_sure_no_undo)) %>
-						<% end %>
-					<% end %>
-				</li>
-			<% end %>
-		</ul>
-	</div>
-		
-	<div class="four columns">
-		<div class="panel">
+	<div class="row header col-md-12">
+        <h3><%= t :patients %></h3>
 
-			<!-- 	
-			<input type="text" id="patient_search" name="patient_search" class="input-text" /> <br />
-						
-			<script>
-				$(function(){			
-					 // Patient search box 
-					 $("#patient_search").autoSuggest("/patients.json", {startText: "Search", minChars: 2, selectionLimit: 1, selectedValuesProp: "id", selectedItemProp: "fullname", searchObjProps: "uid,fullname", resultClick: function(data){ window.location.href = "/patients/" + data.attributes.id; }});
-				});
-			</script>
-		-->
-			
-			<ul>
-				<li><%= link_to t(:create_new_patient), new_patient_url, "data-icon" => "+" %></li>
+        <div class="pull-right">            
+            <%= link_to t(:create_new_patient), new_patient_url, "class" => "btn-flat primary pull-right" %>
+        </div>
+    </div>
+
+	<div class="row">
+	    <div class="col-md-12">
+	        <table class="table table-hover">
+	            <thead>
+	                <tr>
+	                    <th class="col-md-4">
+	                        <%= t :name %>
+	                    </th>
+	                    <th class="col-md-2">
+	                        <span class="line"></span> <%= t :updated_at %>
+	                    </th>
+	                    <th class="col-md-3 align-right">
+	                        <span class="line"></span> <%= t :email %>
+	                    </th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	            
+		            <% @patients.each do |patient| %>
+			            <tr class="<% if patient.id == @patients.first.id %>first<% end %>">	
+			            	<td>
+			                    <img src="<%= avatar_url(patient.email)%>" alt="contact" class="img-circle avatar hidden-phone" />
+			                    <%= link_to patient.fullname, patient, :class => "name" %>
+			                    <span class="subtext">
+									<%= patient.uid %>
+			                    </span>
+			                </td>
+
+			                <% if !patient.missing_info? %>	 
+				                <td>
+				                    <%= patient.updated_at.to_formatted_s :long %>
+				                </td>
+				                <td class="align-right">
+				                    <%= mail_to patient.email %>
+				                </td>
+				            <% else %>
+				            	<td colspan="2">
+				            		<% if user_is_admin?(current_user) %>
+							  			<%= raw t :patient_without_required_info, delete_url: (link_to (t(:delete_patient)).downcase, patient, :method => :delete, :confirm => t(:are_you_sure_no_undo)) %>
+									<% else %>
+										<%= t :patient_without_required_info, delete_url: t(:delete_patient).downcase  %>
+									<% end %>
+								</td>
+							<% end %>
+			            </tr>
+			        <% end %>
+
+			    </tbody>
+			</table>
+
+			<ul class ="pagination pull-right">
+			  <% letter_options.each do |letter| %>
+			    <% if params[:letter] == letter %>
+			    	<li class="current"><%= link_to letter, patients_url(:letter => letter)%></li>
+			    <% else %>
+			      <li><%= link_to letter, patients_url(:letter => letter)%></li>
+			    <% end %>
+			  <% end %>
 			</ul>
 		</div>
 	</div>
 </div>
 
-<div class="row">
-	<ul class ="pagination">
-	  <% letter_options.each do |letter| %>
-	    <% if params[:letter] == letter %>
-	    	<li class="current"><%= link_to letter, patients_url(:letter => letter)%></li>
-	    <% else %>
-	      <li><%= link_to letter, patients_url(:letter => letter)%></li>
-	    <% end %>
-	  <% end %>
-	</ul>
-</div>

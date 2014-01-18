@@ -12,8 +12,6 @@
     <div class="content-wrap">
         <%= form_for(@user_session, :url => user_session_path) do |f| %>
         
-        <h6>Log in</h6>
-
         <%= f.email_field :email, :placeholder => t(:email), :autocapitalize => "off", :autocorrect => "off", :class => "form-control" %>
         <%= f.password_field :password, :placeholder => t(:password), :class => "form-control" %>
         
