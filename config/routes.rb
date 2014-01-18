@@ -9,7 +9,10 @@ Odontome::Application.routes.draw do
 		end
 	end
 
-  resources :appointments
+  resources :datebooks do
+    resources :appointments
+  end
+  
   resources :patients do
     member do
       get 'appointments'
@@ -18,22 +21,21 @@ Odontome::Application.routes.draw do
     resources :notes
     resources :patient_treatments
   end
+
   resources :treatments do
     collection do
       get 'predefined_treatments', :as => :predefined_treatments
     end
   end
+  
   resources :users
-  resources :doctors do
-      resources :appointments
-  end
+  resources :doctors
   resource :user_session
   resources :password_resets, :only => [ :new, :create, :edit, :update ]
 		
   get "/signin" => "user_sessions#new", :as => :signin
   get "/logout" => "user_sessions#destroy", :as => :logout
   get "/signup" => "practices#new", :as => :signup
-  get "/datebook" => "datebook#show", :as => :datebook
   get "/practice" => "practices#show", :as => :practice
   post "/practice" => "practices#create"
   post "/practice/:id" => "practices#update", :as => :practice_update
@@ -44,6 +46,8 @@ Odontome::Application.routes.draw do
   get "/terms"  => "welcome#terms"
 
   get "/admin/practices" => "admin#practices", :as => :practices_admin
+
+  get '/datebook', to: redirect('/')
 
   match '/404', :to => 'errors#not_found'
   match '/422', :to => 'errors#server_error'

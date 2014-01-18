@@ -16,7 +16,7 @@ class Patient < ActiveRecord::Base
   
   scope :alphabetically, lambda { |letter|
   	mine
-  	.select("firstname,lastname,uid,id,date_of_birth,allergies,email")
+  	.select("firstname,lastname,uid,id,date_of_birth,allergies,email,updated_at")
   	.where("lower(firstname) LIKE ?", "#{letter.downcase}%")
   }
   
@@ -102,17 +102,10 @@ class Patient < ActiveRecord::Base
     
   private
   
-  def check_for_patients_limit
-    unless Practice.find(self.practice.id).number_of_patients > Patient.mine.count
-      self.errors[:base] << _("We are very sorry, but you have reached your patients limit. Please upgrade your account in My Practice settings")
-      false
-    end
-  end
-  
   # this function is a small compromise to bypass that weird situation where a patient is created with everything set to nil
   def destroy_nils
   	Patient.mine.destroy_all(:firstname => nil)
-  	Appointment.mine.destroy_all(:patient_id => nil)
+  	Appointment.destroy_all(:patient_id => nil)
   end
 
 end

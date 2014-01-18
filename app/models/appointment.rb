@@ -2,19 +2,14 @@ class Appointment < ActiveRecord::Base
 	# plugins
 
   # associations
-  belongs_to :practice, :counter_cache => true
+  belongs_to :datebook
   belongs_to :doctor
   belongs_to :patient
   
-  scope :mine, lambda { 
-    where("appointments.practice_id = ? ", UserSession.find.user.practice_id)
-  }
-   
   scope :find_between, lambda { |starts_at, ends_at|
   	includes(:doctor, :patient)
     .where("appointments.starts_at > ? AND appointments.ends_at < ?", Time.at(starts_at.to_i), Time.at(ends_at.to_i))
     .order("appointments.starts_at")
-    .mine
   }
 
   scope :find_from_doctor_and_between, lambda { |doctor_id, starts_at, ends_at|
@@ -23,13 +18,12 @@ class Appointment < ActiveRecord::Base
   }
     
   # validations
-  validates_presence_of :practice_id, :doctor_id, :patient_id
-  validates_numericality_of :practice_id, :doctor_id, :patient_id
-  validate :ends_at_should_be_later_than_starts_at
+  validates_presence_of :datebook_id, :doctor_id, :patient_id
+  validates_numericality_of :datebook_id, :doctor_id, :patient_id
+  validate :ends_at_should_be_later_than_starts_at, :practice_is_mine
   validates :notes, :length => { :within => 0..255 }, :allow_blank => true
   
   # callbacks
-  before_validation :set_practice_id, :on => :create
   before_create :set_ends_at
   
   # Overwrite de JSON response to comply with what the event calendar wants
@@ -41,7 +35,7 @@ class Appointment < ActiveRecord::Base
         :end => ends_at.to_formatted_s(:rfc822),
         :title => notes,
         :doctor_id => doctor_id,
-        :practice_id => practice_id,
+        :datebook_id => datebook_id,
         :patient_id => patient_id,
         :color => doctor.color,
         :doctor_name => doctor.fullname,
@@ -59,6 +53,15 @@ class Appointment < ActiveRecord::Base
 	  	end
 	  end
   end
+
+  def practice_is_mine
+    begin
+      is_mine = Datebook.mine.find self.datebook_id
+
+      rescue ActiveRecord::RecordNotFound
+        self.errors[:base] << I18n.t("errors.messages.invalid_practice_id")
+    end
+  end
   
   def set_ends_at
   	if self.ends_at.nil?
@@ -66,6 +69,4 @@ class Appointment < ActiveRecord::Base
     end
   end
   
-
-
 end

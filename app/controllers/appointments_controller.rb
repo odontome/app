@@ -9,17 +9,19 @@ class AppointmentsController < ApplicationController
   layout false
   
   def index
+    datebook = Datebook.mine.find params[:datebook_id]
 
     if (params[:doctor_id])
-      @appointments = Appointment.find_from_doctor_and_between(params[:doctor_id], params[:start], params[:end])
+      @appointments = datebook.appointments.find_from_doctor_and_between(params[:doctor_id], params[:start], params[:end])
     else
-      @appointments = Appointment.find_between(params[:start], params[:end])
+      @appointments = datebook.appointments.find_between(params[:start], params[:end])
     end
      
      respond_with(@appointments, :methods => ["doctor","patient"])
   end
   
   def new
+    @datebook = Datebook.mine.find params[:datebook_id]
     @appointment = Appointment.new
     @appointment.starts_at = params[:starts_at]
     @doctors = Doctor.mine.valid
@@ -28,6 +30,7 @@ class AppointmentsController < ApplicationController
   def create
     @appointment = Appointment.new(params[:appointment])
     @appointment.starts_at = Time.at(params[:appointment][:starts_at].to_i)
+    @appointment.datebook_id = params[:datebook_id]
 
     # if "as_values_patient_id" is not empty use that, otherwise use "patient_id"
     @appointment.patient_id = Patient.find_or_create_from((params[:as_values_patient_id] != "") ? (params[:as_values_patient_id]) : (params[:appointment][:patient_id]))
@@ -45,13 +48,15 @@ class AppointmentsController < ApplicationController
   end
   
   def edit
-    @appointment = Appointment.mine.find(params[:id])
+    @datebook = Datebook.mine.find params[:datebook_id]
+    @appointment = Appointment.where(:id => params[:id], :datebook_id => @datebook.id).first
     @patient = Patient.mine.find(params[:patient_id])
     @doctors = Doctor.mine.valid
   end
   
   def update
-    @appointment = Appointment.mine.find(params[:id])
+    datebook = Datebook.mine.find params[:datebook_id]
+    @appointment = Appointment.where(:id => params[:id], :datebook_id => datebook.id).first
     
     # if "as_values_patient_id" is not empty use that, otherwise use "patient_id"
     if params[:appointment][:patient_id] != nil
@@ -70,7 +75,8 @@ class AppointmentsController < ApplicationController
   end
   
   def destroy
-    @appointment = Appointment.mine.find(params[:id])
+    datebook = Datebook.mine.find params[:datebook_id]
+    @appointment = Appointment.where(:id => params[:id], :datebook_id => datebook.id).first
 
     respond_to do |format|
       if @appointment.destroy

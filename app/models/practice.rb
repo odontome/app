@@ -5,7 +5,7 @@ class Practice < ActiveRecord::Base
   
   # associations
   has_many :users, :dependent => :delete_all    # didn't work with :destroy 'cause if the before_destroy callback in User.rb 
-  has_many :appointments, :dependent => :delete_all
+  has_many :datebooks, :dependent => :delete_all
   has_many :doctors, :dependent => :delete_all 
   has_many :patients, :dependent => :destroy # uses :destroy so User.rb deletes_all its children
   has_many :treatments, :dependent => :delete_all 
@@ -18,6 +18,7 @@ class Practice < ActiveRecord::Base
   # callbacks
   before_validation :set_timezone_and_locale, :on => :create
   before_validation :set_first_user_data, :on => :create
+  after_create :create_first_datebook
 
   def set_as_cancelled
     self.status = "cancelled"
@@ -40,6 +41,10 @@ class Practice < ActiveRecord::Base
   def set_first_user_data
     self.users.first.firstname = I18n.t :administrator
     self.users.first.lastname = (I18n.t :user).downcase
+  end
+
+  def create_first_datebook
+    Datebook.create({ :practice_id => self.id, :name => I18n.t(:your_first_datebook) })
   end
 
 end

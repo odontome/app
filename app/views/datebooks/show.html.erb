@@ -6,8 +6,10 @@
 		var d = date.getDate();
 		var m = date.getMonth();
 		var y = date.getFullYear();
-		var withDoctorIdString = '<% if params[:doctor_id] %>doctor_id=<%=params[:doctor_id]%><% end %>'
-							
+		var withDoctorIdString = '<% if params[:doctor_id] %>?doctor_id=<%=params[:doctor_id]%><% end %>';
+		var datebookId = '<%= @datebook.id %>';
+		var endpointURL = "/datebooks/" + datebookId + "/appointments";
+		
 		$("#calendar").fullCalendar({
 			defaultView: <% if @is_mobile.nil? %>"agendaWeek"<%else%>"agendaDay"<% end %>,
 			minTime: 8,
@@ -44,14 +46,14 @@
 			},
 			editable: true,
 			eventSources: [{
-			  url: '/appointments?' + withDoctorIdString,
+			  url: endpointURL + withDoctorIdString,
 			  ignoreTimezone: true
 			}],
 			allDaySlot: false,
 			allDayDefault: false,
 			dayClick: function(dayDate, allDay, jsEvent, view){
 				if (view.name != "month"){		
-					var url = "/appointments/new";
+					var url = endpointURL + '/new';
 					var timestamp = Math.round((dayDate).getTime() / 1000);
 					
 					$.get(url, {"starts_at": timestamp}, function(data) {
@@ -65,7 +67,7 @@
 				}
 			},
 			eventClick: function(calEvent, jsEvent, view) {
-				var url = "/appointments/" + calEvent.id + "/edit?patient_id=" + calEvent.patient_id;
+				var url = endpointURL + '/' + calEvent.id + "/edit?patient_id=" + calEvent.patient_id;
 				
 				$.get(url, function(data) {
 				  $('.modal-title').html($.fullCalendar.formatDate(calEvent.start, "dd, MMMM · hh:mm tt"));
@@ -78,7 +80,7 @@
 				//update the event with the new data
 				$.ajax({ 
 				    type: "PUT", 
-				    url: "/appointments/" + JSON.stringify(event.id),
+				    url: endpointURL + "/" + JSON.stringify(event.id),
 				    data: { 
 				    	"appointment[starts_at]": JSON.stringify(event.start), 
 							"appointment[ends_at]": JSON.stringify(event.end)
@@ -89,7 +91,7 @@
 				// update the event with the new data
 				$.ajax({ 
 				    type: "PUT", 
-				    url: "/appointments/" + calEvent.id,
+				    url: endpointURL + "/" + calEvent.id,
 				    data: { 
 				    	"appointment[starts_at]": JSON.stringify(calEvent.start), 
 							"appointment[ends_at]": JSON.stringify(calEvent.end), 
@@ -128,15 +130,16 @@
 
 			<br />
 
-			<ul class="nav nav-pills">
-			  <li class="<%= @filtered_by.nil? ? 'active' : ''%>">
-			  	<a href="/"><span style="color: #333333">&#x25CF;</span> <%= t :everyone %></a>
-			  </li>
-				<% @doctors.each do |doctor| %>
-					<li class="<%= @filtered_by.to_i == doctor.id ? 'active' : ''%>"><a href="?doctor_id=<%=doctor.id%>"><span style="color: <%= doctor.color %>">&#x25CF;</span> <%= doctor.fullname %></a></li>
-				<% end %>
-			</ul>
+			<div class="col-md-3 col-sm-6 doctor-pill <%= @filtered_by.nil? ? 'active' : ''%>">
+				<a href="/"><i class="fa fa-circle-o" style="color: #333333"></i>&nbsp; <%= t :everyone %></a>
+			</div>
 
+			<% @doctors.each do |doctor| %>
+				<div class="col-md-3 col-sm-6 doctor-pill <%= @filtered_by.to_i == doctor.id ? 'active' : ''%>">
+					<a href="?doctor_id=<%=doctor.id%>"><i class="fa fa-circle-o" style="color: <%= doctor.color %>"></i>&nbsp; <%= doctor.fullname %></a>
+				</div>
+			<% end %>
+			
 		</div>
 	</div>
 </div>

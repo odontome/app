@@ -11,7 +11,6 @@ class PracticesController < ApplicationController
 
   def show
     @practice = current_user.practice
-    @is_user_admin = current_user.roles.include?("admin")
   end
 
   def new
@@ -44,7 +43,7 @@ class PracticesController < ApplicationController
   def update
     @practice = current_user.practice
     session[:locale] = params[:practice][:locale]
-    
+
     respond_to do |format|
       if @practice.update_attributes(params[:practice])
         format.html { redirect_to(practice_url, :notice => t(:practice_updated_success_message)) }
@@ -88,7 +87,6 @@ class PracticesController < ApplicationController
 
   def settings
     @practice = current_user.practice
-    @practice_patients_count = @practice.patients.count
   end
 
 end

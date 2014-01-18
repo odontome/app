@@ -1,0 +1,9 @@
+playa_del_carmen:
+  id: 1
+  name: Playa del Carmen
+  practice_id: 1
+
+cuernavaca:
+  id: 2
+  name: Cuernavaca
+  practice_id: 1

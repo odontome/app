@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,19 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120217214734) do
+ActiveRecord::Schema.define(:version => 20140118170341) do
 
   create_table "appointments", :force => true do |t|
-    t.integer   "practice_id"
-    t.integer   "doctor_id"
-    t.integer   "patient_id"
-    t.string    "notes"
-    t.string    "status",      :limit => 50
-    t.timestamp "starts_at"
-    t.timestamp "ends_at"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
-    t.boolean   "notified",                  :default => false
+    t.integer  "doctor_id"
+    t.integer  "patient_id"
+    t.string   "notes"
+    t.string   "status",      :limit => 50
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "notified",                  :default => false
+    t.integer  "datebook_id"
   end
 
   add_index "appointments", ["starts_at", "ends_at"], :name => "index_appointments_on_starts_at_and_ends_at"
@@ -33,6 +34,13 @@ ActiveRecord::Schema.define(:version => 20120217214734) do
     t.string    "notes"
     t.timestamp "created_at"
     t.timestamp "updated_at"
+  end
+
+  create_table "datebooks", :force => true do |t|
+    t.integer  "practice_id"
+    t.string   "name",        :limit => 100
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "doctors", :force => true do |t|
@@ -58,14 +66,14 @@ ActiveRecord::Schema.define(:version => 20120217214734) do
   end
 
   create_table "patient_treatments", :force => true do |t|
-    t.integer  "patient_id"
-    t.integer  "doctor_id"
-    t.string   "name",         :limit => 100
-    t.float    "price"
-    t.boolean  "is_completed"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "notes",        :limit => 500
+    t.integer   "patient_id"
+    t.integer   "doctor_id"
+    t.string    "name",         :limit => 100
+    t.float     "price"
+    t.boolean   "is_completed"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.string    "notes",        :limit => 500
   end
 
   create_table "patients", :force => true do |t|
@@ -91,27 +99,22 @@ ActiveRecord::Schema.define(:version => 20120217214734) do
     t.text      "family_diseases"
   end
 
-  create_table "plans", :force => true do |t|
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
-  end
-
   create_table "practices", :force => true do |t|
-    t.string    "name"
-    t.string    "locale",                           :default => "en_US"
-    t.string    "timezone"
-    t.string    "status",             :limit => 50, :default => "free"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
-    t.integer   "plan_id",                          :default => 1
-    t.timestamp "cancelled_at"
-    t.integer   "number_of_patients",               :default => 500
-    t.string    "invitation_code"
-    t.string    "currency_unit",                    :default => "$"
-    t.integer   "patients_count",                   :default => 0
-    t.integer   "appointments_count",               :default => 0
-    t.integer   "doctors_count",                    :default => 0
-    t.integer   "users_count",                      :default => 0
+    t.string   "name"
+    t.string   "locale",                           :default => "en_US"
+    t.string   "timezone"
+    t.string   "status",             :limit => 50, :default => "free"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "plan_id",                          :default => 1
+    t.datetime "cancelled_at"
+    t.integer  "number_of_patients",               :default => 500
+    t.string   "invitation_code"
+    t.string   "currency_unit",                    :default => "$"
+    t.integer  "patients_count",                   :default => 0
+    t.integer  "doctors_count",                    :default => 0
+    t.integer  "users_count",                      :default => 0
+    t.integer  "datebooks_count"
   end
 
   create_table "treatments", :force => true do |t|
