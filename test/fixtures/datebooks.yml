@@ -7,3 +7,8 @@ cuernavaca:
   id: 2
   name: Cuernavaca
   practice_id: 1
+
+without_appointments:
+  id: 3
+  name: Cancún
+  practice_id: 1

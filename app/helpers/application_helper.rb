@@ -14,13 +14,13 @@ module ApplicationHelper
   end
   
   def new_tag
-  	content_tag :span, t(:new), :class => "radius red label"
+  	content_tag :span, t(:new), :class => "label label-primary"
   end
   
   def incomplete_tag
-  	content_tag :span, t(:incomplete), :class => "radius red label"
+  	content_tag :span, t(:incomplete), :class => "label label-danger"
   end
-  
+
   def avatar_url(email, size = 96)
   	email = email || "user_has_no@email.com"
   	default_url = "#{root_url}images/avatar.jpg"

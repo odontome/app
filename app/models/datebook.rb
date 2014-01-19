@@ -15,5 +15,19 @@ class Datebook < ActiveRecord::Base
 
   # callbacks
   before_validation :set_practice_id, :on => :create
+  before_destroy :check_if_is_deleteable
+
+  def is_deleteable
+    return true if self.appointments.count == 0
+  end
+
+  private
+  
+  def check_if_is_deleteable
+    unless self.is_deleteable
+      self.errors[:base] << I18n.t("errors.messages.has_appointments")
+      false
+    end
+  end
 
 end

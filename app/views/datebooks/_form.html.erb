@@ -1,0 +1,13 @@
+<%= form_for(@datebook, :class => "form-horizontal") do |f| %>
+
+  <%= render "shared/error_messages", :target => @datebook %>
+
+  <p class="form-group col-md-8">
+  	<%= f.label :name %>
+    <%= f.text_field :name, :class => "form-control" %>
+  </p>
+
+  <p class="form-group col-md-8">
+	 <%= f.submit(t(:save), :class => "btn btn-primary", :disable_with => t(:please_wait)) %> 
+  </p>
+<% end %>

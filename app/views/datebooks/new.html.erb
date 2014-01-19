@@ -1,0 +1,26 @@
+<div id="pad-wrapper" class="new-user">
+    <div class="row header">
+        <div class="col-md-12">
+            <h3><%= t :create_new_datebook %></h3>
+        </div>                
+    </div>
+
+    <div class="row form-wrapper">
+        <!-- left column -->
+        <div class="col-md-9 with-sidebar">
+            <%= render 'form' %>
+        </div>
+
+        <!-- side right column -->
+        <div class="col-md-3 form-sidebar">                       
+            <h6>Sidebar text for instructions</h6>
+            <p>Add multiple users at once</p>
+            <p>Choose one of the following file types:</p>
+            <ul>
+                <li><a href="#">Upload a vCard file</a></li>
+                <li><a href="#">Import from a CSV file</a></li>
+                <li><a href="#">Import from an Excel file</a></li>
+            </ul>
+        </div>
+    </div>
+</div>  

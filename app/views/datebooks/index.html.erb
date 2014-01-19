@@ -1,0 +1,47 @@
+<div id="pad-wrapper" class="table-wrapper">
+
+	<div class="row header col-md-12">
+        <h3><%= t :datebooks %></h3>
+
+        <div class="pull-right">            
+            <%= link_to t(:create_new_datebook), new_datebook_url, "class" => "btn-flat primary pull-right" %>
+        </div>
+    </div>
+
+	<div class="row">
+	    <div class="col-md-12">
+	        <table class="table table-hover">
+	            <thead>
+	                <tr>
+	                    <th class="col-md-4">
+	                        <%= t :name %>
+	                    </th>
+	                    <th class="col-md-2">
+	                        <span class="line"></span> <%= t :status %>
+	                    </th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	            
+		            <% @datebooks.each do |datebook| %>
+			            <tr class="<% if datebook.id == @datebooks.first.id %>first<% end %>">	
+			            	<td>
+			                    <%= link_to datebook.name, datebook, :class => "name" %>
+			                </td>
+
+			                <td>
+			                	<%= incomplete_tag %>
+			                	<ul class="actions">
+                                    <li><%= link_to t(:edit), edit_datebook_path(datebook) %></li>
+									<li class="last"><%= link_to t(:delete), datebook, :method => :delete, :confirm => t(:are_you_sure) %></li>
+                                </ul>								
+			                </td>
+			            </tr>
+			        <% end %>
+
+			    </tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
