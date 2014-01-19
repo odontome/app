@@ -53,10 +53,13 @@ class DatebooksController < ApplicationController
 
   def destroy
     @datebook = Datebook.mine.find params[:id]
-    @datebook.destroy
 
     respond_to do |format|
-      format.html { redirect_to(datebooks_url) }
+      if (@datebook.destroy)
+        format.html { redirect_to(datebooks_url) }
+      else
+        format.html { redirect_to(datebooks_url, :error => I18n.t("errors.messages.has_appointments"))}
+      end
     end
   end
 
