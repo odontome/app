@@ -22,7 +22,7 @@ class Patient < ActiveRecord::Base
   
   scope :search, lambda { |q|
     select("id,uid,firstname,lastname")
-    .where("uid LIKE '%"+q+"%' OR lower(firstname) LIKE '%"+q.downcase+"%' OR lower(lastname) LIKE '%"+q.downcase+"%'")
+    .where("uid LIKE ? OR lower(firstname) LIKE ? OR lower(lastname) LIKE ?", q, "%#{q.downcase}%", "%#{q.downcase}%")
     .mine
     .limit(10)
     .order("firstname")
