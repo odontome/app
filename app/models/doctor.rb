@@ -38,7 +38,7 @@ class Doctor < ActiveRecord::Base
   
   def check_if_is_deleteable
     unless self.is_deleteable
-      self.errors[:base] << I18n.t("errors.messages.doctor_has_appointments")
+      self.errors[:base] << I18n.t("errors.messages.has_appointments")
       false
     end
   end
