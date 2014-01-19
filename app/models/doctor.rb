@@ -38,7 +38,7 @@ class Doctor < ActiveRecord::Base
   
   def check_if_is_deleteable
     unless self.is_deleteable
-      self.errors[:base] << _("Can't delete a doctor with registered appointments or patient's treatments, please use 'Suspend' instead.")
+      self.errors[:base] << I18n.t("errors.messages.doctor_has_appointments")
       false
     end
   end
