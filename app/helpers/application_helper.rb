@@ -27,5 +27,9 @@ module ApplicationHelper
   	gravatar_id = Digest::MD5.hexdigest(email.downcase)
   	"http://gravatar.com/avatar/#{gravatar_id}?s=#{size}"
   end
+
+  def is_current_datebook?(id)
+    params[:controller] == "datebooks" && params[:id] == id.to_s
+  end
   
 end

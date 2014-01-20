@@ -40,7 +40,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <% @datebooks.each do |datebook| %>
-                            <li><%= link_to datebook.name , datebook %></li>
+                            <li><%= link_to is_current_datebook?(datebook.id) ? "#{datebook.name} ✓" : datebook.name , datebook %></li>
                         <% end %>
                     </ul>
                 </li>        
