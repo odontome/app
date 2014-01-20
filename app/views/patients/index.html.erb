@@ -58,15 +58,19 @@
 			    </tbody>
 			</table>
 
-			<ul class ="pagination pull-right">
-			  <% letter_options.each do |letter| %>
-			    <% if params[:letter] == letter %>
-			    	<li class="current"><%= link_to letter, patients_url(:letter => letter)%></li>
-			    <% else %>
-			      <li><%= link_to letter, patients_url(:letter => letter)%></li>
-			    <% end %>
-			  <% end %>
-			</ul>
+			<% if params[:q].nil? %>
+				<ul class ="pagination pull-right">
+				  <% letter_options.each do |letter| %>
+				    <% if params[:letter] == letter %>
+				    	<li class="active"><%= link_to letter, patients_url(:letter => letter)%></li>
+				    <% else %>
+				      <li><%= link_to letter, patients_url(:letter => letter)%></li>
+				    <% end %>
+				  <% end %>
+				</ul>
+			<% else %>
+				<span class="pull-right"><%= t(:patient_search_results, :patients_count => @patients.size) %></span>
+			<% end %>
 		</div>
 	</div>
 </div>

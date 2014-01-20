@@ -29,6 +29,7 @@ en:
   admin_credentials_required: You need to be the administrator of the practice to
     do this
   administrator: Administrator
+  patient_search_results: '%{patients_count} patients found'
   edit: Edit
   name: Name
   age: Age

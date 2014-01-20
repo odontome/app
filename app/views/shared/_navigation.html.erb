@@ -46,7 +46,9 @@
                     </ul>
                 </li>
                 <li class="hidden-xs hidden-sm">
-                    <input class="search" type="text">
+                    <%= form_tag patients_url, :method => :get do %>
+                        <input name="q" class="search" type="text">
+                    <% end %>
                 </li>          
             <% end %>
         </ul>
