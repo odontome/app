@@ -24,7 +24,7 @@ class Patient < ActiveRecord::Base
     select("id,uid,firstname,lastname,email,updated_at,date_of_birth")
     .where("uid LIKE ? OR lower(firstname) LIKE ? OR lower(lastname) LIKE ?", q, "%#{q.downcase}%", "%#{q.downcase}%")
     .mine
-    .limit(10)
+    .limit(25)
     .order("firstname")
   }  
     

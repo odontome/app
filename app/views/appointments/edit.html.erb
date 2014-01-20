@@ -6,6 +6,6 @@
 		var selectedPatient = [{id: "<%=@patient.id%>", uid: "<%=@patient.uid%>", fullname: "<%=escape_javascript @patient.fullname%>"}];
 				
 		// Setup autocomplete for patients
-		$("#appointment_patient_id").autoSuggest("/patients.json", {minChars: 2, selectionLimit: 1, selectedValuesProp: "id", selectedItemProp: "fullname", searchObjProps: "uid,fullname", asHtmlID: "patient_id", preFill: selectedPatient});
+		$("#appointment_patient_id").autoSuggest("/patients.json", {minChars: 3, selectionLimit: 1, selectedValuesProp: "id", selectedItemProp: "fullname", searchObjProps: "uid,fullname", asHtmlID: "patient_id", preFill: selectedPatient});
 	});	
 </script>
