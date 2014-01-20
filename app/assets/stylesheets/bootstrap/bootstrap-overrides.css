@@ -11,7 +11,7 @@ h1,h2,h3,h4,h5,h6{
 /* labels */
 .label, .badge {
 	font-weight: lighter;
-	font-size: 90%;
+	font-size: 80%;
 }
 .label-success, .badge-success {
 	background-color: rgb(129, 189, 130);

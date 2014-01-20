@@ -13,6 +13,18 @@
         <ul class="nav navbar-nav pull-right-lg">
             <% if current_user %> 
                 <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <%= t(:datebooks) %>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <% @datebooks.each do |datebook| %>
+                            <li><%= link_to is_current_datebook?(datebook.id) ? "#{datebook.name} ✓" : datebook.name , datebook %></li>
+                        <% end %>
+                    </ul>
+                </li>        
+                <li><%= link_to t(:patients), patients_url %></li> 
+                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="<%= avatar_url(current_user.email, 24)%>" alt="contact" class="img-circle avatar" />
                     <%= current_user.firstname %> <b class="caret"></b></a>
 
@@ -33,21 +45,9 @@
                         <li><%= link_to t(:signout), logout_url %></li>
                     </ul>
                 </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <%= t(:datebook) %>
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <% @datebooks.each do |datebook| %>
-                            <li><%= link_to is_current_datebook?(datebook.id) ? "#{datebook.name} ✓" : datebook.name , datebook %></li>
-                        <% end %>
-                    </ul>
-                </li>        
-                <li><%= link_to t(:patients), patients_url %></li>
                 <li class="hidden-xs hidden-sm">
                     <input class="search" type="text">
-                </li>               
+                </li>          
             <% end %>
         </ul>
     </nav>        

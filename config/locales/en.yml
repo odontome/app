@@ -24,10 +24,13 @@ en:
       treatment: Treatment
       user: User
   address: Address
-  addtional_notes: ''
+  everyone: Everyone
+  addtional_notes: Additional notes
   admin_credentials_required: You need to be the administrator of the practice to
     do this
   administrator: Administrator
+  edit: Edit
+  name: Name
   age: Age
   ago: ago
   allergic_to: Allergic to
@@ -63,6 +66,9 @@ en:
   create_new_user: Create new user
   current_medications: Current medications
   customization: Customization
+  for_your_information: For your information
+  instructions:
+    datebooks: Datebooks are the backbone of every practice. One common usage is to create one per each of your practices.
   date:
     abbr_day_names:
     - Sun
@@ -93,11 +99,6 @@ en:
     - Thursday
     - Friday
     - Saturday
-    formats:
-      day_and_date: ! '%A (%e %B)'
-      default: ! '%m/%d/%Y'
-      long: ! '%d %B, %Y'
-      short: ! '%d %b'
     month_names:
     - January
     - February
@@ -111,7 +112,15 @@ en:
     - October
     - November
     - December
+    formats:
+      day_and_date: ! '%A (%e %B)'
+      default: ! '%m/%d/%Y'
+      long: ! '%d %B, %Y'
+      short: ! '%d %b'
   datebook: Datebook
+  datebooks: Datebooks
+  active: Active
+  inactive: Inactive
   day: Day
   delete: Delete
   delete_appointment: Delete this appointment
@@ -138,6 +147,7 @@ en:
       invalid_date_range: The chosen dates are invalid
       invalid_email_format: Invalid format
       unauthorised: You don't have permissions to do this
+  manage: Manage
   family_diseases_hint: Please be as descriptive as possible.
   family_history: Family history
   female: Female
@@ -149,6 +159,8 @@ en:
   incomplete: Incomplete
   last_seen: Last seen
   logout: Logout?
+  signout: Sign out
+  profile: Profile
   mailers:
     notifier:
       password_reset:
@@ -231,7 +243,7 @@ en:
   reset_password: Reset password
   return_to_listing: Return to listing
   save: Save
-  select_doctor: ''
+  select_doctor: Select a doctor
   signin: Sign in
   signup: Sign up
   spanish: Spanish
@@ -266,3 +278,4 @@ en:
   years_old: years old
   you_agree_to_our_terms_and_privacy_policy: You agree to our %{terms_url} and to
     our %{privacy_url} when you register.
+  your_first_datebook: Your first datebook

@@ -54,7 +54,7 @@ es:
   contact_information: ''
   contact_us: ''
   create_new_doctor: ''
-  create_new_patient: ''
+  create_new_patient: Crear nuevo paciente
   create_new_treatment: ''
   create_new_user: ''
   current_medications: ''
@@ -64,10 +64,10 @@ es:
     abbr_month_names: ''
     day_names: ''
     formats:
-      default: ! '%d/%m/%Y'
-      short: ! '%d de %b'
-      long: ! '%d de %B de %Y'
-      day_and_date: ! '%A (%e de %B)'
+      default: '%d/%m/%Y'
+      short: '%d de %b'
+      long: '%d de %B de %Y'
+      day_and_date: '%A (%e de %B)'
     month_names: ''
   datebook: ''
   day: ''
@@ -195,10 +195,10 @@ es:
   terms_of_service: ''
   time:
     formats:
-      default: ! "%A, %d de %B de %Y %H:%M:%S %z"
-      short: ! "%d de %b %H:%M"
-      long: ! "%d de %B de %Y %H:%M"
-      just_the_time: ! "%H:%M"
+      default: "%A, %d de %B de %Y %H:%M:%S %z"
+      short: "%d de %b %H:%M"
+      long: "%d de %B de %Y %H:%M"
+      just_the_time: "%H:%M"
     am: am
     pm: pm
   today: ''

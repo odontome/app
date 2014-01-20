@@ -6,7 +6,11 @@ class DatebooksController < ApplicationController
   	# this same variable is already defined in the
     # application controller. Maybe we should think of
     # a way to remove it from there
-    # @datebooks = Datebook.mine.order("name")
+    @datebooks = Datebook.mine
+    .select('datebooks.id, datebooks.name, datebooks.updated_at, count(appointments.id) as appointments_count')
+    .joins('left outer join appointments on appointments.datebook_id = datebooks.id')
+    .group('datebooks.id')
+    .order('name')
   end
 
   def show

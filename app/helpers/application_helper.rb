@@ -21,6 +21,10 @@ module ApplicationHelper
   	content_tag :span, t(:incomplete), :class => "label label-danger"
   end
 
+  def label_tag(message, type="info")
+    content_tag :span, message, :class => "label label-#{type}"
+  end
+
   def avatar_url(email, size = 96)
   	email = email || "user_has_no@email.com"
   	default_url = "#{root_url}images/avatar.jpg"
