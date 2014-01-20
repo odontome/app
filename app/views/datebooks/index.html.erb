@@ -17,7 +17,7 @@
 	                        <%= t :name %>
 	                    </th>
 	                    <th class="col-md-2">
-	                        <span class="line"></span> <%= t :status %>
+	                        <span class="line"></span> <%= t :updated_at %>
 	                    </th>
 	                </tr>
 	            </thead>
@@ -30,7 +30,8 @@
 			                </td>
 
 			                <td>
-			                	<%= incomplete_tag %>
+			                	<%= datebook.updated_at.to_formatted_s :short %>
+
 			                	<ul class="actions">
                                     <li><%= link_to t(:edit), edit_datebook_path(datebook) %></li>
 									<li class="last"><%= link_to t(:delete), datebook, :method => :delete, :confirm => t(:are_you_sure) %></li>
