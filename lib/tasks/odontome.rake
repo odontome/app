@@ -5,6 +5,7 @@ namespace :odontome do
     if defined?(Rails) && (Rails.env == 'development')
       Rails.logger = Logger.new(STDOUT)
     end
+
     to_update = []
     appointments = Appointment.includes(:doctor, :patient)
     .where("appointments.starts_at > ? AND appointments.ends_at < ? AND appointments.notified = ? 
@@ -18,4 +19,19 @@ namespace :odontome do
     Appointment.where(:id => to_update).update_all(:notified => true)
     
   end
+
+  desc "Delete practices cancelled more than 15 days ago"
+  task :delete_practices_cancelled_a_while_ago => :environment do
+    if defined?(Rails) && (Rails.env == 'development')
+      Rails.logger = Logger.new(STDOUT)
+    end
+
+    practices = Practice.where("cancelled_at < ?", 15.days.ago)
+
+    practices.each do |practice|
+      practice.destroy
+    end
+
+  end
+
 end
