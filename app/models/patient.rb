@@ -30,6 +30,7 @@ class Patient < ActiveRecord::Base
     
   # validations
   validates_uniqueness_of :uid, :scope => :practice_id, :allow_nil => true, :allow_blank => true
+  validates_uniqueness_of :email, :scope => :practice_id, :allow_nil => true, :allow_blank => true
   validates_presence_of :practice_id, :firstname, :lastname, :date_of_birth, :past_illnesses, :surgeries, :medications, :drugs_use, :family_diseases, :emergency_telephone, :cigarettes_per_day, :drinks_per_day
   
   validates_numericality_of :cigarettes_per_day, :drinks_per_day, :only_integer => true, :greater_than_or_equal_to => 0

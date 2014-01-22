@@ -20,7 +20,7 @@ class PatientTest < ActiveSupport::TestCase
 		assert patient.errors[:drinks_per_day].any?
 	end
 	
-	test "patient is not valid without an unique uid" do	
+	test "patient is not valid without an unique uid in the same practice" do	
 		patient = Patient.new(:uid => 0001, 
 								:practice_id => 1,
 								:firstname => "Daniella",
@@ -28,6 +28,14 @@ class PatientTest < ActiveSupport::TestCase
 													
 		assert !patient.save
 		assert_equal I18n.t("activerecord.errors.messages.taken"), patient.errors[:uid].join("; ")
+	end
+
+	test "patient is not valid without an unique email in the same practice" do	
+		patient = patients(:two)
+		patient.email = patients(:four).email
+
+		assert !patient.save
+		assert_equal I18n.t("activerecord.errors.messages.taken"), patient.errors[:email].join("; ")
 	end
 	
 	test "patient vices must be numbers" do

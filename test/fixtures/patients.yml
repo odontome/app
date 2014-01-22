@@ -24,6 +24,7 @@ two:
   practice_id: 1
   firstname: Miguel
   lastname: Camacho
+  email: nonosisi@gmail.com
   
 three:
   id: 3
@@ -31,6 +32,7 @@ three:
   practice_id: 3
   firstname: Daniella
   lastname: Sanguino
+  email: daniella.sanguino@gmail.com
 
 four:
   id: 4
