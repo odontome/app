@@ -1,11 +1,12 @@
 /* ...
-*= require_self
-*= require font-awesome
 *= require bootstrap/bootstrap
 *= require bootstrap/bootstrap-overrides
-*= require lib/font-awesome
 *= require layout
 *= require elements
-*= require icons
 *= require signin
+*= require_self
 */
+
+body {
+	background: #1daefc !important;
+}
