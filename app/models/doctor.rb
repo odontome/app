@@ -18,6 +18,7 @@ class Doctor < ActiveRecord::Base
   # validations
   validates_presence_of :practice_id, :firstname, :lastname
   validates_uniqueness_of :uid, :scope => :practice_id, :allow_nil => true, :allow_blank => true
+  validates_uniqueness_of :email, :scope => :practice_id, :allow_nil => true, :allow_blank => true
   validates_length_of :uid, :within => 0..25, :allow_blank => true
   validates_length_of :speciality, :within => 0..50, :allow_blank => true
   validates_format_of :email, :with => Authlogic::Regex.email, :allow_blank => true

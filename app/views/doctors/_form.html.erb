@@ -1,46 +1,53 @@
-<%= form_for(@doctor) do |f| %>
-
+<%= form_for(@doctor, :class => "form-horizontal") do |f| %>
+  
   <%= render "shared/error_messages", :target => @doctor %>
 
-  <p>
+  <p class="form-group col-md-8">
   	<%= f.label :firstname %>
-    <%= f.text_field :firstname, :class => "input-text" %>
-  </p>
-  <p>
-  	<%= f.label :lastname %>
-    <%= f.text_field :lastname, :class => "input-text"  %>
-  </p>
-  <p>
-  	<%= f.label :uid %>
-    <%= f.text_field :uid, :class => "input-text" %>
-  </p>
-  <p>
-  	<%= f.label :email %>
-    <%= f.email_field :email, :class => "input-text" %>
-  </p>
-  <p>
-	<%= f.label :gender %>
-	<%= f.select(:gender, [[t(:male),(t(:male)).downcase],[t(:female),(t(:female)).downcase]]) %>
-  </p>
-  <p>
-  	<%= f.label :speciality %>
-    <%= f.text_field :speciality, :class => "input-text" %>
-  </p>
-  <p>
-	<%= f.label t(:calendar_color) %>
-	<%= f.text_field :color, :placeholder => t(:calendar_color), :class => "color_picker" %>    
+    <%= f.text_field :firstname, :class => "form-control" %>
   </p>
 
-	<%= f.submit(t(:save), :class => "button nice white", :disable_with => t(:please_wait)) %> 
+  <p class="form-group col-md-8">
+  	<%= f.label :lastname %>
+    <%= f.text_field :lastname, :class => "form-control"  %>
+  </p>
+
+  <p class="form-group col-md-8">
+  	<%= f.label :uid %>
+    <%= f.text_field :uid, :class => "form-control" %>
+  </p>
+
+  <p class="form-group col-md-8">
+  	<%= f.label :email %>
+    <%= f.email_field :email, :class => "form-control" %>
+    <%= label_tag t(:consider_using_gravatar), "default" %>
+  </p>
+
+  <p class="form-group col-md-8">
+  	<%= f.label :gender %>
+  	<%= f.select(:gender, [[t(:male),(t(:male)).downcase],[t(:female),(t(:female)).downcase]], {}, { :class => "form-control" }) %>
+  </p>
+
+  <p class="form-group col-md-8">
+  	<%= f.label :speciality %>
+    <%= f.text_field :speciality, :class => "form-control" %>
+  </p>
+
+  <p class="form-group col-md-8">
+    <%= f.label t(:calendar_color) %>
+    <%= f.text_field :color, :placeholder => t(:calendar_color), :class => "form-control color-picker" %>    
+  </p>
+
+  <p class="form-group col-md-8">
+  	<%= f.submit(t(:save), :class => "btn btn-primary", :disable_with => t(:please_wait)) %> 
+    <span class="cancel"><%= t :or %>
+      <%= link_to t(:cancel).downcase, doctors_url %>
+    </span>
+  </p>
 <% end %>
 
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('.color_picker').simpleColor({
-			buttonClass: "g-button",
-			buttonValue: "<%= t(:choose)%>",
-			buttonCancelValue: "<%= t(:cancel)%>"
-			});
-	});
+<script>
+  $(document).ready(function(){
+    $('input.color-picker').minicolors({ theme: 'bootstrap' });
+  });
 </script>
-

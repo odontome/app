@@ -68,8 +68,10 @@ en:
   current_medications: Current medications
   customization: Customization
   for_your_information: For your information
+  consider_using_gravatar: Register this email with gravatar.org to use it as a profile image.
   instructions:
     datebooks: Datebooks are the backbone of every practice. One common usage is to create one per each of your practices.
+    doctors: To better organize your staff, use different colors for each doctor.
   date:
     abbr_day_names:
     - Sun

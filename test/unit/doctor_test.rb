@@ -18,7 +18,7 @@ class DoctorTest < ActiveSupport::TestCase
 		assert_equal I18n.t("errors.messages.invalid"), doctor.errors[:email].join("; ")
 	end
 
-	test "doctor is not valid without an unique uid" do	
+	test "doctor is not valid without an unique uid in the same practice" do	
 		doctor = Doctor.new(:uid => "D001",
 										:practice_id => 1,
 										:firstname => "Daniella",
@@ -26,6 +26,14 @@ class DoctorTest < ActiveSupport::TestCase
 													
 		assert !doctor.save
 		assert_equal I18n.t("activerecord.errors.messages.taken"), doctor.errors[:uid].join("; ")
+	end
+
+	test "doctor is not valid without an unique email in the same practice" do	
+		doctor = doctors(:rebecca)
+		doctor.email = doctors(:perishable).email
+
+		assert !doctor.save
+		assert_equal I18n.t("activerecord.errors.messages.taken"), doctor.errors[:email].join("; ")
 	end
 
 	test "doctor uid must be between 0 and 25 characters" do

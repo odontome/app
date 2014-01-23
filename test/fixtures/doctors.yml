@@ -5,6 +5,7 @@ rebecca:
   firstname: Rebecca
   lastname: Riera
   gender: female
+  email: rebeca.riera@gmail.com
   
 perishable:
   id: 2
@@ -13,3 +14,4 @@ perishable:
   firstname: Ismael
   lastname: Fernandez
   gender: male
+  email: isma.fernandez@gmail.com

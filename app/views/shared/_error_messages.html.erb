@@ -1,10 +1,11 @@
 <% if target.errors.any? %>
-	<div class="alert alert-danger">
-		<ul>
-		<% target.errors.full_messages.each do |msg| %>
-			<li><%= msg %></li>
-		<% end %>
-		</ul>
-		<a href="" class="close">&times;</a>
+	<div class="col-md-12">
+		<div class="alert alert-danger">
+			<ul>
+			<% target.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li>
+			<% end %>
+			</ul>
+		</div>
 	</div>
 <% end %>

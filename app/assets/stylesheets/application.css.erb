@@ -17,6 +17,7 @@
 *= require elements
 *= require icons
 *= require autoSuggest.css
+*= require jquery.minicolors
 *= require_self
 
 */
@@ -25,12 +26,53 @@
    Forms
 ----------------------------------------- */
 
+.form-group:last-child {
+	margin-top: 12px;
+}
+
 .form-group .cancel {
 	margin-left: 12px;
 }
 
 .form-group .cancel a {
 	margin-left: 8px;
+}
+
+.has-error .help-block,
+.has-error .control-label {
+  color: #e74c3c;
+}
+.has-error .form-control {
+  color: #e74c3c;
+  border-color: #e74c3c;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.has-error .form-control:-moz-placeholder {
+  color: #e74c3c;
+}
+.has-error .form-control::-moz-placeholder {
+  color: #e74c3c;
+  opacity: 1;
+}
+.has-error .form-control:-ms-input-placeholder {
+  color: #e74c3c;
+}
+.has-error .form-control::-webkit-input-placeholder {
+  color: #e74c3c;
+}
+.has-error .form-control.placeholder {
+  color: #e74c3c;
+}
+.has-error .form-control:focus {
+  border-color: #e74c3c;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.has-error .input-group-addon {
+  color: #e74c3c;
+  border-color: #e74c3c;
+  background-color: #ffffff;
 }
 
 /* -----------------------------------------

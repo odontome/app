@@ -10,6 +10,7 @@ gem 'rails-i18n', '~> 3.0.0'
 gem 'redis', "3.0.5"
 
 gem 'font-awesome-rails'
+gem 'jquery-minicolors-rails'
 
 group :assets do
 	gem 'sass-rails', '~> 3.2.3'

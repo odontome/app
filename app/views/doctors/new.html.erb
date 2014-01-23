@@ -1,15 +1,21 @@
-<div class="row">
-	<div class="eight columns">
-		<h1><%= t :create_new_doctor %></h1>
-		
-		<%= render 'form' %>
-	</div>
-	
-	<div class="four columns">
-		<div class="panel">			
-			<ul>
-				<li><%=link_to t(:return_to_listing), doctors_url, "data-icon" => "<" %></li>
-			</ul>
-		</div>
-	</div>
-</div>
+<div id="pad-wrapper" class="new-user">
+    <div class="row header">
+        <div class="col-md-12">
+            <h3><%= t :create_new_doctor %></h3>
+        </div>                
+    </div>
+
+    <div class="row form-wrapper">
+        <!-- left column -->
+        <div class="col-md-9 with-sidebar">
+            <%= render 'form' %>
+        </div>
+
+        <!-- side right column -->
+        <div class="col-md-3 form-sidebar">                       
+            <h6><%= t :for_your_information %></h6>
+            
+            <%= t "instructions.doctors" %>
+        </div>
+    </div>
+</div>  

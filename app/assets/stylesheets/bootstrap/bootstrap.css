@@ -4051,7 +4051,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
   display: none;
 }
 .label-default {
-  background-color: #999999;
+  background-color: #ddd;
+  color: #666;
 }
 .label-default[href]:hover,
 .label-default[href]:focus {

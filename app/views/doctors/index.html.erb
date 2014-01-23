@@ -1,33 +1,61 @@
-<div class="row">	
-	<div class="eight columns">
-		<h1><%= t :doctors %></h1>
-		
-		<ul id="list-items">
-			<% @doctors.each do |doctor| %>
-				<li>
-					<h2>
-						<%= link_to doctor.fullname, doctor %>
-						<% if !doctor.is_active %>
-							<span class="red radius label"><%= t :suspended %></span>
-						<% end %>
-					</h2>			
-					
-					<span style="color: <%= doctor.color %>">&#x25CF;</span>
-					<span><strong><%= t :uid %>:</strong> <%=doctor.uid%></span>
-					<span><strong><%= t :speciality %>:</strong> <%=doctor.speciality%></span>
-				</li>
-			<% end %>
-		</ul>
-	</div>
-	
-	<div class="four columns">
-		<div class="panel">			
-			<p><%= link_to t(:create_new_doctor), new_doctor_url, "data-icon" => "+" %></p>
+<div id="pad-wrapper" class="table-wrapper users-list">
+
+	<div class="row header col-md-12">
+        <h3><%= t :doctors %></h3>
+
+        <div class="pull-right">            
+            <%= link_to t(:create_new_doctor), new_doctor_url, "class" => "btn-flat primary pull-right" %>
+        </div>
+    </div>
+
+	<div class="row">
+	    <div class="col-md-12">
+	        <table class="table table-hover">
+	            <thead>
+	                <tr>
+	                    <th class="col-md-4">
+	                        <%= t :name %>
+	                    </th>
+	                    <th class="col-md-4">
+	                        <%= t :color %>
+	                    </th>
+	                    <th class="col-md-2">
+	                        <span class="line"></span> <%= t :status %>
+	                    </th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	            
+		            <% @doctors.each do |doctor| %>
+			            <tr class="<% if doctor.id == @doctors.first.id %>first<% end %>">	
+			            	<td>
+			                    <img src="<%= avatar_url(doctor.email)%>" alt="contact" class="img-circle avatar hidden-phone" />
+			                    <%= link_to doctor.fullname, doctor, :class => "name" %>
+			                    <span class="subtext">
+									<%= doctor.speciality %>
+			                    </span>
+			                </td>
+			                <td><i class="fa fa-circle-o" style="color: <%= doctor.color %>"></i></td>
+			                <td>
+			                	<% if doctor.is_active %>
+			                		<%= label_tag t(:active).downcase, "success" %>
+			                	<% else %>
+			                		<%= label_tag t(:suspended).downcase %>
+			                	<% end %>
+
+			                	<ul class="actions">
+                                    <li><%= link_to t(:edit), edit_doctor_path(doctor) %></li>
+									<li class="last">
+										<%= link_to_suspend_or_delete doctor %>
+									</li>
+                                </ul>								
+			                </td>
+			            </tr>
+			        <% end %>
+
+			    </tbody>
+			</table>
 		</div>
 	</div>
-	
 </div>
 
-
-
-	
