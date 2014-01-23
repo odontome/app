@@ -6,7 +6,3 @@
 *= require signin
 *= require_self
 */
-
-body {
-	background: #1daefc !important;
-}
