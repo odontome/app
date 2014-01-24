@@ -1,39 +1,56 @@
-<div class="row">
-	<div class="eight columns">
-		<h1><%= t :treatments %></h1>
+<div id="pad-wrapper" class="table-wrapper">
 
-		<% if @treatments.empty? %>
-			<div class="alert-box warning">
-				<p><%= t(:no_treatments_message)%></p>
-				<p><%= link_to t(:use_preloaded_treatments), predefined_treatments_treatments_path %></p>
-				<a href="" class="close">&times;</a>
-			</div>
-		<% end %>
+	<div class="row header col-md-12">
+        <h3><%= t :treatments %></h3>
 
-		<ul id="list-items">
-			<% @treatments.each do |treatment| %>
-				<li>
-					<h2><%= link_to treatment.name, treatment %>
-						<% if treatment.missing_info? 
-							incomplete_tag
-						else %>
-							<small><%= number_to_currency_with_currency(treatment.price)%></small>
+        <div class="pull-right">            
+            <%= link_to t(:create_new_treatment), new_treatment_url, "class" => "btn-flat primary pull-right" %>
+        </div>
+    </div>
 
-						<% end %>
-					</h2>			
-		
-					<% if treatment.missing_info? %>
-					  	<span data-icon="!"><%= raw t :treatment_without_price, delete_url: (link_to (t(:delete_treatment)).downcase, treatment_path(treatment), :method => :delete, :confirm => t(:are_you_sure)) %></span>
-					<% end %>
-				</li>
-			<% end %>
-		</ul>
-	</div>
-	
-	<div class="four columns">
-		<div class="panel">
-						
-			<p><%= link_to t(:create_new_treatment), new_treatment_url, "data-icon" => "+" %></p>
+    <div class="row">
+		    <div class="col-md-12">
+			    <% if @treatments.empty? %>
+					<div class="alert alert-warning">
+						<p><%= t(:no_treatments_message)%></p>
+						<p><%= link_to t(:use_preloaded_treatments), predefined_treatments_treatments_path %></p>
+					</div>			
+				<% else %>
+			        <table class="table table-hover">
+			            <thead>
+			                <tr>
+			                    <th class="col-md-4">
+			                        <%= t :name %>
+			                    </th>
+			                    <th class="col-md-2">
+			                        <span class="line"></span> <%= t :price %>
+			                    </th>
+			                    <th class="col-md-2">
+			                    </th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			            
+				            <% @treatments.each do |treatment| %>
+					            <tr class="<% if treatment.id == @treatments.first.id %>first<% end %>">	
+					            	<td>
+					                    <%= link_to treatment.name, treatment, :class => "name" %>
+					                </td>
+					                <td><%= number_to_currency_with_currency(treatment.price)%></td>
+					                <td>
+					                	<ul class="actions">
+		                                    <li><%= link_to t(:edit), edit_treatment_path(treatment) %></li>
+											<li class="last"><%= link_to t(:delete), treatment, :method => :delete, :confirm => t(:are_you_sure) %>
+											</li>
+		                                </ul>								
+					                </td>
+					            </tr>
+					        <% end %>
+
+					    </tbody>
+					</table>
+				<% end %>
 		</div>
 	</div>
 </div>
+

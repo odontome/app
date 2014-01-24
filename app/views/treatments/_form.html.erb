@@ -1,16 +1,22 @@
-<%= form_for(@treatment) do |f| %>
+<%= form_for(@treatment, :class => "form-horizontal") do |f| %>
 
   <%= render "shared/error_messages", :target => @treatment %>
 
-  <p>
+  <p class="form-group col-md-8">
   	<%= f.label :name %>
-    <%= f.text_field :name, :class => "input-text" %>
+    <%= f.text_field :name, :class => "form-control" %>
   </p>
-  <p>
+
+  <p class="form-group col-md-8">
   	<%= f.label :price %>
-    <%= f.number_field :price, :class => "input-text"  %>
+    <%= f.number_field :price, :class => "form-control"  %>
   </p>
   
-  <%= f.submit(t(:save), :class => "button nice white", :disable_with => t(:please_wait)) %> 
+  <p class="form-group col-md-8">
+   <%= f.submit(t(:save), :class => "btn btn-primary", :disable_with => t(:please_wait)) %> 
+   <span class="cancel"><%= t :or %>
+    <%= link_to t(:cancel).downcase, treatments_url %>
+    </span>
+  </p>
 
 <% end %>
