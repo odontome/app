@@ -264,7 +264,7 @@ en:
       short: ! '%d %b %H:%M'
     pm: pm
   today: Today
-  treatment_without_price: Add a price to this treatment, or simply %{delete_url}
+  treatment_without_price: Add a price to this treatment, or simply delete it
   treatments: Treatments
   treatments_created_success_message: Treatment created successfully
   treatments_updated_success_message: Treatment updated successfully

@@ -36,7 +36,14 @@
 					            	<td>
 					                    <%= link_to treatment.name, treatment, :class => "name" %>
 					                </td>
-					                <td><%= number_to_currency_with_currency(treatment.price)%></td>
+					                <td>
+						                <% if !treatment.missing_info? %>	 
+							                <%= number_to_currency_with_currency(treatment.price)%>
+							            <% else %>
+						  					<%= t :treatment_without_price %>					  				
+										<% end %>
+									</td>
+
 					                <td>
 					                	<ul class="actions">
 		                                    <li><%= link_to t(:edit), edit_treatment_path(treatment) %></li>
