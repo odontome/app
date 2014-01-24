@@ -49,9 +49,10 @@ Odontome::Application.routes.draw do
 
   get '/datebook', to: redirect('/')
 
-  match '/404', :to => 'errors#not_found'
-  match '/422', :to => 'errors#server_error'
-  match '/500', :to => 'errors#server_error'
+  get '/404', :to => 'errors#not_found'
+  get '/401', :to => 'errors#unauthorized'
+  get '/422', :to => 'errors#server_error'
+  get '/500', :to => 'errors#server_error'
 
   root :to => "welcome#index"
 

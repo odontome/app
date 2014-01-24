@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, :on => :create
   
   validates :firstname, :lastname, :length => { :maximum => 20 }
-  validates :password, :length => { :minimum => 4 }
+  validates :password, :length => { :minimum => 7 }
   
   # callbacks
   before_validation :set_practice_id, :on => :create

@@ -10,7 +10,7 @@
 				<%= link_to t(:no_doctors), doctors_path %>
 			<% else %>
 				<%= f.label t :doctor %>
-				<%= f.select(:doctor_id, options_from_collection_for_select(@doctors, "id", "fullname", :selected => @appointment.doctor_id), :title => t(:select_doctor)) %>
+				<%= f.select(:doctor_id, options_from_collection_for_select(@doctors, "id", "fullname", :selected => @appointment.doctor_id), {}, { :class => "form-control", :title => t(:select_doctor) }) %>
 			<% end %>
 		</p>
 

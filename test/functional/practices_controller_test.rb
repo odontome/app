@@ -21,7 +21,7 @@ class PracticesControllerTest < ActionController::TestCase
   test "should create practice and send welcome email" do
     controller.session["user_credentials"] = nil
 
-    practice = { :name => "Odonto.me Demo Practice", :users_attributes => {"0"=>{"email"=> "demo@odonto.me", "password"=> "12345", "password_confirmation"=> "12345" } } }
+    practice = { :name => "Odonto.me Demo Practice", :users_attributes => {"0"=>{"email"=> "demo@odonto.me", "password"=> "1234567890", "password_confirmation"=> "1234567890" } } }
 
     assert_difference('Practice.count') do
       post :create, practice: practice

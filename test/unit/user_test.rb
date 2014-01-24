@@ -39,13 +39,13 @@ class UserTest < ActiveSupport::TestCase
   	assert_equal I18n.t("errors.messages.too_long", :count => 20), user.errors[:lastname].join("; ")
   end
   
-  test "user password must be at least 4 chars long" do
+  test "user password must be at least 7 chars long" do
   	user = users(:founder)
   	user.password = "123"
   	user.password_confirmation = "123"
   	
   	assert !user.save
-  	assert_equal I18n.t("errors.messages.too_short", :count => 4), user.errors[:password][1]
+  	assert_equal I18n.t("errors.messages.too_short", :count => 7), user.errors[:password][1]
   end
     
   test "user password must be confirmed" do

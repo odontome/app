@@ -8,8 +8,8 @@ class UsersControllerTest < ActionController::TestCase
   	@new_user = { :firstname => "Rebecca",
   								:lastname => "Riera",
   								:email => "rebeccariera@bokanova.mx",
-  								:password => "123456",
-  								:password_confirmation => "123456"
+  								:password => "1234567",
+  								:password_confirmation => "1234567"
   							}
   end
   

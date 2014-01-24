@@ -3,7 +3,7 @@ require 'test_helper'
 class UserSessionsControllerTest < ActionController::TestCase
 
   def valid_user_session_attributes
-    @valid_user_session_attributes ||= { :email => 'raulriera@hotmail.com', :password => '123456' }
+    @valid_user_session_attributes ||= { :email => 'raulriera@hotmail.com', :password => '1234567890' }
   end
 
   test "should get new" do
