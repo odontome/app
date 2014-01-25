@@ -42,7 +42,7 @@ class UserTest < ActiveSupport::TestCase
   test "user password must be at least 7 chars long" do
   	user = users(:founder)
   	user.password = "123"
-  	user.password_confirmation = "123"
+    user.password_confirmation = "123"
   	
   	assert !user.save
   	assert_equal I18n.t("errors.messages.too_short", :count => 7), user.errors[:password][1]
@@ -52,11 +52,11 @@ class UserTest < ActiveSupport::TestCase
   	user = User.new(:firstname => "Raul",
   									:lastname => "Riera",
   									:email => "new@email.com")
-  	user.password = "123456"
-  	user.password_confirmation = "111111"
+  	user.password = "1234567890"
+  	user.password_confirmation = "1111111111"
   	
   	assert !user.save
-  	assert_equal I18n.t("errors.messages.confirmation"), user.errors[:password][1]
+  	assert_equal I18n.t("errors.messages.confirmation"), user.errors[:password][0]
   end
 	
 	test "user fullname shortcut" do

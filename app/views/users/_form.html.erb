@@ -1,34 +1,37 @@
-<%= form_for(@user) do |f| %>
-	
+<%= form_for(@user, :class => "form-horizontal") do |f| %>
+
 	<%= render "shared/error_messages", :target => @user%>
+
+	<p class="form-group col-md-8">
+		<%= f.label :firstname %>
+		<%= f.text_field :firstname, :class => "form-control" %>
+	</p>
+
+	<p class="form-group col-md-8">
+		<%= f.label :lastname %>
+		<%= f.text_field :lastname, :class => "form-control"  %>
+	</p>
+
+	<p class="form-group col-md-8">
+		<%= f.label :email %>
+		<%= f.email_field :email, :class => "form-control" %>
+	</p>
+
+	<p class="form-group col-md-8">
+		<%= f.label :password %>
+		<%= f.password_field :password, :class => "form-control" %>
+	</p>
 	
-	<fieldset>
-	  <legend><%= t :personal_information%></legend>
-	  <p>
-	  	<%= f.label :firstname %>
-	    <%= f.text_field :firstname, :class => "input-text" %>
-	  </p>
-	  <p>
-	  	<%= f.label :lastname %>
-	    <%= f.text_field :lastname, :class => "input-text"  %>
-	  </p>
-	</fieldset>
-	<fieldset>
-	  <legend><%= t :account_information%></legend>
-	  <p>
-	  	<%= f.label :email %>
-	    <%= f.email_field :email, :class => "input-text" %>
-	  </p>
-		<p>
-			<%= f.label :password %>
-		  <%= f.password_field :password, :class => "input-text" %>
-		</p>
-		<p>
-			<%= f.label :password_confirmation %>
-		  <%= f.password_field :password_confirmation, :class => "input-text" %>
-		</p>
-	</fieldset>
-	
-  <%= f.submit( t(:save), :class => "button nice white", :disable_with => t(:please_wait)) %>
+	<p class="form-group col-md-8">
+		<%= f.label :password_confirmation %>
+		<%= f.password_field :password_confirmation, :class => "form-control" %>
+	</p>
+
+	<p class="form-group col-md-8">
+		<%= f.submit(t(:save), :class => "btn btn-primary", :disable_with => t(:please_wait)) %> 
+		<span class="cancel"><%= t :or %>
+			<%= link_to t(:cancel).downcase, users_url %>
+		</span>
+	</p>
 
 <% end %>

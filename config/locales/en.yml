@@ -7,6 +7,16 @@ en:
   activate: Activate
   activerecord:
     attributes:
+      datebook:
+        name: Name
+      doctor:
+        firstname: First name
+        lastname: Last name
+        email: Email
+        uid: Chart number
+        gender: Gender
+        speciality: Speciality
+        calendar_color: Preferred color
       practice:
         currency_unit: Preferred currency
         locale: Preferred language
@@ -18,11 +28,14 @@ en:
         firstname: First name
         lastname: Last name
         password: Password
-        password_confirmation: Passtword confirmation
+        password_confirmation: Password confirmation
     models:
       practice: Practice
       treatment: Treatment
       user: User
+      datebook: Datebook
+      treatment: Treatment
+      doctor: Doctor
   address: Address
   everyone: Everyone
   addtional_notes: Additional notes
@@ -47,7 +60,6 @@ en:
   balance: Balance
   balance_created_error_message: There was a problem creating this item
   body: Body
-  calendar_color: Preferred color
   cancel: Cancel
   cancelled_account: Your account has been cancelled and is no longer possible to
     access it. Please contact us if you need assistance.
@@ -72,6 +84,8 @@ en:
   instructions:
     datebooks: Datebooks are the backbone of every practice. One common usage is to create one per each of your practices.
     doctors: To better organize your staff, use different colors for each doctor.
+    users: These are the people who have access to your Odonto.me. It is recommended that you don't use the "administrator" account for everything.
+    treatments: Everything you do to your patients. These items are directly connected to the balance of your practice.
   date:
     abbr_day_names:
     - Sun

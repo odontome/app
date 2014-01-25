@@ -43,7 +43,7 @@ class UsersControllerTest < ActionController::TestCase
   
   test "should update user" do
     put :update, id: users(:founder).to_param, user: @new_user
-    assert_redirected_to users_url
+    assert_redirected_to user_url
   end
 
   test "should destroy user" do

@@ -1,25 +1,59 @@
-<div class="row">	
-	
-	<div class="eight columns">
-		<h1><%= t(:users)%></h1>
+<div id="pad-wrapper" class="table-wrapper users-list">
 
-		<ul id="list-items">
-			<% @users.each do |user| %>
-				<li>
-					<h2><%= link_to user.fullname, user %> <% if user_is_admin?(user) %> <span class="label white radius">admin</span><%end%></h2>
-		
-					<span><strong><%= t(:email)%>:</strong> <%=user.email%></span>
-					<span><strong><%= t(:last_seen)%>:</strong> <% if user.last_login_at %><%= time_ago_in_words(user.last_login_at) %><% else %><%= t(:never)%><% end %></span>	
-				</li>
-			<% end %>
-		</ul>
-	</div>
+	<div class="row header col-md-12">
+        <h3><%= t :users %></h3>
 
-	<div class="four columns">
-		<div class="panel">
-			<p><%= t(:user_create_help) %></p>
-			
-			<p><%= link_to t(:create_new_user), new_user_path, "data-icon" => "+" %></p>
+        <div class="pull-right">            
+            <%= link_to t(:create_new_user), new_user_url, "class" => "btn-flat primary pull-right" %>
+        </div>
+    </div>
+
+	<div class="row">
+	    <div class="col-md-12">
+	        <table class="table table-hover">
+	            <thead>
+	                <tr>
+	                    <th class="col-md-4">
+	                        <%= t :name %>
+	                    </th>
+	                    <th class="col-md-2">
+	                        <span class="line"></span> <%= t :email %>
+	                    </th>
+	                    <th class="col-md-2">
+	                        
+	                    </th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	            
+		            <% @users.each do |user| %>
+			            <tr class="<% if user.id == @users.first.id %>first<% end %>">	
+			            	<td>
+			            		<img src="<%= avatar_url(user.email)%>" alt="contact" class="img-circle avatar hidden-phone" />
+			                    <%= link_to user.fullname, user, :class => "name" %>
+			                    <span class="subtext">
+			                    	<% if !user.last_login_at.nil? %>
+			                    		<%= t :last_login_at %> <%= time_ago_in_words user.last_login_at %>
+			                    	<% else %>
+			                    		<%= t :last_login_at %> <%= t :never %>
+			                    	<% end %>
+			                    </span>
+			                </td>
+			                <td><%= mail_to user.email %></td>
+			                <td>
+			                	<ul class="actions">
+                                    <li><%= link_to t(:edit), edit_user_path(user) %></li>
+									<li class="last">
+										<%= link_to t(:delete), user, :method => :delete, :confirm => t(:are_you_sure) %>
+									</li>
+                                </ul>								
+			                </td>
+			            </tr>
+			        <% end %>
+
+			    </tbody>
+			</table>
 		</div>
 	</div>
 </div>
+

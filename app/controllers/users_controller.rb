@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :require_user
-  before_filter :require_practice_admin, :only => [:index, :destroy]
+  before_filter :require_practice_admin, :except => [:show, :edit, :update]
 
   def index
     @users = User.mine
@@ -39,7 +39,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to(users_url, :notice => I18n.t(:user_updated_success_message)) }
+        format.html { redirect_to(@user, :notice => I18n.t(:user_updated_success_message)) }
       else
         format.html { render :action => "edit" }
       end

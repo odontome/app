@@ -3,8 +3,8 @@ class User < ActiveRecord::Base
   belongs_to :practice, :counter_cache => true
   
   acts_as_authentic do |c|
-       c.login_field = "email"
-       c.validate_email_field = false
+    c.login_field = "email"
+    c.validate_email_field = false
   end
 
   scope :mine, lambda { 
@@ -14,11 +14,9 @@ class User < ActiveRecord::Base
   validates_presence_of :firstname, :lastname, :email, :roles
   validates_uniqueness_of :email
   validates_format_of :email, :with => Authlogic::Regex.email
-  validates_presence_of :password, :on => :create
-  validates_confirmation_of :password, :on => :create
-  
   validates :firstname, :lastname, :length => { :maximum => 20 }
-  validates :password, :length => { :minimum => 7 }
+  validates :password, :length => { :minimum => 7 }, :if => :validate_password?
+  validates :password_confirmation, :length => { :minimum => 7 }, :if => :validate_password?
   
   # callbacks
   before_validation :set_practice_id, :on => :create
@@ -41,6 +39,10 @@ class User < ActiveRecord::Base
   end
     
   private
+
+  def validate_password?
+    self.password.present? && self.password_confirmation.present?
+  end
   
   def check_if_admin
     if self.roles.include?("admin")
