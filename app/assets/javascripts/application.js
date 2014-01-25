@@ -7,6 +7,7 @@
 //= require jquery-ui-1.10.2.custom.min
 //= require jquery.autoSuggest
 //= require jquery.minicolors
+//= require retina-1.1.0
 //= require theme
 
 // This function prevents the session from ending

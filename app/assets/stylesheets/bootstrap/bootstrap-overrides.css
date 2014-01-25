@@ -208,7 +208,7 @@ textarea::-webkit-input-placeholder {
 }
 /* navbar brand*/
 .navbar-inverse .navbar-brand {
-	padding: 12px 20px;
+	padding: 10px 60px;
 }
 /* navbar links */
 .navbar-inverse .nav > li > a {
