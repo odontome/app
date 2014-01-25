@@ -18,6 +18,8 @@ en:
         speciality: Speciality
         calendar_color: Preferred color
       practice:
+        name: Name
+        timezone: Timezone
         currency_unit: Preferred currency
         locale: Preferred language
       treatment:
@@ -86,6 +88,8 @@ en:
     doctors: To better organize your staff, use different colors for each doctor.
     users: These are the people who have access to your Odonto.me. It is recommended that you don't use the "administrator" account for everything.
     treatments: Everything you do to your patients. These items are directly connected to the balance of your practice.
+    practice: From here, can update everything about your practice. Please take a moment to review all your options here.
+    practice_close: If from any reason you decide to leave us. You can %{close_url} at anytime.
   date:
     abbr_day_names:
     - Sun

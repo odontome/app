@@ -1,52 +1,56 @@
-<div class="row">
+<div id="pad-wrapper" class="new-user">
+    <div class="row header">
+        <div class="col-md-12">
+            <h3><%= t :practice_settings %></h3>
+        </div>                
+    </div>
 
-	<div class="eight columns">
-		<h1><%= @practice.name %></h1>
-		
-		<%= form_for(@practice, :url => "/practice/#{@practice.id}", :method => :update) do |f| %>
-		
-		  <% if @practice.errors.any? %>
-		    <div class="alert-box error">
-		      <% @practice.errors.full_messages.each do |msg| %>
-		        <%= msg %><br />
-			  	<% end %>
-			  	<a href="" class="close">&times;</a>
-		    </div>
-		  <% end %>
-		
-			<fieldset>
-				<legend><%= t :practice_information %></legend>
-			  <p>
-			  	<%= f.label :name %>
-			    <%= f.text_field :name, :title => t(:practice_name), :class => "input-text" %>
+    <div class="row form-wrapper">
+        <!-- left column -->
+        <div class="col-md-9 with-sidebar">
+            <%= form_for(@practice, :url => "/practice/#{@practice.id}", :method => :update, :class => "form-horizontal") do |f| %>
+
+				<%= render "shared/error_messages", :target => @practice%>
+
+				<p class="form-group col-md-8">
+					<%= f.label :name %>
+					<%= f.text_field :name, :class => "form-control" %>
 					<sub><%= t :practice_name_hint %></sub>
-			  </p>
-			</fieldset>
-			<fieldset>
-				<legend><%= t :customization %></legend>
-			  	<p>
+				</p>
+
+			  	<p class="form-group col-md-8">
 					<%= f.label :locale %>
-					<%= f.select(:locale, [[ t(:english), 'en'],[ t(:spanish),'es']] ) %>
+					<%= f.select(:locale, [[ t(:english), 'en'],[ t(:spanish),'es']], {}, { :class => "form-control"} ) %>
 			  	</p>
-			  	<p>
+
+			  	<p class="form-group col-md-8">
 					<%= f.label :timezone %>
-					<%= f.time_zone_select :timezone, [ ActiveSupport::TimeZone[@practice.timezone]] %>
+					<%= f.time_zone_select :timezone, [ ActiveSupport::TimeZone[@practice.timezone]], {}, { :class => "form-control"} %>
 			  	</p>
-			  	<p>
+
+			  	<p class="form-group col-md-8">
 					<%= f.label :currency_unit %>
-					<%= f.select(:currency_unit, %w[$ € £ Bs. S/.]) %>
+					<%= f.select(:currency_unit, %w[$ € £ Bs. S/.], {}, { :class => "form-control"}) %>
 			  	</p>
-			</fieldset>
-	
-			<%= f.submit(t(:save), :class => "button nice white") %> <%= t(:or) %> <%= link_to t(:cancel),  practice_url%>
-	
-		<% end %>
-	</div>
-	
-	<div class="four columns">
-		<div class="panel">				
-			<p><%= link_to t(:close_your_account), practice_cancel_url, "data-icon" => "-" %></p>
-			
-		</div>
-	</div>
-</div>	
+
+
+				<p class="form-group col-md-8">
+					<%= f.submit(t(:save), :class => "btn btn-primary", :disable_with => t(:please_wait)) %> 
+					<span class="cancel"><%= t :or %>
+						<%= link_to t(:cancel).downcase, practice_url %>
+					</span>
+				</p>
+
+			<% end %>
+        </div>
+
+        <!-- side right column -->
+        <div class="col-md-3 form-sidebar">                       
+            <h6><%= t :for_your_information %></h6>
+            
+            <p><%= t "instructions.practice" %></p>
+
+            <p><%= raw t "instructions.practice_close", close_url: (link_to (t(:close_your_account)).downcase, practice_cancel_url) %></p>
+        </div>
+    </div>
+</div>  
