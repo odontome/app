@@ -16,7 +16,7 @@
 	                    <th class="col-md-4">
 	                        <%= t :name %>
 	                    </th>
-	                    <th class="col-md-2">
+	                    <th class="col-md-2 hidden-xs hidden-sm">
 	                        <span class="line"></span> <%= t :email %>
 	                    </th>
 	                    <th class="col-md-2">
@@ -39,7 +39,7 @@
 			                    	<% end %>
 			                    </span>
 			                </td>
-			                <td><%= mail_to user.email %></td>
+			                <td class="hidden-xs hidden-sm"><%= mail_to user.email %></td>
 			                <td>
 			                	<ul class="actions">
                                     <li><%= link_to t(:edit), edit_user_path(user) %></li>

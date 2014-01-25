@@ -19,7 +19,7 @@
 	                    <th class="col-md-2">
 	                        <span class="line"></span> <%= t :updated_at %>
 	                    </th>
-	                    <th class="col-md-3 align-right">
+	                    <th class="col-md-3 align-right hidden-xs hidden-sm">
 	                        <span class="line"></span> <%= t :email %>
 	                    </th>
 	                </tr>
@@ -40,7 +40,7 @@
 				                <td>
 				                    <%= patient.updated_at.to_formatted_s :long %>
 				                </td>
-				                <td class="align-right">
+				                <td class="align-right hidden-xs hidden-sm">
 				                    <%= mail_to patient.email %>
 				                </td>
 				            <% else %>
