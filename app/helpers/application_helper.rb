@@ -22,7 +22,7 @@ module ApplicationHelper
   end
 
   def label_tag(message, type="info")
-    content_tag :span, message, :class => "label label-#{type}"
+    content_tag "sub", message, :class => "label label-#{type}"
   end
 
   def avatar_url(email, size = 96)
