@@ -1,20 +1,17 @@
-<div class="row">
-	<div class="eight columns">
+<div id="pad-wrapper" class="users-list">
 
-	<h1><%= t :practice_cancellation %></h1>
-	
-	<p><%= t :practice_cancellation_message %></p>
-	
-	<%= link_to t(:close_account), practice_close_url, :method => :post, :confirm => t(:are_you_sure_no_undo), :class => "button nice red"%> 
-	
-	</div>
-	
-	<div class="four columns">
-		<div class="panel">			
-			<ul>
-				<li><%=link_to t(:go_back), practice_url, "data-icon" => "<" %></li>
-			</ul>
+	<div class="row header col-md-12">
+        <h3><%= t :practice_cancellation %></h3>
+
+        <div class="pull-right">            
+            <%= link_to t(:close_account), practice_close_url, :method => :post, :confirm => t(:are_you_sure_no_undo), "class" => "btn-flat danger pull-right" %>
+        </div>
+    </div>
+
+	<div class="row">
+	    <div class="col-md-12">
+	        <p><%= t :practice_cancellation_message %></p>
 		</div>
 	</div>
-	
 </div>
+

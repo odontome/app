@@ -90,7 +90,7 @@ en:
     doctors: To better organize your staff, use different colors for each doctor.
     users: These are the people who have access to your Odonto.me. It is recommended that you don't use the "administrator" account for everything.
     treatments: Everything you do to your patients. These items are directly connected to the balance of your practice.
-    practice: From here, can update everything about your practice. Please take a moment to review all your options here.
+    practice: From here, you can update everything about your practice. Please take a moment to review all your options here.
     practice_close: If from any reason you decide to leave us. You can %{close_url} at anytime.
   date:
     abbr_day_names:
@@ -246,7 +246,7 @@ en:
   personal_information: Personal information
   please_wait: Pleast wait...
   practice_cancellation: Practice cancellation
-  practice_cancellation_message: Lorem ipsum
+  practice_cancellation_message: We are sorry that you wish to leave us, if there is anything we can improve or help you, please get in touch with us. To finialize the cancellation of your account please click on the top button.
   practice_close_active_message: ''
   practice_close_error_message: ''
   practice_close_success_message: ''
