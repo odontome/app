@@ -182,7 +182,7 @@ textarea::-webkit-input-placeholder {
 /* NAVBAR */
 .navbar-inverse {
 	font-size: 13px;
-	min-height: 48px;
+	min-height: 56px;
 	margin-bottom: 0px;
 	border-radius: 0px;
 	border-bottom: 1px solid #191e23;
@@ -208,21 +208,15 @@ textarea::-webkit-input-placeholder {
 }
 /* navbar brand*/
 .navbar-inverse .navbar-brand {
-	color: #ffffff;
-	text-transform: uppercase;
-	font-weight: lighter;
-	padding: 11px 20px;
-}
-.navbar-inverse .navbar-brand strong {
-	font-weight: normal;
+	padding: 12px 20px;
 }
 /* navbar links */
 .navbar-inverse .nav > li > a {
-	padding: 13px 15px 8px;
+	padding: 16px 15px 8px;
 	border-left: 1px solid #101417;
 	color: rgb(214, 214, 214);
 	outline: 0px;
-	height: 46px;
+	height: 56px;
 	transition: background .1s linear;
 	-moz-transition: background .1s linear; /* Firefox 4 */
 	-webkit-transition: background .1s linear; /* Safari and Chrome */
