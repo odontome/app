@@ -185,16 +185,9 @@ textarea::-webkit-input-placeholder {
 	min-height: 56px;
 	margin-bottom: 0px;
 	border-radius: 0px;
-	border-bottom: 1px solid #191e23;
+	border-bottom: 1px solid #f3f3f3;
 
-	background: #2c3742; /* Old browsers */
-	background: -moz-linear-gradient(top,  #2c3742 0%, #28303a 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#2c3742), color-stop(100%,#28303a)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #2c3742 0%,#28303a 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #2c3742 0%,#28303a 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #2c3742 0%,#28303a 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  #2c3742 0%,#28303a 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2c3742', endColorstr='#28303a',GradientType=0 ); /* IE6-9 */
+	background: #fafafa !important;
 }
 /* navbar-nav*/
 .navbar-inverse .navbar-nav {
@@ -212,32 +205,37 @@ textarea::-webkit-input-placeholder {
 }
 /* navbar links */
 .navbar-inverse .nav > li > a {
-	padding: 16px 15px 8px;
-	border-left: 1px solid #101417;
-	color: rgb(214, 214, 214);
+	padding: 18px 15px 8px;
+	border-left: 1px solid #f3f3f3;
+	color: #666 !important;
+	background: #fafafa !important;
 	outline: 0px;
-	height: 56px;
+	height: 58px;
+	font-size: 14px;
 	transition: background .1s linear;
 	-moz-transition: background .1s linear; /* Firefox 4 */
 	-webkit-transition: background .1s linear; /* Safari and Chrome */
 	-o-transition: background .1s linear;  /* Opera */
 }
 .navbar-inverse .nav > li > a:hover {
-	background: rgba(25, 31, 36,0.6);
+	color: #000 !important;
+	background: #f3f3f3 !important;
 }
 /* dropdown caret */
 .dropdown .caret {
 	position: relative;
 	top: -1px;	
 }
+
 /* dropdown active */
 .dropdown.open > a, 
 .dropdown.open > a:hover, 
 .dropdown.open > a:focus {
-	border-color: #101417;
+	border-color: #f3f3f3 !important;
 }
 /* dropdown menu */
 .dropdown-menu > li > a {
+	color: #000;
 	font-size: 13px;
 	outline: none;
 }
@@ -245,7 +243,8 @@ textarea::-webkit-input-placeholder {
 .dropdown-menu > li > a:focus,
 .dropdown-submenu:hover > a,
 .dropdown-submenu:focus > a {
-	background: rgb(60, 91, 121) !important;
+	color: #000;
+	background: #f3f3f3 !important;
 }
 
 
