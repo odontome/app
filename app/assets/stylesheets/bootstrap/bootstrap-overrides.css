@@ -185,8 +185,7 @@ textarea::-webkit-input-placeholder {
 	min-height: 56px;
 	margin-bottom: 0px;
 	border-radius: 0px;
-	border-bottom: 1px solid #f3f3f3;
-
+	border-bottom: 1px solid #f3f3f3 !important;
 	background: #fafafa !important;
 }
 /* navbar-nav*/

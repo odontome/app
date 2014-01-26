@@ -1,90 +1,107 @@
-<%= form_for(@patient) do |f| %>
+<%= form_for(@patient, :class => "form-horizontal") do |f| %>
 
-  	<%= render "shared/error_messages", :target => @patient%>
+	<%= render "shared/error_messages", :target => @patient%>
 
-	<fieldset>
-	  <legend><%= t :personal_information %></legend>
+	<p class="form-group col-md-8">
+		<%= f.label :firstname %>
+		<%= f.text_field :firstname, :class => "form-control" %>
+	</p>
 
-	  <p>
-	  	<%= f.label :firstname %>
-	    <%= f.text_field :firstname, :class => "form-control" %>
-	  </p>
-	  <p>
-	  	<%= f.label :lastname %>
-	    <%= f.text_field :lastname, :class => "form-control" %>
-	  </p>
-	  <p>
-	    <%= f.label :date_of_birth %> 
-	    <%= f.date_select :date_of_birth, :start_year => Time.now.year - 80, :end_year => Time.now.year - 3 %>
-	  </p>
-	  <p>
-	  	<%= f.label :uid %>
-	    <%= f.text_field :uid, :class => "form-control" %>
-		<sub class="label label-default"><%= t :only_if_clinic_uses_uid %></sub>
-	  </p>
-	</fieldset>
+	<p class="form-group col-md-8">
+		<%= f.label :lastname %>
+		<%= f.text_field :lastname, :class => "form-control" %>
+	</p>
 
-	<fieldset>
-	  <legend><%= t :contact_information %></legend>
-	  <p>
-	  	<%= f.label :email %>
-	    <%= f.email_field :email, :class => "form-control" %>
-	  </p>
-	  <p>
-	  	<%= f.label :telephone %>
-	    <%= f.telephone_field :telephone, :class => "form-control" %>
-	  </p>
-	  <p>
-	  	<%= f.label :mobile %>
-	    <%= f.telephone_field :mobile, :class => "form-control" %>
-	  </p>
-	  <p>
-	  	<%= f.label :emergency_telephone %>
-	    <%= f.telephone_field :emergency_telephone, :class => "form-control" %>
-	  </p>
-	  <p>
-	  	<%= f.label :address %>
-	    <%= f.text_area :address, :maxlength => 100, :rows => 2, :class => "form-control" %>
-	  </p>
-	</fieldset>
-	
-	<fieldset>
-	  <legend><%= t :medical_history %></legend>
-	  <p>
-	  	<%= f.label :allergies %>
-	    <%= f.text_area :allergies, :rows => 2, :class => "form-control" %>
-	  </p>
-	  <p>
-	  	<%= f.label :past_illnesses %>
-	    <%= f.text_area :past_illnesses, :rows => 2, :class => "form-control" %>
-	  </p>
-	  <p>
-	  	<%= f.label :surgeries %>
-	    <%= f.text_area :surgeries, :rows => 2, :class => "form-control" %>
-	  </p>
-	  <p>
-	  	<%= f.label :medications %>
-	    <%= f.text_area :medications, :rows => 4, :class => "form-control" %>
-	  </p>
-	  <p>
-	  	<%= f.label :cigarettes_per_day %>
-	    <%= f.number_field :cigarettes_per_day, :class => "form-control" %>
-	  </p>
-	  <p>
-	  	<%= f.label :drinks_per_day %>
-	    <%= f.number_field :drinks_per_day, :class => "form-control" %>
-	  </p>
-	  <p>
-	  	<%= f.label :drugs_use %>
-	    <%= f.text_area :drugs_use, :rows => 2, :class => "form-control" %>
-	    <sub class="label label-default"><%= t :drugs_use_hint %></sub>
-	  </p>
-	  <p>
-	  	<%= f.label :family_diseases %>
-	    <%= f.text_area :family_diseases, :rows => 4, :class => "form-control" %>
-	    <sub class="label label-default"><%= t :family_diseases_hint %></sub>
-	  </p>
-	</fieldset>
-	
-	<%= f.submit( t(:save), :class => "btn btn-embossed btn-primary", :disable_with => t(:please_wait)) %>
+	<p class="form-group col-md-8">
+		<%= f.label :date_of_birth %> 
+		<%= f.date_select :date_of_birth, :start_year => Time.now.year - 90, :end_year => Time.now.year - 3 %>
+	</p>
+
+	<p class="form-group col-md-8">
+		<%= f.label :uid %>
+		<%= f.text_field :uid, :class => "form-control" %>
+		<%= label_tag t(:only_if_clinic_uses_uid), "default" %>
+	</p>
+
+	<p class="form-group col-md-8 form-section">
+		<label><%= t :contact_information %></label>
+	</p>
+
+	<p class="form-group col-md-8">
+		<%= f.label :email %>
+		<%= f.email_field :email, :class => "form-control" %>
+	</p>
+
+	<p class="form-group col-md-8">
+		<%= f.label :telephone %>
+		<%= f.telephone_field :telephone, :class => "form-control" %>
+	</p>
+
+	<p class="form-group col-md-8">
+		<%= f.label :mobile %>
+		<%= f.telephone_field :mobile, :class => "form-control" %>
+	</p>
+
+	<p class="form-group col-md-8">
+		<%= f.label :emergency_telephone %>
+		<%= f.telephone_field :emergency_telephone, :class => "form-control" %>
+	</p>
+
+	<p class="form-group col-md-8">
+		<%= f.label :address %>
+		<%= f.text_area :address, :maxlength => 100, :rows => 2, :class => "form-control" %>
+	</p>
+
+	<p class="form-group col-md-8 form-section">
+		<label><%= t :medical_history %></label>
+	</p>
+
+	<p class="form-group col-md-8">
+		<%= f.label :allergies %>
+		<%= f.text_area :allergies, :rows => 2, :class => "form-control" %>
+	</p>
+
+	<p class="form-group col-md-8">
+		<%= f.label :past_illnesses %>
+		<%= f.text_area :past_illnesses, :rows => 2, :class => "form-control" %>
+	</p>
+
+	<p class="form-group col-md-8">
+		<%= f.label :surgeries %>
+		<%= f.text_area :surgeries, :rows => 2, :class => "form-control" %>
+	</p>
+
+	<p class="form-group col-md-8">
+		<%= f.label :medications %>
+		<%= f.text_area :medications, :rows => 4, :class => "form-control" %>
+	</p>
+
+	<p class="form-group col-md-8">
+		<%= f.label :cigarettes_per_day %>
+		<%= f.number_field :cigarettes_per_day, :class => "form-control" %>
+	</p>
+
+	<p class="form-group col-md-8">
+		<%= f.label :drinks_per_day %>
+		<%= f.number_field :drinks_per_day, :class => "form-control" %>
+	</p>
+
+	<p class="form-group col-md-8">
+		<%= f.label :drugs_use %>
+		<%= f.text_area :drugs_use, :rows => 2, :class => "form-control" %>
+		<%= label_tag t(:drugs_use_hint), "default" %>
+	</p>
+
+	<p class="form-group col-md-8">
+		<%= f.label :family_diseases %>
+		<%= f.text_area :family_diseases, :rows => 4, :class => "form-control" %>
+		<%= label_tag t(:family_diseases_hint), "default" %>
+	</p>
+
+	<p class="form-group col-md-8">
+		<%= f.submit(t(:save), :class => "btn btn-primary", :disable_with => t(:please_wait)) %> 
+		<span class="cancel"><%= t :or %>
+			<%= link_to t(:cancel).downcase, patients_url %>
+		</span>
+	</p>
 <% end %>

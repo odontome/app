@@ -31,6 +31,24 @@ en:
         lastname: Last name
         password: Password
         password_confirmation: Password confirmation
+      patient:
+        firstname: First name
+        lastname: Last name
+        date_of_birth: Date of birth
+        uid: Chart number
+        email: Email
+        telephone: Telephone number
+        mobile: Mobile number
+        emergency_telephone: Emergency telephone number
+        address: Address
+        allergies: Allergies
+        past_illnesses: Past illnesses
+        surgeries: Past surgeries
+        medications: Medications
+        cigarettes_per_day: How many cigarattes per day?
+        drinks_per_day: How many drinks per day?
+        drugs_use: Drug use history
+        family_diseases: History of family diseases
     models:
       practice: Practice
       treatment: Treatment
@@ -96,6 +114,7 @@ en:
     treatments: Everything you do to your patients. These items are directly connected to the balance of your practice.
     practice: From here, you can update everything about your practice. Please take a moment to review all your options here.
     practice_close: If from any reason you decide to leave us. You can %{close_url} at anytime.
+    patients: Easily the most important part of your practice. You can setup a patient fast by just filling out the few required fields, but it's strongly recommended you take the time to add as much info as possible.
   date:
     abbr_day_names:
     - Sun
