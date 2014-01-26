@@ -75,12 +75,16 @@ en:
   close_your_account: Close your account
   contact_information: Contact information
   contact_us: Contact us
+  create_new_datebook: Create new datebook
   create_new_doctor: Create new doctor
   create_new_patient: Create new patient
   create_new_treatment: Create new treatment
   create_new_user: Create new user
   current_medications: Current medications
   customization: Customization
+  status: Status
+  updated_at: Updated at
+  last_login_at: Last login
   color: Color
   for_your_information: For your information
   consider_using_gravatar: Register this email with gravatar.org to use it as a profile image.
@@ -164,13 +168,14 @@ en:
   email: Email
   emergency_telephone: Emergency telephone
   english: English
-  enter_patient_name_or_uid: Patient name or unique identifier
+  enter_patient_name_or_uid: Patient name or chart number
   errors:
     messages:
       invalid_date_range: The chosen dates are invalid
       invalid_email_format: Invalid format
       unauthorised: You don't have permissions to do this
   manage: Manage
+  search: Search
   family_diseases_hint: Please be as descriptive as possible.
   family_history: Family history
   female: Female
