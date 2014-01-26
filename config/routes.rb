@@ -6,6 +6,7 @@ Odontome::Application.routes.draw do
     	resources :datebooks do
         resources :appointments
       end
+      resources :balances
       resources :patients
       resources :doctors
 		end
