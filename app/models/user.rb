@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   before_create :set_admin_role_for_first_user
   before_destroy :check_if_admin
   before_update :check_if_is_editeable_by_non_admins
-  before_save :ensure_authentication_token
+  before_save :update_authentication_token
 
   def fullname
     [firstname, lastname].join(' ')
@@ -62,9 +62,11 @@ class User < ActiveRecord::Base
     end
   end
   
-  def ensure_authentication_token
+  def update_authentication_token
   	if self.crypted_password_changed?
-  		self.authentication_token = Authlogic::Random.hex_token
+  		begin
+        self.authentication_token = SecureRandom.hex
+      end while self.class.exists?(authentication_token: authentication_token)
   	end
   end
   
