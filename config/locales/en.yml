@@ -108,13 +108,12 @@ en:
   consider_using_gravatar: Register this email with gravatar.org to use it as a profile image.
   practice_settings: Practice settings
   instructions:
-    datebooks: Datebooks are the backbone of every practice. One common usage is to create one per each of your practices.
-    doctors: To better organize your staff, use different colors for each doctor.
-    users: These are the people who have access to your Odonto.me. It is recommended that you don't use the "administrator" account for everything.
-    treatments: Everything you do to your patients. These items are directly connected to the balance of your practice.
-    practice: From here, you can update everything about your practice. Please take a moment to review all your options here.
-    practice_close: If from any reason you decide to leave us. You can %{close_url} at anytime.
-    patients: Easily the most important part of your practice. You can setup a patient fast by just filling out the few required fields, but it's strongly recommended you take the time to add as much info as possible.
+    datebooks: "<p>Datebooks are the backbone of every practice.</p> <p>Because you can already filter your datebooks by doctor, one common usage is to create one datebook per each of your practices.</p>"
+    doctors: "<p>To better organize your staff, use different colors for each doctor.</p> <p>Please note that you can suspend doctors that are no longer in your staff to prevent them from appearing in Odonto.me, while still keeping all their data in your records.</p>"
+    users: "<p>These are the people who have access to your Odonto.me.</p> <p>Since only you have access to these sections, it is recommended that you create users with less privilages to handle the day to day usage and leave your <strong>%{email}</strong> account for management.</p>"
+    treatments: "Everything you do to your patients. These items are directly connected to the balance of your practice."
+    practice: "<p>From here, you can update everything about your practice. Please take a moment to review all your options here.</p> <p>If from any reason you decide to leave us. You can %{close_url} at anytime.</p>"
+    patients: "Easily the most important part of your practice. You can setup a patient fast by just filling out the few required fields, but it's strongly recommended you take the time to add as much info as possible."
   date:
     abbr_day_names:
     - Sun

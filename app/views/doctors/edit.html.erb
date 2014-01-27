@@ -15,7 +15,7 @@
         <div class="col-md-3 form-sidebar">                       
             <h6><%= t :for_your_information %></h6>
             
-            <p><%= t "instructions.doctors" %></p>
+            <%= raw t "instructions.doctors".html_safe %>
         </div>
     </div>
 </div>  

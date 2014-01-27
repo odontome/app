@@ -48,9 +48,7 @@
         <div class="col-md-3 form-sidebar">                       
             <h6><%= t :for_your_information %></h6>
             
-            <p><%= t "instructions.practice" %></p>
-
-            <p><%= raw t "instructions.practice_close", close_url: (link_to (t(:close_your_account)).downcase, practice_cancel_url) %></p>
+            <p><%= raw t("instructions.practice", close_url: (link_to (t(:close_your_account)).downcase, practice_cancel_url)).html_safe %></p>
         </div>
     </div>
 </div>  
