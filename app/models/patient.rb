@@ -1,5 +1,6 @@
 class Patient < ActiveRecord::Base  
-	# plugins
+	# permitted attributes
+  attr_accessible :uid, :practice_id, :firstname, :lastname, :fullname, :date_of_birth, :past_illnesses, :surgeries, :medications, :drugs_use, :cigarettes_per_day, :drinks_per_day, :family_diseases, :emergency_telephone
 
   # associations
   has_many :appointments, :dependent => :delete_all

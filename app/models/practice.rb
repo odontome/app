@@ -1,7 +1,6 @@
 class Practice < ActiveRecord::Base
-
-  # Practice status:
-  # cancelled - account terminated. User or admin wants to close it. Will be here for 30 days, then it should be deleted from DB.
+  # permitted attributes
+  attr_accessible :name, :users_attributes
   
   # associations
   has_many :users, :dependent => :delete_all    # didn't work with :destroy 'cause if the before_destroy callback in User.rb 

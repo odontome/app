@@ -1,5 +1,6 @@
 class Appointment < ActiveRecord::Base
-	# plugins
+	# permitted attributes
+  attr_accessible :datebook_id, :doctor_id, :patient_id, :starts_at, :ends_at, :notes
 
   # associations
   belongs_to :datebook

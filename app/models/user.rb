@@ -1,16 +1,22 @@
 class User < ActiveRecord::Base
-  
+  # permitted attributes
+  attr_accessible :firstname, :lastname, :email, :password, :password_confirmation, :practice_id
+
+  # associations
   belongs_to :practice, :counter_cache => true
   
+  # plugins
   acts_as_authentic do |c|
     c.login_field = "email"
     c.validate_email_field = false
   end
 
+  # named scopes
   scope :mine, lambda { 
     where("users.practice_id = ? ", UserSession.find.user.practice_id)
   }  
 
+  # validations
   validates_presence_of :firstname, :lastname, :email, :roles
   validates_uniqueness_of :email
   validates_format_of :email, :with => Authlogic::Regex.email

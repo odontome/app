@@ -1,4 +1,6 @@
 class Datebook < ActiveRecord::Base
+  # permitted attributes
+  attr_accessible :name, :practice_id
 
   # associations
   has_many :appointments
