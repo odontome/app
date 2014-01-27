@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   # permitted attributes
-  attr_accessible :firstname, :lastname, :email, :password, :password_confirmation, :practice_id
+  attr_accessible :firstname, :lastname, :email, :password, :password_confirmation
 
   # associations
   belongs_to :practice, :counter_cache => true

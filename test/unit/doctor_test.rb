@@ -18,9 +18,10 @@ class DoctorTest < ActiveSupport::TestCase
 		assert_equal I18n.t("errors.messages.invalid"), doctor.errors[:email].join("; ")
 	end
 
-	test "doctor is not valid without an unique uid in the same practice" do	
+	test "doctor is not valid without an unique uid in the same practice" do
+		UserSession.create users(:founder)
+		
 		doctor = Doctor.new(:uid => "D001",
-										:practice_id => 1,
 										:firstname => "Daniella",
 										:lastname => "Sanguino")
 													

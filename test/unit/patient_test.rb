@@ -20,9 +20,10 @@ class PatientTest < ActiveSupport::TestCase
 		assert patient.errors[:drinks_per_day].any?
 	end
 	
-	test "patient is not valid without an unique uid in the same practice" do	
+	test "patient is not valid without an unique uid in the same practice" do
+		UserSession.create users(:founder)
+		
 		patient = Patient.new(:uid => 0001, 
-								:practice_id => 1,
 								:firstname => "Daniella",
 								:lastname => "Sanguino")
 													

@@ -1,6 +1,6 @@
 class Treatment < ActiveRecord::Base
   # permitted attributes
-  attr_accessible :name, :price, :practice_id
+  attr_accessible :name, :price
 
   # associations
   belongs_to :practice
