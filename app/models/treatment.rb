@@ -1,6 +1,7 @@
 class Treatment < ActiveRecord::Base
-  # plugins
-  
+  # permitted attributes
+  attr_accessible :name, :price, :practice_id
+
   # associations
   belongs_to :practice
   
