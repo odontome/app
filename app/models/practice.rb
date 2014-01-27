@@ -1,6 +1,6 @@
 class Practice < ActiveRecord::Base
   # permitted attributes
-  attr_accessible :name, :users_attributes
+  attr_accessible :name, :users_attributes, :locale, :timezone, :currency_unit
   
   # associations
   has_many :users, :dependent => :delete_all    # didn't work with :destroy 'cause if the before_destroy callback in User.rb 
