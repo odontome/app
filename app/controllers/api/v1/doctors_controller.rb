@@ -25,7 +25,7 @@ class Api::V1::DoctorsController < Api::V1::BaseController
   end
   
   def update
-  	@doctor.update_attributes(params[:@doctor])
+  	@doctor.update_attributes(params[:doctor])
 		respond_with(@doctor)
   end
   
@@ -37,7 +37,7 @@ class Api::V1::DoctorsController < Api::V1::BaseController
   private
   
   def find_doctor
-  	@doctor = Doctor.mine.valid.find(params[:id])
+  	@doctor = Doctor.mine.find(params[:id])
   	rescue ActiveRecord::RecordNotFound
   		error = { :error => "The doctor you were looking for could not be found."}
   		respond_with(error, :status => 404)

@@ -37,7 +37,7 @@ class Api::V1::BalancesController < Api::V1::BaseController
   end
   
   def update
-  	@balance.update_attributes(params[:@balance])
+  	@balance.update_attributes(params[:balance])
 		respond_with(@balance)
   end
   
