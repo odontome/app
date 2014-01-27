@@ -1,0 +1,8 @@
+refund:
+  notes: Refunded by doctor
+  amount: -10.99
+  patient_id: 1
+
+charge:
+  amount: 10.99
+  patient_id: 1
