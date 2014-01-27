@@ -1,6 +1,6 @@
 class Doctor < ActiveRecord::Base
   # permitted attributes
-  attr_accessible :uid, :practice_id, :firstname, :lastname, :email
+  attr_accessible :uid, :practice_id, :firstname, :lastname, :email, :gender, :speciality, :color
 
   # associations
   belongs_to :practice, :counter_cache => true
