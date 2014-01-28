@@ -1,6 +1,7 @@
 ---
 en:
   account_cancelled: Account cancelled
+  appointments_in_datebook: "%{count} appointments"
   account_information: Account information
   account_not_found: An account with the given information was not found. If you think
     this is a mistake, please contact with us

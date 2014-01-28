@@ -29,7 +29,10 @@
 		            <% @datebooks.each do |datebook| %>
 			            <tr class="<% if datebook.id == @datebooks.first.id %>first<% end %>">	
 			            	<td>
-			                    <%= link_to datebook.name, datebook, :class => "name" %>
+			            		<%= link_to datebook.name, datebook, :class => "name" %>
+			            		<span class="subtext">
+									<%= t :appointments_in_datebook, count: datebook.appointments_count %>
+			                    </span>
 			                </td>
 			                <td><%= datebook.updated_at.to_formatted_s :short %></td>
 			                <td>
