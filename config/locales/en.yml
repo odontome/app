@@ -9,13 +9,17 @@ en:
   activate: Activate
   activerecord:
     attributes:
+      appointment:
+        doctor_id: Doctor
+        patient_id: Patient
+        notes: Additional notes
       datebook:
         name: Name
       doctor:
         firstname: First name
         lastname: Last name
         email: Email
-        uid: Chart number
+        uid: Unique identifier
         gender: Gender
         speciality: Speciality
         calendar_color: Preferred color
