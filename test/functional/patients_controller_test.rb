@@ -5,7 +5,7 @@ class PatientsControllerTest < ActionController::TestCase
   setup do
   	controller.session["user_credentials"] = users(:founder).persistence_token
   	
-  	@new_patient = {:practice_id => 1,
+  	@new_patient = {
   									:firstname => "Daniella",
 										:lastname => "Sanguino",
 										:date_of_birth => "1988-11-16",

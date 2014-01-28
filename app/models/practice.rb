@@ -43,7 +43,7 @@ class Practice < ActiveRecord::Base
   end
 
   def create_first_datebook
-    Datebook.create({ :practice_id => self.id, :name => I18n.t(:your_first_datebook) })
+    Datebook.create({ :name => I18n.t(:your_first_datebook) })
   end
 
 end
