@@ -25,17 +25,7 @@ class TreatmentsControllerTest < ActionController::TestCase
     end
     assert_redirected_to treatments_url
   end
-  
-  test "should show treatment if complete" do
-    get :show, id: treatments(:complete).to_param
-    assert_response :success
-  end
-
-  test "should show edit if incomplete" do
-    get :show, id: treatments(:incomplete).to_param
-    assert_redirected_to :action => :edit
-  end
-  
+    
   test "should get edit" do
     get :edit, id: treatments(:incomplete).to_param
     assert_response :success

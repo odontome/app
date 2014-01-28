@@ -34,10 +34,9 @@
 				            <% @treatments.each do |treatment| %>
 					            <tr class="<% if treatment.id == @treatments.first.id %>first<% end %>">	
 					            	<td>
-					                    <%= link_to treatment.name, treatment, :class => "name" %>
-					                    <span class="subtext">
-					                    	<%= t :last_update, date:( time_ago_in_words treatment.updated_at) %>
-					                    </span>
+					                    <span class="name">
+					                    	<%= treatment.name %>
+					                   	</span>
 					                </td>
 					                <td>
 						                <% if !treatment.missing_info? %>	 
