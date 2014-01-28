@@ -104,7 +104,7 @@ en:
   customization: Customization
   status: Status
   updated_at: Updated at
-  last_login_at: Last login
+  last_login_at: Last login %{date} ago
   color: Color
   for_your_information: For your information
   consider_using_gravatar: Register this email with gravatar.org to use it as a profile image.
