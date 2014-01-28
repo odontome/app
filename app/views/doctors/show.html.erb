@@ -19,45 +19,51 @@
         <div class="col-md-12 bio">
             <div class="profile-box">
 
-                <h6><%= t :future_appointments %></h6>
-                <br>
-                <!-- recent orders table -->
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th class="col-md-3">
-                                <span class="line"></span>
-                                <%= t :appointment_date %>
-                            </th>
-                            <th class="col-md-4">
-                                <span class="line"></span>
-                                <%= t :patient %>
-                            </th>
-                            <th class="col-md-5">
-                                <span class="line"></span>
-                                <%= t :notes %>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- row -->
-                        <% @appointments.each do |appointment| %>
-                        <tr class="<% if appointment.id == @appointments.first.id %>first<% end %>">
-                            <td>
-                            	<sub><%=l appointment.starts_at.to_date, :format => :day_and_date %></sub> <br />
-                                <%= appointment.starts_at.to_formatted_s :time %> - 
-                                <%= appointment.ends_at.to_formatted_s :time %>
-                            </td>
-                            <td>
-                                <%= link_to appointment.patient.fullname, appointment.patient %>
-                            </td>
-                            <td>
-                                <%= appointment.notes %>
-                            </td>
-                        <% end %>
-                        </tr>
-                    </tbody>
-                </table>
+                <% if @appointments.size > 0 %>
+                    <h6><%= t :future_appointments %></h6>
+                    <br>
+                    <!-- recent orders table -->
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-md-3">
+                                    <span class="line"></span>
+                                    <%= t :appointment_date %>
+                                </th>
+                                <th class="col-md-4">
+                                    <span class="line"></span>
+                                    <%= t :patient %>
+                                </th>
+                                <th class="col-md-5">
+                                    <span class="line"></span>
+                                    <%= t :notes %>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- row -->
+                            <% @appointments.each do |appointment| %>
+                            <tr class="<% if appointment.id == @appointments.first.id %>first<% end %>">
+                                <td>
+                                	<sub><%=l appointment.starts_at.to_date, :format => :day_and_date %></sub> <br />
+                                    <%= appointment.starts_at.to_formatted_s :time %> - 
+                                    <%= appointment.ends_at.to_formatted_s :time %>
+                                </td>
+                                <td>
+                                    <%= link_to appointment.patient.fullname, appointment.patient %>
+                                </td>
+                                <td>
+                                    <%= appointment.notes %>
+                                </td>
+                            <% end %>
+                            </tr>
+                        </tbody>
+                    </table>
+                
+                <% else %>
+                    <h6><%= t :future_appointments %></h6>
+                    <p><%= raw (t :doctor_has_no_future_appointments, datebooks_url: link_to(t(:appointments), root_url)).html_safe %></p>
+                <% end %>
 
             </div>
         </div>

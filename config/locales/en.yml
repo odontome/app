@@ -9,6 +9,7 @@ en:
   activate: Activate
   gravatar_tooltip: Avatar taken from gravatar.org
   future_appointments: Future appointments
+  doctor_has_no_future_appointments: Your schedule is free. How about if we schedule some %{datebooks_url}?
   activerecord:
     attributes:
       appointment:
