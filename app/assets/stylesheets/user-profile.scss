@@ -29,9 +29,9 @@
 	}
 	.profile {
 		.profile-box {
-			border-top: 1px solid #dde2e9;
-			padding-top: 23px;
-			width: 90%;
+			// border-top: 1px solid #dde2e9;
+			// padding-top: 23px;
+			width: 100%;
 		}
 		.section {
 			margin-bottom: 80px;
@@ -43,7 +43,7 @@
 		}
 		.bio {
 			box-shadow: 4px 0px 3px -1px rgba(226, 226, 226, 0.1);
-			border-right: 1px solid #edeef1;
+			// border-right: 1px solid #edeef1;
 			.span12 {
 				margin-left: 0;
 			}
@@ -118,21 +118,6 @@
 
 
 /* responsive */
-
-@media (min-width: 768px) and (max-width: 979px) { 
-	.user-profile .address ul {
-		margin-left: 18px;
-		i {
-			display: none;
-		}
-		li.ico-li{
-			font-weight: bold;
-			a {
-				font-weight: normal;
-			}
-		}
-	}
-}
 
 @media (max-width: 768px) {
 	.user-profile {

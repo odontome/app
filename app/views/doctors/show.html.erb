@@ -1,38 +1,65 @@
-<div class="row">
-	<div class="eight columns">
-		
-		<h1><span style="color: <%= @doctor.color %>">&#x25CF;</span>
-			<%=@doctor.fullname%>
-			<% if !@doctor.is_active %>
-				<span class="red radius label"><%= t :suspended %></span>
-			<% end %>
-		</h1>
-		
-		<p>
-			<strong><%= t :uid %>:</strong> <%= @doctor.uid%>
-		</p>
-		<p>
-			<strong><%= t :email %>:</strong> <%= @doctor.email%>
-		</p>
-		<p>
-			<strong><%= t :gender %>:</strong> <%= @doctor.gender.titleize%>
-		</p>
-		<p>
-			<strong><%= t :speciality %>:</strong> <%= @doctor.speciality%>
-		</p>
-	</div>
-	
-	<div class="four columns">
+<div id="pad-wrapper" class="user-profile">
+    <!-- header -->
+    <div class="row header">
+        <div class="col-md-8">
+            <img src="<%= avatar_url(@doctor.email,'100x100')%>" alt="contact" class="avatar img-circle" data-toggle="tooltip" title="<%= t :gravatar_tooltip %>" data-placement="bottom" />
+            <h3 class="name"><%= @doctor.fullname %></h3>
+            <span class="area"><%= @doctor.speciality %></span>
+        </div>
+        
+        <% if !@doctor.is_active %>
+        	<div class="pull-right doctor-status">
+				<%= label_tag t(:suspended).downcase %>
+			</div>
+		<% end %>
 
-		<div class="panel">			
-			<ul>
-				<li><%= link_to t(:edit_doctor), edit_doctor_path(@doctor), "data-icon" => "x" %></li>
-				<% if user_is_admin?(current_user) %>
-					<li><%= link_to_suspend_or_delete @doctor %></li>
-				<% end %>
-				<li><%= link_to t(:return_to_listing), doctors_url, "data-icon" => "<" %></li>
-			</ul>
-						
-		</div>
-	</div>
+    </div>
+
+    <div class="row profile">
+        <div class="col-md-12 bio">
+            <div class="profile-box">
+
+                <h6><%= t :future_appointments %></h6>
+                <br>
+                <!-- recent orders table -->
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-md-3">
+                                <span class="line"></span>
+                                <%= t :appointment_date %>
+                            </th>
+                            <th class="col-md-4">
+                                <span class="line"></span>
+                                <%= t :patient %>
+                            </th>
+                            <th class="col-md-5">
+                                <span class="line"></span>
+                                <%= t :notes %>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- row -->
+                        <% @appointments.each do |appointment| %>
+                        <tr class="<% if appointment.id == @appointments.first.id %>first<% end %>">
+                            <td>
+                            	<sub><%=l appointment.starts_at.to_date, :format => :day_and_date %></sub> <br />
+                                <%= appointment.starts_at.to_formatted_s :time %> - 
+                                <%= appointment.ends_at.to_formatted_s :time %>
+                            </td>
+                            <td>
+                                <%= link_to appointment.patient.fullname, appointment.patient %>
+                            </td>
+                            <td>
+                                <%= appointment.notes %>
+                            </td>
+                        <% end %>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
 </div>

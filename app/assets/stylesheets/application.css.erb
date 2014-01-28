@@ -11,6 +11,7 @@
 *= require calendar
 *= require user-list
 *= require new-user
+*= require user-profile
 *= require tables
 *= require ui-elements
 *= require layout
@@ -110,9 +111,13 @@
 	opacity: 0.75
 }
 
+/* Desktops */
 @media (min-width: 980px) {
     .pull-right-lg {
         float: right;
+    }
+    .doctor-status {
+      margin-top: 20px;
     }
 }
 

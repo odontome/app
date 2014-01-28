@@ -7,6 +7,7 @@ class DoctorsController < ApplicationController
 
   def show
     @doctor = Doctor.mine.find(params[:id])
+    @appointments = @doctor.appointments.joins(:patient).where("starts_at > ?", Date.today).order("starts_at desc")
   end
 
   def new

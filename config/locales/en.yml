@@ -7,6 +7,8 @@ en:
   account_not_found: An account with the given information was not found. If you think
     this is a mistake, please contact with us
   activate: Activate
+  gravatar_tooltip: Avatar taken from gravatar.org
+  future_appointments: Future appointments
   activerecord:
     attributes:
       appointment:
@@ -64,7 +66,7 @@ en:
       doctor: Doctor
   address: Address
   everyone: Everyone
-  addtional_notes: Additional notes
+  additional_notes: Additional notes
   admin_credentials_required: You need to be the administrator of the practice to
     do this
   administrator: Administrator
@@ -107,6 +109,9 @@ en:
   current_medications: Current medications
   customization: Customization
   status: Status
+  patient: Patient
+  starts_at: Starts at
+  notes: Notes
   updated_at: Updated at
   last_login_at: Last login %{date} ago
   color: Color
@@ -170,6 +175,7 @@ en:
       short: ! '%d %b'
   datebook: Datebook
   datebooks: Datebooks
+  appointment_date: Date
   active: Active
   inactive: Inactive
   day: Day
