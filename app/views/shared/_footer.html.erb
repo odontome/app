@@ -1,11 +1,11 @@
 <div class="bottom-menu">
 	<div class="container">
-		<div class="col-md-2 navbar-brand">
-            <a href="/" class="fui-flat"></a>
+		<div class="col-md-1">
+            <%= image_tag_with_at2x "logo-mini.png", :width => 50 %>
         </div>
 
-        <div class="col-md-10">
-			<ul class="bottom-links">
+        <div class="col-md-11">
+			<ul class="bottom-links pull-right-lg">
 				<li><%= link_to t(:terms_of_service), "/terms", :target => "_blank" %></li>
 				<li><%= link_to t(:privacy_policy), "/privacy", :target => "_blank" %></li>
 				<li><%= link_to t(:contact_us), "mailto:hello@odonto.me", :target => "_blank" %></li>

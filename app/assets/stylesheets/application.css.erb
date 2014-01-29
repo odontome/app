@@ -221,27 +221,17 @@
    Footer
    ----------------------------------------- */
 
-   .bottom-menu {
-    padding: 39px 0 42px;
-  }
-  .bottom-menu .navbar-brand {
-    font-size: 24px;
-    margin-top: -4px;
-    padding: 0;
+  .bottom-menu {
+    padding: 60px 0 40px;
   }
   .bottom-menu .title {
     font-size: 13px;
-    font-weight: 700;
     margin-top: 0;
   }
   .bottom-menu a {
-    color: inherit;
+    color: #aaa !important;
   }
-  .active .bottom-menu a,
-  .bottom-menu a:hover,
-  .bottom-menu a:focus {
-    color: #1abc9c;
-  }
+
   .bottom-menu .label,
   .bottom-menu .badge {
     vertical-align: middle;
@@ -249,6 +239,7 @@
   .bottom-menu .bottom-links {
     font-size: 12px;
     line-height: 1.286;
+    margin-top: 20px;
   }
   .bottom-menu .bottom-links:before,
   .bottom-menu .bottom-icons:before,
@@ -296,18 +287,24 @@
     float: left;
     margin: 0 18px 0 0;
   }
-  @media (max-width: 767px) {
-    .bottom-menu .navbar-brand,
-    .bottom-menu .bottom-links {
-      margin-bottom: 30px;
+  @media (max-width: 480px) {
+    .bottom-menu img {
+      display: block;
+      margin: 0 auto;
     }
-    .bottom-menu .navbar-brand {
+    .bottom-menu,
+    .bottom-menu .bottom-links {
+      margin-bottom: 10px;
+    }
+    .bottom-menu {
       padding: 15px;
       float: none;
     }
     .bottom-menu .bottom-links li {
       float: none;
-      margin-bottom: 2px;
+      margin-bottom: 4px;
+      margin-right: 0;
+      text-align: center;
     }
     .bottom-menu [class*="span"]:last-child .bottom-links {
       margin-bottom: 0;
