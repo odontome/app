@@ -3431,6 +3431,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   .navbar-collapse {
     width: auto;
     border-top: 0;
+    margin: 0 40px;
     box-shadow: none;
   }
   .navbar-collapse.collapse {
@@ -3506,6 +3507,9 @@ textarea.input-group-sm > .input-group-btn > .btn {
 @media (min-width: 768px) {
   .navbar > .container .navbar-brand {
     margin-left: -15px;
+  }
+  .navbar-brand {
+    margin-left: 30px;
   }
 }
 .navbar-toggle {
