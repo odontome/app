@@ -33,9 +33,9 @@
 			                    <%= link_to user.fullname, user, :class => "name" %>
 			                    <span class="subtext">
 			                    	<% if !user.last_login_at.nil? %>
-			                    		<%= t :last_login_at, date:(time_ago_in_words user.last_login_at) %>
+			                    		<%= t :last_login_at_with_date, date:(time_ago_in_words user.last_login_at) %>
 			                    	<% else %>
-			                    		<%= t :last_login_at %> <%= t :never %>
+            							<%= t :never_logged_in %>
 			                    	<% end %>
 			                    </span>
 			                </td>

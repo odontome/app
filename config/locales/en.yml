@@ -114,7 +114,9 @@ en:
   starts_at: Starts at
   notes: Notes
   updated_at: Updated at
-  last_login_at: Last login %{date} ago
+  last_login_at_with_date: Last login %{date} ago
+  last_login_at: Last login
+  never_logged_in: Never has logged into Odonto.me
   color: Color
   for_your_information: For your information
   consider_using_gravatar: Register this email with gravatar.org to use it as a profile image.

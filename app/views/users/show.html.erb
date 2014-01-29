@@ -1,30 +1,33 @@
-<div class="row">
-	<div class="eight columns">
-
-		<h1><%=@user.fullname%></h1>
-
-		<p>
-			<strong><%= t :email %>:</strong> <%= @user.email%>
-		</p>
-		<p>
-			<strong><%= t :last_seen %>:</strong> <% if @user.last_login_at %><%= l @user.last_login_at, :format => :long %> ( <%= time_ago_in_words(@user.last_login_at)%> <%= t :ago %>)<% else %><%= t :never %><% end %>
-		</p>
-		<p>
-			<strong><%= t :number_of_signins %>:</strong> <% if @user.login_count.to_i > 1 %><%= @user.login_count %><% else %><%= t :none %><% end %>
-		</p>
-	</div>
-	
-	<div class="four columns">
-		<div class="panel">			
-			<ul>
-				<% if is_editeable_by_current_user(@user) %>
-					<li><%=link_to t(:edit_user), edit_user_path(@user), "data-icon" => "x" %></li>
-				<% end %>
-				<% if user_is_admin?(current_user) && !user_is_admin?(@user) %>
-					<li><%=link_to t(:delete_user), user_path(@user), :method => :delete, :confirm => t(:are_you_sure), "data-icon" => "-" %></li>
-				<% end %>
-				<li><%=link_to t(:return_to_listing), users_url, "data-icon" => "<" %></li>
-			</ul>
+<div id="pad-wrapper" class="user-profile">
+    <!-- header -->
+    <div class="row header">
+        <div class="col-md-8">
+            <img src="<%= avatar_url(@user.email,'100x100')%>" alt="contact" class="avatar img-circle" data-toggle="tooltip" title="<%= t :gravatar_tooltip %>" data-placement="bottom" />
+            <h3 class="name"><%= @user.fullname %></h3>
+            <span class="area">
+            	<% if !@user.last_login_at.nil? %>
+            		<%= t :last_login_at_with_date, date:(time_ago_in_words @user.last_login_at) %>
+            	<% else %>
+            		<%= t :never_logged_in %>
+            	<% end %>
+            </span>
+        </div>
+        
+    	<div class="pull-right doctor-status">
+			<% if user_is_admin?(@user) %>
+				<%= label_tag @user.roles %>
+			<% end %>
 		</div>
-	</div>
+
+    </div>
+
+    <!--
+    <div class="row profile">
+        <div class="col-md-12 bio">
+            <div class="profile-box">
+
+            </div>
+        </div>
+    </div>
+	-->
 </div>
