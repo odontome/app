@@ -20,7 +20,7 @@
 	<p class="form-group col-md-8">
 		<%= f.label :uid %>
 		<%= f.text_field :uid, :class => "form-control" %>
-		<%= label_tag t(:only_if_clinic_uses_uid), "default" %>
+		<%= content_tag "sub", t(:only_if_clinic_uses_uid) %>
 	</p>
 
 	<p class="form-group col-md-8 form-section">
@@ -89,13 +89,13 @@
 	<p class="form-group col-md-8">
 		<%= f.label :drugs_use %>
 		<%= f.text_area :drugs_use, :rows => 2, :class => "form-control" %>
-		<%= label_tag t(:drugs_use_hint), "default" %>
+		<%= content_tag "sub", t(:drugs_use_hint) %>
 	</p>
 
 	<p class="form-group col-md-8">
 		<%= f.label :family_diseases %>
 		<%= f.text_area :family_diseases, :rows => 4, :class => "form-control" %>
-		<%= label_tag t(:family_diseases_hint), "default" %>
+		<%= content_tag "sub", t(:family_diseases_hint) %>
 	</p>
 
 	<p class="form-group col-md-8">

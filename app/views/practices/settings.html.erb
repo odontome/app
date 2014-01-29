@@ -15,7 +15,7 @@
 				<p class="form-group col-md-8">
 					<%= f.label :name %>
 					<%= f.text_field :name, :class => "form-control" %>
-					<%= label_tag t(:practice_name_hint), "default" %>
+					<%= content_tag "sub", t(:practice_name_hint) %>
 				</p>
 
 			  	<p class="form-group col-md-8">

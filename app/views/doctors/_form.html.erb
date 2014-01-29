@@ -15,13 +15,13 @@
   <p class="form-group col-md-8">
   	<%= f.label :uid %>
     <%= f.text_field :uid, :class => "form-control" %>
-    <%= label_tag t(:only_if_clinic_uses_uid), "default" %>
+    <%= content_tag "sub", t(:only_if_clinic_uses_uid) %>
   </p>
 
   <p class="form-group col-md-8">
   	<%= f.label :email %>
     <%= f.email_field :email, :class => "form-control" %>
-    <%= label_tag t(:consider_using_gravatar), "default" %>
+    <%= content_tag "sub", t(:consider_using_gravatar) %>
   </p>
 
   <p class="form-group col-md-8">
