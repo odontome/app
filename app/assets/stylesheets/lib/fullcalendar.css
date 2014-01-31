@@ -498,6 +498,11 @@ table.fc-border-separate {
 	height: 2px;
 	overflow: hidden;
 	}
+
+.fc-widget-header {
+	color: #666;
+	font-weight: normal;
+}
 	
 .fc-widget-header .fc-agenda-divider-inner {
 	background: #eee;
