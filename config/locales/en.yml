@@ -1,5 +1,6 @@
 ---
 en:
+  already_have_an_account: Already have an account?
   account_cancelled: Account cancelled
   age_with_suffix: "%{age} years old"
   appointments_in_datebook: "%{count} appointments"

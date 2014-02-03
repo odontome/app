@@ -37,6 +37,7 @@
 			font-size: 18px;
 			font-weight: 600;
 		}
+		input[type="text"],
 		input[type="email"],
 		input[type="password"]{
 			font-size: 15px;
@@ -111,7 +112,7 @@
 			color: #666;
 		}
 		a {
-			color: #4a576a;
+			color: #3389d1;
 			margin-left: 7px;
 			transition: all .1s linear;
 			-moz-transition: all .1s linear; /* Firefox 4 */
