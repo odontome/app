@@ -36,7 +36,7 @@
 			                </td>
 			                <td><%= datebook.updated_at.to_formatted_s :short %></td>
 			                <td>
-			                	<% if datebook.appointments_count > 0 %>
+			                	<% if datebook.appointments_count.to_i > 0 %>
 			                		<%= label_tag t(:active).downcase, "success" %>
 			                	<% else %>
 			                		<%= label_tag t(:inactive).downcase %>
@@ -45,7 +45,7 @@
 			                	<ul class="actions">
                                     <li><%= link_to t(:edit), edit_datebook_path(datebook) %></li>
 									<li class="last">
-										<% if datebook.appointments_count > 0 %>
+										<% if datebook.appointments_count.to_i > 0 %>
 											<span class="strikethrough"><%= t :delete %></span>
 										<% else %>
 											<%= link_to t(:delete), datebook, :method => :delete, :confirm => t(:are_you_sure) %>
