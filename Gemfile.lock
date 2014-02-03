@@ -81,6 +81,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25.1)
     multi_json (1.8.4)
+    pg (0.14.1)
     polyglot (0.3.3)
     rack (1.4.5)
     rack-cache (1.2)
@@ -175,6 +176,7 @@ DEPENDENCIES
   jquery-minicolors-rails
   jquery-rails (>= 3.0.4)
   mail
+  pg
   rails (= 3.2.16)
   rails-i18n (~> 3.0.0)
   redis (= 3.0.5)
