@@ -27,7 +27,8 @@ class PatientsController < ApplicationController
   def show
     @patient = Patient.mine.find(params[:id])
     @patient_notes = @patient.notes.order("created_at DESC")
-    
+    @appointments = Appointment.where("patient_id = ? AND starts_at > ?", @patient.id, Time.now).includes(:doctor).order("starts_at desc")
+
     if @patient.missing_info?
       redirect_to edit_patient_path(@patient)
     else 
@@ -78,10 +79,4 @@ class PatientsController < ApplicationController
     end
   end
   
-  def appointments 
-    @appointments = Appointment.where("patient_id = ?", params[:id]).includes(:doctor).order( "starts_at desc")
-    
-    render :layout => nil
-  end
-
 end

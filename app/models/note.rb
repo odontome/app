@@ -1,5 +1,7 @@
 class Note < ActiveRecord::Base
-  
+  # permitted attributes
+  attr_accessible :notes
+
   # associations
   belongs_to :noteable, :polymorphic => true
   

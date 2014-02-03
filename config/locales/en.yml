@@ -1,15 +1,19 @@
 ---
 en:
   account_cancelled: Account cancelled
+  age_with_suffix: "%{age} years old"
   appointments_in_datebook: "%{count} appointments"
   last_update: "Updated %{date} ago"
+  ago_in_words: "%{date} ago"
   account_information: Account information
   account_not_found: An account with the given information was not found. If you think
     this is a mistake, please contact with us
   activate: Activate
   gravatar_tooltip: Avatar taken from gravatar.org
   future_appointments: Future appointments
+  schedule: Schedule
   doctor_has_no_future_appointments: Your schedule is free. How about if we schedule some %{datebooks_url}?
+  patient_has_no_future_appointments: No future appointments. Would you like to %{datebooks_url} one?
   activerecord:
     attributes:
       appointment:
@@ -59,6 +63,8 @@ en:
         drugs_use: Drug use history
         family_diseases: History of family diseases
     models:
+      appointment: Appointment
+      patient: Patient
       practice: Practice
       treatment: Treatment
       user: User
@@ -172,10 +178,10 @@ en:
     - November
     - December
     formats:
-      day_and_date: ! '%A (%e %B)'
-      default: ! '%m/%d/%Y'
-      long: ! '%d %B, %Y'
-      short: ! '%d %b'
+      day_and_date: "%A (%e %B)"
+      default: "%m/%d/%Y"
+      long: "%d %B, %Y"
+      short: "'%d %b"
   datebook: Datebook
   datebooks: Datebooks
   appointment_date: Date
@@ -260,7 +266,7 @@ en:
   none: none
   not_logged_in: Not logged in
   note_created_error_message: There was a problem creating this note
-  notes_about_this: Notes about %{class_name}
+  notes_about_this: Optional notes for this %{class_name}
   number_of_signins: Number of signins
   only_if_clinic_uses_uid: Only if your practice uses an unique identification system
   or: or
@@ -316,10 +322,10 @@ en:
   time:
     am: am
     formats:
-      default: ! '%a, %d %b %Y %H:%M:%S %z'
-      just_the_time: ! '%H:%M'
-      long: ! '%B %d, %Y %H:%M'
-      short: ! '%d %b %H:%M'
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      just_the_time: "%H:%M"
+      long: "%B %d, %Y %H:%M"
+      short: "%d %b %H:%M"
     pm: pm
   today: Today
   treatment_without_price: Add a price to this treatment, or simply delete it
@@ -329,14 +335,12 @@ en:
   uid: Unique identifier
   use_preloaded_treatments: Would you like to use our list of predefined treatments?
   user: User
-  user_create_help: Lorem ipsum very very very long
   user_created_success_message: The user was created successfully
   user_updated_success_message: The user was updated successfully
   users: Users
   week: Week
   welcome: Welcome to Odonto.me
   welcome_email_subject: Welcome aboard!
-  years_old: years old
   you_agree_to_our_terms_and_privacy_policy: You agree to our %{terms_url} and to
     our %{privacy_url} when you register.
   your_first_datebook: Your first datebook

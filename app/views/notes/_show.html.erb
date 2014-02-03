@@ -1,5 +1,5 @@
-<div id="note<%=note.id%>" class="alert-box">
-	<p><span class="radius label blue"><%=l note.created_at, :format => :long %></span>
-	<%=note.notes%></p>
-	<%= link_to "×", [noteable, note], :method => :delete, :remote => true, :class => "close", :title => t(:delete) %>
+<div id="note<%=note.id%>" class="alert alert-dismissable">
+	<%= link_to raw("&times;"), [noteable, note], :method => :delete, :remote => true, :class => "close" %>
+	<p><%= note.notes %></p>
+	<sub><%= t :ago_in_words, date: time_ago_in_words(note.created_at) %></sub>
 </div>

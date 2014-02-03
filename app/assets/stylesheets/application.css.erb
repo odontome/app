@@ -7,7 +7,6 @@
 *= require lib/fullcalendar
 *= require lib/jquery-ui-1.10.2.custom.css.erb
 *= require lib/jquery.dataTables
-*= require lib/morris
 *= require calendar
 *= require user-list
 *= require new-user
@@ -28,6 +27,45 @@
   light blue = #f5fafc
   light gray = #f3f3f3
   */
+
+.sidebar .btn-flat {
+  width: 100%;
+}
+
+.list-group-item {
+  font-size: 90%;
+}
+
+.list-group-item h6 {
+  font-weight: 600;
+}
+
+.list-group-item i {
+  width: 10px;
+  text-align: center;
+  margin-right: 12px;
+}
+
+.list-group-item-danger {
+  background: #b85e80;
+  border-color: #b85e80;
+  color: #fff;
+}
+
+.comment {
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.comment .alert {
+  padding: 15px 0;
+  margin-bottom: 0;
+}
+
+.comment .close {
+  display: none;
+  right: 0 !important;
+}
 
 /* -----------------------------------------
    Forms

@@ -1,3 +1,17 @@
 <% notes.each do |note| %>
 	<%= render :partial => "notes/show", :locals => {:note => note, :noteable => noteable}%>
 <% end %>
+
+<script>
+	$(document).ready(function() {
+		$(".comment").on("mouseenter", ".alert-dismissable", 
+			function() {
+		    	$(this).find("a.close").show();
+		  	});
+		$(".comment").on("mouseleave", ".alert-dismissable",
+			function() {
+				$(this).find("a.close").hide();
+		  	}
+		);
+	});
+</script>
