@@ -3,8 +3,6 @@
 404/index.jpg: 404-f9abd4fa86ab325ae40ea3014bdd5772.jpg
 500.jpg: 500-9f3d867c7bbea55cf1d57cb216c99c8f.jpg
 500/index.jpg: 500-9f3d867c7bbea55cf1d57cb216c99c8f.jpg
-avatar.jpg: avatar-ab78b4461eb3e7b52f66bd7fd36c26b8.jpg
-avatar/index.jpg: avatar-ab78b4461eb3e7b52f66bd7fd36c26b8.jpg
 glyphicons-halflings-white.png: glyphicons-halflings-white-6cccd17a7aed91dbc0157d343c68c0d9.png
 glyphicons-halflings-white/index.png: glyphicons-halflings-white-6cccd17a7aed91dbc0157d343c68c0d9.png
 glyphicons-halflings.png: glyphicons-halflings-2851b489e8c39f8fad44fc10efb99c3e.png
@@ -71,8 +69,8 @@ table-icons.png: table-icons-d62738d16be03b31103387cb7ed8674c.png
 table-icons/index.png: table-icons-d62738d16be03b31103387cb7ed8674c.png
 application.js: application-aaa01656aa9218cb70b7f28ceffb48db.js
 application/index.js: application-aaa01656aa9218cb70b7f28ceffb48db.js
-application.css: application-2c5b550d4d795ca986f27948a2204c45.css
-application/index.css: application-2c5b550d4d795ca986f27948a2204c45.css
+application.css: application-40b6af1f9e7a28dc2822e5e782f3dd40.css
+application/index.css: application-40b6af1f9e7a28dc2822e5e782f3dd40.css
 jquery.minicolors.png: jquery.minicolors-061cbc2cb9eb063d65da8d3ee7305c75.png
 jquery/index.minicolors.png: jquery.minicolors-061cbc2cb9eb063d65da8d3ee7305c75.png
 FontAwesome.otf: FontAwesome-1b753859c011e89c9cc8e29a6ee33956.otf
