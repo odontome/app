@@ -41,10 +41,10 @@ Odontome::Application.routes.draw do
   get "/signup" => "practices#new", :as => :signup
   get "/practice" => "practices#show", :as => :practice
   post "/practice" => "practices#create"
-  post "/practice/:id" => "practices#update", :as => :practice_update
   get "/practice/settings" => "practices#settings", :as => :practice_settings
   get "/practice/cancel" => "practices#cancel", :as => :practice_cancel
   post "/practice/close" => "practices#close", :as => :practice_close
+  post "/practice/:id" => "practices#update", :as => :practice_update
   get "/privacy"  => "welcome#privacy"
   get "/terms"  => "welcome#terms"
 
