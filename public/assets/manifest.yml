@@ -69,8 +69,8 @@ table-icons.png: table-icons-d62738d16be03b31103387cb7ed8674c.png
 table-icons/index.png: table-icons-d62738d16be03b31103387cb7ed8674c.png
 application.js: application-aaa01656aa9218cb70b7f28ceffb48db.js
 application/index.js: application-aaa01656aa9218cb70b7f28ceffb48db.js
-application.css: application-40b6af1f9e7a28dc2822e5e782f3dd40.css
-application/index.css: application-40b6af1f9e7a28dc2822e5e782f3dd40.css
+application.css: application-fbd276a43ab9c41bf11a3f50df0f24ae.css
+application/index.css: application-fbd276a43ab9c41bf11a3f50df0f24ae.css
 jquery.minicolors.png: jquery.minicolors-061cbc2cb9eb063d65da8d3ee7305c75.png
 jquery/index.minicolors.png: jquery.minicolors-061cbc2cb9eb063d65da8d3ee7305c75.png
 FontAwesome.otf: FontAwesome-1b753859c011e89c9cc8e29a6ee33956.otf
