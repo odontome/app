@@ -22,7 +22,7 @@ h1,h2,h3,h4,h5,h6{
 
 /* alerts */
 .alert{
-	text-align: left;
+	text-align: center;
 }
 .alert [class^="icon-"], 
 .alert [class*=" icon-"] {
