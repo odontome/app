@@ -1,9 +1,16 @@
-<%= form_tag password_resets_path do %>
-	<p><%= t :password_reset_instructions %></p>
+<%= link_to (image_tag_with_at2x "logofull.png", :title => t(:home), :class => "logo"), root_path %>
 
-	<p>
-	  <%= text_field_tag :email, nil, :placeholder => t(:email), :autocapitalize => "off", :autocorrect => "off", :class => "input-text" %>
-	</p>
-	
-	<%= submit_tag( t(:reset_password), :class => "button nice blue") %> <%= t :or %> <%= link_to t(:go_back), signin_path %>
-<% end %>
+<div class="box">
+    <div class="content-wrap">
+        <%= form_tag password_resets_path do %>
+			<p><%= t :password_reset_instructions %></p>
+
+			<p>
+			  <%= text_field_tag :email, nil, :placeholder => t(:email), :autocapitalize => "off", :autocorrect => "off", :class => "form-control" %>
+			</p>
+			
+			<%= submit_tag( t(:reset_password), :class => "btn btn-primary login") %>
+
+        <% end %>
+    </div>
+</div>
