@@ -27,8 +27,6 @@ class PracticesController < ApplicationController
 
   def create
     @practice = Practice.new(params[:practice])
-    # @practice.locale = session[:locale]
-    # @practice.timezone = session[:time_zone_name]
     
     respond_to do |format|
       if @practice.save
@@ -58,7 +56,6 @@ class PracticesController < ApplicationController
 
   def close
     if current_user.practice.status == "active"
-      # "active" means that the account has an active plan in Paypal
       flash[:alert] = I18n.t(:practice_close_active_message)
       redirect_to practice_settings_url
     else
