@@ -1,7 +1,7 @@
 ---
 en:
   already_have_an_account: Already have an account?
-  account_cancelled: Account cancelled
+  account_cancelled: Your account is cancelled. If you believe this is a mistake, please contact us as soon as possible.
   age_with_suffix: "%{age} years old"
   appointments_in_datebook: "%{count} appointments"
   last_update: "Updated %{date} ago"

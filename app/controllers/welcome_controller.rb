@@ -16,11 +16,6 @@ class WelcomeController < ApplicationController
     end
   end
 
-  def set_session_time_zone
-    session[:time_zone_name] = params[:detected_timezone]
-    render :nothing => true
-  end
-
   def privacy
   end
 
