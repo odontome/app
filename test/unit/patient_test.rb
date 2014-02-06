@@ -10,14 +10,7 @@ class PatientTest < ActiveSupport::TestCase
 		assert patient.errors[:firstname].any?
 		assert patient.errors[:lastname].any?
 		assert patient.errors[:date_of_birth].any?
-		assert patient.errors[:past_illnesses].any?
-		assert patient.errors[:surgeries].any?
-		assert patient.errors[:medications].any?
-		assert patient.errors[:drugs_use].any?
-		assert patient.errors[:family_diseases].any?
-		assert patient.errors[:emergency_telephone].any?
-		assert patient.errors[:cigarettes_per_day].any?
-		assert patient.errors[:drinks_per_day].any?
+		assert patient.errors[:uid].any?
 	end
 	
 	test "patient is not valid without an unique uid in the same practice" do
