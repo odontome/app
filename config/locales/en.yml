@@ -78,7 +78,10 @@ en:
   admin_credentials_required: You need to be the administrator of the practice to
     do this
   administrator: Administrator
-  patient_search_results: '%{patients_count} patients found'
+  patient_search_results_zero: No patients were found.
+  patient_search_results_one: There was that patient!
+  patient_search_results_few: "%{patients_count} patients found."
+  patient_search_results_many: "Showing %{patients_count} of many patients. Try a more accurate search."
   edit: Edit
   name: Name
   age: Age

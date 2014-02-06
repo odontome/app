@@ -69,7 +69,17 @@
 				  <% end %>
 				</ul>
 			<% else %>
-				<span class="pull-right"><%= t(:patient_search_results, :patients_count => @patients.size) %></span>
+				<span class="pull-right">
+					<% if @patients.size == 0 %>
+						<%= t :patient_search_results_zero, :patients_count => @patients.size %>
+					<% elsif @patients.size == 1 %>
+						<%= t :patient_search_results_one %>
+					<% elsif @patients.size <= 20 %>
+						<%= t :patient_search_results_few, :patients_count => @patients.size %>
+					<% else %>
+						<%= t :patient_search_results_many, :patients_count => @patients.size %>
+					<% end %>
+				</span>
 			<% end %>
 		</div>
 	</div>
