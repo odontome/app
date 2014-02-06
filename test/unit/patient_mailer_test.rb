@@ -33,12 +33,10 @@ class PatientMailerTest < ActionMailer::TestCase
     email = PatientMailer.appointment_soon_email(patient.email, patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, doctor.fullname, practice_email).deliver
 
     assert !ActionMailer::Base.deliveries.empty?
-    # FIXME
-    # I have to make this in spanish
-    # before releasing this test completely
+
     # Test the body of the sent email contains what we expect it to
-    assert_match(/It starts at: <strong>08:00<\/strong>/, email.encoded)
-    assert_match(/and ends at: <strong>09:00<\/strong>/, email.encoded)
+    assert_match(/Comienza a las: <strong>08:00<\/strong>/, email.encoded)
+    assert_match(/y termina a las: <strong>09:00<\/strong>/, email.encoded)
   end
 
 end
