@@ -1,7 +1,6 @@
   
 //= require jquery
 //= require jquery_ujs
-//= require_self
 //= require bootstrap
 //= require fullcalendar.min
 //= require jquery-ui-1.10.2.custom.min

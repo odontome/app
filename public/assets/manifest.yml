@@ -67,8 +67,8 @@ select-bg.png: select-bg-7db54ca65707e60462cee50702b62f12.png
 select-bg/index.png: select-bg-7db54ca65707e60462cee50702b62f12.png
 table-icons.png: table-icons-d62738d16be03b31103387cb7ed8674c.png
 table-icons/index.png: table-icons-d62738d16be03b31103387cb7ed8674c.png
-application.js: application-aaa01656aa9218cb70b7f28ceffb48db.js
-application/index.js: application-aaa01656aa9218cb70b7f28ceffb48db.js
+application.js: application-488160af65888910a70e53382882f61d.js
+application/index.js: application-488160af65888910a70e53382882f61d.js
 application.css: application-fbd276a43ab9c41bf11a3f50df0f24ae.css
 application/index.css: application-fbd276a43ab9c41bf11a3f50df0f24ae.css
 jquery.minicolors.png: jquery.minicolors-061cbc2cb9eb063d65da8d3ee7305c75.png
