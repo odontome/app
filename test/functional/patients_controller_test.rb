@@ -9,14 +9,7 @@ class PatientsControllerTest < ActionController::TestCase
   									:firstname => "Daniella",
 										:lastname => "Sanguino",
 										:date_of_birth => "1988-11-16",
-										:past_illnesses => "none",
-										:surgeries => "none",
-										:medications => "none",
-										:drugs_use => "none",
-										:cigarettes_per_day => 0,
-										:drinks_per_day => 0,
-										:family_diseases => "none",
-										:emergency_telephone => "call my mom"
+										:uid => "RR0001"
 									}  	
   end
   
