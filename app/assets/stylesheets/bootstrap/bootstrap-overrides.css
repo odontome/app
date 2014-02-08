@@ -320,6 +320,12 @@ table th span.line{
 	height: 10px;
 }
 
+.table tfoot td {
+	padding: 20px 0 0 !important;
+	text-align: center;
+	font-size: 80%;
+}
+
 /* modals */
 .modal-backdrop.in {
 	opacity: 0.5 !important;

@@ -1,7 +1,4 @@
-$("<%=escape_javascript(render :partial => 'show', :locals => {:note => @note, :noteable => @noteable})%>").prependTo(".comment");
-
-// Scroll to the top of the annotations
-$('html, body').animate({scrollTop: $(".comment").offset().top}, 1000);
+$("<%=escape_javascript(render :partial => 'show', :locals => {:note => @note, :noteable => @noteable})%>").prependTo(".comment").addClass("animated fadeInUp");
 
 // Clear the form
 $('#note_notes').val("");

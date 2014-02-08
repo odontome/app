@@ -104,6 +104,7 @@ en:
     access it. Please contact us if you need assistance.
   chart: Chart
   chart_notes: Chart notes
+  comments: Comments
   chart_number: Chart number
   choose: Choose
   cigarettes_per_day: Cigarettes per day
@@ -189,7 +190,10 @@ en:
   datebook: Datebook
   datebooks: Datebooks
   appointment_date: Date
+  appointments: Appointments
   active: Active
+  show_past_appointments: Show past appointments
+  hide_past_appointments: Hide past appointments
   inactive: Inactive
   day: Day
   delete: Delete

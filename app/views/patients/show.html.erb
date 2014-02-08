@@ -5,11 +5,11 @@
             <img src="<%= avatar_url(@patient.email,'100x100')%>" alt="contact" class="avatar img-circle" data-toggle="tooltip" title="<%= t :gravatar_tooltip %>" data-placement="bottom" />
             <h3 class="name"><%= @patient.fullname %></h3>
             <span class="area" data-toggle="tooltip" title="<%=l @patient.date_of_birth, :format => :long %>">
-            	<%= t :age_with_suffix, age: @patient.age %>
+            	<%= t :age_with_suffix, age: @patient.age %> <%#= @patient.gender %>
             </span>
         </div>
-       	
-       	<%= link_to t(:edit_patient), edit_patient_path(@patient), :class => "btn-flat white pull-right-lg" %>	
+
+        <%= link_to t(:edit_patient), edit_patient_path(@patient), :class => "btn-flat white pull-right-lg" %>	
 
     </div>
 
@@ -18,26 +18,34 @@
 
             <div class="section">
                 <% if @appointments.size > 0 %>
-                    <h6><%= t :future_appointments %></h6>
-                    <br>
                     <!-- recent orders table -->
                     <table class="table table-hover">
                         <tbody>
                             <!-- row -->
-                            <% @appointments.each do |appointment| %>
-                            <tr class="<% if appointment.id == @appointments.first.id %>first<% end %>">
-                                <td style="border-left: <%= appointment.doctor.color %> 2px solid">
-                                    <sub><%=l appointment.starts_at.to_date, :format => :day_and_date %></sub> <br />
-                                    <%= appointment.starts_at.to_formatted_s :time %> - 
-                                    <%= appointment.ends_at.to_formatted_s :time %>
-                                </td>
-                                <td>
-                                    <%= appointment.doctor.fullname %><br />
-                                    <sub><%= appointment.notes %></sub>
-                                </td>
+                            <% @appointments.each do |appointment| %>              
+                                <tr class="<% if appointment.starts_at < Time.now %>past-appointments hidden<% end %>">
+                                    <td style="border-left: <%= appointment.doctor.color %> 2px solid">
+                                        <sub><%=l appointment.starts_at.to_date, :format => :day_and_date %></sub> <br />
+                                        <%= appointment.starts_at.to_formatted_s :time %> - 
+                                        <%= appointment.ends_at.to_formatted_s :time %>
+                                    </td>
+                                    <td>
+                                        <%= appointment.doctor.fullname %><br />
+                                        <sub><%= appointment.notes %></sub>
+                                    </td>
+                                </tr>
                             <% end %>
-                            </tr>
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2">
+                                    <a id="toggle-appointments">
+                                        <span><%= t :show_past_appointments %></span>
+                                        <span class="hidden"><%= t :hide_past_appointments %></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                 
                 <% else %>
@@ -47,11 +55,11 @@
             </div>
 
             <div class="section">
-        	   <h6><%= t :notes %></h6>
-			 <div class="comment">
-				<%= render :partial => "notes/index", :locals => {:notes => @patient_notes, :noteable => @patient} %>
-				<%= render :partial => "notes/new", :locals => {:noteable => @patient} %>
-			</div>	
+                <h6><%= t :comments %></h6>
+                <div class="comment">
+                    <%= render :partial => "notes/index", :locals => {:notes => @patient_notes, :noteable => @patient} %>
+                    <%= render :partial => "notes/new", :locals => {:noteable => @patient} %>
+                </div>	
             </div>
 
         </div>
@@ -60,44 +68,53 @@
 
         	<ul class="list-group">
         		<% if !@patient.allergies.nil? && !@patient.allergies != "" %>
-	        		<li class="list-group-item list-group-item-danger">
-	        			<%= t :allergic_to %> <%= @patient.allergies %>
-	        		</li>
-        		<% end %>
+             <li class="list-group-item list-group-item-danger">
+                <%= t :allergic_to %> <%= @patient.allergies %>
+            </li>
+            <% end %>
 
-        		<li class="list-group-item">        			
-        			<p><em><%= t :past_illnesses %></em> <%= @patient.past_illnesses%></p>
-					<p><em><%= t :past_surgeries %></em> <%= @patient.surgeries%></p>
-					<p><em><%= t :current_medications %></em> <%= @patient.medications%></p>
-					<p><em><%= t :cigarettes_per_day %></em> <%= @patient.cigarettes_per_day%></p>
-					<p><em><%= t :drinks_per_day %></em> <%= @patient.drinks_per_day%></p>
-					<p><em><%= t :drugs_use %></em> <%= @patient.drugs_use%></p>
-					<p><em><%= t :family_history %></em> <%= @patient.family_diseases %></p>
-        		</li>
-        		<li class="list-group-item">
-        			<h6><%= t :contact_information %></h6>
-        			<% if @patient.email != "" %>
-        				<p><i class="fa fa-envelope-o"></i> <%= mail_to @patient.email %></p>
-        			<% end %>
-        			<% if @patient.telephone != "" %>
-        				<p><i class="fa fa-phone"></i> <%= @patient.telephone %></p>
-        			<% end %>
-        			<% if @patient.mobile != "" %>
-        				<p><i class="fa fa-mobile"></i> <%= @patient.mobile %></p>
-        			<% end %>
-        			<% if @patient.emergency_telephone != "" %>
-        				<p><i class="fa fa-exclamation"></i> <%= @patient.emergency_telephone %></p>
-        			<% end %>
-        			<% if @patient.address != "" %>
-        				<p><i class="fa fa-home"></i> <%= @patient.address %></p>
-        			<% end %>
-        		</li>
-        	</ul>
+            <li class="list-group-item">        			
+             <p><em><%= t :past_illnesses %></em> <%= @patient.past_illnesses%></p>
+             <p><em><%= t :past_surgeries %></em> <%= @patient.surgeries%></p>
+             <p><em><%= t :current_medications %></em> <%= @patient.medications%></p>
+             <p><em><%= t :cigarettes_per_day %></em> <%= @patient.cigarettes_per_day%></p>
+             <p><em><%= t :drinks_per_day %></em> <%= @patient.drinks_per_day%></p>
+             <p><em><%= t :drugs_use %></em> <%= @patient.drugs_use%></p>
+             <p><em><%= t :family_history %></em> <%= @patient.family_diseases %></p>
+         </li>
+         <li class="list-group-item">
+             <h6><%= t :contact_information %></h6>
+             <% if @patient.email != "" %>
+             <p><i class="fa fa-envelope-o"></i> <%= mail_to @patient.email %></p>
+             <% end %>
+             <% if @patient.telephone != "" %>
+             <p><i class="fa fa-phone"></i> <%= @patient.telephone %></p>
+             <% end %>
+             <% if @patient.mobile != "" %>
+             <p><i class="fa fa-mobile"></i> <%= @patient.mobile %></p>
+             <% end %>
+             <% if @patient.emergency_telephone != "" %>
+             <p><i class="fa fa-exclamation"></i> <%= @patient.emergency_telephone %></p>
+             <% end %>
+             <% if @patient.address != "" %>
+             <p><i class="fa fa-home"></i> <%= @patient.address %></p>
+             <% end %>
+         </li>
+     </ul>
 
-			<% if user_is_admin?(current_user) %>
-				<%= link_to t(:delete_patient), @patient, :method => :delete, :confirm => t(:are_you_sure_no_undo), "class" => "btn-flat danger" %>
-			<% end %>
+     <% if user_is_admin?(current_user) %>
+     <%= link_to t(:delete_patient), @patient, :method => :delete, :confirm => t(:are_you_sure_no_undo), "class" => "btn-flat danger" %>
+     <% end %>
 
-        </div>
-    </div>
+ </div>
 </div>
+</div>
+
+<script>
+    var appointmentsToggle = $("#toggle-appointments");
+
+    appointmentsToggle.on("click", function(){
+        $(this).children().toggleClass("hidden");
+        $("tbody > tr.past-appointments").toggleClass("hidden animated fadeIn");
+    });
+</script>
