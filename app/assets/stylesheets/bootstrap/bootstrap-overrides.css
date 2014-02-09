@@ -23,8 +23,8 @@ h1,h2,h3,h4,h5,h6{
 /* alerts */
 .alert{
 	text-align: center;
-	margin-top: 20px;
 }
+
 .alert [class^="icon-"], 
 .alert [class*=" icon-"] {
 	font-size: 27px;
