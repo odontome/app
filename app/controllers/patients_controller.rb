@@ -26,7 +26,7 @@ class PatientsController < ApplicationController
 
   def show
     @patient = Patient.mine.find(params[:id])
-    @patient_notes = @patient.notes.order("created_at DESC")
+    @patient_notes = @patient.notes.includes(:user).order("created_at DESC")
     @appointments = Appointment.where("patient_id = ?", @patient.id).includes(:doctor).order("starts_at desc")
 
     if @patient.missing_info?

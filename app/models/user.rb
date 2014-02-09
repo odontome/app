@@ -4,7 +4,8 @@ class User < ActiveRecord::Base
 
   # associations
   belongs_to :practice, :counter_cache => true
-  
+  has_many :notes
+
   # plugins
   acts_as_authentic do |c|
     c.login_field = "email"
