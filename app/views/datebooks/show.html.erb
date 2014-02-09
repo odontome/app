@@ -98,6 +98,9 @@
 						  }
 				});
 			},
+			dayRender: function( date, cell) {
+				cell.addTouch();
+			},
 			eventRender: function(event, element) {
 				// Append the name of the patient    
 				element.find('.fc-event-time').append(" " + event.firstname + " " + event.lastname);
