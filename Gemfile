@@ -19,13 +19,13 @@ end
 
 group :development do
 	gem 'sqlite3-ruby', :require => 'sqlite3'
-	gem 'i18n-tasks', '~> 0.2.10'
+	gem 'i18n-tasks', '~> 0.2.18'
   	gem 'brakeman', :require => false
 end
 
 group :production do
-  # gems specifically for Heroku go here
-  gem "pg"
+	# gems specifically for Heroku go here
+	gem "pg"
 end
 
 group :test do

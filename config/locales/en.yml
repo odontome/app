@@ -1,41 +1,50 @@
 ---
 en:
-  already_have_an_account: Already have an account?
-  account_cancelled: Your account is marked for cancellation. If you believe this is a mistake, please contact us as soon as possible.
-  age_with_suffix: "%{age} years old"
-  appointments_in_datebook: "%{count} appointments"
-  last_update: "Updated %{date} ago"
-  ago_in_words: "%{date} ago"
-  account_information: Account information
+  account_cancelled: Your account is marked for cancellation. If you believe this
+    is a mistake, please contact us as soon as possible.
   account_not_found: An account with the given information was not found. If you think
     this is a mistake, please contact with us
   activate: Activate
-  gravatar_tooltip: Avatar taken from gravatar.org
-  future_appointments: Future appointments
-  schedule: Schedule
-  doctor_has_no_future_appointments: Your schedule is free. How about if we schedule some %{datebooks_url}?
-  patient_has_no_future_appointments: No future appointments. Would you like to %{datebooks_url} one?
+  active: Active
   activerecord:
     attributes:
       appointment:
         doctor_id: Doctor
-        patient_id: Patient
         notes: Additional notes
+        patient_id: Patient
       datebook:
         name: Name
       doctor:
+        calendar_color: Preferred color
+        email: Email
+        firstname: First name
+        gender: Gender
+        lastname: Last name
+        speciality: Speciality
+        uid: Unique identifier
+      patient:
+        address: Address
+        allergies: Allergies
+        cigarettes_per_day: How many cigarattes per day?
+        date_of_birth: Date of birth
+        drinks_per_day: How many drinks per day?
+        drugs_use: Drug use history
+        email: Email
+        emergency_telephone: Emergency telephone number
+        family_diseases: History of family diseases
         firstname: First name
         lastname: Last name
-        email: Email
-        uid: Unique identifier
-        gender: Gender
-        speciality: Speciality
-        calendar_color: Preferred color
+        medications: Medications
+        mobile: Mobile number
+        past_illnesses: Past illnesses
+        surgeries: Past surgeries
+        telephone: Telephone number
+        uid: Chart number
       practice:
-        name: Name
-        timezone: Timezone
         currency_unit: Preferred currency
         locale: Preferred language
+        name: Name
+        timezone: Timezone
       treatment:
         name: Name
         price: Price
@@ -45,54 +54,33 @@ en:
         lastname: Last name
         password: Password
         password_confirmation: Password confirmation
-      patient:
-        firstname: First name
-        lastname: Last name
-        date_of_birth: Date of birth
-        uid: Chart number
-        email: Email
-        telephone: Telephone number
-        mobile: Mobile number
-        emergency_telephone: Emergency telephone number
-        address: Address
-        allergies: Allergies
-        past_illnesses: Past illnesses
-        surgeries: Past surgeries
-        medications: Medications
-        cigarettes_per_day: How many cigarattes per day?
-        drinks_per_day: How many drinks per day?
-        drugs_use: Drug use history
-        family_diseases: History of family diseases
     models:
       appointment: Appointment
+      datebook: Datebook
+      doctor: Doctor
       patient: Patient
       practice: Practice
       treatment: Treatment
       user: User
-      datebook: Datebook
-      treatment: Treatment
-      doctor: Doctor
-  address: Address
-  everyone: Everyone
   additional_notes: Additional notes
+  address: Address
   admin_credentials_required: You need to be the administrator of the practice to
     do this
   administrator: Administrator
-  patient_search_results_zero: No patients were found.
-  patient_search_results_one: There was that patient!
-  patient_search_results_few: "%{patients_count} patients found."
-  patient_search_results_many: "Showing %{patients_count} of many patients. Try a more accurate search."
-  edit: Edit
-  name: Name
   age: Age
+  age_with_suffix: ! '%{age} years old'
   ago: ago
+  ago_in_words: ! '%{date} ago'
   allergic_to: Allergic to
   allergies: Allergies
+  already_have_an_account: Already have an account?
   annotate: Annotate
   appointment_created_error_message: The appointment was created successfully
+  appointment_date: Date
   appointment_deleted_error_message: There was a problem deleting the appointment
   appointment_updated_error_message: There was a problem updating the appointment
-  appointments: appointments
+  appointments: Appointments
+  appointments_in_datebook: ! '%{count} appointments'
   are_you_sure: Are you sure?
   are_you_sure_no_undo: Are you sure? All related data will be deleted, there is no
     going back
@@ -100,17 +88,16 @@ en:
   balance_created_error_message: There was a problem creating this item
   body: Body
   cancel: Cancel
-  cancelled_account: Your account has been cancelled and is no longer possible to
-    access it. Please contact us if you need assistance.
   chart: Chart
   chart_notes: Chart notes
-  comments: Comments
   chart_number: Chart number
-  choose: Choose
   cigarettes_per_day: Cigarettes per day
-  click_here: Click here
   close_account: Close account
   close_your_account: Close your account
+  color: Color
+  comments: Comments
+  consider_using_gravatar: Register this email with gravatar.org to use it as a profile
+    image.
   contact_information: Contact information
   contact_us: Contact us
   create_new_datebook: Create new datebook
@@ -119,26 +106,6 @@ en:
   create_new_treatment: Create new treatment
   create_new_user: Create new user
   current_medications: Current medications
-  customization: Customization
-  status: Status
-  patient: Patient
-  starts_at: Starts at
-  notes: Notes
-  updated_at: Updated at
-  last_login_at_with_date: Last login %{date} ago
-  last_login_at: Last login
-  never_logged_in: Never has logged into Odonto.me
-  color: Color
-  for_your_information: For your information
-  consider_using_gravatar: Register this email with gravatar.org to use it as a profile image.
-  practice_settings: Practice settings
-  instructions:
-    datebooks: "<p>Datebooks are the backbone of every practice.</p> <p>Because you can already filter your datebooks by doctor, one common usage is to create one datebook per each of your practices.</p>"
-    doctors: "<p>To better organize your staff, use different colors for each doctor.</p> <p>Please note that you can suspend doctors that are no longer in your staff to prevent them from appearing in Odonto.me, while still keeping all their data in your records.</p>"
-    users: "<p>These are the people who have access to your Odonto.me.</p> <p>Since only you have access to these sections, it is recommended that you create users with less privilages to handle the day to day usage and leave your <strong>administrator</strong> account for management.</p>"
-    treatments: "Everything you do to your patients. These items are directly connected to the balance of your practice."
-    practice: "<p>From here, you can update everything about your practice. Please take a moment to review all your options here.</p> <p>If from any reason you decide to leave us. You can %{close_url} at anytime.</p>"
-    patients: "Easily the most important part of your practice. You can setup a patient fast by just filling out the few required fields, but it's strongly recommended you take the time to add as much info as possible."
   date:
     abbr_day_names:
     - Sun
@@ -169,6 +136,11 @@ en:
     - Thursday
     - Friday
     - Saturday
+    formats:
+      day_and_date: ! '%A (%e %B)'
+      default: ! '%m/%d/%Y'
+      long: ! '%d %B, %Y'
+      short: ! '''%d %b'
     month_names:
     - January
     - February
@@ -182,36 +154,21 @@ en:
     - October
     - November
     - December
-    formats:
-      day_and_date: "%A (%e %B)"
-      default: "%m/%d/%Y"
-      long: "%d %B, %Y"
-      short: "'%d %b"
-  datebook: Datebook
   datebooks: Datebooks
-  appointment_date: Date
-  appointments: Appointments
-  active: Active
-  show_past_appointments: Show past appointments
-  hide_past_appointments: Hide past appointments
-  inactive: Inactive
   day: Day
   delete: Delete
   delete_appointment: Delete this appointment
   delete_patient: Delete this patient
-  delete_treatment: Delete this treatment
-  delete_user: Delete this user
-  doctor: Doctor
   doctor_created_success_message: The doctor was created successfully
+  doctor_has_no_future_appointments: Your schedule is free. How about if we schedule
+    some %{datebooks_url}?
   doctor_updated_success_message: The doctor was updated successfully
   doctors: Doctors
   drinks_per_day: Drinks per day
   drugs_use: Drugs used
   drugs_use_hint: Please be as descriptive as possible.
-  edit_doctor: Edit this doctor
+  edit: Edit
   edit_patient: Edit this patient
-  edit_treatment: Edit this treatment
-  edit_user: Edit this user
   email: Email
   emergency_telephone: Emergency telephone
   english: English
@@ -221,21 +178,45 @@ en:
       invalid_date_range: The chosen dates are invalid
       invalid_email_format: Invalid format
       unauthorised: You don't have permissions to do this
-  manage: Manage
-  search: Search
+  everyone: Everyone
   family_diseases_hint: Please be as descriptive as possible.
   family_history: Family history
   female: Female
   female_doctor_prefix: D.D.S.
+  for_your_information: For your information
   forgot_password: Forgot your password?
+  future_appointments: Future appointments
   gender: Gender
-  go_back: Go back
+  gravatar_tooltip: Avatar taken from gravatar.org
+  hide_past_appointments: Hide past appointments
   home: Home
+  inactive: Inactive
   incomplete: Incomplete
+  instructions:
+    datebooks: <p>Datebooks are the backbone of every practice.</p> <p>Because you
+      can already filter your datebooks by doctor, one common usage is to create one
+      datebook per each of your practices.</p>
+    doctors: <p>To better organize your staff, use different colors for each doctor.</p>
+      <p>Please note that you can suspend doctors that are no longer in your staff
+      to prevent them from appearing in Odonto.me, while still keeping all their data
+      in your records.</p>
+    patients: Easily the most important part of your practice. You can setup a patient
+      fast by just filling out the few required fields, but it's strongly recommended
+      you take the time to add as much info as possible.
+    practice: <p>From here, you can update everything about your practice. Please
+      take a moment to review all your options here.</p> <p>If from any reason you
+      decide to leave us. You can %{close_url} at anytime.</p>
+    treatments: Everything you do to your patients. These items are directly connected
+      to the balance of your practice.
+    users: <p>These are the people who have access to your Odonto.me.</p> <p>Since
+      only you have access to these sections, it is recommended that you create users
+      with less privilages to handle the day to day usage and leave your <strong>administrator</strong>
+      account for management.</p>
+  last_login_at: Last login
+  last_login_at_with_date: Last login %{date} ago
   last_seen: Last seen
+  last_update: Updated %{date} ago
   logout: Logout?
-  signout: Sign out
-  profile: Profile
   mailers:
     notifier:
       password_reset:
@@ -248,20 +229,13 @@ en:
         subject: Welcome to Odonto.me
   male: Male
   male_doctor_prefix: D.D.S.
+  manage: Manage
   medical_history: Medical history
   mobile: Mobile
   month: Month
-  my_doctors: My doctors
-  my_doctors_summary: Lorem ipsum not so long
-  my_practice: My practice
-  my_practice_help: Lorem ipsum very very long
-  my_practice_settings: My practice settings
-  my_practice_settings_summary: Lorem ipsum not so long
-  my_treatments: My treatments
-  my_treatments_summary: Lorem ipsum not so long
-  my_users: My users
-  my_users_summary: Lorem ipsum not so long
+  name: Name
   never: Never
+  never_logged_in: Never has logged into Odonto.me
   new: New
   new_user: New user
   no_account: Don't have an account?
@@ -270,15 +244,16 @@ en:
     created
   no_patients: You haven't created any patients so far.
   no_treatments_message: You haven't created any treatments so far.
-  no_user_with_that_email: There doesn't appear to be any users with this email
+  no_user_with_that_email: There seems to be a problem. If you are still having problems,
+    please contact us.
   none: none
   not_logged_in: Not logged in
   note_created_error_message: There was a problem creating this note
+  notes: Notes
   notes_about_this: Optional notes for this %{class_name}
   number_of_signins: Number of signins
   only_if_clinic_uses_uid: Only if your practice uses an unique identification system
   or: or
-  or_just: or just
   password: Password
   password_confirmation: Password confirmation
   password_reset_instructions: We will send you instructions on how to change your
@@ -288,8 +263,16 @@ en:
   password_reset_success_message: Your password was reset.
   past_illnesses: Past illnesses
   past_surgeries: Past surgeries
+  patient: Patient
   patient_created_success_message: The patient was created successfully
+  patient_has_no_future_appointments: No future appointments. Would you like to %{datebooks_url}
+    one?
   patient_incomplete: Patient incomplete
+  patient_search_results_few: ! '%{patients_count} patients found.'
+  patient_search_results_many: Showing %{patients_count} of many patients. Try a more
+    accurate search.
+  patient_search_results_one: There was that patient!
+  patient_search_results_zero: No patients were found.
   patient_treatment_created_error_message: The item was created successfully
   patient_treatment_updated_error_message: There was a problem creating this item
   patient_updated_success_message: The patient was updated successfully
@@ -298,7 +281,9 @@ en:
   personal_information: Personal information
   please_wait: Pleast wait...
   practice_cancellation: Practice cancellation
-  practice_cancellation_message: We are sorry that you wish to leave us, if there is anything we can improve or help you, please get in touch with us. To finialize the cancellation of your account please click on the top button.
+  practice_cancellation_message: We are sorry that you wish to leave us, if there
+    is anything we can improve or help you, please get in touch with us. To finialize
+    the cancellation of your account please click on the top button.
   practice_close_active_message: ''
   practice_close_error_message: ''
   practice_close_success_message: ''
@@ -308,21 +293,29 @@ en:
   practice_name_hint: Something like "My awesome dental practice"
   practice_not_completely_setup: Please finish completing the information about your
     practice (doctors, treatments, etc) before using this section.
+  practice_settings: Practice settings
   practice_updated_success_message: Your practice has been updated
   practices: Practices
   predefined_treatments_created_success_message: Predefined treatments have been created
     for you. Feel free to update their name and prices to whatever fits you.
   price: Price
   privacy_policy: Privacy policy
+  profile: Profile
   remember_me: Remember me
   reset_password: Reset password
   return_to_listing: Return to listing
   save: Save
+  schedule: Schedule
+  search: Search
   select_doctor: Select a doctor
+  show_past_appointments: Show past appointments
   signin: Sign in
+  signout: Sign out
   signup: Sign up
   spanish: Spanish
   speciality: Speciality
+  starts_at: Starts at
+  status: Status
   suspend: Suspend
   suspended: Suspended
   telephone: Telephone
@@ -330,10 +323,10 @@ en:
   time:
     am: am
     formats:
-      default: "%a, %d %b %Y %H:%M:%S %z"
-      just_the_time: "%H:%M"
-      long: "%B %d, %Y %H:%M"
-      short: "%d %b %H:%M"
+      default: ! '%a, %d %b %Y %H:%M:%S %z'
+      just_the_time: ! '%H:%M'
+      long: ! '%B %d, %Y %H:%M'
+      short: ! '%d %b %H:%M'
     pm: pm
   today: Today
   treatment_without_price: Add a price to this treatment, or simply delete it
@@ -341,6 +334,7 @@ en:
   treatments_created_success_message: Treatment created successfully
   treatments_updated_success_message: Treatment updated successfully
   uid: Unique identifier
+  updated_at: Updated at
   use_preloaded_treatments: Would you like to use our list of predefined treatments?
   user: User
   user_created_success_message: The user was created successfully
@@ -348,7 +342,6 @@ en:
   users: Users
   week: Week
   welcome: Welcome to Odonto.me
-  welcome_email_subject: Welcome aboard!
   you_agree_to_our_terms_and_privacy_policy: You agree to our %{terms_url} and to
     our %{privacy_url} when you register.
   your_first_datebook: Your first datebook
