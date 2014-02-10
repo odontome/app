@@ -69,10 +69,8 @@ en:
   administrator: Administrator
   age: Age
   age_with_suffix: ! '%{age} years old'
-  ago: ago
   ago_in_words: ! '%{date} ago'
   allergic_to: Allergic to
-  allergies: Allergies
   already_have_an_account: Already have an account?
   annotate: Annotate
   appointment_created_error_message: The appointment was created successfully
@@ -88,9 +86,6 @@ en:
   balance_created_error_message: There was a problem creating this item
   body: Body
   cancel: Cancel
-  chart: Chart
-  chart_notes: Chart notes
-  chart_number: Chart number
   cigarettes_per_day: Cigarettes per day
   close_account: Close account
   close_your_account: Close your account
@@ -170,7 +165,6 @@ en:
   edit: Edit
   edit_patient: Edit this patient
   email: Email
-  emergency_telephone: Emergency telephone
   english: English
   enter_patient_name_or_uid: Patient name or chart number
   errors:
@@ -212,10 +206,7 @@ en:
       only you have access to these sections, it is recommended that you create users
       with less privilages to handle the day to day usage and leave your <strong>administrator</strong>
       account for management.</p>
-  last_login_at: Last login
   last_login_at_with_date: Last login %{date} ago
-  last_seen: Last seen
-  last_update: Updated %{date} ago
   logout: Logout?
   mailers:
     notifier:
