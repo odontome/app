@@ -1,220 +1,308 @@
 ---
 es:
-  account_cancelled: ''
-  account_information: ''
-  account_not_found: ''
-  activate: ''
+  account_cancelled: Tu cuenta ha sido marcada para cancelación. Si crees que esto es un error, por favor contacta con nosotros lo más rápido posible.
+  account_not_found: No se encontró ninguna cuenta con esta información.
+  activate: Activar
+  active: Activa
   activerecord:
     attributes:
+      appointment:
+        doctor_id: Doctor
+        notes: Comentarios adicionales
+        patient_id: Paciente
+      datebook:
+        name: Nombre
+      doctor:
+        calendar_color: Color preferido
+        email: Email
+        firstname: Nombre
+        gender: Sexo
+        lastname: Apellido
+        speciality: Especialidad
+        uid: Identificador único
+      patient:
+        address: Dirección
+        allergies: Alergias
+        cigarettes_per_day: ¿Cuántos cigarrillos al día?
+        date_of_birth: Fecha de nacimiento
+        drinks_per_day: ¿Cuántos tragos al día?
+        drugs_use: Historial de uso de drogas
+        email: Email
+        emergency_telephone: Teléfono de emergencias
+        family_diseases: Historial de enfermedades en la familia
+        firstname: Nombre
+        lastname: Apellido
+        medications: Medicamentos
+        mobile: Movíl
+        past_illnesses: Historial de enfermedades
+        surgeries: Historial de cirugías
+        telephone: Teléfono
+        uid: Número de la historia
       practice:
-        currency_unit: ''
-        locale: ''
+        currency_unit: Moneda
+        locale: Idioma
+        name: Nombre
+        timezone: Huso horario
       treatment:
-        name: ''
-        price: ''
+        name: Nombre
+        price: Precio
       user:
-        email: ''
-        firstname: ''
-        lastname: ''
-        password: ''
-        password_confirmation: ''
+        email: Email
+        firstname: Nombre
+        lastname: Apellido
+        password: Contraseña
+        password_confirmation: Confirmación de contraseña
     models:
-      practice: ''
-      treatment: ''
-      user: ''
-  address: ''
-  addtional_notes: ''
-  admin_credentials_required: ''
-  administrator: ''
-  age: ''
-  ago: ''
-  allergic_to: ''
-  allergies: ''
-  annotate: ''
-  appointment_created_error_message: ''
-  appointment_deleted_error_message: ''
-  appointment_updated_error_message: ''
-  appointments: ''
-  are_you_sure: ''
-  are_you_sure_no_undo: ''
-  balance: ''
-  balance_created_error_message: ''
-  body: ''
-  calendar_color: ''
-  cancel: ''
-  cancelled_account: ''
-  chart: ''
-  chart_notes: ''
-  chart_number: ''
-  choose: ''
-  cigarettes_per_day: ''
-  click_here: ''
-  close_account: ''
-  close_your_account: ''
-  contact_information: ''
-  contact_us: ''
-  create_new_doctor: ''
-  create_new_patient: Crear nuevo paciente
-  create_new_treatment: ''
-  create_new_user: ''
-  current_medications: ''
-  customization: ''
+      appointment: Cita
+      datebook: Agenda
+      doctor: Doctor
+      patient: Paciente
+      practice: Clínica
+      treatment: Tratamiento
+      user: Usuario
+  additional_notes: Comentarios adicionales
+  address: Direcci´øn
+  admin_credentials_required: Necesitas ser administrador para poder hacer esto.
+  administrator: Administrador
+  age: Edad
+  age_with_suffix: ! 'hace %{age}'
+  ago_in_words: ! 'hace %{date}'
+  allergic_to: alérgico a
+  already_have_an_account: ¿Ya tienes una cuenta?
+  annotate: Anotar
+  appointment_created_error_message: La cita ha sido creada con éxito
+  appointment_date: Fecha
+  appointment_deleted_error_message: Ocurrió un problema al intentar borrar la cita.
+  appointment_updated_error_message: Ocurrió un problema al intentar actualizar la cita.
+  appointments: Citas
+  appointments_in_datebook: ! '%{count} citas'
+  are_you_sure: ¿Estás seguro?
+  are_you_sure_no_undo: ¿Estás seguro? Toda la información relacionada será borrada.
+  balance: Estado de cuenta
+  balance_created_error_message: Ocurrió un problema al intentar crear esta entrada.
+  cancel: Cancelar
+  cigarettes_per_day: Cigarrillos por día
+  close_account: Cerra cuenta
+  close_your_account: Cerrar tu cuenta
+  color: Color
+  comments: Comentarios
+  consider_using_gravatar: Regístra este email en gravatar.org para utilizar imágenes de perfíl.
+  contact_information: Información de contácto
+  contact_us: Contacta con nosotros
+  create_new_datebook: Nueva agenda
+  create_new_doctor: Nuevo doctor
+  create_new_patient: Nuevo paciente
+  create_new_treatment: Nuevo tratamiento
+  create_new_user: Nuevo usario
+  current_medications: Medicamentes actuales
   date:
-    abbr_day_names: ''
-    abbr_month_names: ''
-    day_names: ''
+    abbr_day_names:
+    - Dom
+    - Lun
+    - Mar
+    - Mie
+    - Jue
+    - Vie
+    - Sab
+    abbr_month_names:
+    - Ene
+    - Feb
+    - Mar
+    - Abr
+    - May
+    - Jun
+    - Jul
+    - Ago
+    - Sep
+    - Oct
+    - Nov
+    - Dic
+    day_names:
+    - Domingo
+    - Lunes
+    - Martes
+    - Miércoles
+    - Jueves
+    - Viernes
+    - Sábado
     formats:
-      default: '%d/%m/%Y'
-      short: '%d de %b'
-      long: '%d de %B de %Y'
-      day_and_date: '%A (%e de %B)'
-    month_names: ''
-  datebook: ''
-  day: ''
-  delete: ''
-  delete_appointment: ''
-  delete_patient: ''
-  delete_treatment: ''
-  delete_user: ''
-  doctor: ''
-  doctor_created_success_message: ''
-  doctor_updated_success_message: ''
-  doctors: ''
-  drinks_per_day: ''
-  drugs_use: ''
-  drugs_use_hint: ''
-  edit_doctor: ''
-  edit_patient: ''
-  edit_treatment: ''
-  edit_user: ''
-  email: ''
-  emergency_telephone: ''
-  english: ''
-  enter_patient_name_or_uid: ''
+      day_and_date: ! '%A (%e %B)'
+      default: ! '%d/%m/%Y'
+      long: ! '%d %B, %Y'
+      short: ! '''%d %b'
+    month_names:
+    - Enero
+    - Febrero
+    - Marzo
+    - Abril
+    - Mayo
+    - Junio
+    - Julio
+    - Agosto
+    - Septiembre
+    - Octubre
+    - Noviembre
+    - Diciembre
+  datebooks: Agendas
+  day: Día
+  delete: Borrar
+  delete_appointment: Borrar esta cita
+  delete_patient: Borrar este paciente
+  doctor_created_success_message: El doctor ha sido creado con éxito.
+  doctor_has_no_future_appointments: Tu agenda esta totalmente libre. ¿Qué tal si %{datebooks_url} algo?
+  doctor_updated_success_message: El doctor ha sido actualizado con éxito.
+  doctors: Doctores
+  drinks_per_day: Tragos por día
+  drugs_use: Drogas utilizadas
+  drugs_use_hint: Por favor sé lo más descriptivo posible.
+  edit: Editar
+  edit_patient: Editar este paciente
+  email: Email
+  english: Inglés
+  enter_patient_name_or_uid: Paciente o historia
   errors:
     messages:
-      invalid_date_range: ''
-      invalid_email_format: ''
-      unauthorised: ''
-  family_diseases_hint: ''
-  family_history: ''
-  female: ''
-  female_doctor_prefix: ''
-  forgot_password: ''
-  gender: ''
-  go_back: ''
-  home: ''
-  incomplete: ''
-  last_seen: ''
-  logout: ''
+      invalid_date_range: Las fechas son invalidas.
+      invalid_email_format: Formato invalido.
+      unauthorised: No posees los permisos necesarios para hacer esto.
+  everyone: Todos
+  family_diseases_hint: Por favor sé lo más descriptivo posible.
+  family_history: Historial familiar
+  female: Mujer
+  female_doctor_prefix: Dra.
+  for_your_information: Para tu información
+  forgot_password: Olvidaste tu contraseña?
+  future_appointments: Próximas citas
+  gender: Sexo
+  gravatar_tooltip: Imagen de perfíl tomada de gravatar.org
+  hide_past_appointments: Esconder citas pasadas
+  home: Inicio
+  inactive: Inactivo
+  incomplete: Incompleto
+  instructions:
+    datebooks: <p>Agendas son el centro de cada clínica.</p> <p>Debido a que ya puedes filtrar por doctores, un uso común de las agendas es crear una por cada clínica que poseas.</p>
+    doctors: <p>Para mejor organizar a tu personal, utiliza diferentes colores para cada doctor.</p>
+      <p>Recuerda que puedes suspender doctores que ya no trabajes para ti. De esta manera no aparecerán en tu Odonto.me pero igual mantendrás todo el historial de sus actividades.</p>
+    patients: Lo más importante de tu clínica. Con solo unos cuantos clics puedes crear un paciente, aunque es recomendado que llenes la mayor cantidad de información posible.
+    practice: <p>Configura tu clínica como prefieras.</p> <p>Si por algún motivo decides dejarnos. Puedes %{close_url} en cualquier momento.</p>
+    treatments: Todo lo que le haces a tus pacientes. Esta sección está directamente relacionada con el estado de cuenta de tu clínica.
+    users: <p>Las personas que pueden accesar a tu Odonto.me.</p> <p>Ya que solo tú puedes ver esta información, Es recomendado que crees tantos usuarios quieras para manejar Odonto.me pero dejes a este usuario <strong>administrador</strong>
+      para la adminstración y configuración.</p>
+  last_login_at_with_date: Última sesión hace %{date}
+  logout: ¿Cerrar sesión?
   mailers:
     notifier:
       password_reset:
-        subject: ''
+        subject: Tu petición de cambio de contraseña
     patient:
       appointment_soon_email:
-        subject: ''
+        subject: Tu cita con %{practice_name} se acerca
     practice:
       welcome:
-        subject: ''
-  male: ''
-  male_doctor_prefix: ''
-  medical_history: ''
-  mobile: ''
-  month: ''
-  my_doctors: ''
-  my_doctors_summary: ''
-  my_practice: ''
-  my_practice_help: ''
-  my_practice_settings: ''
-  my_practice_settings_summary: ''
-  my_treatments: ''
-  my_treatments_summary: ''
-  my_users: ''
-  my_users_summary: ''
-  never: ''
-  new: ''
-  new_user: ''
-  no_account: ''
-  no_doctors: ''
-  no_patient_found_new_one_will_be_created: ''
-  no_patients: ''
-  no_treatments_message: ''
-  no_user_with_that_email: ''
-  none: ''
-  not_logged_in: ''
-  note_created_error_message: ''
-  notes_about_this: ''
-  number_of_signins: ''
-  only_if_clinic_uses_uid: ''
-  or: ''
-  or_just: ''
-  password: ''
-  password_confirmation: ''
-  password_reset_instructions: ''
-  password_reset_instructions_sent_to_email: ''
-  password_reset_success_message: ''
-  past_illnesses: ''
-  past_surgeries: ''
-  patient_created_success_message: ''
-  patient_incomplete: ''
-  patient_treatment_created_error_message: ''
-  patient_treatment_updated_error_message: ''
-  patient_updated_success_message: ''
-  patient_without_required_info: ''
-  patients: ''
-  personal_information: ''
-  please_wait: ''
-  practice_cancellation: ''
-  practice_cancellation_message: ''
+        subject: Bienvenido a Odonto.me
+  male: Hombre
+  male_doctor_prefix: Dr.
+  manage: Gestionar
+  medical_history: Historial medico
+  mobile: Movil
+  month: Mes
+  name: Nombre
+  never: Nunca
+  never_logged_in: Nunca ha entrado a Odonto.me
+  new: Nuevo
+  new_user: Nuevo usuario
+  no_account: ¿No tienes una cuenta?
+  no_doctors: Por favor crea algunos doctores antes.
+  no_patient_found_new_one_will_be_created: No se ha encontrado ningún paciente, se creara uno.
+  no_patients: Aún no has creado ningún paciente.
+  no_treatments_message: Aún no has creado ningún tratamiento.
+  no_user_with_that_email: Parece haber un problema. Si esto continua, por favor contacta con nosotros.
+  none: Ninguna
+  not_logged_in: No tienes ninguna sesión abierta
+  note_created_error_message: Ocurrió un problema al crear este comentario
+  notes: Comentarios
+  notes_about_this: Comentarios adicionales para este %{class_name}
+  number_of_signins: Número de ingresos
+  only_if_clinic_uses_uid: Solo si tu clínica utiliza un sistema único de identificación
+  or: o
+  password: Contraseña
+  password_confirmation: Confirmación de contraseña
+  password_reset_instructions: Te enviaremos instrucciones de como cambiar tu contraseña cuando nos digas tu email.
+  password_reset_instructions_sent_to_email: Las instrucciones han sido enviadas a tu email.
+  password_reset_success_message: Tu contraseña fue actualizada.
+  past_illnesses: Enfermedades pasadas
+  past_surgeries: Cirugias pasadas
+  patient: Paciente
+  patient_created_success_message: El paciente fue creado con éxito
+  patient_has_no_future_appointments: Sin próximas citas. ¿Quiéres %{datebooks_url}
+    una?
+  patient_incomplete: Paciente incompleto
+  patient_search_results_few: ! '%{patients_count} pacientes encontrados.'
+  patient_search_results_many: Mostrado %{patients_count} de muchos pacientes. Intenta refinar tu búsqueda.
+  patient_search_results_one: Lo encontré
+  patient_search_results_zero: Ningún paciente encontrado.
+  patient_treatment_created_error_message: El item fue creado con éxito
+  patient_treatment_updated_error_message: Ocurrió un problema para crear este item
+  patient_updated_success_message: El paciente fue actualizado con éxito
+  patient_without_required_info: Agrega la información que falta, o simplemente puedes %{delete_url}
+  patients: Pacientes
+  personal_information: Información personal
+  please_wait: Por favor espera...
+  practice_cancellation: Cancelación de cuenta
+  practice_cancellation_message: Lamentamos que quieras dejarnos, si hay algo que podamos hacer para ayudarte, por favor ponte en contacto con nosotros. Para continuar con la cancelación presiona el siguiente botón.
   practice_close_active_message: ''
   practice_close_error_message: ''
   practice_close_success_message: ''
   practice_created_success_message: ''
-  practice_information: ''
-  practice_name: ''
-  practice_name_hint: ''
-  practice_not_completely_setup: ''
-  practice_updated_success_message: ''
-  practices: ''
-  predefined_treatments_created_success_message: ''
-  price: ''
-  privacy_policy: ''
-  remember_me: ''
-  reset_password: ''
-  return_to_listing: ''
-  save: ''
-  select_doctor: ''
-  signin: ''
-  signup: ''
-  spanish: ''
-  speciality: ''
-  suspend: ''
-  suspended: ''
-  telephone: ''
-  terms_of_service: ''
+  practice_information: Información de la clínica
+  practice_name: Nombre de la clínica
+  practice_name_hint: Algo como "Mi excelente clínica"
+  practice_settings: Preferencias de la clínica
+  practice_updated_success_message: La clínica ha sido actualizada con éxito
+  practices: Clínicas
+  predefined_treatments_created_success_message: Se han utilizado los tratamientos por defecto. Modifica los nombres y precios a tu mejor parecer.
+  price: Precio
+  privacy_policy: Política de privacidad
+  profile: Perfíl
+  remember_me: Recordarme
+  reset_password: Cambiar contraseña
+  save: Guardar
+  schedule: Agendar
+  search: Buscar
+  select_doctor: Selecciona un doctor
+  show_past_appointments: Mostrar citas pasadas
+  signin: Iniciar sesión
+  signout: Cerrar sesión
+  signup: Registrate
+  spanish: Español
+  speciality: Especialidad
+  starts_at: Comienza el
+  status: Estatus
+  suspend: Suspender
+  suspended: Suspendido
+  telephone: Teléfono
+  terms_of_service: Términos del servicio
   time:
-    formats:
-      default: "%A, %d de %B de %Y %H:%M:%S %z"
-      short: "%d de %b %H:%M"
-      long: "%d de %B de %Y %H:%M"
-      just_the_time: "%H:%M"
     am: am
+    formats:
+      default: ! '%a, %d %b %Y %H:%M:%S %z'
+      just_the_time: ! '%H:%M'
+      long: ! '%B %d, %Y %H:%M'
+      short: ! '%d %b %H:%M'
     pm: pm
-  today: ''
-  treatment_without_price: ''
-  treatments: ''
-  treatments_created_success_message: ''
-  treatments_updated_success_message: ''
-  uid: ''
-  use_preloaded_treatments: ''
-  user: ''
-  user_create_help: ''
-  user_created_success_message: ''
-  user_updated_success_message: ''
-  users: ''
-  week: ''
-  welcome: ''
-  welcome_email_subject: ''
-  years_old: ''
-  you_agree_to_our_terms_and_privacy_policy: ''
+  today: Hoy
+  treatment_without_price: Agrega un precio a este tratamiento, o simplemente borralo
+  treatments: Tratamientos
+  treatments_created_success_message: El tratamiento ha sido creado con éxito.
+  treatments_updated_success_message: El tratamiento ha sido actualizado con éxito.
+  uid: Identificador único
+  updated_at: Actualizado el
+  use_preloaded_treatments: ¿Usar los tratamientos por defecto?
+  user: Usuario
+  user_created_success_message: El usuario ha sido creado con éxito.
+  user_updated_success_message: El usuario ha sido actualizado con éxito.
+  users: Usuarios
+  week: Semana
+  welcome: Bienvenido a Odonto.me
+  you_agree_to_our_terms_and_privacy_policy: Aceptas nuestras %{terms_url} y nuestra %{privacy_url} cuando continuas.
+  your_first_datebook: Tu agenda
