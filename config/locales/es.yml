@@ -161,10 +161,16 @@ es:
   english: Inglés
   enter_patient_name_or_uid: Paciente o historia
   errors:
+    titles:
+      unauthorised: No puedes hacer eso
+      not_found: Mmm, no lo encontré
+      server_error: Ay...
     messages:
       invalid_date_range: Las fechas son invalidas.
       invalid_email_format: Formato invalido.
       unauthorised: No posees los permisos necesarios para hacer esto.
+      not_found: Puede ser que haya sido borrado o nunca existió
+      server_error: Ha ocurrido un error, por favor intentalo más tarde
   everyone: Todos
   family_diseases_hint: Por favor sé lo más descriptivo posible.
   family_history: Historial familiar

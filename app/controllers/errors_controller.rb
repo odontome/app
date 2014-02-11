@@ -1,4 +1,6 @@
 class ErrorsController < ApplicationController
+  layout "simple"
+
   def not_found
     render :status => 404, :formats => [:html]
   end
@@ -7,7 +9,7 @@ class ErrorsController < ApplicationController
     render :status => 500, :formats => [:html]
   end
 
-  def unauthorized
+  def unauthorised
   	render :status => 401, :formats => [:html]
   end
 end

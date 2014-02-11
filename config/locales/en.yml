@@ -167,10 +167,16 @@ en:
   english: English
   enter_patient_name_or_uid: Patient name or chart number
   errors:
+    titles:
+      unauthorised: You can't do that
+      not_found: Hmmm, I can't find that
+      server_error: Oh oh...
     messages:
       invalid_date_range: The chosen dates are invalid
       invalid_email_format: Invalid format
-      unauthorised: You don't have permissions to do this
+      unauthorised: You don't have permission to do this
+      not_found: It may have been deleted or never existed
+      server_error: Something went wrong, please try again later.
   everyone: Everyone
   family_diseases_hint: Please be as descriptive as possible.
   family_history: Family history

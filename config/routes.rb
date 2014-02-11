@@ -53,7 +53,7 @@ Odontome::Application.routes.draw do
   get '/datebook', to: redirect('/')
 
   get '/404', :to => 'errors#not_found'
-  get '/401', :to => 'errors#unauthorized'
+  get '/401', :to => 'errors#unauthorised'
   get '/422', :to => 'errors#server_error'
   get '/500', :to => 'errors#server_error'
 
