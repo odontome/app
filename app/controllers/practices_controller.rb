@@ -44,7 +44,7 @@ class PracticesController < ApplicationController
 
     respond_to do |format|
       if @practice.update_attributes(params[:practice])
-        format.html { redirect_to(practice_url, :notice => t(:practice_updated_success_message)) }
+        format.html { redirect_to(practice_settings_url, :notice => t(:practice_updated_success_message)) }
       else
         format.html { render :action => "settings" }
       end
