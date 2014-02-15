@@ -26,7 +26,8 @@ Odontome::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 
   # Configure the host for emails
-  config.action_mailer.default_url_options = { :host => "0.0.0.0:3000" }
+  config.action_mailer.asset_host = "http://0.0.0.0:3000"
+  config.action_mailer.default_url_options = { :host => '0.0.0.0:3000' }
 
   # Do not compress assets
   config.assets.compress = false
