@@ -11,6 +11,10 @@ ico-gallery-trash.png: ico-gallery-trash-c1465834cb5bab03b7f59b0146e8365a.png
 ico-gallery-trash/index.png: ico-gallery-trash-c1465834cb5bab03b7f59b0146e8365a.png
 ico-table-delete.png: ico-table-delete-8f1a9001ecb278fdcd3819922ff55d2e.png
 ico-table-delete/index.png: ico-table-delete-8f1a9001ecb278fdcd3819922ff55d2e.png
+icon.png: icon-177f728c7090a034b7adbec87464298f.png
+icon/index.png: icon-177f728c7090a034b7adbec87464298f.png
+icon@2x.png: icon@2x-17a973b89adb4724e339c6214885026c.png
+icon@2x/index.png: icon@2x-17a973b89adb4724e339c6214885026c.png
 jquery-ui/animated-overlay.gif: jquery-ui/animated-overlay-602eee4c79a4796b02bb6442948c9e28.gif
 jquery-ui/animated-overlay/index.gif: jquery-ui/animated-overlay-602eee4c79a4796b02bb6442948c9e28.gif
 jquery-ui/slider-handler.png: jquery-ui/slider-handler-f522e6f275125ede054c7b8cade2837d.png
@@ -47,10 +51,6 @@ jquery-ui/ui-icons_ffffff_256x240.png: jquery-ui/ui-icons_ffffff_256x240-a4ba482
 jquery-ui/ui-icons_ffffff_256x240/index.png: jquery-ui/ui-icons_ffffff_256x240-a4ba4821c4d4a15fc977431670953726.png
 lens.png: lens-00f822f824612e333b36955abe448bb0.png
 lens/index.png: lens-00f822f824612e333b36955abe448bb0.png
-logo-mini.png: logo-mini-177f728c7090a034b7adbec87464298f.png
-logo-mini/index.png: logo-mini-177f728c7090a034b7adbec87464298f.png
-logo-mini@2x.png: logo-mini@2x-17a973b89adb4724e339c6214885026c.png
-logo-mini@2x/index.png: logo-mini@2x-17a973b89adb4724e339c6214885026c.png
 logo.png: logo-b74ebc27fd4f8a2cde28acd29edfd7d3.png
 logo/index.png: logo-b74ebc27fd4f8a2cde28acd29edfd7d3.png
 logo@2x.png: logo@2x-24b52acbf22536e268238ff169b5eb6c.png
