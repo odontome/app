@@ -46,6 +46,73 @@ class AppointmentsController < ApplicationController
     end
 
   end
+
+  def show
+    @datebook = Datebook.mine.find params[:datebook_id]
+    @appointment = Appointment.where(:id => params[:id], :datebook_id => @datebook.id).first
+
+    pass = Passbook::PKPass.new '{
+                "formatVersion" : 1,
+                "passTypeIdentifier" : "pass.com.raulriera.odontome.web",
+                "serialNumber" : "'+@appointment.id.to_s+'",
+                "teamIdentifier" : "R64MTWS872",
+                "organizationName" : "Odonto.me",
+                "description" : "Coupon for 1 Free Hug",
+                "logoText" : "",
+                "foregroundColor" : "#ffffff",
+                "backgroundColor" : "#3389d1",
+                "relevantDate" : "' + @appointment.starts_at.to_formatted_s(:date) + '",
+                "barcode" : {
+                    "message" : "http://my.odonto.me/appointments/' + @appointment.id.to_s + '/check-in",
+                    "format" : "PKBarcodeFormatQR",
+                    "messageEncoding" : "iso-8859-1"
+                },
+                "eventTicket": {
+                   "primaryFields" : [
+                        {
+                       "key" : "location",
+                       "label" : "Practice",
+                       "value" :  "' + @datebook.practice.name + '"
+                       }
+                   ],
+                   "auxiliaryFields" : [
+                      {
+                       "key" : "date",
+                       "label" : "Date",
+                       "value" : "' + l(@appointment.starts_at.to_date, :format => :day_and_date) + ' ' + @appointment.starts_at.to_formatted_s(:time) + '"
+                       },
+                       {
+                       "key" : "doctor",
+                       "label" : "Doctor",
+                       "value" : "' + @appointment.doctor.fullname + '"
+                       }
+                   ],
+                   "backFields" : [
+                      {
+                        "key" : "extras",
+                        "label" : "Extras",
+                        "value" : "Your friends receive 50% off price"
+                      },
+                      {
+                        "key" : "phone",
+                        "label" : "For more info",
+                        "value" : "800-1234567890"
+                      },
+                      {
+                        "key" : "terms",
+                        "label" : "TERMS AND CONDITIONS",
+                        "value" : "Free hugs last 18 seconds and must be claimed on your birthday. Bring your pass or an id"
+                      }
+                    ]
+                }
+            }'
+
+    pass.addFiles ['public/assets/logo.png', 'public/assets/logo@2x.png', 'public/assets/icon.png', 'public/assets/icon@2x.png']
+
+    pkpass = pass.stream
+    send_data pkpass.string, type: 'application/vnd.apple.pkpass', disposition: 'attachment', filename: "pass.pkpass"
+
+  end
   
   def edit
     @datebook = Datebook.mine.find params[:datebook_id]
@@ -88,4 +155,5 @@ class AppointmentsController < ApplicationController
       end
     end
   end
+
 end
