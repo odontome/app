@@ -31,9 +31,9 @@
 				},
 			<% end %>
 			monthNames: <%= raw (t "date.month_names").last(12) %>,
-			monthNamesShort: <%= raw (t "date.abbr_month_names") %>,
-			dayNames: <%= raw t "date.day_names" %>,
-			dayNamesShort: <%= raw t "date.abbr_day_names" %>,
+			monthNamesShort: <%= raw (t "date.abbr_month_names").last(12) %>,
+			dayNames: <%= raw (t "date.day_names").last(7) %>,
+			dayNamesShort: <%= raw (t "date.abbr_day_names").last(7) %>,
 			buttonText: {
 			    prev:     '&nbsp;&#9668;&nbsp;',  // left triangle
 			    next:     '&nbsp;&#9658;&nbsp;',  // right triangle

@@ -96,53 +96,8 @@ es:
   create_new_user: Nuevo usario
   current_medications: Medicamentes actuales
   date:
-    abbr_day_names:
-    - Dom
-    - Lun
-    - Mar
-    - Mie
-    - Jue
-    - Vie
-    - Sab
-    abbr_month_names:
-    - Ene
-    - Feb
-    - Mar
-    - Abr
-    - May
-    - Jun
-    - Jul
-    - Ago
-    - Sep
-    - Oct
-    - Nov
-    - Dic
-    day_names:
-    - Domingo
-    - Lunes
-    - Martes
-    - Miércoles
-    - Jueves
-    - Viernes
-    - Sábado
     formats:
-      day_and_date: ! '%A (%e %B)'
-      default: ! '%d/%m/%Y'
-      long: ! '%d %B, %Y'
-      short: ! '''%d %b'
-    month_names:
-    - Enero
-    - Febrero
-    - Marzo
-    - Abril
-    - Mayo
-    - Junio
-    - Julio
-    - Agosto
-    - Septiembre
-    - Octubre
-    - Noviembre
-    - Diciembre
+      day_and_date: ! '%A (%e %b)'
   datebooks: Agendas
   day: Día
   delete: Borrar
