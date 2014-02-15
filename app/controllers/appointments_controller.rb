@@ -107,7 +107,7 @@ class AppointmentsController < ApplicationController
                 }
             }'
 
-    pass.addFiles ['public/assets/logo.png', 'public/assets/logo@2x.png', 'public/assets/icon.png', 'public/assets/icon@2x.png']
+    pass.addFiles ['passbook/logo.png', 'passbook/logo@2x.png', 'passbook/icon.png', 'passbook/icon@2x.png']
 
     pkpass = pass.stream
     send_data pkpass.string, type: 'application/vnd.apple.pkpass', disposition: 'attachment', filename: "pass.pkpass"
