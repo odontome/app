@@ -278,6 +278,7 @@ en:
       just_the_time: ! '%H:%M'
       long: ! '%B %d, %Y %H:%M'
       short: ! '%d %b %H:%M'
+      w3c: ! '%Y-%m-%dT%H:%M:%S%:z'
     pm: pm
   today: Today
   treatment_without_price: Add a price to this treatment, or simply delete it

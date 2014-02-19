@@ -1,0 +1,77 @@
+// <div class="masonry cols">
+//     <div class="box one"></div>
+//     <div class="box two"></div>
+//     <div class="box one"></div>
+//     <div class="box three"></div>
+//     <div class="box two"></div>
+//     <div class="box five"></div>
+//     <div class="box one"></div>
+//     <div class="box two"></div>
+//     <div class="box six"></div>
+//     <div class="box three"></div>
+//     <div class="box two"></div>
+// </div>
+
+.masonry {
+  width: 100%;
+  max-width: 700px;
+  margin: 2em auto;
+}
+
+.cols {
+  -moz-column-count: 3;
+  -moz-column-gap: 3%;
+  -moz-column-width: 30%;
+  -webkit-column-count: 3;
+  -webkit-column-gap: 3%;
+  -webkit-column-width: 30%;
+  column-count: 3;
+  column-gap: 3%;
+  column-width: 30%;
+}
+
+.box {
+  margin-bottom: 20px;
+  &.one {
+    height: 200px;
+    background-color: #d77575;
+  }
+  &.two {
+    height: 300px;
+    background-color: #dcbc4c;
+  }
+  &.three {
+    background-color: #a3ca3b;
+    height: 400px;
+  }
+  &.four {
+    background-color: #3daee3;
+    height: 500px;
+  }
+  &.five {
+    background-color: #bb8ed8;
+    height: 600px;
+  }
+  &.six {
+    background-color: #baafb1;
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .masonry {
+    width: 100%;
+    margin: 2em auto;
+  }
+  .cols {
+    -moz-column-count: 1;
+    -moz-column-gap: 3%;
+    -moz-column-width: 30%;
+    -webkit-column-count: 1;
+    -webkit-column-gap: 3%;
+    -webkit-column-width: 30%;
+    column-count: 1;
+    column-gap: 3%;
+    column-width: 30%;
+  }
+}

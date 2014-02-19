@@ -250,6 +250,7 @@ es:
       just_the_time: ! '%H:%M'
       long: ! '%B %d, %Y %H:%M'
       short: ! '%d %b %H:%M'
+      w3c: ! '%Y-%m-%dT%H:%M:%S%:z'
     pm: pm
   today: Hoy
   treatment_without_price: Agrega un precio a este tratamiento, o simplemente borralo
