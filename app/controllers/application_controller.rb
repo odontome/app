@@ -116,4 +116,14 @@ class ApplicationController < ActionController::Base
     }
   end
 
+  def decipher(value)
+    cipher = Gibberish::AES.new(Rails.configuration.secret_token)
+    return cipher.dec value
+  end
+
+  def cipher(value)
+    cipher = Gibberish::AES.new(Rails.configuration.secret_token)
+    return cipher.enc value
+  end
+
 end
