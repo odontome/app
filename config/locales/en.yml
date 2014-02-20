@@ -222,6 +222,7 @@ en:
   patient_search_results_few: ! '%{patients_count} patients found.'
   patient_search_results_many: Showing %{patients_count} of many patients. Try a more
     accurate search.
+  more_information: More information
   patient_search_results_one: There was that patient!
   patient_search_results_zero: No patients were found.
   patient_treatment_created_error_message: The item was created successfully

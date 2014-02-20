@@ -57,6 +57,7 @@ GEM
     fastercsv (1.5.5)
     font-awesome-rails (4.0.3.1)
       railties (>= 3.2, < 5.0)
+    gibberish (1.4.0)
     grocer (0.5.0)
     haml (4.0.5)
       tilt
@@ -181,6 +182,7 @@ DEPENDENCIES
   authlogic (~> 3.2)
   brakeman
   font-awesome-rails
+  gibberish (~> 1.4.0)
   i18n-tasks (~> 0.2.18)
   jquery-minicolors-rails
   jquery-rails (>= 3.0.4)

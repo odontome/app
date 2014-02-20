@@ -1,6 +1,6 @@
 class AppointmentsController < ApplicationController
   # filters
-  before_filter :require_user
+  before_filter :require_user, :except => :show
   
   # provides
   respond_to :html, :json
@@ -48,25 +48,24 @@ class AppointmentsController < ApplicationController
   end
 
   def show
-    @datebook = Datebook.mine.find params[:datebook_id]
-    @appointment = Appointment.where(:id => params[:id], :datebook_id => @datebook.id).first
+    cipher = Gibberish::AES.new(Rails.configuration.secret_token)
+    appointment_id_deciphered = cipher.dec params[:id]
 
-    puts "@@@@@@@@@@@@@@@@@@@@"
-    puts I18n.l(@appointment.starts_at, :format => :w3c)
-    puts "@@@@@@@@@@@@@@@@@@@@"
+    datebook = Datebook.find params[:datebook_id]
+    appointment = Appointment.where(:id => appointment_id_deciphered, :datebook_id => datebook.id).first
 
     pass = Passbook::PKPass.new '{
                 "formatVersion" : 1,
                 "passTypeIdentifier" : "pass.me.odonto.patient.reminder",
-                "serialNumber" : "'+@appointment.id.to_s+'",
+                "serialNumber" : "'+appointment.id.to_s+'",
                 "teamIdentifier" : "R64MTWS872",
                 "organizationName" : "Odonto.me",
                 "description" : "Patient appointment",
                 "foregroundColor" : "#1ca5ef",
                 "backgroundColor" : "#ffffff",
-                "relevantDate" : "' + I18n.l(@appointment.starts_at, :format => :w3c) + '",
+                "relevantDate" : "' + I18n.l(appointment.starts_at, :format => :w3c) + '",
                 "barcode" : {
-                    "message" : "http://my.odonto.me/appointments/' + @appointment.id.to_s + '/check-in",
+                    "message" : "http://my.odonto.me/appointments/' + appointment.id.to_s + '/check-in",
                     "format" : "PKBarcodeFormatPDF417",
                     "messageEncoding" : "UTF8"
                 },
@@ -75,14 +74,14 @@ class AppointmentsController < ApplicationController
                         {
                        "key" : "location",
                        "label" : "Practice",
-                       "value" :  "' + @datebook.practice.name + '"
+                       "value" :  "' + datebook.practice.name + '"
                        }
                    ],
                    "secondaryFields" : [
                       {
                        "key" : "date",
                        "label" : "Date",
-                       "value" : "' + I18n.l(@appointment.starts_at, :format => :w3c) + '",
+                       "value" : "' + I18n.l(appointment.starts_at, :format => :w3c) + '",
                        "dateStyle" : "PKDateStyleMedium",
                        "timeStyle" : "PKDateStyleShort"
                        }
@@ -91,19 +90,14 @@ class AppointmentsController < ApplicationController
                        {
                        "key" : "doctor",
                        "label" : "Doctor",
-                       "value" : "' + @appointment.doctor.fullname + '"
+                       "value" : "' + appointment.doctor.fullname + '"
                        }
                    ],
                    "backFields" : [
                       {
                           "key" : "website",
-                          "label" : "More information",
+                          "label" : "' + I18n.t(:more_information) + '",
                           "value" : "http://www.odonto.me"
-                      },
-                      {
-                        "key" : "terms",
-                        "label" : "TERMS AND CONDITIONS",
-                        "value" : "Free hugs last 18 seconds and must be claimed on your birthday. Bring your pass or an id"
                       }
                     ]
                 }

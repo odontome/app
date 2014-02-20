@@ -12,6 +12,7 @@ gem 'passbook', '~> 0.3.1'
 
 gem 'font-awesome-rails'
 gem 'jquery-minicolors-rails'
+gem 'gibberish', '~> 1.4.0'
 
 group :assets do
 	gem 'sass-rails', '~> 3.2.3'
