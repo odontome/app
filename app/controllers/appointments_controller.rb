@@ -48,7 +48,9 @@ class AppointmentsController < ApplicationController
   end
 
   def show
-    appointment_id_deciphered = decipher(params[:id])
+    cipher = Gibberish::AES.new(Rails.configuration.secret_token)
+    
+    appointment_id_deciphered = cipher.dec(Base64.strict_decode64(params[:id]))
 
     datebook = Datebook.find params[:datebook_id]
     appointment = Appointment.where(:id => appointment_id_deciphered, :datebook_id => datebook.id).first
@@ -63,6 +65,7 @@ class AppointmentsController < ApplicationController
                 "foregroundColor" : "#1ca5ef",
                 "backgroundColor" : "#ffffff",
                 "relevantDate" : "' + I18n.l(appointment.starts_at, :format => :w3c) + '",
+                "expirationDate" : "' + I18n.l(appointment.ends_at, :format => :w3c) + '",
                 "barcode" : {
                     "message" : "https://my.odonto.me/patients/' + appointment.patient_id.to_s + '",
                     "format" : "PKBarcodeFormatQR",

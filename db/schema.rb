@@ -11,19 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140209022654) do
+ActiveRecord::Schema.define(:version => 20140220225345) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "doctor_id"
     t.integer  "patient_id"
     t.string   "notes"
-    t.string   "status",      :limit => 50
+    t.string   "status",               :limit => 50
     t.datetime "starts_at"
     t.datetime "ends_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "notified",                  :default => false
+    t.boolean  "notified_of_reminder",               :default => false
     t.integer  "datebook_id"
+    t.boolean  "notified_of_schedule",               :default => false
   end
 
   add_index "appointments", ["starts_at", "ends_at"], :name => "index_appointments_on_starts_at_and_ends_at"

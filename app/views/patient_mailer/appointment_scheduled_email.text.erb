@@ -1,0 +1,17 @@
+Thank you for visiting!
+
+Hello <%= @patient_name %>,
+We are sending you this email on behalf of <%= @practice_name %>.
+
+You scheduled an appointment this coming
+<%=l @start_time.to_date, :format => :day_and_date %> with <%= @doctor_name %>.
+
+It starts at: <%=l @start_time.to_time.in_time_zone(@practice_timezone), :format => :just_the_time %>
+and ends at: <%=l @end_time.to_time.in_time_zone(@practice_timezone), :format => :just_the_time %>
+
+Are you an iOS or Android user? You can get a Passbook of this appointment here <%= @passbook_url %>
+
+See you soon!
+<%= @practice_name%>.
+
+Sent by Odonto.me

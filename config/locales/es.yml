@@ -158,6 +158,8 @@ es:
     patient:
       appointment_soon_email:
         subject: Tu cita con %{practice_name} se acerca
+      appointment_scheduled_email:
+        subject: Tu cita con %{practice_name}
     practice:
       welcome:
         subject: Bienvenido a Odonto.me

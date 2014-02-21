@@ -39,4 +39,24 @@ class PatientMailerTest < ActionMailer::TestCase
     assert_match(/y termina a las: <strong>09:00<\/strong>/, email.encoded)
   end
 
+  test "patient scheduled appointment notifier" do
+    practice = practices(:complete)
+    appointment = appointments(:first_visit)
+    doctor = doctors(:rebecca)
+    patient = patients(:four)
+
+    passbook_url = appointment.ciphered_url
+
+    # Send the email, then test that it got queued
+    email = PatientMailer.appointment_scheduled_email(patient.email, patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, doctor.fullname, users(:perishable).email, passbook_url).deliver
+
+    assert !ActionMailer::Base.deliveries.empty?
+    
+    # Test the body of the sent email contains what we expect it to
+    assert_equal ['hello@odonto.me'], email.from
+    assert_equal ['contact@bokanova.mx'], email.reply_to
+    assert_equal ['raulriera@hotmail.com'], email.to
+    assert_equal I18n.t("mailers.patient.appointment_scheduled_email.subject", practice_name: practice.name), email.subject
+    assert_match(/Are you an iOS or Android user\? You can get a Passbook of this appointment here/, email.encoded)
+  end
 end

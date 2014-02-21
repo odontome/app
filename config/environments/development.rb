@@ -30,6 +30,7 @@ Odontome::Application.configure do
   config.action_mailer.default_url_options = { :host => '0.0.0.0:3000' }
 
   # Do not compress assets
+  config.assets.compile = false
   config.assets.compress = false
   config.assets.paths << Rails.root.join('app', 'assets', 'font')
   config.assets.precompile += %w(.svg .eot .woff .ttf)

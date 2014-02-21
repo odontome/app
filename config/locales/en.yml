@@ -175,6 +175,8 @@ en:
     patient:
       appointment_soon_email:
         subject: Your appointment with %{practice_name} is soon
+      appointment_scheduled_email:
+        subject: Your appointment with %{practice_name}
     practice:
       welcome:
         subject: Welcome to Odonto.me

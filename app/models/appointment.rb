@@ -44,6 +44,14 @@ class Appointment < ActiveRecord::Base
         :lastname => patient.lastname
       }
 	end
+
+  def ciphered_url
+    cipher = Gibberish::AES.new(Rails.configuration.secret_token)
+
+    ciphered_url_encoded_id = Base64.strict_encode64(cipher.enc(self.id.to_s))
+     
+    return "https://my.odonto.me/datebooks/#{self.datebook_id.to_s}/appointments/#{ciphered_url_encoded_id}"
+  end
   
   private
   

@@ -1,0 +1,12 @@
+Hola <%= @patient_name %>,
+Gracias por tu visita 
+
+Te enviamos este email en nombre de <%= @practice_name %> porque hiciste una cita para este próximo <%=l @start_time.to_date, :format => :day_and_date %> con <%= @doctor_name %>.
+
+Comienza a las: <%=l @start_time.to_time.in_time_zone(@practice_timezone), :format => :just_the_time %>
+y termina a las: <%=l @end_time.to_time.in_time_zone(@practice_timezone), :format => :just_the_time %>
+
+¿Eres un usuario de iOS o Android? Puedes descargar tu Passbook aquí <%= @passbook_url %>
+
+¡Te vemos pronto!,
+<%= @practice_name %>
