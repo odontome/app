@@ -31,9 +31,8 @@ namespace :odontome do
 
     to_update = []
     appointments = Appointment.includes(:doctor, :patient)
-    .where("appointments.created_at < ? AND appointments.created_at > ? AND appointments.notified_of_schedule = ? 
-                                      AND patients.email <> ''", 
-                                      Time.now, 5.minutes.ago, false)
+    .where("appointments.created_at < ? AND appointments.notified_of_schedule = ? 
+                                      AND patients.email <> ''", 5.minutes.ago, false)
     appointments.each do |appointment|
       practice = appointment.datebook.practice
       passbook_url = appointment.ciphered_url
