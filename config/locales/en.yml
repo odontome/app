@@ -2,10 +2,10 @@
 en:
   account_cancelled: Your account is marked for cancellation. If you believe this
     is a mistake, please contact us as soon as possible.
-  account_not_found: An account with the given information was not found. If you think
-    this is a mistake, please contact with us
+  account_not_found: An account with the given information was not found. If you think this is a mistake, please contact with us
   activate: Activate
   active: Active
+  update_password: Update password
   activerecord:
     attributes:
       appointment:
@@ -257,7 +257,6 @@ en:
   profile: Profile
   remember_me: Remember me
   reset_password: Reset password
-  return_to_listing: Return to listing
   save: Save
   schedule: Schedule
   search: Search
