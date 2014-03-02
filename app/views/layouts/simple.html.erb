@@ -25,7 +25,7 @@
 			<div id="pad-wrapper">
 
 				<div align="center">
-					<%=  image_tag_with_at2x "logo.png" %>
+					<%= image_tag_with_at2x "logo.png", :title => t(:home), :class => "logo", :width => 100 %>
 				</div>
 
 				<%= yield %>
