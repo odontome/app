@@ -9,9 +9,15 @@
 	It starts at: <strong><%=l @start_time.to_time.in_time_zone(@practice_timezone), :format => :just_the_time %></strong><br/ >
 	and ends at: <strong><%=l @end_time.to_time.in_time_zone(@practice_timezone), :format => :just_the_time %></strong>
 </p>
-<p>
-	Are you an iOS or Android user? You can get a <a href="<%= @passbook_url %>">Passbook</a> of this appointment
-</p>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td align="center">
+            <a href="<%= @passbook_url %>"><%= image_tag "passbook_en", :width => 120 %></a>
+        </td>
+    </tr>
+</table>
+
 <p>
 	See you soon!,<br />
 	<%= @practice_name %>

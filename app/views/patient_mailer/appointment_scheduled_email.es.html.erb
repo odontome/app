@@ -9,9 +9,15 @@
 	Comienza a las: <strong><%=l @start_time.to_time.in_time_zone(@practice_timezone), :format => :just_the_time %></strong><br/ >
 	y termina a las: <strong><%=l @end_time.to_time.in_time_zone(@practice_timezone), :format => :just_the_time %></strong>
 </p>
-<p>
-	¿Eres un usuario de iOS o Android? Puedes descargar tu <a href="<%= @passbook_url %>">Passbook</a>
-</p>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td align="center">
+            <a href="<%= @passbook_url %>"><%= image_tag "passbook_es", :width => 120 %></a>
+        </td>
+    </tr>
+</table>
+
 <p>
 	¡Te vemos pronto!,<br />
 	<%= @practice_name %>
