@@ -59,12 +59,16 @@ logofull.png: logofull-1ad560703a31a8b21579811dee9b7255.png
 logofull/index.png: logofull-1ad560703a31a8b21579811dee9b7255.png
 logofull@2x.png: logofull@2x-70a743698e496945e49ec93bfe00f79f.png
 logofull@2x/index.png: logofull@2x-70a743698e496945e49ec93bfe00f79f.png
+passbook-en.png: passbook-en-c0fe87fed4e950d5fca08cd13e406638.png
+passbook-en/index.png: passbook-en-c0fe87fed4e950d5fca08cd13e406638.png
+passbook-es.png: passbook-es-af17e266cef41e86e377ce9871409054.png
+passbook-es/index.png: passbook-es-af17e266cef41e86e377ce9871409054.png
 select-bg.png: select-bg-7db54ca65707e60462cee50702b62f12.png
 select-bg/index.png: select-bg-7db54ca65707e60462cee50702b62f12.png
 table-icons.png: table-icons-d62738d16be03b31103387cb7ed8674c.png
 table-icons/index.png: table-icons-d62738d16be03b31103387cb7ed8674c.png
-application.js: application-e788a464068eee2022aadd4d05896b82.js
-application/index.js: application-e788a464068eee2022aadd4d05896b82.js
+application.js: application-f730afbb3acc8b51e6e157627e87ae3a.js
+application/index.js: application-f730afbb3acc8b51e6e157627e87ae3a.js
 application.css: application-1a03ebfc5e5f38fa9918b9e20417cb93.css
 application/index.css: application-1a03ebfc5e5f38fa9918b9e20417cb93.css
 jquery.minicolors.png: jquery.minicolors-061cbc2cb9eb063d65da8d3ee7305c75.png
@@ -79,5 +83,5 @@ fontawesome-webfont.ttf: fontawesome-webfont-4d228e1a1ddd570d6380dcd9b1a11d5c.tt
 fontawesome-webfont/index.ttf: fontawesome-webfont-4d228e1a1ddd570d6380dcd9b1a11d5c.ttf
 fontawesome-webfont.woff: fontawesome-webfont-6cfa562c51325bb1df40b64732dc8699.woff
 fontawesome-webfont/index.woff: fontawesome-webfont-6cfa562c51325bb1df40b64732dc8699.woff
-jquery.min.map: jquery.min-6336c5bca4c709e809647cdfcb484d0a.map
-jquery/index.min.map: jquery.min-6336c5bca4c709e809647cdfcb484d0a.map
+jquery.min.map: jquery.min-388372ef65cc311f6a3df4a6ceac8d22.map
+jquery/index.min.map: jquery.min-388372ef65cc311f6a3df4a6ceac8d22.map
