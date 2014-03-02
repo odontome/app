@@ -55,55 +55,62 @@ class AppointmentsController < ApplicationController
     datebook = Datebook.find params[:datebook_id]
     appointment = Appointment.where(:id => appointment_id_deciphered, :datebook_id => datebook.id).first
 
-    pass = Passbook::PKPass.new '{
-                "formatVersion" : 1,
-                "passTypeIdentifier" : "pass.me.odonto.patient.reminder",
-                "serialNumber" : "'+appointment.id.to_s+'",
-                "teamIdentifier" : "R64MTWS872",
-                "organizationName" : "Odonto.me",
-                "description" : "Patient appointment",
-                "foregroundColor" : "#1ca5ef",
-                "backgroundColor" : "#ffffff",
-                "relevantDate" : "' + I18n.l(appointment.starts_at, :format => :w3c) + '",
-                "expirationDate" : "' + I18n.l(appointment.ends_at, :format => :w3c) + '",
-                "barcode" : {
-                    "message" : "https://my.odonto.me/patients/' + appointment.patient_id.to_s + '",
-                    "format" : "PKBarcodeFormatQR",
-                    "messageEncoding" : "UTF8"
-                },
-                "eventTicket": {
-                   "primaryFields" : [
+    # create this here, otherwise it will be a local variable inside the 
+    # I18n block
+    pass = nil
+
+    # temporaly change the locale
+    I18n.with_locale(datebook.practice.locale) do
+      pass = Passbook::PKPass.new '{
+                  "formatVersion" : 1,
+                  "passTypeIdentifier" : "pass.me.odonto.patient.reminder",
+                  "serialNumber" : "'+appointment.id.to_s+'",
+                  "teamIdentifier" : "R64MTWS872",
+                  "organizationName" : "Odonto.me",
+                  "description" : "Patient appointment",
+                  "foregroundColor" : "#1ca5ef",
+                  "backgroundColor" : "#ffffff",
+                  "relevantDate" : "' + I18n.l(appointment.starts_at, :format => :w3c) + '",
+                  "expirationDate" : "' + I18n.l(appointment.ends_at, :format => :w3c) + '",
+                  "barcode" : {
+                      "message" : "https://my.odonto.me/patients/' + appointment.patient_id.to_s + '",
+                      "format" : "PKBarcodeFormatQR",
+                      "messageEncoding" : "UTF8"
+                  },
+                  "eventTicket": {
+                     "primaryFields" : [
+                          {
+                         "key" : "location",
+                         "label" : "Practice",
+                         "value" :  "' + datebook.practice.name + '"
+                         }
+                     ],
+                     "secondaryFields" : [
                         {
-                       "key" : "location",
-                       "label" : "Practice",
-                       "value" :  "' + datebook.practice.name + '"
-                       }
-                   ],
-                   "secondaryFields" : [
-                      {
-                       "key" : "date",
-                       "label" : "Date",
-                       "value" : "' + I18n.l(appointment.starts_at, :format => :w3c) + '",
-                       "dateStyle" : "PKDateStyleMedium",
-                       "timeStyle" : "PKDateStyleShort"
-                       }
-                   ],
-                   "auxiliaryFields" : [
-                       {
-                       "key" : "doctor",
-                       "label" : "Doctor",
-                       "value" : "' + appointment.doctor.fullname + '"
-                       }
-                   ],
-                   "backFields" : [
-                      {
-                          "key" : "website",
-                          "label" : "' + I18n.t(:more_information) + '",
-                          "value" : "http://www.odonto.me"
-                      }
-                    ]
-                }
-            }'
+                         "key" : "date",
+                         "label" : "Date",
+                         "value" : "' + I18n.l(appointment.starts_at, :format => :w3c) + '",
+                         "dateStyle" : "PKDateStyleMedium",
+                         "timeStyle" : "PKDateStyleShort"
+                         }
+                     ],
+                     "auxiliaryFields" : [
+                         {
+                         "key" : "doctor",
+                         "label" : "Doctor",
+                         "value" : "' + appointment.doctor.fullname + '"
+                         }
+                     ],
+                     "backFields" : [
+                        {
+                            "key" : "website",
+                            "label" : "' + I18n.t(:more_information) + '",
+                            "value" : "http://www.odonto.me"
+                        }
+                      ]
+                  }
+              }'
+    end
 
     pass.addFiles ['passbook/logo.png', 'passbook/logo@2x.png', 'passbook/icon.png', 'passbook/icon@2x.png']
 
