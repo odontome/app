@@ -1,21 +1,33 @@
-<div class="row">
-	<div class="twelve columns">
-		
-		<h1>Following <%= @practices.count %> practices</h1>
-		
-		<table id="patient_balance" class="sortable">
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Name</th>
-					<th>Patients</th>
-					<th>Doctors</th>
-					<th>Users</th>
-					<th>Joined</th>
-				</tr>
-			</thead>
-			
-			<tbody>
+<div id="pad-wrapper" class="table-wrapper users-list">
+
+	<div class="row header col-md-12">
+        <h3><%= @practices.count %> practices</h3>
+    </div>
+
+	<div class="row">
+	    <div class="col-md-12">
+	        <table class="table table-hover">
+	            <thead>
+	                <tr>
+	                    <th class="col-md-2">
+	                        ID
+	                    </th>
+	                    <th class="col-md-4">
+	                        <span class="line"></span> Name
+	                    </th>
+	                    <th class="col-md-2">
+	                        <span class="line"></span> Patients
+	                    </th>
+	                    <th class="col-md-2">
+	                        <span class="line"></span> Doctors
+	                    </th>
+	                    <th class="col-md-2">
+	                        <span class="line"></span> Joined
+	                    </th>
+	                </tr>
+	            </thead>
+	            <tbody>
+
 				<% @practices.each do |practice| %>
 					<tr>
 						<td><%= practice.id %></td>
