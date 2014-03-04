@@ -113,6 +113,8 @@ es:
   drugs_use_hint: Por favor sé lo más descriptivo posible.
   edit: Editar
   edit_patient: Editar este paciente
+  datebook_updated_success_message: Agenda actualizada con éxito
+  datebook_created_success_message: Agenda creada con éxito
   email: Email
   english: Inglés
   enter_patient_name_or_uid: Paciente o historia

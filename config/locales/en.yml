@@ -243,6 +243,8 @@ en:
   practice_close_success_message: ''
   practice_created_success_message: ''
   practice_information: Practice information
+  datebook_updated_success_message: Datebook updated successfully
+  datebook_created_success_message: Datebook updated successfully
   practice_name: Practice name
   practice_name_hint: Something like "My awesome dental practice"
   practice_not_completely_setup: Please finish completing the information about your
