@@ -4,7 +4,7 @@ class AdminController < ApplicationController
   respond_to :html
 
   def practices
-    @practices = Practice.select("id, name, created_at, datebooks_count, patients_count, doctors_count, users_count")
+    @practices = Practice.select("id, name, created_at, datebooks_count, patients_count, doctors_count, users_count").order("created_at desc")
   end
   
 end
