@@ -9,7 +9,6 @@
 					<th>Id</th>
 					<th>Name</th>
 					<th>Patients</th>
-					<th>Appointments</th>
 					<th>Doctors</th>
 					<th>Users</th>
 					<th>Joined</th>
@@ -22,7 +21,6 @@
 						<td><%= practice.id %></td>
 						<td><%= practice.name %></td>
 						<td><span class="label round white"><%= practice.patients_count %></span></td>
-						<td><span class="label round white"><%= practice.appointments_count %></span></td>
 						<td><span class="label round white"><%= practice.doctors_count %></span></td>
 						<td><span class="label round white"><%= practice.users_count %></span></td>
 						<td><%= time_ago_in_words practice.created_at %></td>
