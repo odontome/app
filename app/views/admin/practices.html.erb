@@ -9,19 +9,22 @@
 	        <table class="table table-hover">
 	            <thead>
 	                <tr>
-	                    <th class="col-md-2">
+	                    <th class="col-md-1">
 	                        ID
 	                    </th>
 	                    <th class="col-md-4">
 	                        <span class="line"></span> Name
 	                    </th>
-	                    <th class="col-md-2">
+	                    <th class="col-md-1">
+	                        <span class="line"></span> Datebooks
+	                    </th>
+	                    <th class="col-md-1">
 	                        <span class="line"></span> Patients
 	                    </th>
-	                    <th class="col-md-2">
+	                    <th class="col-md-1">
 	                        <span class="line"></span> Doctors
 	                    </th>
-	                    <th class="col-md-2">
+	                    <th class="col-md-4">
 	                        <span class="line"></span> Joined
 	                    </th>
 	                </tr>
@@ -32,9 +35,10 @@
 					<tr>
 						<td><%= practice.id %></td>
 						<td><%= practice.name %></td>
-						<td><span class="label round white"><%= practice.patients_count %></span></td>
-						<td><span class="label round white"><%= practice.doctors_count %></span></td>
-						<td><span class="label round white"><%= practice.users_count %></span></td>
+						<td><%= practice.datebooks_count %></td>
+						<td><%= practice.patients_count %></td>
+						<td><%= practice.doctors_count %></td>
+						<td><%= practice.users_count %></td>
 						<td><%= time_ago_in_words practice.created_at %></td>
 					</tr>
 				<% end %>
