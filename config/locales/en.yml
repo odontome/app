@@ -5,6 +5,7 @@ en:
   account_not_found: An account with the given information was not found. If you think this is a mistake, please contact with us
   activate: Activate
   active: Active
+  developers: Developers
   update_password: Update password
   activerecord:
     attributes:
