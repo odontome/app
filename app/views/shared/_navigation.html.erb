@@ -21,6 +21,10 @@
                         <% @datebooks.each do |datebook| %>
                             <li><%= link_to is_current_datebook?(datebook.id) ? "#{datebook.name} ✓" : datebook.name , datebook %></li>
                         <% end %>
+                        <% if user_is_admin? %>
+                            <li class="divider"></li>
+                            <li><%= link_to t(:create_new_datebook), new_datebook_url %></li>
+                        <% end %>
                     </ul>
                 </li>        
                 <li><%= link_to t(:patients), patients_url %></li> 
