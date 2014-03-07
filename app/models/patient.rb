@@ -7,7 +7,6 @@ class Patient < ActiveRecord::Base
   has_many :balances, :dependent => :delete_all 
   has_many :notes, :as => :noteable, :dependent => :delete_all   
   has_many :doctors, :through => :appointments
-  has_many :patient_treatments, :dependent => :delete_all
   belongs_to :practice, :counter_cache => true
   
   scope :mine, lambda { 

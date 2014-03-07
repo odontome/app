@@ -20,9 +20,7 @@ Odontome::Application.routes.draw do
     member do
       get 'appointments'
     end
-    resources :balances
     resources :notes
-    resources :patient_treatments
   end
 
   resources :treatments do

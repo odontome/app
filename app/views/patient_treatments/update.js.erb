@@ -1,8 +1,0 @@
-<% if params[:patient_treatment][:is_completed] != nil %>
-	
-	// Close the drawer
-	$('li#treatment<%=@treatment.id%> > .drawer').slideToggle(500, function() {
-	    $('li#treatment<%=@treatment.id%>').replaceWith("<%=escape_javascript(render :partial => 'show', :locals => {:treatment => @treatment, :patient => @patient, :doctors => @doctors})%>");
-	  });
-		
-<% end %>

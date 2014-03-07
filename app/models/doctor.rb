@@ -6,7 +6,6 @@ class Doctor < ActiveRecord::Base
   belongs_to :practice, :counter_cache => true
   has_many :appointments
   has_many :patients, :through => :appointments
-  has_many :patient_treatments
 
   scope :mine, lambda {
     where("doctors.practice_id = ? ", UserSession.find.user.practice_id)
@@ -34,7 +33,7 @@ class Doctor < ActiveRecord::Base
   end
   
   def is_deleteable
-    return true if self.appointments.count == 0 && self.patient_treatments.count == 0
+    return true if self.appointments.count == 0
   end
 
   private

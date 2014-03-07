@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140227194433) do
+ActiveRecord::Schema.define(:version => 20140307205357) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "doctor_id"
@@ -65,17 +65,6 @@ ActiveRecord::Schema.define(:version => 20140227194433) do
     t.integer   "noteable_id"
     t.string    "noteable_type"
     t.integer   "user_id"
-  end
-
-  create_table "patient_treatments", :force => true do |t|
-    t.integer   "patient_id"
-    t.integer   "doctor_id"
-    t.string    "name",         :limit => 100
-    t.float     "price"
-    t.boolean   "is_completed"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
-    t.string    "notes",        :limit => 500
   end
 
   create_table "patients", :force => true do |t|
