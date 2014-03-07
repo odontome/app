@@ -1,7 +1,7 @@
 class NotifierMailer < ActionMailer::Base
 
   layout 'email'
-  default :from => "hello@odonto.me"
+  default :from => "Odonto.me <hello@odonto.me>"
   
   def deliver_password_reset_instructions(user)
     @user = user
@@ -10,7 +10,8 @@ class NotifierMailer < ActionMailer::Base
     # temporarely set the locale and then change it back
     # when the block finishes
     I18n.with_locale(@user.practice.locale) do
-    	mail(:to => user.email, :subject => I18n.t("mailers.notifier.password_reset.subject"))
+    	mail(:to => user.email, 
+           :subject => I18n.t("mailers.notifier.password_reset.subject"))
     end
   end
   
