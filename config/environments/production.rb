@@ -51,6 +51,15 @@ Odontome::Application.configure do
   # config.middleware.use Rack::SslEnforcer, :only => ["/signup", "/signin", "/users/new", /^\/users\/(.+)\/edit/, "/set_session_time_zone", /^\/api\//], :mixed => true
 
   # Configure the host for emails
+  ActionMailer::Base.smtp_settings = {
+      :port =>           '587',
+      :address =>        'smtp.mandrillapp.com',
+      :user_name =>      ENV['MANDRILL_USERNAME'],
+      :password =>       ENV['MANDRILL_APIKEY'],
+      :domain =>         'heroku.com',
+      :authentication => :plain
+  }
+  ActionMailer::Base.delivery_method = :smtp
   config.action_mailer.asset_host = "http://my.odonto.me"
   config.action_mailer.default_url_options = { :host => 'my.odonto.me' }
 
