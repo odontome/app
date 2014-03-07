@@ -186,7 +186,6 @@ DEPENDENCIES
   i18n-tasks (~> 0.2.18)
   jquery-minicolors-rails
   jquery-rails (>= 3.0.4)
-  mail
   passbook (~> 0.3.1)
   pg
   rails (= 3.2.17)
