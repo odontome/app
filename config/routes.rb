@@ -6,6 +6,7 @@ Odontome::Application.routes.draw do
     	resources :datebooks do
         resources :appointments
       end
+      get "/practice" => "practices#show"
       resources :balances
       resources :patients
       resources :doctors
