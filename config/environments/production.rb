@@ -56,7 +56,7 @@ Odontome::Application.configure do
       :address =>        'smtp.mandrillapp.com',
       :user_name =>      ENV['MANDRILL_USERNAME'],
       :password =>       ENV['MANDRILL_APIKEY'],
-      :domain =>         'heroku.com',
+      :domain =>         'odonto.me',
       :authentication => :plain
   }
   ActionMailer::Base.delivery_method = :smtp
