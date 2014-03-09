@@ -1,1 +1,32 @@
-<h1>DASHBOARD!!!!</h1>
+<div id="pad-wrapper" class="user-profile">
+    <!-- header -->
+    <div class="row header">
+        <div class="col-md-8">
+            <h3><%= @practice.name %></h3>
+        </div>
+
+    </div>
+
+
+    <div class="row stats">
+        <div class="col-md-4 card">
+            <div>
+            	<h1><%= link_to @practice.datebooks_count, datebooks_url %></h1>
+            	<p><%= t :datebooks %></p>
+            </div>
+        </div>
+        <div class="col-md-4 card">
+            <div>
+            	<h1><%= link_to @practice.doctors_count, doctors_url %></h1>
+            	<p><%= t :doctors %></p>
+            </div>
+        </div>
+        <div class="col-md-4 card">
+            <div>
+            	<h1><%= link_to @practice.patients_count, patients_url %></h1>
+            	<p><%= t :patients %></p>
+            </div>
+        </div>
+    </div>
+	
+</div>
