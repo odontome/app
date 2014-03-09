@@ -7,6 +7,7 @@ en:
   active: Active
   developers: Developers
   update_password: Update password
+  my_practice: My practice
   activerecord:
     attributes:
       appointment:

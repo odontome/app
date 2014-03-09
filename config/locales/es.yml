@@ -6,6 +6,7 @@ es:
   active: Activa
   developers: Desarrolladores
   update_password: Actualizar contraseña
+  my_practice: Mi clínica
   activerecord:
     attributes:
       appointment:

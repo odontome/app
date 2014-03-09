@@ -41,7 +41,7 @@
                         <li><%= link_to t(:treatments), treatments_url %></li>                        
                         <% if user_is_admin? %>
                             <li><%= link_to t(:users), users_url %></li>
-                            <li><%= link_to t(:practice_settings), practice_settings_url %></li>
+                            <li><%= link_to t(:my_practice), practice_url %></li>
                         <% end %>
                         <li class="divider"></li>
                         <li><%= link_to t(:profile), current_user %></li>
