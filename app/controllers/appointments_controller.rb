@@ -78,6 +78,13 @@ class AppointmentsController < ApplicationController
                       "messageEncoding" : "UTF8"
                   },
                   "eventTicket": {
+                    "headerFields": [
+                      {
+                        "key" : "date",
+                        "label" : "' + I18n.l(appointment.starts_at.to_date, :format => :day_and_date) + '",
+                        "value" : "' + I18n.l(appointment.starts_at.to_time.in_time_zone(datebook.practice.timezone), :format => :just_the_time) + '"
+                      }
+                    ],
                      "primaryFields" : [
                           {
                          "key" : "location",
@@ -87,15 +94,6 @@ class AppointmentsController < ApplicationController
                      ],
                      "secondaryFields" : [
                         {
-                         "key" : "date",
-                         "label" : "Date",
-                         "value" : "' + I18n.l(appointment.starts_at, :format => :w3c) + '",
-                         "dateStyle" : "PKDateStyleMedium",
-                         "timeStyle" : "PKDateStyleShort"
-                         }
-                     ],
-                     "auxiliaryFields" : [
-                         {
                          "key" : "doctor",
                          "label" : "Doctor",
                          "value" : "' + appointment.doctor.fullname + '"
