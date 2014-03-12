@@ -68,7 +68,7 @@ es:
   admin_credentials_required: Necesitas ser administrador para poder hacer esto.
   administrator: Administrador
   age: Edad
-  age_with_suffix: ! 'hace %{age}'
+  age_with_suffix: ! '%{age} años de edad'
   ago_in_words: ! 'hace %{date}'
   allergic_to: alérgico a
   already_have_an_account: ¿Ya tienes una cuenta?
