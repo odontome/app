@@ -5,8 +5,6 @@ class Api::V1::AppointmentsController < Api::V1::BaseController
   before_filter :validate_date_range, :only => [:index]
   
   def index
-    datebook = Datebook.mine.find params[:datebook_id]
-
     case params[:from]
     when 'today'
       starts_at = DateTime.now.at_beginning_of_day
@@ -19,7 +17,7 @@ class Api::V1::AppointmentsController < Api::V1::BaseController
       ends_at = starts_at + 31.days
     end
 
-    respond_with(datebook.appointments.find_between(starts_at, ends_at), :methods => ["doctor","patient"])
+    respond_with(@datebook.appointments.find_between(starts_at, ends_at), :methods => ["doctor","patient"])
   end
   
   def show
@@ -49,7 +47,7 @@ class Api::V1::AppointmentsController < Api::V1::BaseController
   private
   
   def find_datebook
-    @appointment = Datebook.mine.find(params[:datebook_id])
+    @datebook = Datebook.mine.find(params[:datebook_id])
     rescue ActiveRecord::RecordNotFound
       error = { :error => "The datebook you were looking for could not be found."}
       respond_with(error, :status => 404)
