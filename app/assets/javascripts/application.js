@@ -8,6 +8,7 @@
 //= require jquery.autoSuggest
 //= require jquery.minicolors
 //= require retina-1.1.0
+//= require jstz.min
 //= require theme
 
 // This function prevents the session from ending

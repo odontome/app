@@ -16,9 +16,11 @@
 		  	<%= user_form.password_field :password_confirmation, :placeholder => t(:password_confirmation), :class => "form-control" %>
         <% end %>
 
-       <div class="remember">
+        <div class="remember">
         	<%= raw t :you_agree_to_our_terms_and_privacy_policy, terms_url: link_to(t(:terms_of_service).downcase, "/terms", :target => "_blank"), privacy_url: link_to(t(:privacy_policy).downcase, "/privacy", :target => "_blank") %>
         </div>
+
+        <%= practice_form.text_field :timezone, :class => "form-control" %> 
 
         <%= practice_form.submit(t(:signup), :class => "btn btn-primary login", :disable_with => t(:please_wait)) %>
 
@@ -30,3 +32,8 @@
     <p><%= t :already_have_an_account %> </p>
     <%= link_to t(:signin), signin_url %>
 </div>
+
+<script>
+    var timezone = jstz.determine();
+    document.getElementById("practice_timezone").value = timezone.name();
+</script>
