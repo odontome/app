@@ -243,7 +243,6 @@ en:
   practice_close_active_message: ''
   practice_close_error_message: Oops, there was a problem trying to close your account. Please contact us.
   practice_close_success_message: We are sorry to see you go. Your data is schedule for deletion.
-  practice_created_success_message: Thank you for joining Odonto.me. Please take a few minutes to look around and never hesitate to contact us if you need anything.
   practice_information: Practice information
   datebook_updated_success_message: Datebook updated successfully
   datebook_created_success_message: Datebook updated successfully

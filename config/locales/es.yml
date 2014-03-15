@@ -221,7 +221,6 @@ es:
   practice_close_active_message: ''
   practice_close_error_message: Ha ocurrido un error al intentar cerrar tu cuenta. Por favor contact con nosotros para solucionarlo.
   practice_close_success_message: Que lastima que has decidido dejarnos. Tu información ha sido marcada para ser borrada.
-  practice_created_success_message: Gracias por unirte a Odonto.me. Recuerda que siempre puedes contactarnos si necesitas algo.
   practice_information: Información de la clínica
   practice_name: Nombre de la clínica
   practice_name_hint: Algo como "Mi excelente clínica"
