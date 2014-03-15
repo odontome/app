@@ -1,4 +1,25 @@
 <div id="pad-wrapper">
+
+    <% if @practice.patients_count == 0 || @practice.doctors_count == 0 %>
+        <div class="flash-message alert alert-warning row">
+            <div class="col-md-8 col-md-offset-2 tutorial">
+                <h4><%= I18n.t :welcome %></h4>
+                <p><%= I18n.t "tutorial.message" %></p>
+
+                <hr />
+
+                <% if @practice.datebooks_count == 1 %>
+                    <p><%= raw I18n.t "tutorial.datebooks", :datebooks_url => link_to(I18n.t(:datebooks).downcase, datebooks_url) %></p>
+                <% end %>
+                <% if @practice.doctors_count == 0 %>
+                    <p><%= I18n.t "tutorial.doctors" %></p>
+                <% end %>
+                <p><%= raw I18n.t "tutorial.practice", :practice_settings_url => link_to(I18n.t(:practice_settings).downcase, practice_settings_url) %></p>
+
+            </div>
+        </div> 
+    <% end %>
+
     <!-- header -->
     <div class="row header">
         <div class="col-md-10">

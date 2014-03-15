@@ -273,6 +273,11 @@ es:
   user_updated_success_message: El usuario ha sido actualizado con éxito.
   users: Usuarios
   week: Semana
+  tutorial:
+    message: Podemos ver que apenas estás empezando y nos gustaría ayudarte a configurar tu clínica.
+    datebooks: Empiezas con una sola agenda que hemos creado por ti. Puedes editar el nombre de la misma o crear todas las que necesites en %{datebooks_url}.
+    doctors: Necesitas por lo menos un doctor para empezar a agendar pacientes. De nuevo, puedes crear todos los que quieras.
+    practice: No olvides configurar tu huso horario, idioma y moneda en %{practice_settings_url}. Algunos de estos valores fueron creados por ti, pero vale la pena revisar que todo este en orden.
   welcome: Bienvenido a Odonto.me
   you_agree_to_our_terms_and_privacy_policy: Aceptas nuestras %{terms_url} y nuestra %{privacy_url} cuando continuas.
   your_first_datebook: Tu agenda
