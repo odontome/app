@@ -12,7 +12,7 @@
                     <p><%= raw I18n.t "tutorial.datebooks", :datebooks_url => link_to(I18n.t(:datebooks).downcase, datebooks_url) %></p>
                 <% end %>
                 <% if @practice.doctors_count == 0 %>
-                    <p><%= I18n.t "tutorial.doctors" %></p>
+                    <p><%= raw I18n.t "tutorial.doctors", :doctors_url => link_to(I18n.t(:doctors).downcase, doctors_url) %></p>
                 <% end %>
                 <p><%= raw I18n.t "tutorial.practice", :practice_settings_url => link_to(I18n.t(:practice_settings).downcase, practice_settings_url) %></p>
 
