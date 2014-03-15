@@ -33,7 +33,19 @@ class Practice < ActiveRecord::Base
   private
   
   def set_timezone_and_locale
-    self.timezone = Time.zone.name
+    begin
+      # parse the [Continent]/[City_Name] into [City Name]
+      timezone_without_continent = self.timezone.split("/").last.sub("_"," ")
+      # check if the parsed city name is part of the locales
+      if ActiveSupport::TimeZone.all.map(&:name).include? timezone_without_continent
+        self.timezone = timezone_without_continent
+      else
+        self.timezone = Time.zone.name
+      end
+    rescue
+      self.timezone = Time.zone.name
+    end
+
     self.locale = "en"
   end
 

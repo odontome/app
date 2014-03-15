@@ -20,7 +20,7 @@
         	<%= raw t :you_agree_to_our_terms_and_privacy_policy, terms_url: link_to(t(:terms_of_service).downcase, "/terms", :target => "_blank"), privacy_url: link_to(t(:privacy_policy).downcase, "/privacy", :target => "_blank") %>
         </div>
 
-        <%= practice_form.text_field :timezone, :class => "form-control" %> 
+        <%= practice_form.hidden_field :timezone, :class => "form-control" %> 
 
         <%= practice_form.submit(t(:signup), :class => "btn btn-primary login", :disable_with => t(:please_wait)) %>
 

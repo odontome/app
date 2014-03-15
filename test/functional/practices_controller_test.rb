@@ -21,7 +21,9 @@ class PracticesControllerTest < ActionController::TestCase
   test "should create practice and send welcome email" do
     controller.session["user_credentials"] = nil
 
-    practice = { :name => "Odonto.me Demo Practice", :users_attributes => {"0"=>{"email"=> "demo@odonto.me", "password"=> "1234567890", "password_confirmation"=> "1234567890" } } }
+    practice = { :name => "Odonto.me Demo Practice", 
+                 :timezone => "Europe/London",
+                 :users_attributes => {"0"=>{"email"=> "demo@odonto.me", "password"=> "1234567890", "password_confirmation"=> "1234567890" } } }
 
     assert_difference('Practice.count') do
       post :create, practice: practice
@@ -35,6 +37,19 @@ class PracticesControllerTest < ActionController::TestCase
     assert_match(/Hello and welcome to Odonto.me!/, welcome_email.encoded)
 
     assert_redirected_to practice_path
+  end
+
+  test "should create practice with invalid timezone" do
+    controller.session["user_credentials"] = nil
+
+    practice = { :name => "Odonto.me Demo Practice", 
+                 :timezone => "",
+                 :users_attributes => {"0"=>{"email"=> "demo@odonto.me", "password"=> "1234567890", "password_confirmation"=> "1234567890" } } }
+
+    assert_difference('Practice.count') do
+      post :create, practice: practice
+    end
+
   end
   
 end
