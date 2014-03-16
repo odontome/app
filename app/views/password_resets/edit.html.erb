@@ -5,7 +5,7 @@
 		<%= form_tag password_reset_path, :method => :put do %>
 			<p><%= t :password_update_instructions %></p>
 
-			<p><%= password_field_tag :password, :class => "form-control" %></p>
+			<p><%= password_field_tag :password, nil, :placeholder => t(:email), :class => "form-control" %></p>
 			
 			<%= submit_tag( t(:update_password), :class => "btn btn-primary login") %>
 
