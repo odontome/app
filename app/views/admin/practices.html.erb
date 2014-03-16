@@ -34,7 +34,7 @@
 				<% @practices.each do |practice| %>
 					<tr>
 						<td><%= practice.id %></td>
-						<td><%= practice.name %></td>
+						<td><%= practice.name %> <% if practice.cancelled_at %><br /> <sub class="alert-danger">(Cancelled at <%= practice.cancelled_at %></sub> <% end %> </td>
 						<td><%= practice.datebooks_count %></td>
 						<td><%= practice.patients_count %></td>
 						<td><%= practice.doctors_count %></td>
