@@ -2,7 +2,7 @@
 
 <div class="box">
     <div class="content-wrap">
-		<% form_tag password_reset_path, :method => :put do %>
+		<%= form_tag password_reset_path, :method => :put do %>
 			<p><%= t :password_update_instructions %></p>
 
 			<p><%= password_field_tag :password, :class => "form-control" %></p>
