@@ -4,6 +4,7 @@ class NotifierMailer < ActionMailer::Base
   default :from => "Odonto.me <hello@odonto.me>"
   
   def deliver_password_reset_instructions(user)
+    @show_logo_in_header = true
     @user = user
     @edit_password_reset_url = edit_password_reset_url(@user.perishable_token)
 
