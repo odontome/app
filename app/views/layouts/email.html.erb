@@ -185,6 +185,18 @@ ul li, ol li {
 			<!-- content -->
 			<div class="content">
 			<table>
+
+				<% if @show_logo_in_header %>
+				<tr>
+					<td align="center">
+						<p><a href="http://www.odonto.me">
+								<%= image_tag "logofull.png", :width => 150 %>
+							</a>
+						</p>
+					</td>
+				</tr>
+				<% end %>
+
 				<tr>
 					<td>
 						<%= yield %>
