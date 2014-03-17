@@ -1,0 +1,21 @@
+<h1>Resumen del día <%= l @date.to_date, :format => :day_and_date %></h1>
+
+<% if !@appointments.nil? %>
+	<h3><%= @appointments.size %> citas agendadas</h3>
+
+	<ul>
+		<% @appointments.each do |appointment| %>
+			<li><%= "#{appointment['patient_firstname']} #{appointment['patient_lastname']} con #{appointment['doctor_firstname']} #{appointment['doctor_lastname']} el #{l(appointment['starts_at'].to_time, :format => :short)}"%></li>
+		<% end %>
+	</ul>
+<% end %>
+
+<% if !@patients.nil? %>
+	<h3><%= @patients.size %> nuevos pacientes</h3>
+	
+	<ul>
+		<% @patients.each do |patient| %>
+			<li><%= link_to "#{patient['firstname']} #{patient['lastname']}", patient_url(:id => patient['id']) %></li>
+		<% end %>
+	</ul>
+<% end %>

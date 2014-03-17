@@ -182,6 +182,8 @@ en:
     practice:
       welcome:
         subject: Welcome to Odonto.me
+      daily_recap:
+        subject: Daily recap for %{date}
   male: Male
   male_doctor_prefix: D.D.S.
   manage: Manage

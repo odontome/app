@@ -59,4 +59,66 @@ namespace :odontome do
 
   end
 
+  desc "Send an activity recap everyday at 8am in their timezone"
+  task :send_daily_recap_to_administrators => :environment do 
+
+    if defined?(Rails) && (Rails.env == 'development')
+      Rails.logger = Logger.new(STDOUT)
+    end
+
+    # configuration
+    TIMEZONES = ActiveSupport::TimeZone.all
+    HOUR_TO_SEND_EMAILS = 8
+    DAY_TO_QUERY = Time.zone.now.beginning_of_day - 1.day
+
+    def timezones_where_hour_are(hour, time = Time.now)
+      TIMEZONES.select { |z|
+        t = time.in_time_zone(z)
+        t.hour == hour
+      }.map(&:name)
+    end
+
+    def practices_in_timezones(timezones)
+      return [] if timezones.empty?
+      Practice.select(:id).where(:timezone => timezones).pluck(:id)
+    end
+
+    practice_ids = practices_in_timezones(timezones_where_hour_are(HOUR_TO_SEND_EMAILS))
+
+    if practice_ids.size > 0
+      admins_of_these_practices = User.select("firstname, lastname, practice_id, email, locale")
+      .where(:practice_id => practice_ids)
+      .where("roles = ?", "admin")
+      .joins(:practice)
+      .order(:practice_id)
+
+      patients_created_today = Patient.select("id,firstname,lastname,practice_id")
+      .where(:practice_id => practice_ids)
+      .where("created_at >= ?", DAY_TO_QUERY)
+      .order(:practice_id)
+
+      appointments_created_today = Datebook.select("datebooks.practice_id, datebooks.name, appointments.starts_at, doctors.firstname as doctor_firstname, doctors.lastname as doctor_lastname, patients.firstname as patient_firstname, patients.lastname as patient_lastname")
+      .where("datebooks.practice_id" => practice_ids)
+      .where("appointments.created_at >= ?", DAY_TO_QUERY)
+      .joins(:appointments => [:doctor, :patient])
+      .order("datebooks.practice_id")
+
+      # create array of column values (hash) instead of an array of models
+      patients = ActiveRecord::Base.connection.select_all(patients_created_today)
+      appointments = ActiveRecord::Base.connection.select_all(appointments_created_today)
+      users = ActiveRecord::Base.connection.select_all(admins_of_these_practices)
+
+      # group the arrays by practice_id
+      patients = patients.group_by { |patient| patient["practice_id"] }
+      appointments = appointments.group_by { |appointment| appointment["practice_id"] }
+      users = users.group_by { |user| user["practice_id"] }
+
+      # go through every practice_id in this timezone and send them an
+      # email with their daily recap
+      practice_ids.each do |practice_id|
+        PracticeMailer.daily_recap_email(users[practice_id], patients[practice_id], appointments[practice_id], DAY_TO_QUERY).deliver
+      end
+    end
+
+  end
 end

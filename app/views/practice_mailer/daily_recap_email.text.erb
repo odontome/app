@@ -1,0 +1,17 @@
+Daily recap for <%= l @date.to_date, :format => :day_and_date %>
+
+<% if !@appointments.nil? %>
+<%= @appointments.size %> appointments scheduled
+	<% @appointments.each do |appointment| %>
+<%= "#{appointment['patient_firstname']} #{appointment['patient_lastname']} with #{appointment['doctor_firstname']} #{appointment['doctor_lastname']} at #{appointment['starts_at']}"%> 
+	<% end %>
+<% end %>
+
+<% if !@patients.nil? %>
+<%= @patients.size %> patients added
+	<% @patients.each do |patient| %>
+<%= "#{patient['firstname']} #{patient['lastname']}" %> <%= url_for patient_url(:id => patient['id']) %>
+	<% end %>
+<% end %>
+
+
