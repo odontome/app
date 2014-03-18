@@ -69,7 +69,8 @@ namespace :odontome do
     # configuration
     TIMEZONES = ActiveSupport::TimeZone.all
     HOUR_TO_SEND_EMAILS = 8
-    DAY_TO_QUERY = Time.zone.now.beginning_of_day - 1.day
+    TODAY = Time.zone.now.beginning_of_day
+    YESTERDAY = TODAY - 1.day
 
     def timezones_where_hour_are(hour, time = Time.now)
       TIMEZONES.select { |z|
@@ -94,12 +95,12 @@ namespace :odontome do
 
       patients_created_today = Patient.select("id,firstname,lastname,practice_id")
       .where(:practice_id => practice_ids)
-      .where("created_at >= ?", DAY_TO_QUERY)
+      .where("patients.created_at >= ? AND patients.created_at <= ?", YESTERDAY, TODAY)
       .order(:practice_id)
 
       appointments_created_today = Datebook.select("datebooks.practice_id, datebooks.name, appointments.starts_at, doctors.firstname as doctor_firstname, doctors.lastname as doctor_lastname, patients.firstname as patient_firstname, patients.lastname as patient_lastname")
       .where("datebooks.practice_id" => practice_ids)
-      .where("appointments.created_at >= ?", DAY_TO_QUERY)
+      .where("appointments.created_at >= ? AND appointments.created_at <= ?", YESTERDAY, TODAY)
       .joins(:appointments => [:doctor, :patient])
       .order("datebooks.practice_id")
 
@@ -116,7 +117,7 @@ namespace :odontome do
       # go through every practice_id in this timezone and send them an
       # email with their daily recap
       practice_ids.each do |practice_id|
-        PracticeMailer.daily_recap_email(users[practice_id], patients[practice_id], appointments[practice_id], DAY_TO_QUERY).deliver
+        PracticeMailer.daily_recap_email(users[practice_id], patients[practice_id], appointments[practice_id], YESTERDAY).deliver
       end
     end
 
