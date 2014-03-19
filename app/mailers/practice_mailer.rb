@@ -19,7 +19,7 @@ class PracticeMailer < ActionMailer::Base
   		# temporarely set the locale and then change it back
 	    # when the block finishes
 	    I18n.with_locale(admin_user.first["locale"]) do
-  			mail(:to => admin_user.first["email"], :subject => I18n.t("mailers.practice.dayly_recap.subject", :date => l(@date.to_date, :format => :day_and_date)))
+  			mail(:to => admin_user.first["email"], :subject => I18n.t("mailers.practice.daily_recap.subject", :date => l(@date.to_date, :format => :day_and_date)))
   		end
   	end
   end

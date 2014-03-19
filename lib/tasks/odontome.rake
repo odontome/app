@@ -117,7 +117,7 @@ namespace :odontome do
       # go through every practice_id in this timezone and send them an
       # email with their daily recap
       practice_ids.each do |practice_id|
-        PracticeMailer.daily_recap_email(users[practice_id], patients[practice_id], appointments[practice_id], YESTERDAY).deliver
+        PracticeMailer.daily_recap_email(users[practice_id.to_s], patients[practice_id.to_s], appointments[practice_id.to_s], YESTERDAY).deliver
       end
     end
 
