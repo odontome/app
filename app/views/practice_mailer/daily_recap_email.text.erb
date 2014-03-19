@@ -3,7 +3,7 @@ Daily recap for <%= l @date.to_date, :format => :day_and_date %>
 <% if !@appointments.nil? %>
 <%= @appointments.size %> appointments scheduled
 	<% @appointments.each do |appointment| %>
-<%= "#{appointment['patient_firstname']} #{appointment['patient_lastname']} with #{appointment['doctor_firstname']} #{appointment['doctor_lastname']} at #{appointment['starts_at']}"%> 
+<%= "#{appointment['patient_firstname']} #{appointment['patient_lastname']} with #{appointment['doctor_firstname']} #{appointment['doctor_lastname']} at #{l appointment['starts_at'].to_time, :format => :short}"%>
 	<% end %>
 <% end %>
 

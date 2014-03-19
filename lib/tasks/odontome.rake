@@ -93,7 +93,7 @@ namespace :odontome do
       .joins(:practice)
       .order(:practice_id)
 
-      patients_created_today = Patient.select("id,firstname,lastname,practice_id")
+      patients_created_today = Patient.select("id, firstname, lastname, practice_id, email")
       .where(:practice_id => practice_ids)
       .where("patients.created_at >= ? AND patients.created_at <= ?", YESTERDAY, TODAY)
       .order(:practice_id)
@@ -110,14 +110,14 @@ namespace :odontome do
       users = ActiveRecord::Base.connection.select_all(admins_of_these_practices)
 
       # group the arrays by practice_id
-      patients = patients.group_by { |patient| patient["practice_id"] }
-      appointments = appointments.group_by { |appointment| appointment["practice_id"] }
-      users = users.group_by { |user| user["practice_id"] }
+      patients = patients.group_by { |patient| patient["practice_id"].to_s }
+      appointments = appointments.group_by { |appointment| appointment["practice_id"].to_s }
+      users = users.group_by { |user| user["practice_id"].to_s }
 
       # go through every practice_id in this timezone and send them an
       # email with their daily recap
       practice_ids.each do |practice_id|
-        PracticeMailer.daily_recap_email(users[practice_id.to_s], patients[practice_id.to_s], appointments[practice_id.to_s], YESTERDAY).deliver
+        PracticeMailer.daily_recap_email(users["#{practice_id}"], patients["#{practice_id}"], appointments["#{practice_id}"], YESTERDAY).deliver
       end
     end
 

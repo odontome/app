@@ -2,6 +2,7 @@ class PracticeMailer < ActionMailer::Base
 
   layout 'email'
   default :from => "Odonto.me <hello@odonto.me>"
+  add_template_helper(ApplicationHelper)
   
   def welcome_email(practice)
   	@show_logo_in_header = true
