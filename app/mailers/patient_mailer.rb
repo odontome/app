@@ -4,8 +4,6 @@ class PatientMailer < ActionMailer::Base
 
   def appointment_soon_email(patient_email, patient_name, start_time, end_time, practice_name, practice_locale, practice_timezone, doctor_name, practice_email)
     
-    @show_logo_in_header = false
-
     @patient_name = patient_name
     @start_time = start_time
     @end_time = end_time
@@ -24,9 +22,7 @@ class PatientMailer < ActionMailer::Base
   end
 
   def appointment_scheduled_email(patient_email, patient_name, start_time, end_time, practice_name, practice_locale, practice_timezone, doctor_name, practice_email, passbook_url)
-    
-    @show_logo_in_header = false
-    
+        
     @patient_name = patient_name
     @start_time = start_time
     @end_time = end_time

@@ -5,13 +5,10 @@ class PracticeMailer < ActionMailer::Base
   add_template_helper(ApplicationHelper)
   
   def welcome_email(practice)
-  	@show_logo_in_header = true
-
   	mail(:to => practice.users.first.email, :subject => I18n.t("mailers.practice.welcome.subject"))
   end
 
   def daily_recap_email(admin_user, patients_created_today, appointments_created_today, date)
-  	@show_logo_in_header = true
   	@patients = patients_created_today
   	@appointments = appointments_created_today
   	@date = date

@@ -44,20 +44,6 @@ ul li,ol li{margin-left:5px;list-style-position:inside}
 			<!-- content -->
 			<div class="content">
 			<table>
-
-				<% if @show_logo_in_header %>
-					<tr>
-						<td align="center">
-							<p>
-								<a href="http://www.odonto.me">
-									<%= image_tag "logofull@2x.png", :width => 150 %>
-								</a>
-							</p>
-							<br />
-						</td>
-					</tr>
-				<% end %>
-
 				<tr>
 					<td>
 						<%= yield %>
