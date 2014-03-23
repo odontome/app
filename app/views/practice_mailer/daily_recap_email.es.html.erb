@@ -5,7 +5,7 @@
 
 	<ul>
 		<% @appointments.each do |appointment| %>
-			<li><%= raw "<strong>#{appointment['patient_firstname']} #{appointment['patient_lastname']}</strong> con #{appointment['doctor_firstname']} #{appointment['doctor_lastname']} <i>el #{l(appointment['starts_at'].to_time, :format => :short)} (#{appointment['name']})</i>"%></li>
+			<li><%= raw "#{appointment['patient_firstname']} #{appointment['patient_lastname']} con #{appointment['doctor_firstname']} #{appointment['doctor_lastname']} <br /><small>#{l(appointment['starts_at'].to_time, :format => :short)} (#{appointment['name']})</small>"%></li>
 		<% end %>
 	</ul>
 <% end %>
