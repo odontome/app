@@ -1,0 +1,19 @@
+<p>
+	Happy birthday <%= @patient["firstname"] %>!
+</p>
+<p>
+	We would like to wish you the best birthday ever, we even "made you" this sugary treat. Don't forget to visit us if you eat all that sugar :)
+</p>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td align="center">
+            <%= image_tag "bday-muffin@2x.png", :width => 300 %>
+        </td>
+    </tr>
+</table>
+
+<p>
+	Hope to see you again soon!,<br />
+	<%= @patient['practice_name'] %>
+</p>

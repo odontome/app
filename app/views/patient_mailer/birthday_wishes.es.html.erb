@@ -1,0 +1,19 @@
+<p>
+	¡Feliz cumpleaños <%= @patient["firstname"] %>!
+</p>
+<p>
+	Esperemos que hoy pases el mejor cumpleaños de tu vida, inclusive te "hemos hecho" este regalo azucarado. No olvides visitarnos de nuevo después de comer tanta azucar :)
+</p>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td align="center">
+            <%= image_tag "bday-muffin@2x.png", :width => 300 %>
+        </td>
+    </tr>
+</table>
+
+<p>
+	Esperamos verte pronto,<br />
+	<%= @patient['practice_name'] %>
+</p>

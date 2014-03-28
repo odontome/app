@@ -1,4 +1,5 @@
 namespace :odontome do
+
   desc "Send appointment reminders to patients"
   task :send_appointment_reminder_notifications => :environment do
 
@@ -67,31 +68,14 @@ namespace :odontome do
     end
 
     # configuration
-    TIMEZONES = ActiveSupport::TimeZone.all
     HOUR_TO_SEND_EMAILS = 8
     TODAY = Time.zone.now.beginning_of_day
     YESTERDAY = TODAY - 1.day
 
-    def timezones_where_hour_are(hour, time = Time.now)
-      TIMEZONES.select { |z|
-        t = time.in_time_zone(z)
-        t.hour == hour
-      }.map(&:name)
-    end
-
-    def practices_in_timezones(timezones)
-      return [] if timezones.empty?
-      Practice.select(:id).where(:timezone => timezones).pluck(:id)
-    end
-
     practice_ids = practices_in_timezones(timezones_where_hour_are(HOUR_TO_SEND_EMAILS))
 
     if practice_ids.size > 0
-      admins_of_these_practices = User.select("firstname, lastname, practice_id, email, locale")
-      .where(:practice_id => practice_ids)
-      .where("roles = ?", "admin")
-      .joins(:practice)
-      .order(:practice_id)
+      admins_of_these_practices = admin_of_practice(practice_ids)
 
       patients_created_today = Patient.select("id, firstname, lastname, practice_id, email")
       .where(:practice_id => practice_ids)
@@ -122,4 +106,76 @@ namespace :odontome do
     end
 
   end
+
+  desc "Send birthday wishes to patients in their timezone"
+  task :send_birthday_wishes_to_patients => :environment do
+
+    if defined?(Rails) && (Rails.env == 'development')
+      Rails.logger = Logger.new(STDOUT)
+    end
+
+    HOUR_TO_SEND_EMAILS = 15
+    TODAY = Time.zone.now.to_date
+
+    practice_ids = practices_in_timezones(timezones_where_hour_are(HOUR_TO_SEND_EMAILS))
+
+    if practice_ids.size > 0
+      admins_of_these_practices = admin_of_practice(practice_ids)
+
+      patients_of_these_practices = Patient.select("practice_id, firstname, lastname, date_of_birth, email, practices.locale, practices.name as practice_name")
+      .where(:practice_id => practice_ids)
+      .where("patients.email <> ''")
+      .where("extract(month from date_of_birth) = ? AND extract(day from date_of_birth) = ?", TODAY.strftime('%m'), TODAY.strftime('%d'))
+      .joins(:practice)
+
+      # create array of column values (hash) instead of an array of models
+      patients = ActiveRecord::Base.connection.select_all(patients_of_these_practices)
+      users = ActiveRecord::Base.connection.select_all(admins_of_these_practices)
+
+      # group the arrays by practice_id
+      patients = patients.group_by { |patient| patient["practice_id"].to_s }
+      users = users.group_by { |user| user["practice_id"].to_s }
+
+      # go through every practice_id in this timezone and email them
+      practice_ids.each do |practice_id|
+        patients_in_practice = patients["#{practice_id}"]
+        admin_user = users["#{practice_id}"].first
+
+        if patients_in_practice
+          patients_in_practice.each do |patient|
+            PatientMailer.birthday_wishes(admin_user, patient).deliver
+          end
+        end
+      end
+
+    end
+
+  end
+
+  # find all the timezones where the hour is @hour
+  def timezones_where_hour_are(hour)
+    time = Time.now
+    timezones = ActiveSupport::TimeZone.all
+
+    timezones.select { |z|
+      t = time.in_time_zone(z)
+      t.hour == hour
+    }.map(&:name)
+  end
+
+  # find all the practices that match any of the @timezones
+  def practices_in_timezones(timezones)
+    return [] if timezones.empty?
+    Practice.select(:id).where(:timezone => timezones).pluck(:id)
+  end
+
+  # find all the admins for the given @practice_ids
+  def admin_of_practice(practice_ids)
+    User.select("firstname, lastname, practice_id, email, locale")
+      .where(:practice_id => practice_ids)
+      .where("roles = ?", "admin")
+      .joins(:practice)
+      .order(:practice_id)
+  end
+
 end

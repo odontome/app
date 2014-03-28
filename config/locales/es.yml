@@ -165,6 +165,8 @@ es:
         subject: Tu cita con %{practice_name} se acerca
       appointment_scheduled_email:
         subject: Tu cita con %{practice_name}
+      birthday:
+        subject: ¡Feliz cumpleaños!
     practice:
       welcome:
         subject: Bienvenido a Odonto.me

@@ -41,4 +41,18 @@ class PatientMailer < ActionMailer::Base
     end
   end
 
+  def birthday_wishes(admin, patient)
+    @admin = admin
+    @patient = patient
+
+    # temporarely set the locale and then change it back
+    # when the block finishes
+    I18n.with_locale(@patient["locale"]) do
+      mail(:from => "#{@patient['practice_name']} <hello@odonto.me>",
+           :to => @patient["email"], 
+           :subject => I18n.t("mailers.patient.birthday.subject"),
+           :reply_to => @admin["email"])
+    end
+  end
+
 end
