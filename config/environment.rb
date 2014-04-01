@@ -14,6 +14,8 @@ ActiveRecord::Base.include_root_in_json = false
 $appointment_notificacion_hours = 48 # if the appointment is in the next {hours} it will send a notification
 $appointment_notificacion_time = 3 # UTC hours. Example: "3" for 3am-UTC
 
+LAST_VISITED_DATEBOOK = :last_visited_datebook
+
 # Config authlogic
 Authlogic::Session::Base.controller = Authlogic::ControllerAdapters::RailsAdapter.new(self)
 

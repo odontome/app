@@ -8,7 +8,12 @@ class WelcomeController < ApplicationController
       if current_user_is_superadmin?
         home_url = practices_admin_url
       else
-        home_url = Datebook.mine.first
+
+        if session[LAST_VISITED_DATEBOOK]
+          home_url = Datebook.mine.find session[LAST_VISITED_DATEBOOK]
+        else
+          home_url = Datebook.mine.first
+        end
       end
       redirect_to home_url
     else

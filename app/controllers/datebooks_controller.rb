@@ -10,14 +10,18 @@ class DatebooksController < ApplicationController
     .select('datebooks.id, datebooks.name, datebooks.updated_at, count(appointments.id) as appointments_count')
     .joins('left outer join appointments on appointments.datebook_id = datebooks.id')
     .group('datebooks.id')
-    .order('name')
+    .order(:name)
   end
 
   def show
     @doctors = Doctor.mine.order("firstname")
     @filtered_by = params[:doctor_id] || nil
-
     @datebook = Datebook.mine.find params[:id]
+
+    # store this variable in the session scope, the next time
+    # so when the user clicks on the logo it will send him
+    # to this datebook
+    session[LAST_VISITED_DATEBOOK] = @datebook.id
 
     # Detect if this is coming from a mobile device
     @is_mobile = request.user_agent =~ /Mobile|webOS|Android/
