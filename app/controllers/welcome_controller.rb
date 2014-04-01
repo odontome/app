@@ -10,10 +10,15 @@ class WelcomeController < ApplicationController
       else
 
         if session[LAST_VISITED_DATEBOOK]
-          home_url = Datebook.mine.find session[LAST_VISITED_DATEBOOK]
+          begin
+            home_url = Datebook.mine.find(session[LAST_VISITED_DATEBOOK])
+          rescue ActiveRecord::RecordNotFound
+            home_url = Datebook.mine.first
+          end
         else
           home_url = Datebook.mine.first
-        end
+        end       
+
       end
       redirect_to home_url
     else
