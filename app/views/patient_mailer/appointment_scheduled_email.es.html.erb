@@ -3,11 +3,11 @@
 	Gracias por tu visita
 </p>
 <p>
-	Te enviamos este email en nombre de <strong><%= @practice_name %></strong> porque hiciste una cita para el <strong><%=l @start_time.to_date, :format => :day_and_date %></strong> con <%= @doctor_name %>.
+	Te enviamos este email en nombre de <strong><%= @practice_name %></strong> porque hiciste una cita para el <strong><%= @appointment_date %></strong> con <%= @doctor_name %>.
 </p>
 <p>
-	Comienza a las: <strong><%=l @start_time.to_time.in_time_zone(@practice_timezone), :format => :just_the_time %></strong><br />
-	y termina a las: <strong><%=l @end_time.to_time.in_time_zone(@practice_timezone), :format => :just_the_time %></strong>
+	Comienza a las: <strong><%= @appointment_start_time %></strong><br />
+	y termina a las: <strong><%= @appointment_end_time %></strong>
 </p>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">

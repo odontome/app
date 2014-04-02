@@ -3,11 +3,11 @@
 	¡Tienes una cita dental pronto! 
 </p>
 <p>
-	Te enviamos este email en nombre de <strong><%= @practice_name %></strong> porque tienes agendada una cita este próximo <strong><%=l @start_time.to_date, :format => :day_and_date %></strong> con <%= @doctor_name %>.
+	Te enviamos este email en nombre de <strong><%= @practice_name %></strong> porque tienes agendada una cita este próximo <strong><%= @appointment_date %></strong> con <%= @doctor_name %>.
 </p>
 <p>
-	Comienza a las: <strong><%=l @start_time.to_time.in_time_zone(@practice_timezone), :format => :just_the_time %></strong><br />
-	y termina a las: <strong><%=l @end_time.to_time.in_time_zone(@practice_timezone), :format => :just_the_time %></strong>
+	Comienza a las: <strong><%= @appointment_start_time %></strong><br />
+	y termina a las: <strong><%= @appointment_end_time %></strong>
 </p>
 <p>
 	¡Te vemos pronto!,<br />
