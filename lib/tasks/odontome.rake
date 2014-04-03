@@ -15,7 +15,7 @@ namespace :odontome do
     appointments.each do |appointment|
       practice = appointment.datebook.practice
 
-      PatientMailer.appointment_soon_email(appointment.patient.email, appointment.patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, appointment.doctor.fullname, practice.users.first.email).deliver
+      PatientMailer.appointment_soon_email(appointment.patient.email, appointment.patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, appointment.doctor, practice.users.first.email).deliver
 
       to_update << appointment.id
     end
@@ -38,7 +38,7 @@ namespace :odontome do
       practice = appointment.datebook.practice
       passbook_url = appointment.ciphered_url
 
-      PatientMailer.appointment_scheduled_email(appointment.patient.email, appointment.patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, appointment.doctor.fullname, practice.users.first.email, passbook_url).deliver
+      PatientMailer.appointment_scheduled_email(appointment.patient.email, appointment.patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, appointment.doctor, practice.users.first.email, passbook_url).deliver
 
       to_update << appointment.id
     end
