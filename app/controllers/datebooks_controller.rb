@@ -24,7 +24,7 @@ class DatebooksController < ApplicationController
     session[LAST_VISITED_DATEBOOK] = @datebook.id
 
     # Detect if this is coming from a mobile device
-    @is_mobile = request.user_agent =~ /Mobile|webOS|Android/
+    @is_mobile = request.user_agent =~ /iPhone|webOS|Android/
   end
 
   def new
