@@ -52,7 +52,7 @@ class AppointmentsController < ApplicationController
     
     appointment_id_deciphered = cipher.dec(Base64.strict_decode64(params[:id]))
 
-    datebook = Datebook.find params[:datebook_id]
+    datebook = Datebook.includes(:practice).find(params[:datebook_id])
     appointment = Appointment.where(:id => appointment_id_deciphered, :datebook_id => datebook.id).first
 
     # create this here, otherwise it will be a local variable inside the 
@@ -66,12 +66,12 @@ class AppointmentsController < ApplicationController
                   "passTypeIdentifier" : "pass.me.odonto.patient.reminder",
                   "serialNumber" : "'+appointment.id.to_s+'",
                   "teamIdentifier" : "R64MTWS872",
-                  "organizationName" : "Odonto.me",
+                  "organizationName" : "' + datebook.practice.name + '",
                   "description" : "Patient appointment",
                   "foregroundColor" : "#1ca5ef",
                   "backgroundColor" : "#ffffff",
-                  "relevantDate" : "' + I18n.l(appointment.starts_at, :format => :w3c) + '",
-                  "expirationDate" : "' + I18n.l(appointment.ends_at, :format => :w3c) + '",
+                  "relevantDate" : "' + I18n.l(appointment.starts_at.in_time_zone(datebook.practice.timezone), :format => :w3c) + '",
+                  "expirationDate" : "' + I18n.l(appointment.ends_at.in_time_zone(datebook.practice.timezone), :format => :w3c) + '",
                   "barcode" : {
                       "message" : "https://my.odonto.me/patients/' + appointment.patient_id.to_s + '",
                       "format" : "PKBarcodeFormatQR",
@@ -81,8 +81,8 @@ class AppointmentsController < ApplicationController
                     "headerFields": [
                       {
                         "key" : "date",
-                        "label" : "' + I18n.l(appointment.starts_at.to_date, :format => :day_and_date) + '",
-                        "value" : "' + I18n.l(appointment.starts_at.to_time.in_time_zone(datebook.practice.timezone), :format => :just_the_time) + '"
+                        "label" : "' + I18n.l(appointment.starts_at.in_time_zone(datebook.practice.timezone).to_date, :format => :day_and_date) + '",
+                        "value" : "' + I18n.l(appointment.starts_at.in_time_zone(datebook.practice.timezone).to_time.in_time_zone(datebook.practice.timezone), :format => :just_the_time) + '"
                       }
                     ],
                      "primaryFields" : [
