@@ -97,15 +97,11 @@
 						  }
 				});
 			},
-			eventAfterRender: function( event, element, view ) { 
-	// Add touch dragging to event element 
-	element.addTouch();
-     },
-			eventRender: function(event, element) {
-				// Append the name of the patient    
+			eventAfterRender: function(event, element, view) {
 				element.find('.fc-event-time').append(" " + event.firstname + " " + event.lastname);
-		    }
-			
+				// Add touch dragging to event element 
+				element.addTouch();
+     		}
 		});
 	});	
 </script>
