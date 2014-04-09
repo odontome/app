@@ -40,6 +40,16 @@ class PatientsControllerTest < ActionController::TestCase
     get :edit, id: patients(:one).to_param
     assert_response :success
   end
+
+  test "should get search results" do
+    get :index, q: patients(:four).firstname
+    assert_not_nil assigns(:patients)
+  end
+
+  test "should not get search results" do
+    get :index, q: patients(:four).email
+    assert assigns(:patients).empty?
+  end
   
   test "should update patient" do
     put :update, id: patients(:one).to_param, practice: @new_patient
