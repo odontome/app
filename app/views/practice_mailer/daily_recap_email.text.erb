@@ -1,9 +1,9 @@
-Daily recap for <%= l @date.to_date, :format => :day_and_date %>
+Daily recap for <%= l @date.in_time_zone(@practice_timezone).to_date, :format => :day_and_date %>
 
 <% if !@appointments.nil? %>
 <%= @appointments.size %> appointments scheduled
 	<% @appointments.each do |appointment| %>
-<%= "#{appointment['patient_firstname']} #{appointment['patient_lastname']} with #{appointment['doctor_firstname']} #{appointment['doctor_lastname']} at #{l appointment['starts_at'].to_time, :format => :short}"%>
+<%= "#{appointment['patient_firstname']} #{appointment['patient_lastname']} with #{appointment['doctor_firstname']} #{appointment['doctor_lastname']} at #{l appointment['starts_at'].to_time.in_time_zone(@practice_timezone), :format => :short}"%>
 	<% end %>
 <% end %>
 

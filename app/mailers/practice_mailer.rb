@@ -12,11 +12,14 @@ class PracticeMailer < ActionMailer::Base
   	@patients = patients_created_today
   	@appointments = appointments_created_today
   	@date = date
-	
+
   	if !@patients.nil? || !@appointments.nil?
+      @practice_timezone = admin_user.first["timezone"]
+      @practice_locale = admin_user.first["locale"]
+
   		# temporarely set the locale and then change it back
 	    # when the block finishes
-	    I18n.with_locale(admin_user.first["locale"]) do
+	    I18n.with_locale(@practice_locale) do
   			mail(:to => admin_user.first["email"], :subject => I18n.t("mailers.practice.daily_recap.subject", :date => l(@date.to_date, :format => :day_and_date)))
   		end
   	end

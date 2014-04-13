@@ -1,11 +1,11 @@
-<h3>Resumen del día <%= l @date.to_date, :format => :day_and_date %></h3>
+<h3>Resumen del día <%= l @date.in_time_zone(@practice_timezone).to_date, :format => :day_and_date %></h3>
 
 <% if !@appointments.nil? %>
 	<h4><%= @appointments.size %> citas agendadas</h4>
 
 	<ul>
 		<% @appointments.each do |appointment| %>
-			<li><%= raw "#{appointment['patient_firstname']} #{appointment['patient_lastname']} con #{appointment['doctor_firstname']} #{appointment['doctor_lastname']} <br /><small>#{l(appointment['starts_at'].to_time, :format => :short)} (#{appointment['name']})</small>"%></li>
+			<li><%= raw "#{appointment['patient_firstname']} #{appointment['patient_lastname']} con #{appointment['doctor_firstname']} #{appointment['doctor_lastname']} <br /><small>#{l(appointment['starts_at'].to_time.in_time_zone(@practice_timezone), :format => :short)} (#{appointment['name']})</small>"%></li>
 		<% end %>
 	</ul>
 <% end %>

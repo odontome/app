@@ -1,9 +1,9 @@
-Resumen del día <%= l @date.to_date, :format => :day_and_date %>
+Resumen del día <%= l @date.in_time_zone(@practice_timezone).to_date, :format => :day_and_date %>
 
 <% if !@appointments.nil? %>
 <%= @appointments.size %> citas agendadas
 	<% @appointments.each do |appointment| %>
-<%= "#{appointment['patient_firstname']} #{appointment['patient_lastname']} con #{appointment['doctor_firstname']} #{appointment['doctor_lastname']} el #{l(appointment['starts_at'].to_time, :format => :short)}"%>
+<%= "#{appointment['patient_firstname']} #{appointment['patient_lastname']} con #{appointment['doctor_firstname']} #{appointment['doctor_lastname']} el #{l(appointment['starts_at'].to_time.in_time_zone(@practice_timezone), :format => :short)}"%>
 	<% end %>
 <% end %>
 
