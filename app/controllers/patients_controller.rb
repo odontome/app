@@ -1,10 +1,10 @@
 class PatientsController < ApplicationController
   before_filter :require_user
   before_filter :require_practice_admin, :only => [:destroy]
-  
+
   # provides
   respond_to :html, :json
-  
+
   def index
     # this is the most frequent scenario, a simple list of patients
     if (params[:q] === nil)
@@ -20,18 +20,18 @@ class PatientsController < ApplicationController
     else
       @patients = Patient.search(params[:q])
     end
-        
+
     respond_with(@patients, :methods => :fullname)
   end
 
   def show
     @patient = Patient.mine.find(params[:id])
     @patient_notes = @patient.notes.includes(:user).order("created_at DESC")
-    @appointments = Appointment.where("patient_id = ?", @patient.id).includes(:doctor).order("starts_at desc")
+    @appointments = Appointment.find_all_past_and_future_for_patient @patient.id
 
     if @patient.missing_info?
       redirect_to edit_patient_path(@patient)
-    else 
+    else
       respond_to do |format|
         format.html # show.html.erb
       end
@@ -78,5 +78,5 @@ class PatientsController < ApplicationController
       format.html { redirect_to(patients_url) }
     end
   end
-  
+
 end

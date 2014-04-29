@@ -71,10 +71,10 @@ select-bg.png: select-bg-7db54ca65707e60462cee50702b62f12.png
 select-bg/index.png: select-bg-7db54ca65707e60462cee50702b62f12.png
 table-icons.png: table-icons-d62738d16be03b31103387cb7ed8674c.png
 table-icons/index.png: table-icons-d62738d16be03b31103387cb7ed8674c.png
-application.js: application-cfced937c5e70b5b4952b49bb85f1c1d.js
-application/index.js: application-cfced937c5e70b5b4952b49bb85f1c1d.js
-application.css: application-0fad40341427762cea1aeac2f08b4066.css
-application/index.css: application-0fad40341427762cea1aeac2f08b4066.css
+application.js: application-4a10cc603a930d54ea84b32c0e1638d6.js
+application/index.js: application-4a10cc603a930d54ea84b32c0e1638d6.js
+application.css: application-02b0e56c8382c4ca01431082eb16680b.css
+application/index.css: application-02b0e56c8382c4ca01431082eb16680b.css
 jquery.minicolors.png: jquery.minicolors-061cbc2cb9eb063d65da8d3ee7305c75.png
 jquery/index.minicolors.png: jquery.minicolors-061cbc2cb9eb063d65da8d3ee7305c75.png
 FontAwesome.otf: FontAwesome-1b753859c011e89c9cc8e29a6ee33956.otf

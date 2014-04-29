@@ -100,7 +100,7 @@ class Patient < ActiveRecord::Base
 
     return patient_id_or_name
   end
-    
+  
   private
   
   # this function is a small compromise to bypass that weird situation where a patient is created with everything set to nil

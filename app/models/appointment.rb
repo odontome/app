@@ -45,6 +45,30 @@ class Appointment < ActiveRecord::Base
       }
 	end
 
+  # find all the appointments of a give patient and arrange them
+  # in past and future hashes
+  def self.find_all_past_and_future_for_patient(patient_id)
+    query = Appointment.where("patient_id = ?", patient_id).includes(:doctor).order("starts_at desc")
+
+    appointments = {
+      :future => [],
+      :past => []
+    }
+
+    today = Date.today.beginning_of_day
+
+    query.each do |appointment|
+      if appointment.starts_at > today
+        appointments[:future] << appointment
+      else
+        appointments[:past] << appointment
+      end
+
+    end
+
+    return appointments 
+  end
+
   def ciphered_url
     cipher = Gibberish::AES.new(Rails.configuration.secret_token)
 

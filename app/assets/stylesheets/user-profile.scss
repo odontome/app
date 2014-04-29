@@ -31,26 +31,31 @@
 		font-weight: 600;
 		font-size: 14px;
 	}
+}
 
-	.profile {
-		.profile-box {
-			// border-top: 1px solid #dde2e9;
-			// padding-top: 23px;
-			width: 100%;
-		}
-		.section {
-			margin-bottom: 80px;
+.comment {
+	margin-bottom: 100px;
+	margin-top: 20px;
+}
 
-			&.comment {
-				margin-bottom: 100px;
-				margin-top: 20px;
-			}
+.comment sub {
+	color: #bbb;
+}
 
-			.comment sub {
-				color: #bbb;
-			}
-		}
-	}
+.comment {
+padding: 0;
+margin-bottom: 20px;
+}
+
+.comment .alert {
+padding: 15px 0;
+margin-bottom: 0;
+text-align: left;
+}
+
+.comment .close {
+display: none;
+right: 0 !important;
 }
 
 

@@ -8,6 +8,7 @@ en:
   developers: Developers
   update_password: Update password
   my_practice: My practice
+  chart_number: Chart number
   activerecord:
     attributes:
       appointment:
@@ -70,6 +71,7 @@ en:
     do this
   administrator: Administrator
   age: Age
+  years_old: Years old
   age_with_suffix: ! '%{age} years old'
   ago_in_words: ! '%{date} ago'
   allergic_to: Allergic to
@@ -142,6 +144,7 @@ en:
   for_your_information: For your information
   forgot_password: Forgot your password?
   future_appointments: Future appointments
+  past_appointments: Past appointments
   gender: Gender
   gravatar_tooltip: Avatar taken from gravatar.org
   hide_past_appointments: Hide past appointments

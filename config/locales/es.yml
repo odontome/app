@@ -7,6 +7,7 @@ es:
   developers: Desarrolladores
   update_password: Actualizar contraseña
   my_practice: Mi clínica
+  chart_number: Número de historia
   activerecord:
     attributes:
       appointment:
@@ -40,7 +41,7 @@ es:
         past_illnesses: Historial de enfermedades
         surgeries: Historial de cirugías
         telephone: Teléfono
-        uid: Número de la historia
+        uid: Número de historia
       practice:
         currency_unit: Moneda
         locale: Idioma
@@ -68,9 +69,10 @@ es:
   admin_credentials_required: Necesitas ser administrador para poder hacer esto.
   administrator: Administrador
   age: Edad
+  years_old: Años de edad
   age_with_suffix: ! '%{age} años de edad'
   ago_in_words: ! 'hace %{date}'
-  allergic_to: alérgico a
+  allergic_to: Alérgico a
   already_have_an_account: ¿Ya tienes una cuenta?
   annotate: Anotar
   appointment_created_error_message: La cita ha sido creada con éxito
@@ -97,7 +99,7 @@ es:
   create_new_patient: Nuevo paciente
   create_new_treatment: Nuevo tratamiento
   create_new_user: Nuevo usario
-  current_medications: Medicamentes actuales
+  current_medications: Medicamentos actuales
   date:
     formats:
       day_and_date: ! '%A (%e %b)'
@@ -139,6 +141,7 @@ es:
   for_your_information: Para tu información
   forgot_password: Olvidaste tu contraseña?
   future_appointments: Próximas citas
+  past_appointments: Citas anteriores
   gender: Sexo
   gravatar_tooltip: Imagen de perfíl tomada de gravatar.org
   hide_past_appointments: Esconder citas pasadas

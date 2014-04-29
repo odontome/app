@@ -1,60 +1,45 @@
-// <div class="masonry cols">
-//     <div class="box one"></div>
-//     <div class="box two"></div>
-//     <div class="box one"></div>
-//     <div class="box three"></div>
-//     <div class="box two"></div>
-//     <div class="box five"></div>
-//     <div class="box one"></div>
-//     <div class="box two"></div>
-//     <div class="box six"></div>
-//     <div class="box three"></div>
-//     <div class="box two"></div>
-// </div>
-
 .masonry {
   width: 100%;
-  max-width: 700px;
   margin: 2em auto;
 }
 
 .cols {
-  -moz-column-count: 3;
-  -moz-column-gap: 3%;
-  -moz-column-width: 30%;
   -webkit-column-count: 3;
-  -webkit-column-gap: 3%;
-  -webkit-column-width: 30%;
+  -webkit-column-gap: 10px;
+  -webkit-column-fill: auto;
+  -moz-column-count: 3;
+  -moz-column-gap: 10px;
+  -moz-column-fill: auto;
   column-count: 3;
-  column-gap: 3%;
-  column-width: 30%;
+  column-gap: 15px;
+  column-fill: auto;
 }
 
-.box {
-  margin-bottom: 20px;
-  &.one {
-    height: 200px;
-    background-color: #d77575;
+.masonry-box {
+  width: 100%;
+  display: inline-block;
+  background: #FEFEFE;
+  border: 1px solid #FAFAFA;
+  box-shadow: 0 0 1px rgba(34, 25, 25, 0.4);
+  margin: 0 2px 15px;
+  -webkit-column-break-inside: avoid;
+  -moz-column-break-inside: avoid;
+  column-break-inside: avoid;
+  padding: 15px;
+  padding-bottom: 5px;
+  background: -webkit-linear-gradient(45deg, #FFF, #F9F9F9);
+
+  &.unstyled {
+    border: none;
+    background: transparent;
+    box-shadow: none;
   }
-  &.two {
-    height: 300px;
-    background-color: #dcbc4c;
+  &.centered {
+    text-align: center;
   }
-  &.three {
-    background-color: #a3ca3b;
-    height: 400px;
-  }
-  &.four {
-    background-color: #3daee3;
-    height: 500px;
-  }
-  &.five {
-    background-color: #bb8ed8;
-    height: 600px;
-  }
-  &.six {
-    background-color: #baafb1;
-    height: 200px;
+
+  input.btn-flat {
+    width: 100%;
   }
 }
 
