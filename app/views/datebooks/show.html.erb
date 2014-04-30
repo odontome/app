@@ -1,7 +1,7 @@
 <script type="text/javascript">
 
 	$(document).ready(function() {
-	
+
 		var date = new Date();
 		var d = date.getDate();
 		var m = date.getMonth();
@@ -9,7 +9,7 @@
 		var withDoctorIdString = '<% if params[:doctor_id] %>?doctor_id=<%=params[:doctor_id]%><% end %>';
 		var datebookId = '<%= @datebook.id %>';
 		var endpointURL = "/datebooks/" + datebookId + "/appointments";
-		
+
 		$("#calendar").fullCalendar({
 			defaultView: <% if @is_mobile.nil? %>"agendaWeek"<%else%>"agendaDay"<% end %>,
 			minTime: 8,
@@ -51,10 +51,10 @@
 			allDaySlot: false,
 			allDayDefault: false,
 			dayClick: function(dayDate, allDay, jsEvent, view){
-				if (view.name != "month"){		
+				if (view.name != "month"){
 					var url = endpointURL + '/new';
 					var timestamp = Math.round((dayDate).getTime() / 1000);
-					
+
 					$.get(url, {"starts_at": timestamp}, function(data) {
 					  $('.modal-title').html($.fullCalendar.formatDate(dayDate, "dd, MMMM · hh:mm tt"));
 	    			  $('.body-container').html(data);
@@ -67,43 +67,43 @@
 			},
 			eventClick: function(calEvent, jsEvent, view) {
 				var url = endpointURL + '/' + calEvent.id + "/edit?patient_id=" + calEvent.patient_id;
-				
+
 				$.get(url, function(data) {
 				  $('.modal-title').html($.fullCalendar.formatDate(calEvent.start, "dd, MMMM · hh:mm tt"));
 	    		  $('.body-container').html(data);
 				  $(".modal").modal();
 				});
 			},
-			
+
 			eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc){
 				//update the event with the new data
-				$.ajax({ 
-				    type: "PUT", 
+				$.ajax({
+				    type: "PUT",
 				    url: endpointURL + "/" + JSON.stringify(event.id),
-				    data: { 
-				    	"appointment[starts_at]": JSON.stringify(event.start), 
+				    data: {
+				    	"appointment[starts_at]": JSON.stringify(event.start),
 							"appointment[ends_at]": JSON.stringify(event.end)
 						  }
 				});
 			},
 			eventResize: function(calEvent, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) {
 				// update the event with the new data
-				$.ajax({ 
-				    type: "PUT", 
+				$.ajax({
+				    type: "PUT",
 				    url: endpointURL + "/" + calEvent.id,
-				    data: { 
-				    	"appointment[starts_at]": JSON.stringify(calEvent.start), 
-							"appointment[ends_at]": JSON.stringify(calEvent.end), 
+				    data: {
+				    	"appointment[starts_at]": JSON.stringify(calEvent.start),
+							"appointment[ends_at]": JSON.stringify(calEvent.end),
 						  }
 				});
 			},
 			eventAfterRender: function(event, element, view) {
 				element.find('.fc-event-time').append(" " + event.firstname + " " + event.lastname);
-				// Add touch dragging to event element 
+				// Add touch dragging to event element
 				element.addTouch();
      		}
 		});
-	});	
+	});
 </script>
 
 <div id="pad-wrapper">
@@ -117,14 +117,14 @@
 			    <div class="modal-content">
 			      <div class="modal-header">
 			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			        <h4 class="modal-title"><%= t :please_wait %></h3>
+			        <h4 class="modal-title"><%= t :please_wait %></h4>
 			      </div>
 
 			      <div class="body-container">
 			      	<%= t :please_wait %>
 			      </div>
 			    </div>
-			  </div>  
+			  </div>
 			</div>
 
 			<br />
@@ -138,7 +138,7 @@
 					<a href="?doctor_id=<%=doctor.id%>"><i class="fa fa-circle-o" style="color: <%= doctor.color %>"></i>&nbsp; <%= doctor.fullname %></a>
 				</div>
 			<% end %>
-			
+
 		</div>
 	</div>
 </div>
