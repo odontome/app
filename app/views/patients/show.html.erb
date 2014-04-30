@@ -111,26 +111,89 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"><%= t :please_wait %></h4>
+        <h4 class="modal-title"><%= t :appointments %></h4>
       </div>
 
       <div class="body-container">
-        <%= t :please_wait %>
+
+
+          <div id="future_appointments" class="hidden">
+            <table class="table table-hover">
+              <tbody>
+                <% @appointments[:future].each do |appointment| %>
+
+                  <tr>
+                      <td style="border-left: <%= appointment.doctor.color %> 2px solid">
+                          <sub><%=l appointment.starts_at.to_date, :format => :day_and_date %></sub> <br />
+                          <%= appointment.starts_at.to_formatted_s :time %> -
+                          <%= appointment.ends_at.to_formatted_s :time %>
+                      </td>
+                      <td>
+                          <%= appointment.doctor.fullname %><br />
+                          <sub><%= appointment.notes %></sub>
+                      </td>
+                  </tr>
+
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+
+          <div id="past_appointments" class="hidden">
+            <table class="table table-hover">
+              <tbody>
+                <% @appointments[:past].each do |appointment| %>
+
+                  <tr>
+                      <td style="border-left: <%= appointment.doctor.color %> 2px solid">
+                          <sub><%=l appointment.starts_at.to_date, :format => :day_and_date %></sub> <br />
+                          <%= appointment.starts_at.to_formatted_s :time %> -
+                          <%= appointment.ends_at.to_formatted_s :time %>
+                      </td>
+                      <td>
+                          <%= appointment.doctor.fullname %><br />
+                          <sub><%= appointment.notes %></sub>
+                      </td>
+                  </tr>
+
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+
       </div>
     </div>
   </div>
 </div>
 
+
 <script>
 $(document).ready(function() {
   $("a[href='#future_appointments']" ).click(function() {
-    showDialog();
+    showDialog("future");
   });
 
-  function showDialog(){
-    $('.modal-title').html("Dialog");
-    $('.body-container').html("asdas das dasdas dasdsa da das dasd as dasdasdasd as dasdasdas das das das dasd sa");
+  $("a[href='#past_appointments']" ).click(function() {
+    showDialog("past");
+  });
+
+  function showDialog(type){
+
+    if (type == "future") {
+      console.log("@WTF");
+      $("div#future_appointments").removeClass("hidden");
+      $("div#past_appointments").addClass("hidden");
+
+    } else {
+      console.log("@WTF2");
+
+      $("div#future_appointments").addClass("hidden");
+      $("div#past_appointments").removeClass("hidden");
+
+    }
+
     $(".modal").modal();
+
   }
 
 });
