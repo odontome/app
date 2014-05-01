@@ -1,13 +1,16 @@
-
-<%#= link_to t(:edit_patient), edit_patient_path(@patient), :class => "btn-flat white pull-right-lg" %>
-
-<%# if user_is_admin?(current_user) %>
-    <%#= link_to t(:delete_patient), @patient, :method => :delete, :confirm => t(:are_you_sure_no_undo), "class" => "btn-flat danger" %>
-<%# end %>
-
 <div id="pad-wrapper">
     <div class="row">
         <div class="col-md-12">
+
+            <div class="pull-right">
+              <p><%= link_to t(:edit_patient), edit_patient_path(@patient) %>
+
+              <% if user_is_admin?(current_user) %>
+                  • <%= link_to t(:delete_patient), @patient, :method => :delete, :confirm => t(:are_you_sure_no_undo), "class" => "danger" %>
+              <% end %>
+              </p>
+            </div>
+
             <div class="masonry cols">
                 <div class="masonry-box centered unstyled">
                     <img src="<%= avatar_url(@patient.email,'100x100')%>" alt="contact" class="avatar img-circle" data-toggle="tooltip" title="<%= t :gravatar_tooltip %>" data-placement="bottom" />
@@ -16,6 +19,7 @@
                     <% if !@patient.allergies.nil? && !@patient.allergies != "" %>
                         <span class="label label-danger"><%= t(:allergic_to).downcase %> <%= @patient.allergies %></span>
                     <% end %>
+
                 </div>
 
                 <div class="masonry-box">
