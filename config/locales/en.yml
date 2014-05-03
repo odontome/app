@@ -227,7 +227,7 @@ en:
   past_surgeries: Past surgeries
   patient: Patient
   patient_created_success_message: The patient was created successfully
-  patient_has_no_future_appointments: No future appointments. Would you like to %{datebooks_url}
+  patient_has_no_appointments: No appointments. Would you like to %{datebooks_url}
     one?
   patient_incomplete: Patient incomplete
   patient_search_results_few: ! '%{patients_count} patients found.'

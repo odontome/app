@@ -210,7 +210,7 @@ es:
   past_surgeries: Cirugias pasadas
   patient: Paciente
   patient_created_success_message: El paciente fue creado con éxito
-  patient_has_no_future_appointments: Sin próximas citas. ¿Quiéres %{datebooks_url}
+  patient_has_no_appointments: Sin citas. ¿Quiéres %{datebooks_url}
     una?
   patient_incomplete: Paciente incompleto
   patient_search_results_few: ! '%{patients_count} pacientes encontrados.'
