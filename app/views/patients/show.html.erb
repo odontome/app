@@ -122,76 +122,76 @@
         </div>
     </div>
 
-</div>
 
-<div class="modal fade" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"><%= t :appointments %></h4>
-      </div>
+  <div class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"><%= t :appointments %></h4>
+        </div>
 
-      <div class="body-container">
+        <div class="body-container">
 
-          <div id="future_appointments" class="hidden">
-            <table class="table table-hover">
-              <tbody>
-                <% if @appointments[:future].empty? %>
-                  <tr>
-                      <td>
-                        <p><%= raw (t :patient_has_no_appointments, datebooks_url: link_to(t(:schedule).downcase, root_url)).html_safe %></p>
-                      </td>
-                  </tr>
-                <% else %>
-                  <% @appointments[:future].each do |appointment| %>
+            <div id="future_appointments" class="hidden">
+              <table class="table table-hover">
+                <tbody>
+                  <% if @appointments[:future].empty? %>
                     <tr>
-                        <td style="border-left: <%= appointment.doctor.color %> 2px solid">
-                            <sub><%=l appointment.starts_at.to_date, :format => :day_and_date %></sub> <br />
-                            <%= appointment.starts_at.to_formatted_s :time %> -
-                            <%= appointment.ends_at.to_formatted_s :time %>
-                        </td>
                         <td>
-                            <%= appointment.doctor.fullname %><br />
-                            <sub><%= appointment.notes %></sub>
+                          <p><%= raw (t :patient_has_no_appointments, datebooks_url: link_to(t(:schedule).downcase, root_url)).html_safe %></p>
                         </td>
                     </tr>
-                  <% end %>
-              <% end %>
-              </tbody>
-            </table>
-          </div>
-
-          <div id="past_appointments" class="hidden">
-            <table class="table table-hover">
-              <tbody>
-                <% if @appointments[:past].empty? %>
-                  <tr>
-                      <td>
-                        <p><%= raw (t :patient_has_no_appointments, datebooks_url: link_to(t(:schedule).downcase, root_url)).html_safe %></p>
-                      </td>
-                  </tr>
-                <% else %>
-                  <% @appointments[:past].each do |appointment| %>
-
-                    <tr>
-                        <td style="border-left: <%= appointment.doctor.color %> 2px solid">
-                            <sub><%=l appointment.starts_at.to_date, :format => :day_and_date %></sub> <br />
-                            <%= appointment.starts_at.to_formatted_s :time %> -
-                            <%= appointment.ends_at.to_formatted_s :time %>
-                        </td>
-                        <td>
-                            <%= appointment.doctor.fullname %><br />
-                            <sub><%= appointment.notes %></sub>
-                        </td>
-                    </tr>
-
-                  <% end %>
+                  <% else %>
+                    <% @appointments[:future].each do |appointment| %>
+                      <tr>
+                          <td style="border-left: <%= appointment.doctor.color %> 2px solid">
+                              <sub><%=l appointment.starts_at.to_date, :format => :day_and_date %></sub> <br />
+                              <%= appointment.starts_at.to_formatted_s :time %> -
+                              <%= appointment.ends_at.to_formatted_s :time %>
+                          </td>
+                          <td>
+                              <%= appointment.doctor.fullname %><br />
+                              <sub><%= appointment.notes %></sub>
+                          </td>
+                      </tr>
+                    <% end %>
                 <% end %>
-              </tbody>
-            </table>
-          </div>
+                </tbody>
+              </table>
+            </div>
 
+            <div id="past_appointments" class="hidden">
+              <table class="table table-hover">
+                <tbody>
+                  <% if @appointments[:past].empty? %>
+                    <tr>
+                        <td>
+                          <p><%= raw (t :patient_has_no_appointments, datebooks_url: link_to(t(:schedule).downcase, root_url)).html_safe %></p>
+                        </td>
+                    </tr>
+                  <% else %>
+                    <% @appointments[:past].each do |appointment| %>
+
+                      <tr>
+                          <td style="border-left: <%= appointment.doctor.color %> 2px solid">
+                              <sub><%=l appointment.starts_at.to_date, :format => :day_and_date %></sub> <br />
+                              <%= appointment.starts_at.to_formatted_s :time %> -
+                              <%= appointment.ends_at.to_formatted_s :time %>
+                          </td>
+                          <td>
+                              <%= appointment.doctor.fullname %><br />
+                              <sub><%= appointment.notes %></sub>
+                          </td>
+                      </tr>
+
+                    <% end %>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+
+        </div>
       </div>
     </div>
   </div>
