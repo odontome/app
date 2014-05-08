@@ -1,7 +1,8 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.17'
-gem 'authlogic', '~> 3.2'
+gem 'rails', '3.2.18'
+gem 'authlogic', '3.3'
+gem 'scrypt', '1.2.1'
 gem 'jquery-rails', '>= 3.0.4'
 gem 'taps'
 gem 'will_paginate', '~> 3.0'
@@ -21,7 +22,7 @@ end
 group :development do
 	gem 'sqlite3-ruby', :require => 'sqlite3'
 	gem 'i18n-tasks', '~> 0.2.18'
-  	gem 'brakeman', :require => false
+  gem 'brakeman', :require => false
 end
 
 group :production do
