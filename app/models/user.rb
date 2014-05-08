@@ -10,12 +10,16 @@ class User < ActiveRecord::Base
   acts_as_authentic do |c|
     c.login_field = "email"
     c.validate_email_field = false
+
+    # these two options are for the transition to newer versions of the gem
+    c.transition_from_crypto_providers = Authlogic::CryptoProviders::Sha512
+    c.crypto_provider = Authlogic::CryptoProviders::SCrypt
   end
 
   # named scopes
-  scope :mine, lambda { 
+  scope :mine, lambda {
     where("users.practice_id = ? ", UserSession.find.user.practice_id)
-  }  
+  }
 
   # validations
   validates_presence_of :firstname, :lastname, :email, :roles
@@ -24,7 +28,7 @@ class User < ActiveRecord::Base
   validates :firstname, :lastname, :length => { :maximum => 20 }
   validates :password, :length => { :minimum => 7 }, :if => :validate_password?
   validates :password_confirmation, :length => { :minimum => 7 }, :if => :validate_password?
-  
+
   # callbacks
   before_validation :set_practice_id, :on => :create
   before_create :set_admin_role_for_first_user
@@ -44,20 +48,20 @@ class User < ActiveRecord::Base
     reset_perishable_token!
     NotifierMailer.deliver_password_reset_instructions(self).deliver
   end
-    
+
   private
 
   def validate_password?
     self.password.present? && self.password_confirmation.present?
   end
-  
+
   def check_if_admin
     if self.roles.include?("admin")
       self.errors[:base] << I18n.t("errors.messages.unauthorised")
       false
     end
-  end  
-  
+  end
+
   def set_admin_role_for_first_user
     self.roles = "admin" if User.where("practice_id = ?", self.practice_id).count == 0
   end
@@ -65,10 +69,10 @@ class User < ActiveRecord::Base
   def check_if_is_editeable_by_non_admins # normal users can't edit admins
     if UserSession.find && self.roles.include?("admin") && !UserSession.find.user.roles.include?("admin")
       self.errors[:base] << I18n.t("errors.messages.unauthorised")
-      false 
+      false
     end
   end
-  
+
   def update_authentication_token
   	if self.crypted_password_changed?
   		begin
@@ -76,5 +80,5 @@ class User < ActiveRecord::Base
       end while self.class.exists?(authentication_token: authentication_token)
   	end
   end
-  
+
 end
