@@ -6,7 +6,7 @@ es:
   active: Activa
   balance_textfield_title: Cantidad de dinero recibido o devuelto
   amount: Monto
-  balance_discount_hint: Para descuentos y devoluciones, simplemente introduce valores negativos
+  balance_discount_hint: Cualquier valor negativo será ingresado como egresos
   expense: Egreso
   income: Ingreso
   download_as_csv_file: Descargar como CSV

@@ -7,7 +7,7 @@ en:
   active: Active
   balance_textfield_title: Amount of money received or returned
   amount: Amount
-  balance_discount_hint: For discounts or refunds, simply use a negative amount
+  balance_discount_hint: any negative value will be entered as an expense
   expense: Expense
   income: Income
   download_as_csv_file: Download as CSV

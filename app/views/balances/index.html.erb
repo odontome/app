@@ -1,14 +1,14 @@
-<div id="pad-wrapper">
-		<div class="row">
-				<div class="col-md-12">
-
+<div id="pad-wrapper" class="new-user">
+		<div class="row form-wrapper">
+				<div class="col-md-8 with-sidebar">
+					
 					<!-- Balance table -->
 					<table id="patient_balance" class="table table-hover">
 						<thead>
 							<tr>
 								<th width="col-md-6"><%=t :notes %></th>
-								<th width="col-md-3"><%=t :expense %></th>
-								<th width="col-md-3"><%=t :income %></th>
+								<th width="col-md-3"><span class="line"></span> <%=t :expense %></th>
+								<th width="col-md-3"><span class="line"></span> <%=t :income %></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -29,5 +29,26 @@
 					<%= render "new" %>
 
 				</div>
+
+				<div class="col-md-4 hidden-xs form-sidebar">
+					<h6><%= t :treatments %></h6>
+					<ul>
+					<% @treatments.each do |treatment| %>
+						<li><small><a class="quick-entry" href="#" data-price="<%=treatment.price%>"><%= treatment.name %></a></small></li>
+					<% end %>
+				</ul>
+				</div>
 		</div>
 </div>
+
+<script>
+$(document).ready(function() {
+	$("a.quick-entry" ).click(function() {
+		$('[type=number]').val($(this).data('price')*-1);
+		$('textarea').val($(this).text());
+		document.getElementById("entry-form").scrollIntoView(false);
+		return false;
+	});
+
+});
+</script>
