@@ -119,8 +119,8 @@
                 <% end %>
 
                 <div class="masonry-box centered">
-                    <h2><%= number_to_currency_with_symbol @total_balance, 0 %></h2>
-                     <p><%= t :balance %></p>
+                    <h2><%= link_to number_to_currency_with_symbol(@total_balance, 0), patient_balances_path(@patient) %></h2>
+                    <p><%= t :balance %></p>
                 </div>
 
             </div>
