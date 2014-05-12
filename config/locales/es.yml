@@ -4,7 +4,6 @@ es:
   account_not_found: No se encontró ninguna cuenta con esta información.
   activate: Activar
   active: Activa
-  balance_textfield_title: Cantidad de dinero recibido o devuelto
   amount: Monto
   balance_discount_hint: Cualquier valor negativo será ingresado como egresos
   expense: Egreso

@@ -5,7 +5,6 @@ en:
   account_not_found: An account with the given information was not found. If you think this is a mistake, please contact with us
   activate: Activate
   active: Active
-  balance_textfield_title: Amount of money received or returned
   amount: Amount
   balance_discount_hint: any negative value will be entered as an expense
   expense: Expense

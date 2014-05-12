@@ -1,8 +1,8 @@
-<%= form_tag(patient_balances_path, :method => "post", :remote => true, :id => "entry-form" ) do %>
+<%= form_tag(patient_balances_path, :method => "post", :remote => true, :id => "entry-form") do %>
 
 	<p class="form-group">
-			<label for="balance_amount"> <%=t :balance_textfield_title %></label>
-	    <%= number_field_tag "balance[amount]", nil, { :title => t(:amount), :class => "form-control" } %>
+			<label for="balance_amount"> <%=t :amount %></label>
+	    <%= number_field_tag "balance[amount]", nil, { :class => "form-control" } %>
 	    <sub><%= t :balance_discount_hint %></sub>
 	</p>
 
