@@ -5,8 +5,15 @@ en:
   account_not_found: An account with the given information was not found. If you think this is a mistake, please contact with us
   activate: Activate
   active: Active
+  balance_textfield_title: Amount of money received or returned
+  amount: Amount
+  balance_discount_hint: For discounts or refunds, simply use a negative amount
+  expense: Expense
+  income: Income
+  download_as_csv_file: Download as CSV
   developers: Developers
   update_password: Update password
+  created_at: Created at
   my_practice: My practice
   chart_number: Chart number
   activerecord:

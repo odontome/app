@@ -118,6 +118,11 @@
                 </div>
                 <% end %>
 
+                <div class="masonry-box centered">
+                    <h2><%= number_to_currency_with_symbol @total_balance, 0 %></h2>
+                     <p><%= t :balance %></p>
+                </div>
+
             </div>
         </div>
     </div>

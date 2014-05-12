@@ -28,6 +28,7 @@ class PatientsController < ApplicationController
     @patient = Patient.mine.find(params[:id])
     @patient_notes = @patient.notes.includes(:user).order("created_at DESC")
     @appointments = Appointment.find_all_past_and_future_for_patient @patient.id
+    @total_balance = Balance.where("patient_id = ?", @patient.id).sum(:amount)
 
     if @patient.missing_info?
       redirect_to edit_patient_path(@patient)

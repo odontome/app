@@ -4,6 +4,13 @@ es:
   account_not_found: No se encontró ninguna cuenta con esta información.
   activate: Activar
   active: Activa
+  balance_textfield_title: Cantidad de dinero recibido o devuelto
+  amount: Monto
+  balance_discount_hint: Para descuentos y devoluciones, simplemente introduce valores negativos
+  expense: Egreso
+  income: Ingreso
+  download_as_csv_file: Descargar como CSV
+  created_at: Creado el
   developers: Desarrolladores
   update_password: Actualizar contraseña
   my_practice: Mi clínica

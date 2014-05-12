@@ -1,10 +1,10 @@
 <%= form_for([@datebook, @appointment], :remote => true, :class => "form-horizontal") do |f| %>
 	<div class="modal-body">
-		<p class="form-group">		
+		<p class="form-group">
 			<%= f.label :patient_id %>
 			<%= text_field_tag "appointment[patient_id]", nil, :class => "form-control", :autocomplete => "off" %>
 		</p>
-			
+
 		<p class="form-group">
 			<% if @doctors.empty? %>
 				<%= link_to t(:no_doctors), doctors_path %>
@@ -18,15 +18,15 @@
 			<%= f.text_area :notes, :placeholder => t(:additional_notes), :rows => 2, :maxlength => 255, :class => "form-control"  %>
 		</p>
 	</div>
-	
+
 	<div class="modal-footer">
-		<% if controller.action_name == "edit" %> 
-			<%= link_to t(:delete_appointment), [@datebook, @appointment], :method => :delete, :remote => :true, :confirm => t(:are_you_sure), :class => "btn btn-danger" %> 
+		<% if controller.action_name == "edit" %>
+			<%= link_to t(:delete_appointment), [@datebook, @appointment], :method => :delete, :remote => :true, :confirm => t(:are_you_sure), :class => "btn btn-danger" %>
 		<% else %>
 			<%= f.hidden_field :starts_at %>
-		<% end %> 
+		<% end %>
 
-		<%= f.submit(t(:save), :class => "btn btn-primary", :disable_with => t(:please_wait)) %> 
+		<%= f.submit(t(:save), :class => "btn btn-primary", :disable_with => t(:please_wait)) %>
 	</div>
-	
+
 <% end %>

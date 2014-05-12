@@ -4,5 +4,5 @@ $("#patient_balance > tbody").append("<%=escape_javascript(render :partial => 's
 $('[type=number],textarea').val("");
 
 // Highlight the new total
-$("tfoot td:last-child").html("<%=escape_javascript(link_to number_to_currency_with_currency(@total), patient_balances_path(:format => :csv), :class => 'button large nice right', :title => _('Download balance in CSV'))%>");
+$("tfoot td:last-child").html("<%=escape_javascript(link_to number_to_currency_with_symbol(@total), patient_balances_path(:format => :csv), :class => 'button large nice right', :title => t(:download_as_csv_file))%>");
 $("tfoot").effect("highlight", {}, 3000);

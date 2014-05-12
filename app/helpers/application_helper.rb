@@ -1,5 +1,5 @@
 module ApplicationHelper
-  
+
   # overwrite to the pagination plugin
   def paginated_letter(available_letters, letter)
     if available_letters.include?(letter)
@@ -8,15 +8,15 @@ module ApplicationHelper
       content_tag :span, letter
     end
   end
-  
-  def number_to_currency_with_currency(number)
-    number_to_currency(number, :unit => @current_user.practice.currency_unit)
+
+  def number_to_currency_with_symbol(number, precision = 2)
+    number_to_currency(number, :unit => @current_user.practice.currency_unit, :precision => precision)
   end
-  
+
   def new_tag
   	content_tag :span, t(:new), :class => "label label-primary"
   end
-  
+
   def incomplete_tag
   	content_tag :span, t(:incomplete), :class => "label label-danger"
   end
@@ -40,5 +40,5 @@ module ApplicationHelper
     name_at_2x = name_at_1x.gsub(%r{\.\w+$}, '@2x\0')
     image_tag(name_at_1x, options.merge("data-at2x" => asset_path(name_at_2x)))
   end
-  
+
 end

@@ -1,6 +1,6 @@
-<%=_("Created at")%>,<%=_("Notes")%>,<%=_("Amount")%>
-<%= CSV.generate do |csv|
+<%= CSV.generate(:col_sep => ";") do |csv|
+  csv << [t(:created_at), t(:notes), t(:amount)]
   @balances.each do |balance|
     csv << [ l( balance[:created_at], :format => :long), balance[:notes], balance[:amount]]
   end
-end %>
+end.html_safe %>

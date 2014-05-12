@@ -40,7 +40,7 @@
 					                </td>
 					                <td>
 						                <% if !treatment.missing_info? %>	 
-							                <%= number_to_currency_with_currency(treatment.price)%>
+							                <%= number_to_currency_with_symbol(treatment.price)%>
 							            <% else %>
 						  					<%= t :treatment_without_price %>					  				
 										<% end %>

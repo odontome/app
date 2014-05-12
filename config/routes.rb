@@ -1,31 +1,34 @@
 Odontome::Application.routes.draw do
 
+	# API
 	namespace :api do
     namespace :v1 do
 
     	post "/authentication" => "authentication#create"
       get "/practice" => "practices#show"
 
-      resources :balances
       resources :doctors
       resources :treatments
+			resources :balances
 
       resources :datebooks do
         resources :appointments
       end
+
       resources :patients do
         resources :notes
       end
-      
+
 		end
 	end
 
   resources :datebooks do
     resources :appointments
   end
-  
+
   resources :patients do
     resources :notes
+		resources :balances
   end
 
   resources :treatments do
@@ -33,28 +36,36 @@ Odontome::Application.routes.draw do
       get 'predefined_treatments', :as => :predefined_treatments
     end
   end
-  
+
   resources :users
   resources :doctors
-  resource :user_session
   resources :password_resets, :only => [ :new, :create, :edit, :update ]
-		
+
+	# authentication
+	resource :user_session
   get "/signin" => "user_sessions#new", :as => :signin
   get "/logout" => "user_sessions#destroy", :as => :logout
   get "/signup" => "practices#new", :as => :signup
+
+	# practice management
   get "/practice" => "practices#show", :as => :practice
   post "/practice" => "practices#create"
   get "/practice/settings" => "practices#settings", :as => :practice_settings
   get "/practice/cancel" => "practices#cancel", :as => :practice_cancel
   post "/practice/close" => "practices#close", :as => :practice_close
   post "/practice/:id" => "practices#update", :as => :practice_update
-  get "/privacy"  => "welcome#privacy"
+
+	# static pages
+	get "/privacy" => "welcome#privacy"
   get "/terms"  => "welcome#terms"
 
+	# admin
   get "/admin/practices" => "admin#practices", :as => :practices_admin
 
+	# legaly URL, should remove shortly
   get '/datebook', to: redirect('/')
 
+	# error handling
   get '/404', :to => 'errors#not_found'
   get '/401', :to => 'errors#unauthorised'
   get '/422', :to => 'errors#server_error'

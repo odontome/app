@@ -1,29 +1,29 @@
-class BalancesController < ApplicationController  
-  require 'csv'
-  
+class BalancesController < ApplicationController
   before_filter :require_user
-  
+
   # provides
   respond_to :html, :js, :csv
-  
+
   def index
     @patient = Patient.mine.find(params[:patient_id])
     @balances = Balance.where("patient_id = ?", @patient.id)
     @total = Balance.where("patient_id = ?", params[:patient_id]).sum(:amount)
-    
+    @treatments = Treatment.mine.order("name")
+
     respond_to do |format|
-      format.html { render :layout => nil }
-      format.csv { 
-            headers["Content-Type"] = "text/csv"
-            headers["Content-disposition"] = "attachment; filename=#{@patient.fullname}.csv"
-      } 
+      format.html
+      format.csv {
+        headers["Content-Type"] = "text/csv"
+        headers["Content-disposition"] = "attachment; filename=#{@patient.fullname}.csv"
+      }
     end
   end
 
   def create
     @balance = Balance.new(params[:balance])
-    @balance.patient_id = params[:patient_id] #FIXME yeah this sucks
-    
+    patient = Patient.mine.find(params[:patient_id])
+    @balance.patient_id = patient.id
+
     respond_to do |format|
       if @balance.save
           @total = Balance.where("patient_id = ?", params[:patient_id]).sum(:amount)

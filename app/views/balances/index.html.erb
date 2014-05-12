@@ -1,32 +1,33 @@
-<div class="row">	
-	<table id="patient_balance">
-		<thead>
-			<tr>
-				<th width="70%"><%=_("Notes")%></th>
-				<th width="15%"><%=_("Expenses")%></th>
-				<th width="15%"><%=_("Income")%></th>			
-			</tr>
-		</thead>
-		<tbody>
-		<% @balances.each do |balance| %>
-			<%= render :partial => "show", :locals => {:balance => balance}%>
-		<% end %>
-		</tbody>
-		<tfoot>
-			<tr>
-				<td colspan="3"><%=link_to number_to_currency_with_currency(@total), patient_balances_path(:format => :csv), :class => "button large nice", :title => _("Download balance in CSV") %></td>
-			</tr>
-		</tfoot>
-	</table>
-</div>
+<div id="pad-wrapper">
+		<div class="row">
+				<div class="col-md-12">
 
-<div class="row">	
-	<%= render "new" %>
-</div>
+					<!-- Balance table -->
+					<table id="patient_balance" class="table table-hover">
+						<thead>
+							<tr>
+								<th width="col-md-6"><%=t :notes %></th>
+								<th width="col-md-3"><%=t :expense %></th>
+								<th width="col-md-3"><%=t :income %></th>
+							</tr>
+						</thead>
+						<tbody>
+							<% @balances.each do |balance| %>
+								<%= render :partial => "show", :locals => {:balance => balance}%>
+							<% end %>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td></td>
+								<td></td>
+								<td><h5><%=link_to number_to_currency_with_symbol(@total), patient_balances_path(:format => :csv), :title => t(:download_as_csv_file) %></h5></td>
+							</tr>
+						</tfoot>
+					</table>
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		// Limit the notes
-		$('#balance_notes').limit('255');
-	});
-</script>
+					<!-- Entry form -->
+					<%= render "new" %>
+
+				</div>
+		</div>
+</div>

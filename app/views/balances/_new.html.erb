@@ -1,14 +1,15 @@
-<%= form_tag(patient_balances_path, :method => "post", :remote => true) do %>
-	<fieldset>
-		<legend><%= _("Transaction information") %></legend>
-		<p>
-				<label for="balance_amount"> <%= _("Amount of money received or returned") %></label>
-		    <%= number_field_tag "balance[amount]", nil, { :title => _("Amount"), :class => "input-text" } %>
-		    <sub><%= _("For discounts or returns, simply supply a negative amount") %></sub>
-		</p>
-		<p>
-		    <%= text_area_tag "balance[notes]", nil, {:rows => 2, :placeholder => _("Optional notes"), :title => _("Optional notes")}  %>
-		</p>
-	</fieldset>
-	<%= submit_tag(_("Save"), :class => "button nice white", :disable_with => _("Please wait...")) %>
+<%= form_tag(patient_balances_path, :method => "post", :remote => true ) do %>
+
+	<p class="form-group">
+			<label for="balance_amount"> <%=t :balance_textfield_title %></label>
+	    <%= number_field_tag "balance[amount]", nil, { :title => t(:amount), :class => "form-control" } %>
+	    <sub><%= t :balance_discount_hint %></sub>
+	</p>
+
+	<p class="form-group">
+		<label for="balance_notes"> <%=t :additional_notes %></label>
+	  <%= text_area_tag "balance[notes]", nil, { :rows => 2, :maxlength => 255, :class => "form-control" }  %>
+	</p>
+
+	<%= submit_tag(t(:save), :class => "btn btn-primary", :disable_with => t(:please_wait)) %>
 <% end %>

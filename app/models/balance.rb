@@ -4,7 +4,7 @@ class Balance < ActiveRecord::Base
 
   # associations
   belongs_to :patient
-  
+
   # named scopes
   scope :find_between, lambda { |starts_at, ends_at, practice_id|
   	select("patients.uid, patients.firstname, patients.lastname, balances.id, balances.created_at, balances.amount, balances.notes")
@@ -17,4 +17,5 @@ class Balance < ActiveRecord::Base
   validates_presence_of :amount, :patient_id
   validates_numericality_of :amount
   validates :notes, :length => 0..160, :presence => false
+
 end
