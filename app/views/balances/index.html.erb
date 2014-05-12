@@ -44,8 +44,9 @@
 <script>
 $(document).ready(function() {
 	$("a.quick-entry" ).click(function() {
-		$('[type=number]').val($(this).data('price')*-1);
-		$('textarea').val($(this).text());
+		var element = $(this);
+		$('[type=number]').val(element.data('price')*-1);
+		$('textarea').val(element.text());
 		document.getElementById("entry-form").scrollIntoView(false);
 		return false;
 	});
