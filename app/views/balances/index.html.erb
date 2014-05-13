@@ -32,11 +32,17 @@
 
 				<div class="col-md-4 hidden-xs form-sidebar">
 					<h6><%= t :treatments %></h6>
-					<ul>
-					<% @treatments.each do |treatment| %>
-						<li><small><a class="quick-entry" href="#" data-price="<%=treatment.price%>"><%= treatment.name %></a></small></li>
+
+					<% if @treatments.empty? %>
+						<p><%= t(:no_treatments_message) %></p>
+					<% else %>
+						<ul>
+							<% @treatments.each do |treatment| %>
+								<li><small><a class="quick-entry" href="#" data-price="<%=treatment.price%>"><%= treatment.name %></a></small></li>
+							<% end %>
+						</ul>
 					<% end %>
-				</ul>
+					
 				</div>
 		</div>
 </div>
