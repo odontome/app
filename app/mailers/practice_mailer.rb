@@ -3,17 +3,18 @@ class PracticeMailer < ActionMailer::Base
   layout 'email'
   default :from => "Odonto.me <hello@odonto.me>"
   add_template_helper(ApplicationHelper)
-  
+
   def welcome_email(practice)
   	mail(:to => practice.users.first.email, :subject => I18n.t("mailers.practice.welcome.subject"))
   end
 
-  def daily_recap_email(admin_user, patients_created_today, appointments_created_today, date)
+  def daily_recap_email(admin_user, patients_created_today, appointments_created_today, balance_created_today, date)
   	@patients = patients_created_today
   	@appointments = appointments_created_today
+    @balance = balance_created_today
   	@date = date
 
-  	if !@patients.nil? || !@appointments.nil?
+  	if !@patients.nil? || !@appointments.nil? || !@balance.nil?
       @practice_timezone = admin_user.first["timezone"]
       @practice_locale = admin_user.first["locale"]
 

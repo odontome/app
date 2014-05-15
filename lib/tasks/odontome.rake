@@ -9,8 +9,8 @@ namespace :odontome do
 
     to_update = []
     appointments = Appointment.includes(:doctor, :patient)
-    .where("appointments.starts_at > ? AND appointments.ends_at < ? AND appointments.notified_of_reminder = ? 
-                                      AND patients.email <> ''", 
+    .where("appointments.starts_at > ? AND appointments.ends_at < ? AND appointments.notified_of_reminder = ?
+                                      AND patients.email <> ''",
                                       Time.now, Time.now + $appointment_notificacion_hours.hours, false)
     appointments.each do |appointment|
       practice = appointment.datebook.practice
@@ -20,19 +20,19 @@ namespace :odontome do
       to_update << appointment.id
     end
     Appointment.where(:id => to_update).update_all(:notified_of_reminder => true)
-    
+
   end
 
   desc "Send appointment schedule notification to patients"
   task :send_appointment_scheduled_notifications => :environment do
-    
+
     if defined?(Rails) && (Rails.env == 'development')
       Rails.logger = Logger.new(STDOUT)
     end
 
     to_update = []
     appointments = Appointment.includes(:doctor, :patient)
-    .where("appointments.created_at < ? AND appointments.notified_of_schedule = ? 
+    .where("appointments.created_at < ? AND appointments.notified_of_schedule = ?
                                       AND patients.email <> ''", 5.minutes.ago, false)
     appointments.each do |appointment|
       practice = appointment.datebook.practice
@@ -61,7 +61,7 @@ namespace :odontome do
   end
 
   desc "Send an activity recap everyday at 8am in their timezone"
-  task :send_daily_recap_to_administrators => :environment do 
+  task :send_daily_recap_to_administrators => :environment do
 
     if defined?(Rails) && (Rails.env == 'development')
       Rails.logger = Logger.new(STDOUT)
@@ -88,20 +88,27 @@ namespace :odontome do
       .joins(:appointments => [:doctor, :patient])
       .order("datebooks.practice_id")
 
+      balance_created_today = Balance.select("SUM(balances.amount) as amount, patients.practice_id")
+      .joins('left outer join patients on balances.patient_id = patients.id')
+      .where("balances.created_at >= ? AND balances.created_at <= ?", YESTERDAY, TODAY)
+      .where("patients.practice_id" => practice_ids)
+
       # create array of column values (hash) instead of an array of models
       patients = ActiveRecord::Base.connection.select_all(patients_created_today)
       appointments = ActiveRecord::Base.connection.select_all(appointments_created_today)
       users = ActiveRecord::Base.connection.select_all(admins_of_these_practices)
+      balance = ActiveRecord::Base.connection.select_all(balance_created_today)
 
       # group the arrays by practice_id
       patients = patients.group_by { |patient| patient["practice_id"].to_s }
       appointments = appointments.group_by { |appointment| appointment["practice_id"].to_s }
       users = users.group_by { |user| user["practice_id"].to_s }
+      balance = balance.group_by { |balance| balance["practice_id"].to_s }
 
       # go through every practice_id in this timezone and send them an
       # email with their daily recap
       practice_ids.each do |practice_id|
-        PracticeMailer.daily_recap_email(users["#{practice_id}"], patients["#{practice_id}"], appointments["#{practice_id}"], YESTERDAY).deliver
+        PracticeMailer.daily_recap_email(users["#{practice_id}"], patients["#{practice_id}"], appointments["#{practice_id}"], balance["#{practice_id}"], YESTERDAY).deliver
       end
     end
 

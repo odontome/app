@@ -1,5 +1,9 @@
 Daily recap for <%= l @date.in_time_zone(@practice_timezone).to_date, :format => :day_and_date %>
 
+<% if !@balance.nil? %>
+<%= number_to_currency(@balance.first['amount'], :locale => @practice_locale) %> processed today
+<% end %>
+
 <% if !@appointments.nil? %>
 <%= @appointments.size %> appointments scheduled
 	<% @appointments.each do |appointment| %>
@@ -13,5 +17,3 @@ Daily recap for <%= l @date.in_time_zone(@practice_timezone).to_date, :format =>
 <%= "#{patient['firstname']} #{patient['lastname']}" %> <%= url_for patient_url(:id => patient['id']) %>
 	<% end %>
 <% end %>
-
-

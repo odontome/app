@@ -1,5 +1,9 @@
 Resumen del día <%= l @date.in_time_zone(@practice_timezone).to_date, :format => :day_and_date %>
 
+<% if !@balance.nil? %>
+<%= number_to_currency(@balance.first['amount'], :locale => @practice_locale) %> procesados hoy
+<% end %>
+
 <% if !@appointments.nil? %>
 <%= @appointments.size %> citas agendadas
 	<% @appointments.each do |appointment| %>
@@ -13,5 +17,3 @@ Resumen del día <%= l @date.in_time_zone(@practice_timezone).to_date, :format =
 <%= "#{patient['firstname']} #{patient['lastname']}" %> <%= url_for patient_url(:id => patient['id']) %>
 	<% end %>
 <% end %>
-
-
