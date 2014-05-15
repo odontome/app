@@ -1,7 +1,7 @@
 Resumen del día <%= l @date.in_time_zone(@practice_timezone).to_date, :format => :day_and_date %>
 
 <% if !@balance.nil? %>
-<%= number_to_currency(@balance.first['amount'], :locale => @practice_locale) %> procesados hoy
+<%= number_to_human @balance.first['amount'] %> procesados en el balance
 <% end %>
 
 <% if !@appointments.nil? %>
