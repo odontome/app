@@ -92,6 +92,7 @@ namespace :odontome do
       .joins('left outer join patients on balances.patient_id = patients.id')
       .where("balances.created_at >= ? AND balances.created_at <= ?", YESTERDAY, TODAY)
       .where("patients.practice_id" => practice_ids)
+      .group("patients.practice_id")
 
       # create array of column values (hash) instead of an array of models
       patients = ActiveRecord::Base.connection.select_all(patients_created_today)
