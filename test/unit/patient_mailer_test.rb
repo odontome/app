@@ -1,5 +1,5 @@
 require 'test_helper'
- 
+
 class PatientMailerTest < ActionMailer::TestCase
 
   test "patient appointment reminder" do
@@ -12,7 +12,7 @@ class PatientMailerTest < ActionMailer::TestCase
     email = PatientMailer.appointment_soon_email(patient.email, patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, doctor, users(:perishable).email).deliver
 
     assert !ActionMailer::Base.deliveries.empty?
-    
+
     # Test the body of the sent email contains what we expect it to
     assert_equal ['hello@odonto.me'], email.from
     assert_equal ['contact@bokanova.mx'], email.reply_to
@@ -53,7 +53,7 @@ class PatientMailerTest < ActionMailer::TestCase
     email = PatientMailer.appointment_scheduled_email(patient.email, patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, doctor, users(:perishable).email, passbook_url).deliver
 
     assert !ActionMailer::Base.deliveries.empty?
-    
+
     # Test the body of the sent email contains what we expect it to
     assert_equal ['hello@odonto.me'], email.from
     assert_equal ['contact@bokanova.mx'], email.reply_to
@@ -61,4 +61,30 @@ class PatientMailerTest < ActionMailer::TestCase
     assert_equal I18n.t("mailers.patient.appointment_scheduled_email.subject", practice_name: practice.name), email.subject
     assert_match(/Are you an iOS or Android user\? You can get a Passbook of this appointment here/, email.encoded)
   end
+
+  test "patient birthday wishes notifier" do
+
+    admin = {
+      "email" => "contact@bokanova.mx"
+    }
+
+    patient = {
+      "locale" => "en",
+      "practice_name" => "Odonto.me",
+      "email" => "raulriera@hotmail.com"
+    }
+
+    # Send the email, then test that it got queued
+    email = PatientMailer.birthday_wishes(admin, patient).deliver
+
+    assert !ActionMailer::Base.deliveries.empty?
+
+    # Test the body of the sent email contains what we expect it to
+    assert_equal ['hello@odonto.me'], email.from
+    assert_equal ['contact@bokanova.mx'], email.reply_to
+    assert_equal ['raulriera@hotmail.com'], email.to
+    assert_equal I18n.t("mailers.patient.birthday.subject"), email.subject
+    assert_match /We would like to wish you the best birthday ever. We \"made\" you this sugary treat for you. Don't forget to visit us if you eat all that sugar/, email.encoded
+  end
+
 end

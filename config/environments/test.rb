@@ -37,6 +37,10 @@ Odontome::Application.configure do
   config.serve_static_assets = true
   config.static_cache_control = "public, max-age=3600"
 
+  # Configure the host for emails
+  config.action_mailer.asset_host = "http://0.0.0.0:3000"
+  config.action_mailer.default_url_options = { :host => '0.0.0.0:3000' }
+
   # Raise exception on mass assignment protection for Active Record models
   config.active_record.mass_assignment_sanitizer = :strict
 end
