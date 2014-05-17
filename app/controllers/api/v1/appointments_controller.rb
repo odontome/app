@@ -1,14 +1,14 @@
 class Api::V1::AppointmentsController < Api::V1::BaseController
-  
+
   before_filter :find_datebook, :only => [:index]
   before_filter :find_appointment, :only => [:show, :update, :destroy]
   before_filter :validate_date_range, :only => [:index]
-  
+
   def index
     case params[:from]
     when 'today'
       starts_at = DateTime.now.at_beginning_of_day
-      ends_at = starts_at + 23.hours
+      ends_at = starts_at + 24.hours
     when 'week'
       starts_at = DateTime.now.at_beginning_of_week
       ends_at = starts_at + 7.days
@@ -19,33 +19,33 @@ class Api::V1::AppointmentsController < Api::V1::BaseController
 
     respond_with(@datebook.appointments.find_between(starts_at, ends_at), :methods => ["doctor","patient"])
   end
-  
+
   def show
     respond_with(@appointment, :methods => ["doctor","patient"])
   end
-  
+
   def create
     appointment = Appointment.create(params[:appointment])
-    
+
     if appointment.valid?
       respond_with(appointment, :location => api_v1_appointment_path(appointment))
     else
       respond_with(appointment)
-  	end 
+  	end
   end
-  
+
   def update
   	@appointment.update_attributes(params[:appointment])
 		respond_with(@appointment)
   end
-  
+
   # def destroy
   #   @appointment.destroy
   #   respond_with(@appointment)
   # end
-  
+
   private
-  
+
   def find_datebook
     @datebook = Datebook.mine.find(params[:datebook_id])
     rescue ActiveRecord::RecordNotFound
@@ -66,5 +66,5 @@ class Api::V1::AppointmentsController < Api::V1::BaseController
         respond_with(error, :status => 400)
     end
   end
-  
+
 end

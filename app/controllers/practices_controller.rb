@@ -16,7 +16,7 @@ class PracticesController < ApplicationController
     @practice = current_user.practice
 
     starts_at = DateTime.now.at_beginning_of_day
-    ends_at = starts_at + 23.hours
+    ends_at = starts_at + 24.hours
     @today_balance = Balance.find_between(starts_at, ends_at, @current_user.practice_id).sum(:amount)
   end
 
@@ -94,10 +94,18 @@ class PracticesController < ApplicationController
   end
 
   def balance
-    starts_at = DateTime.now.at_beginning_of_day
-    ends_at = starts_at + 23.hours
+    
+    if (params[:created_at])
+      starts_at = DateTime.parse params[:created_at]
+    else
+      starts_at = DateTime.now
+    end
 
-    @selected_date = starts_at.strftime("%d-%m-%Y")
+    starts_at = starts_at.at_beginning_of_day
+    ends_at = starts_at + 24.hours
+
+    #@selected_date = starts_at.strftime("%d-%m-%Y")
+    @selected_date = starts_at
 
     @balances = Balance.find_between starts_at, ends_at, @current_user.practice_id
     @total = @balances.sum(:amount)

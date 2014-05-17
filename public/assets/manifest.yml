@@ -71,10 +71,10 @@ select-bg.png: select-bg-7db54ca65707e60462cee50702b62f12.png
 select-bg/index.png: select-bg-7db54ca65707e60462cee50702b62f12.png
 table-icons.png: table-icons-d62738d16be03b31103387cb7ed8674c.png
 table-icons/index.png: table-icons-d62738d16be03b31103387cb7ed8674c.png
-application.js: application-99b16e72932dd7c4bf2c3fcd64b5b4ef.js
-application/index.js: application-99b16e72932dd7c4bf2c3fcd64b5b4ef.js
-application.css: application-431745d0eabff53239376b9ed8fce6dc.css
-application/index.css: application-431745d0eabff53239376b9ed8fce6dc.css
+application.js: application-3fbfdfde8f4b5ff0bb8f92186376cf8c.js
+application/index.js: application-3fbfdfde8f4b5ff0bb8f92186376cf8c.js
+application.css: application-b790a3454c37b2ce22a97556897ae0dc.css
+application/index.css: application-b790a3454c37b2ce22a97556897ae0dc.css
 jquery.minicolors.grid: jquery.minicolors-9acddc78828d5f091ab4074bd0fa0485.grid
 jquery/index.minicolors.grid: jquery.minicolors-9acddc78828d5f091ab4074bd0fa0485.grid
 jquery.minicolors.grid.png: jquery.minicolors.grid-cbe69c77f0cd71232ca7e197e1b42ee2.png
