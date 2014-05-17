@@ -50,6 +50,7 @@ Odontome::Application.routes.draw do
 	# practice management
   get "/practice" => "practices#show", :as => :practice
   post "/practice" => "practices#create"
+	get "/practice/balance" => "practices#balance", :as => :practice_balance
   get "/practice/settings" => "practices#settings", :as => :practice_settings
   get "/practice/cancel" => "practices#cancel", :as => :practice_cancel
   post "/practice/close" => "practices#close", :as => :practice_close

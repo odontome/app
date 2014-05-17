@@ -4,7 +4,10 @@ class PracticesController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_superadmin, :only => [:index, :destroy, :edit]
   before_filter :require_practice_admin, :only => [:settings, :update, :close]
-  
+
+  # provides
+  respond_to :html, :csv, :only => :balance
+
   def index
     @practices = Practice.all
   end
@@ -17,7 +20,7 @@ class PracticesController < ApplicationController
     @practice = Practice.new
     @practice.users.build
     @user = User.new
-    
+
     render :layout => "user_sessions"
   end
 
@@ -27,7 +30,7 @@ class PracticesController < ApplicationController
 
   def create
     @practice = Practice.new(params[:practice])
-    
+
     respond_to do |format|
       if @practice.save
         PracticeMailer.welcome_email(@practice).deliver
@@ -50,7 +53,7 @@ class PracticesController < ApplicationController
       end
     end
   end
-  
+
   def cancel
   end
 
@@ -84,6 +87,24 @@ class PracticesController < ApplicationController
 
   def settings
     @practice = current_user.practice
+  end
+
+  def balance
+    starts_at = DateTime.now.at_beginning_of_day
+    ends_at = starts_at + 23.hours
+
+    @selected_date = starts_at.strftime("%d-%m-%Y")
+
+    @balances = Balance.find_between starts_at, ends_at, @current_user.practice_id
+    @total = @balances.sum(:amount)
+
+    respond_to do |format|
+      format.html
+      format.csv {
+        headers["Content-Type"] = "text/csv"
+        headers["Content-disposition"] = "attachment; filename=#{starts_at}.csv"
+      }
+    end
   end
 
 end

@@ -9,6 +9,7 @@
 //= require jquery.minicolors
 //= require retina-1.1.0
 //= require jstz.min
+//= require bootstrap.datepicker
 //= require theme
 
 // This function prevents the session from ending

@@ -1,0 +1,51 @@
+<div id="pad-wrapper" class="new-user">
+  <div class="row header col-md-12">
+      <h3><%= t :balance %></h3>
+
+      <div class="pull-right-lg">
+          <%= link_to @selected_date, new_patient_url, "class" => "btn-flat white pull-right" %>
+      </div>
+  </div>
+
+    <div class="row form-wrapper">
+        <div class="col-md-12">
+
+          <!-- Balance table -->
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th width="col-md-6"><%=t :notes %></th>
+                <th width="col-md-3"><span class="line"></span> <%=t :expense %></th>
+                <th width="col-md-3"><span class="line"></span> <%=t :income %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @balances.each do |balance| %>
+                <tr>
+                  <td><%= link_to "#{balance.firstname} #{balance.lastname}", patient_path(balance.patient_id) %><br />
+                  <sub><%= l balance.created_at, :format => :long %> - <%= balance.notes %></sub>
+                  </td>
+                  <td align="center"><% if (balance.amount < 0)%> <%=balance.amount %> <% end %></td>
+                  <td align="center"><% if (balance.amount >= 0)%> <%=balance.amount %> <% end %></td>
+                </tr>
+              <% end %>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td></td>
+                <td></td>
+                <td><h5><%=link_to number_to_currency_with_symbol(@total), practice_balance_path(:format => :csv), :title => t(:download_as_csv_file) %></h5></td>
+              </tr>
+            </tfoot>
+          </table>
+
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+  $(function () {
+
+  });
+</script>
