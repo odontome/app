@@ -2,7 +2,7 @@
 
 <% if !@balance.nil? %>
 	<h4><%= t :balance %></h4>
-	<p><%= number_to_currency @balance.first['amount'], :unit => @currency_unit %> procesados hoy</p>
+	<p><%= number_to_currency @balance.first['amount'], :unit => @currency_unit %> procesados ayer</p>
 <% end %>
 
 <% if !@appointments.nil? %>

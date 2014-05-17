@@ -119,7 +119,7 @@ class PracticeMailerTest < ActionMailer::TestCase
     assert_equal ['hello@odonto.me'], email.from
     assert_equal ['contact@bokanova.mx'], email.to
     assert_equal I18n.t("mailers.practice.daily_recap.subject", :date => I18n.l(today.to_date, :format => :day_and_date)), email.subject
-    assert_match /\$1,000.00 processed today/, email.encoded
+    assert_match /\$1,000.00 processed yesterday/, email.encoded
 
   end
 
