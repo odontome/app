@@ -3,7 +3,7 @@ class PracticesController < ApplicationController
   before_filter :require_user, :only =>  [:index, :destroy, :edit, :settings, :show, :close]
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_superadmin, :only => [:index, :destroy, :edit]
-  before_filter :require_practice_admin, :only => [:settings, :update, :close]
+  before_filter :require_practice_admin, :only => [:settings, :balance, :update, :close]
 
   # provides
   respond_to :html, :csv, :only => :balance
