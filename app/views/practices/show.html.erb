@@ -17,7 +17,7 @@
                 <p><%= raw I18n.t "tutorial.practice", :practice_settings_url => link_to(I18n.t(:practice_settings).downcase, practice_settings_url) %></p>
 
             </div>
-        </div> 
+        </div>
     <% end %>
 
     <!-- header -->
@@ -33,24 +33,30 @@
 
 
     <div class="row stats">
-        <div class="col-md-4 card">
+        <div class="col-md-3 card">
             <div>
             	<h1><%= link_to @practice.datebooks_count, datebooks_url %></h1>
             	<p><%= t :datebooks %></p>
             </div>
         </div>
-        <div class="col-md-4 card">
+        <div class="col-md-3 card">
             <div>
             	<h1><%= link_to @practice.doctors_count, doctors_url %></h1>
             	<p><%= t :doctors %></p>
             </div>
         </div>
-        <div class="col-md-4 card">
+        <div class="col-md-3 card">
             <div>
             	<h1><%= link_to @practice.patients_count, patients_url %></h1>
             	<p><%= t :patients %></p>
             </div>
         </div>
+        <div class="col-md-3 card">
+            <div>
+              <h1><%= link_to number_to_currency_with_symbol(@today_balance, 0), practice_balance_url %></h1>
+              <p><%= t :today_balance %></p>
+            </div>
+        </div>
     </div>
-	
+
 </div>

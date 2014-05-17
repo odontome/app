@@ -14,6 +14,10 @@ class PracticesController < ApplicationController
 
   def show
     @practice = current_user.practice
+
+    starts_at = DateTime.now.at_beginning_of_day
+    ends_at = starts_at + 23.hours
+    @today_balance = Balance.find_between(starts_at, ends_at, @current_user.practice_id).sum(:amount)
   end
 
   def new

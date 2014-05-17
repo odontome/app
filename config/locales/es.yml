@@ -8,6 +8,7 @@ es:
   balance_discount_hint: Cualquier valor negativo será ingresado como egresos
   expense: Egreso
   income: Ingreso
+  today_balance: Balance de hoy
   download_as_csv_file: Descargar como CSV
   created_at: Creado el
   developers: Desarrolladores

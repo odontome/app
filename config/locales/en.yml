@@ -9,6 +9,7 @@ en:
   balance_discount_hint: Any negative value will be entered as an expense
   expense: Expense
   income: Income
+  today_balance: Today's balance
   download_as_csv_file: Download as CSV
   developers: Developers
   update_password: Update password
