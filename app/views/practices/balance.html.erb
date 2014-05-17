@@ -3,8 +3,8 @@
       <h3><%= t :balance %></h3>
 
       <div class="pull-right-lg">
-        <a href="#pick-date" class="btn-flat white pull-right"><%= l(@selected_date, :format => :long) %></a>
-        <input type="text" class="datepicker hidden" />
+        <a href="#pick-date" class="btn-flat white pull-right"><%= @selected_date %></a>
+        <input type="text" class="datepicker hidden" <input data-value="<%= params[:created_at]%>" />
 
       </div>
   </div>
@@ -55,6 +55,7 @@
     var $input = $('.datepicker').pickadate({
         today: '<%= t :today %>',
         clear: '<%= t :cancel %>',
+        formatSubmit: 'yyyy-mm-dd',
         monthsFull: <%= raw (t "date.month_names").last(12) %>,
         monthsShort: <%= raw (t "date.abbr_month_names").last(12) %>,
         weekdaysFull: <%= raw (t "date.day_names").last(7) %>,
