@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'test_helper'
 
 class PracticeMailerTest < ActionMailer::TestCase
@@ -22,7 +23,8 @@ class PracticeMailerTest < ActionMailer::TestCase
     admin = [{
       "locale" => "en",
       "timezone" => "London",
-      "email" => "contact@bokanova.mx"
+      "email" => "contact@bokanova.mx",
+      "currency_unit" => "€"
     }]
 
     today = Time.zone.now.beginning_of_day
@@ -51,7 +53,8 @@ class PracticeMailerTest < ActionMailer::TestCase
     admin = [{
       "locale" => "en",
       "timezone" => "London",
-      "email" => "contact@bokanova.mx"
+      "email" => "contact@bokanova.mx",
+      "currency_unit" => "€"
     }]
 
     today = Time.zone.now.beginning_of_day
@@ -95,8 +98,9 @@ class PracticeMailerTest < ActionMailer::TestCase
   test "practice daily suggest email, balance only" do
     admin = [{
       "locale" => "en",
-      "timezone" => "London",
-      "email" => "contact@bokanova.mx"
+      "timezone" => "Mexico City",
+      "email" => "contact@bokanova.mx",
+      "currency_unit" => "$"
     }]
 
     today = Time.zone.now.beginning_of_day
@@ -115,7 +119,7 @@ class PracticeMailerTest < ActionMailer::TestCase
     assert_equal ['hello@odonto.me'], email.from
     assert_equal ['contact@bokanova.mx'], email.to
     assert_equal I18n.t("mailers.practice.daily_recap.subject", :date => I18n.l(today.to_date, :format => :day_and_date)), email.subject
-    assert_match /1 Thousand processed in the balance/, email.encoded
+    assert_match /\$1,000.00 processed today/, email.encoded
 
   end
 

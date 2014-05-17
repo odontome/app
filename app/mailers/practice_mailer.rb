@@ -17,6 +17,7 @@ class PracticeMailer < ActionMailer::Base
   	if !@patients.nil? || !@appointments.nil? || !@balance.nil?
       @practice_timezone = admin_user.first["timezone"]
       @practice_locale = admin_user.first["locale"]
+      @currency_unit = admin_user.first["currency_unit"]
 
   		# temporarely set the locale and then change it back
 	    # when the block finishes
