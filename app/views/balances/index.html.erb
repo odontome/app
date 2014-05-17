@@ -1,50 +1,64 @@
+<div id="pad-wrapper" class="user-profile">
+
+	<!-- header -->
+	<div class="row header">
+			<div class="col-md-8">
+					<img src="<%= avatar_url(@patient.email,'100x100')%>" alt="contact" class="avatar img-circle" data-toggle="tooltip" title="<%= t :gravatar_tooltip %>" data-placement="bottom" />
+					<h3 class="name"><%= @patient.fullname %></h3>
+					<span class="area"><%= t :uid %> <%= @patient.uid %></span>
+			</div>
+
+	</div>
+</div>
+
 <div id="pad-wrapper" class="new-user">
-		<div class="row form-wrapper">
-				<div class="col-md-8 with-sidebar">
+	<div class="row form-wrapper">
+			<div class="col-md-8 with-sidebar">
 
-					<!-- Balance table -->
-					<table id="patient_balance" class="table table-hover">
-						<thead>
-							<tr>
-								<th width="col-md-6"><%=t :notes %></th>
-								<th width="col-md-3"><span class="line"></span> <%=t :expense %></th>
-								<th width="col-md-3"><span class="line"></span> <%=t :income %></th>
-							</tr>
-						</thead>
-						<tbody>
-							<% @balances.each do |balance| %>
-								<%= render :partial => "show", :locals => {:balance => balance}%>
-							<% end %>
-						</tbody>
-						<tfoot>
-							<tr>
-								<td></td>
-								<td></td>
-								<td><h5><%=link_to number_to_currency_with_symbol(@total), patient_balances_path(:format => :csv), :title => t(:download_as_csv_file) %></h5></td>
-							</tr>
-						</tfoot>
-					</table>
+				<!-- Balance table -->
+				<table id="patient_balance" class="table table-hover">
+					<thead>
+						<tr>
+							<th width="col-md-6"><%=t :notes %></th>
+							<th width="col-md-3"><span class="line"></span> <%=t :expense %></th>
+							<th width="col-md-3"><span class="line"></span> <%=t :income %></th>
+						</tr>
+					</thead>
+					<tbody>
+						<% @balances.each do |balance| %>
+							<%= render :partial => "show", :locals => {:balance => balance}%>
+						<% end %>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td></td>
+							<td></td>
+							<td><h5><%=link_to number_to_currency_with_symbol(@total), patient_balances_path(:format => :csv), :title => t(:download_as_csv_file) %></h5></td>
+						</tr>
+					</tfoot>
+				</table>
 
-					<!-- Entry form -->
-					<%= render "new" %>
+				<!-- Entry form -->
+				<%= render "new" %>
 
-				</div>
+			</div>
 
-				<div class="col-md-4 hidden-xs form-sidebar">
-					<h6><%= t :treatments %></h6>
+			<div class="col-md-4 hidden-xs form-sidebar">
+				<h6><%= t :treatments %></h6>
 
-					<% if @treatments.empty? %>
-						<p><%= t(:no_treatments_message) %></p>
-					<% else %>
-						<ul>
-							<% @treatments.each do |treatment| %>
-								<li><small><a class="quick-entry" href="#" data-price="<%=treatment.price%>"><%= treatment.name %></a></small></li>
-							<% end %>
-						</ul>
-					<% end %>
-					
-				</div>
-		</div>
+				<% if @treatments.empty? %>
+					<p><%= t(:no_treatments_message) %></p>
+				<% else %>
+					<ul>
+						<% @treatments.each do |treatment| %>
+							<li><small><a class="quick-entry" href="#" data-price="<%=treatment.price%>"><%= treatment.name %></a></small></li>
+						<% end %>
+					</ul>
+				<% end %>
+
+			</div>
+	</div>
+
 </div>
 
 <script>
