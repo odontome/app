@@ -9,6 +9,7 @@ gem 'will_paginate', '~> 3.0'
 gem 'rails-i18n', '~> 3.0.0'
 gem 'redis', '3.0.5'
 gem 'passbook', '~> 0.3.1'
+gem 'mixpanel-ruby'
 
 gem 'font-awesome-rails'
 gem 'jquery-minicolors-rails'

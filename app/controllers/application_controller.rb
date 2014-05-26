@@ -1,18 +1,19 @@
 class ApplicationController < ActionController::Base
-  
+
   protect_from_forgery
 
   helper :all
 
   helper_method :current_session, :current_user, :user_is_admin?
 
+  before_filter :mixpanel
   before_filter :check_account_status
   before_filter :set_locale
-  before_filter :set_timezone  
+  before_filter :set_timezone
   before_filter :find_datebooks
-  
+
   def check_account_status
-    if current_user 
+    if current_user
       if current_user.practice.status == "cancelled"
         current_user_session.destroy
         redirect_to signin_url, :alert => I18n.t(:account_cancelled)
@@ -23,13 +24,13 @@ class ApplicationController < ActionController::Base
   def set_locale
     I18n.locale = session[:locale] || I18n.default_locale
   end
-  
+
   def set_timezone
     if current_user
       Time.zone = current_user.practice.timezone
     end
   end
-    
+
   private
 
   def current_user_session
@@ -47,7 +48,7 @@ class ApplicationController < ActionController::Base
   end
 
   def find_datebooks
-    if current_user 
+    if current_user
       @datebooks = Datebook.mine.order("name")
     end
   end
@@ -79,7 +80,7 @@ class ApplicationController < ActionController::Base
   def store_location
     session[:return_to] = request.url
   end
-  
+
   def redirect_back_or_default(default, message=nil)
     return_to = session[:return_to] || default
     redirect_to(return_to, :alert => message)
@@ -87,8 +88,8 @@ class ApplicationController < ActionController::Base
   end
 
   def require_superadmin
-  	    	
-    if current_user	
+
+    if current_user
       redirect_back_or_default("/") unless current_user_is_superadmin?
       return false
     else
@@ -109,11 +110,15 @@ class ApplicationController < ActionController::Base
   end
 
   def render_ujs_error(object, message)
-    render :template => "shared/ujs/form_errors.js.erb", 
+    render :template => "shared/ujs/form_errors.js.erb",
       :locals =>{
-      :item => object, 
+      :item => object,
       :notice => message
     }
+  end
+
+  def mixpanel
+    @mixpanel = Mixpanel::Tracker.new("a11e3dace9deabb780160e4acde44863")
   end
 
 end
