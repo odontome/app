@@ -16,8 +16,8 @@ class UserSessionsController < ApplicationController
         session[:locale] = @user_session.user.preferred_language
 
         # record the signed in
-        @mixpanel.track(@user_session.user.email, 'Signed in')
-        @mixpanel.people.set(@user_session.user.email, {
+        MIXPANEL_CLIENT.track(@user_session.user.email, 'Signed in')
+        MIXPANEL_CLIENT.people.set(@user_session.user.email, {
             '$first_name' => @user_session.user.firstname,
             '$last_name' => @user_session.user.lastname,
             '$email' => @user_session.user.email,

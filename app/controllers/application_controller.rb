@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_session, :current_user, :user_is_admin?
 
-  before_filter :mixpanel
   before_filter :check_account_status
   before_filter :set_locale
   before_filter :set_timezone
@@ -115,10 +114,6 @@ class ApplicationController < ActionController::Base
       :item => object,
       :notice => message
     }
-  end
-
-  def mixpanel
-    @mixpanel = Mixpanel::Tracker.new("a11e3dace9deabb780160e4acde44863")
   end
 
 end

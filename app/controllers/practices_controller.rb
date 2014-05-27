@@ -42,13 +42,13 @@ class PracticesController < ApplicationController
         new_user = @practice.users.first
 
         # record the signup
-        @mixpanel.people.set(new_user.email, {
+        MIXPANEL_CLIENT.people.set(new_user.email, {
             '$first_name' => new_user.firstname,
             '$last_name' => new_user.lastname,
             '$email' => new_user.email,
             '$language' => new_user.preferred_language
         })
-        @mixpanel.track(new_user.email, 'Signed up')
+        MIXPANEL_CLIENT.track(new_user.email, 'Signed up')
 
         PracticeMailer.welcome_email(@practice).deliver
         format.html { redirect_to(practice_path) }

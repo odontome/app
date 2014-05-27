@@ -1,7 +1,6 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'csv'
-require 'mixpanel-ruby'
 require 'rails/all'
 
 if defined?(Bundler)
