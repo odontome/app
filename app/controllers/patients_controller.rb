@@ -19,9 +19,6 @@ class PatientsController < ApplicationController
     # otherwise, this is a search for patients
     else
       @patients = Patient.search(params[:q])
-
-      # record the search in
-      MIXPANEL_CLIENT.track(@current_user.email, 'Searched for patient', { "query" => params[:q] })
     end
 
     respond_with(@patients, :methods => :fullname)
@@ -52,7 +49,7 @@ class PatientsController < ApplicationController
 
   def create
     @patient = Patient.new(params[:patient])
-        
+
     respond_to do |format|
       if @patient.save
         # track the creation of a complete patient profile
