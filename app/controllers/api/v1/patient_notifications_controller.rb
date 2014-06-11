@@ -10,7 +10,7 @@ class Api::V1::PatientNotificationsController < Api::V1::BaseController
     mandrill = Mandrill::API.new "kajMhDc9RHOo8Auc4Fgzaw" # CHANGE THIS TO ENV_VARIABLES
 
     patients = Patient.mine.select("firstname, lastname, email").where(:email => "rieraraul@gmail.com")
-
+    
     if patients.empty?
       render :json => {:error => "Patients could not be found." }, :status => 404
 
@@ -24,6 +24,12 @@ class Api::V1::PatientNotificationsController < Api::V1::BaseController
         :merge_vars => to_mandrill_merge_variables(patients),
         :preserve_recipients => false
       }
+
+      # track the event in mixpanel
+      MIXPANEL_CLIENT.track(@current_user.user.email, 'Sent patient notifications', {
+          'Number of patients' => patients.size,
+          'Query' => params[:query]
+      })
 
       render :json => mandrill.messages.send(message)
 
