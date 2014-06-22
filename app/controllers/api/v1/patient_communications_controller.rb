@@ -44,24 +44,49 @@ class Api::V1::PatientCommunicationsController < Api::V1::BaseController
       @message_subject = params[:subject]
       @message_body = params[:message].html_safe
 
-      message = {
+      message = mandrill.messages.send({
         :subject => @message_subject,
         :from_name => @current_user.user.practice.name,
-        :from_email => @current_user.user.email,
+        :from_email => "hello@odonto.me",
+        :headers =>{ "Reply-To"=> @current_user.user.email },
         :to => to_mandrill_email(patients),
+        :track_clicks => true,
+        :track_opens => true,
         :html => render_to_string('patient_mailer/practice_communication', :layout => 'email'),
         :merge_vars => to_mandrill_merge_variables(patients),
         :preserve_recipients => false
-      }
+      })
 
-      # track the event in mixpanel
-      # MIXPANEL_CLIENT.track(@current_user.user.email, 'Sent patient communications', {
-      #     'Number of patients' => patients.size,
-      #     'Query' => params[:query]
-      # })
+      # make sure that the message was sent without errors
+      if (message.is_a?(Array))
 
-      render :json => mandrill.messages.send(message)
+        patient_communication = PatientCommunication.new({
+          :subject => params[:subject],
+          :message => params[:message],
+          :number_of_patients => patients.size,
+          :user_id => @current_user.user.id
+        })
 
+        # were we able to save the record without problems?
+        if (patient_communication.save)
+
+          # track the event in mixpanel
+          MIXPANEL_CLIENT.track(@current_user.user.email, 'Sent patient communications', {
+              'Number of patients' => patients.size,
+              'Query' => params[:query]
+          })
+
+          render :json => patient_communication
+        # otherwise return an error message but make sure they know
+        # the communication was sent anyway
+        else
+          render :json => {:error => "The communication was sent, but with some problems." }, :status => 500
+        end
+
+      # otherwise respond with an error message
+      else
+        render :json => {:error => "There was a problem sending the communication." }, :status => 400
+      end
     end
   end
 
