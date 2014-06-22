@@ -10,7 +10,7 @@ Odontome::Application.routes.draw do
       resources :doctors
       resources :treatments
 			resources :balances
-			resources :patient_notifications
+			resources :patient_communications
 
       resources :datebooks do
         resources :appointments
