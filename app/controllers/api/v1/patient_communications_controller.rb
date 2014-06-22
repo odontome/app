@@ -41,7 +41,7 @@ class Api::V1::PatientCommunicationsController < Api::V1::BaseController
       # REMEMBER THE LINE BELOW
       patients = Patient.mine.select("firstname, lastname, email").where("email = ?", "rieraraul@gmail.com")
 
-      @message_subject = params[:subject]
+      @message_subject = params[:subject].html_safe
       @message_body = params[:message].html_safe
 
       message = mandrill.messages.send({
@@ -61,8 +61,8 @@ class Api::V1::PatientCommunicationsController < Api::V1::BaseController
       if (message.is_a?(Array))
 
         patient_communication = PatientCommunication.new({
-          :subject => params[:subject],
-          :message => params[:message],
+          :subject => @message_subject,
+          :message => @message_body,
           :number_of_patients => patients.size,
           :user_id => @current_user.user.id
         })
