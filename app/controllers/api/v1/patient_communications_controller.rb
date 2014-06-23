@@ -3,7 +3,11 @@ class Api::V1::PatientCommunicationsController < Api::V1::BaseController
   require 'mandrill'
 
   def index
+    @patient_communications = PatientCommunication
+    .select("patient_communications.id, patient_communications.subject, patient_communications.message, patient_communications.created_at")
+    .where("practices.id = ?", @current_user.user.practice.id).joins(:user => :practice)
 
+    respond_with(@patient_communications)
   end
 
   def create
