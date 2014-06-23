@@ -12,7 +12,7 @@ class Api::V1::PatientCommunicationsController < Api::V1::BaseController
     patients = Patient.mine.select("firstname, lastname, email")
 
     params[:query].each do |query|
-      case query["type"]
+      case query
 
       when "last_visit"
         patients = patients.where("appointments.ends_at >= ?", query["value"].days.ago)
