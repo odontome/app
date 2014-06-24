@@ -4,4 +4,7 @@ class PatientCommunication < ActiveRecord::Base
 
   # associations
   belongs_to :user
+
+  # validations
+  validates_presence_of :subject, :message
 end
