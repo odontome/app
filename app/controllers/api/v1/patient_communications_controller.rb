@@ -18,8 +18,16 @@ class Api::V1::PatientCommunicationsController < Api::V1::BaseController
     params[:query].each do |query|
       case query
 
-      when "last_visit"
-        patients = patients.where("appointments.ends_at >= ?", query["value"].days.ago)
+      when "appointment"
+        query_date = query["value"]
+
+        if query_date < 0
+           query_date = query_date.days.ago
+        else
+           query_date = Time.now + query_date.days
+        end
+
+        patients = patients.where("appointments.starts_at >= ?", query_date)
         .includes(:appointments)
 
       when "balance_greater_than"
@@ -44,13 +52,16 @@ class Api::V1::PatientCommunicationsController < Api::V1::BaseController
       # REMOVE THIS AFTER TESTING!!!
       # REMEMBER THE LINE BELOW
       patients = Patient.mine.select("firstname, lastname, email").where("email = ?", "rieraraul@gmail.com")
+      # REMEMBER TO REMOVE THE PREVIOUS LINE
+      # YOU GOT IT? OK OK
 
       @message_subject = params[:subject].html_safe
       @message_body = params[:message].html_safe
+      @practice_name = @current_user.user.practice.name
 
       message = mandrill.messages.send({
         :subject => @message_subject,
-        :from_name => @current_user.user.practice.name,
+        :from_name => @practice_name,
         :from_email => "hello@odonto.me",
         :headers =>{ "Reply-To"=> @current_user.user.email },
         :to => to_mandrill_email(patients),
