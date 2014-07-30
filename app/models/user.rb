@@ -4,7 +4,8 @@ class User < ActiveRecord::Base
 
   # associations
   belongs_to :practice, :counter_cache => true
-  has_many :notes
+  has_many :notes, :dependent => :delete_all
+  has_many :patient_communications, :dependent => :delete_all 
 
   # plugins
   acts_as_authentic do |c|

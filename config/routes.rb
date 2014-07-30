@@ -10,6 +10,7 @@ Odontome::Application.routes.draw do
       resources :doctors
       resources :treatments
 			resources :balances
+			resources :patient_communications
 
       resources :datebooks do
         resources :appointments
@@ -63,7 +64,10 @@ Odontome::Application.routes.draw do
 	# admin
   get "/admin/practices" => "admin#practices", :as => :practices_admin
 
-	# legaly URL, should remove shortly
+	# unsubscribe links
+	get "/patients/unsubscribe" => "patients#unsubscribe", :as => :patients_unsubscribe
+
+	# legacy URL, should remove shortly (waiting for removal)
   get '/datebook', to: redirect('/')
 
 	# error handling

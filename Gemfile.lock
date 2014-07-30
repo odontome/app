@@ -53,6 +53,7 @@ GEM
       thread
       thread_safe
     erubis (2.7.0)
+    excon (0.34.0)
     execjs (2.0.2)
     fastercsv (1.5.5)
     ffi (1.9.3)
@@ -87,6 +88,9 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    mandrill-api (1.0.51)
+      excon (>= 0.16.0, < 1.0)
+      json (>= 1.7.7, < 2.0)
     mime-types (1.25.1)
     minitest (4.7.5)
     mixpanel-ruby (1.4.0)
@@ -196,6 +200,7 @@ DEPENDENCIES
   i18n-tasks (~> 0.2.18)
   jquery-minicolors-rails
   jquery-rails (>= 3.0.4)
+  mandrill-api
   mixpanel-ruby
   passbook (~> 0.3.1)
   pg

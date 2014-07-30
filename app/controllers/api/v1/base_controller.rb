@@ -1,14 +1,13 @@
 class Api::V1::BaseController < ActionController::Base
-  
+
   before_filter :authenticate_user!, :throttle
-  before_filter :authorize_admin!, :only => [:destroy] 
-  
+  before_filter :authorize_admin!, :only => [:destroy]
+
   respond_to :json
-  
+
   private
 
   def authenticate_user!
-
     authenticate_or_request_with_http_token do |token, options|
       @current_user = User.find_by_authentication_token(token)
 
@@ -19,9 +18,9 @@ class Api::V1::BaseController < ActionController::Base
       end
 
     end
-	
+
   end
-    
+
   def authorize_admin!
     authenticate_user!
     unless @current_user.user.roles.include?("admin")
@@ -60,5 +59,5 @@ class Api::V1::BaseController < ActionController::Base
     response.headers["X-Rate-Limit-Remaining"] = (THROTTLE_MAX_REQUESTS - count.to_i).to_s
     response.headers["X-Rate-Limit-Reset"] = time_till_reset
   end
-  
+
 end
