@@ -4,6 +4,7 @@ en:
     is a mistake, please contact us as soon as possible.
   account_not_found: An account with the given information was not found. If you think this is a mistake, please contact with us
   activate: Activate
+  range: Range
   active: Active
   amount: Amount
   balance_discount_hint: Any negative value will be entered as an expense

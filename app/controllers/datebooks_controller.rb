@@ -1,16 +1,16 @@
 class DatebooksController < ApplicationController
   before_filter :require_user
   before_filter :require_practice_admin, :except => [:show]
-  
+
   def index
   	# this same variable is already defined in the
     # application controller. Maybe we should think of
     # a way to remove it from there
     @datebooks = Datebook.mine
-    .select('datebooks.id, datebooks.name, datebooks.updated_at, count(appointments.id) as appointments_count')
+    .select('datebooks.id, datebooks.name, datebooks.updated_at, datebooks.starts_at, datebooks.ends_at, count(appointments.id) as appointments_count')
     .joins('left outer join appointments on appointments.datebook_id = datebooks.id')
     .group('datebooks.id')
-    .order(:name)
+    .order('datebooks.created_at')
   end
 
   def show

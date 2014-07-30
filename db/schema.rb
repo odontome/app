@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140622220346) do
+ActiveRecord::Schema.define(:version => 20140730181605) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "doctor_id"
@@ -40,8 +40,10 @@ ActiveRecord::Schema.define(:version => 20140622220346) do
   create_table "datebooks", :force => true do |t|
     t.integer  "practice_id"
     t.string   "name",        :limit => 100
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+    t.integer  "starts_at",                  :default => 8
+    t.integer  "ends_at",                    :default => 20
   end
 
   create_table "doctors", :force => true do |t|

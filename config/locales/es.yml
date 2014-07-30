@@ -3,6 +3,7 @@ es:
   account_cancelled: Tu cuenta ha sido marcada para cancelación. Si crees que esto es un error, por favor contacta con nosotros lo más rápido posible.
   account_not_found: No se encontró ninguna cuenta con esta información.
   activate: Activar
+  range: Rango
   active: Activa
   amount: Monto
   balance_discount_hint: Cualquier valor negativo será ingresado como egresos

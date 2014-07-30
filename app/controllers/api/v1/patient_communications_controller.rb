@@ -11,7 +11,7 @@ class Api::V1::PatientCommunicationsController < Api::V1::BaseController
   end
 
   def create
-    mandrill = Mandrill::API.new "CJx4OZ8lZLqJbVO4yzkmHg" # CHANGE THIS TO ENV_VARIABLES
+    mandrill = Mandrill::API.new ENV["MANDRILL_APIKEY"]
 
     patients = Patient.mine.select("firstname, lastname, email")
 

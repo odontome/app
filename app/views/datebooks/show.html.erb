@@ -12,8 +12,8 @@
 
 		$("#calendar").fullCalendar({
 			defaultView: <% if @is_mobile.nil? %>"agendaWeek"<%else%>"agendaDay"<% end %>,
-			minTime: 8,
-			maxTime: 21,
+			minTime: <%= @datebook.starts_at %>,
+			maxTime: <%= @datebook.ends_at %>,
 			firstDay: 1,
 			//timeFormat: 'h:mm t{ - h:mm t} ',
 			<% if @is_mobile.nil? %>

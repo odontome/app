@@ -8,7 +8,17 @@
   </p>
 
   <p class="form-group col-md-8">
-	 <%= f.submit(t(:save), :class => "btn btn-primary", :disable_with => t(:please_wait)) %> 
+    <%= f.label :starts_at %>
+    <%= f.number_field :starts_at, :class => "form-control" %>
+  </p>
+
+  <p class="form-group col-md-8">
+    <%= f.label :ends_at %>
+    <%= f.number_field :ends_at, :class => "form-control" %>
+  </p>
+
+  <p class="form-group col-md-8">
+	 <%= f.submit(t(:save), :class => "btn btn-primary", :disable_with => t(:please_wait)) %>
    <span class="cancel"><%= t :or %>
     <%= link_to t(:cancel).downcase, datebooks_url %>
     </span>
