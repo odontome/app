@@ -25,6 +25,8 @@ en:
         patient_id: Patient
       datebook:
         name: Name
+        starts_at: Day starts at
+        ends_at: Day ends at
       doctor:
         calendar_color: Preferred color
         email: Email
