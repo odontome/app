@@ -22,6 +22,9 @@ es:
         doctor_id: Doctor
         notes: Comentarios adicionales
         patient_id: Paciente
+      balance:
+        notes: Comentarios adicionales
+        amount: Monto
       datebook:
         name: Nombre
         starts_at: Día comienza a las

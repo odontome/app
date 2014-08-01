@@ -23,6 +23,9 @@ en:
         doctor_id: Doctor
         notes: Additional notes
         patient_id: Patient
+      balance:
+        notes: Additional notes
+        amount: Amount
       datebook:
         name: Name
         starts_at: Day starts at
