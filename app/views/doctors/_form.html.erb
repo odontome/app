@@ -1,14 +1,14 @@
 <%= form_for(@doctor, :class => "form-horizontal") do |f| %>
-  
+
   <%= render "shared/error_messages", :target => @doctor %>
 
   <p class="form-group col-md-8">
-  	<%= f.label :firstname %>
+  	<%= f.label :firstname %> *
     <%= f.text_field :firstname, :class => "form-control" %>
   </p>
 
   <p class="form-group col-md-8">
-  	<%= f.label :lastname %>
+  	<%= f.label :lastname %> *
     <%= f.text_field :lastname, :class => "form-control"  %>
   </p>
 
@@ -36,11 +36,11 @@
 
   <p class="form-group col-md-8">
     <%= f.label :calendar_color %>
-    <%= f.text_field :color, :class => "form-control color-picker" %>    
+    <%= f.text_field :color, :class => "form-control color-picker" %>
   </p>
 
   <p class="form-group col-md-8">
-  	<%= f.submit(t(:save), :class => "btn btn-primary", :disable_with => t(:please_wait)) %> 
+  	<%= f.submit(t(:save), :class => "btn btn-primary", :disable_with => t(:please_wait)) %>
     <span class="cancel"><%= t :or %>
       <%= link_to t(:cancel).downcase, doctors_url %>
     </span>

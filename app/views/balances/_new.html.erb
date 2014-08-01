@@ -1,13 +1,13 @@
 <%= form_tag(patient_balances_path, :method => "post", :remote => true, :id => "entry-form") do %>
 
 	<p class="form-group col-md-12">
-			<label for="balance_amount"> <%=t :amount %></label>
+			<label for="balance_amount"> <%=t :amount %></label> *
 	    <%= number_field_tag "balance[amount]", nil, { :class => "form-control" } %>
 	    <sub><%= t :balance_discount_hint %></sub>
 	</p>
 
 	<p class="form-group col-md-12">
-		<label for="balance_notes"> <%=t :additional_notes %></label>
+		<label for="balance_notes"> <%=t :additional_notes %></label> *
 	  <%= text_area_tag "balance[notes]", nil, { :rows => 2, :maxlength => 160, :class => "form-control" }  %>
 	</p>
 

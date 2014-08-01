@@ -3,17 +3,17 @@
   <%= render "shared/error_messages", :target => @treatment %>
 
   <p class="form-group col-md-8">
-  	<%= f.label :name %>
+  	<%= f.label :name %> *
     <%= f.text_field :name, :class => "form-control" %>
   </p>
 
   <p class="form-group col-md-8">
-  	<%= f.label :price %>
+  	<%= f.label :price %> *
     <%= f.number_field :price, :class => "form-control"  %>
   </p>
-  
+
   <p class="form-group col-md-8">
-   <%= f.submit(t(:save), :class => "btn btn-primary", :disable_with => t(:please_wait)) %> 
+   <%= f.submit(t(:save), :class => "btn btn-primary", :disable_with => t(:please_wait)) %>
    <span class="cancel"><%= t :or %>
     <%= link_to t(:cancel).downcase, treatments_url %>
     </span>

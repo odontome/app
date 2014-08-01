@@ -3,17 +3,17 @@
   <%= render "shared/error_messages", :target => @datebook %>
 
   <p class="form-group col-md-8">
-  	<%= f.label :name %>
+  	<%= f.label :name %> *
     <%= f.text_field :name, :class => "form-control" %>
   </p>
 
   <p class="form-group col-md-8">
-    <%= f.label :starts_at %>
+    <%= f.label :starts_at %> *
     <%= f.number_field :starts_at, :class => "form-control" %>
   </p>
 
   <p class="form-group col-md-8">
-    <%= f.label :ends_at %>
+    <%= f.label :ends_at %> *
     <%= f.number_field :ends_at, :class => "form-control" %>
   </p>
 

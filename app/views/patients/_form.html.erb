@@ -3,22 +3,22 @@
 	<%= render "shared/error_messages", :target => @patient%>
 
 	<p class="form-group col-md-8">
-		<%= f.label :firstname %>
+		<%= f.label :firstname %> *
 		<%= f.text_field :firstname, :class => "form-control" %>
 	</p>
 
 	<p class="form-group col-md-8">
-		<%= f.label :lastname %>
+		<%= f.label :lastname %> *
 		<%= f.text_field :lastname, :class => "form-control" %>
 	</p>
 
 	<p class="form-group col-md-8">
-		<%= f.label :date_of_birth %> 
+		<%= f.label :date_of_birth %>
 		<%= f.date_select :date_of_birth, :start_year => Time.now.year - 90, :end_year => Time.now.year - 3 %>
 	</p>
 
 	<p class="form-group col-md-8">
-		<%= f.label :uid %>
+		<%= f.label :uid %> *
 		<%= f.text_field :uid, :class => "form-control" %>
 	</p>
 
@@ -98,7 +98,7 @@
 	</p>
 
 	<p class="form-group col-md-8">
-		<%= f.submit(t(:save), :class => "btn btn-primary", :disable_with => t(:please_wait)) %> 
+		<%= f.submit(t(:save), :class => "btn btn-primary", :disable_with => t(:please_wait)) %>
 		<span class="cancel"><%= t :or %>
 			<%= link_to t(:cancel).downcase, patients_url %>
 		</span>

@@ -1,7 +1,7 @@
 <%= form_for([@datebook, @appointment], :remote => true, :class => "form-horizontal") do |f| %>
 	<div class="modal-body">
 		<p class="form-group">
-			<%= f.label :patient_id %>
+			<%= f.label :patient_id %> *
 			<%= text_field_tag "appointment[patient_id]", nil, :class => "form-control", :autocomplete => "off" %>
 		</p>
 
@@ -9,7 +9,7 @@
 			<% if @doctors.empty? %>
 				<%= link_to t(:no_doctors), doctors_path %>
 			<% else %>
-				<%= f.label :doctor_id %>
+				<%= f.label :doctor_id %> *
 				<%= f.select(:doctor_id, options_from_collection_for_select(@doctors, "id", "fullname", :selected => @appointment.doctor_id), {}, { :class => "form-control", :title => t(:select_doctor) }) %>
 			<% end %>
 		</p>

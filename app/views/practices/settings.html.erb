@@ -2,7 +2,7 @@
     <div class="row header">
         <div class="col-md-12">
             <h3><%= t :practice_settings %></h3>
-        </div>                
+        </div>
     </div>
 
     <div class="row form-wrapper">
@@ -13,7 +13,7 @@
 				<%= render "shared/error_messages", :target => @practice%>
 
 				<p class="form-group col-md-8">
-					<%= f.label :name %>
+					<%= f.label :name %> *
 					<%= f.text_field :name, :class => "form-control" %>
 					<%= content_tag "sub", t(:practice_name_hint) %>
 				</p>
@@ -35,7 +35,7 @@
 
 
 				<p class="form-group col-md-8">
-					<%= f.submit(t(:save), :class => "btn btn-primary", :disable_with => t(:please_wait)) %> 
+					<%= f.submit(t(:save), :class => "btn btn-primary", :disable_with => t(:please_wait)) %>
 					<span class="cancel"><%= t :or %>
 						<%= link_to t(:cancel).downcase, practice_url %>
 					</span>
@@ -45,10 +45,10 @@
         </div>
 
         <!-- side right column -->
-        <div class="col-md-3 form-sidebar">                       
+        <div class="col-md-3 form-sidebar">
             <h6><%= t :for_your_information %></h6>
-            
+
             <p><%= raw t("instructions.practice", close_url: (link_to (t(:close_your_account)).downcase, practice_cancel_url)).html_safe %></p>
         </div>
     </div>
-</div>  
+</div>
