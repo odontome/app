@@ -43,6 +43,7 @@
 			    day:      '<%= t :day %>'
 			},
 			editable: true,
+			viewDisplay: resizeCalendar,
 			eventSources: [{
 			  url: endpointURL + withDoctorIdString,
 			  ignoreTimezone: true
@@ -102,6 +103,13 @@
 				element.addTouch();
      		}
 		});
+
+		function resizeCalendar(calendarView) {
+		    if(calendarView.name === 'agendaWeek' || calendarView.name === 'agendaDay') {
+		        // if height is too big for these views, then scrollbars will be hidden
+		        calendarView.setHeight(9999);
+		    }
+		}
 
 	});
 </script>
