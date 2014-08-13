@@ -1,38 +1,38 @@
-class Patient < ActiveRecord::Base  
+class Patient < ActiveRecord::Base
   # permitted attributes
   attr_accessible :uid, :firstname, :lastname, :fullname, :date_of_birth, :past_illnesses, :surgeries, :medications, :drugs_use, :cigarettes_per_day, :drinks_per_day, :family_diseases, :emergency_telephone, :email, :telephone, :mobile, :address, :allergies
 
   # associations
   has_many :appointments, :dependent => :delete_all
-  has_many :balances, :dependent => :delete_all 
-  has_many :notes, :as => :noteable, :dependent => :delete_all   
+  has_many :balances, :dependent => :delete_all
+  has_many :notes, :as => :noteable, :dependent => :delete_all
   has_many :doctors, :through => :appointments
   belongs_to :practice, :counter_cache => true
-  
-  scope :mine, lambda { 
+
+  scope :mine, lambda {
     where("patients.practice_id = ? ", UserSession.find.user.practice_id)
     .order("firstname")
   }
-  
+
   scope :alphabetically, lambda { |letter|
     mine
     .select("firstname,lastname,uid,id,date_of_birth,allergies,email,updated_at")
     .where("lower(firstname) LIKE ?", "#{letter.downcase}%")
   }
-  
+
   scope :search, lambda { |q|
     select("id,uid,firstname,lastname,email,updated_at,date_of_birth")
     .where("uid LIKE ? OR lower(firstname || ' ' || lastname) LIKE ?", q, "%#{q.downcase}%")
     .mine
     .limit(25)
     .order("firstname")
-  }  
-    
+  }
+
   # validations
   validates_uniqueness_of :uid, :scope => :practice_id
   validates_uniqueness_of :email, :scope => :practice_id, :allow_nil => true, :allow_blank => true
-  validates_presence_of :practice_id, :firstname, :lastname, :date_of_birth, :uid
-  
+  validates_presence_of :practice_id, :firstname, :lastname, :date_of_birth
+
   validates_numericality_of :cigarettes_per_day, :drinks_per_day, :only_integer => true, :greater_than_or_equal_to => 0, :allow_blank => true
   validates_length_of :uid, :within => 0..25, :allow_blank => true
   validates_length_of :firstname, :within => 1..25
@@ -42,16 +42,16 @@ class Patient < ActiveRecord::Base
   validates_length_of :mobile, :within => 0..20, :allow_blank => true
   validates_length_of :emergency_telephone, :within => 5..20, :allow_blank => true
   validates_format_of :email, :with => Authlogic::Regex.email, :allow_blank => true
-  
+
   # callbacks
   before_validation :set_practice_id, :on => :create
   #before_create :check_for_patients_limit
   after_create :destroy_nils
-    
+
   def fullname
     [firstname, lastname].join(' ')
   end
-  
+
   def fullname=(name)
     split = name.split(' ', 2)
     self.firstname = split.first
@@ -65,18 +65,18 @@ class Patient < ActiveRecord::Base
       return 0
     end
   end
-  
+
   # this functions checks if the user was created from the datebook (skipped all validation, so most of the data is invalid)
   def missing_info?
     return date_of_birth.nil?
   end
-  
+
   # this function tries to find a patient by an ID or it's NAME, otherwise it creates one
-  def self.find_or_create_from(patient_id_or_name) 
+  def self.find_or_create_from(patient_id_or_name)
 
     # remove any possible commas from this value
     patient_id_or_name.gsub!(",", "")
-      
+
     # Check if we are dealing with an integer or a string
     if (patient_id_or_name.to_i == 0)
       # instantiate a new patient
@@ -89,20 +89,20 @@ class Patient < ActiveRecord::Base
 
       patient_id_or_name = patient.id
     end
-    
+
     # validate that this patient really exists
     begin
       patient_double_check = Patient.find patient_id_or_name
-            
+
       rescue ActiveRecord::RecordNotFound
         patient_id_or_name = nil
     end
 
     return patient_id_or_name
   end
-  
+
   private
-  
+
   # this function is a small compromise to bypass that weird situation where a patient is created with everything set to nil
   def destroy_nils
     Patient.mine.destroy_all(:firstname => nil)
