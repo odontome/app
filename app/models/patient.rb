@@ -29,7 +29,7 @@ class Patient < ActiveRecord::Base
   }
 
   # validations
-  validates_uniqueness_of :uid, :scope => :practice_id
+  validates_uniqueness_of :uid, :scope => :practice_id, :allow_nil => true, :allow_blank => true
   validates_uniqueness_of :email, :scope => :practice_id, :allow_nil => true, :allow_blank => true
   validates_presence_of :practice_id, :firstname, :lastname, :date_of_birth
 
