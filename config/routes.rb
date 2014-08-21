@@ -10,7 +10,6 @@ Odontome::Application.routes.draw do
       resources :doctors
       resources :treatments
 			resources :balances
-			resources :patient_communications
 
       resources :datebooks do
         resources :appointments
@@ -42,6 +41,9 @@ Odontome::Application.routes.draw do
   resources :doctors
   resources :password_resets, :only => [ :new, :create, :edit, :update ]
 
+	# apps
+	resources :broadcasts
+
 	# authentication
 	resource :user_session
   get "/signin" => "user_sessions#new", :as => :signin
@@ -66,9 +68,7 @@ Odontome::Application.routes.draw do
 
 	# unsubscribe links
 	get "/patients/unsubscribe" => "patients#unsubscribe", :as => :patients_unsubscribe
-
-	# legacy URL, should remove shortly (waiting for removal)
-  get '/datebook', to: redirect('/')
+	get "/doctors/unsubscribe" => "doctors#unsubscribe", :as => :doctors_unsubscribe
 
 	# error handling
   get '/404', :to => 'errors#not_found'
