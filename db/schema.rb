@@ -42,9 +42,9 @@ ActiveRecord::Schema.define(:version => 20140821193649) do
     t.string   "message"
     t.integer  "number_of_recipients"
     t.integer  "user_id"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
-    t.integer  "number_of_opens"
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.integer  "number_of_opens",      :default => 0
   end
 
   create_table "datebooks", :force => true do |t|
