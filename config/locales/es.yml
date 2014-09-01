@@ -3,6 +3,9 @@ es:
   account_cancelled: Tu cuenta ha sido marcada para cancelación. Si crees que esto es un error, por favor contacta con nosotros lo más rápido posible.
   account_not_found: No se encontró ninguna cuenta con esta información.
   activate: Activar
+  authlogic:
+    error_messages:
+      consecutive_failed_logins_limit_exceeded: Muchos intentos consecutivos para iniciar una sesión, la cuenta ha sido bloqueada temporalmente.
   range: Rango
   active: Activa
   amount: Monto

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140821193649) do
+ActiveRecord::Schema.define(:version => 20140901230449) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "doctor_id"
@@ -144,6 +144,7 @@ ActiveRecord::Schema.define(:version => 20140821193649) do
     t.integer   "login_count",          :default => 0
     t.string    "perishable_token",     :default => "",     :null => false
     t.string    "authentication_token"
+    t.integer   "failed_login_count",   :default => 0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

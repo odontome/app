@@ -4,6 +4,9 @@ en:
     is a mistake, please contact us as soon as possible.
   account_not_found: An account with the given information was not found. If you think this is a mistake, please contact with us
   activate: Activate
+  authlogic:
+    error_messages:
+      consecutive_failed_logins_limit_exceeded: Consecutive failed logins limit exceeded, account has been temporarily disabled.
   range: Range
   active: Active
   amount: Amount
@@ -15,8 +18,12 @@ en:
   developers: Developers
   update_password: Update password
   created_at: Created at
+  sent_at: Sent at
   my_practice: My practice
   chart_number: Chart number
+  number_of_recipients: Recipients
+  number_of_opens: Opens
+  subject: Subject
   activerecord:
     attributes:
       appointment:
@@ -26,6 +33,11 @@ en:
       balance:
         notes: Additional notes
         amount: Amount
+      broadcast:
+        subject: Subject
+        number_of_recipients: Number of recipients
+        number_of_opens: Number of opens
+        user_id: Sender
       datebook:
         name: Name
         starts_at: Day starts at
@@ -72,6 +84,7 @@ en:
         password_confirmation: Password confirmation
     models:
       appointment: Appointment
+      broadcast: Broadcast
       datebook: Datebook
       doctor: Doctor
       patient: Patient
@@ -101,6 +114,8 @@ en:
     going back
   balance: Balance
   balance_created_error_message: There was a problem creating this item
+  broadcasts: Broadcasts
+  broadcast_created_success_message: Your broadcast has been scheduled. Your patients will be notified very shortly.
   cancel: Cancel
   cigarettes_per_day: Cigarettes per day
   close_account: Close account
@@ -111,6 +126,7 @@ en:
     image.
   contact_information: Contact information
   contact_us: Contact us
+  create_new_broadcast: Create new broadcast
   create_new_datebook: Create new datebook
   create_new_doctor: Create new doctor
   create_new_patient: Create new patient
@@ -165,6 +181,7 @@ en:
   inactive: Inactive
   incomplete: Incomplete
   instructions:
+    broadcasts: <p>Broadcasts are the way to communicate to your patients in bulk.</p><p>Need to send a notification to all your patients who last visit was 6 months ago? Do you want to send a promotion to all of them? This is where you do it.</p>
     datebooks: <p>Datebooks are the backbone of every practice.</p> <p>Because you
       can already filter your datebooks by doctor, one common usage is to create one
       datebook per each of your practices.</p>
@@ -281,6 +298,8 @@ en:
   remember_me: Remember me
   reset_password: Reset password
   save: Save
+  send: Send
+  continue: Continue
   schedule: Schedule
   search: Search
   select_doctor: Select a doctor
