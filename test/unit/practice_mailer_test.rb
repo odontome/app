@@ -3,6 +3,13 @@ require 'test_helper'
 
 class PracticeMailerTest < ActionMailer::TestCase
 
+  setup :yesterday_date
+
+  def yesterday_date
+    @today = Time.zone.now.beginning_of_day
+    @yesterday = @today - 1.day
+  end
+
   test "practice welcome email" do
     practice = practices(:complete)
     practice.users << users(:founder)
@@ -27,8 +34,6 @@ class PracticeMailerTest < ActionMailer::TestCase
       "currency_unit" => "€"
     }]
 
-    today = Time.zone.now.beginning_of_day
-
     patients = [{
       "id" => 1,
       "firstname" => "Raul",
@@ -37,14 +42,14 @@ class PracticeMailerTest < ActionMailer::TestCase
     }]
 
     # Send the email, then test that it got queued
-    email = PracticeMailer.daily_recap_email(admin, patients, nil, nil, today).deliver
+    email = PracticeMailer.daily_recap_email(admin, patients, nil, nil, @yesterday).deliver
 
     assert !ActionMailer::Base.deliveries.empty?
 
     # Test the body of the sent email contains what we expect it to
     assert_equal ['hello@odonto.me'], email.from
     assert_equal ['contact@bokanova.mx'], email.to
-    assert_equal I18n.t("mailers.practice.daily_recap.subject", :date => I18n.l(today.to_date, :format => :day_and_date)), email.subject
+    assert_equal I18n.t("mailers.practice.daily_recap.subject", :date => I18n.l(@yesterday.in_time_zone(admin.first['timezone']).to_date, :format => :day_and_date)), email.subject
     assert_match /1 patients added/, email.encoded
 
   end
@@ -57,8 +62,6 @@ class PracticeMailerTest < ActionMailer::TestCase
       "currency_unit" => "€"
     }]
 
-    today = Time.zone.now.beginning_of_day
-
     appointments = [
       {
         "id" => 1,
@@ -67,7 +70,7 @@ class PracticeMailerTest < ActionMailer::TestCase
         "patient_lastname" => "Riera",
         "doctor_firstname" => "Rebecca",
         "doctor_lastname" => "Riera",
-        "starts_at" => today - 2.hours,
+        "starts_at" => @yesterday - 2.hours,
         "email" => "raulriera@hotmail.com"
       },
       {
@@ -77,20 +80,20 @@ class PracticeMailerTest < ActionMailer::TestCase
         "patient_lastname" => "Riera",
         "doctor_firstname" => "Ruth",
         "doctor_lastname" => "Riera",
-        "starts_at" => today - 2.hours,
+        "starts_at" => @yesterday - 2.hours,
         "email" => "raulriera@hotmail.com"
       }
     ]
 
     # Send the email, then test that it got queued
-    email = PracticeMailer.daily_recap_email(admin, nil, appointments, nil, today).deliver
+    email = PracticeMailer.daily_recap_email(admin, nil, appointments, nil, @yesterday).deliver
 
     assert !ActionMailer::Base.deliveries.empty?
 
     # Test the body of the sent email contains what we expect it to
     assert_equal ['hello@odonto.me'], email.from
     assert_equal ['contact@bokanova.mx'], email.to
-    assert_equal I18n.t("mailers.practice.daily_recap.subject", :date => I18n.l(today.to_date, :format => :day_and_date)), email.subject
+    assert_equal I18n.t("mailers.practice.daily_recap.subject", :date => I18n.l(@yesterday.in_time_zone(admin.first['timezone']).to_date, :format => :day_and_date)), email.subject
     assert_match /2 appointments scheduled/, email.encoded
 
   end
@@ -103,22 +106,20 @@ class PracticeMailerTest < ActionMailer::TestCase
       "currency_unit" => "$"
     }]
 
-    today = Time.zone.now.beginning_of_day
-
     balance = [{
       "practice_id" => 1,
       "amount" => 1000
     }]
 
     # Send the email, then test that it got queued
-    email = PracticeMailer.daily_recap_email(admin, nil, nil, balance, today).deliver
+    email = PracticeMailer.daily_recap_email(admin, nil, nil, balance, @yesterday).deliver
 
     assert !ActionMailer::Base.deliveries.empty?
 
     # Test the body of the sent email contains what we expect it to
     assert_equal ['hello@odonto.me'], email.from
     assert_equal ['contact@bokanova.mx'], email.to
-    assert_equal I18n.t("mailers.practice.daily_recap.subject", :date => I18n.l(today.to_date, :format => :day_and_date)), email.subject
+    assert_equal I18n.t("mailers.practice.daily_recap.subject", :date => I18n.l(@yesterday.in_time_zone(admin.first['timezone']).to_date, :format => :day_and_date)), email.subject
     assert_match /\$1,000.00 processed yesterday/, email.encoded
 
   end
