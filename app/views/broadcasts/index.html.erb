@@ -1,0 +1,47 @@
+<div id="pad-wrapper" class="table-wrapper users-list">
+
+	<div class="row header col-md-12">
+        <h3><%= t :broadcasts %></h3>
+
+        <div class="pull-right-lg">
+            <%= link_to t(:create_new_broadcast), new_broadcast_url, "class" => "btn-flat primary pull-right" %>
+        </div>
+    </div>
+
+	<div class="row">
+	    <div class="col-md-12">
+	        <table class="table table-hover">
+	            <thead>
+	                <tr>
+	                    <th class="col-md-4">
+	                        <%= t :subject %>
+	                    </th>
+	                    <th class="col-md-3">
+	                        <span class="line"></span> <%= t :number_of_recipients %>
+	                    </th>
+											<th class="col-md-3">
+													<span class="line"></span> <%= t :number_of_opens %>
+											</th>
+	                    <th class="col-md-2">
+	                        <span class="line"></span> <%= t :sent_at %>
+	                    </th>
+	                </tr>
+	            </thead>
+	            <tbody>
+
+		          <% @broadcasts.each do |broadcast| %>
+							<tr class="<% if broadcast.id == @broadcasts.first.id %>first<% end %>">
+								<td>
+									<%= broadcast.subject %>
+								</td>
+								<td><%= number_with_delimiter broadcast.number_of_recipients %></td>
+								<td><%= number_with_delimiter broadcast.number_of_opens %></td>
+								<td><%= broadcast.created_at.to_formatted_s :short %></td>
+							</tr>
+							<% end %>
+
+			    </tbody>
+			</table>
+		</div>
+	</div>
+</div>

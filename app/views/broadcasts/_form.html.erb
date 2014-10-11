@@ -1,0 +1,154 @@
+<section class="step1">
+  <form role="form">
+
+    <div class="form-group col-md-8">
+  		<h4>Step 1: Target patients</h4>
+  	</div>
+
+    <div class="form-group col-md-8">
+
+      <div class="row">
+
+        <div class="col-xs-4">
+
+          <div id="audience" class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+              Last seen
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+              <li><a role="menuitem" tabindex="-1" href="#">Last seen</a></li>
+              <li><a role="menuitem" tabindex="-1" href="#">Scheduled for</a></li>
+              <li class="divider"></li>
+              <li><a role="menuitem" tabindex="-1" href="#">Everyone</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="col-xs-2">
+          <input id="count" type="text" class="form-control" value="7" maxlength="2">
+        </div>
+
+        <div class="col-xs-6">
+
+          <div id="multiplier" class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown">
+              days ago
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+              <li><a role="menuitem" tabindex="-1" href="#" data-value="1">days ago</a></li>
+              <li><a role="menuitem" tabindex="-1" href="#" data-value="7">weeks ago</a></li>
+              <li><a role="menuitem" tabindex="-1" href="#" data-value="30">months ago</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+  </form>
+
+</section>
+
+<section class="step2">
+  <%= form_for(@broadcast, :class => "form-horizontal") do |f| %>
+
+    <%= render "shared/error_messages", :target => @broadcast %>
+
+    <div class="form-group col-md-8">
+      <h4>Step 2: Compose your message</h4>
+    </div>
+
+    <p class="form-group col-md-8">
+    	<%= f.label :subject %> *
+      <%= f.text_field :subject, :class => "form-control" %>
+    </p>
+
+    <p class="form-group col-md-8">
+    	<%= f.label :message %> *
+      <%= f.text_area :message, :class => "form-control"  %>
+    </p>
+
+    <p class="form-group col-md-8">
+      <%#= link_to t(:continue), nil, :class => "btn btn-primary" %>
+    	<%= f.submit(t(:send), :class => "btn btn-primary", :disable_with => t(:please_wait)) %>
+      <span class="cancel"><%= t :or %>
+        <%= link_to t(:cancel).downcase, broadcasts_url %>
+      </span>
+    </p>
+  <% end %>
+</section>
+
+<script>
+
+  // Move this into a jQuery plugin
+	(function($) {
+
+			$.fn.dropdown = function( options ) {
+
+        var defaults = $.extend({
+            onChange: null
+        }, options );
+
+        var dropdown = this;
+
+        dropdown.on("click", "li", function(event) {
+          var row = $(this);
+          var selectedRow = row.index();
+          var selectedObject = $(dropdown.find("ul").children()[selectedRow]);
+
+          selectedValue(selectedObject.text());
+
+          if (defaults.onChange) {
+            var data = { "index": selectedRow };
+            var anchor = selectedObject.children()[0];
+            var dataAttributeValue = $(anchor).data('value');
+
+            if (dataAttributeValue) {
+              data.value = dataAttributeValue;
+            } else {
+              data.value =  selectedObject.text();
+            }
+
+            defaults.onChange(data);
+          }
+
+          event.preventDefault();
+        });
+
+        function selectedValue(text) {
+          dropdown.find("button").html(text.concat(" ", bootstrapCaret()));
+        }
+
+        function bootstrapCaret() {
+          return "<span class='caret'></span>";
+        }
+
+      return this;
+
+    };
+  }( jQuery ));
+
+
+  $( document ).ready(function() {
+    // Init the library
+    $("#audience").dropdown({
+      onChange: function(data) {
+        console.log("Index: " + data.index + ", Value: " + data.value);
+      }
+    });
+
+    $("#multiplier").dropdown({
+      onChange: function(data) {
+        console.log("Index: " + data.index + ", Value: " + data.value);
+      }
+    });
+  });
+
+</script>

@@ -4,7 +4,7 @@ class Broadcast < ActiveRecord::Base
 
   scope :mine, lambda {
     where("users.practice_id = ? ", UserSession.find.user.practice_id)
-    .joins(:users)
+    .joins(:user)
     .order("created_at")
   }
 
@@ -12,5 +12,16 @@ class Broadcast < ActiveRecord::Base
   belongs_to :user
 
   # validations
-  validates_presence_of :subject, :message
+  validates_presence_of :subject, :message, :user_id
+
+  # callbacks
+  before_validation :set_user
+
+  private
+
+  def set_user
+    if UserSession.find
+      self.user_id = UserSession.find.user.id
+    end
+  end
 end

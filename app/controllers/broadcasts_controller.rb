@@ -18,7 +18,7 @@ class BroadcastsController < ApplicationController
 
     respond_to do |format|
       if @broadcast.save
-        broadcast.html { redirect_to(broadcasts_url, :notice => t(:broadcast_created_success_message))}
+        format.html { redirect_to(broadcasts_url, :notice => t(:broadcast_created_success_message))}
       else
         format.html { render :action => "new" }
       end
