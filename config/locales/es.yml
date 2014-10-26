@@ -176,6 +176,9 @@ es:
   last_login_at_with_date: Última sesión hace %{date}
   logout: ¿Cerrar sesión?
   mailers:
+    doctor:
+      today_agenda:
+        subject: Tus citas de hoy
     notifier:
       password_reset:
         subject: Tu petición de cambio de contraseña

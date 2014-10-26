@@ -204,6 +204,9 @@ en:
   last_login_at_with_date: Last login %{date} ago
   logout: Logout?
   mailers:
+    doctor:
+      today_agenda:
+        subject: Your appointsments for today
     notifier:
       password_reset:
         subject: Your password reset request

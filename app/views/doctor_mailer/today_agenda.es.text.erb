@@ -1,0 +1,9 @@
+Hola <%= @doctor_name %>,
+
+Estas son las citas que tienes para hoy en <%= @practice.name %>
+
+<% @appointments.each do |appointment| %>
+-<%= raw "#{appointment['patient_firstname']} #{appointment['patient_lastname']}  #{l(appointment['starts_at'].to_time.in_time_zone(@practice_timezone), :format => :just_the_time)} - #{l(appointment['ends_at'].to_time.in_time_zone(@practice_timezone), :format => :just_the_time)} (#{appointment['datebook']})"%>
+<% end %>
+
+Enviado por Odonto.me

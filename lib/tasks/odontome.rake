@@ -115,6 +115,42 @@ namespace :odontome do
 
   end
 
+  desc "Send today's appointments everyday in their timezone"
+  task :send_todays_appointments_to_doctors => :environment do
+
+    if defined?(Rails) && (Rails.env == 'development')
+      Rails.logger = Logger.new(STDOUT)
+    end
+
+    # configuration
+    HOUR_TO_SEND_EMAILS = 7
+    TODAY = Time.zone.now.beginning_of_day
+
+    practice_ids = practices_in_timezones(timezones_where_hour_are(HOUR_TO_SEND_EMAILS))
+
+    if practice_ids.size > 0
+      admins_of_these_practices = admin_of_practice(practice_ids)
+
+      appointments_scheduled_for_today = Datebook.select("practices.name as practice, datebooks.practice_id, datebooks.name as datebook, appointments.starts_at, appointments.ends_at, doctors.id as doctor_id, doctors.firstname as doctor_firstname, doctors.lastname as doctor_lastname, doctors.email as doctor_email, patients.firstname as patient_firstname, patients.lastname as patient_lastname")
+      .where("doctors.email <> ''")
+      .where("datebooks.practice_id" => practice_ids)
+      .where("appointments.starts_at >= ? AND appointments.ends_at <= ?", TODAY, Time.zone.now.end_of_day)
+      .joins(:appointments => [:doctor, :patient])
+      .joins(:practice)
+
+      # create array of column values (hash) instead of an array of models
+      appointments = ActiveRecord::Base.connection.select_all(appointments_scheduled_for_today)
+
+      # group the arrays by practice_id
+      appointments = appointments.group_by { |appointment| appointment["doctor_id"].to_s }
+
+      appointments.each do |key, value|
+        DoctorMailer.today_agenda(value).deliver
+      end
+    end
+
+  end
+
   desc "Send birthday wishes to patients in their timezone"
   task :send_birthday_wishes_to_patients => :environment do
 
