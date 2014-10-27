@@ -123,10 +123,10 @@ namespace :odontome do
     end
 
     # configuration
-    HOUR_TO_SEND_EMAILS = 7
-    TODAY = Time.zone.now.beginning_of_day
+    hour_to_send_emais = 7
+    today = Time.zone.now.beginning_of_day
 
-    practice_ids = practices_in_timezones(timezones_where_hour_are(HOUR_TO_SEND_EMAILS))
+    practice_ids = practices_in_timezones(timezones_where_hour_are(hour_to_send_emais))
 
     if practice_ids.size > 0
       admins_of_these_practices = admin_of_practice(practice_ids)
@@ -134,7 +134,7 @@ namespace :odontome do
       appointments_scheduled_for_today = Datebook.select("practices.name as practice, datebooks.practice_id, datebooks.name as datebook, appointments.starts_at, appointments.ends_at, doctors.id as doctor_id, doctors.firstname as doctor_firstname, doctors.lastname as doctor_lastname, doctors.email as doctor_email, patients.firstname as patient_firstname, patients.lastname as patient_lastname")
       .where("doctors.email <> ''")
       .where("datebooks.practice_id" => practice_ids)
-      .where("appointments.starts_at >= ? AND appointments.ends_at <= ?", TODAY, Time.zone.now.end_of_day)
+      .where("appointments.starts_at >= ? AND appointments.ends_at <= ?", today, Time.zone.now.end_of_day)
       .joins(:appointments => [:doctor, :patient])
       .joins(:practice)
 
@@ -158,10 +158,10 @@ namespace :odontome do
       Rails.logger = Logger.new(STDOUT)
     end
 
-    HOUR_TO_SEND_EMAILS = 15
-    TODAY = Time.zone.now.to_date
+    hour_to_send_emais = 15
+    today = Time.zone.now.to_date
 
-    practice_ids = practices_in_timezones(timezones_where_hour_are(HOUR_TO_SEND_EMAILS))
+    practice_ids = practices_in_timezones(timezones_where_hour_are(hour_to_send_emais))
 
     if practice_ids.size > 0
       admins_of_these_practices = admin_of_practice(practice_ids)
