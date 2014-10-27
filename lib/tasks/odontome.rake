@@ -137,6 +137,7 @@ namespace :odontome do
       .where("appointments.starts_at >= ? AND appointments.ends_at <= ?", today, Time.zone.now.end_of_day)
       .joins(:appointments => [:doctor, :patient])
       .joins(:practice)
+      .order("appointments.starts_at")
 
       # create array of column values (hash) instead of an array of models
       appointments = ActiveRecord::Base.connection.select_all(appointments_scheduled_for_today)
