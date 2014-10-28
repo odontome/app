@@ -68,29 +68,29 @@ namespace :odontome do
     end
 
     # configuration
-    HOUR_TO_SEND_EMAILS = 8
-    TODAY = Time.zone.now.beginning_of_day
-    YESTERDAY = TODAY - 1.day
+    hour_to_send_emails = 8
+    today = Time.zone.now.beginning_of_day
+    yesterday = today - 1.day
 
-    practice_ids = practices_in_timezones(timezones_where_hour_are(HOUR_TO_SEND_EMAILS))
+    practice_ids = practices_in_timezones(timezones_where_hour_are(hour_to_send_emails))
 
     if practice_ids.size > 0
       admins_of_these_practices = admin_of_practice(practice_ids)
 
       patients_created_today = Patient.select("id, firstname, lastname, practice_id, email")
       .where(:practice_id => practice_ids)
-      .where("patients.created_at >= ? AND patients.created_at <= ?", YESTERDAY, TODAY)
+      .where("patients.created_at >= ? AND patients.created_at <= ?", yesterday, today)
       .order(:practice_id)
 
       appointments_created_today = Datebook.select("datebooks.practice_id, datebooks.name, appointments.starts_at, doctors.firstname as doctor_firstname, doctors.lastname as doctor_lastname, patients.firstname as patient_firstname, patients.lastname as patient_lastname")
       .where("datebooks.practice_id" => practice_ids)
-      .where("appointments.created_at >= ? AND appointments.created_at <= ?", YESTERDAY, TODAY)
+      .where("appointments.created_at >= ? AND appointments.created_at <= ?", yesterday, today)
       .joins(:appointments => [:doctor, :patient])
       .order("datebooks.practice_id")
 
       balance_created_today = Balance.select("SUM(balances.amount) as amount, patients.practice_id")
       .joins('left outer join patients on balances.patient_id = patients.id')
-      .where("balances.created_at >= ? AND balances.created_at <= ?", YESTERDAY, TODAY)
+      .where("balances.created_at >= ? AND balances.created_at <= ?", yesterday, today)
       .where("patients.practice_id" => practice_ids)
       .group("patients.practice_id")
 
@@ -123,10 +123,10 @@ namespace :odontome do
     end
 
     # configuration
-    hour_to_send_emais = 7
+    hour_to_send_emails = 7
     today = Time.zone.now.beginning_of_day
 
-    practice_ids = practices_in_timezones(timezones_where_hour_are(hour_to_send_emais))
+    practice_ids = practices_in_timezones(timezones_where_hour_are(hour_to_send_emails))
 
     if practice_ids.size > 0
       admins_of_these_practices = admin_of_practice(practice_ids)
@@ -159,10 +159,10 @@ namespace :odontome do
       Rails.logger = Logger.new(STDOUT)
     end
 
-    hour_to_send_emais = 15
+    hour_to_send_emails = 15
     today = Time.zone.now.to_date
 
-    practice_ids = practices_in_timezones(timezones_where_hour_are(hour_to_send_emais))
+    practice_ids = practices_in_timezones(timezones_where_hour_are(hour_to_send_emails))
 
     if practice_ids.size > 0
       admins_of_these_practices = admin_of_practice(practice_ids)
