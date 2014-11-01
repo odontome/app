@@ -12,6 +12,7 @@ class DoctorMailer < ActionMailer::Base
     # temporarely set the locale and then change it back
     # when the block finishes
     I18n.with_locale(@practice.locale) do
+      @practice_timezone = @practice.timezone
       mail(:to => @doctor_email,
            :subject => I18n.t("mailers.doctor.today_agenda.subject"))
     end
