@@ -7,6 +7,6 @@
 
 <ul>
 <% @appointments.each do |appointment| %>
-	<li><%= raw "#{appointment['patient_firstname']} #{appointment['patient_lastname']} <br /><small>#{l(appointment['starts_at'].to_time.in_time_zone(@practice_timezone), :format => :just_the_time)} - #{l(appointment['ends_at'].to_time.in_time_zone(@practice_timezone), :format => :just_the_time)} (#{appointment['datebook']})</small>"%></li>
+	<li><%= raw "#{appointment['patient_firstname']} #{appointment['patient_lastname']} <br />#{appointment['notes']} <small>#{l(appointment['starts_at'].to_time.in_time_zone(@practice_timezone), :format => :just_the_time)} - #{l(appointment['ends_at'].to_time.in_time_zone(@practice_timezone), :format => :just_the_time)} (#{appointment['datebook']})</small>"%></li>
 <% end %>
 </ul>

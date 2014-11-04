@@ -21,7 +21,8 @@ class DoctorMailerTest < ActionMailer::TestCase
         "doctor_email" => "rebeccariera@hotmail.com",
         "starts_at" => Time.zone.now,
         "ends_at" => Time.zone.now + 2.hours,
-        "email" => "raulriera@hotmail.com"
+        "email" => "raulriera@hotmail.com",
+        "notes" => "This is his first visit"
       },
       {
         "practice_id" => 1,
@@ -33,7 +34,8 @@ class DoctorMailerTest < ActionMailer::TestCase
         "doctor_email" => "rebeccariera@hotmail.com",
         "starts_at" => Time.zone.now + 3.hours,
         "ends_at" => Time.zone.now + 4.hours,
-        "email" => "raulriera@hotmail.com"
+        "email" => "raulriera@hotmail.com",
+        "notes" => "She is visiting from Barcelona"
       }
     ]
 

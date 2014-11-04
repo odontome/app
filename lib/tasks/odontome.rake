@@ -131,7 +131,7 @@ namespace :odontome do
     if practice_ids.size > 0
       admins_of_these_practices = admin_of_practice(practice_ids)
 
-      appointments_scheduled_for_today = Datebook.select("practices.name as practice, datebooks.practice_id, datebooks.name as datebook, appointments.starts_at, appointments.ends_at, doctors.id as doctor_id, doctors.firstname as doctor_firstname, doctors.lastname as doctor_lastname, doctors.email as doctor_email, patients.firstname as patient_firstname, patients.lastname as patient_lastname")
+      appointments_scheduled_for_today = Datebook.select("practices.name as practice, datebooks.practice_id, datebooks.name as datebook, appointments.starts_at, appointments.ends_at, appointments.notes, doctors.id as doctor_id, doctors.firstname as doctor_firstname, doctors.lastname as doctor_lastname, doctors.email as doctor_email, patients.firstname as patient_firstname, patients.lastname as patient_lastname")
       .where("doctors.email <> ''")
       .where("datebooks.practice_id" => practice_ids)
       .where("appointments.starts_at >= ? AND appointments.ends_at <= ?", today, Time.zone.now.end_of_day)
