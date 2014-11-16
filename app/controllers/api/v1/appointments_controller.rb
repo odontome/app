@@ -39,10 +39,10 @@ class Api::V1::AppointmentsController < Api::V1::BaseController
 		respond_with(@appointment)
   end
 
-  # def destroy
-  #   @appointment.destroy
-  #   respond_with(@appointment)
-  # end
+  def destroy
+    @appointment.destroy
+    respond_with(@appointment)
+  end
 
   private
 
