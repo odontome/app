@@ -123,7 +123,7 @@ namespace :odontome do
     end
 
     # configuration
-    hour_to_send_emails = 7
+    hour_to_send_emails = 18
     today = Time.zone.now.beginning_of_day
 
     practice_ids = practices_in_timezones(timezones_where_hour_are(hour_to_send_emails))
