@@ -125,6 +125,7 @@ namespace :odontome do
     # configuration
     hour_to_send_emails = 18
     today = Time.zone.now.beginning_of_day
+    end_of_today = today.end_of_day
 
     practice_ids = practices_in_timezones(timezones_where_hour_are(hour_to_send_emails))
 
@@ -134,7 +135,7 @@ namespace :odontome do
       appointments_scheduled_for_today = Datebook.select("practices.name as practice, datebooks.practice_id, datebooks.name as datebook, appointments.starts_at, appointments.ends_at, appointments.notes, doctors.id as doctor_id, doctors.firstname as doctor_firstname, doctors.lastname as doctor_lastname, doctors.email as doctor_email, patients.firstname as patient_firstname, patients.lastname as patient_lastname")
       .where("doctors.email <> ''")
       .where("datebooks.practice_id" => practice_ids)
-      .where("appointments.starts_at >= ? AND appointments.ends_at <= ?", today, Time.zone.now.end_of_day)
+      .where("appointments.starts_at >= ? AND appointments.ends_at <= ?", today, end_of_today)
       .joins(:appointments => [:doctor, :patient])
       .joins(:practice)
       .order("appointments.starts_at")
