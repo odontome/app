@@ -17,7 +17,7 @@ gem 'jquery-minicolors-rails'
 gem 'gibberish', '~> 1.4.0'
 
 gem 'premailer-rails'
-gem 'nokogiri'
+gem 'hpricot'
 
 group :assets do
 	gem 'sass-rails', '~> 3.2.3'
