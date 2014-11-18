@@ -36,8 +36,8 @@ class PatientMailerTest < ActionMailer::TestCase
     assert !ActionMailer::Base.deliveries.empty?
 
     # Test the body of the sent email contains what we expect it to
-    assert_match(/Comienza a las: <strong>08:00<\/strong>/, email.encoded)
-    assert_match(/y termina a las: <strong>09:00<\/strong>/, email.encoded)
+    assert_match(/Comienza a las: (.*)08:00/, email.encoded)
+    assert_match(/y termina a las: (.*)09:00/, email.encoded)
     assert_match(/Dra. Rebecca Riera/, email.encoded)
   end
 
