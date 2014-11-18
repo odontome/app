@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.18'
+gem 'rails', '3.2.19'
 gem 'authlogic', '3.4.2'
 gem 'scrypt', '1.2.1'
 gem 'jquery-rails', '>= 3.0.4'
