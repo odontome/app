@@ -1,15 +1,26 @@
-<p>
-	Hola <%= @patient_name %>,<br />
-	¡Tienes una cita pronto!
-</p>
-<p>
-	Te enviamos este email porque tienes agendada una cita este próximo <strong><%= @appointment_date %></strong> con <%= @doctor_name %>.
-</p>
-<p>
-	Comienza a las: <strong><%= @appointment_start_time %></strong><br />
-	y termina a las: <strong><%= @appointment_end_time %></strong>
-</p>
-<p>
-	¡Te vemos pronto!,<br />
-	<%= @practice_name %>
-</p>
+<tr>
+	<td class="content-block">
+		Hola <%= @patient_name %>,<br />
+		¡Tienes una cita pronto!
+	</td>
+</tr>
+
+<tr>
+	<td class="content-block">
+		Te enviamos este email porque tienes agendada una cita este próximo <strong><%= @appointment_date %></strong> con <%= @doctor_name %>.
+	</td>
+</tr>
+
+<tr>
+	<td class="content-block">
+		Comienza a las: <strong><%= @appointment_start_time %></strong><br />
+		y termina a las: <strong><%= @appointment_end_time %></strong>
+	</td>
+</tr>
+
+<tr>
+	<td class="content-block">
+		¡Nos vemos pronto!,<br />
+		<%= @practice_name %>
+	</td>
+</tr>

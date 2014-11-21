@@ -1,15 +1,26 @@
-<p>
-	Hello <%= @patient_name %>,<br />
-	You have an appointment soon!
-</p>
-<p>
-	We are sending you this email because you have a scheduled appointment this coming <strong><%= @appointment_date %></strong> with <%= @doctor_name %>.
-</p>
-<p>
-	It starts at: <strong><%= @appointment_start_time %></strong><br />
-	and ends at: <strong><%= @appointment_end_time %></strong>
-</p>
-<p>
-	See you soon!,<br />
-	<%= @practice_name %>
-</p>
+<tr>
+	<td class="content-block">
+		Hello <%= @patient_name %>,<br />
+		You have an appointment soon!
+	</td>
+</tr>
+
+<tr>
+	<td class="content-block">
+		We are sending you this email because you have a scheduled appointment this coming <strong><%= @appointment_date %></strong> with <%= @doctor_name %>.
+	</td>
+</tr>
+
+<tr>
+	<td class="content-block">
+		It starts at: <strong><%= @appointment_start_time %></strong><br />
+		and ends at: <strong><%= @appointment_end_time %></strong>
+	</td>
+</tr>
+
+<tr>
+	<td class="content-block">
+		See you soon!,<br />
+		<%= @practice_name %>
+	</td>
+</tr>
