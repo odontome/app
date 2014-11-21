@@ -1,24 +1,32 @@
-<p>
-	Hello <%= @patient_name %>,<br />
-	Thanks for visiting us
-</p>
-<p>
-	We are sending you this email because you scheduled an appointment for the <strong><%= @appointment_date %></strong> with <%= @doctor_name %>.
-</p>
-<p>
-	It starts at: <strong><%= @appointment_start_time %></strong><br />
-	and ends at: <strong><%= @appointment_end_time %></strong>
-</p>
+<tr>
+	<td class="content-block">
+		Hello <%= @patient_name %>,<br />
+		Thanks for visiting us
+	</td>
+</tr>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tr>
-        <td align="center">
-            <a href="<%= @passbook_url %>"><%= image_tag "passbook-en.png", :width => 120 %></a>
-        </td>
-    </tr>
-</table>
+<tr>
+	<td class="content-block">
+		We are sending you this email because you scheduled an appointment for the <strong><%= @appointment_date %></strong> with <%= @doctor_name %>.
+	</td>
+</tr>
 
-<p>
-	See you soon!,<br />
-	<%= @practice_name %>
-</p>
+<tr>
+	<td class="content-block">
+		It starts at: <strong><%= @appointment_start_time %></strong><br />
+		and ends at: <strong><%= @appointment_end_time %></strong>
+	</td>
+</tr>
+
+<tr>
+	<td class="aligncenter content-block">
+		<a href="<%= @passbook_url %>"><%= image_tag "passbook-en.png", :width => 120 %></a>
+	</td>
+</tr>
+
+<tr>
+	<td class="content-block">
+		See you soon!,<br />
+		<%= @practice_name %>
+	</td>
+</tr>

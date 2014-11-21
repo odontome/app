@@ -1,24 +1,32 @@
-<p>
-	Hola <%= @patient_name %>,<br />
-	Gracias por tu visita
-</p>
-<p>
-	Te enviamos este email porque hiciste una cita para el <strong><%= @appointment_date %></strong> con <%= @doctor_name %>.
-</p>
-<p>
-	Comienza a las: <strong><%= @appointment_start_time %></strong><br />
-	y termina a las: <strong><%= @appointment_end_time %></strong>
-</p>
+<tr>
+	<td class="content-block">
+		Hola <%= @patient_name %>,<br />
+		Gracias por tu visita
+	</td>
+</tr>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tr>
-        <td align="center">
-            <a href="<%= @passbook_url %>"><%= image_tag "passbook-es.png", :width => 120 %></a>
-        </td>
-    </tr>
-</table>
+<tr>
+	<td class="content-block">
+		Te enviamos este email porque hiciste una cita para el <strong><%= @appointment_date %></strong> con <%= @doctor_name %>.
+	</td>
+</tr>
 
-<p>
-	¡Te vemos pronto!,<br />
-	<%= @practice_name %>
-</p>
+<tr>
+	<td class="content-block">
+		Comienza a las: <strong><%= @appointment_start_time %></strong><br />
+		y termina a las: <strong><%= @appointment_end_time %></strong>
+	</td>
+</tr>
+
+<tr>
+	<td class="aligncenter content-block">
+		<a href="<%= @passbook_url %>"><%= image_tag "passbook-es.png", :width => 120 %></a>
+	</td>
+</tr>
+
+<tr>
+	<td class="content-block">
+		¡Nos vemos pronto!,<br />
+		<%= @practice_name %>
+	</td>
+</tr>
