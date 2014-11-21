@@ -1,22 +1,24 @@
-<h1>¡Feliz cumpleaños <%= @patient["firstname"] %>!</h1>
+<tr>
+  <td class="aligncenter content-block">
+    <h1>¡Feliz cumpleaños <%= @patient["firstname"] %>!</h1>
+  </td>
+</tr>
 
-<br />
+<tr>
+  <td class="aligncenter content-block">
+    <%= image_tag "bday-muffin@2x.png", :width => 300 %>
+  </td>
+</tr>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tr>
-        <td align="center">
-            <%= image_tag "bday-muffin@2x.png", :width => 300 %>
-        </td>
-    </tr>
-</table>
+<tr>
+  <td class="content-block">
+    Esperemos que hoy pases el mejor cumpleaños de tu vida. Hemos "hecho" este regalo azucarado para ti. No olvides visitarnos de nuevo después de comer tanta azucar :)
+  </td>
+</tr>
 
-<br />
-
-<p>
-	Esperemos que hoy pases el mejor cumpleaños de tu vida. Hemos "hecho" este regalo azucarado para ti. No olvides visitarnos de nuevo después de comer tanta azucar :)
-</p>
-
-<p>
-	Esperamos verte pronto,<br />
-	<%= @patient['practice_name'] %>
-</p>
+<tr>
+  <td class="content-block">
+    Esperamos verte pronto,<br />
+    <%= @patient['practice_name'] %>
+  </td>
+</tr>
