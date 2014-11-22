@@ -1,29 +1,44 @@
-<h3>Resumen del día <%= l @date.in_time_zone(@practice_timezone).to_date, :format => :day_and_date %></h3>
+<tr>
+	<td class="aligncenter content-block">
+		<h3>Resumen del día <%= l @date.in_time_zone(@practice_timezone).to_date, :format => :day_and_date %></h3>
+	</td>
+</tr>
 
 <% if !@balance.nil? %>
-	<h4><%= t :balance %></h4>
-	<p><%= number_to_currency @balance.first['amount'], :unit => @currency_unit %> procesados ayer</p>
+	<tr>
+		<td class="aligncenter content-block">
+			<h4><%= t :balance %></h4>
+			<p><%= number_to_currency @balance.first['amount'], :unit => @currency_unit %> procesados ayer</p>
+		</td>
+	</tr>
 <% end %>
 
 <% if !@appointments.nil? %>
-	<h4><%= @appointments.size %> citas agendadas</h4>
-
-	<ul>
-		<% @appointments.each do |appointment| %>
+<tr>
+	<td class="aligncenter content-block">
+		<h4><%= @appointments.size %> citas agendadas</h4>
+		<ul>
+			<% @appointments.each do |appointment| %>
 			<li><%= raw "#{appointment['patient_firstname']} #{appointment['patient_lastname']} con #{appointment['doctor_firstname']} #{appointment['doctor_lastname']} <br /><small>#{l(appointment['starts_at'].to_time.in_time_zone(@practice_timezone), :format => :short)} (#{appointment['name']})</small>"%></li>
-		<% end %>
-	</ul>
+			<% end %>
+		</ul>
+	</td>
+</tr>
 <% end %>
 
-<% if !@patients.nil? %>
-	<h4><%= @patients.size %> nuevos pacientes</h4>
+<% if !@balance.nil? %>
+<tr>
+	<td class="aligncenter content-block">
+		<h4><%= @patients.size %> nuevos pacientes</h4>
 
-	<table>
-		<% @patients.each do |patient| %>
+		<table>
+			<% @patients.each do |patient| %>
 			<tr>
 				<td width="60px"><img src="<%= avatar_url(patient['email'])%>" alt="contact" class="img-circle" width="50px" /></td>
 				<td><%= link_to "#{patient['firstname']} #{patient['lastname']}", patient_url(:id => patient['id']) %></td>
 			</tr>
-		<% end %>
-	</table>
+			<% end %>
+		</table>
+	</td>
+</tr>
 <% end %>
