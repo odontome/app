@@ -123,7 +123,7 @@ namespace :odontome do
     end
 
     # configuration
-    hour_to_send_emails = 18
+    hour_to_send_emails = 7
     today = Time.zone.now.beginning_of_day
     end_of_today = today.end_of_day
 
