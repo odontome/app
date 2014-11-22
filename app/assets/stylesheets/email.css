@@ -1,13 +1,13 @@
 /* -------------------------------------
-    GLOBAL
-    A very basic CSS reset
+GLOBAL
+A very basic CSS reset
 ------------------------------------- */
 * {
   margin: 0;
   padding: 0;
   font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 img {
@@ -28,7 +28,7 @@ table td {
 }
 
 /* -------------------------------------
-    BODY & CONTAINER
+BODY & CONTAINER
 ------------------------------------- */
 body {
   background-color: #f6f6f6;
@@ -55,7 +55,7 @@ body {
 }
 
 /* -------------------------------------
-    HEADER, FOOTER, MAIN
+HEADER, FOOTER, MAIN
 ------------------------------------- */
 .main {
   background: #fff;
@@ -90,7 +90,7 @@ body {
 }
 
 /* -------------------------------------
-    TYPOGRAPHY
+TYPOGRAPHY
 ------------------------------------- */
 h1, h2, h3 {
   font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -128,7 +128,7 @@ p li, ul li, ol li {
 }
 
 /* -------------------------------------
-    LINKS & BUTTONS
+LINKS & BUTTONS
 ------------------------------------- */
 a {
   color: #348eda;
@@ -146,12 +146,12 @@ a {
   text-align: center;
   cursor: pointer;
   display: inline-block;
-  border-radius: 25px;
+  border-radius: 6px;
   text-transform: capitalize;
 }
 
 /* -------------------------------------
-    OTHER STYLES THAT MIGHT BE USEFUL
+OTHER STYLES THAT MIGHT BE USEFUL
 ------------------------------------- */
 .last {
   margin-bottom: 0;
@@ -178,8 +178,8 @@ a {
 }
 
 /* -------------------------------------
-    ALERTS
-    Change the class depending on warning email, good email or bad email
+ALERTS
+Change the class depending on warning email, good email or bad email
 ------------------------------------- */
 .alert {
   font-size: 16px;
@@ -206,8 +206,8 @@ a {
 }
 
 /* -------------------------------------
-    INVOICE
-    Styles for the billing table
+INVOICE
+Styles for the billing table
 ------------------------------------- */
 .invoice {
   margin: 40px auto;
@@ -230,7 +230,7 @@ a {
 }
 
 /* -------------------------------------
-    RESPONSIVE AND MOBILE FRIENDLY STYLES
+RESPONSIVE AND MOBILE FRIENDLY STYLES
 ------------------------------------- */
 @media only screen and (max-width: 640px) {
   h1, h2, h3, h4 {
