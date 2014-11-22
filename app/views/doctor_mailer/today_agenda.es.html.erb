@@ -1,12 +1,25 @@
-<p>
-	Hola <%= @doctor_name %>,
-</p>
-<p>
-	Estas son las citas que tienes para hoy en <%= @practice.name %>
-</p>
+<tr>
+	<td class="content-block">
+		Hola <%= @doctor_name %>,
+	</td>
+</tr>
 
-<ul>
-<% @appointments.each do |appointment| %>
-	<li><%= raw "#{appointment['patient_firstname']} #{appointment['patient_lastname']} <br />#{appointment['notes']} <small>#{l(appointment['starts_at'].to_time.in_time_zone(@practice_timezone), :format => :just_the_time)} - #{l(appointment['ends_at'].to_time.in_time_zone(@practice_timezone), :format => :just_the_time)} (#{appointment['datebook']})</small>"%></li>
-<% end %>
-</ul>
+<tr>
+	<td class="content-block">
+		Estas son las citas que tienes para hoy en <%= @practice.name %>
+	</td>
+</tr>
+
+<tr>
+	<td class="content-block">
+		<ul>
+			<% @appointments.each do |appointment| %>
+			<li>
+				<%= raw "#{appointment['patient_firstname']} #{appointment['patient_lastname']} <br />
+				#{appointment['notes']}
+				<small>#{l(appointment['starts_at'].to_time.in_time_zone(@practice_timezone), :format => :just_the_time)} - #{l(appointment['ends_at'].to_time.in_time_zone(@practice_timezone), :format => :just_the_time)} (#{appointment['datebook']})</small>" %>
+			</li>
+			<% end %>
+		</ul>
+	</td>
+</tr>
