@@ -127,6 +127,11 @@ p li, ul li, ol li {
   list-style-position: inside;
 }
 
+small {
+  font-size: 12px;
+  color: #333;
+}
+
 /* -------------------------------------
 LINKS & BUTTONS
 ------------------------------------- */
