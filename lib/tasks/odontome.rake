@@ -69,12 +69,13 @@ namespace :odontome do
 
     # configuration
     hour_to_send_emails = 8
-    today = Time.zone.now.beginning_of_day
-    yesterday = today - 1.day
-
-    practice_ids = practices_in_timezones(timezones_where_hour_are(hour_to_send_emails))
+    timezones_where_hour_is = timezones_where_hour_are(hour_to_send_emails)
+    practice_ids = practices_in_timezones(timezones_where_hour_is)
 
     if practice_ids.size > 0
+      today = Time.now.in_time_zone(timezones_where_hour_is.first).beginning_of_day
+      yesterday = today - 1.day
+
       admins_of_these_practices = admin_of_practice(practice_ids)
 
       patients_created_today = Patient.select("id, firstname, lastname, practice_id, email")
