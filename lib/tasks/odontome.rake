@@ -163,17 +163,18 @@ namespace :odontome do
     end
 
     hour_to_send_emails = 15
-    today = Time.zone.now.to_date
-
-    practice_ids = practices_in_timezones(timezones_where_hour_are(hour_to_send_emails))
+    timezones_where_hour_is = timezones_where_hour_are(hour_to_send_emails)
+    practice_ids = practices_in_timezones(timezones_where_hour_is)
 
     if practice_ids.size > 0
+      today = Time.now.in_time_zone(timezones_where_hour_is.first).beginning_of_day
+
       admins_of_these_practices = admin_of_practice(practice_ids)
 
       patients_of_these_practices = Patient.select("practice_id, firstname, lastname, date_of_birth, email, practices.locale, practices.name as practice_name")
       .where(:practice_id => practice_ids)
       .where("patients.email <> ''")
-      .where("extract(month from date_of_birth) = ? AND extract(day from date_of_birth) = ?", TODAY.strftime('%m'), TODAY.strftime('%d'))
+      .where("extract(month from date_of_birth) = ? AND extract(day from date_of_birth) = ?", today.strftime('%m'), today.strftime('%d'))
       .joins(:practice)
 
       # create array of column values (hash) instead of an array of models
