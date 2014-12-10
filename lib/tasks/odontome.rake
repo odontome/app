@@ -124,12 +124,13 @@ namespace :odontome do
 
     # configuration
     hour_to_send_emails = 7
-    today = Time.zone.now.beginning_of_day
-    end_of_today = today.end_of_day
-
-    practice_ids = practices_in_timezones(timezones_where_hour_are(hour_to_send_emails))
+    timezones_where_hour_is = timezones_where_hour_are(hour_to_send_emails)
+    practice_ids = practices_in_timezones(timezones_where_hour_is)
 
     if practice_ids.size > 0
+      today = Time.now.in_time_zone(timezones_where_hour_is.first).beginning_of_day
+      end_of_today = today.end_of_day
+
       admins_of_these_practices = admin_of_practice(practice_ids)
 
       appointments_scheduled_for_today = Datebook.select("practices.name as practice, datebooks.practice_id, datebooks.name as datebook, appointments.starts_at, appointments.ends_at, appointments.notes, doctors.id as doctor_id, doctors.firstname as doctor_firstname, doctors.lastname as doctor_lastname, doctors.email as doctor_email, patients.firstname as patient_firstname, patients.lastname as patient_lastname")
