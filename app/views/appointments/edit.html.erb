@@ -2,10 +2,18 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		
+
+		function onSelectionClicked(e){
+			var patientId = $("#as-values-patient_id").val().match(/\d/g).join("");
+
+			if (!isNaN(patientId)) {
+				self.location = "/patients/" + patientId;
+			}
+		}
+
 		var selectedPatient = [{id: "<%=@patient.id%>", uid: "<%=@patient.uid%>", fullname: "<%=escape_javascript @patient.fullname%>"}];
-				
+
 		// Setup autocomplete for patients
-		$("#appointment_patient_id").autoSuggest("/patients.json", {minChars: 3, selectionLimit: 1, selectedValuesProp: "id", selectedItemProp: "fullname", searchObjProps: "uid,fullname", asHtmlID: "patient_id", preFill: selectedPatient});
-	});	
+		$("#appointment_patient_id").autoSuggest("/patients.json", { minChars: 3, selectionLimit: 1, selectedValuesProp: "id", selectedItemProp: "fullname", searchObjProps: "uid,fullname", asHtmlID: "patient_id", preFill: selectedPatient, selectionClick: onSelectionClicked });
+	});
 </script>
