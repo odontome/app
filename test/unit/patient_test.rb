@@ -20,7 +20,7 @@ class PatientTest < ActiveSupport::TestCase
 								:lastname => "Sanguino")
 
 		assert !patient.save
-		assert_equal I18n.t("activerecord.errors.messages.taken"), patient.errors[:uid].join("; ")
+		assert_equal I18n.t("errors.messages.taken"), patient.errors[:uid].join("; ")
 	end
 
 	test "patient is not valid without an unique email in the same practice" do
@@ -28,7 +28,7 @@ class PatientTest < ActiveSupport::TestCase
 		patient.email = patients(:four).email
 
 		assert !patient.save
-		assert_equal I18n.t("activerecord.errors.messages.taken"), patient.errors[:email].join("; ")
+		assert_equal I18n.t("errors.messages.taken"), patient.errors[:email].join("; ")
 	end
 
 	test "patient vices must be numbers" do

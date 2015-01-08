@@ -4,22 +4,25 @@ Odontome::Application.configure do
   ENV["REDISTOGO_URL"] = 'redis://redistogo:681bdba6cde45dca00275208cac1a7a0@pearlfish.redistogo.com:9008/'
 
   # In the development environment your application's code is reloaded on
-  # every request.  This slows down response time but is perfect for development
-  # since you don't have to restart the webserver when you make code changes.
+  # every request. This slows down response time but is perfect for development
+  # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
+  # Do not eager load code on boot.
+  config.eager_load = false
+
   # Log error messages when you accidentally call methods on nil.
-  config.whiny_nils = true
+  # config.whiny_nils = true
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
   #config.action_view.debug_rjs             = true
   config.action_controller.perform_caching = false
 
-  # Don't care if the mailer can't send
+  # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
-  # Print deprecation notices to the Rails logger
+  # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
   # Only use best-standards-support built into browsers
@@ -30,16 +33,19 @@ Odontome::Application.configure do
   config.action_mailer.default_url_options = { :host => '0.0.0.0:3000' }
 
   # Do not compress assets
-  config.assets.compile = false
-  config.assets.compress = false
-  config.assets.paths << Rails.root.join('app', 'assets', 'font')
-  config.assets.precompile += %w(.svg .eot .woff .ttf)
+  # config.assets.compile = false
+  # config.assets.compress = false
+  # config.assets.paths << Rails.root.join('app', 'assets', 'font')
+  # config.assets.precompile += %w(.svg .eot .woff .ttf)
 
   # Expands the lines which load the assets
   config.assets.debug = true
 
   # Raise exception on mass assignment protection for Active Record models
   config.active_record.mass_assignment_sanitizer = :strict
+
+  # Raise an error on page load if there are pending migrations
+  config.active_record.migration_error = :page_load
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
