@@ -19,7 +19,7 @@ class BalancesControllerTest < ActionController::TestCase
     }
 
     assert_difference 'Balance.count' do
-      post :create, { balance: entry, patient_id: 1 }
+      post :create, { balance: entry, patient_id: 1, format: :js }
     end
   end
 
@@ -30,7 +30,7 @@ class BalancesControllerTest < ActionController::TestCase
     }
 
     assert_difference 'Balance.count' do
-      post :create, { balance: entry, patient_id: 1 }
+      post :create, { balance: entry, patient_id: 1, format: :js }
     end
   end
 
