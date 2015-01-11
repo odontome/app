@@ -6,7 +6,7 @@
               <p><%= link_to t(:edit_patient), edit_patient_path(@patient) %>
 
               <% if user_is_admin?(current_user) %>
-                  • <%= link_to t(:delete_patient), @patient, :method => :delete, :confirm => t(:are_you_sure_no_undo), "class" => "danger" %>
+                  • <%= link_to t(:delete_patient), @patient, :method => :delete, data: { confirm: t(:are_you_sure_no_undo) }, "class" => "danger" %>
               <% end %>
               </p>
             </div>

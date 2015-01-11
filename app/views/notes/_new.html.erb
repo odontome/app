@@ -4,5 +4,5 @@
 	    <%= text_area_tag "note[notes]", nil, {:rows => 2, :maxlength => 255, :class => "form-control", :placeholder => t(:notes_about_this, class_name: noteable.class.to_s.downcase) }  %>
 	</p>
 
-	<%= submit_tag( t(:annotate), :class => "btn-flat primary", :disable_with => t(:please_wait)) %>
+	<%= submit_tag( t(:annotate), :class => "btn-flat primary", data: { disable_with: t(:please_wait) }) %>
 <% end %>

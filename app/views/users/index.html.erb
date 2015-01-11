@@ -44,7 +44,7 @@
 			                	<ul class="actions">
                                     <li><%= link_to t(:edit), edit_user_path(user) %></li>
 									<li class="last">
-										<%= link_to t(:delete), user, :method => :delete, :confirm => t(:are_you_sure) %>
+										<%= link_to t(:delete), user, :method => :delete, data: { confirm: t(:are_you_sure) } %>
 									</li>
                                 </ul>								
 			                </td>
