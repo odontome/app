@@ -38,10 +38,11 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.6)
     arel (6.0.0)
-    authlogic (3.4.2)
+    authlogic (3.4.4)
       activerecord (>= 3.2)
       activesupport (>= 3.2)
       request_store (~> 1.0)
+      scrypt (~> 1.2)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     brakeman (3.0.0)
@@ -161,7 +162,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (10.4.2)
     redis (3.0.5)
-    request_store (1.0.5)
+    request_store (1.1.0)
     responders (2.0.2)
       railties (>= 4.2.0.alpha, < 5)
     rest-client (1.6.7)
@@ -230,7 +231,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  authlogic (= 3.4.2)
+  authlogic (= 3.4.4)
   brakeman
   font-awesome-rails
   gibberish (~> 1.4.0)

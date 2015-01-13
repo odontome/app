@@ -32,7 +32,7 @@ gem 'responders', '~> 2.0'
 
 ### odonto.me specifc
 
-gem 'authlogic', '3.4.2'
+gem 'authlogic', '3.4.4'
 gem 'scrypt', '1.2.1'
 gem 'taps'
 gem 'will_paginate', '~> 3.0'
