@@ -1,6 +1,8 @@
 .bundle
 db/*.sqlite3
-log/*.log
+db/*.sqlite3-journal
+log/*
+!/log/.keep
 tmp/**/*
 ssl-cert
 .sass-cache/

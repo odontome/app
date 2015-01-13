@@ -1,14 +1,41 @@
 source 'http://rubygems.org'
 
-# gem 'rails', '3.2.19'
-gem 'rails', '4.0.12'
+### default rails stuff
+
+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+gem 'rails', '4.2.0'
+# gem 'sqlite3'
+gem 'sass-rails', '~> 5.0'
+gem 'uglifier', '>= 1.3.0'
+# gem 'coffee-rails', '~> 4.1.0'
+# gem 'therubyracer', platforms: :ruby
+gem 'jquery-rails'
+# gem 'turbolinks'
+# gem 'jbuilder', '~> 2.0'
+# gem 'sdoc', '~> 0.4.0', group: :doc
+# gem 'bcrypt', '~> 3.1.7'
+# gem 'unicorn'
+# gem 'capistrano-rails', group: :development
+
+group :development, :test do
+  # gem 'byebug'
+  gem 'web-console', '~> 2.0'
+  gem 'spring'
+end
+
+
+### rails backward compatibility
+
+gem 'protected_attributes'
+gem 'responders', '~> 2.0'
+
+
+### odonto.me specifc
+
 gem 'authlogic', '3.4.2'
 gem 'scrypt', '1.2.1'
-# gem 'jquery-rails', '>= 3.0.4'
-gem 'jquery-rails'
 gem 'taps'
 gem 'will_paginate', '~> 3.0'
-# gem 'rails-i18n', '~> 3.0.0'
 gem 'rails-i18n', '~> 4.0.0'
 gem 'redis', '3.0.5'
 gem 'passbook', '~> 0.3.1'
@@ -22,15 +49,7 @@ gem 'gibberish', '~> 1.4.0'
 gem 'premailer-rails'
 gem 'hpricot'
 
-# group :assets do
-# 	gem 'sass-rails', '~> 3.2.3'
-# 	gem 'uglifier', '>= 1.0.3'
-# end
-gem 'sass-rails', '~> 4.0.2'
-gem 'uglifier', '>= 1.3.0'
-
 group :development do
-	# gem 'sqlite3-ruby', :require => 'sqlite3'
   gem 'sqlite3'
 	gem 'i18n-tasks', '~> 0.2.18'
   gem 'brakeman', :require => false
@@ -43,10 +62,5 @@ end
 
 group :test do
 	# pretty printed test output
-	gem 'turn'
+	# gem 'turn'
 end
-
-# Use debugger
-gem 'debugger', group: [:development, :test]
-
-gem 'protected_attributes'
