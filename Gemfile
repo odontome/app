@@ -58,6 +58,7 @@ end
 
 group :production do
 	# gems specifically for Heroku go here
+  gem 'rails_12factor'
 	gem 'pg'
 end
 
