@@ -1,6 +1,6 @@
 (function($){
 	$.fn.autoSuggest = function(data, options) {
-		var defaults = { 
+		var defaults = {
 			asHtmlID: false,
 			startText: "Enter Name Here",
 			emptyText: "No Results Found",
@@ -28,9 +28,9 @@
 		  	retrieveComplete: function(data){ return data; },
 		  	resultClick: function(data){},
 		  	resultsComplete: function(){}
-	  	};  
-	 	var opts = $.extend(defaults, options);	 	
-		
+	  	};
+	 	var opts = $.extend(defaults, options);
+
 		var d_type = "object";
 		var d_count = 0;
 		if(typeof data == "string") {
@@ -53,23 +53,23 @@
 				var input = $(this);
 				input.attr("autocomplete","off").addClass("as-input").attr("id",x_id).val(opts.startText);
 				var input_focus = false;
-				
+
 				// Setup basic elements and render them to the DOM
 				input.wrap('<ul class="as-selections" id="as-selections-'+x+'"></ul>').wrap('<li class="as-original" id="as-original-'+x+'"></li>');
 				var selections_holder = $("#as-selections-"+x);
-				var org_li = $("#as-original-"+x);				
+				var org_li = $("#as-original-"+x);
 				var results_holder = $('<div class="as-results" id="as-results-'+x+'"></div>').hide();
 				var results_ul =  $('<ul class="as-list"></ul>');
 				var values_input = $('<input type="hidden" class="as-values" name="as_values_'+x+'" id="as-values-'+x+'" />');
 				var prefill_value = "";
 				if(typeof opts.preFill == "string"){
-					var vals = opts.preFill.split(",");					
+					var vals = opts.preFill.split(",");
 					for(var i=0; i < vals.length; i++){
 						var v_data = {};
 						v_data[opts.selectedValuesProp] = vals[i];
 						if(vals[i] != ""){
-							add_selected_item(v_data, "000"+i);	
-						}		
+							add_selected_item(v_data, "000"+i);
+						}
 					}
 					prefill_value = opts.preFill;
 				} else {
@@ -82,8 +82,8 @@
 							if(new_v == undefined){ new_v = ""; }
 							prefill_value = prefill_value+new_v+",";
 							if(new_v != ""){
-								add_selected_item(opts.preFill[i], "000"+i);	
-							}		
+								add_selected_item(opts.preFill[i], "000"+i);
+							}
 						}
 					}
 				}
@@ -98,15 +98,15 @@
 				selections_holder.click(function(){
 					input_focus = true;
 					input.focus();
-				}).mousedown(function(){ input_focus = false; }).after(results_holder);	
+				}).mousedown(function(){ input_focus = false; }).after(results_holder);
 
 				var timeout = null;
 				var prev = "";
 				var totalSelections = 0;
 				var tab_press = false;
-				
+
 				// Handle input field events
-				input.focus(function(){			
+				input.focus(function(){
 					if($(this).val() == opts.startText && values_input.val() == ""){
 						$(this).val("");
 					} else if(input_focus){
@@ -124,7 +124,7 @@
 					} else if(input_focus){
 						$("li.as-selection-item", selections_holder).addClass("blur").removeClass("selected");
 						results_holder.hide();
-					}				
+					}
 				}).keydown(function(e) {
 					// track last key pressed
 					lastKeyPressCode = e.keyCode;
@@ -139,7 +139,7 @@
 							moveSelection("down");
 							break;
 						case 8:  // delete
-							if(input.val() == ""){							
+							if(input.val() == ""){
 								var last = values_input.val().split(",");
 								last = last[last.length - 2];
 								selections_holder.children().not(org_li.prev()).removeClass("selected");
@@ -147,8 +147,7 @@
 									values_input.val(values_input.val().replace(","+last+",",","));
 									opts.selectionRemoved.call(this, org_li.prev());
 								} else {
-									opts.selectionClick.call(this, org_li.prev());
-									org_li.prev().addClass("selected");		
+									org_li.prev().addClass("selected");
 								}
 							}
 							if(input.val().length == 1){
@@ -163,11 +162,11 @@
 						case 9: case 188:  // tab or comma
 							tab_press = true;
 							var i_input = input.val().replace(/(,)/g, "");
-							if(i_input != "" && values_input.val().search(","+i_input+",") < 0 && i_input.length >= opts.minChars){	
+							if(i_input != "" && values_input.val().search(","+i_input+",") < 0 && i_input.length >= opts.minChars){
 								e.preventDefault();
 								var n_data = {};
 								n_data[opts.selectedItemProp] = i_input;
-								n_data[opts.selectedValuesProp] = i_input;																				
+								n_data[opts.selectedValuesProp] = i_input;
 								var lis = $("li", selections_holder).length;
 								add_selected_item(n_data, "00"+(lis+1));
 								input.val("");
@@ -196,7 +195,7 @@
 							break;
 					}
 				});
-				
+
 				function keyChange() {
 					// ignore if the following keys are pressed: [del] [shift] [capslock]
 					if( lastKeyPressCode == 46 || (lastKeyPressCode > 8 && lastKeyPressCode < 32) ){ return results_holder.hide(); }
@@ -213,11 +212,11 @@
 							if(opts.beforeRetrieve){
 								string = opts.beforeRetrieve.call(this, string);
 							}
-							$.getJSON(req_string+"?"+opts.queryParam+"="+encodeURIComponent(string)+limit+opts.extraParams, function(data){ 
+							$.getJSON(req_string+"?"+opts.queryParam+"="+encodeURIComponent(string)+limit+opts.extraParams, function(data){
 								d_count = 0;
 								var new_data = opts.retrieveComplete.call(this, data);
 								for (k in new_data) if (new_data.hasOwnProperty(k)) d_count++;
-								processData(new_data, string); 
+								processData(new_data, string);
 							});
 						} else {
 							if(opts.beforeRetrieve){
@@ -235,13 +234,13 @@
 					if (!opts.matchCase){ query = query.toLowerCase(); }
 					var matchCount = 0;
 					results_holder.html(results_ul.html("")).hide();
-					for(var i=0;i<d_count;i++){				
+					for(var i=0;i<d_count;i++){
 						var num = i;
 						num_count++;
 						var forward = false;
 						if(opts.searchObjProps == "value") {
 							var str = data[num].value;
-						} else {	
+						} else {
 							var str = "";
 							var names = opts.searchObjProps.split(",");
 							for(var y=0;y<names.length;y++){
@@ -250,10 +249,10 @@
 							}
 						}
 						if(str){
-							if (!opts.matchCase){ str = str.toLowerCase(); }				
+							if (!opts.matchCase){ str = str.toLowerCase(); }
 							if(str.search(query) != -1 && values_input.val().search(","+data[num][opts.selectedValuesProp]+",") == -1){
 								forward = true;
-							}	
+							}
 						}
 						if(forward){
 							var formatted = $('<li class="as-result-item" id="as-result-item-'+num+'"></li>').click(function(){
@@ -273,19 +272,19 @@
 									$(this).addClass("active");
 								}).data("data",{attributes: data[num], num: num_count});
 							var this_data = $.extend({},data[num]);
-							if (!opts.matchCase){ 
+							if (!opts.matchCase){
 								var regx = new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + query + ")(?![^<>]*>)(?![^&;]+;)", "gi");
 							} else {
 								var regx = new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + query + ")(?![^<>]*>)(?![^&;]+;)", "g");
 							}
-							
+
 							if(opts.resultsHighlight){
 								this_data[opts.selectedItemProp] = this_data[opts.selectedItemProp].replace(regx,"<em>$1</em>");
 							}
 							if(!opts.formatList){
 								formatted = formatted.html(this_data[opts.selectedItemProp]);
 							} else {
-								formatted = opts.formatList.call(this, this_data, formatted);	
+								formatted = opts.formatList.call(this, this_data, formatted);
 							}
 							results_ul.append(formatted);
 							delete this_data;
@@ -301,7 +300,7 @@
 					results_holder.show();
 					opts.resultsComplete.call(this);
 				}
-				
+
 				function add_selected_item(data, num){
 					values_input.val(values_input.val()+data[opts.selectedValuesProp]+",");
 					var item = $('<li class="as-selection-item" id="as-selection-'+num+'"></li>').click(function(){
@@ -317,9 +316,9 @@
 							return false;
 						});
 					org_li.before(item.html(data[opts.selectedItemProp]).prepend(close));
-					opts.selectionAdded.call(this, org_li.prev());	
+					opts.selectionAdded.call(this, org_li.prev());
 				}
-				
+
 				function moveSelection(direction){
 					if($(":visible",results_holder).length > 0){
 						var lis = $("li", results_holder);
@@ -327,21 +326,21 @@
 							var start = lis.eq(0);
 						} else {
 							var start = lis.filter(":last");
-						}					
+						}
 						var active = $("li.active:first", results_holder);
 						if(active.length > 0){
 							if(direction == "down"){
 							start = active.next();
 							} else {
 								start = active.prev();
-							}	
+							}
 						}
 						lis.removeClass("active");
 						start.addClass("active");
 					}
 				}
-									
+
 			});
 		}
 	}
-})(jQuery);  	
+})(jQuery);
