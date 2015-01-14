@@ -1,8 +1,8 @@
-# Load the rails application
+# Load the Rails application.
 require File.expand_path('../application', __FILE__)
 
-# Initialize the rails application
-Odontome::Application.initialize!
+# Initialize the Rails application.
+Rails.application.initialize!
 
 # YAML config files
 TREATMENTS = YAML.load_file(File.join(Rails.root, "config", "treatments.yml"))

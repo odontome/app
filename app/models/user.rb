@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   # associations
   belongs_to :practice, :counter_cache => true
   has_many :notes, :dependent => :delete_all
-  has_many :broadcasts, :dependent => :delete_all 
+  has_many :broadcasts, :dependent => :delete_all
 
   # plugins
   acts_as_authentic do |c|
@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
 
   def deliver_password_reset_instructions!
     reset_perishable_token!
-    NotifierMailer.deliver_password_reset_instructions(self).deliver
+    NotifierMailer.deliver_password_reset_instructions(self).deliver_now
   end
 
   private

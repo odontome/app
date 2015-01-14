@@ -46,7 +46,7 @@
 				            <% else %>
 				            	<td colspan="2">
 				            		<% if user_is_admin?(current_user) %>
-							  			<%= raw t :patient_without_required_info, delete_url: (link_to (t(:delete_patient)).downcase, patient, :method => :delete, :confirm => t(:are_you_sure_no_undo)) %>
+							  			<%= raw t :patient_without_required_info, delete_url: (link_to (t(:delete_patient)).downcase, patient, :method => :delete, data: { confirm: t(:are_you_sure_no_undo) }) %>
 									<% else %>
 										<%= t :patient_without_required_info, delete_url: t(:delete_patient).downcase  %>
 									<% end %>

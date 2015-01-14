@@ -50,7 +50,7 @@ class PracticesController < ApplicationController
         })
         MIXPANEL_CLIENT.track(new_user.email, 'Signed up')
 
-        PracticeMailer.welcome_email(@practice).deliver
+        PracticeMailer.welcome_email(@practice).deliver_now
         format.html { redirect_to(practice_path) }
       else
         format.html { render :action => "new", :as => :signup, :layout => "user_sessions" }

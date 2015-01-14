@@ -49,7 +49,7 @@
 					                <td>
 					                	<ul class="actions">
 		                                    <li><%= link_to t(:edit), edit_treatment_path(treatment) %></li>
-											<li class="last"><%= link_to t(:delete), treatment, :method => :delete, :confirm => t(:are_you_sure) %>
+											<li class="last"><%= link_to t(:delete), treatment, :method => :delete, data: { confirm: t(:are_you_sure) } %>
 											</li>
 		                                </ul>								
 					                </td>

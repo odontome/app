@@ -21,12 +21,12 @@
 
 	<div class="modal-footer">
 		<% if controller.action_name == "edit" %>
-			<%= link_to t(:delete_appointment), [@datebook, @appointment], :method => :delete, :remote => :true, :confirm => t(:are_you_sure), :class => "btn btn-danger" %>
+			<%= link_to t(:delete_appointment), [@datebook, @appointment], :method => :delete, :remote => :true, data: { confirm: t(:are_you_sure) }, :class => "btn btn-danger" %>
 		<% else %>
 			<%= f.hidden_field :starts_at %>
 		<% end %>
 
-		<%= f.submit(t(:save), :class => "btn btn-primary", :disable_with => t(:please_wait)) %>
+		<%= f.submit(t(:save), :class => "btn btn-primary", data: { disable_with: t(:please_wait) }) %>
 	</div>
 
 <% end %>

@@ -81,8 +81,8 @@
 				    type: "PUT",
 				    url: endpointURL + "/" + JSON.stringify(event.id),
 				    data: {
-				    	"appointment[starts_at]": JSON.stringify(event.start),
-							"appointment[ends_at]": JSON.stringify(event.end)
+				    	"appointment[starts_at]": event.start,
+							"appointment[ends_at]": event.end
 						  }
 				});
 			},
@@ -92,8 +92,8 @@
 				    type: "PUT",
 				    url: endpointURL + "/" + calEvent.id,
 				    data: {
-				    	"appointment[starts_at]": JSON.stringify(calEvent.start),
-							"appointment[ends_at]": JSON.stringify(calEvent.end),
+				    	"appointment[starts_at]": calEvent.start,
+							"appointment[ends_at]": calEvent.end,
 						  }
 				});
 			},

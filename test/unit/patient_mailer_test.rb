@@ -9,7 +9,7 @@ class PatientMailerTest < ActionMailer::TestCase
     patient = patients(:four)
 
     # Send the email, then test that it got queued
-    email = PatientMailer.appointment_soon_email(patient.email, patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, doctor, users(:perishable).email).deliver
+    email = PatientMailer.appointment_soon_email(patient.email, patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, doctor, users(:perishable).email).deliver_now
 
     assert !ActionMailer::Base.deliveries.empty?
 
@@ -31,7 +31,7 @@ class PatientMailerTest < ActionMailer::TestCase
     patient = patients(:four)
 
     # Send the email, then test that it got queued
-    email = PatientMailer.appointment_soon_email(patient.email, patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, doctor, practice_email).deliver
+    email = PatientMailer.appointment_soon_email(patient.email, patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, doctor, practice_email).deliver_now
 
     assert !ActionMailer::Base.deliveries.empty?
 
@@ -50,7 +50,7 @@ class PatientMailerTest < ActionMailer::TestCase
     passbook_url = appointment.ciphered_url
 
     # Send the email, then test that it got queued
-    email = PatientMailer.appointment_scheduled_email(patient.email, patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, doctor, users(:perishable).email, passbook_url).deliver
+    email = PatientMailer.appointment_scheduled_email(patient.email, patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, doctor, users(:perishable).email, passbook_url).deliver_now
 
     assert !ActionMailer::Base.deliveries.empty?
 
@@ -75,7 +75,7 @@ class PatientMailerTest < ActionMailer::TestCase
     }
 
     # Send the email, then test that it got queued
-    email = PatientMailer.birthday_wishes(admin, patient).deliver
+    email = PatientMailer.birthday_wishes(admin, patient).deliver_now
 
     assert !ActionMailer::Base.deliveries.empty?
 

@@ -26,7 +26,7 @@ class AppointmentsControllerTest < ActionController::TestCase
     }
 
     assert_difference 'Appointment.count' do
-      post :create, { appointment: existing_patient, datebook_id: 1, as_values_patient_id: "4," } 
+      post :create, { appointment: existing_patient, datebook_id: 1, as_values_patient_id: "4,", format: :js } 
       # see Patient.find_or_create_from to understand the 'as_values_patient_id' property
     end
   end
@@ -39,7 +39,7 @@ class AppointmentsControllerTest < ActionController::TestCase
     }
 
     assert_difference ['Patient.count', 'Appointment.count'] do
-      post :create, { appointment: new_patient, datebook_id: 1, as_values_patient_id: "New patient" }
+      post :create, { appointment: new_patient, datebook_id: 1, as_values_patient_id: "New patient", format: :js }
       # see Patient.find_or_create_from to understand the 'as_values_patient_id' property
     end
   end
@@ -52,7 +52,7 @@ class AppointmentsControllerTest < ActionController::TestCase
     }
 
     assert_no_difference ['Appointment.count'] do
-      post :create, { appointment: new_patient, datebook_id: 9, as_values_patient_id: "New patient" }
+      post :create, { appointment: new_patient, datebook_id: 9, as_values_patient_id: "New patient", format: :js }
       # see Patient.find_or_create_from to understand the 'as_values_patient_id' property
     end
   end

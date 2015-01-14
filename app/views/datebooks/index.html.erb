@@ -52,7 +52,7 @@
 									<% if datebook.appointments_count.to_i > 0 %>
 									<span class="strikethrough"><%= t :delete %></span>
 									<% else %>
-									<%= link_to t(:delete), datebook, :method => :delete, :confirm => t(:are_you_sure) %>
+									<%= link_to t(:delete), datebook, :method => :delete, data: { confirm: t(:are_you_sure) } %>
 									<% end %>
 								</li>
 							</ul>

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'test_helper'
 
 class DoctorMailerTest < ActionMailer::TestCase
@@ -40,7 +41,7 @@ class DoctorMailerTest < ActionMailer::TestCase
     ]
 
     # Send the email, then test that it got queued
-    email = DoctorMailer.today_agenda(appointments).deliver
+    email = DoctorMailer.today_agenda(appointments).deliver_now
 
     assert !ActionMailer::Base.deliveries.empty?
 

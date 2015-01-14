@@ -1,13 +1,13 @@
 class AppointmentsController < ApplicationController
   # filters
   before_filter :require_user, :except => :show
-  
+
   # provides
   respond_to :html, :json
-  
+
   #layout
   layout false
-  
+
   def index
     datebook = Datebook.mine.find params[:datebook_id]
 
@@ -16,25 +16,27 @@ class AppointmentsController < ApplicationController
     else
       @appointments = datebook.appointments.find_between(params[:start], params[:end])
     end
-     
+
      respond_with(@appointments, :methods => ["doctor","patient"])
   end
-  
+
   def new
     @datebook = Datebook.mine.find params[:datebook_id]
     @appointment = Appointment.new
-    @appointment.starts_at = params[:starts_at]
+    @appointment.starts_at = params[:starts_at].to_i
     @doctors = Doctor.mine.valid
   end
-  
+
   def create
-    @appointment = Appointment.new(params[:appointment])
+    @appointment = Appointment.new()
+    @appointment.doctor_id = params[:appointment][:doctor_id].to_i
+    @appointment.notes = params[:appointment][:notes]
     @appointment.starts_at = Time.at(params[:appointment][:starts_at].to_i)
     @appointment.datebook_id = params[:datebook_id]
 
     # if "as_values_patient_id" is not empty use that, otherwise use "patient_id"
     @appointment.patient_id = Patient.find_or_create_from((params[:as_values_patient_id] != "") ? (params[:as_values_patient_id]) : (params[:appointment][:patient_id]))
-    
+
     respond_to do |format|
       if @appointment.save
           format.js  { } #create.js.erb
@@ -49,13 +51,13 @@ class AppointmentsController < ApplicationController
 
   def show
     cipher = Gibberish::AES.new(Rails.configuration.secret_token)
-    
+
     appointment_id_deciphered = cipher.dec(Base64.strict_decode64(params[:id]))
 
     datebook = Datebook.includes(:practice).find(params[:datebook_id])
     appointment = Appointment.where(:id => appointment_id_deciphered, :datebook_id => datebook.id).first
 
-    # create this here, otherwise it will be a local variable inside the 
+    # create this here, otherwise it will be a local variable inside the
     # I18n block
     pass = nil
 
@@ -116,34 +118,34 @@ class AppointmentsController < ApplicationController
     send_data pkpass.string, :type => 'application/vnd.apple.pkpass', :disposition => 'attachment', :filename => "pass.pkpass"
 
   end
-  
+
   def edit
     @datebook = Datebook.mine.find params[:datebook_id]
     @appointment = Appointment.where(:id => params[:id], :datebook_id => @datebook.id).first
     @patient = Patient.mine.find(params[:patient_id])
     @doctors = Doctor.mine.valid
   end
-  
+
   def update
     datebook = Datebook.mine.find params[:datebook_id]
     @appointment = Appointment.where(:id => params[:id], :datebook_id => datebook.id).first
-    
+
     # if "as_values_patient_id" is not empty use that, otherwise use "patient_id"
     if params[:appointment][:patient_id] != nil
       params[:appointment][:patient_id] = Patient.find_or_create_from((params[:as_values_patient_id] != "") ? (params[:as_values_patient_id]) : (params[:appointment][:patient_id]))
     end
-    
+
     respond_to do |format|
       if @appointment.update_attributes(params[:appointment])
         format.js { } # update.js.erb
       else
-        format.js  { 
+        format.js  {
           render_ujs_error(@appointment, I18n.t(:appointment_updated_error_message))
         }
       end
     end
   end
-  
+
   def destroy
     datebook = Datebook.mine.find params[:datebook_id]
     @appointment = Appointment.where(:id => params[:id], :datebook_id => datebook.id).first

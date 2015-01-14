@@ -26,7 +26,7 @@ class DoctorTest < ActiveSupport::TestCase
 										:lastname => "Sanguino")
 													
 		assert !doctor.save
-		assert_equal I18n.t("activerecord.errors.messages.taken"), doctor.errors[:uid].join("; ")
+		assert_equal I18n.t("errors.messages.taken"), doctor.errors[:uid].join("; ")
 	end
 
 	test "doctor is not valid without an unique email in the same practice" do	
@@ -34,7 +34,7 @@ class DoctorTest < ActiveSupport::TestCase
 		doctor.email = doctors(:perishable).email
 
 		assert !doctor.save
-		assert_equal I18n.t("activerecord.errors.messages.taken"), doctor.errors[:email].join("; ")
+		assert_equal I18n.t("errors.messages.taken"), doctor.errors[:email].join("; ")
 	end
 
 	test "doctor uid must be between 0 and 25 characters" do

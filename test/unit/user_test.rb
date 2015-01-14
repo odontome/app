@@ -17,7 +17,7 @@ class UserTest < ActiveSupport::TestCase
   									:email => users(:founder).email)
   												
   	assert !user.save
-  	assert_equal I18n.t("activerecord.errors.messages.taken"), user.errors[:email][1]
+  	assert_equal I18n.t("errors.messages.taken"), user.errors[:email][1]
   end
   
   test "user is not valid without a valid email address" do
@@ -56,7 +56,7 @@ class UserTest < ActiveSupport::TestCase
   	user.password_confirmation = "1111111111"
   	
   	assert !user.save
-  	assert_equal I18n.t("errors.messages.confirmation"), user.errors[:password][0]
+  	assert_equal I18n.t("errors.messages.confirmation", attribute: 'Password'), user.errors[:password_confirmation][0]
   end
 	
 	test "user fullname shortcut" do
