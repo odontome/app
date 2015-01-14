@@ -15,7 +15,7 @@ namespace :odontome do
     appointments.each do |appointment|
       practice = appointment.datebook.practice
 
-      PatientMailer.appointment_soon_email(appointment.patient.email, appointment.patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, appointment.doctor, practice.users.first.email).deliver
+      PatientMailer.appointment_soon_email(appointment.patient.email, appointment.patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, appointment.doctor, practice.users.first.email).deliver_now
 
       to_update << appointment.id
     end
@@ -38,7 +38,7 @@ namespace :odontome do
       practice = appointment.datebook.practice
       passbook_url = appointment.ciphered_url
 
-      PatientMailer.appointment_scheduled_email(appointment.patient.email, appointment.patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, appointment.doctor, practice.users.first.email, passbook_url).deliver
+      PatientMailer.appointment_scheduled_email(appointment.patient.email, appointment.patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, appointment.doctor, practice.users.first.email, passbook_url).deliver_now
 
       to_update << appointment.id
     end
@@ -110,7 +110,7 @@ namespace :odontome do
       # go through every practice_id in this timezone and send them an
       # email with their daily recap
       practice_ids.each do |practice_id|
-        PracticeMailer.daily_recap_email(users["#{practice_id}"], patients["#{practice_id}"], appointments["#{practice_id}"], balance["#{practice_id}"], YESTERDAY).deliver
+        PracticeMailer.daily_recap_email(users["#{practice_id}"], patients["#{practice_id}"], appointments["#{practice_id}"], balance["#{practice_id}"], YESTERDAY).deliver_now
       end
     end
 
@@ -149,7 +149,7 @@ namespace :odontome do
       appointments = appointments.group_by { |appointment| appointment["doctor_id"].to_s }
 
       appointments.each do |key, value|
-        DoctorMailer.today_agenda(value).deliver
+        DoctorMailer.today_agenda(value).deliver_now
       end
     end
 
@@ -192,7 +192,7 @@ namespace :odontome do
 
         if patients_in_practice
           patients_in_practice.each do |patient|
-            PatientMailer.birthday_wishes(admin_user, patient).deliver
+            PatientMailer.birthday_wishes(admin_user, patient).deliver_now
           end
         end
       end

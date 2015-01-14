@@ -15,7 +15,7 @@ class PracticeMailerTest < ActionMailer::TestCase
     practice.users << users(:founder)
 
     # Send the email, then test that it got queued
-    email = PracticeMailer.welcome_email(practice).deliver
+    email = PracticeMailer.welcome_email(practice).deliver_now
     assert !ActionMailer::Base.deliveries.empty?
 
     # Test the body of the sent email contains what we expect it to
@@ -41,7 +41,7 @@ class PracticeMailerTest < ActionMailer::TestCase
     }]
 
     # Send the email, then test that it got queued
-    email = PracticeMailer.daily_recap_email(admin, patients, nil, nil, @yesterday).deliver
+    email = PracticeMailer.daily_recap_email(admin, patients, nil, nil, @yesterday).deliver_now
 
     assert !ActionMailer::Base.deliveries.empty?
 
@@ -85,7 +85,7 @@ class PracticeMailerTest < ActionMailer::TestCase
     ]
 
     # Send the email, then test that it got queued
-    email = PracticeMailer.daily_recap_email(admin, nil, appointments, nil, @yesterday).deliver
+    email = PracticeMailer.daily_recap_email(admin, nil, appointments, nil, @yesterday).deliver_now
 
     assert !ActionMailer::Base.deliveries.empty?
 
@@ -111,7 +111,7 @@ class PracticeMailerTest < ActionMailer::TestCase
     }]
 
     # Send the email, then test that it got queued
-    email = PracticeMailer.daily_recap_email(admin, nil, nil, balance, @yesterday).deliver
+    email = PracticeMailer.daily_recap_email(admin, nil, nil, balance, @yesterday).deliver_now
 
     assert !ActionMailer::Base.deliveries.empty?
 
