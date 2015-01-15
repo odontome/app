@@ -8,7 +8,7 @@ namespace :odontome do
     end
 
     to_update = []
-    appointments = Appointment.includes(:doctor, :patient)
+    appointments = Appointment.includes(:doctor, :patient).joins(:doctor, :patient)
     .where("appointments.starts_at > ? AND appointments.ends_at < ? AND appointments.notified_of_reminder = ?
                                       AND patients.email <> ''",
                                       Time.now, Time.now + $appointment_notificacion_hours.hours, false)
@@ -31,7 +31,7 @@ namespace :odontome do
     end
 
     to_update = []
-    appointments = Appointment.includes(:doctor, :patient)
+    appointments = Appointment.includes(:doctor, :patient).joins(:doctor, :patient)
     .where("appointments.created_at < ? AND appointments.notified_of_schedule = ?
                                       AND patients.email <> ''", 5.minutes.ago, false)
     appointments.each do |appointment|
