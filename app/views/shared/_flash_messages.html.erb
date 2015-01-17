@@ -1,11 +1,12 @@
-<% flash.each do |key, msg| 
+<% flash.each do |key, msg|
+
 	case key
-    when :notice then key = "success"
-    when :error then key = "danger"
-    when :alert then key = "warning"
+		when "notice" then key = "success"
+		when "error" then key = "danger"
+		when "alert" then key = "warning"
     end %>
 
 	<div class="flash-message alert alert-<%= key %>">
 		<%= msg %>
-	</div>    
+	</div>
 <% end %>
