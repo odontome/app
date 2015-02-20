@@ -206,7 +206,7 @@ en:
   mailers:
     doctor:
       today_agenda:
-        subject: Your appointsments for today
+        subject: Your appointments for today
     notifier:
       password_reset:
         subject: Your password reset request
