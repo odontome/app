@@ -69,7 +69,7 @@ class DoctorsController < ApplicationController
     doctor = Doctor.find(doctor_id_deciphered)
 
     start_of_week = Date.today.at_beginning_of_week.to_time.to_i
-    end_of_week = Date.today.at_end_of_week.to_time.to_i
+    end_of_week = start_of_week + 2.weeks
 
     @appointments = doctor.appointments.find_between(start_of_week, end_of_week).includes(:patient)
 
