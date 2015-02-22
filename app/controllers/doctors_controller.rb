@@ -66,12 +66,12 @@ class DoctorsController < ApplicationController
     cipher = Gibberish::AES.new(Rails.configuration.secret_token)
 
     doctor_id_deciphered = cipher.dec(Base64.strict_decode64(params[:doctor_id]))
-    doctor = Doctor.find(doctor_id_deciphered)
+    @doctor = Doctor.find(doctor_id_deciphered)
 
     start_of_week = Date.today.at_beginning_of_week.to_time.to_i
     end_of_week = start_of_week + 2.weeks
 
-    @appointments = doctor.appointments.find_between(start_of_week, end_of_week).includes(:patient)
+    @appointments = @doctor.appointments.find_between(start_of_week, end_of_week).includes(:patient)
 
     respond_with(@appointments)
   end

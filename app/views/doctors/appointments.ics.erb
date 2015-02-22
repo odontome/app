@@ -1,6 +1,10 @@
 <%=
 cal = Icalendar::Calendar.new
 
+cal.timezone do |t|
+  t.tzid = @doctor.practice.timezone
+end
+
 @appointments.each do |appointment|
 
   cal.event do |e|
