@@ -20,7 +20,7 @@
             <div class="profile-box">
 
               <h6><%= t :calendar_feed %></h6>
-              <p><%= raw (t :calendar_feed_message, doctor_name: @doctor.firstname, feed_url: @doctor.ciphered_feed_url).html_safe %></p>
+              <p style="word-wrap: break-word;"><%= raw (t :calendar_feed_message, doctor_name: @doctor.firstname, feed_url: @doctor.ciphered_feed_url).html_safe %></p>
               <br />
 
                 <% if @appointments.size > 0 %>
