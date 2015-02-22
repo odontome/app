@@ -42,6 +42,7 @@ gem 'redis', '3.0.5'
 gem 'passbook', '~> 0.3.1'
 gem 'mixpanel-ruby'
 gem 'mandrill-api'
+gem 'icalendar'
 
 gem 'font-awesome-rails'
 gem 'jquery-minicolors-rails'

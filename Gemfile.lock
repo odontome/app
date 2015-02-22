@@ -95,6 +95,7 @@ GEM
       rake
       term-ansicolor
       terminal-table
+    icalendar (2.2.2)
     jquery-minicolors-rails (2.1.4.0)
       jquery-rails
       rails (>= 3.2.8)
@@ -249,6 +250,7 @@ DEPENDENCIES
   gibberish (~> 1.4.0)
   hpricot
   i18n-tasks (~> 0.2.18)
+  icalendar
   jquery-minicolors-rails
   jquery-rails
   mandrill-api

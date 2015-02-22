@@ -1,6 +1,10 @@
 class DoctorsController < ApplicationController
-  before_filter :require_user
-  
+  # filters
+  before_filter :require_user, :except => :appointments
+
+  # provides
+  respond_to :ics, :only => [:appointments]
+
   def index
     @doctors = Doctor.mine
   end
@@ -44,11 +48,11 @@ class DoctorsController < ApplicationController
 
   def destroy
     @doctor = Doctor.mine.find(params[:id])
-    
+
     # Check if this doctor can be deleted, otherwise toggle his validness
     if @doctor.is_deleteable
       @doctor.destroy
-    else 
+    else
       @doctor.is_active = !@doctor.is_active
       @doctor.save
     end
@@ -56,6 +60,20 @@ class DoctorsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(doctors_url) }
     end
+  end
+
+  def appointments
+    cipher = Gibberish::AES.new(Rails.configuration.secret_token)
+
+    doctor_id_deciphered = cipher.dec(Base64.strict_decode64(params[:doctor_id]))
+    doctor = Doctor.find(doctor_id_deciphered)
+
+    start_of_week = Date.today.at_beginning_of_week.to_time.to_i
+    end_of_week = Date.today.at_end_of_week.to_time.to_i
+
+    @appointments = doctor.appointments.find_between(start_of_week, end_of_week).includes(:patient)
+
+    respond_with(@appointments)
   end
 
 end

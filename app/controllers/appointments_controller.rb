@@ -17,7 +17,7 @@ class AppointmentsController < ApplicationController
       @appointments = datebook.appointments.find_between(params[:start], params[:end])
     end
 
-     respond_with(@appointments, :methods => ["doctor","patient"])
+    respond_with(@appointments, :methods => ["doctor","patient"])
   end
 
   def new

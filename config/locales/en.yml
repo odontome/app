@@ -16,6 +16,8 @@ en:
   today_balance: Today's balance
   download_as_csv_file: Download as CSV
   developers: Developers
+  calendar_feed: Subscribe to appointments
+  calendar_feed_message: You can subscribe to the appointments of %{doctor_name} by entering this address <strong>%{feed_url}</strong> in your favorite calendar app.
   update_password: Update password
   created_at: Created at
   sent_at: Sent at
@@ -142,7 +144,7 @@ en:
   delete_appointment: Delete this appointment
   delete_patient: Delete this patient
   doctor_created_success_message: The doctor was created successfully
-  doctor_has_no_future_appointments: Your schedule is free. How about if we schedule
+  doctor_has_no_future_appointments: The schedule is free. How about if we schedule
     some %{datebooks_url}?
   doctor_updated_success_message: The doctor was updated successfully
   doctors: Doctors

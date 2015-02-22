@@ -14,6 +14,8 @@ es:
   income: Ingreso
   today_balance: Balance de hoy
   download_as_csv_file: Descargar como CSV
+  calendar_feed: Suscripción a las citas
+  calendar_feed_message: Puedes suscribirte a las citas de %{doctor_name} utilizando la siguiente dirección <strong>%{feed_url}</strong> en tu app de calendario favorita.
   created_at: Creado el
   developers: Desarrolladores
   update_password: Actualizar contraseña
@@ -125,7 +127,7 @@ es:
   delete_appointment: Borrar esta cita
   delete_patient: Borrar este paciente
   doctor_created_success_message: El doctor ha sido creado con éxito.
-  doctor_has_no_future_appointments: Tu agenda esta totalmente libre. ¿Qué tal si %{datebooks_url} algo?
+  doctor_has_no_future_appointments: La agenda está libre. ¿Qué tal si %{datebooks_url} algo?
   doctor_updated_success_message: El doctor ha sido actualizado con éxito.
   doctors: Doctores
   drinks_per_day: Tragos por día

@@ -38,7 +38,9 @@ Odontome::Application.routes.draw do
   end
 
   resources :users
-  resources :doctors
+  resources :doctors do
+		get "/appointments" => "doctors#appointments"
+	end
   resources :password_resets, :only => [ :new, :create, :edit, :update ]
 
 	# apps

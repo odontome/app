@@ -1,0 +1,18 @@
+<%=
+cal = Icalendar::Calendar.new
+
+@appointments.each do |appointment|
+
+  cal.event do |e|
+    e.dtstart     = Icalendar::Values::DateTime.new(appointment.starts_at)
+    e.dtend       = Icalendar::Values::DateTime.new(appointment.ends_at)
+    e.summary     = appointment.patient.fullname
+    e.location    = appointment.datebook.name
+    e.description = appointment.notes
+  end
+
+end
+
+cal.publish
+cal.to_ical
+%>
