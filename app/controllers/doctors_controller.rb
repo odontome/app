@@ -66,7 +66,7 @@ class DoctorsController < ApplicationController
     cipher = Gibberish::AES.new(Rails.configuration.secret_token)
 
     doctor_id_deciphered = cipher.dec(Base64.strict_decode64(params[:doctor_id]))
-    @doctor = Doctor.find(doctor_id_deciphered)
+    @doctor = Doctor.find_by id: doctor_id_deciphered, is_active: true
 
     start_of_week = Date.today.at_beginning_of_week.to_time.to_i
     end_of_week = start_of_week + 2.weeks

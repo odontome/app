@@ -19,9 +19,11 @@
         <div class="col-md-12 bio">
             <div class="profile-box">
 
-              <h6><%= t :calendar_feed %></h6>
-              <p style="word-wrap: break-word;"><%= raw (t :calendar_feed_message, doctor_name: @doctor.firstname, feed_url: @doctor.ciphered_feed_url).html_safe %></p>
-              <br />
+              <% if @doctor.is_active %>
+                  <h6><%= t :calendar_feed %></h6>
+                  <p style="word-wrap: break-word;"><%= raw (t :calendar_feed_message, doctor_name: @doctor.firstname, feed_url: @doctor.ciphered_feed_url).html_safe %></p>
+                  <br />
+              <% end %>
 
                 <% if @appointments.size > 0 %>
                     <h6><%= t :future_appointments %></h6>
