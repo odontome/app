@@ -15,7 +15,7 @@ es:
   today_balance: Balance de hoy
   download_as_csv_file: Descargar como CSV
   calendar_feed: Suscripción a las citas
-  calendar_feed_message: Puedes suscribirte a las citas de %{doctor_name} utilizando la siguiente dirección <strong>%{feed_url}</strong> en tu app de calendario favorita.
+  calendar_feed_message: Puedes suscribirte a las citas de %{doctor_name} utilizando la siguiente dirección <strong class="selectable">%{feed_url}</strong> en tu app de calendario favorita.
   created_at: Creado el
   developers: Desarrolladores
   update_password: Actualizar contraseña

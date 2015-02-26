@@ -75,3 +75,11 @@
         </div>
     </div>
 </div>
+
+<script>
+document.onclick = function(e) {
+  if (e.target.className === 'selectable') {
+      selectText(e.target);
+  }
+};
+</script>

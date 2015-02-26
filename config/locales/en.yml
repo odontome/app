@@ -17,7 +17,7 @@ en:
   download_as_csv_file: Download as CSV
   developers: Developers
   calendar_feed: Subscribe to appointments
-  calendar_feed_message: You can subscribe to the appointments of %{doctor_name} by entering this address <strong>%{feed_url}</strong> in your favorite calendar app.
+  calendar_feed_message: You can subscribe to the appointments of %{doctor_name} by entering this address <strong class="selectable">%{feed_url}</strong> in your favorite calendar app.
   update_password: Update password
   created_at: Created at
   sent_at: Sent at
