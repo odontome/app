@@ -73,6 +73,12 @@ class DoctorsController < ApplicationController
 
     @appointments = @doctor.appointments.find_between(start_of_week, end_of_week).includes(:patient)
 
+    # track this event
+    MIXPANEL_CLIENT.track(@doctor.email, 'Requested calendar subscription', {
+        'Number of appointments' => @appointments.size,
+        'Practice' => @doctor.practice.name
+    })
+
     respond_with(@appointments)
   end
 

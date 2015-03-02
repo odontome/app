@@ -6,7 +6,16 @@ rebecca:
   lastname: Riera
   gender: female
   email: rebeca.riera@gmail.com
-  
+
+no_email:
+  id: 3
+  uid: D003
+  practice_id: 1
+  firstname: Ruth
+  lastname: Riera
+  gender: female
+  email:
+
 perishable:
   id: 2
   uid: D002
