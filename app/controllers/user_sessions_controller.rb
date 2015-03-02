@@ -15,13 +15,18 @@ class UserSessionsController < ApplicationController
       if @user_session.save
         session[:locale] = @user_session.user.preferred_language
 
+        user = @user_session.user
+        practice = @user_session.user.practice
+
         # record the signed in
-        MIXPANEL_CLIENT.track(@user_session.user.email, 'Signed in')
-        MIXPANEL_CLIENT.people.set(@user_session.user.email, {
-            '$first_name' => @user_session.user.firstname,
-            '$last_name' => @user_session.user.lastname,
-            '$email' => @user_session.user.email,
-            '$language' => @user_session.user.preferred_language
+        MIXPANEL_CLIENT.track(user.email, 'Signed in')
+        MIXPANEL_CLIENT.people.set(user.email, {
+            '$first_name' => user.firstname,
+            '$last_name' => user.lastname,
+            '$email' => user.email,
+            '$language' => user.preferred_language,
+            'Practice' => practice.name,
+            '$timezone' => practice.timezone
         })
 
         format.html { redirect_to(root_url) }
