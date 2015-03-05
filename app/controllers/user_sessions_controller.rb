@@ -25,8 +25,11 @@ class UserSessionsController < ApplicationController
             '$last_name' => user.lastname,
             '$email' => user.email,
             '$language' => user.preferred_language,
+            '$timezone' => practice.timezone,
             'Practice' => practice.name,
-            '$timezone' => practice.timezone
+            'Number of patients' => practice.patients_count,
+            'Number of doctors' => practice.doctors_count,
+            'Number of datebooks' => practice.datebooks_count,
         })
 
         format.html { redirect_to(root_url) }
