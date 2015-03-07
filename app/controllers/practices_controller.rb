@@ -46,7 +46,12 @@ class PracticesController < ApplicationController
             '$first_name' => new_user.firstname,
             '$last_name' => new_user.lastname,
             '$email' => new_user.email,
-            '$language' => new_user.preferred_language
+            '$language' => @practice.locale,
+            '$timezone' => @practice.timezone,
+            'Practice' => @practice.name,
+            'Number of patients' => @practice.patients_count,
+            'Number of doctors' => @practice.doctors_count,
+            'Number of datebooks' => @practice.datebooks_count
         })
         MIXPANEL_CLIENT.track(new_user.email, 'Signed up')
 
