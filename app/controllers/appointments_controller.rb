@@ -63,6 +63,15 @@ class AppointmentsController < ApplicationController
 
     # temporaly change the locale
     I18n.with_locale(datebook.practice.locale) do
+
+      # track this event
+      MIXPANEL_CLIENT.track(appointment.patient.email, 'Requested passbook', {
+          'Start date' => appointment.starts_at.in_time_zone(datebook.practice.timezone),
+          'End date' => appointment.ends_at.in_time_zone(datebook.practice.timezone),
+          'Practice' => datebook.practice.name,
+          'Doctor' => appointment.doctor.fullname
+      })
+
       pass = Passbook::PKPass.new '{
                   "formatVersion" : 1,
                   "passTypeIdentifier" : "pass.me.odonto.patient.reminder",
