@@ -24,10 +24,13 @@ class PatientsController < ApplicationController
     # otherwise, this is a search for patients
     else
       @patients = Patient.search(params[:q])
-      # track this event
-      MIXPANEL_CLIENT.track(@current_user.email, 'Searching for a patient profile', {
-          'Query' => params[:q]
-      })
+
+      if !params.has_key?("format")
+        # track this event
+        MIXPANEL_CLIENT.track(@current_user.email, 'Searching for a patient profile', {
+            'Query' => params[:q]
+        })
+      end
     end
 
     respond_with(@patients, :methods => :fullname)
