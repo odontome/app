@@ -6,14 +6,6 @@ class AddCountColumnsToPractice < ActiveRecord::Migration
       t.integer :doctors_count, :default => 0
       t.integer :users_count, :default => 0
     end
-    Practice.reset_column_information
-    Practice.find(:all).each do |p| 
-       Practice.update_counters p.id, :patients_count => p.patients.count
-       Practice.update_counters p.id, :appointments_count => p.appointments.count
-       Practice.update_counters p.id, :doctors_count => p.doctors.count
-       Practice.update_counters p.id, :users_count => p.users.count
-     end
-    
   end
 
   def self.down

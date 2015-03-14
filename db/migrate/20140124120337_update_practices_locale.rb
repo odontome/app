@@ -1,11 +1,11 @@
 class UpdatePracticesLocale < ActiveRecord::Migration
   def up
-  	Practice.update_all "locale = 'es'", "locale = 'es_ES'"
-  	Practice.update_all "locale = 'en'", "locale = 'en_US'"
+  	Practice.where("locale = 'es_ES'").update_all("locale = 'es'")
+    Practice.where("locale = 'en_US'").update_all("locale = 'en'")
   end
 
   def down
-  	Practice.update_all "locale = 'es_ES'", "locale = 'es'"
-  	Practice.update_all "locale = 'en_US'", "locale = 'en'"
+    Practice.where("locale = 'es'").update_all("locale = 'es_ES'")
+    Practice.where("locale = 'en'").update_all("locale = 'en_US'")
   end
 end
