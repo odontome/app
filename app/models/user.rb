@@ -56,6 +56,10 @@ class User < ActiveRecord::Base
     return "http://my.odonto.me/users/#{ciphered_url_encoded_id}/unsubscribe"
   end
 
+  def is_admin?
+    self.roles.include?("admin")
+  end
+
   private
 
   def validate_password?
@@ -63,7 +67,7 @@ class User < ActiveRecord::Base
   end
 
   def check_if_admin
-    if self.roles.include?("admin")
+    if self.is_admin?
       self.errors[:base] << I18n.t("errors.messages.unauthorised")
       false
     end
