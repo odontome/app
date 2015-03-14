@@ -37,9 +37,7 @@ class Doctor < ActiveRecord::Base
   end
 
   def ciphered_feed_url
-    cipher = Gibberish::AES.new(Rails.configuration.secret_token)
-
-    ciphered_url_encoded_id = Base64.strict_encode64(cipher.enc(self.id.to_s))
+    ciphered_url_encoded_id = Cipher.encode(self.id.to_s)
 
     return "http://my.odonto.me/doctors/#{ciphered_url_encoded_id}/appointments.ics"
   end

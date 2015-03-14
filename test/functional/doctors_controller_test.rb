@@ -42,8 +42,7 @@ class DoctorsControllerTest < ActionController::TestCase
 
   test "should get calendar subscription" do
     doctor = doctors(:rebecca)
-    cipher = Gibberish::AES.new(Rails.configuration.secret_token)
-    ciphered_url_encoded_id = Base64.strict_encode64(cipher.enc(doctor.id.to_s))
+    ciphered_url_encoded_id = Cipher.encode(doctor.id.to_s)
 
     get :appointments, doctor_id: ciphered_url_encoded_id, :format => :ics
     assert_response :success

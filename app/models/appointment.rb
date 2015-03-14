@@ -6,7 +6,7 @@ class Appointment < ActiveRecord::Base
   belongs_to :datebook
   belongs_to :doctor
   belongs_to :patient
-  
+
   scope :find_between, lambda { |starts_at, ends_at|
   	includes(:doctor, :patient)
     .where("appointments.starts_at > ? AND appointments.ends_at < ?", Time.at(starts_at.to_i), Time.at(ends_at.to_i))
@@ -17,16 +17,16 @@ class Appointment < ActiveRecord::Base
     where("appointments.doctor_id = ?", doctor_id)
     .find_between starts_at, ends_at
   }
-    
+
   # validations
   validates_presence_of :datebook_id, :doctor_id, :patient_id
   validates_numericality_of :datebook_id, :doctor_id, :patient_id
   validate :ends_at_should_be_later_than_starts_at, :practice_is_mine
   validates :notes, :length => { :within => 0..255 }, :allow_blank => true
-  
+
   # callbacks
   before_create :set_ends_at
-  
+
   # Overwrite de JSON response to comply with what the event calendar wants
   # this needs to be overwritten in the "web" version and not the whole app
   def as_json(options = {})
@@ -66,22 +66,20 @@ class Appointment < ActiveRecord::Base
 
     end
 
-    return appointments 
+    return appointments
   end
 
   def ciphered_url
-    cipher = Gibberish::AES.new(Rails.configuration.secret_token)
+    ciphered_url_encoded_id = Cipher.encode(self.id.to_s)
 
-    ciphered_url_encoded_id = Base64.strict_encode64(cipher.enc(self.id.to_s))
-     
     return "https://my.odonto.me/datebooks/#{self.datebook_id.to_s}/appointments/#{ciphered_url_encoded_id}"
   end
-  
+
   private
-  
+
   def ends_at_should_be_later_than_starts_at
   	if !self.starts_at.nil? && !self.ends_at.nil?
-	  	if self.starts_at >= self.ends_at  
+	  	if self.starts_at >= self.ends_at
 	  		self.errors[:base] << I18n.t("errors.messages.invalid_date_range")
 	  	end
 	  end
@@ -95,11 +93,11 @@ class Appointment < ActiveRecord::Base
         self.errors[:base] << I18n.t("errors.messages.invalid_practice_id")
     end
   end
-  
+
   def set_ends_at
   	if self.ends_at.nil?
     	self.ends_at = self.starts_at + 60.minutes
     end
   end
-  
+
 end

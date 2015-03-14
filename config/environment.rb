@@ -7,7 +7,7 @@ Rails.application.initialize!
 # YAML config files
 TREATMENTS = YAML.load_file(File.join(Rails.root, "config", "treatments.yml"))
 
-# Don't include the root object in the JSON 
+# Don't include the root object in the JSON
 ActiveRecord::Base.include_root_in_json = false
 
 # Appointment notifications configuration
@@ -24,3 +24,6 @@ require 'extensions/view_extensions'
 
 # Require the model extensions
 require 'extensions/model_extensions'
+
+# Require the cipher module
+require 'cipher'

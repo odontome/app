@@ -49,10 +49,8 @@ class AppointmentsController < ApplicationController
 
   end
 
-  def show
-    cipher = Gibberish::AES.new(Rails.configuration.secret_token)
-
-    appointment_id_deciphered = cipher.dec(Base64.strict_decode64(params[:id]))
+  def show    
+    appointment_id_deciphered = Cipher.decode(params[:id])
 
     datebook = Datebook.includes(:practice).find(params[:datebook_id])
     appointment = Appointment.where(:id => appointment_id_deciphered, :datebook_id => datebook.id).first
