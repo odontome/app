@@ -21,6 +21,7 @@ es:
   update_password: Actualizar contraseña
   my_practice: Mi clínica
   chart_number: Número de historia
+  subscribe_again: Suscríbete de nuevo
   activerecord:
     attributes:
       appointment:
@@ -309,3 +310,8 @@ es:
   welcome: Bienvenido a Odonto.me
   you_agree_to_our_terms_and_privacy_policy: Aceptas nuestras %{terms_url} y nuestra %{privacy_url} cuando continuas.
   your_first_datebook: Tu agenda
+  email_notifications:
+    title: Notificaciones por correo
+    subscribe_message: "Ya no estás suscrito para recibir notificaciones de la <strong>%{name}</strong>. Suscríbete de nuevo <a href='%{url}?undo'>haciendo clic aquí</a>"
+    unsubscribe_message: "Estás suscrito para recibir notificaciones sobre la  <strong>%{name}</strong>. Date de baja <a href='%{url}'>haciendo clic aquí</a>"
+    daily_digest: "actividad de tu clínica"

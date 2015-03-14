@@ -50,6 +50,12 @@ class User < ActiveRecord::Base
     NotifierMailer.deliver_password_reset_instructions(self).deliver_now
   end
 
+  def ciphered_unsubscribe_url
+    ciphered_url_encoded_id = Cipher.encode(self.id.to_s)
+
+    return "http://my.odonto.me/users/#{ciphered_url_encoded_id}/unsubscribe"
+  end
+
   private
 
   def validate_password?

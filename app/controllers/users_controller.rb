@@ -55,4 +55,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def unsubscribe
+    @user = User.mine.find(params[:id])
+
+    if params.key?(:undo)
+      @user.subscribed_to_digest = true
+    else
+      @user.subscribed_to_digest = false
+    end
+
+    @user.save
+
+    redirect_to @user
+  end
+
 end

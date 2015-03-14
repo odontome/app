@@ -12,7 +12,7 @@
             	<% end %>
             </span>
         </div>
-        
+
     	<div class="pull-right doctor-status">
 			<% if user_is_admin?(@user) %>
 				<%= label_tag @user.roles %>
@@ -21,13 +21,19 @@
 
     </div>
 
-    <!--
     <div class="row profile">
         <div class="col-md-12 bio">
             <div class="profile-box">
 
+              <h6><%= t "email_notifications.title" %></h6>
+
+              <% if @user.subscribed_to_digest %>
+                <p style="word-wrap: break-word;"><%= raw (t "email_notifications.unsubscribe_message", name: t("email_notifications.daily_digest"), url: url_for(:users_unsubscribe)).html_safe %></p>
+              <% else %>
+                <p style="word-wrap: break-word;"><%= raw (t "email_notifications.subscribe_message", name: t("email_notifications.daily_digest"), url: url_for(:users_unsubscribe)).html_safe %></p>
+              <% end %>
+
             </div>
         </div>
     </div>
-	-->
 </div>

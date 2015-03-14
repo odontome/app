@@ -26,6 +26,9 @@ en:
   number_of_recipients: Recipients
   number_of_opens: Opens
   subject: Subject
+  subscribe_again: Subscribe again
+  you_are_subscribed_again: You are subscribed again
+  you_are_unsubscribed: You are unsubscribed
   activerecord:
     attributes:
       appointment:
@@ -351,3 +354,8 @@ en:
   you_agree_to_our_terms_and_privacy_policy: You agree to our %{terms_url} and to
     our %{privacy_url} when you register.
   your_first_datebook: Your first datebook
+  email_notifications:
+    title: Email notifications
+    subscribe_message: "You are no longer subscribed to recieve emails about <strong>%{name}</strong>. Enable it again, <a href='%{url}?undo'>clicking here</a>"
+    unsubscribe_message: "You are subscribed to recieve emails about <strong>%{name}</strong>. To stop, <a href='%{url}'>click here</a>"
+    daily_digest: "your daily practice's activity"

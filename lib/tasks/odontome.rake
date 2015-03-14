@@ -76,7 +76,15 @@ namespace :odontome do
       today = Time.now.in_time_zone(timezones_where_hour_is.first).beginning_of_day
       yesterday = today - 1.day
 
-      admins_of_these_practices = admin_of_practice(practice_ids)
+      admins_of_these_practices = admin_of_practice(practice_ids).where("subscribed_to_digest = ?", true)
+
+      # override the `practice_ids` with only the practices of subscribed admins
+      practice_ids = admins_of_these_practices.pluck(:practice_id)
+
+      # maybe this override cleared them all (very unlikely)
+      if practice_ids.size == 0
+        next # exits the task
+      end
 
       patients_created_today = Patient.select("id, firstname, lastname, practice_id, email")
       .where(:practice_id => practice_ids)
@@ -110,7 +118,7 @@ namespace :odontome do
       # go through every practice_id in this timezone and send them an
       # email with their daily recap
       practice_ids.each do |practice_id|
-        PracticeMailer.daily_recap_email(users["#{practice_id}"], patients["#{practice_id}"], appointments["#{practice_id}"], balance["#{practice_id}"], YESTERDAY).deliver_now
+        PracticeMailer.daily_recap_email(users["#{practice_id}"], patients["#{practice_id}"], appointments["#{practice_id}"], balance["#{practice_id}"], yesterday).deliver_now
       end
     end
 
@@ -220,7 +228,7 @@ namespace :odontome do
 
   # find all the admins for the given @practice_ids
   def admin_of_practice(practice_ids)
-    User.select("firstname, lastname, practice_id, email, locale, timezone, currency_unit")
+    User.select("firstname, lastname, practice_id, email, locale, timezone, currency_unit, subscribed_to_digest")
       .where(:practice_id => practice_ids)
       .where("roles = ?", "admin")
       .joins(:practice)
