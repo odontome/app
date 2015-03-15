@@ -1,12 +1,12 @@
 <tr>
-	<td class="aligncenter content-block">
+	<td class="content-block">
 		<h3>Daily recap for <%= l @date.in_time_zone(@practice_timezone).to_date, :format => :day_and_date %></h3>
 	</td>
 </tr>
 
 <% if !@balance.nil? %>
 <tr>
-	<td class="aligncenter content-block">
+	<td class="content-block">
 		<h4><%= t :balance %></h4>
 		<p><%= number_to_currency @balance.first['amount'], :unit => @currency_unit %> processed yesterday</p>
 	</td>
@@ -15,20 +15,29 @@
 
 <% if !@appointments.nil? %>
 <tr>
-	<td class="aligncenter content-block">
+	<td class="content-block">
 		<h4><%= @appointments.size %> appointments scheduled</h4>
-		<ul>
+
+		<table width="100%" cellpadding="0" cellspacing="0">
 			<% @appointments.each do |appointment| %>
-			<li><%= raw "#{appointment['patient_firstname']} #{appointment['patient_lastname']} with #{appointment['doctor_firstname']} #{appointment['doctor_lastname']} <br /><small>#{l(appointment['starts_at'].to_time.in_time_zone(@practice_timezone), :format => :short)} (#{appointment['name']})</small>"%></li>
+			<tr>
+				<td width="40%">
+					<%= raw "#{l(appointment['starts_at'].to_time.in_time_zone(@practice_timezone), :format => :short)} <br /><small>#{appointment['name']}</small>"%>
+				</td>
+				<td>
+					<%= raw "#{appointment['patient_firstname']} #{appointment['patient_lastname']} <br /><small>with #{appointment['doctor_firstname']} #{appointment['doctor_lastname']} </small>" %>
+				</td>
+			</tr>
 			<% end %>
-		</ul>
+		</table>
+
 	</td>
 </tr>
 <% end %>
 
 <% if !@patients.nil? %>
 <tr>
-	<td class="aligncenter content-block">
+	<td class="content-block">
 		<h4><%= @patients.size %> new patients</h4>
 
 		<table>
