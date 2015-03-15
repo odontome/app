@@ -72,7 +72,7 @@ class Appointment < ActiveRecord::Base
   def ciphered_url
     ciphered_url_encoded_id = Cipher.encode(self.id.to_s)
 
-    return "https://my.odonto.me/datebooks/#{self.datebook_id.to_s}/appointments/#{ciphered_url_encoded_id}"
+    return "http://my.odonto.me/datebooks/#{self.datebook_id.to_s}/appointments/#{ciphered_url_encoded_id}"
   end
 
   private
