@@ -6,6 +6,7 @@ class Appointment < ActiveRecord::Base
   belongs_to :datebook
   belongs_to :doctor
   belongs_to :patient
+  belongs_to :review
 
   scope :find_between, lambda { |starts_at, ends_at|
   	includes(:doctor, :patient)

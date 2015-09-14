@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+valid:
+  appointment_id: 1
+  score: 4
+  comment: Excellent service, I will definitely come back
+
+invalid:
+  appointment_id: a
+  score: 0
+  comment: 

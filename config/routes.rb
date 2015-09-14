@@ -45,6 +45,7 @@ Odontome::Application.routes.draw do
 
 	# apps
 	resources :broadcasts
+  resources :reviews
 
 	# authentication
 	resource :user_session
