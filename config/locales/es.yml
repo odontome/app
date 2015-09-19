@@ -1,5 +1,6 @@
 ---
 es:
+  at: en
   account_cancelled: Tu cuenta ha sido marcada para cancelación. Si crees que esto es un error, por favor contacta con nosotros lo más rápido posible.
   account_not_found: No se encontró ninguna cuenta con esta información.
   activate: Activar
@@ -75,6 +76,9 @@ es:
         lastname: Apellido
         password: Contraseña
         password_confirmation: Confirmación de contraseña
+      review:
+        score: Puntuación
+        comment: Comentarios sobre tu experiencia
     models:
       appointment: Cita
       datebook: Agenda
@@ -83,6 +87,7 @@ es:
       practice: Clínica
       treatment: Tratamiento
       user: Usuario
+      review: Calificaciones
   additional_notes: Comentarios adicionales
   address: Direcci´øn
   admin_credentials_required: Necesitas ser administrador para poder hacer esto.
@@ -192,6 +197,8 @@ es:
         subject: Tu cita con %{practice_name}
       birthday:
         subject: ¡Feliz cumpleaños!
+      review:
+        subject: ¿Cómo estuvo tu cita en %{practice_name}?
     practice:
       welcome:
         subject: Bienvenido a Odonto.me

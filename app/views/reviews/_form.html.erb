@@ -20,7 +20,7 @@
   </p>
 
   <p class="form-group">
-    <%= f.label :comment %><br>
+    <%= f.label :comment %> <label><%= t :at %> <%= @appointment.datebook.practice.name %></label><br>
     <%= f.text_area :comment, :rows => 2, :maxlength => 255, :class => "form-control" %>
   </p>
 
