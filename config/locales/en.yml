@@ -87,6 +87,9 @@ en:
         lastname: Last name
         password: Password
         password_confirmation: Password confirmation
+      review:
+        score: Score
+        comment: Comments about your experience
     models:
       appointment: Appointment
       broadcast: Broadcast
@@ -96,6 +99,7 @@ en:
       practice: Practice
       treatment: Treatment
       user: User
+      review: Review
   additional_notes: Additional notes
   address: Address
   admin_credentials_required: You need to be the administrator of the practice to
@@ -222,6 +226,8 @@ en:
         subject: Your appointment with %{practice_name}
       birthday:
         subject: Happy birthday!
+      review:
+        subject: How was your appointment with %{practice_name}?
     practice:
       welcome:
         subject: Welcome to Odonto.me

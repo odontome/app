@@ -1,18 +1,18 @@
 require 'test_helper'
 
 class AppointmentsControllerTest < ActionController::TestCase
-  
+
   setup do
   	current_user = users(:founder)
   	controller.session["user_credentials"] = users(:founder).persistence_token
   end
-  
+
   test "should get index" do
     get :index, :datebook_id => 1, :format => "json"
     assert_response :success
     assert_not_nil assigns(:appointments)
   end
-  
+
 	test "should get new" do
 	  get :new, :datebook_id => 1
 	  assert_response :success
@@ -26,7 +26,7 @@ class AppointmentsControllerTest < ActionController::TestCase
     }
 
     assert_difference 'Appointment.count' do
-      post :create, { appointment: existing_patient, datebook_id: 1, as_values_patient_id: "4,", format: :js } 
+      post :create, { appointment: existing_patient, datebook_id: 1, as_values_patient_id: "4,", format: :js }
       # see Patient.find_or_create_from to understand the 'as_values_patient_id' property
     end
   end

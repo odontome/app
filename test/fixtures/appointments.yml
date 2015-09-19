@@ -1,6 +1,15 @@
 first_visit:
+  id: 1
   datebook_id: 1
   doctor_id: 1
   patient_id: 4
   starts_at: 2014-01-04 14:00:00 +0000
   ends_at: 2014-01-04 15:00:00 +0000
+
+unreviewed:
+  id: 2
+  datebook_id: 1
+  doctor_id: 1
+  patient_id: 4
+  starts_at: <%= 2.days.ago %>
+  ends_at: <%= 2.days.ago + 1.hour %>

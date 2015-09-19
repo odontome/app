@@ -1,7 +1,4 @@
-class DoctorMailer < ActionMailer::Base
-
-  layout 'email'
-  default :from => "Odonto.me <hello@odonto.me>"
+class DoctorMailer < ApplicationMailer
 
   def today_agenda(agenda)
     @practice = Practice.find agenda.first["practice_id"]

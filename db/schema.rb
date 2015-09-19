@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150914015354) do
+ActiveRecord::Schema.define(version: 20150915004146) do
 
   create_table "appointments", force: :cascade do |t|
     t.integer  "doctor_id"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20150914015354) do
     t.boolean  "notified_of_reminder",             default: false
     t.integer  "datebook_id"
     t.boolean  "notified_of_schedule",             default: false
+    t.boolean  "notified_of_review",               default: false
   end
 
   add_index "appointments", ["starts_at", "ends_at"], name: "index_appointments_on_starts_at_and_ends_at"

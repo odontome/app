@@ -1,5 +1,5 @@
-<%= form_for(@review) do |f| %>
-  <% if @review.errors.any? %>
+<%= form_for(@review, :remote => true, :class => "form-horizontal") do |f| %>
+  <!-- <% if @review.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@review.errors.count, "error") %> prohibited this review from being saved:</h2>
 
@@ -9,21 +9,51 @@
       <% end %>
       </ul>
     </div>
-  <% end %>
+  <% end %> -->
 
-  <div class="field">
-    <%= f.label :appointment_id %><br>
-    <%= f.number_field :appointment_id %>
-  </div>
-  <div class="field">
-    <%= f.label :score %><br>
-    <%= f.number_field :score %>
-  </div>
-  <div class="field">
+  <p class="form-group">
+    <a href="#" data-score="1" class="rating-star"><%= image_tag asset_path('rating-star@2x.png'), :width => 35 %></a>
+    <a href="#" data-score="2" class="rating-star"><%= image_tag asset_path('rating-star@2x.png'), :width => 35 %></a>
+    <a href="#" data-score="3" class="rating-star"><%= image_tag asset_path('rating-star@2x.png'), :width => 35 %></a>
+    <a href="#" data-score="4" class="rating-star"><%= image_tag asset_path('rating-star@2x.png'), :width => 35 %></a>
+    <a href="#" data-score="5" class="rating-star"><%= image_tag asset_path('rating-star@2x.png'), :width => 35 %></a>
+  </p>
+
+  <p class="form-group">
     <%= f.label :comment %><br>
-    <%= f.text_field :comment %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <%= f.text_area :comment, :rows => 2, :maxlength => 255, :class => "form-control" %>
+  </p>
+
+  <p class="form-group">
+    <%= f.hidden_field :appointment_id %>
+    <%= f.hidden_field :score %>
+    <%= f.submit(t(:save), :class => "btn btn-primary", data: { disable_with: t(:please_wait) }, disabled: true) %>
+  </p>
 <% end %>
+
+<script>
+$(document).ready(function() {
+	$("a.rating-star").click(function() {
+		var element = $(this);
+		$('#review_score').val(element.data('score'));
+    fillStarsTo(element.data('score'));
+		return false;
+	});
+
+  function fillStarsTo(count) {
+    if (count > 0) {
+      $('input[type="submit"]').removeAttr('disabled');
+    }
+
+    $(".rating-star > img").each(function( index ) {
+      $(this).attr("src", "<%= asset_path('rating-star@2x.png') %>");
+    });
+    $(".rating-star > img").slice(0, count).each(function( index ) {
+      $(this).attr("src", "<%= asset_path('rating-star-filled@2x.png') %>");
+    });
+  }
+
+  fillStarsTo(<%= @review.score || 0 %>);
+
+});
+</script>

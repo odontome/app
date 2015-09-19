@@ -19,4 +19,11 @@ class ReviewTest < ActiveSupport::TestCase
   	assert !review.save
   	assert_equal I18n.t("errors.messages.taken"), review.errors[:appointment_id].first
   end
+
+  test "review shows full appointment info" do
+    review = reviews(:valid)
+
+    assert review.appointment = appointments(:first_visit)
+  end
+
 end

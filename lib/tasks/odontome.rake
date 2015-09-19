@@ -209,6 +209,33 @@ namespace :odontome do
 
   end
 
+  desc "Send appointment review request to patients in their timezone"
+  task :send_appointment_review_to_patients => :environment do
+
+    if defined?(Rails) && (Rails.env == 'development')
+      Rails.logger = Logger.new(STDOUT)
+    end
+
+    appointments_pending_review = Datebook.select("practices.name as practice, practices.locale as practice_locale, datebooks.name as datebook,
+    appointments.id as appointment_id, appointments.starts_at, appointments.ends_at,
+    doctors.firstname as doctor_firstname, doctors.lastname as doctor_lastname, doctors.email as doctor_email,
+    patients.email as patient_email, patients.firstname as patient_firstname, patients.lastname as patient_lastname")
+    .where("patient_email <> ''")
+    .where("appointments.ends_at < ?", 2.hours.ago)
+    .where("appointments.notified_of_review = ?", false)
+    .joins(:appointments => [:doctor, :patient])
+    .joins(:practice)
+    .order("appointments.ends_at")
+
+    # mark all the appointments found as "reviewed"
+    Appointment.where(:id => appointments_pending_review.map(&:id)).update_all(:notified_of_review => true)
+
+    # go through every appointment found and email them
+    appointments_pending_review.each do |appointment|
+      PatientMailer.review_recent_appointment(appointment).deliver_now
+    end
+  end
+
   # find all the timezones where the hour is @hour
   def timezones_where_hour_are(hour)
     time = Time.now

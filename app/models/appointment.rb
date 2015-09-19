@@ -6,7 +6,7 @@ class Appointment < ActiveRecord::Base
   belongs_to :datebook
   belongs_to :doctor
   belongs_to :patient
-  belongs_to :review
+  has_one :review
 
   scope :find_between, lambda { |starts_at, ends_at|
   	includes(:doctor, :patient)
@@ -27,6 +27,10 @@ class Appointment < ActiveRecord::Base
 
   # callbacks
   before_create :set_ends_at
+
+  def is_no_show
+    status != nil
+  end
 
   # Overwrite de JSON response to comply with what the event calendar wants
   # this needs to be overwritten in the "web" version and not the whole app
@@ -71,9 +75,19 @@ class Appointment < ActiveRecord::Base
   end
 
   def ciphered_url
-    ciphered_url_encoded_id = Cipher.encode(self.id.to_s)
+    encoded_id = self.ciphered_id
 
-    return "http://my.odonto.me/datebooks/#{self.datebook_id.to_s}/appointments/#{ciphered_url_encoded_id}"
+    return "http://my.odonto.me/datebooks/#{self.datebook_id.to_s}/appointments/#{encoded_id}"
+  end
+
+  def ciphered_review_url
+    encoded_appointment_id = self.ciphered_id
+
+    return "http://my.odonto.me/reviews/new/?appointment_id=#{encoded_appointment_id}"
+  end
+
+  def ciphered_id
+    Cipher.encode(self.id.to_s)
   end
 
   private

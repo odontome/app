@@ -1,7 +1,9 @@
 class Review < ActiveRecord::Base
+  # permitted attributes
+  attr_accessible :appointment_id, :score, :comment
 
   # associations
-  has_many :appointments
+  belongs_to :appointment
 
   # validations
   validates_presence_of :score
