@@ -248,6 +248,7 @@ en:
   never_logged_in: Never has logged into Odonto.me
   new: New
   new_user: New user
+  no_reviews_message: No patients have reviewed their experience yet.<br /> Everytime a patient visits your practice, an email will be sent to ask them to review their experience.
   no_account: Don't have an account?
   no_doctors: Please create doctors before using this section
   no_patient_found_new_one_will_be_created: No patient was found, a new one will be
