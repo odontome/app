@@ -13,7 +13,7 @@ class ReviewsController < ApplicationController
   def new
     @review = Review.new
 
-    #begin
+    begin
       # check that this appointment is reviewable
       deciphered_appointment_id = Cipher.decode params[:appointment_id]
       @appointment = Appointment.where(id: deciphered_appointment_id).includes(:doctor, :datebook => [:practice]).first
@@ -25,10 +25,10 @@ class ReviewsController < ApplicationController
       @review.score = params[:score]
       @review.appointment_id = params[:appointment_id]
 
-    # rescue Exception
-    #   redirect_to "http://www.odonto.me"
-    #   return
-    # end
+    rescue Exception
+      redirect_to "http://www.odonto.me"
+      return
+    end
 
     respond_with(@review, layout: "simple")
   end
