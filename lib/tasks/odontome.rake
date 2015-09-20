@@ -219,7 +219,7 @@ namespace :odontome do
     appointments_pending_review = Datebook.select("practices.name as practice, practices.locale as practice_locale, datebooks.name as datebook,
     appointments.id as appointment_id, appointments.starts_at, appointments.ends_at,
     doctors.firstname as doctor_firstname, doctors.lastname as doctor_lastname, doctors.email as doctor_email,
-    patients.email as patient_email, patients.firstname as patient_firstname, patients.lastname as patient_lastname")
+    patients.email as patient_email, patients.firstname as patient_name")
     .where("patients.email <> ''")
     .where("appointments.ends_at < ?", 2.hours.ago)
     .where("appointments.notified_of_review = ?", false)
