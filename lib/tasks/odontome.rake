@@ -227,6 +227,8 @@ namespace :odontome do
     .joins(:practice)
     .order("appointments.ends_at")
 
+    exit if !appointments_pending_review.exists?
+
     # mark all the appointments found as "reviewed"
     Appointment.where(:id => appointments_pending_review.map(&:appointment_id)).update_all(:notified_of_review => true)
 
