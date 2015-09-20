@@ -1,6 +1,6 @@
 ---
 en:
-  at: at
+  tell_us_about_your_experience_at_practice: Tell us about your experience at %{practice_name}
   account_cancelled: Your account is marked for cancellation. If you believe this
     is a mistake, please contact us as soon as possible.
   account_not_found: An account with the given information was not found. If you think this is a mistake, please contact with us
