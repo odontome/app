@@ -7,6 +7,9 @@ es:
   authlogic:
     error_messages:
       consecutive_failed_logins_limit_exceeded: Muchos intentos consecutivos para iniciar una sesión, la cuenta ha sido bloqueada temporalmente.
+  appointment: Cita
+  review: Calificación
+  thank_you: ¡Gracias!
   range: Rango
   active: Activa
   amount: Monto
@@ -270,6 +273,8 @@ es:
   profile: Perfíl
   remember_me: Recordarme
   reset_password: Cambiar contraseña
+  reviews: Calificaciones
+  review_created_success_message: Esta información será utilizada para mejorar la experiencia de todos.
   save: Guardar
   schedule: Agendar
   search: Buscar

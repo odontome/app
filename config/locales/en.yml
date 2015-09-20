@@ -8,6 +8,9 @@ en:
   authlogic:
     error_messages:
       consecutive_failed_logins_limit_exceeded: Consecutive failed logins limit exceeded, account has been temporarily disabled.
+  appointment: Appointment
+  review: Review
+  thank_you: Thank you!
   range: Range
   active: Active
   amount: Amount
@@ -312,6 +315,8 @@ en:
   profile: Profile
   remember_me: Remember me
   reset_password: Reset password
+  reviews: Reviews
+  review_created_success_message: This information will be used to improve the experience of everyone.
   save: Save
   send: Send
   continue: Continue

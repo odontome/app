@@ -5,6 +5,13 @@ class Review < ActiveRecord::Base
   # associations
   belongs_to :appointment
 
+  scope :mine, lambda {
+    includes(:appointment => [:doctor, :patient])
+    .joins(:appointment => [:datebook => [:practice]])
+    .where("practices.id = ? ", UserSession.find.user.practice_id)
+    .order("created_at")
+  }
+
   # validations
   validates_presence_of :score
   validates_numericality_of :score, :appointment_id

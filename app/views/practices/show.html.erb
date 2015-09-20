@@ -33,28 +33,34 @@
 
 
     <div class="row stats">
-        <div class="col-md-3 card">
+        <div class="col-md-4 card">
             <div>
-            	<h1><%= link_to @practice.datebooks_count, datebooks_url %></h1>
+            	<h1><%= link_to number_to_human(@practice.datebooks_count), datebooks_url %></h1>
             	<p><%= t :datebooks %></p>
             </div>
         </div>
-        <div class="col-md-3 card">
+        <div class="col-md-4 card">
             <div>
-            	<h1><%= link_to @practice.doctors_count, doctors_url %></h1>
+            	<h1><%= link_to number_to_human(@practice.doctors_count), doctors_url %></h1>
             	<p><%= t :doctors %></p>
             </div>
         </div>
-        <div class="col-md-3 card">
+        <div class="col-md-4 card">
             <div>
-            	<h1><%= link_to @practice.patients_count, patients_url %></h1>
+            	<h1><%= link_to number_to_human(@practice.patients_count), patients_url %></h1>
             	<p><%= t :patients %></p>
             </div>
         </div>
-        <div class="col-md-3 card">
+        <div class="col-md-4 card">
             <div>
               <h1><%= link_to number_to_currency_with_symbol(@today_balance, 0), practice_balance_url %></h1>
               <p><%= t :today_balance %></p>
+            </div>
+        </div>
+        <div class="col-md-4 card">
+            <div>
+              <h1><%= link_to number_to_human(@reviews_count), reviews_url %></h1>
+              <p><%= t :reviews %></p>
             </div>
         </div>
     </div>

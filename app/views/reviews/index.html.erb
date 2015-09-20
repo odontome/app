@@ -1,31 +1,58 @@
-<p id="notice"><%= notice %></p>
+<div id="pad-wrapper" class="table-wrapper users-list">
 
-<h1>Listing Reviews</h1>
+	<div class="row header col-md-12">
+        <h3><%= t :reviews %></h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>Appointment</th>
-      <th>Score</th>
-      <th>Comment</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+        <!-- <div class="pull-right-lg">
+            <%= link_to t(:create_new_treatment), new_treatment_url, "class" => "btn-flat primary pull-right" %>
+        </div> -->
+    </div>
 
-  <tbody>
-    <% @reviews.each do |review| %>
-      <tr>
-        <td><%= review.appointment_id %></td>
-        <td><%= review.score %></td>
-        <td><%= review.comment %></td>
-        <td><%= link_to 'Show', review %></td>
-        <td><%= link_to 'Edit', edit_review_path(review) %></td>
-        <td><%= link_to 'Destroy', review, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    <div class="row">
+		    <div class="col-md-12">
+			    <% if @reviews.empty? %>
+              <div class="alert alert-warning">
+                  <p><%= t(:no_reviews_message)%></p>
+              </div>
+				<% else %>
+			        <table class="table table-hover">
+			            <thead>
+			                <tr>
+			                    <th class="col-md-2">
+			                        <%= t :appointment %>
+			                    </th>
+			                    <th class="col-md-4">
+			                        <span class="line"></span> <%= t :review %>
+			                    </th>
+			                    <th class="col-md-2">
+                              <span class="line"></span> <%= t :created_at %>
+			                    </th>
+			                </tr>
+			            </thead>
+			            <tbody>
+				            <% @reviews.each do |review| %>
+					            <tr class="<% if review.id == @reviews.first.id %>first<% end %>">
+					            	  <td>
+					                    <span class="name">
+                                <%= link_to review.appointment.patient.fullname, review.appointment.patient %> <br />
+                                <%= link_to review.appointment.doctor.fullname, review.appointment.doctor %> <br />
+					                    	<%= review.appointment.starts_at.to_formatted_s :long %>
+					                   	</span>
+					                </td>
+					                <td>
+                              <%= ratings_widget review.score %> <br />
+                              <p><%= review.comment %></p>
+									        </td>
 
-<br>
+					                <td>
+                            <%= review.created_at.to_formatted_s :long %>
+					                </td>
+					            </tr>
+					        <% end %>
 
-<%= link_to 'New Review', new_review_path %>
+					    </tbody>
+					</table>
+				<% end %>
+		</div>
+	</div>
+</div>

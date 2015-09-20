@@ -6,7 +6,7 @@ class ReviewsController < ApplicationController
   respond_to :html, :js
 
   def index
-    @reviews = Review.all
+    @reviews = Review.mine
     respond_with(@reviews)
   end
 
