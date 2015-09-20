@@ -228,7 +228,7 @@ namespace :odontome do
     .order("appointments.ends_at")
 
     # mark all the appointments found as "reviewed"
-    Appointment.where(:id => appointments_pending_review.map(&:id)).update_all(:notified_of_review => true)
+    Appointment.where(:id => appointments_pending_review.map(&:appointment_id)).update_all(:notified_of_review => true)
 
     # go through every appointment found and email them
     appointments_pending_review.each do |appointment|

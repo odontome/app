@@ -1,2 +1,3 @@
-$(".new_review").fadeOut("slow");
-$(".new_review_success").fadeIn("slow").removeClass("hidden");
+$(".new_review").fadeOut("slow", function() {
+  $(".new_review_success").fadeIn("slow").removeClass("hidden");
+});
