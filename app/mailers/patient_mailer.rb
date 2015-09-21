@@ -67,7 +67,7 @@ class PatientMailer < ApplicationMailer
     # temporarely set the locale and then change it back
     # when the block finishes
     I18n.with_locale(@appointment["practice_locale"]) do
-      mail(:from => "Odonto.me <hello@odonto.me>",
+      mail(:from => "#{@appointment['practice']} <hello@odonto.me>",
            :to => @appointment["patient_email"],
            :subject => I18n.t("mailers.patient.review.subject", practice_name: @appointment["practice"]))
     end
