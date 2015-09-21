@@ -24,4 +24,9 @@ class PracticeMailer < ApplicationMailer
   		end
   	end
   end
+
+  def new_review_notification(review)
+
+  end
+
 end

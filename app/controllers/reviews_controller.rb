@@ -7,6 +7,10 @@ class ReviewsController < ApplicationController
 
   def index
     @reviews = Review.mine
+
+    # track the event in mixpanel
+    MIXPANEL_CLIENT.track(@current_user.email, 'Viewing reviews')
+
     respond_with(@reviews)
   end
 
@@ -22,6 +26,14 @@ class ReviewsController < ApplicationController
 
       end
 
+      # track the event in mixpanel
+      MIXPANEL_CLIENT.track(@appointment.id, 'Attempting a review', {
+          'Patient' => @appointment.patient.fullname,
+          'Doctor' => @appointment.doctor.fullname,
+          'Practice' => @appointment.datebook.practice.name,
+          'Score' => params[:score]
+      })
+
       @review.score = params[:score]
       @review.appointment_id = params[:appointment_id]
 
@@ -36,6 +48,11 @@ class ReviewsController < ApplicationController
   def create
     @review = Review.new(review_params)
     @review.appointment_id = Cipher.decode(review_params[:appointment_id])
+
+    # track the event in mixpanel
+    MIXPANEL_CLIENT.track(@review.appointment_id, 'Completed a review', {
+        'Score' => @review.score
+    })
 
     respond_to do |format|
       if @review.save
