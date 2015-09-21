@@ -123,4 +123,16 @@ class PracticeMailerTest < ActionMailer::TestCase
 
   end
 
+  test "new_review_notification" do
+    review = reviews(:valid)
+    practice = review.appointment.datebook.practice
+    admin_user = practice.users.first
+
+    mail = PracticeMailer.new_review_notification(review)
+    assert_equal I18n.t("mailers.practice.new_review_notification.subject"), mail.subject
+    assert_equal admin_user.email, mail.to.first
+    assert_equal ["hello@odonto.me"], mail.from
+    assert_match "View more at", mail.body.encoded
+  end
+
 end

@@ -1,0 +1,22 @@
+<tr>
+  <td class="aligncenter content-block">
+    <% (1..@review.score).each do |i| %>
+      <%= image_tag "rating-star-filled@2x.png", :width => 35 %>
+    <% end %>
+    <% (1..(5-@review.score)).each do |i| %>
+      <%= image_tag "rating-star@2x.png", :width => 35 %>
+    <% end %>
+  </td>
+</tr>
+
+<tr>
+  <td class="aligncenter content-block">
+    <i>"<%= @review.comment.html_safe %>"</i>
+  </td>
+</tr>
+
+<tr>
+  <td class="content-block">
+    <small>Ver más <%= link_to "califaciones", reviews_url %>.</small>
+  </td>
+</tr>

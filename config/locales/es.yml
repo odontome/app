@@ -207,6 +207,8 @@ es:
         subject: Bienvenido a Odonto.me
       daily_recap:
         subject: Resumen diario de %{date}
+      new_review_notification:
+        subject: Tienes una nueva calificación
   male: Hombre
   male_doctor_prefix: Dr.
   manage: Gestionar

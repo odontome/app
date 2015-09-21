@@ -56,6 +56,8 @@ class ReviewsController < ApplicationController
 
     respond_to do |format|
       if @review.save
+          # email the admin about this review
+          PracticeMailer.new_review_notification(@review).deliver_now
           format.js  { } #create.js.erb
       else
           format.js  {

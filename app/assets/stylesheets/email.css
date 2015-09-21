@@ -127,7 +127,7 @@ p li, ul li, ol li {
   list-style-position: inside;
 }
 
-small {
+small, small > a {
   font-size: 12px;
   color: #333;
 }
