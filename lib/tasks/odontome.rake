@@ -220,7 +220,7 @@ namespace :odontome do
     appointments.id as appointment_id, appointments.starts_at, appointments.ends_at,
     patients.email as patient_email, patients.firstname as patient_name")
     .where("patients.email <> ''")
-    .where("appointments.ends_at < ?", 2.hours.ago)
+    .where("appointments.ends_at < ? AND appointments.ends_at > ?", 60.minutes.ago, 6.hours.ago)
     .where("appointments.notified_of_review = ?", false)
     .joins(:appointments => [:patient])
     .joins(:practice)
