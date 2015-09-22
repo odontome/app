@@ -8,10 +8,13 @@ namespace :odontome do
     end
 
     to_update = []
+
     appointments = Appointment.includes(:doctor, :patient).joins(:doctor, :patient)
-    .where("appointments.starts_at > ? AND appointments.ends_at < ? AND appointments.notified_of_reminder = ?
-                                      AND patients.email <> ''",
-                                      Time.now, Time.now + $appointment_notificacion_hours.hours, false)
+    .where("appointments.starts_at > ? AND appointments.ends_at < ?", Time.now, Time.now + $appointment_notificacion_hours.hours)
+    .where("appointments.notified_of_reminder = ?", false)
+    .where("patients.email <> ''")
+    .where("appointments.status = ?", Appointment.status[:confirmed])
+
     appointments.each do |appointment|
       practice = appointment.datebook.practice
 
@@ -31,9 +34,12 @@ namespace :odontome do
     end
 
     to_update = []
+
     appointments = Appointment.includes(:doctor, :patient).joins(:doctor, :patient)
-    .where("appointments.created_at < ? AND appointments.notified_of_schedule = ?
-                                      AND patients.email <> ''", 5.minutes.ago, false)
+    .where("appointments.created_at < ? AND appointments.notified_of_schedule = ?", 5.minutes.ago, false)
+    .where("appointments.status = ?", Appointment.status[:confirmed])
+    .where("patients.email <> ''")
+
     appointments.each do |appointment|
       practice = appointment.datebook.practice
       passbook_url = appointment.ciphered_url
@@ -146,6 +152,7 @@ namespace :odontome do
       .where("doctors.email <> ''")
       .where("datebooks.practice_id" => practice_ids)
       .where("appointments.starts_at >= ? AND appointments.ends_at <= ?", today, end_of_today)
+      .where("appointments.status = ?", Appointment.status[:confirmed])
       .joins(:appointments => [:doctor, :patient])
       .joins(:practice)
       .order("appointments.starts_at")
@@ -222,6 +229,7 @@ namespace :odontome do
     .where("patients.email <> ''")
     .where("appointments.ends_at < ? AND appointments.ends_at > ?", 60.minutes.ago, 1.day.ago)
     .where("appointments.notified_of_review = ?", false)
+    .where("appointments.status = ?", Appointment.status[:confirmed])
     .joins(:appointments => [:patient])
     .joins(:practice)
     .order("appointments.ends_at")

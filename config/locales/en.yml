@@ -152,6 +152,8 @@ en:
   datebooks: Datebooks
   day: Day
   delete: Delete
+  cancel_appointment: Cancel this appointment
+  confirm_appointment: Confirm this appointment
   delete_appointment: Delete this appointment
   delete_patient: Delete this patient
   doctor_created_success_message: The doctor was created successfully

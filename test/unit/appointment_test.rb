@@ -52,6 +52,13 @@ class AppointmentTest < ActiveSupport::TestCase
 
 	end
 
+	test "appointment status should default to confirmed" do
+		appointment = appointments(:first_visit)
+
+		assert_equal appointment.status, Appointment.status[:confirmed]
+		assert appointment.is_confirmed
+	end
+
 	test "appointment should generate a valid passbook url" do
     appointment = appointments(:first_visit)
 

@@ -21,6 +21,11 @@
 
 	<div class="modal-footer">
 		<% if controller.action_name == "edit" %>
+			<% if @appointment.is_confirmed %>
+				<%= link_to t(:cancel_appointment), [@datebook, @appointment], :method => :put, :remote => :true, data: { params: { appointment: { status: Appointment.status[:cancelled] } }.to_param }, :class => "btn" %>
+			<% else %>
+				<%= link_to t(:confirm_appointment), [@datebook, @appointment], :method => :put, :remote => :true, data: { params: { appointment: { status: Appointment.status[:confirmed] } }.to_param }, :class => "btn" %>
+			<% end %>
 			<%= link_to t(:delete_appointment), [@datebook, @appointment], :method => :delete, :remote => :true, data: { confirm: t(:are_you_sure) }, :class => "btn btn-danger" %>
 		<% else %>
 			<%= f.hidden_field :starts_at %>

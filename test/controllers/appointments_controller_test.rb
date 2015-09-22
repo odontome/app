@@ -19,40 +19,40 @@ class AppointmentsControllerTest < ActionController::TestCase
 	end
 
   test "should create an appointment with an existing patient" do
-    existing_patient = {
+    appointment = {
       :doctor_id => 1,
       :starts_at => '2014-01-04 14:00:00 +0000',
       :ends_at => '2014-01-04 15:00:00 +0000'
     }
 
     assert_difference 'Appointment.count' do
-      post :create, { appointment: existing_patient, datebook_id: 1, as_values_patient_id: "4,", format: :js }
+      post :create, { appointment: appointment, datebook_id: 1, as_values_patient_id: "4,", format: :js }
       # see Patient.find_or_create_from to understand the 'as_values_patient_id' property
     end
   end
 
   test "should create an appointment with a new patient" do
-    new_patient = {
+    appointment = {
       :doctor_id => 2,
       :starts_at => '2014-01-04 14:00:00 +0000',
       :ends_at => '2014-01-04 15:00:00 +0000'
     }
 
     assert_difference ['Patient.count', 'Appointment.count'] do
-      post :create, { appointment: new_patient, datebook_id: 1, as_values_patient_id: "New patient", format: :js }
+      post :create, { appointment: appointment, datebook_id: 1, as_values_patient_id: "New patient", format: :js }
       # see Patient.find_or_create_from to understand the 'as_values_patient_id' property
     end
   end
 
   test "should not create an appointment with in a foreign practice" do
-    new_patient = {
+    appointment = {
       :doctor_id => 2,
       :starts_at => '2014-01-04 14:00:00 +0000',
       :ends_at => '2014-01-04 15:00:00 +0000'
     }
 
     assert_no_difference ['Appointment.count'] do
-      post :create, { appointment: new_patient, datebook_id: 9, as_values_patient_id: "New patient", format: :js }
+      post :create, { appointment: appointment, datebook_id: 9, as_values_patient_id: "New patient", format: :js }
       # see Patient.find_or_create_from to understand the 'as_values_patient_id' property
     end
   end

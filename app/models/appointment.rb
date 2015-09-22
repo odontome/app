@@ -1,6 +1,6 @@
 class Appointment < ActiveRecord::Base
 	# permitted attributes
-  attr_accessible :datebook_id, :doctor_id, :patient_id, :starts_at, :ends_at, :notes
+  attr_accessible :datebook_id, :doctor_id, :patient_id, :starts_at, :ends_at, :notes, :status
 
   # associations
   belongs_to :datebook
@@ -28,8 +28,19 @@ class Appointment < ActiveRecord::Base
   # callbacks
   before_create :set_ends_at
 
-  def is_no_show
-    status != nil
+  def is_cancelled
+    status == self.class.status[:cancelled]
+  end
+
+  def is_confirmed
+    status == self.class.status[:confirmed]
+  end
+
+  def self.status
+    {
+      confirmed: "confirmed",
+      cancelled: "cancelled"
+    }
   end
 
   # Overwrite de JSON response to comply with what the event calendar wants
@@ -43,7 +54,7 @@ class Appointment < ActiveRecord::Base
         :doctor_id => doctor_id,
         :datebook_id => datebook_id,
         :patient_id => patient_id,
-        :color => doctor.color,
+        :color => is_confirmed ? doctor.color : "#cdcdcd",
         :doctor_name => doctor.fullname,
         :firstname => patient.firstname,
         :lastname => patient.lastname

@@ -4,7 +4,7 @@ class AddNotifiedForReviewToAppointments < ActiveRecord::Migration
       t.boolean :notified_of_review, :default => false
     end
 
-    # Mark all previously created appointments as "notified"
+    # mark all previously created appointments as "notified"
     # we do this to prevent a massive spam to our user base
     Appointment.update_all :notified_of_review => true
   end

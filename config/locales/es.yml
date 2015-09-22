@@ -133,6 +133,8 @@ es:
   datebooks: Agendas
   day: Día
   delete: Borrar
+  cancel_appointment: Cancelar esta cita
+  confirm_appointment: Confirmar esta cita
   delete_appointment: Borrar esta cita
   delete_patient: Borrar este paciente
   doctor_created_success_message: El doctor ha sido creado con éxito.

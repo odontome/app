@@ -151,9 +151,11 @@
                     <% @appointments[:future].each do |appointment| %>
                       <tr>
                           <td style="border-left: <%= appointment.doctor.color %> 2px solid">
+                              <% if appointment.is_cancelled %><del><% end %>
                               <sub><%=l appointment.starts_at.to_date, :format => :day_and_date %></sub> <br />
                               <%= appointment.starts_at.to_formatted_s :time %> -
                               <%= appointment.ends_at.to_formatted_s :time %>
+                              <% if appointment.is_cancelled %></del><% end %>
                           </td>
                           <td>
                               <%= appointment.doctor.fullname %><br />
@@ -180,9 +182,11 @@
 
                       <tr>
                           <td style="border-left: <%= appointment.doctor.color %> 2px solid">
+                              <% if appointment.is_cancelled %><del><% end %>
                               <sub><%=l appointment.starts_at.to_date, :format => :day_and_date %></sub> <br />
                               <%= appointment.starts_at.to_formatted_s :time %> -
                               <%= appointment.ends_at.to_formatted_s :time %>
+                              <% if appointment.is_cancelled %></del><% end %>
                           </td>
                           <td>
                               <%= appointment.doctor.fullname %><br />
