@@ -137,10 +137,6 @@ class AppointmentsController < ApplicationController
     datebook = Datebook.mine.find params[:datebook_id]
     @appointment = Appointment.where(:id => params[:id], :datebook_id => datebook.id).first
 
-    puts "=========================="
-    puts params
-    puts "=========================="
-
     # if "as_values_patient_id" is not empty use that, otherwise use "patient_id"
     if params[:appointment][:patient_id] != nil
       params[:appointment][:patient_id] = Patient.find_or_create_from((params[:as_values_patient_id] != "") ? (params[:as_values_patient_id]) : (params[:appointment][:patient_id]))
