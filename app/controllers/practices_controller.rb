@@ -19,6 +19,9 @@ class PracticesController < ApplicationController
     ends_at = starts_at + 24.hours
     @today_balance = Balance.find_between(starts_at, ends_at, @current_user.practice_id).sum(:amount)
     @reviews_count = Review.mine.count
+
+    # track this event
+    MIXPANEL_CLIENT.track(current_user.email, 'Viewing practice')
   end
 
   def new
