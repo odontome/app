@@ -228,12 +228,13 @@ namespace :odontome do
     patients.email as patient_email, patients.firstname as patient_name")
     .where("patients.email <> ''")
     .where("appointments.ends_at < ?", 45.minutes.ago)
+    .where("appointments.ends_at > ?", 3.days.ago)
     .where("appointments.notified_of_review = ?", false)
     .where("appointments.status = ?", Appointment.status[:confirmed])
     .joins(:appointments => [:patient])
     .joins(:practice)
     .order("appointments.ends_at")
-
+    
     exit if !appointments_pending_review.exists?
 
     # mark all the appointments found as "reviewed"
