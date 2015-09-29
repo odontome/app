@@ -74,7 +74,7 @@ class PatientsController < ApplicationController
     respond_to do |format|
       if @patient.save
         # track the creation of a complete patient profile
-        MIXPANEL_CLIENT.track(@current_user.email, 'Completed patient profile')
+        MIXPANEL_CLIENT.track(@current_user.email, 'Compleated a patient profile')
 
         format.html { redirect_to(@patient, :notice => I18n.t(:patient_created_success_message)) }
       else
