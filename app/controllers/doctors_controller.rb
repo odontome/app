@@ -7,19 +7,34 @@ class DoctorsController < ApplicationController
 
   def index
     @doctors = Doctor.mine
+
+    # track this event
+    MIXPANEL_CLIENT.track(@current_user.email, 'Viewing all doctors profiles')
   end
 
   def show
     @doctor = Doctor.mine.find(params[:id])
     @appointments = @doctor.appointments.joins(:patient).where("starts_at > ?", Date.today).order("starts_at desc")
+
+    # track this event
+    MIXPANEL_CLIENT.track(@current_user.email, 'Viewing a doctor profile', {
+      'Doctor' => @doctor.fullname,
+      'Color' => @doctor.color
+    })
   end
 
   def new
     @doctor = Doctor.new
+
+    # track this event
+    MIXPANEL_CLIENT.track(@current_user.email, 'Creating a doctor profile')
   end
 
   def edit
     @doctor = Doctor.mine.find(params[:id])
+
+    # track this event
+    MIXPANEL_CLIENT.track(@current_user.email, 'Modifying a doctor profile')
   end
 
   def create
@@ -27,6 +42,9 @@ class DoctorsController < ApplicationController
 
     respond_to do |format|
       if @doctor.save
+        # track the creation of a complete patient profile
+        MIXPANEL_CLIENT.track(@current_user.email, 'Compleated a doctor profile')
+
         format.html { redirect_to(doctors_url, :notice => t(:doctor_created_success_message))}
       else
         format.html { render :action => "new" }
@@ -39,6 +57,9 @@ class DoctorsController < ApplicationController
 
     respond_to do |format|
       if @doctor.update_attributes(params[:doctor])
+        # track this event
+        MIXPANEL_CLIENT.track(@current_user.email, 'Modified a doctor profile')
+
         format.html { redirect_to(doctors_url, :notice => t(:doctor_updated_success_message)) }
       else
         format.html { render :action => "edit" }
@@ -52,9 +73,17 @@ class DoctorsController < ApplicationController
     # Check if this doctor can be deleted, otherwise toggle his validness
     if @doctor.is_deleteable
       @doctor.destroy
+
+      # track this event
+      MIXPANEL_CLIENT.track(@current_user.email, 'Deleted a doctor profile')
     else
       @doctor.is_active = !@doctor.is_active
       @doctor.save
+
+      # track this event
+      MIXPANEL_CLIENT.track(@current_user.email, 'Toggled a doctor profile', {
+          "Is Active?" => @doctor.is_active
+      })
     end
 
     respond_to do |format|
