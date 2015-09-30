@@ -28,11 +28,6 @@ class DatebooksController < ApplicationController
 
     # Detect if this is coming from a mobile device
     @is_mobile = request.user_agent =~ /iPhone|webOS|Android/
-
-    # track this event
-    MIXPANEL_CLIENT.track(@current_user.email, 'Viewing a datebook', {
-        'Name' => @datebook.name
-    })
   end
 
   def new
