@@ -73,6 +73,9 @@ class PracticesController < ApplicationController
 
     respond_to do |format|
       if @practice.update_attributes(params[:practice])
+        # track this event
+        MIXPANEL_CLIENT.track(@current_user.email, 'Updated practice')
+
         format.html { redirect_to(practice_settings_url, :notice => t(:practice_updated_success_message)) }
       else
         format.html { render :action => "settings" }
@@ -81,6 +84,8 @@ class PracticesController < ApplicationController
   end
 
   def cancel
+    # track this event
+    MIXPANEL_CLIENT.track(@current_user.email, 'Cancelling practice')
   end
 
   def close
@@ -113,10 +118,12 @@ class PracticesController < ApplicationController
 
   def settings
     @practice = current_user.practice
+
+    # track this event
+    MIXPANEL_CLIENT.track(@current_user.email, 'Viewing practice settings')
   end
 
   def balance
-
     if (params[:created_at])
       starts_at = DateTime.parse params[:created_at]
     else
@@ -130,6 +137,12 @@ class PracticesController < ApplicationController
 
     @balances = Balance.find_between starts_at, ends_at, @current_user.practice_id
     @total = @balances.sum(:amount)
+
+    # track this event
+    MIXPANEL_CLIENT.track(@current_user.email, 'Viewing practice balance', {
+        'Date' => @selected_date,
+        'Total' => @total
+    })
 
     respond_to do |format|
       format.html
