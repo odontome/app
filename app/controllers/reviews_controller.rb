@@ -49,23 +49,23 @@ class ReviewsController < ApplicationController
     @review = Review.new(review_params)
     @review.appointment_id = Cipher.decode(review_params[:appointment_id])
 
-    # track the event in mixpanel
-    MIXPANEL_CLIENT.track(@review.appointment_id, 'Completed a review', {
-        'Score' => @review.score
-    })
-
     respond_to do |format|
       if @review.save
-          # email the admin about this review
-          PracticeMailer.new_review_notification(@review).deliver_now
-          format.js  { } #create.js.erb
+        # email the admin about this review
+        PracticeMailer.new_review_notification(@review).deliver_now
+
+        # track the event in mixpanel
+        MIXPANEL_CLIENT.track(@review.appointment_id, 'Completed a review', {
+          'Score' => @review.score
+        })
+
+        format.js  { } #create.js.erb
       else
-          format.js  {
-            render_ujs_error(@review, I18n.t(:review_created_error_message))
-          }
+        format.js  {
+          render_ujs_error(@review, I18n.t(:review_created_error_message))
+        }
       end
     end
-
   end
 
   private
