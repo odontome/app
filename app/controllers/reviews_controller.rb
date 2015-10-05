@@ -22,20 +22,20 @@ class ReviewsController < ApplicationController
       deciphered_appointment_id = Cipher.decode params[:appointment_id]
       @appointment = Appointment.where(id: deciphered_appointment_id).includes(:doctor, :datebook => [:practice]).first
 
-      if Review.where(appointment_id: deciphered_appointment_id).count != 0
+      if Review.where(appointment_id: deciphered_appointment_id).exists?
+        # do nothing, handle this in the view
+      else
+        # track the event in mixpanel
+        MIXPANEL_CLIENT.track(@appointment.id, 'Attempting a review', {
+            'Patient' => @appointment.patient.fullname,
+            'Doctor' => @appointment.doctor.fullname,
+            'Practice' => @appointment.datebook.practice.name,
+            'Score' => params[:score]
+        })
 
+        @review.score = params[:score]
+        @review.appointment_id = params[:appointment_id]
       end
-
-      # track the event in mixpanel
-      MIXPANEL_CLIENT.track(@appointment.id, 'Attempting a review', {
-          'Patient' => @appointment.patient.fullname,
-          'Doctor' => @appointment.doctor.fullname,
-          'Practice' => @appointment.datebook.practice.name,
-          'Score' => params[:score]
-      })
-
-      @review.score = params[:score]
-      @review.appointment_id = params[:appointment_id]
 
     rescue Exception
       redirect_to "http://www.odonto.me"
