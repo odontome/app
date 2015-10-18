@@ -77,8 +77,8 @@ class AppointmentsController < ApplicationController
                   "teamIdentifier" : "R64MTWS872",
                   "organizationName" : "' + datebook.practice.name + '",
                   "description" : "Patient appointment",
-                  "foregroundColor" : "#1ca5ef",
-                  "backgroundColor" : "#ffffff",
+                  "foregroundColor" : "#222222",
+                  "backgroundColor" : "#f4f4f4",
                   "relevantDate" : "' + I18n.l(appointment.starts_at.in_time_zone(datebook.practice.timezone), :format => :w3c) + '",
                   "expirationDate" : "' + I18n.l(appointment.ends_at.in_time_zone(datebook.practice.timezone), :format => :w3c) + '",
                   "barcode" : {
