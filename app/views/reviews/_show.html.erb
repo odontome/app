@@ -1,0 +1,17 @@
+<tr class="<% if review.id == @reviews.first.id %>first<% end %>">
+    <td>
+        <span class="name">
+          <%= link_to review.appointment.patient.fullname, review.appointment.patient %> <br />
+          <%= link_to review.appointment.doctor.fullname, review.appointment.doctor %> <br />
+          <%= review.appointment.starts_at.to_formatted_s :long %>
+        </span>
+    </td>
+    <td>
+        <%= ratings_widget review.score %> <br />
+        <p><%= review.comment.html_safe %></p>
+    </td>
+
+    <td>
+      <%= review.created_at.to_formatted_s :long %>
+    </td>
+</tr>

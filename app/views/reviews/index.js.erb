@@ -1,0 +1,10 @@
+<% @reviews.each do |review| %>
+  $("<%=escape_javascript(render :partial => 'show', :locals => {:review => review })%>").appendTo("tbody").addClass("animated fadeInUp");
+<% end %>
+
+<% if @should_display_load_more %>
+  // Update the URL with the new page number
+  $("tfoot > tr > td").html("<%=escape_javascript(link_to t(:load_more_reviews), reviews_url(:page => @current_page), remote: true) %>");
+<% else %>
+  $("tfoot").addClass("animated fadeOut");
+<% end %>

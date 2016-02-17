@@ -1,12 +1,8 @@
 <div id="pad-wrapper" class="table-wrapper users-list">
 
 	<div class="row header col-md-12">
-        <h3><%= t :reviews %></h3>
-
-        <!-- <div class="pull-right-lg">
-            <%= link_to t(:create_new_treatment), new_treatment_url, "class" => "btn-flat primary pull-right" %>
-        </div> -->
-    </div>
+  		<h3><%= t :reviews %></h3>
+  </div>
 
     <div class="row">
 		    <div class="col-md-12">
@@ -31,27 +27,19 @@
 			            </thead>
 			            <tbody>
 				            <% @reviews.each do |review| %>
-					            <tr class="<% if review.id == @reviews.first.id %>first<% end %>">
-					            	  <td>
-					                    <span class="name">
-                                <%= link_to review.appointment.patient.fullname, review.appointment.patient %> <br />
-                                <%= link_to review.appointment.doctor.fullname, review.appointment.doctor %> <br />
-					                    	<%= review.appointment.starts_at.to_formatted_s :long %>
-					                   	</span>
-					                </td>
-					                <td>
-                              <%= ratings_widget review.score %> <br />
-                              <p><%= review.comment.html_safe %></p>
-									        </td>
-
-					                <td>
-                            <%= review.created_at.to_formatted_s :long %>
-					                </td>
-					            </tr>
-					        <% end %>
-
-					    </tbody>
-					</table>
+											<%= render :partial => "show", :locals => { :review => review }%>
+					        	<% end %>
+					    		</tbody>
+									<tfoot>
+										<tr>
+											<td align="center" colspan="3">
+												<% if @should_display_load_more %>
+													<%= link_to t(:load_more_reviews), reviews_url(:page => @current_page), remote: true %>
+												<% end %>
+											</td>
+										</tr>
+									</tfoot>
+								</table>
 				<% end %>
 		</div>
 	</div>

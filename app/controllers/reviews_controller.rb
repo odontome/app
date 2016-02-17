@@ -6,7 +6,21 @@ class ReviewsController < ApplicationController
   respond_to :html, :js
 
   def index
-    @reviews = Review.mine
+    reviews_per_page = 15
+    @current_page = 0
+    @reviews = Review.mine.limit(reviews_per_page)
+
+    if params[:page].nil?
+      @reviews = @reviews.offset(0)
+    else
+      @reviews = @reviews.offset(params[:page].to_i * reviews_per_page)
+      @current_page = params[:page].to_i
+    end
+
+    # increment the current page count
+    @current_page = @current_page + 1
+    # calculate if we need to load more reviews
+    @should_display_load_more = Review.mine.count >= (@current_page * reviews_per_page)
 
     # track the event in mixpanel
     MIXPANEL_CLIENT.track(@current_user.email, 'Viewing reviews')

@@ -281,6 +281,7 @@ es:
   reviews: Calificaciones
   review_created_success_message: Esta información será utilizada para mejorar la experiencia de todos.
   save: Guardar
+  load_more_reviews: Cargar más calificaciones
   schedule: Agendar
   search: Buscar
   select_doctor: Selecciona un doctor
