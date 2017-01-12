@@ -17,7 +17,7 @@ class DatebooksController < ApplicationController
   end
 
   def show
-    @doctors = Doctor.mine.order("firstname")
+    @doctors = Doctor.mine.valid.order("firstname")
     @filtered_by = params[:doctor_id] || nil
     @datebook = Datebook.mine.find params[:id]
 
