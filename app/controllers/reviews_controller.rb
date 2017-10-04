@@ -1,6 +1,6 @@
 class ReviewsController < ApplicationController
   # filters
-  before_filter :require_user, :except => [:new, :create]
+  before_action :require_user, :except => [:new, :create]
 
   # provides
   respond_to :html, :js

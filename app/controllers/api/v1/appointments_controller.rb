@@ -1,8 +1,8 @@
 class Api::V1::AppointmentsController < Api::V1::BaseController
 
-  before_filter :find_datebook, :only => [:index]
-  before_filter :find_appointment, :only => [:show, :update, :destroy]
-  before_filter :validate_date_range, :only => [:index]
+  before_action :find_datebook, :only => [:index]
+  before_action :find_appointment, :only => [:show, :update, :destroy]
+  before_action :validate_date_range, :only => [:index]
 
   def index
     case params[:from]

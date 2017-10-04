@@ -1,4 +1,4 @@
-class AddCurrencyToPractice < ActiveRecord::Migration
+class AddCurrencyToPractice < ActiveRecord::Migration[5.0]
   def self.up
     change_table :practices do |t|
       t.string :currency_unit, :default => "$"

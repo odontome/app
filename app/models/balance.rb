@@ -1,4 +1,4 @@
-class Balance < ActiveRecord::Base
+class Balance < ApplicationRecord
   # permitted attributes
   attr_accessible :patient_id, :amount, :notes
 

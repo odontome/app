@@ -1,4 +1,4 @@
-class Doctor < ActiveRecord::Base
+class Doctor < ApplicationRecord
   # permitted attributes
   attr_accessible :uid, :firstname, :lastname, :email, :gender, :speciality, :color
 

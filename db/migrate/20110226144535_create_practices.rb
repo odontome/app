@@ -1,4 +1,4 @@
-class CreatePractices < ActiveRecord::Migration
+class CreatePractices < ActiveRecord::Migration[5.0]
   def self.up
     create_table :practices do |t|
       t.string :name

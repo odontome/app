@@ -1,4 +1,4 @@
-class EliminateTableNulls < ActiveRecord::Migration
+class EliminateTableNulls < ActiveRecord::Migration[5.0]
   def self.up
     change_column :appointments, :practice_id, :integer, :null => true
     change_column :appointments, :doctor_id, :integer, :null => true

@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   # permitted attributes
   attr_accessible :firstname, :lastname, :email, :password, :password_confirmation
 

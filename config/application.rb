@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
 require 'csv'
 require 'rails/all'
@@ -22,7 +22,10 @@ module Odontome
     # config.i18n.default_locale = :de
     
     # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
+    # config.active_record.raise_in_transactional_callbacks = true
+
+    config.autoload_paths << "#{Rails.root}/lib"
+
 
 
     ### Odonto.me stuff
@@ -31,7 +34,7 @@ module Odontome
     config.i18n.enforce_available_locales = false
 
     # Protect from mass assignments
-    config.active_record.whitelist_attributes = true
+    # config.active_record.whitelist_attributes = true
 
     # Configure the default encoding used in templates for Ruby 1.9.
     # config.encoding = "utf-8"
@@ -41,5 +44,7 @@ module Odontome
 
     # enable custom error pages
     config.exceptions_app = self.routes
+    config.action_controller.permit_all_parameters = true
+
   end
 end

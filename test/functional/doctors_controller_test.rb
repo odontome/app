@@ -25,18 +25,18 @@ class DoctorsControllerTest < ActionController::TestCase
 
   test "should create doctor" do
     assert_difference('Doctor.count') do
-      post :create, doctor: @new_doctor
+      post :create, params: {doctor: @new_doctor}
     end
     assert_redirected_to doctors_url
   end
 
   test "should show doctor" do
-    get :show, id: doctors(:rebecca).to_param
+    get :show, params: {id: doctors(:rebecca).to_param}
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: doctors(:rebecca).to_param
+    get :edit, params: {id: doctors(:rebecca).to_param}
     assert_response :success
   end
 
@@ -44,18 +44,18 @@ class DoctorsControllerTest < ActionController::TestCase
     doctor = doctors(:rebecca)
     ciphered_url_encoded_id = Cipher.encode(doctor.id.to_s)
 
-    get :appointments, doctor_id: ciphered_url_encoded_id, :format => :ics
+    get :appointments, params: {doctor_id: ciphered_url_encoded_id}, :format => :ics
     assert_response :success
   end
 
   test "should update doctor" do
-    put :update, id: doctors(:rebecca).to_param, doctor: @new_doctor
+    put :update, params: {id: doctors(:rebecca).to_param, doctor: @new_doctor}
     assert_redirected_to doctors_url
   end
 
   test "should destroy doctor" do
     assert_difference('Doctor.count', -1) do
-      delete :destroy, id: doctors(:perishable).to_param
+      delete :destroy, params: {id: doctors(:perishable).to_param}
     end
 
     assert_redirected_to doctors_path

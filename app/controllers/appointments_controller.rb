@@ -1,6 +1,6 @@
 class AppointmentsController < ApplicationController
   # filters
-  before_filter :require_user, :except => :show
+  before_action :require_user, :except => :show
 
   # provides
   respond_to :html, :json

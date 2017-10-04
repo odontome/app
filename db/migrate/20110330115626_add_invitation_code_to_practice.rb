@@ -1,4 +1,4 @@
-class AddInvitationCodeToPractice < ActiveRecord::Migration
+class AddInvitationCodeToPractice < ActiveRecord::Migration[5.0]
   def self.up
     change_table :practices do |t|
       t.string :invitation_code

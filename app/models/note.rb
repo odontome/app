@@ -1,4 +1,4 @@
-class Note < ActiveRecord::Base
+class Note < ApplicationRecord
   # permitted attributes
   attr_accessible :notes
 

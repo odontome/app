@@ -1,4 +1,4 @@
-class AddAuthColumnsToDoctor < ActiveRecord::Migration
+class AddAuthColumnsToDoctor < ActiveRecord::Migration[5.0]
   def self.up
     change_table :doctors do |t|
       t.string    :crypted_password

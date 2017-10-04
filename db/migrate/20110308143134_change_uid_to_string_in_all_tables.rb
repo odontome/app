@@ -1,4 +1,4 @@
-class ChangeUidToStringInAllTables < ActiveRecord::Migration
+class ChangeUidToStringInAllTables < ActiveRecord::Migration[5.0]
   def self.up
     change_table :patients do |t|
       t.change :uid, :string

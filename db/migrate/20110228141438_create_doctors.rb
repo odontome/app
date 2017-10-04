@@ -1,4 +1,4 @@
-class CreateDoctors < ActiveRecord::Migration
+class CreateDoctors < ActiveRecord::Migration[5.0]
   def self.up
     create_table :doctors do |t|
       t.integer :uid

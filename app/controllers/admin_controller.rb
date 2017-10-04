@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
 
-  before_filter :require_superadmin
+  before_action :require_superadmin
   respond_to :html
 
   def practices

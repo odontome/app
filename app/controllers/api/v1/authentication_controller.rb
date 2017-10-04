@@ -1,6 +1,6 @@
 class Api::V1::AuthenticationController < Api::V1::BaseController
 
-	before_filter :authenticate_user!, :only => :destroy
+	before_action :authenticate_user!, :only => :destroy
 
 	def create
 		begin

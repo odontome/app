@@ -1,4 +1,4 @@
-class UpdatePatientCommunicationsTable < ActiveRecord::Migration
+class UpdatePatientCommunicationsTable < ActiveRecord::Migration[5.0]
   def up
     rename_column :patient_communications, :number_of_patients, :number_of_recipients
     add_column :patient_communications, :number_of_opens, :integer, default: 0

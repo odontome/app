@@ -1,4 +1,4 @@
-class UninstallActsAsAudited < ActiveRecord::Migration
+class UninstallActsAsAudited < ActiveRecord::Migration[5.0]
   def self.up
   	drop_table :audits
   end

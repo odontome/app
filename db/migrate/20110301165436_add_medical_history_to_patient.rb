@@ -1,4 +1,4 @@
-class AddMedicalHistoryToPatient < ActiveRecord::Migration
+class AddMedicalHistoryToPatient < ActiveRecord::Migration[5.0]
   def self.up
     change_table :patients do |t|
       t.text :allergies

@@ -8,10 +8,10 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_session, :current_user, :user_is_admin?
 
-  before_filter :check_account_status
-  before_filter :set_locale
-  before_filter :set_timezone
-  before_filter :find_datebooks
+  before_action :check_account_status
+  before_action :set_locale
+  before_action :set_timezone
+  before_action :find_datebooks
 
   def check_account_status
     if current_user

@@ -1,4 +1,4 @@
-class Patient < ActiveRecord::Base
+class Patient < ApplicationRecord
   # permitted attributes
   attr_accessible :uid, :firstname, :lastname, :fullname, :date_of_birth, :past_illnesses, :surgeries, :medications, :drugs_use, :cigarettes_per_day, :drinks_per_day, :family_diseases, :emergency_telephone, :email, :telephone, :mobile, :address, :allergies
 
@@ -105,8 +105,8 @@ class Patient < ActiveRecord::Base
 
   # this function is a small compromise to bypass that weird situation where a patient is created with everything set to nil
   def destroy_nils
-    Patient.mine.destroy_all(:firstname => nil)
-    Appointment.destroy_all(:patient_id => nil)
+    Patient.mine.where(firstname: nil).destroy_all
+    Appointment.where(patient_id: nil).destroy_all
   end
 
 end

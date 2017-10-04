@@ -1,4 +1,4 @@
-class Practice < ActiveRecord::Base
+class Practice < ApplicationRecord
   # permitted attributes
   attr_accessible :name, :users_attributes, :locale, :timezone, :currency_unit
   

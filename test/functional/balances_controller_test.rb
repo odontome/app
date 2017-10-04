@@ -7,7 +7,7 @@ class BalancesControllerTest < ActionController::TestCase
   end
 
   test "should get index" do
-    get :index, patient_id: 1
+    get :index, params: {patient_id: 1}
     assert_response :success
     assert_not_nil assigns(:treatments)
   end
@@ -19,7 +19,7 @@ class BalancesControllerTest < ActionController::TestCase
     }
 
     assert_difference 'Balance.count' do
-      post :create, { balance: entry, patient_id: 1, format: :js }
+      post :create, params: { balance: entry, patient_id: 1, format: :js }
     end
   end
 
@@ -30,7 +30,7 @@ class BalancesControllerTest < ActionController::TestCase
     }
 
     assert_difference 'Balance.count' do
-      post :create, { balance: entry, patient_id: 1, format: :js }
+      post :create, params: { balance: entry, patient_id: 1, format: :js }
     end
   end
 

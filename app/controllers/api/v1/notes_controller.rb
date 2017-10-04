@@ -1,7 +1,7 @@
 class Api::V1::NotesController < Api::V1::BaseController
   
-  before_filter :find_noteable
-  before_filter :find_note, :only => [:show, :update]
+  before_action :find_noteable
+  before_action :find_note, :only => [:show, :update]
   
   def index
     respond_with(@noteable.notes, :only => [:created_at, :id, :notes])

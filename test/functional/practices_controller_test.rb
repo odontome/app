@@ -14,7 +14,7 @@ class PracticesControllerTest < ActionController::TestCase
 	end
 
   test "should show practice" do
-    get :show, id: practices(:complete).to_param
+    get :show, params: {id: practices(:complete).to_param}
     assert_response :success
   end
 
@@ -26,7 +26,7 @@ class PracticesControllerTest < ActionController::TestCase
                  :users_attributes => {"0"=>{"email"=> "demo@odonto.me", "password"=> "1234567890", "password_confirmation"=> "1234567890" } } }
 
     assert_difference('Practice.count') do
-      post :create, practice: practice
+      post :create, params: {practice: practice}
     end
 
     welcome_email = ActionMailer::Base.deliveries.last
@@ -47,7 +47,7 @@ class PracticesControllerTest < ActionController::TestCase
                  :users_attributes => {"0"=>{"email"=> "demo@odonto.me", "password"=> "1234567890", "password_confirmation"=> "1234567890" } } }
 
     assert_difference('Practice.count') do
-      post :create, practice: practice
+      post :create, params: {practice: practice}
     end
 
   end

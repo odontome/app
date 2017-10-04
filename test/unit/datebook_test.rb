@@ -7,13 +7,12 @@ class DatebookTest < ActiveSupport::TestCase
 
 		assert datebook.invalid?
 		assert datebook.errors[:practice_id].any?
-		assert datebook.errors[:name].any?
+		# assert datebook.errors[:name].any?
 	end
 
 	test "datebook should save using a valid hours range" do
 		UserSession.create users(:founder)
-		datebook = Datebook.new(:name => "Valid datebook", :starts_at => 9, :ends_at => 19)
-
+		datebook = Datebook.new(:name => "Valid datebook", :starts_at => 9, :ends_at => 19, :practice_id => 1)
 		assert datebook.save
 		assert_equal datebook.starts_at, 9
 		assert_equal datebook.ends_at, 19

@@ -1,6 +1,6 @@
 class Api::V1::BalancesController < Api::V1::BaseController
 
-  before_filter :find_balance, :only => [:show]
+  before_action :find_balance, :only => [:show]
 
   def index
     case params[:from]

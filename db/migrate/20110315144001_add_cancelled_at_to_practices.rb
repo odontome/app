@@ -1,4 +1,4 @@
-class AddCancelledAtToPractices < ActiveRecord::Migration
+class AddCancelledAtToPractices < ActiveRecord::Migration[5.0]
   def self.up
     change_table :practices do |t|
       t.datetime :cancelled_at

@@ -1,4 +1,4 @@
-class Treatment < ActiveRecord::Base
+class Treatment < ApplicationRecord
   # permitted attributes
   attr_accessible :name, :price
 

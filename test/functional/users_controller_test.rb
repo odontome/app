@@ -8,8 +8,8 @@ class UsersControllerTest < ActionController::TestCase
   	@new_user = { :firstname => "Rebecca",
   								:lastname => "Riera",
   								:email => "rebeccariera@bokanova.mx",
-  								:password => "1234567",
-  								:password_confirmation => "1234567"
+  								:password => "12345678",
+  								:password_confirmation => "12345678"
   							}
   end
   
@@ -26,29 +26,29 @@ class UsersControllerTest < ActionController::TestCase
   
   test "should create user" do
     assert_difference('User.count') do
-      post :create, user: @new_user
+      post :create, params: {user: @new_user}
     end
     assert_redirected_to users_url
   end
   
   test "should show user" do
-    get :show, id: users(:founder).to_param
+    get :show, params: {id: users(:founder).to_param}
     assert_response :success
   end
   
   test "should get edit" do
-    get :edit, id: users(:founder).to_param
+    get :edit, params: {id: users(:founder).to_param}
     assert_response :success
   end
   
   test "should update user" do
-    put :update, id: users(:founder).to_param, user: @new_user
+    put :update, params: {id: users(:founder).to_param, user: @new_user}
     assert_redirected_to user_url
   end
 
   test "should destroy user" do
     assert_difference('User.count', -1) do
-      delete :destroy, id: users(:perishable).to_param
+      delete :destroy, params: {id: users(:perishable).to_param}
     end
 				
     assert_redirected_to users_path

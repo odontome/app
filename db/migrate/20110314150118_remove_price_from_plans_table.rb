@@ -1,4 +1,4 @@
-class RemovePriceFromPlansTable < ActiveRecord::Migration
+class RemovePriceFromPlansTable < ActiveRecord::Migration[5.0]
   def self.up
     change_table :plans do |t|
       t.remove :price

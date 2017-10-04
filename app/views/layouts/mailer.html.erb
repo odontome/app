@@ -14,7 +14,7 @@
 					url('http://fonts.gstatic.com/s/opensans/v10/cJZKeOuBrn4kERxqtaUH3bO3LdcAZYWl9Si6vvxL-qU.woff') format('woff');
 	}
 
-	<%= Rails.application.assets.find_asset("email").body.html_safe %> {}
+	<%= stylesheet_link_tag "email" %>
 </style>
 </head>
 <body itemscope itemtype="http://schema.org/EmailMessage">

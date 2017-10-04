@@ -1,6 +1,6 @@
 class Api::V1::TreatmentsController < Api::V1::BaseController
   
-  before_filter :find_treatment, :only => [:show]
+  before_action :find_treatment, :only => [:show]
   
   def index
     respond_with(Treatment.mine.valid, :only => [:id, :name, :price])

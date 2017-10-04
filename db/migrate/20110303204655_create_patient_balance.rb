@@ -1,4 +1,4 @@
-class CreatePatientBalance < ActiveRecord::Migration
+class CreatePatientBalance < ActiveRecord::Migration[5.0]
   def self.up
     create_table :balances do |t|
       t.integer :patient_id

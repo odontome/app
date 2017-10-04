@@ -1,4 +1,4 @@
-class RemovePatientsFromPlans < ActiveRecord::Migration
+class RemovePatientsFromPlans < ActiveRecord::Migration[5.0]
   def self.up
     change_table :plans do |t|
       t.remove :number_of_patients

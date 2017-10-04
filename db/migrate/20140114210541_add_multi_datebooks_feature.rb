@@ -1,4 +1,4 @@
-class AddMultiDatebooksFeature < ActiveRecord::Migration
+class AddMultiDatebooksFeature < ActiveRecord::Migration[5.0]
   def self.up
     create_table :datebooks do |t|
       t.integer :practice_id

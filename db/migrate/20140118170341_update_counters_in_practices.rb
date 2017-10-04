@@ -1,4 +1,4 @@
-class UpdateCountersInPractices < ActiveRecord::Migration
+class UpdateCountersInPractices < ActiveRecord::Migration[5.0]
   def up
   	remove_column :practices, :appointments_count
   	add_column :practices, :datebooks_count, :integer

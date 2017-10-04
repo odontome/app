@@ -1,4 +1,4 @@
-class RemoveToothNumberAndAddNotesToPatientTreatments < ActiveRecord::Migration
+class RemoveToothNumberAndAddNotesToPatientTreatments < ActiveRecord::Migration[5.0]
   def self.up
   	change_table :patient_treatments do |t|
   	  t.remove :tooth_number

@@ -1,4 +1,4 @@
-class RemovePatientTreatments < ActiveRecord::Migration
+class RemovePatientTreatments < ActiveRecord::Migration[5.0]
   def up
   	drop_table :patient_treatments
   end

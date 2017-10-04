@@ -1,6 +1,6 @@
 class Api::V1::DatebooksController < Api::V1::BaseController
   
-  before_filter :find_datebook, :only => [:show]
+  before_action :find_datebook, :only => [:show]
   
   def index
     datebooks = Datebook.mine

@@ -1,6 +1,6 @@
 class Api::V1::PatientsController < Api::V1::BaseController
   
-  before_filter :find_patient, :only => [:show, :update, :destroy]
+  before_action :find_patient, :only => [:show, :update, :destroy]
   
   def index
     respond_with Patient.mine, :only => [:id, :uid, :firstname, :lastname, :updated_at], :methods => [:fullname, :age]

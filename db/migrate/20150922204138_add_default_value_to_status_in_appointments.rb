@@ -1,4 +1,4 @@
-class AddDefaultValueToStatusInAppointments < ActiveRecord::Migration
+class AddDefaultValueToStatusInAppointments < ActiveRecord::Migration[5.0]
   def self.up
     change_column :appointments, :status, :string, :default => Appointment.status[:confirmed]
 

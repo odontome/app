@@ -1,4 +1,4 @@
-class CreateTreatments < ActiveRecord::Migration
+class CreateTreatments < ActiveRecord::Migration[5.0]
   def self.up
     create_table :treatments do |t|
       t.integer :practice_id

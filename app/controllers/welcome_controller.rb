@@ -9,9 +9,9 @@ class WelcomeController < ApplicationController
         home_url = practices_admin_url
       else
 
-        if session[LAST_VISITED_DATEBOOK]
+        if session[:LAST_VISITED_DATEBOOK]
           begin
-            home_url = Datebook.mine.find(session[LAST_VISITED_DATEBOOK])
+            home_url = Datebook.mine.find(session[:LAST_VISITED_DATEBOOK])
           rescue ActiveRecord::RecordNotFound
             home_url = Datebook.mine.first
           end

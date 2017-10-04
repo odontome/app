@@ -1,4 +1,4 @@
-class Appointment < ActiveRecord::Base
+class Appointment < ApplicationRecord
 	# permitted attributes
   attr_accessible :datebook_id, :doctor_id, :patient_id, :starts_at, :ends_at, :notes, :status
 

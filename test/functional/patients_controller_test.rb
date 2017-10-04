@@ -26,39 +26,39 @@ class PatientsControllerTest < ActionController::TestCase
   
   test "should create patient" do
     assert_difference('Patient.count') do
-      post :create, patient: @new_patient
+      post :create, params: {patient: @new_patient}
     end
     assert_redirected_to patient_path(assigns(:patient))
   end
   
   test "should show patient" do
-    get :show, id: patients(:one).to_param
+    get :show, params: {id: patients(:one).to_param}
     assert_response :success
   end
   
   test "should get edit" do
-    get :edit, id: patients(:one).to_param
+    get :edit, params: {id: patients(:one).to_param}
     assert_response :success
   end
 
   test "should get search results" do
-    get :index, q: patients(:four).firstname
+    get :index, params: {q: patients(:four).firstname}
     assert_not_nil assigns(:patients)
   end
 
   test "should not get search results" do
-    get :index, q: patients(:four).email
+    get :index, params: {q: patients(:four).email}
     assert assigns(:patients).empty?
   end
   
   test "should update patient" do
-    put :update, id: patients(:one).to_param, practice: @new_patient
+    put :update, params: {id: patients(:one).to_param, practice: @new_patient}
     assert_redirected_to patient_path(assigns(:patient))
   end
 
   test "should destroy patient" do
     assert_difference('Patient.count', -1) do
-      delete :destroy, id: patients(:one).to_param
+      delete :destroy, params: {id: patients(:one).to_param}
     end
 				
     assert_redirected_to patients_path

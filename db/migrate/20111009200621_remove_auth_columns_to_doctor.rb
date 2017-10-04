@@ -1,4 +1,4 @@
-class RemoveAuthColumnsToDoctor < ActiveRecord::Migration
+class RemoveAuthColumnsToDoctor < ActiveRecord::Migration[5.0]
   def self.up
   	remove_column :doctors, :persistence_token
     remove_column :doctors, :crypted_password

@@ -1,4 +1,4 @@
-class AddNotifiedForReviewToAppointments < ActiveRecord::Migration
+class AddNotifiedForReviewToAppointments < ActiveRecord::Migration[5.0]
   def self.up
     change_table :appointments do |t|
       t.boolean :notified_of_review, :default => false

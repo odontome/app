@@ -1,4 +1,4 @@
-class CreatePlansWithFreePlan < ActiveRecord::Migration
+class CreatePlansWithFreePlan < ActiveRecord::Migration[5.0]
   def self.up
     create_table :plans do |t|
       t.integer :number_of_patients, :null => false

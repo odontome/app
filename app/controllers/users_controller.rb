@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_filter :require_user
-  before_filter :require_practice_admin, :except => [:show, :edit, :update]
+  before_action :require_user
+  before_action :require_practice_admin, :except => [:show, :edit, :update]
 
   def index
     @users = User.mine
@@ -24,6 +24,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
+
 
     respond_to do |format|
       if @user.save

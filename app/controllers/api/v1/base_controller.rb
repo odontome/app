@@ -1,7 +1,7 @@
 class Api::V1::BaseController < ActionController::Base
 
-  before_filter :authenticate_user!, :throttle
-  before_filter :authorize_admin!, :only => [:destroy]
+  before_action :authenticate_user!, :throttle
+  before_action :authorize_admin!, :only => [:destroy]
 
   respond_to :json
 

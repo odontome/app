@@ -1,6 +1,6 @@
 class Api::V1::PracticesController < Api::V1::BaseController
   
-  before_filter :find_practice, :only => [:show]
+  before_action :find_practice, :only => [:show]
     
   def show
     respond_with(@practice, :only => [:currency_unit, :locale, :name, :timezone, :created_at])

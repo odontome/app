@@ -1,6 +1,6 @@
 class DoctorsController < ApplicationController
   # filters
-  before_filter :require_user, :except => :appointments
+  before_action :require_user, :except => :appointments
 
   # provides
   respond_to :ics, :only => [:appointments]

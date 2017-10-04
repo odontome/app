@@ -1,4 +1,4 @@
-class AddLastLoginAtToUsers < ActiveRecord::Migration
+class AddLastLoginAtToUsers < ActiveRecord::Migration[5.0]
   def self.up
     change_table :users do |t|
       t.datetime :current_login_at

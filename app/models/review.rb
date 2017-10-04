@@ -1,4 +1,4 @@
-class Review < ActiveRecord::Base
+class Review < ApplicationRecord
   # permitted attributes
   attr_accessible :appointment_id, :score, :comment
 

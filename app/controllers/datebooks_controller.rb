@@ -1,6 +1,6 @@
 class DatebooksController < ApplicationController
-  before_filter :require_user
-  before_filter :require_practice_admin, :except => [:show]
+  before_action :require_user
+  before_action :require_practice_admin, :except => [:show]
 
   def index
   	# this same variable is already defined in the
@@ -24,7 +24,7 @@ class DatebooksController < ApplicationController
     # store this variable in the session scope, the next time
     # so when the user clicks on the logo it will send him
     # to this datebook
-    session[LAST_VISITED_DATEBOOK] = @datebook.id
+    session[:LAST_VISITED_DATEBOOK] = @datebook.id
 
     # Detect if this is coming from a mobile device
     @is_mobile = request.user_agent =~ /iPhone|webOS|Android/

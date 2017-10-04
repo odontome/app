@@ -17,7 +17,7 @@ class UserTest < ActiveSupport::TestCase
   									:email => users(:founder).email)
   												
   	assert !user.save
-  	assert_equal I18n.t("errors.messages.taken"), user.errors[:email][1]
+  	assert_equal I18n.t("errors.messages.taken"), user.errors[:email][0]
   end
   
   test "user is not valid without a valid email address" do

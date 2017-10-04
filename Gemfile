@@ -1,27 +1,27 @@
 source 'https://rubygems.org'
-ruby '2.0.0'
+ruby '2.4.0'
 
 ### default rails stuff
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.0'
+gem 'rails', '5.1.4'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
-gem 'unicorn'
-
+# gem 'unicorn'
+gem 'puma'
 ### rails backward compatibility
 
-gem 'protected_attributes'
+gem 'protected_attributes_continued'
 gem 'responders', '~> 2.0'
 
 ### odonto.me specifc
 
-gem 'authlogic', '3.4.4'
+gem 'authlogic', '3.6.0'
 gem 'scrypt', '1.2.1'
 gem 'taps'
 gem 'rails-i18n', '~> 4.0.0'
-gem 'redis', '3.0.5'
+gem 'redis', '~> 3.0'
 gem 'passbook', '~> 0.3.1'
 gem 'mixpanel-ruby'
 gem 'mandrill-api'
@@ -38,6 +38,11 @@ group :development do
   gem 'sqlite3'
 	gem 'i18n-tasks', '~> 0.2.18'
   gem 'brakeman', :require => false
+  gem 'web-console', '>= 3.3.0'
+  gem 'listen', '>= 3.0.5', '< 3.2'
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'spring-watcher-listen', '~> 2.0.0'
+
 end
 
 group :production do
@@ -53,6 +58,6 @@ end
 
 group :development, :test do
   # gem 'byebug'
-  gem 'web-console', '~> 2.0'
   gem 'spring'
+  gem 'rails-controller-testing'
 end
