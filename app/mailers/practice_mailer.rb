@@ -3,7 +3,7 @@ class PracticeMailer < ApplicationMailer
   add_template_helper(ApplicationHelper)
 
   def welcome_email(practice)
-  	mail(:to => practice.users.first.email, :subject => I18n.t("mailers.practice.welcome.subject"))
+  	mail(:to => practice.email, :subject => I18n.t("mailers.practice.welcome.subject"))
   end
 
   def daily_recap_email(admin_user, patients_created_today, appointments_created_today, balance_created_today, date)

@@ -11,7 +11,8 @@ class DoctorMailer < ApplicationMailer
     I18n.with_locale(@practice.locale) do
       @practice_timezone = @practice.timezone
       mail(:to => @doctor_email,
-           :subject => I18n.t("mailers.doctor.today_agenda.subject"))
+           :subject => I18n.t("mailers.doctor.today_agenda.subject"),
+           :reply_to => @practice.email)
     end
   end
 

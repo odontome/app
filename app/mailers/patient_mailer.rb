@@ -57,7 +57,6 @@ class PatientMailer < ApplicationMailer
 
   def review_recent_appointment(appointment)
     @appointment = appointment
-
     # since we can't init the object with an id
     # create one temporarely
     temporary_appointment = Appointment.new
@@ -67,9 +66,12 @@ class PatientMailer < ApplicationMailer
     # temporarely set the locale and then change it back
     # when the block finishes
     I18n.with_locale(@appointment["practice_locale"]) do
-      mail(:from => "#{@appointment['practice']} <hello@odonto.me>",
+      mail(:from => "#{@appointment.practice.name} <hello@odonto.me>",
            :to => @appointment["patient_email"],
-           :subject => I18n.t("mailers.patient.review.subject", practice_name: @appointment["practice"]))
+           :subject => I18n.t("mailers.patient.review.subject", 
+           :practice_name => @appointment.practice.name),
+           :reply_to => @appointment.practice.email
+          )
     end
   end
 

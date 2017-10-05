@@ -308,6 +308,7 @@ en:
   datebook_created_success_message: Datebook updated successfully
   practice_name: Practice name
   practice_name_hint: Something like "My awesome dental practice"
+  practice_email: Practice email
   practice_not_completely_setup: Please finish completing the information about your
     practice (doctors, treatments, etc) before using this section.
   practice_settings: Practice settings

@@ -48,6 +48,7 @@ class DoctorMailerTest < ActionMailer::TestCase
     # Test the body of the sent email contains what we expect it to
     assert_equal ['hello@odonto.me'], email.from
     assert_equal I18n.t("mailers.doctor.today_agenda.subject"), email.subject
+    assert_equal [appointments.first["email"]], email.reply_to
     assert_match /Hello Rebecca,/, email.encoded
 
   end

@@ -18,6 +18,12 @@
 					<%= content_tag "sub", t(:practice_name_hint) %>
 				</p>
 
+				<p class="form-group col-md-8">
+					<%= f.label :email, t(:practice_email) %> *
+					<%= f.text_field :email, :class => "form-control" %>
+					<%= content_tag "sub" %>
+				</p>
+
 			  	<p class="form-group col-md-8">
 					<%= f.label :locale %>
 					<%= f.select(:locale, [[ t(:english), 'en'],[ t(:spanish),'es']], {}, { :class => "form-control"} ) %>

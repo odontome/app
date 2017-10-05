@@ -88,17 +88,18 @@ class PatientMailerTest < ActionMailer::TestCase
   end
 
   test "review_recent_appointment" do
-    appointment = {
+    appointment = OpenStruct.new({
       "appointment_id" => 1,
       "patient_email" => "raulriera@hotmail.com",
-      "practice" => "Bokanova Riviera Maya",
+      "practice" => practices(:complete),
       "patient_name" => "Raul"
-    }
+    })
 
     mail = PatientMailer.review_recent_appointment(appointment)
-    assert_equal I18n.t("mailers.patient.review.subject", practice_name: appointment["practice"]), mail.subject
+    assert_equal I18n.t("mailers.patient.review.subject", practice_name: appointment["practice"].name), mail.subject
     assert_equal appointment["patient_email"], mail.to.first
     assert_equal ["hello@odonto.me"], mail.from
+    assert_equal [appointment.practice.email], mail.reply_to
     assert_match "how was your experience with us at", mail.body.encoded
   end
 

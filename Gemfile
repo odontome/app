@@ -33,6 +33,8 @@ gem 'gibberish', '~> 1.4.0'
 
 gem 'premailer-rails'
 gem 'hpricot'
+gem 'rails_select_on_includes', '~> 0.5.6' 
+
 
 group :development do
   gem 'sqlite3'

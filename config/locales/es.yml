@@ -269,6 +269,7 @@ es:
   practice_information: Información de la clínica
   practice_name: Nombre de la clínica
   practice_name_hint: Algo como "Mi excelente clínica"
+  practice_email: Email de la clínica
   practice_settings: Preferencias de la clínica
   practice_updated_success_message: La clínica ha sido actualizada con éxito
   practices: Clínicas

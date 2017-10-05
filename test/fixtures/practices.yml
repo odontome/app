@@ -5,6 +5,7 @@ complete:
   timezone: Europe/London
   status: free
   currency_unit: $
+  email: raulriera@hotmail.com
 
 complete_another_language:
   id: 2
@@ -13,3 +14,4 @@ complete_another_language:
   timezone: America/Mexico_City
   status: free
   currency_unit: $
+  email: raulriera@hotmail.com

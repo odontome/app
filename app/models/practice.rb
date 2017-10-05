@@ -1,6 +1,6 @@
 class Practice < ApplicationRecord
   # permitted attributes
-  attr_accessible :name, :users_attributes, :locale, :timezone, :currency_unit
+  attr_accessible :name, :users_attributes, :locale, :timezone, :currency_unit, :email
   
   # associations
   has_many :users, :dependent => :delete_all    # didn't work with :destroy 'cause if the before_destroy callback in User.rb 
@@ -12,12 +12,14 @@ class Practice < ApplicationRecord
   accepts_nested_attributes_for :users, :limit => 1
   
   # validations
-  validates_presence_of :name, :timezone, :locale
+  validates_presence_of :name, :timezone, :locale, :email
+  validates_uniqueness_of :email
 
   # callbacks
   before_validation :set_timezone_and_locale, :on => :create
   before_validation :set_first_user_data, :on => :create
   after_create :create_first_datebook
+  before_create :set_email_practice
 
   def set_as_cancelled
     self.status = "cancelled"
@@ -31,6 +33,10 @@ class Practice < ApplicationRecord
   end  
 
   private
+
+  def set_email_practice
+    self.email = users.first.email
+  end
   
   def set_timezone_and_locale
     begin

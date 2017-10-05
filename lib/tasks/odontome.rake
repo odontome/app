@@ -18,7 +18,7 @@ namespace :odontome do
     appointments.each do |appointment|
       practice = appointment.datebook.practice
 
-      PatientMailer.appointment_soon_email(appointment.patient.email, appointment.patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, appointment.doctor, practice.users.first.email).deliver_now
+      PatientMailer.appointment_soon_email(appointment.patient.email, appointment.patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, appointment.doctor, practice.email).deliver_now
 
       to_update << appointment.id
     end
@@ -44,7 +44,7 @@ namespace :odontome do
       practice = appointment.datebook.practice
       passbook_url = appointment.ciphered_url
 
-      PatientMailer.appointment_scheduled_email(appointment.patient.email, appointment.patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, appointment.doctor, practice.users.first.email, passbook_url).deliver_now
+      PatientMailer.appointment_scheduled_email(appointment.patient.email, appointment.patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, appointment.doctor, practice.email, passbook_url).deliver_now
 
       to_update << appointment.id
     end
@@ -223,7 +223,7 @@ namespace :odontome do
       Rails.logger = Logger.new(STDOUT)
     end
 
-    appointments_pending_review = Datebook.select("practices.name as practice, practices.locale as practice_locale, datebooks.name as datebook,
+    appointments_pending_review = Datebook.select("practices.name as practice, practices.id as practice_id, practices.locale as practice_locale, datebooks.name as datebook,
     appointments.id as appointment_id, appointments.starts_at, appointments.ends_at,
     patients.email as patient_email, patients.firstname as patient_name")
     .where("patients.email <> ''")
@@ -233,8 +233,9 @@ namespace :odontome do
     .where("appointments.status = ?", Appointment.status[:confirmed])
     .joins(:appointments => [:patient])
     .joins(:practice)
+    .includes(:practice)
     .order("appointments.ends_at")
-    
+
     exit if !appointments_pending_review.exists?
 
     # mark all the appointments found as "reviewed"
