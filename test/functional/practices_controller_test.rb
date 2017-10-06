@@ -23,7 +23,6 @@ class PracticesControllerTest < ActionController::TestCase
 
     practice = { :name => "Odonto.me Demo Practice",
                  :timezone => "Europe/London",
-                 :email => "demo@odonto.me",
                  :users_attributes => {"0"=>{"email"=> "demo@odonto.me", "password"=> "1234567890", "password_confirmation"=> "1234567890" } } }
 
     assert_difference('Practice.count') do
@@ -45,13 +44,12 @@ class PracticesControllerTest < ActionController::TestCase
 
     practice = { :name => "Odonto.me Demo Practice",
                  :timezone => "",
-                 :email => "demo@odonto.me",
                  :users_attributes => {"0"=>{"email"=> "demo@odonto.me", "password"=> "1234567890", "password_confirmation"=> "1234567890" } } }
 
     assert_difference('Practice.count') do
       post :create, params: {practice: practice}
     end
-
+    assert_equal Practice.last.email, 'demo@odonto.me'
   end
 
 end

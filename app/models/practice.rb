@@ -12,7 +12,8 @@ class Practice < ApplicationRecord
   accepts_nested_attributes_for :users, :limit => 1
   
   # validations
-  validates_presence_of :name, :timezone, :locale, :email
+  validates_presence_of :name, :timezone, :locale
+  validates_presence_of :email, on: :update
   validates_uniqueness_of :email
 
   # callbacks
