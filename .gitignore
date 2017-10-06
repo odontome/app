@@ -6,3 +6,5 @@ log/*
 tmp/**/*
 ssl-cert
 .sass-cache/
+.redis
+.postgres
