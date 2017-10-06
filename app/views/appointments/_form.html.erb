@@ -31,7 +31,7 @@
 			<%= f.hidden_field :starts_at %>
 		<% end %>
 
-		<%= f.submit(t(:save), :class => "btn btn-primary", data: { disable_with: t(:please_wait) }) %>
+		<%= f.submit(t(:save), :class => "btn btn-primary", :id => 'appointment_submit', data: { disable_with: t(:please_wait) }) %>
 	</div>
 
 <% end %>

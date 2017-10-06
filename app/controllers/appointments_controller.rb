@@ -28,8 +28,8 @@ class AppointmentsController < ApplicationController
   end
 
   def create
-    @appointment = Appointment.new()
-    @appointment.doctor_id = params[:appointment][:doctor_id].to_i
+    @appointment = Appointment.new
+    @appointment.doctor_id = params[:appointment][:doctor_id]
     @appointment.notes = params[:appointment][:notes]
     @appointment.starts_at = Time.at(params[:appointment][:starts_at].to_i)
     @appointment.datebook_id = params[:datebook_id]

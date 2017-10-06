@@ -2,6 +2,16 @@
 
 	$(document).ready(function() {
 
+		function validateSubmit() {
+			var submitAppointmentElement = $('#appointment_submit');
+			var selectDoctorsElement = $('#appointment_doctor_id');
+			if (selectDoctorsElement.val()) {
+				submitAppointmentElement.attr('disabled', false);
+			} else {
+				submitAppointmentElement.attr('disabled', true);
+			}
+		}
+
 		var date = new Date();
 		var d = date.getDate();
 		var m = date.getMonth();
@@ -59,11 +69,13 @@
 					  $('.modal-title').html($.fullCalendar.formatDate(dayDate, "dd, MMMM · hh:mm tt"));
 	    			  $('.body-container').html(data);
 					  $(".modal").modal();
+					  validateSubmit();
 					});
 				} else {
 					$("#calendar").fullCalendar('changeView', 'agendaDay');
 					$("#calendar").fullCalendar('gotoDate', dayDate);
 				}
+
 			},
 			eventClick: function(calEvent, jsEvent, view) {
 				var url = endpointURL + '/' + calEvent.id + "/edit?patient_id=" + calEvent.patient_id;
@@ -72,6 +84,7 @@
 				  $('.modal-title').html($.fullCalendar.formatDate(calEvent.start, "dd, MMMM · hh:mm tt"));
 	    		  $('.body-container').html(data);
 				  $(".modal").modal();
+				  validateSubmit();
 				});
 			},
 
