@@ -33,6 +33,11 @@ module Odontome
     config.i18n.available_locales = ["es", "en"]
     config.i18n.enforce_available_locales = false
 
+    # disabled field error behavior
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance| 
+      html_tag
+    }
+
     # Protect from mass assignments
     # config.active_record.whitelist_attributes = true
 
