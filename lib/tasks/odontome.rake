@@ -223,17 +223,17 @@ namespace :odontome do
       Rails.logger = Logger.new(STDOUT)
     end
 
-    appointments_pending_review = Datebook.select("practices.name as practice, practices.id as practice_id, practices.locale as practice_locale, datebooks.name as datebook,
-    appointments.id as appointment_id, appointments.starts_at, appointments.ends_at,
-    patients.email as patient_email, patients.firstname as patient_name")
+    appointments_pending_review = Datebook.select("practices.name as practice, 
+    practices.id as practice_id, practices.locale as practice_locale, datebooks.name as datebook,
+    patients.email as patient_email, patients.firstname as patient_name,
+    appointments.id as appointment_id, appointments.starts_at, appointments.ends_at")
     .where("patients.email <> ''")
     .where("appointments.ends_at < ?", 45.minutes.ago)
     .where("appointments.ends_at > ?", 3.days.ago)
     .where("appointments.notified_of_review = ?", false)
     .where("appointments.status = ?", Appointment.status[:confirmed])
-    .joins(:appointments => [:patient])
+    .joins(:appointments => [:patient, :doctor])
     .joins(:practice)
-    .includes(:practice)
     .order("appointments.ends_at")
 
     exit if !appointments_pending_review.exists?
