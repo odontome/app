@@ -1,23 +1,14 @@
-Things you may want to cover:
+@@ -0,0 +1,13 @@
+## How to run locally.
+Docker is the recommended way to run this project locally. Just follow their [instructions](https://docs.docker.com) to get started.
 
-* Ruby version
+Once everything is configured, just run `docker-compose up` to get the application up and running.
 
-* System dependencies
+## Database initialization
+Run the following command from the terminal `docker-compose run web rake db:migrate`.
 
-* Configuration
+## How to run the test suite
+Run the following command from the terminal `docker-compose run web rake test`.
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+## Deployment instructions
+Heroku deploys automatically every commit on the `master` branch. So, is very important to keep that branch in a deployable state.
