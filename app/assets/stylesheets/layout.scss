@@ -22,7 +22,7 @@ input.search{
 	background: image-url("lens.png") #fcfcfc no-repeat 95%;
 	box-shadow: none;
 	height: 25px;
-	width: 220px;
+	width: 100%;
 	font-size: 13px;
 	padding: 2px 6px;
 	border:1px solid #d0dde9;
@@ -45,7 +45,7 @@ input.search{
 .navbar-inverse {
 	input.search {
 		height: 27px;
-		width: 180px;
+		width: 100%;
 		padding: 3px 6px;
 		background: image-url("lens.png") #f3f3f3 no-repeat 95%;
 		border: 1px solid #f3f3f3;

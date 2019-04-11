@@ -27,8 +27,6 @@ module Odontome
     config.enable_dependency_loading = true
     config.autoload_paths << "#{Rails.root}/lib"
 
-
-
     ### Odonto.me stuff
 
     config.i18n.available_locales = ["es", "en"]
@@ -51,6 +49,5 @@ module Odontome
     # enable custom error pages
     config.exceptions_app = self.routes
     config.action_controller.permit_all_parameters = true
-
   end
 end

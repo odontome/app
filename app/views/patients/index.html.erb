@@ -1,12 +1,22 @@
 <div id="pad-wrapper" class="table-wrapper users-list">
 
-	<div class="row header col-md-12">
-        <h3><%= t :patients %></h3>
-
-        <div class="pull-right-lg">            
-            <%= link_to t(:create_new_patient), new_patient_url, "class" => "btn-flat primary pull-right" %>
-        </div>
+  <div class="row">
+	  <div class="col-md-12 hidden-md hidden-lg">
+      <%= form_tag patients_url, :method => :get do %>
+        <p class="form-group">
+          <input name="q" class="search" type="text" value="<%= params[:q]%>">
+        </p>
+      <% end %>
     </div>
+  </div>
+
+	<div class="row header col-md-12">
+      <h3><%= t :patients %></h3>
+
+      <div class="pull-right-lg">            
+          <%= link_to t(:create_new_patient), new_patient_url, "class" => "btn-flat primary pull-right" %>
+      </div>
+  </div>
 
 	<div class="row">
 	    <div class="col-md-12">
