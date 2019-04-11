@@ -2,7 +2,7 @@
 ## How to run locally.
 Docker is the recommended way to run this project locally. Just follow their [instructions](https://docs.docker.com) to get started.
 
-Once everything is configured, just run `docker-compose up` to get the application up and running.
+Once everything is configured, just run `docker-compose up` to get the application up and running. It may be required to run `docker-compose build` before running `up`.
 
 ## Database initialization
 Run the following command from the terminal `docker-compose run web rake db:migrate`.
