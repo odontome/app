@@ -94,6 +94,6 @@ Rails.application.configure do
   }
 
   ActionMailer::Base.delivery_method = :smtp
-  config.action_mailer.asset_host = "http://my.odonto.me"
+  config.action_mailer.asset_host = "https://my.odonto.me"
   config.action_mailer.default_url_options = { :host => 'my.odonto.me' }
 end

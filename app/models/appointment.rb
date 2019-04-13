@@ -88,13 +88,13 @@ class Appointment < ApplicationRecord
   def ciphered_url
     encoded_id = self.ciphered_id
 
-    return "http://my.odonto.me/datebooks/#{self.datebook_id.to_s}/appointments/#{encoded_id}"
+    return "https://my.odonto.me/datebooks/#{self.datebook_id.to_s}/appointments/#{encoded_id}"
   end
 
   def ciphered_review_url
     encoded_appointment_id = self.ciphered_id
 
-    return "http://my.odonto.me/reviews/new/?appointment_id=#{encoded_appointment_id}"
+    return "https://my.odonto.me/reviews/new/?appointment_id=#{encoded_appointment_id}"
   end
 
   def ciphered_id

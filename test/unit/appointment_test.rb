@@ -62,13 +62,13 @@ class AppointmentTest < ActiveSupport::TestCase
 	test "appointment should generate a valid passbook url" do
     appointment = appointments(:first_visit)
 
-		assert_match /http:\/\/my.odonto.me\/datebooks\/\d+\/appointments\/\w+/, appointment.ciphered_url
+		assert_match /https:\/\/my.odonto.me\/datebooks\/\d+\/appointments\/\w+/, appointment.ciphered_url
   end
 
 	test "appointment should generate a valid review url" do
     appointment = appointments(:unreviewed)
 
-		assert_match /http:\/\/my.odonto.me\/reviews\/new\/\?appointment_id=\w+/, appointment.ciphered_review_url
+		assert_match /https:\/\/my.odonto.me\/reviews\/new\/\?appointment_id=\w+/, appointment.ciphered_review_url
   end
 
 end

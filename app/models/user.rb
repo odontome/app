@@ -53,7 +53,7 @@ class User < ApplicationRecord
   def ciphered_unsubscribe_url
     ciphered_url_encoded_id = Cipher.encode(self.id.to_s)
 
-    return "http://my.odonto.me/users/#{ciphered_url_encoded_id}/unsubscribe"
+    return "https://my.odonto.me/users/#{ciphered_url_encoded_id}/unsubscribe"
   end
 
   def is_admin?
