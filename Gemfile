@@ -19,7 +19,6 @@ gem 'responders', '~> 2.0'
 
 gem 'authlogic', '~> 4.5.0'
 gem 'scrypt', '~> 3.0.7'
-gem 'taps', '~> 0.3.24'
 gem 'rails-i18n', '~> 5.1.3'
 gem 'redis', '~> 4.2'
 gem 'mandrill-api', '~> 1.0.53'
@@ -28,20 +27,13 @@ gem 'icalendar', '~> 2.6.1'
 gem 'font-awesome-rails', '~> 4.7.0.5'
 gem 'jquery-minicolors-rails', '~>2.2.6.2'
 gem 'gibberish', '~> 2.1.0'
-
 gem 'premailer-rails', '~> 1.11.1'
-gem 'rails_select_on_includes', '~> 5.2.1' 
 
 gem 'pg', '~> 1.2.3'
 
 group :development do
 	gem 'i18n-tasks', '~> 0.9.23'
-  gem 'brakeman', '~> 4.9.0'
   gem 'web-console', '~> 3.7.0'
-  gem 'listen', '~> 3.2.1'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring-watcher-listen', '~> 2.0.1'
-
 end
 
 group :production do
