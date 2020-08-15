@@ -21,7 +21,7 @@ gem 'authlogic', '~> 4.5.0'
 gem 'scrypt', '~> 3.0.7'
 gem 'taps', '~> 0.3.24'
 gem 'rails-i18n', '~> 4.0.0'
-gem 'redis', '~> 3.0'
+gem 'redis', '~> 4.2'
 gem 'mandrill-api', '~> 1.0.53'
 gem 'icalendar', '~> 2.6.1'
 
