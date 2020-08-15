@@ -4,7 +4,7 @@ ruby '2.4.0'
 ### default rails stuff
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.1.4'
+gem 'rails', '~> 5.2.0'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '~> 4.2.0'
 gem 'jquery-rails', '~> 4.4.0'
@@ -35,7 +35,7 @@ gem 'rails_select_on_includes', '~> 0.5.6'
 
 
 group :development do
-  gem 'sqlite3', '~> 1.3.13' # Not the latest but active record compatible with current rails version"
+  gem 'sqlite3', '~> 1.4.2'
 	gem 'i18n-tasks', '~> 0.9.23'
   gem 'brakeman', '~> 4.9.0'
   gem 'web-console', '~> 3.7.0'
