@@ -10,11 +10,6 @@ class BalancesController < ApplicationController
     @total = Balance.where("patient_id = ?", params[:patient_id]).sum(:amount)
     @treatments = Treatment.mine.order("name")
 
-    # track this event
-    MIXPANEL_CLIENT.track(@current_user.email, 'View patient balance', {
-      'Total' => @total
-    })
-
     respond_to do |format|
       format.html
       format.csv {
@@ -32,11 +27,6 @@ class BalancesController < ApplicationController
     respond_to do |format|
       if @balance.save
           @total = Balance.where("patient_id = ?", params[:patient_id]).sum(:amount)
-
-          # track this event
-          MIXPANEL_CLIENT.track(@current_user.email, 'Created a patient balance', {
-            'Total' => @total
-          })
 
           format.js  { } #create.js.erb
       else

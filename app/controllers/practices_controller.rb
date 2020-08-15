@@ -19,9 +19,6 @@ class PracticesController < ApplicationController
     ends_at = starts_at + 24.hours
     @today_balance = Balance.find_between(starts_at, ends_at, @current_user.practice_id).sum(:amount)
     @reviews_count = Review.mine.count
-
-    # track this event
-    MIXPANEL_CLIENT.track(current_user.email, 'Viewing practice')
   end
 
   def new
@@ -44,21 +41,6 @@ class PracticesController < ApplicationController
 
         # find the previously created user
         new_user = @practice.users.first
-
-        # record the signup
-        MIXPANEL_CLIENT.people.set(new_user.email, {
-            '$first_name' => new_user.firstname,
-            '$last_name' => new_user.lastname,
-            '$email' => new_user.email,
-            '$language' => @practice.locale,
-            '$timezone' => @practice.timezone,
-            'Practice' => @practice.name,
-            'Number of patients' => @practice.patients_count,
-            'Number of doctors' => @practice.doctors_count,
-            'Number of datebooks' => @practice.datebooks_count
-        })
-        MIXPANEL_CLIENT.track(new_user.email, 'Signed up')
-
         PracticeMailer.welcome_email(@practice).deliver_now
         format.html { redirect_to(practice_path) }
       else
@@ -73,9 +55,6 @@ class PracticesController < ApplicationController
 
     respond_to do |format|
       if @practice.update_attributes(params[:practice])
-        # track this event
-        MIXPANEL_CLIENT.track(@current_user.email, 'Updated practice')
-
         format.html { redirect_to(practice_settings_url, :notice => t(:practice_updated_success_message)) }
       else
         format.html { render :action => "settings" }
@@ -84,8 +63,7 @@ class PracticesController < ApplicationController
   end
 
   def cancel
-    # track this event
-    MIXPANEL_CLIENT.track(@current_user.email, 'Cancelling practice')
+    #LOL this does nothing
   end
 
   def close
@@ -118,9 +96,6 @@ class PracticesController < ApplicationController
 
   def settings
     @practice = current_user.practice
-
-    # track this event
-    MIXPANEL_CLIENT.track(@current_user.email, 'Viewing practice settings')
   end
 
   def balance
@@ -137,12 +112,6 @@ class PracticesController < ApplicationController
 
     @balances = Balance.find_between starts_at, ends_at, @current_user.practice_id
     @total = @balances.sum(:amount)
-
-    # track this event
-    MIXPANEL_CLIENT.track(@current_user.email, 'Viewing practice balance', {
-        'Date' => @selected_date,
-        'Total' => @total
-    })
 
     respond_to do |format|
       format.html
