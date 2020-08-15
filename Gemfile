@@ -28,7 +28,7 @@ gem 'icalendar'
 
 gem 'font-awesome-rails'
 gem 'jquery-minicolors-rails'
-gem 'gibberish', '~> 1.4.0'
+gem 'gibberish', '~> 2.1.0'
 
 gem 'premailer-rails'
 gem 'rails_select_on_includes', '~> 0.5.6' 

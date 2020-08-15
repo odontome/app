@@ -1,11 +1,13 @@
 class Cipher
   def self.decode(string)
     cipher = Gibberish::AES.new(Rails.configuration.secret_token)
-    cipher.dec(Base64.strict_decode64(string))
+    encrypted = Base64.strict_decode64(string)
+    cipher.decrypt(encrypted)
   end
 
   def self.encode(string)
     cipher = Gibberish::AES.new(Rails.configuration.secret_token)
-    Base64.strict_encode64(cipher.enc(string))
+    encrypted = cipher.encrypt(string)
+    Base64.strict_encode64(encrypted)
   end
 end
