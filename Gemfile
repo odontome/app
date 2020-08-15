@@ -24,10 +24,10 @@ gem 'rails-i18n', '~> 4.0.0'
 gem 'redis', '~> 3.0'
 gem 'passbook', '~> 0.3.1'
 gem 'mandrill-api'
-gem 'icalendar'
+gem 'icalendar', '~> 2.6.1'
 
 gem 'font-awesome-rails'
-gem 'jquery-minicolors-rails'
+gem 'jquery-minicolors-rails', '~>2.2.6.2'
 gem 'gibberish', '~> 2.1.0'
 
 gem 'premailer-rails'

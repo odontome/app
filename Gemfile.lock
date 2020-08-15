@@ -85,8 +85,10 @@ GEM
       rake
       term-ansicolor
       terminal-table
-    icalendar (2.4.1)
-    jquery-minicolors-rails (2.2.6.0)
+    icalendar (2.6.1)
+      ice_cube (~> 0.16)
+    ice_cube (0.16.3)
+    jquery-minicolors-rails (2.2.6.2)
       jquery-rails
       rails (>= 3.2.8)
     jquery-rails (4.3.1)
@@ -250,8 +252,8 @@ DEPENDENCIES
   font-awesome-rails
   gibberish (~> 2.1.0)
   i18n-tasks (~> 0.2.18)
-  icalendar
-  jquery-minicolors-rails
+  icalendar (~> 2.6.1)
+  jquery-minicolors-rails (~> 2.2.6.2)
   jquery-rails
   listen (>= 3.0.5, < 3.2)
   mandrill-api
