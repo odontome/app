@@ -8,6 +8,7 @@ ssl-cert
 .sass-cache/
 .redis
 .postgres
+.byebug_history
 
 # Bundler
 

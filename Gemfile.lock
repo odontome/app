@@ -129,7 +129,7 @@ GEM
       rubyzip (~> 1.0.0)
       terminal-table
     pg (1.2.3)
-    premailer (1.12.1)
+    premailer (1.13.1)
       addressable
       css_parser (>= 1.6.0)
       htmlentities (>= 4.0.0)
@@ -285,7 +285,7 @@ DEPENDENCIES
   web-console (~> 3.7.0)
 
 RUBY VERSION
-   ruby 2.4.0p0
+   ruby 2.7.0p0
 
 BUNDLED WITH
    2.1.4
