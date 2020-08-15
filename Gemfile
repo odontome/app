@@ -33,9 +33,9 @@ gem 'gibberish', '~> 2.1.0'
 gem 'premailer-rails', '~> 1.11.1'
 gem 'rails_select_on_includes', '~> 0.5.6' 
 
+gem 'pg', '~> 1.2.3'
 
 group :development do
-  gem 'sqlite3', '~> 1.4.2'
 	gem 'i18n-tasks', '~> 0.9.23'
   gem 'brakeman', '~> 4.9.0'
   gem 'web-console', '~> 3.7.0'
@@ -46,9 +46,6 @@ group :development do
 end
 
 group :production do
-	# gems specifically for Heroku go here
-  gem 'rails_12factor', '~> 0.0.3'
-  gem 'pg', '~> 1.2.3'
 end
 
 group :test do
