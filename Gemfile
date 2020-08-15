@@ -17,8 +17,8 @@ gem 'responders', '~> 2.0'
 
 ### odonto.me specifc
 
-gem 'authlogic', '3.6.0'
-gem 'scrypt', '3.0.6'
+gem 'authlogic', '~> 4.5.0'
+gem 'scrypt', '~> 3.0.7'
 gem 'taps'
 gem 'rails-i18n', '~> 4.0.0'
 gem 'redis', '~> 3.0'

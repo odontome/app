@@ -41,7 +41,7 @@ class Patient < ApplicationRecord
   validates_length_of :telephone, :within => 0..20, :allow_blank => true
   validates_length_of :mobile, :within => 0..20, :allow_blank => true
   validates_length_of :emergency_telephone, :within => 5..20, :allow_blank => true
-  validates_format_of :email, :with => Authlogic::Regex.email, :allow_blank => true
+  validates_format_of :email, :with => Authlogic::Regex::EMAIL, :allow_blank => true
 
   # callbacks
   before_validation :set_practice_id, :on => :create

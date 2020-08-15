@@ -25,7 +25,7 @@ class User < ApplicationRecord
   # validations
   validates_presence_of :firstname, :lastname, :email, :roles
   validates_uniqueness_of :email
-  validates_format_of :email, :with => Authlogic::Regex.email
+  validates_format_of :email, :with => Authlogic::Regex::EMAIL
   validates :firstname, :lastname, :length => { :maximum => 20 }
   validates :password, :length => { :minimum => 7 }, :if => :validate_password?
   validates :password_confirmation, :length => { :minimum => 7 }, :if => :validate_password?

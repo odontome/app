@@ -8,7 +8,7 @@ class UserSessionsController < ApplicationController
 
   def create
     @user_session = UserSession.with_scope(:find_options => {:include => :practice}) do
-      UserSession.new(params[:user_session])
+      UserSession.new(params[:user_session].to_h)
     end
 
     respond_to do |format|
