@@ -47,8 +47,8 @@ end
 
 group :production do
 	# gems specifically for Heroku go here
-  gem 'rails_12factor'
-	gem 'pg'
+  gem 'rails_12factor', '~> 0.0.3'
+	gem 'pg', '~> 1.2.3'
 end
 
 group :test do
@@ -57,7 +57,7 @@ group :test do
 end
 
 group :development, :test do
-  # gem 'byebug'
-  gem 'spring'
-  gem 'rails-controller-testing'
+  gem 'byebug', '~> 11.1.3'
+  gem 'spring', '~> 2.1.0'
+  gem 'rails-controller-testing', '~> 1.0.5'
 end
