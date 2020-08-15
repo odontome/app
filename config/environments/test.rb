@@ -48,6 +48,4 @@ Rails.application.configure do
 
   # Raise exception on mass assignment protection for Active Record models
   config.active_record.mass_assignment_sanitizer = :strict
-
-  config.active_record.sqlite3.represent_boolean_as_integer = true
 end
