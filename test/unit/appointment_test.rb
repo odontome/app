@@ -59,7 +59,7 @@ class AppointmentTest < ActiveSupport::TestCase
 		assert appointment.is_confirmed
 	end
 
-	test "appointment should generate a valid passbook url" do
+	test "appointment should generate a valid ciphered url" do
     appointment = appointments(:first_visit)
 
 		assert_match /https:\/\/my.odonto.me\/datebooks\/\d+\/appointments\/\w+/, appointment.ciphered_url

@@ -1,4 +1,3 @@
-@@ -0,0 +1,13 @@
 ## How to run locally.
 Docker is the recommended way to run this project locally. Just follow their [instructions](https://docs.docker.com) to get started.
 

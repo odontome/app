@@ -47,10 +47,8 @@ class PatientMailerTest < ActionMailer::TestCase
     doctor = doctors(:rebecca)
     patient = patients(:four)
 
-    passbook_url = appointment.ciphered_url
-
     # Send the email, then test that it got queued
-    email = PatientMailer.appointment_scheduled_email(patient.email, patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, doctor, users(:perishable).email, passbook_url).deliver_now
+    email = PatientMailer.appointment_scheduled_email(patient.email, patient.fullname, appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, doctor, users(:perishable).email).deliver_now
 
     assert !ActionMailer::Base.deliveries.empty?
 
@@ -59,7 +57,6 @@ class PatientMailerTest < ActionMailer::TestCase
     assert_equal ['contact@bokanova.mx'], email.reply_to
     assert_equal ['raulriera@hotmail.com'], email.to
     assert_equal I18n.t("mailers.patient.appointment_scheduled_email.subject", practice_name: practice.name), email.subject
-    assert_match(/Are you an iOS or Android user\? You can get a Passbook of this appointment here/, email.encoded)
   end
 
   test "patient birthday wishes notifier" do
