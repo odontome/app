@@ -23,7 +23,6 @@ gem 'taps'
 gem 'rails-i18n', '~> 4.0.0'
 gem 'redis', '~> 3.0'
 gem 'passbook', '~> 0.3.1'
-gem 'mixpanel-ruby'
 gem 'mandrill-api'
 gem 'icalendar'
 
@@ -32,7 +31,6 @@ gem 'jquery-minicolors-rails'
 gem 'gibberish', '~> 1.4.0'
 
 gem 'premailer-rails'
-gem 'hpricot'
 gem 'rails_select_on_includes', '~> 0.5.6' 
 
 

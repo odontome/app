@@ -22,9 +22,6 @@ class ReviewsController < ApplicationController
     # calculate if we need to load more reviews
     @should_display_load_more = Review.mine.count >= (@current_page * reviews_per_page)
 
-    # track the event in mixpanel
-    MIXPANEL_CLIENT.track(@current_user.email, 'Viewing reviews')
-
     respond_with(@reviews)
   end
 
@@ -39,14 +36,6 @@ class ReviewsController < ApplicationController
       if Review.where(appointment_id: deciphered_appointment_id).exists?
         # do nothing, handle this in the view
       else
-        # track the event in mixpanel
-        MIXPANEL_CLIENT.track(@appointment.id, 'Attempting a review', {
-            'Patient' => @appointment.patient.fullname,
-            'Doctor' => @appointment.doctor.fullname,
-            'Practice' => @appointment.datebook.practice.name,
-            'Score' => params[:score]
-        })
-
         @review.score = params[:score]
         @review.appointment_id = params[:appointment_id]
       end
@@ -67,12 +56,6 @@ class ReviewsController < ApplicationController
       if @review.save
         # email the admin about this review
         PracticeMailer.new_review_notification(@review).deliver_now
-
-        # track the event in mixpanel
-        MIXPANEL_CLIENT.track(@review.appointment_id, 'Completed a review', {
-          'Score' => @review.score
-        })
-
         format.js  { } #create.js.erb
       else
         format.js  {

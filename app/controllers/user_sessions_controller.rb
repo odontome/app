@@ -17,21 +17,6 @@ class UserSessionsController < ApplicationController
 
         user = @user_session.user
         practice = @user_session.user.practice
-
-        # record the signed in
-        MIXPANEL_CLIENT.track(user.email, 'Signed in')
-        MIXPANEL_CLIENT.people.set(user.email, {
-            '$first_name' => user.firstname,
-            '$last_name' => user.lastname,
-            '$email' => user.email,
-            '$language' => practice.locale,
-            '$timezone' => practice.timezone,
-            'Practice' => practice.name,
-            'Number of patients' => practice.patients_count,
-            'Number of doctors' => practice.doctors_count,
-            'Number of datebooks' => practice.datebooks_count
-        })
-
         format.html { redirect_to(root_url) }
       else
         format.html { render :action => "new" }

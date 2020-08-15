@@ -84,13 +84,6 @@ class Api::V1::PatientCommunicationsController < Api::V1::BaseController
 
         # were we able to save the record without problems?
         if (patient_communication.save)
-
-          # track the event in mixpanel
-          MIXPANEL_CLIENT.track(@current_user.user.email, 'Sent patient communications', {
-              'Number of patients' => patients.size,
-              'Query' => params[:query]
-          })
-
           render :json => patient_communication
         # otherwise return an error message but make sure they know
         # the communication was sent anyway

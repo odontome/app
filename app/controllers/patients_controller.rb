@@ -16,21 +16,9 @@ class PatientsController < ApplicationController
     	end
 
       @patients = Patient.alphabetically params[:letter]
-
-      # track this event
-      MIXPANEL_CLIENT.track(@current_user.email, 'Viewing all patient profiles', {
-          'Letter' => params[:letter]
-      })
-    # otherwise, this is a search for patients
+      
     else
       @patients = Patient.search(params[:q])
-
-      if !params.key?("format")
-        # track this event
-        MIXPANEL_CLIENT.track(@current_user.email, 'Searching for a patient profile', {
-            'Query' => params[:q]
-        })
-      end
     end
 
     respond_with(@patients, :methods => :fullname)
@@ -46,9 +34,6 @@ class PatientsController < ApplicationController
       redirect_to edit_patient_path(@patient)
     else
       respond_to do |format|
-        # track this event
-        MIXPANEL_CLIENT.track(@current_user.email, 'Viewing a patient profile')
-
         format.html # show.html.erb
       end
     end
@@ -56,16 +41,10 @@ class PatientsController < ApplicationController
 
   def new
     @patient = Patient.new
-
-    # track this event
-    MIXPANEL_CLIENT.track(@current_user.email, 'Creating a patient profile')
   end
 
   def edit
     @patient = Patient.mine.find(params[:id])
-
-    # track this event
-    MIXPANEL_CLIENT.track(@current_user.email, 'Modifying a patient profile')
   end
 
   def create
@@ -73,9 +52,6 @@ class PatientsController < ApplicationController
 
     respond_to do |format|
       if @patient.save
-        # track the creation of a complete patient profile
-        MIXPANEL_CLIENT.track(@current_user.email, 'Compleated a patient profile')
-
         format.html { redirect_to(@patient, :notice => I18n.t(:patient_created_success_message)) }
       else
         format.html { render :action => "new" }
@@ -88,9 +64,6 @@ class PatientsController < ApplicationController
 
     respond_to do |format|
       if @patient.update_attributes(params[:patient])
-        # track this event
-        MIXPANEL_CLIENT.track(@current_user.email, 'Modified a patient profile')
-
         format.html { redirect_to(@patient, :notice => I18n.t(:patient_updated_success_message)) }
       else
         format.html { render :action => "edit" }
@@ -101,10 +74,6 @@ class PatientsController < ApplicationController
   def destroy
     @patient = Patient.mine.find(params[:id])
     @patient.destroy
-
-    # track this event
-    MIXPANEL_CLIENT.track(@current_user.email, 'Deleted a patient profile')
-
     respond_to do |format|
       format.html { redirect_to(patients_url) }
     end
