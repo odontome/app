@@ -6,10 +6,10 @@ ruby '2.4.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '5.1.4'
 gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'jquery-rails'
+gem 'uglifier', '~> 4.2.0'
+gem 'jquery-rails', '~> 4.4.0'
 # gem 'unicorn'
-gem 'puma'
+gem 'puma', '~> 4.3.5'
 ### rails backward compatibility
 
 gem 'protected_attributes_continued'
