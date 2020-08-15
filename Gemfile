@@ -35,7 +35,7 @@ gem 'rails_select_on_includes', '~> 0.5.6'
 
 
 group :development do
-  gem 'sqlite3'
+  gem 'sqlite3', '~> 1.3.13' # Not the latest but active record compatible with current rails version"
 	gem 'i18n-tasks', '~> 0.9.23'
   gem 'brakeman', '~> 4.9.0'
   gem 'web-console', '~> 3.7.0'
