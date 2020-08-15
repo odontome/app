@@ -48,7 +48,7 @@ end
 group :production do
 	# gems specifically for Heroku go here
   gem 'rails_12factor', '~> 0.0.3'
-	gem 'pg', '~> 1.2.3'
+  gem 'pg', '~> 1.2.3'
 end
 
 group :test do
