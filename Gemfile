@@ -30,7 +30,7 @@ gem 'jquery-minicolors-rails', '~>2.2.6.2'
 gem 'gibberish', '~> 2.1.0'
 
 gem 'premailer-rails', '~> 1.11.1'
-gem 'rails_select_on_includes', '~> 0.5.6' 
+gem 'rails_select_on_includes', '~> 5.2.1' 
 
 gem 'pg', '~> 1.2.3'
 
