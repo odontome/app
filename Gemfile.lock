@@ -69,7 +69,7 @@ GEM
       rake
     font-awesome-rails (4.7.0.2)
       railties (>= 3.2, < 5.2)
-    gibberish (1.4.0)
+    gibberish (2.1.1)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     grocer (0.7.1)
@@ -246,7 +246,7 @@ DEPENDENCIES
   authlogic (= 3.6.0)
   brakeman
   font-awesome-rails
-  gibberish (~> 1.4.0)
+  gibberish (~> 2.1.0)
   i18n-tasks (~> 0.2.18)
   icalendar
   jquery-minicolors-rails
