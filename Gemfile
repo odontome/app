@@ -9,7 +9,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '~> 4.2.0'
 gem 'jquery-rails', '~> 4.4.0'
 # gem 'unicorn'
-gem 'puma', '~> 4.3.5'
+gem 'puma', '~> 5.2.0'
 ### rails backward compatibility
 
 gem 'protected_attributes_continued', '~> 1.5.0'
