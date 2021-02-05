@@ -8,9 +8,10 @@ namespace :odontome do
     end
 
     to_update = []
+    appointment_notificacion_hours = 48.hours
 
     appointments = Appointment.includes(:doctor, :patient).joins(:doctor, :patient)
-    .where("appointments.starts_at > ? AND appointments.ends_at < ?", Time.now, Time.now + $appointment_notificacion_hours.hours)
+    .where("appointments.starts_at > ? AND appointments.ends_at < ?", Time.now, Time.now + appointment_notificacion_hours)
     .where("appointments.notified_of_reminder = ?", false)
     .where("patients.email <> ''")
     .where("appointments.status = ?", Appointment.status[:confirmed])
