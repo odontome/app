@@ -2,7 +2,7 @@ class TreatmentsController < ApplicationController
   before_action :require_user
 
   def index
-    @treatments = Treatment.mine.order("name")
+    @treatments = Treatment.with_practice(current_user.practice_id).order("name")
   end
 
   def new
@@ -10,11 +10,12 @@ class TreatmentsController < ApplicationController
   end
 
   def edit
-    @treatment = Treatment.mine.find(params[:id])
+    @treatment = Treatment.with_practice(current_user.practice_id).find(params[:id])
   end
 
   def create
     @treatment = Treatment.new(params[:treatment])
+    @treatment.practice_id = current_user.practice_id
 
     respond_to do |format|
       if @treatment.save
@@ -26,7 +27,7 @@ class TreatmentsController < ApplicationController
   end
 
   def update
-    @treatment = Treatment.mine.find(params[:id])
+    @treatment = Treatment.with_practice(current_user.practice_id).find(params[:id])
 
     respond_to do |format|
       if @treatment.update_attributes(params[:treatment])
@@ -38,7 +39,7 @@ class TreatmentsController < ApplicationController
   end
 
   def destroy
-    @treatment = Treatment.mine.find(params[:id])
+    @treatment = Treatment.with_practice(current_user.practice_id).find(params[:id])
     @treatment.destroy
 
     respond_to do |format|
@@ -49,7 +50,7 @@ class TreatmentsController < ApplicationController
   # This loads the list of treatments fom treatments.yml into the user's practice
   def predefined_treatments
     # Don't load if already done
-    if Treatment.mine.count == 0
+    if Treatment.with_practice(current_user.practice_id).count == 0
       current_user.practice.populate_default_treatments
       flash[:notice] = t(:predefined_treatments_created_success_message)
     end

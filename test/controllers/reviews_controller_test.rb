@@ -2,8 +2,7 @@ require 'test_helper'
 
 class ReviewsControllerTest < ActionController::TestCase
   setup do
-  	current_user = users(:founder)
-  	controller.session["user_credentials"] = users(:founder).persistence_token
+  	@controller.session["user"] = users(:founder)
   end
 
   test "should get index" do

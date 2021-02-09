@@ -17,8 +17,8 @@ class PracticesController < ApplicationController
 
     starts_at = DateTime.now.at_beginning_of_day
     ends_at = starts_at + 24.hours
-    @today_balance = Balance.find_between(starts_at, ends_at, @current_user.practice_id).sum(:amount)
-    @reviews_count = Review.mine.count
+    @today_balance = Balance.find_between(starts_at, ends_at, current_user.practice_id).sum(:amount)
+    @reviews_count = Review.with_practice(current_user.practice_id).count
   end
 
   def new
@@ -74,7 +74,7 @@ class PracticesController < ApplicationController
       @practice = current_user.practice
       @practice.set_as_cancelled
       if @practice.save
-        current_user_session.destroy
+        session.clear
         flash.discard
         redirect_to signin_url, :notice => I18n.t(:practice_close_success_message)
       else

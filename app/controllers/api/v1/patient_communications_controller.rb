@@ -13,7 +13,7 @@ class Api::V1::PatientCommunicationsController < Api::V1::BaseController
   def create
     mandrill = Mandrill::API.new ENV["MANDRILL_APIKEY"]
 
-    patients = Patient.mine.select("firstname, lastname, email")
+    patients = Patient.with_practice(current_user.practice_id).select("firstname, lastname, email")
 
     params[:query].each do |query|
       case query
@@ -51,7 +51,7 @@ class Api::V1::PatientCommunicationsController < Api::V1::BaseController
 
       # REMOVE THIS AFTER TESTING!!!
       # REMEMBER THE LINE BELOW
-      patients = Patient.mine.select("firstname, lastname, email").where("email = ?", "rieraraul@gmail.com")
+      patients = Patient.with_practice(current_user.practice_id).select("firstname, lastname, email").where("email = ?", "rieraraul@gmail.com")
       # REMEMBER TO REMOVE THE PREVIOUS LINE
       # YOU GOT IT? OK OK
 

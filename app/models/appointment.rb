@@ -22,7 +22,7 @@ class Appointment < ApplicationRecord
   # validations
   validates_presence_of :datebook_id, :doctor_id, :patient_id
   validates_numericality_of :datebook_id, :doctor_id, :patient_id
-  validate :ends_at_should_be_later_than_starts_at, :practice_is_mine
+  validate :ends_at_should_be_later_than_starts_at
   validates :notes, :length => { :within => 0..255 }, :allow_blank => true
 
   # callbacks
@@ -109,15 +109,6 @@ class Appointment < ApplicationRecord
 	  		self.errors[:base] << I18n.t("errors.messages.invalid_date_range")
 	  	end
 	  end
-  end
-
-  def practice_is_mine
-    begin
-      is_mine = Datebook.mine.find self.datebook_id
-
-      rescue ActiveRecord::RecordNotFound
-        self.errors[:base] << I18n.t("errors.messages.invalid_practice_id")
-    end
   end
 
   def set_ends_at

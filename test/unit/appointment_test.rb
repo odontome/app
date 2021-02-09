@@ -1,9 +1,8 @@
 require 'test_helper'
 
 class AppointmentTest < ActiveSupport::TestCase
-
 	def create_session
-		UserSession.create users(:founder)
+		users(:founder).authenticate("1234567890")
 	end
 
 	setup :create_session

@@ -8,7 +8,7 @@ class ReviewsController < ApplicationController
   def index
     reviews_per_page = 15
     @current_page = 0
-    @reviews = Review.mine.limit(reviews_per_page)
+    @reviews = Review.with_practice(current_user.practice_id).limit(reviews_per_page)
 
     if params[:page].nil?
       @reviews = @reviews.offset(0)
@@ -20,7 +20,7 @@ class ReviewsController < ApplicationController
     # increment the current page count
     @current_page = @current_page + 1
     # calculate if we need to load more reviews
-    @should_display_load_more = Review.mine.count >= (@current_page * reviews_per_page)
+    @should_display_load_more = Review.with_practice(current_user.practice_id).count >= (@current_page * reviews_per_page)
 
     respond_with(@reviews)
   end

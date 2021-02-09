@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -16,7 +15,7 @@ class ApplicationController < ActionController::Base
   def check_account_status
     if current_user
       if current_user.practice.status == "cancelled"
-        current_user_session.destroy
+        session.clear
         redirect_to signin_url, :alert => I18n.t(:account_cancelled)
       end
     end
@@ -34,14 +33,9 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def current_user_session
-    return @current_user_session if defined?(@current_user_session)
-    @current_user_session = UserSession.find
-  end
-
   def current_user
     return @current_user if defined?(@current_user)
-    @current_user = current_user_session && current_user_session.user
+    @current_user ||= User.find(session[:user]["id"]) if session[:user]
   end
 
   def user_is_admin?(user = current_user)
@@ -50,7 +44,7 @@ class ApplicationController < ActionController::Base
 
   def find_datebooks
     if current_user
-      @datebooks = Datebook.mine.order("name")
+      @datebooks = Datebook.with_practice(current_user.practice_id).order("name")
     end
   end
 

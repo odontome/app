@@ -3,7 +3,7 @@ class Api::V1::PatientsController < Api::V1::BaseController
   before_action :find_patient, :only => [:show, :update, :destroy]
   
   def index
-    respond_with Patient.mine, :only => [:id, :uid, :firstname, :lastname, :updated_at], :methods => [:fullname, :age]
+    respond_with Patient.with_practice(current_user.practice_id), :only => [:id, :uid, :firstname, :lastname, :updated_at], :methods => [:fullname, :age]
   end
   
   def show
@@ -33,7 +33,7 @@ class Api::V1::PatientsController < Api::V1::BaseController
   private
   
   def find_patient
-  	@patient = Patient.mine.find(params[:id])
+  	@patient = Patient.with_practice(current_user.practice_id).find(params[:id])
   	rescue ActiveRecord::RecordNotFound
   		error = { :error => "The patient you were looking for could not be found."}
   		respond_with(error, :status => 404)

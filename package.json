@@ -1,0 +1,25 @@
+{
+  "name": "odontome",
+  "version": "1.0.0",
+  "description": "Docker is the recommended way to run this project locally. Just follow their [instructions](https://docs.docker.com) to get started.",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc",
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/odontome/app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/odontome/app/issues"
+  },
+  "homepage": "https://github.com/odontome/app#readme"
+}

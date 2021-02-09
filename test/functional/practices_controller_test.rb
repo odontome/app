@@ -1,14 +1,12 @@
 require 'test_helper'
 
 class PracticesControllerTest < ActionController::TestCase
-
   setup do
-  	current_user = users(:founder)
-  	controller.session["user_credentials"] = users(:founder).persistence_token
+  	@controller.session["user"] = users(:founder)
   end
 
 	test "should get new" do
-		controller.session["user_credentials"] = nil
+		@controller.session["user"] = nil
 	  get :new
 	  assert_response :success
 	end
@@ -19,7 +17,7 @@ class PracticesControllerTest < ActionController::TestCase
   end
 
   test "should create practice and send welcome email" do
-    controller.session["user_credentials"] = nil
+    @controller.session["user"] = nil
 
     practice = { :name => "Odonto.me Demo Practice",
                  :timezone => "Europe/London",
@@ -40,7 +38,7 @@ class PracticesControllerTest < ActionController::TestCase
   end
 
   test "should create practice with invalid timezone" do
-    controller.session["user_credentials"] = nil
+    @controller.session["user"] = nil
 
     practice = { :name => "Odonto.me Demo Practice",
                  :timezone => "",

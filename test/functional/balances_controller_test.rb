@@ -1,9 +1,8 @@
 require 'test_helper'
 
 class BalancesControllerTest < ActionController::TestCase
-
   setup do
-  	UserSession.create users(:founder)
+  	@controller.session["user"] = users(:founder)
   end
 
   test "should get index" do

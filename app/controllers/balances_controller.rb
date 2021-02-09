@@ -5,10 +5,10 @@ class BalancesController < ApplicationController
   respond_to :html, :js, :csv
 
   def index
-    @patient = Patient.mine.find(params[:patient_id])
+    @patient = Patient.with_practice(current_user.practice_id).find(params[:patient_id])
     @balances = Balance.where("patient_id = ?", @patient.id)
     @total = Balance.where("patient_id = ?", params[:patient_id]).sum(:amount)
-    @treatments = Treatment.mine.order("name")
+    @treatments = Treatment.with_practice(current_user.practice_id).order("name")
 
     respond_to do |format|
       format.html
@@ -21,7 +21,7 @@ class BalancesController < ApplicationController
 
   def create
     @balance = Balance.new(params[:balance])
-    patient = Patient.mine.find(params[:patient_id])
+    patient = Patient.with_practice(current_user.practice_id).find(params[:patient_id])
     @balance.patient_id = patient.id
 
     respond_to do |format|

@@ -1,10 +1,8 @@
 require 'test_helper'
 
 class TreatmentsControllerTest < ActionController::TestCase
-  
   setup do
-  	UserSession.create users(:founder)
-  	
+  	@controller.session["user"] = users(:founder)
   	@treatment = { :name => "Cleaning", :price => 19.99 }
   end
   

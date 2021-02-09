@@ -1,10 +1,8 @@
 require 'test_helper'
 
 class DoctorsControllerTest < ActionController::TestCase
-
   setup do
-  	current_user = users(:founder)
-  	controller.session["user_credentials"] = users(:founder).persistence_token
+  	@controller.session["user"] = users(:founder)
 
   	@new_doctor = { :firstname => "Ruth",
   								:lastname => "Riera",

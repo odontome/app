@@ -13,14 +13,15 @@ class PatientTest < ActiveSupport::TestCase
 	end
 
 	test "patient is not valid without an unique uid in the same practice" do
-		UserSession.create users(:founder)
+		users(:founder).authenticate("1234567890")
 
 		patient = Patient.new(:uid => 0001,
+								:practice_id => 1,
 								:firstname => "Daniella",
 								:lastname => "Sanguino")
 
 		assert !patient.save
-		assert_equal I18n.t("errors.messages.taken"), patient.errors[:uid].join("; ")
+		assert_equal I18n.t("errors.messages.taken"), patient.errors[:uid].first
 	end
 
 	test "patient is not valid without an unique email in the same practice" do
@@ -28,7 +29,7 @@ class PatientTest < ActiveSupport::TestCase
 		patient.email = patients(:four).email
 
 		assert !patient.save
-		assert_equal I18n.t("errors.messages.taken"), patient.errors[:email].join("; ")
+		assert_equal I18n.t("errors.messages.taken"), patient.errors[:email].first
 	end
 
 	test "patient vices must be numbers" do
@@ -121,7 +122,7 @@ class PatientTest < ActiveSupport::TestCase
 		patient.email = "notvalid@"
 
 		assert !patient.save
-		assert_equal I18n.t("errors.messages.invalid"), patient.errors[:email].join("; ")
+		assert_equal I18n.t("errors.messages.invalid"), patient.errors[:email].first
 	end
 
 	test "patient fullname shortcut" do
