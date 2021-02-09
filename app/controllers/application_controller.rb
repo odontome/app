@@ -15,8 +15,7 @@ class ApplicationController < ActionController::Base
   def check_account_status
     if current_user
       if current_user.practice.status == "cancelled"
-        # FIXME: Destroy the session
-        #current_user_session.destroy
+        session.clear
         redirect_to signin_url, :alert => I18n.t(:account_cancelled)
       end
     end

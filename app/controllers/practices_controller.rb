@@ -74,8 +74,7 @@ class PracticesController < ApplicationController
       @practice = current_user.practice
       @practice.set_as_cancelled
       if @practice.save
-        # FIXME: Destroy the session
-        #current_user_session.destroy
+        session.clear
         flash.discard
         redirect_to signin_url, :notice => I18n.t(:practice_close_success_message)
       else
