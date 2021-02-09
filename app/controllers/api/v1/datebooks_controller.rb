@@ -3,7 +3,7 @@ class Api::V1::DatebooksController < Api::V1::BaseController
   before_action :find_datebook, :only => [:show]
   
   def index
-    datebooks = Datebook.mine
+    datebooks = Datebook.with_practice(current_user.practice_id)
     .select('datebooks.id, datebooks.name, datebooks.updated_at, count(appointments.id) as appointments_count')
     .joins('left outer join appointments on appointments.datebook_id = datebooks.id')
     .group('datebooks.id')
@@ -43,7 +43,7 @@ class Api::V1::DatebooksController < Api::V1::BaseController
   private
   
   def find_datebook
-  	@datebook = Datebook.mine.find(params[:id])
+  	@datebook = Datebook.with_practice(current_user.practice_id).find(params[:id])
   	rescue ActiveRecord::RecordNotFound
   		error = { :error => "The datebook you were looking for could not be found."}
   		respond_with(error, :status => 404)

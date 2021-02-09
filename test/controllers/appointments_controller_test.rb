@@ -1,10 +1,8 @@
 require 'test_helper'
 
 class AppointmentsControllerTest < ActionController::TestCase
-
   setup do
-  	current_user = users(:founder)
-  	controller.session["user_credentials"] = users(:founder).persistence_token
+  	@controller.session["user"] = users(:founder)
   end
 
   test "should get index" do
@@ -52,7 +50,7 @@ class AppointmentsControllerTest < ActionController::TestCase
     }
 
     assert_no_difference ['Appointment.count'] do
-      post :create, params: { appointment: appointment, datebook_id: 9, as_values_patient_id: "New patient"}, format: :js 
+      post :create, params: { appointment: appointment, datebook_id: 99, as_values_patient_id: "New patient"}, format: :js 
       # see Patient.find_or_create_from to understand the 'as_values_patient_id' property
     end
   end

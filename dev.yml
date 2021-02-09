@@ -6,3 +6,6 @@ up:
       version: v12.18.4
       yarn: 1.13.0
   - bundler
+  - database:
+      bootstrap: bin/rails db:create db:migrate db:schema:load
+      migrate: bin/rails db:migrate db:test:prepare

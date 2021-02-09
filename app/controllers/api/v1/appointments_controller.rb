@@ -47,14 +47,14 @@ class Api::V1::AppointmentsController < Api::V1::BaseController
   private
 
   def find_datebook
-    @datebook = Datebook.mine.find(params[:datebook_id])
+    @datebook = Datebook.with_practice(current_user.practice_id).find(params[:datebook_id])
     rescue ActiveRecord::RecordNotFound
       error = { :error => "The datebook you were looking for could not be found."}
       respond_with(error, :status => 404)
   end
 
   def find_appointment
-  	@appointment = Appointment.mine.find(params[:id])
+  	@appointment = Appointment.with_practice(current_user.practice_id).find(params[:id])
   	rescue ActiveRecord::RecordNotFound
   		error = { :error => "The appointment you were looking for could not be found."}
   		respond_with(error, :status => 404)

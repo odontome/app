@@ -5,8 +5,8 @@ class Treatment < ApplicationRecord
   # associations
   belongs_to :practice
   
-  scope :mine, lambda { 
-     where("treatments.practice_id = ? ", UserSession.find.user.practice_id)
+  scope :with_practice, ->(practice_id) {
+     where("treatments.practice_id = ? ", practice_id)
      .order("name")
   }
   
@@ -21,7 +21,6 @@ class Treatment < ApplicationRecord
   validates_numericality_of :price
   
   # callbacks
-  before_validation :set_practice_id, :on => :create
   
   def missing_info?
     return price.nil? || price <= 0

@@ -1,26 +1,26 @@
 Odontome::Application.routes.draw do
 
 	# API
-	namespace :api do
-    namespace :v1 do
+	# namespace :api do
+  #   namespace :v1 do
 
-    	post "/authentication" => "authentication#create"
-      get "/practice" => "practices#show"
+  #   	post "/authentication" => "authentication#create"
+  #     get "/practice" => "practices#show"
 
-      resources :doctors
-      resources :treatments
-			resources :balances
+  #     resources :doctors
+  #     resources :treatments
+	# 		resources :balances
 
-      resources :datebooks do
-        resources :appointments
-      end
+  #     resources :datebooks do
+  #       resources :appointments
+  #     end
 
-      resources :patients do
-        resources :notes
-      end
+  #     resources :patients do
+  #       resources :notes
+  #     end
 
-		end
-	end
+	# 	end
+	# end
 
   resources :datebooks do
     resources :appointments
@@ -81,5 +81,4 @@ Odontome::Application.routes.draw do
   get '/500', :to => 'errors#server_error'
 
   root :to => "welcome#index"
-
 end

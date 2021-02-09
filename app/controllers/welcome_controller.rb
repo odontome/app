@@ -11,16 +11,16 @@ class WelcomeController < ApplicationController
 
         if session[:LAST_VISITED_DATEBOOK]
           begin
-            home_url = Datebook.mine.find(session[:LAST_VISITED_DATEBOOK])
+            home_url = Datebook.with_practice(current_user.practice_id).find(session[:LAST_VISITED_DATEBOOK])
           rescue ActiveRecord::RecordNotFound
-            home_url = Datebook.mine.first
+            home_url = Datebook.with_practice(current_user.practice_id).first
           end
         else
-          home_url = Datebook.mine.first
+          home_url = Datebook.with_practice(current_user.practice_id).first
         end       
 
       end
-      redirect_to home_url
+      redirect_to practice_url
     else
       redirect_to :signin
     end

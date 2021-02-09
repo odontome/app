@@ -7,6 +7,7 @@ class NotesController < ApplicationController
   def create
     @noteable = find_noteable
     @note = @noteable.notes.build(params[:note])
+    @note.user_id = current_user.id
     
     respond_to do |format|
       if @note.save

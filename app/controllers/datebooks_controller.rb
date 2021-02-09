@@ -6,7 +6,7 @@ class DatebooksController < ApplicationController
   	# this same variable is already defined in the
     # application controller. Maybe we should think of
     # a way to remove it from there
-    @datebooks = Datebook.mine
+    @datebooks = Datebook.with_practice(current_user.practice_id)
     .select('datebooks.id, datebooks.name, datebooks.updated_at, datebooks.starts_at, datebooks.ends_at, count(appointments.id) as appointments_count')
     .joins('left outer join appointments on appointments.datebook_id = datebooks.id')
     .group('datebooks.id')
@@ -14,9 +14,9 @@ class DatebooksController < ApplicationController
   end
 
   def show
-    @doctors = Doctor.mine.valid.order("firstname")
+    @doctors = Doctor.with_practice(current_user.practice_id).valid.order("firstname")
     @filtered_by = params[:doctor_id] || nil
-    @datebook = Datebook.mine.find params[:id]
+    @datebook = Datebook.with_practice(current_user.practice_id).find params[:id]
 
     # store this variable in the session scope, the next time
     # so when the user clicks on the logo it will send him
@@ -33,6 +33,7 @@ class DatebooksController < ApplicationController
 
   def create
     @datebook = Datebook.new(params[:datebook])
+    @datebook.practice_id = current_user.practice_id
 
     respond_to do |format|
       if @datebook.save
@@ -44,11 +45,11 @@ class DatebooksController < ApplicationController
   end
 
   def edit
-    @datebook = Datebook.mine.find params[:id]
+    @datebook = Datebook.with_practice(current_user.practice_id).find params[:id]
   end
 
   def update
-    @datebook = Datebook.mine.find params[:id]
+    @datebook = Datebook.with_practice(current_user.practice_id).find params[:id]
 
     respond_to do |format|
       if @datebook.update_attributes(params[:datebook])
@@ -60,7 +61,7 @@ class DatebooksController < ApplicationController
   end
 
   def destroy
-    @datebook = Datebook.mine.find params[:id]
+    @datebook = Datebook.with_practice(current_user.practice_id).find params[:id]
 
     respond_to do |format|
       if (@datebook.destroy)

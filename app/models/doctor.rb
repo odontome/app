@@ -1,14 +1,14 @@
 class Doctor < ApplicationRecord
   # permitted attributes
-  attr_accessible :uid, :firstname, :lastname, :email, :gender, :speciality, :color
+  attr_accessible :uid, :firstname, :lastname, :email, :gender, :speciality, :color, :practice_id
 
   # associations
   belongs_to :practice, :counter_cache => true
   has_many :appointments
   has_many :patients, :through => :appointments
 
-  scope :mine, lambda {
-    where("doctors.practice_id = ? ", UserSession.find.user.practice_id)
+  scope :with_practice, ->(practice_id) {
+    where("doctors.practice_id = ? ", practice_id)
     .order("doctors.firstname")
   }
 
@@ -22,10 +22,9 @@ class Doctor < ApplicationRecord
   validates_uniqueness_of :email, :scope => :practice_id, :allow_nil => true, :allow_blank => true
   validates_length_of :uid, :within => 0..25, :allow_blank => true
   validates_length_of :speciality, :within => 0..50, :allow_blank => true
-  validates_format_of :email, :with => Authlogic::Regex::EMAIL, :allow_blank => true
+  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
 
   # callbacks
-  before_validation :set_practice_id, :on => :create
   before_destroy :check_if_is_deleteable
 
   def fullname

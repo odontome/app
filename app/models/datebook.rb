@@ -6,8 +6,8 @@ class Datebook < ApplicationRecord
   has_many :appointments
   belongs_to :practice, :counter_cache => true
 
-  scope :mine, lambda {
-    where("datebooks.practice_id = ? ", UserSession.find.user.practice_id)
+  scope :with_practice, ->(practice_id) {
+    where("datebooks.practice_id = ? ", practice_id)
   }
 
   # validations
@@ -20,7 +20,6 @@ class Datebook < ApplicationRecord
   validates_numericality_of :ends_at, less_than_or_equal_to: 23
 
   # callbacks
-  before_validation :set_practice_id, :on => :create
   before_destroy :check_if_is_deleteable
 
   def is_deleteable

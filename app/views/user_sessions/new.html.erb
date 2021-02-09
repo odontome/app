@@ -1,16 +1,8 @@
-<% if @user_session.errors.any? %>
-    <div class="alert alert-warning">
-    <% @user_session.errors.full_messages.each do |msg| %>
-        <%= msg %><br />
-    <% end %>
-    </div> 
-<% end %>
-
 <%= link_to (image_tag_with_at2x "logo.png", :title => t(:home), :class => "logo", :width => 100), root_path %>
 
 <div class="box">
     <div class="content-wrap">
-        <%= form_for(@user_session, :url => user_session_path) do |f| %>
+        <%= form_for(:signin, :url => user_session_path) do |f| %>
         
         <%= f.email_field :email, :placeholder => t(:email), :autocapitalize => "off", :autocorrect => "off", :class => "form-control" %>
         <%= f.password_field :password, :placeholder => t(:password), :class => "form-control" %>

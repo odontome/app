@@ -1,6 +1,6 @@
 class Patient < ApplicationRecord
   # permitted attributes
-  attr_accessible :uid, :firstname, :lastname, :fullname, :date_of_birth, :past_illnesses, :surgeries, :medications, :drugs_use, :cigarettes_per_day, :drinks_per_day, :family_diseases, :emergency_telephone, :email, :telephone, :mobile, :address, :allergies
+  attr_accessible :uid, :firstname, :lastname, :fullname, :date_of_birth, :past_illnesses, :surgeries, :medications, :drugs_use, :cigarettes_per_day, :drinks_per_day, :family_diseases, :emergency_telephone, :email, :telephone, :mobile, :address, :allergies, :practice_id
 
   # associations
   has_many :appointments, :dependent => :delete_all
@@ -9,21 +9,19 @@ class Patient < ApplicationRecord
   has_many :doctors, :through => :appointments
   belongs_to :practice, :counter_cache => true
 
-  scope :mine, lambda {
-    where("patients.practice_id = ? ", UserSession.find.user.practice_id)
+  scope :with_practice, ->(practice_id) {
+    where("patients.practice_id = ? ", practice_id)
     .order("firstname")
   }
 
   scope :alphabetically, lambda { |letter|
-    mine
-    .select("firstname,lastname,uid,id,date_of_birth,allergies,email,updated_at")
+    select("firstname,lastname,uid,id,date_of_birth,allergies,email,updated_at")
     .where("lower(firstname) LIKE ?", "#{letter.downcase}%")
   }
 
   scope :search, lambda { |q|
     select("id,uid,firstname,lastname,email,updated_at,date_of_birth")
     .where("uid LIKE ? OR lower(firstname || ' ' || lastname) LIKE ?", q, "%#{q.downcase}%")
-    .mine
     .limit(25)
     .order("firstname")
   }
@@ -31,6 +29,7 @@ class Patient < ApplicationRecord
   # validations
   validates_uniqueness_of :uid, :scope => :practice_id, :allow_nil => true, :allow_blank => true
   validates_uniqueness_of :email, :scope => :practice_id, :allow_nil => true, :allow_blank => true
+  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, :allow_nil => true, :allow_blank => true
   validates_presence_of :practice_id, :firstname, :lastname, :date_of_birth
 
   validates_numericality_of :cigarettes_per_day, :drinks_per_day, :only_integer => true, :greater_than_or_equal_to => 0, :allow_blank => true
@@ -41,11 +40,8 @@ class Patient < ApplicationRecord
   validates_length_of :telephone, :within => 0..20, :allow_blank => true
   validates_length_of :mobile, :within => 0..20, :allow_blank => true
   validates_length_of :emergency_telephone, :within => 5..20, :allow_blank => true
-  validates_format_of :email, :with => Authlogic::Regex::EMAIL, :allow_blank => true
 
   # callbacks
-  before_validation :set_practice_id, :on => :create
-  #before_create :check_for_patients_limit
   after_create :destroy_nils
 
   def fullname
@@ -72,7 +68,7 @@ class Patient < ApplicationRecord
   end
 
   # this function tries to find a patient by an ID or it's NAME, otherwise it creates one
-  def self.find_or_create_from(patient_id_or_name)
+  def self.find_or_create_from(patient_id_or_name, practice_id)
 
     # remove any possible commas from this value
     patient_id_or_name.gsub!(",", "")
@@ -83,7 +79,7 @@ class Patient < ApplicationRecord
       patient = new()
       patient.fullname = patient_id_or_name
       # set the practice_id manually because validation (and callbacks apparently as well) are skipped
-      patient.practice_id = UserSession.find.user.practice_id
+      patient.practice_id = practice_id
       # skip validation when saving this patient
       patient.save!(:validate => false)
 
@@ -105,7 +101,7 @@ class Patient < ApplicationRecord
 
   # this function is a small compromise to bypass that weird situation where a patient is created with everything set to nil
   def destroy_nils
-    Patient.mine.where(firstname: nil).destroy_all
+    Patient.where(firstname: nil).destroy_all
     Appointment.where(patient_id: nil).destroy_all
   end
 

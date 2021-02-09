@@ -12,7 +12,8 @@ class Api::V1::BaseController < ActionController::Base
       @current_user = User.find_by_authentication_token(token)
 
       if @current_user && !@current_user.authentication_token.nil?
-        @current_user = UserSession.create(@current_user)
+        # FIXME: use JWT?
+        #@current_user = UserSession.create(@current_user)
       else
         render :json => {:error => "Token is invalid." }, :status => 401
       end

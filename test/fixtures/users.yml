@@ -5,10 +5,7 @@ founder:
   lastname: Riera
   email: raulriera@hotmail.com
   roles: admin
-  password_salt: <%= salt = Authlogic::Random.hex_token %>
-  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("1234567890" + salt) %>
-  persistence_token: <%= Authlogic::Random.hex_token %>
-  perishable_token: <%= Authlogic::Random.friendly_token %>
+  password_digest: <%= BCrypt::Password.create("1234567890", cost: BCrypt::Engine::MIN_COST) %>
   login_count: 5
 
 perishable: 
@@ -18,10 +15,7 @@ perishable:
   lastname: Barragan
   email: contact@bokanova.mx
   roles: user
-  password_salt: <%= salt = Authlogic::Random.hex_token %>
-  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("1234567890" + salt) %>
-  persistence_token: <%= Authlogic::Random.hex_token %>
-  perishable_token: <%= Authlogic::Random.friendly_token %>
+  password_digest: <%= BCrypt::Password.create("1234567890", cost: BCrypt::Engine::MIN_COST) %>
   
 user_in_yet_another_practice: 
   id: 3
@@ -30,10 +24,7 @@ user_in_yet_another_practice:
   lastname: Barragan
   email: contact@bokanova.mx
   roles: user
-  password_salt: <%= salt = Authlogic::Random.hex_token %>
-  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("1234567890" + salt) %>
-  persistence_token: <%= Authlogic::Random.hex_token %>
-  perishable_token: <%= Authlogic::Random.friendly_token %>
+  password_digest: <%= BCrypt::Password.create("1234567890", cost: BCrypt::Engine::MIN_COST) %>
   
 api_user:
   id: 4

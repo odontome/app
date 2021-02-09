@@ -15,18 +15,19 @@ class DoctorTest < ActiveSupport::TestCase
 		doctor.email = "notvalid@"
 													
 		assert !doctor.save
-		assert_equal I18n.t("errors.messages.invalid"), doctor.errors[:email].join("; ")
+		assert_equal I18n.t("errors.messages.invalid"), doctor.errors[:email].first
 	end
 
 	test "doctor is not valid without an unique uid in the same practice" do
-		UserSession.create users(:founder)
+		users(:founder).authenticate("1234567890")
 		
 		doctor = Doctor.new(:uid => "D001",
-										:firstname => "Daniella",
-										:lastname => "Sanguino")
+							:practice_id => 1,
+							:firstname => "Daniella",
+							:lastname => "Sanguino")
 													
 		assert !doctor.save
-		assert_equal I18n.t("errors.messages.taken"), doctor.errors[:uid].join("; ")
+		assert_equal I18n.t("errors.messages.taken"), doctor.errors[:uid].first
 	end
 
 	test "doctor is not valid without an unique email in the same practice" do	
@@ -34,7 +35,7 @@ class DoctorTest < ActiveSupport::TestCase
 		doctor.email = doctors(:perishable).email
 
 		assert !doctor.save
-		assert_equal I18n.t("errors.messages.taken"), doctor.errors[:email].join("; ")
+		assert_equal I18n.t("errors.messages.taken"), doctor.errors[:email].first
 	end
 
 	test "doctor uid must be between 0 and 25 characters" do
@@ -42,7 +43,7 @@ class DoctorTest < ActiveSupport::TestCase
 		doctor.uid = "00001111222233334444555666677778888"
 		
 		assert !doctor.save
-		assert_equal I18n.t("errors.messages.too_long", :count => 25), doctor.errors[:uid].join("; ")
+		assert_equal I18n.t("errors.messages.too_long", :count => 25), doctor.errors[:uid].first
 	end
 
 	test "doctor specialty must be between 0 and 50 characters" do
@@ -50,7 +51,7 @@ class DoctorTest < ActiveSupport::TestCase
 		doctor.speciality = "A really long doctors specialty he treats everyone with real care and has study many fields of medicine and destistry"
 		
 		assert !doctor.save
-		assert_equal I18n.t("errors.messages.too_long", :count => 50), doctor.errors[:speciality].join("; ")
+		assert_equal I18n.t("errors.messages.too_long", :count => 50), doctor.errors[:speciality].first
 	end
 
 	test "doctor fullname shortcut" do

@@ -1,6 +1,9 @@
 require 'test_helper'
 
 class DatebookTest < ActiveSupport::TestCase
+	setup do
+		users(:founder).authenticate("1234567890")
+	end
 
 	test "datebook attributes must not be empty" do
 		datebook = Datebook.new
@@ -11,7 +14,6 @@ class DatebookTest < ActiveSupport::TestCase
 	end
 
 	test "datebook should save using a valid hours range" do
-		UserSession.create users(:founder)
 		datebook = Datebook.new(:name => "Valid datebook", :starts_at => 9, :ends_at => 19, :practice_id => 1)
 		assert datebook.save
 		assert_equal datebook.starts_at, 9
@@ -44,14 +46,5 @@ class DatebookTest < ActiveSupport::TestCase
 
 		assert !datebook.save
 		assert_equal I18n.t("errors.messages.too_long", :count => 100), datebook.errors[:name].join("; ")
-
-	end
-
-	test "datebook practice_id should be set from the session" do
-		UserSession.create users(:founder)
-		datebook = Datebook.new(:name => "Consulta #1")
-
-		assert datebook.save
-		assert_equal datebook.practice_id, users(:founder).practice_id
 	end
 end

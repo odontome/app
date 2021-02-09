@@ -2,11 +2,11 @@ class BroadcastsController < ApplicationController
   before_action :require_user
 
   def index
-    @broadcasts = Broadcast.mine
+    @broadcasts = Broadcast.with_practice(current_user.practice_id)
   end
 
   def show
-    @broadcast = Broadcast.mine.find(params[:id])
+    @broadcast = Broadcast.with_practice(current_user.practice_id).find(params[:id])
   end
 
   def new
@@ -26,7 +26,7 @@ class BroadcastsController < ApplicationController
   end
 
   def destroy
-    @broadcast = Broadcast.mine.find(params[:id])
+    @broadcast = Broadcast.with_practice(current_user.practice_id).find(params[:id])
     @broadcast.destroy
 
     respond_to do |format|

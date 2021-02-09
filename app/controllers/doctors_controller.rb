@@ -6,11 +6,11 @@ class DoctorsController < ApplicationController
   respond_to :ics, :only => [:appointments]
 
   def index
-    @doctors = Doctor.mine
+    @doctors = Doctor.with_practice(current_user.practice_id)
   end
 
   def show
-    @doctor = Doctor.mine.find(params[:id])
+    @doctor = Doctor.with_practice(current_user.practice_id).find(params[:id])
     @appointments = @doctor.appointments.joins(:patient).where("starts_at > ?", Date.today).order("starts_at desc")
   end
 
@@ -19,11 +19,12 @@ class DoctorsController < ApplicationController
   end
 
   def edit
-    @doctor = Doctor.mine.find(params[:id])
+    @doctor = Doctor.with_practice(current_user.practice_id).find(params[:id])
   end
 
   def create
     @doctor = Doctor.new(params[:doctor])
+    @doctor.practice_id = current_user.practice_id
 
     respond_to do |format|
       if @doctor.save
@@ -35,7 +36,7 @@ class DoctorsController < ApplicationController
   end
 
   def update
-    @doctor = Doctor.mine.find(params[:id])
+    @doctor = Doctor.with_practice(current_user.practice_id).find(params[:id])
 
     respond_to do |format|
       if @doctor.update_attributes(params[:doctor])
@@ -47,7 +48,7 @@ class DoctorsController < ApplicationController
   end
 
   def destroy
-    @doctor = Doctor.mine.find(params[:id])
+    @doctor = Doctor.with_practice(current_user.practice_id).find(params[:id])
 
     # Check if this doctor can be deleted, otherwise toggle his validness
     if @doctor.is_deleteable

@@ -5,10 +5,10 @@ class Review < ApplicationRecord
   # associations
   belongs_to :appointment
 
-  scope :mine, lambda {
+  scope :with_practice, ->(practice_id) {
     includes(:appointment => [:doctor, :patient])
     .joins(:appointment => [:datebook => [:practice]])
-    .where("practices.id = ? ", UserSession.find.user.practice_id)
+    .where("practices.id = ? ", practice_id)
     .order(created_at: :desc)
   }
 

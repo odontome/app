@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class UserMailerTest < ActionMailer::TestCase
-
   test "reset password instructions mail" do
     user = users(:founder)
 
@@ -15,5 +14,4 @@ class UserMailerTest < ActionMailer::TestCase
     assert_equal ['raulriera@hotmail.com'], email.to
     assert_equal I18n.t("mailers.notifier.password_reset.subject"), email.subject
   end
-
 end
