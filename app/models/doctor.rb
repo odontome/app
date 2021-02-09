@@ -22,7 +22,7 @@ class Doctor < ApplicationRecord
   validates_uniqueness_of :email, :scope => :practice_id, :allow_nil => true, :allow_blank => true
   validates_length_of :uid, :within => 0..25, :allow_blank => true
   validates_length_of :speciality, :within => 0..50, :allow_blank => true
-  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
+  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, :allow_nil => true, :allow_blank => true
 
   # callbacks
   before_destroy :check_if_is_deleteable
