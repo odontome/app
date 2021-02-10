@@ -44,7 +44,7 @@ Rails.application.configure do
   ENV["REDISTOGO_URL"] = 'redis://redistogo:681bdba6cde45dca00275208cac1a7a0@pearlfish.redistogo.com:9008/'
 
   # Configure the host for emails
-  config.action_mailer.asset_host = "http://0.0.0.0:3000"
+  config.action_mailer.asset_host = "https://0.0.0.0:3000"
   config.action_mailer.default_url_options = { :host => '0.0.0.0:3000' }
 
   # Do not compress assets
