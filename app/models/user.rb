@@ -36,8 +36,7 @@ class User < ApplicationRecord
   end
 
   def deliver_password_reset_instructions!
-    # FIXME: Use the built in password recovery system
-    #reset_perishable_token!
+    reset_perishable_token!
     NotifierMailer.deliver_password_reset_instructions(self).deliver_now
   end
 
@@ -74,6 +73,10 @@ class User < ApplicationRecord
         self.authentication_token = SecureRandom.hex
       end while self.class.exists?(authentication_token: authentication_token)
   	end
+  end
+
+  def reset_perishable_token!
+    self.update_attribute(:perishable_token, SecureRandom.urlsafe_base64(15))
   end
 
 end

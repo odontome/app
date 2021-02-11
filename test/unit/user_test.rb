@@ -65,16 +65,12 @@ class UserTest < ActiveSupport::TestCase
 		assert_equal user.fullname, "#{user.firstname} #{user.lastname}"
 	end
 
-	# FIXME: remove all of this, we are not going to use the API anymore
-#   test "user authentication token changes when the password is updated" do
-#     user = users(:api_user)
-#     initial_token = user.authentication_token
-
-#     user.password = "3245435436577"
-#     user.password_confirmation = user.password
-
-#     assert user.save
-#     assert_not_equal initial_token, user.authentication_token
-#   end
+  test "user perishable token changes when deliver password is invoked" do
+    user = users(:founder)
+	initial_token = user.perishable_token
+    
+	user.deliver_password_reset_instructions!
+    assert_not_equal initial_token, user.perishable_token
+  end
  
 end
