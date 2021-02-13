@@ -32,6 +32,7 @@ gem 'premailer-rails', '~> 1.11.1'
 gem 'rails_select_on_includes', '~> 5.2.1'
 
 gem 'pg', '~> 1.2.3'
+gem 'airbrake'
 
 group :development do
   gem 'brakeman', '~> 4.9.0'
