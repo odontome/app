@@ -14,7 +14,7 @@ gem 'uglifier', '~> 4.2.0'
 ### rails backward compatibility
 
 gem 'protected_attributes_continued', '~> 1.5.0'
-gem 'responders', '~> 2.0'
+gem 'responders', '~> 3.0'
 
 ### odonto.me specifc
 
