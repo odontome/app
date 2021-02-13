@@ -37,7 +37,7 @@ class PasswordResetsController < ApplicationController
   private
 
   def load_user_using_perishable_token
-    @user = User.find_using_perishable_token(params[:id])
+    @user = User.find_by(perishable_token: params[:id], updated_at: 10.minutes.ago..Time.now)
     unless @user
       flash[:error] = I18n.t(:account_not_found)
       redirect_to root_url
