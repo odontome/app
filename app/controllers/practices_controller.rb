@@ -1,12 +1,11 @@
 class PracticesController < ApplicationController
-
-  before_action :require_user, :only =>  [:index, :destroy, :edit, :settings, :show, :close]
-  before_action :require_no_user, :only => [:new, :create]
-  before_action :require_superadmin, :only => [:index, :destroy, :edit]
-  before_action :require_practice_admin, :only => [:settings, :balance, :update, :close]
+  before_action :require_user, only: %i[index destroy edit settings show close]
+  before_action :require_no_user, only: %i[new create]
+  before_action :require_superadmin, only: %i[index destroy edit]
+  before_action :require_practice_admin, only: %i[settings balance update close]
 
   # provides
-  respond_to :html, :csv, :only => :balance
+  respond_to :html, :csv, only: :balance
 
   def index
     @practices = Practice.all
@@ -26,7 +25,7 @@ class PracticesController < ApplicationController
     @practice.users.build
     @user = User.new
 
-    render :layout => "user_sessions"
+    render layout: 'user_sessions'
   end
 
   def edit
@@ -44,7 +43,7 @@ class PracticesController < ApplicationController
         PracticeMailer.welcome_email(@practice).deliver_now
         format.html { redirect_to(practice_path) }
       else
-        format.html { render :action => "new", :as => :signup, :layout => "user_sessions" }
+        format.html { render action: 'new', as: :signup, layout: 'user_sessions' }
       end
     end
   end
@@ -55,19 +54,19 @@ class PracticesController < ApplicationController
 
     respond_to do |format|
       if @practice.update_attributes(params[:practice])
-        format.html { redirect_to(practice_settings_url, :notice => t(:practice_updated_success_message)) }
+        format.html { redirect_to(practice_settings_url, notice: t(:practice_updated_success_message)) }
       else
-        format.html { render :action => "settings" }
+        format.html { render action: 'settings' }
       end
     end
   end
 
   def cancel
-    #LOL this does nothing
+    # LOL this does nothing
   end
 
   def close
-    if current_user.practice.status == "active"
+    if current_user.practice.status == 'active'
       flash[:alert] = I18n.t(:practice_close_active_message)
       redirect_to practice_settings_url
     else
@@ -76,7 +75,7 @@ class PracticesController < ApplicationController
       if @practice.save
         session.clear
         flash.discard
-        redirect_to signin_url, :notice => I18n.t(:practice_close_success_message)
+        redirect_to signin_url, notice: I18n.t(:practice_close_success_message)
       else
         @practice.errors[:base] << I18n.t(:practice_close_error_message)
         redirect_to practice_settings_url
@@ -99,27 +98,26 @@ class PracticesController < ApplicationController
   end
 
   def balance
-    if (params[:created_at])
-      starts_at = DateTime.parse params[:created_at]
-    else
-      starts_at = DateTime.now
-    end
+    starts_at = if params[:created_at]
+                  DateTime.parse params[:created_at]
+                else
+                  DateTime.now
+                end
 
     starts_at = starts_at.at_beginning_of_day
     ends_at = starts_at + 24.hours
 
-    @selected_date = starts_at.strftime("%A, %d %B %y")
+    @selected_date = starts_at.strftime('%A, %d %B %y')
 
     @balances = Balance.find_between starts_at, ends_at, @current_user.practice_id
     @total = @balances.sum(:amount)
 
     respond_to do |format|
       format.html
-      format.csv {
-        headers["Content-Type"] = "text/csv"
-        headers["Content-disposition"] = "attachment; filename=#{starts_at}.csv"
-      }
+      format.csv do
+        headers['Content-Type'] = 'text/csv'
+        headers['Content-disposition'] = "attachment; filename=#{starts_at}.csv"
+      end
     end
   end
-
 end

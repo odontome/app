@@ -2,7 +2,7 @@ class TreatmentsController < ApplicationController
   before_action :require_user
 
   def index
-    @treatments = Treatment.with_practice(current_user.practice_id).order("name")
+    @treatments = Treatment.with_practice(current_user.practice_id).order('name')
   end
 
   def new
@@ -19,9 +19,9 @@ class TreatmentsController < ApplicationController
 
     respond_to do |format|
       if @treatment.save
-        format.html { redirect_to(treatments_url, :notice => t(:treatments_created_success_message)) }
+        format.html { redirect_to(treatments_url, notice: t(:treatments_created_success_message)) }
       else
-        format.html { render :action => "new" }
+        format.html { render action: 'new' }
       end
     end
   end
@@ -31,9 +31,9 @@ class TreatmentsController < ApplicationController
 
     respond_to do |format|
       if @treatment.update_attributes(params[:treatment])
-        format.html { redirect_to(treatments_url, :notice => t(:treatments_updated_success_message)) }
+        format.html { redirect_to(treatments_url, notice: t(:treatments_updated_success_message)) }
       else
-        format.html { render :action => "edit" }
+        format.html { render action: 'edit' }
       end
     end
   end
@@ -56,5 +56,4 @@ class TreatmentsController < ApplicationController
     end
     redirect_to treatments_url
   end
-
 end

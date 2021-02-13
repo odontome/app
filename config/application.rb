@@ -2,7 +2,7 @@ require_relative 'boot'
 
 require 'csv'
 require 'rails/all'
-require "sprockets/railtie"
+require 'sprockets/railtie'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -21,7 +21,7 @@ module Odontome
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
-    
+
     # Do not swallow errors in after_commit/after_rollback callbacks.
     # config.active_record.raise_in_transactional_callbacks = true
 
@@ -30,13 +30,13 @@ module Odontome
 
     ### Odonto.me stuff
 
-    config.i18n.available_locales = ["es", "en"]
+    config.i18n.available_locales = %w[es en]
     config.i18n.enforce_available_locales = false
 
     # disabled field error behavior
-    config.action_view.field_error_proc = Proc.new { |html_tag, instance| 
+    config.action_view.field_error_proc = proc do |html_tag, _instance|
       html_tag
-    }
+    end
 
     # Protect from mass assignments
     # config.active_record.whitelist_attributes = true
@@ -48,7 +48,7 @@ module Odontome
     # config.middleware.use Rack::SslEnforcer, :only => ["/signup", "/signin", "/users/new", /^\/users\/(.+)\/edit/, "/set_session_time_zone"], :mixed => true, , :except_hosts => '0.0.0.0'
 
     # enable custom error pages
-    config.exceptions_app = self.routes
+    config.exceptions_app = routes
     config.action_controller.permit_all_parameters = true
   end
 end

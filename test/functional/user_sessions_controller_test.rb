@@ -1,15 +1,15 @@
 require 'test_helper'
 
 class UserSessionsControllerTest < ActionController::TestCase
-  test "should get new" do
+  test 'should get new' do
     get :new
     assert_response :success
   end
 
-  test "should create user session if valid params are given" do
-    post :create, params: { signin: { :email => 'raulriera@hotmail.com', :password => '1234567890' } }
+  test 'should create user session if valid params are given' do
+    post :create, params: { signin: { email: 'raulriera@hotmail.com', password: '1234567890' } }
 
-    assert_equal @controller.session["user"], users(:founder)
+    assert_equal @controller.session['user'], users(:founder)
     assert_redirected_to root_url
   end
 
@@ -24,5 +24,4 @@ class UserSessionsControllerTest < ActionController::TestCase
 
   #   assert_template 'new'
   # end
-
 end

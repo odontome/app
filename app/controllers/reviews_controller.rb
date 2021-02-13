@@ -1,6 +1,6 @@
 class ReviewsController < ApplicationController
   # filters
-  before_action :require_user, :except => [:new, :create]
+  before_action :require_user, except: %i[new create]
 
   # provides
   respond_to :html, :js
@@ -18,7 +18,7 @@ class ReviewsController < ApplicationController
     end
 
     # increment the current page count
-    @current_page = @current_page + 1
+    @current_page += 1
     # calculate if we need to load more reviews
     @should_display_load_more = Review.with_practice(current_user.practice_id).count >= (@current_page * reviews_per_page)
 
@@ -31,7 +31,7 @@ class ReviewsController < ApplicationController
     begin
       # check that this appointment is reviewable
       deciphered_appointment_id = Cipher.decode params[:appointment_id]
-      @appointment = Appointment.where(id: deciphered_appointment_id).includes(:doctor, :datebook => [:practice]).first
+      @appointment = Appointment.where(id: deciphered_appointment_id).includes(:doctor, datebook: [:practice]).first
 
       if Review.where(appointment_id: deciphered_appointment_id).exists?
         # do nothing, handle this in the view
@@ -39,13 +39,12 @@ class ReviewsController < ApplicationController
         @review.score = params[:score]
         @review.appointment_id = params[:appointment_id]
       end
-
     rescue Exception
-      redirect_to "http://www.odonto.me"
+      redirect_to 'http://www.odonto.me'
       return
     end
 
-    respond_with(@review, layout: "simple")
+    respond_with(@review, layout: 'simple')
   end
 
   def create
@@ -56,18 +55,18 @@ class ReviewsController < ApplicationController
       if @review.save
         # email the admin about this review
         PracticeMailer.new_review_notification(@review).deliver_now
-        format.js  { } #create.js.erb
+        format.js  {} # create.js.erb
       else
-        format.js  {
+        format.js  do
           render_ujs_error(@review, I18n.t(:review_created_error_message))
-        }
+        end
       end
     end
   end
 
   private
 
-    def review_params
-      params.require(:review).permit(:appointment_id, :score, :comment)
-    end
+  def review_params
+    params.require(:review).permit(:appointment_id, :score, :comment)
+  end
 end

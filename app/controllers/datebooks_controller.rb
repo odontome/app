@@ -1,20 +1,20 @@
 class DatebooksController < ApplicationController
   before_action :require_user
-  before_action :require_practice_admin, :except => [:show]
+  before_action :require_practice_admin, except: [:show]
 
   def index
-  	# this same variable is already defined in the
+    # this same variable is already defined in the
     # application controller. Maybe we should think of
     # a way to remove it from there
     @datebooks = Datebook.with_practice(current_user.practice_id)
-    .select('datebooks.id, datebooks.name, datebooks.updated_at, datebooks.starts_at, datebooks.ends_at, count(appointments.id) as appointments_count')
-    .joins('left outer join appointments on appointments.datebook_id = datebooks.id')
-    .group('datebooks.id')
-    .order('datebooks.created_at')
+                         .select('datebooks.id, datebooks.name, datebooks.updated_at, datebooks.starts_at, datebooks.ends_at, count(appointments.id) as appointments_count')
+                         .joins('left outer join appointments on appointments.datebook_id = datebooks.id')
+                         .group('datebooks.id')
+                         .order('datebooks.created_at')
   end
 
   def show
-    @doctors = Doctor.with_practice(current_user.practice_id).valid.order("firstname")
+    @doctors = Doctor.with_practice(current_user.practice_id).valid.order('firstname')
     @filtered_by = params[:doctor_id] || nil
     @datebook = Datebook.with_practice(current_user.practice_id).find params[:id]
 
@@ -37,9 +37,9 @@ class DatebooksController < ApplicationController
 
     respond_to do |format|
       if @datebook.save
-        format.html { redirect_to(datebooks_url, :notice => t(:datebook_created_success_message))}
+        format.html { redirect_to(datebooks_url, notice: t(:datebook_created_success_message)) }
       else
-        format.html { render :action => "new" }
+        format.html { render action: 'new' }
       end
     end
   end
@@ -53,9 +53,9 @@ class DatebooksController < ApplicationController
 
     respond_to do |format|
       if @datebook.update_attributes(params[:datebook])
-        format.html { redirect_to(datebooks_url, :notice => t(:datebook_updated_success_message)) }
+        format.html { redirect_to(datebooks_url, notice: t(:datebook_updated_success_message)) }
       else
-        format.html { render :action => "edit" }
+        format.html { render action: 'edit' }
       end
     end
   end
@@ -64,12 +64,11 @@ class DatebooksController < ApplicationController
     @datebook = Datebook.with_practice(current_user.practice_id).find params[:id]
 
     respond_to do |format|
-      if (@datebook.destroy)
+      if @datebook.destroy
         format.html { redirect_to(datebooks_url) }
       else
-        format.html { redirect_to(datebooks_url, :error => I18n.t("errors.messages.has_appointments"))}
+        format.html { redirect_to(datebooks_url, error: I18n.t('errors.messages.has_appointments')) }
       end
     end
   end
-
 end

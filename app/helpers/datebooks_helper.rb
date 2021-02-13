@@ -5,8 +5,8 @@ module DatebooksHelper
     ends_at = DateTime.now.utc.beginning_of_day + ends_at.to_i.hours
 
     # format the date to show only the hours
-    starts_at = starts_at.strftime("%H:%M")
-    ends_at = ends_at.strftime("%H:%M")
+    starts_at = starts_at.strftime('%H:%M')
+    ends_at = ends_at.strftime('%H:%M')
 
     "#{starts_at} - #{ends_at}"
   end

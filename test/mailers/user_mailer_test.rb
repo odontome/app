@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class UserMailerTest < ActionMailer::TestCase
-  test "reset password instructions mail" do
+  test 'reset password instructions mail' do
     user = users(:founder)
 
     # Send the email, then test that it got queued
@@ -12,6 +12,6 @@ class UserMailerTest < ActionMailer::TestCase
     # Test the body of the sent email contains what we expect it to
     assert_equal ['hello@odonto.me'], email.from
     assert_equal ['raulriera@hotmail.com'], email.to
-    assert_equal I18n.t("mailers.notifier.password_reset.subject"), email.subject
+    assert_equal I18n.t('mailers.notifier.password_reset.subject'), email.subject
   end
 end

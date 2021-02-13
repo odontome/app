@@ -41,11 +41,11 @@ Rails.application.configure do
 
   #### Odonto.me stuff
 
-  ENV["REDISTOGO_URL"] = 'redis://redistogo:681bdba6cde45dca00275208cac1a7a0@pearlfish.redistogo.com:9008/'
+  ENV['REDISTOGO_URL'] = 'redis://redistogo:681bdba6cde45dca00275208cac1a7a0@pearlfish.redistogo.com:9008/'
 
   # Configure the host for emails
-  config.action_mailer.asset_host = "https://0.0.0.0:3000"
-  config.action_mailer.default_url_options = { :host => '0.0.0.0:3000' }
+  config.action_mailer.asset_host = 'https://0.0.0.0:3000'
+  config.action_mailer.default_url_options = { host: '0.0.0.0:3000' }
 
   # Do not compress assets
   # config.assets.compile = false
@@ -53,7 +53,7 @@ Rails.application.configure do
   # config.assets.paths << Rails.root.join('app', 'assets', 'font')
   # config.assets.precompile += %w(.svg .eot .woff .ttf)
 
-  config.log_tags = [:uuid, :remote_ip]
+  config.log_tags = %i[uuid remote_ip]
 
   # Raise exception on mass assignment protection for Active Record models
   config.active_record.mass_assignment_sanitizer = :strict

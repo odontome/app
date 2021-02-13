@@ -1,9 +1,9 @@
 class DoctorsController < ApplicationController
   # filters
-  before_action :require_user, :except => :appointments
+  before_action :require_user, except: :appointments
 
   # provides
-  respond_to :ics, :only => [:appointments]
+  respond_to :ics, only: [:appointments]
 
   def index
     @doctors = Doctor.with_practice(current_user.practice_id)
@@ -11,7 +11,7 @@ class DoctorsController < ApplicationController
 
   def show
     @doctor = Doctor.with_practice(current_user.practice_id).find(params[:id])
-    @appointments = @doctor.appointments.joins(:patient).where("starts_at > ?", Date.today).order("starts_at desc")
+    @appointments = @doctor.appointments.joins(:patient).where('starts_at > ?', Date.today).order('starts_at desc')
   end
 
   def new
@@ -28,9 +28,9 @@ class DoctorsController < ApplicationController
 
     respond_to do |format|
       if @doctor.save
-        format.html { redirect_to(doctors_url, :notice => t(:doctor_created_success_message))}
+        format.html { redirect_to(doctors_url, notice: t(:doctor_created_success_message)) }
       else
-        format.html { render :action => "new" }
+        format.html { render action: 'new' }
       end
     end
   end
@@ -40,9 +40,9 @@ class DoctorsController < ApplicationController
 
     respond_to do |format|
       if @doctor.update_attributes(params[:doctor])
-        format.html { redirect_to(doctors_url, :notice => t(:doctor_updated_success_message)) }
+        format.html { redirect_to(doctors_url, notice: t(:doctor_updated_success_message)) }
       else
-        format.html { render :action => "edit" }
+        format.html { render action: 'edit' }
       end
     end
   end
@@ -74,5 +74,4 @@ class DoctorsController < ApplicationController
 
     respond_with(@appointments)
   end
-
 end

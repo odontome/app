@@ -7,7 +7,7 @@ class AddAuthColumnsToDoctor < ActiveRecord::Migration[5.0]
       t.string    :single_access_token
       t.datetime  :current_login_at
       t.datetime  :last_login_at
-      t.integer   :login_count, :null => false, :default => 0
+      t.integer   :login_count, null: false, default: 0
     end
   end
 

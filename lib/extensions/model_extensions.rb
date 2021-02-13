@@ -1,2 +1,2 @@
-class ActiveRecord::Base   
+class ActiveRecord::Base
 end
