@@ -13,11 +13,9 @@ class ApplicationController < ActionController::Base
   before_action :find_datebooks
 
   def check_account_status
-    if current_user
-      if current_user.practice.status == "cancelled"
-        session.clear
-        redirect_to signin_url, :alert => I18n.t(:account_cancelled)
-      end
+    if current_user && (current_user.practice.status == 'cancelled')
+      session.clear
+      redirect_to signin_url, alert: I18n.t(:account_cancelled)
     end
   end
 
@@ -26,32 +24,27 @@ class ApplicationController < ActionController::Base
   end
 
   def set_timezone
-    if current_user
-      Time.zone = current_user.practice.timezone
-    end
+    Time.zone = current_user.practice.timezone if current_user
   end
 
   private
 
   def current_user
     return @current_user if defined?(@current_user)
-    @current_user ||= User.find(session[:user]["id"]) if session[:user]
+
+    @current_user ||= User.find(session[:user]['id']) if session[:user]
   end
 
   def user_is_admin?(user = current_user)
-    return true if user.roles.include?("admin")
+    return true if user.roles.include?('admin')
   end
 
   def find_datebooks
-    if current_user
-      @datebooks = Datebook.with_practice(current_user.practice_id).order("name")
-    end
+    @datebooks = Datebook.with_practice(current_user.practice_id).order('name') if current_user
   end
 
   def current_user_is_superadmin?
-    if current_user
-      return true if current_user.roles.include?("superadmin")
-    end
+    return true if current_user && current_user.roles.include?('superadmin')
   end
 
   def require_user
@@ -59,7 +52,7 @@ class ApplicationController < ActionController::Base
       store_location
       flash[:notice] = t :not_logged_in
       redirect_to signin_path
-      return false
+      false
     end
   end
 
@@ -68,7 +61,7 @@ class ApplicationController < ActionController::Base
       store_location
       flash[:notice] = t :not_logged_in
       redirect_to root_path
-      return false
+      false
     end
   end
 
@@ -76,40 +69,38 @@ class ApplicationController < ActionController::Base
     session[:return_to] = request.url
   end
 
-  def redirect_back_or_default(default, message=nil)
+  def redirect_back_or_default(default, message = nil)
     return_to = session[:return_to] || default
-    redirect_to(return_to, :alert => message)
+    redirect_to(return_to, alert: message)
     session[:return_to] = nil
   end
 
   def require_superadmin
-
     if current_user
-      redirect_back_or_default("/") unless current_user_is_superadmin?
-      return false
+      redirect_back_or_default('/') unless current_user_is_superadmin?
+      false
     else
-    	redirect_back_or_default("/")
-      return false
+      redirect_back_or_default('/')
+      false
     end
   end
 
   def require_practice_admin
     if current_user
       unless user_is_admin?(current_user)
-        redirect_back_or_default("/401", I18n.t(:admin_credentials_required))
-        return false
+        redirect_back_or_default('/401', I18n.t(:admin_credentials_required))
+        false
       end
     else
-      return false
+      false
     end
   end
 
   def render_ujs_error(object, message)
-    render :template => "shared/ujs/form_errors.js.erb",
-      :locals =>{
-      :item => object,
-      :notice => message
-    }
+    render template: 'shared/ujs/form_errors.js.erb',
+           locals: {
+             item: object,
+             notice: message
+           }
   end
-
 end

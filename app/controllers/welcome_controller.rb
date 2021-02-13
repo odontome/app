@@ -1,23 +1,20 @@
 class WelcomeController < ApplicationController
-  
   layout 'simple'
 
   def index
-    flash.keep 
+    flash.keep
     if current_user
       if current_user_is_superadmin?
         home_url = practices_admin_url
-      else
+      elsif session[:LAST_VISITED_DATEBOOK]
 
-        if session[:LAST_VISITED_DATEBOOK]
-          begin
-            home_url = Datebook.with_practice(current_user.practice_id).find(session[:LAST_VISITED_DATEBOOK])
-          rescue ActiveRecord::RecordNotFound
-            home_url = Datebook.with_practice(current_user.practice_id).first
-          end
-        else
+        begin
+          home_url = Datebook.with_practice(current_user.practice_id).find(session[:LAST_VISITED_DATEBOOK])
+        rescue ActiveRecord::RecordNotFound
           home_url = Datebook.with_practice(current_user.practice_id).first
-        end       
+        end
+      else
+        home_url = Datebook.with_practice(current_user.practice_id).first
 
       end
       redirect_to practice_url
@@ -26,10 +23,7 @@ class WelcomeController < ApplicationController
     end
   end
 
-  def privacy
-  end
+  def privacy; end
 
-  def terms
-  end
-
+  def terms; end
 end

@@ -1,6 +1,6 @@
 class NotesController < ApplicationController
   before_action :require_user
-  
+
   # provides
   respond_to :js
 
@@ -8,14 +8,14 @@ class NotesController < ApplicationController
     @noteable = find_noteable
     @note = @noteable.notes.build(params[:note])
     @note.user_id = current_user.id
-    
+
     respond_to do |format|
       if @note.save
-          format.js  { } #create.js.erb
+        format.js  {} # create.js.erb
       else
-          format.js  {
-            render_ujs_error(@note, I18n.t(:note_created_error_message))
-          }
+        format.js  do
+          render_ujs_error(@note, I18n.t(:note_created_error_message))
+        end
       end
     end
   end
@@ -26,19 +26,16 @@ class NotesController < ApplicationController
     @note.destroy
 
     respond_to do |format|
-      format.js { }
+      format.js {}
     end
   end
-  
+
   private
-  
+
   def find_noteable
     params.each do |name, value|
-      if name =~ /(.+)_id$/
-        return $1.classify.constantize.find(value)
-      end
+      return Regexp.last_match(1).classify.constantize.find(value) if name =~ /(.+)_id$/
     end
     nil
   end
-
 end

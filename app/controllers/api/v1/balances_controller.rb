@@ -1,6 +1,5 @@
 class Api::V1::BalancesController < Api::V1::BaseController
-
-  before_action :find_balance, :only => [:show]
+  before_action :find_balance, only: [:show]
 
   def index
     case params[:from]
@@ -26,10 +25,10 @@ class Api::V1::BalancesController < Api::V1::BaseController
     balance = Balance.create(params[:balance])
 
     if balance.valid?
-      respond_with(balance, :location => api_v1_balance_path(balance))
+      respond_with(balance, location: api_v1_balance_path(balance))
     else
       respond_with(balance)
-  	end
+    end
   end
 
   def show
@@ -37,8 +36,8 @@ class Api::V1::BalancesController < Api::V1::BaseController
   end
 
   def update
-  	@balance.update_attributes(params[:balance])
-		respond_with(@balance)
+    @balance.update_attributes(params[:balance])
+    respond_with(@balance)
   end
 
   # def destroy
@@ -49,10 +48,9 @@ class Api::V1::BalancesController < Api::V1::BaseController
   private
 
   def find_balance
-  	@balance = Balance.find(params[:id])
-  	rescue ActiveRecord::RecordNotFound
-  		error = { :error => "The balance you were looking for could not be found."}
-  		respond_with(error, :status => 404)
+    @balance = Balance.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    error = { error: 'The balance you were looking for could not be found.' }
+    respond_with(error, status: 404)
   end
-
 end

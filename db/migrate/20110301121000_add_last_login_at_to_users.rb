@@ -3,7 +3,7 @@ class AddLastLoginAtToUsers < ActiveRecord::Migration[5.0]
     change_table :users do |t|
       t.datetime :current_login_at
       t.datetime :last_login_at
-      t.integer :login_count, :null => false, :default => 0
+      t.integer :login_count, null: false, default: 0
     end
   end
 
@@ -13,4 +13,3 @@ class AddLastLoginAtToUsers < ActiveRecord::Migration[5.0]
     remove_column :users, :current_login_at
   end
 end
-

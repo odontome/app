@@ -1,29 +1,27 @@
 require 'test_helper'
 
 class ReviewTest < ActiveSupport::TestCase
-
-  test "review attributes must not be empty" do
-  	review = Review.new
-  	assert review.invalid?
-  	assert review.errors[:appointment_id].any?
-  	assert review.errors[:score].any?
-  	assert review.errors[:comment].any?
+  test 'review attributes must not be empty' do
+    review = Review.new
+    assert review.invalid?
+    assert review.errors[:appointment_id].any?
+    assert review.errors[:score].any?
+    assert review.errors[:comment].any?
   end
 
-  test "review is not valid without an unique appointment" do
-  	review = Review.new
+  test 'review is not valid without an unique appointment' do
+    review = Review.new
     review.appointment_id = 1
     review.score = 3
-    review.comment = "Pretty good service, very professional"
+    review.comment = 'Pretty good service, very professional'
 
-  	assert !review.save
-  	assert_equal I18n.t("errors.messages.taken"), review.errors[:appointment_id].first
+    assert !review.save
+    assert_equal I18n.t('errors.messages.taken'), review.errors[:appointment_id].first
   end
 
-  test "review shows full appointment info" do
+  test 'review shows full appointment info' do
     review = reviews(:valid)
 
     assert review.appointment = appointments(:first_visit)
   end
-
 end

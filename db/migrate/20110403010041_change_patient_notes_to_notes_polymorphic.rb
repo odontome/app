@@ -1,7 +1,7 @@
 class ChangePatientNotesToNotesPolymorphic < ActiveRecord::Migration[5.0]
   def self.up
     change_table :patient_notes do |t|
-      t.references :noteable, :polymorphic => true
+      t.references :noteable, polymorphic: true
       t.remove :patient_id
     end
 

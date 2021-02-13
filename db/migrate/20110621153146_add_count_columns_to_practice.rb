@@ -1,10 +1,10 @@
 class AddCountColumnsToPractice < ActiveRecord::Migration[5.0]
   def self.up
     change_table :practices do |t|
-      t.integer :patients_count, :default => 0
-      t.integer :appointments_count, :default => 0
-      t.integer :doctors_count, :default => 0
-      t.integer :users_count, :default => 0
+      t.integer :patients_count, default: 0
+      t.integer :appointments_count, default: 0
+      t.integer :doctors_count, default: 0
+      t.integer :users_count, default: 0
     end
   end
 
