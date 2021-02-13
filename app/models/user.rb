@@ -24,6 +24,7 @@ class User < ApplicationRecord
 
   # callbacks
   before_create :set_admin_role_for_first_user
+  before_update :reset_perishable_token
   before_destroy :check_if_admin
   before_save :update_authentication_token
 
@@ -75,8 +76,11 @@ class User < ApplicationRecord
   	end
   end
 
+  def reset_perishable_token
+    self.perishable_token = SecureRandom.urlsafe_base64(15)
+  end
+
   def reset_perishable_token!
     self.update_attribute(:perishable_token, SecureRandom.urlsafe_base64(15))
   end
-
 end
