@@ -80,7 +80,7 @@ namespace :odontome do
         next # exits the task
       end
 
-      patients_created_today = Patient.select('id, firstname, lastname, practice_id, email')
+      patients_created_today = Patient.select('patients.id, patients.firstname, patients.lastname, patients.practice_id, patients.email')
                                       .where(practice_id: practice_ids)
                                       .where('patients.created_at >= ? AND patients.created_at <= ?', yesterday, today)
                                       .order(:practice_id)
