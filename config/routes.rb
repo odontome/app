@@ -1,26 +1,4 @@
 Odontome::Application.routes.draw do
-  # API
-  # namespace :api do
-  #   namespace :v1 do
-
-  #   	post "/authentication" => "authentication#create"
-  #     get "/practice" => "practices#show"
-
-  #     resources :doctors
-  #     resources :treatments
-  # 		resources :balances
-
-  #     resources :datebooks do
-  #       resources :appointments
-  #     end
-
-  #     resources :patients do
-  #       resources :notes
-  #     end
-
-  # 	end
-  # end
-
   resources :datebooks do
     resources :appointments
   end
