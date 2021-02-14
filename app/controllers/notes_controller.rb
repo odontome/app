@@ -1,9 +1,6 @@
 class NotesController < ApplicationController
   before_action :require_user
 
-  # provides
-  respond_to :js
-
   def create
     @noteable = find_noteable
     @note = @noteable.notes.build(params[:note])
@@ -11,7 +8,7 @@ class NotesController < ApplicationController
 
     respond_to do |format|
       if @note.save
-        format.js  {} # create.js.erb
+        format.js {} # create.js.erb
       else
         format.js  do
           render_ujs_error(@note, I18n.t(:note_created_error_message))

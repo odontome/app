@@ -2,9 +2,6 @@ class PatientsController < ApplicationController
   before_action :require_user
   before_action :require_practice_admin, only: [:destroy]
 
-  # provides
-  respond_to :html, :json
-
   def index
     # this is the most frequent scenario, a simple list of patients
     if params[:q].nil?
@@ -16,12 +13,14 @@ class PatientsController < ApplicationController
       end
 
       @patients = Patient.alphabetically(params[:letter]).with_practice(current_user.practice_id)
-
     else
       @patients = Patient.search(params[:q]).with_practice(current_user.practice_id)
     end
 
-    respond_with(@patients, methods: :fullname)
+    respond_to do |format|
+      format.html # index.html
+      format.json { render json: @patients, methods: :fullname }
+    end
   end
 
   def show

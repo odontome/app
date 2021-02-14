@@ -2,9 +2,6 @@ class ReviewsController < ApplicationController
   # filters
   before_action :require_user, except: %i[new create]
 
-  # provides
-  respond_to :html, :js
-
   def index
     reviews_per_page = 15
     @current_page = 0
@@ -22,7 +19,10 @@ class ReviewsController < ApplicationController
     # calculate if we need to load more reviews
     @should_display_load_more = Review.with_practice(current_user.practice_id).count >= (@current_page * reviews_per_page)
 
-    respond_with(@reviews)
+    respond_to do |format|
+      format.html # index.html
+      format.json { render json: @reviews }
+    end
   end
 
   def new
@@ -44,7 +44,10 @@ class ReviewsController < ApplicationController
       return
     end
 
-    respond_with(@review, layout: 'simple')
+    respond_to do |format|
+      format.html { render layout: 'simple' }
+      format.json { render json: @reviews }
+    end
   end
 
   def create
@@ -55,9 +58,9 @@ class ReviewsController < ApplicationController
       if @review.save
         # email the admin about this review
         PracticeMailer.new_review_notification(@review).deliver_now
-        format.js  {} # create.js.erb
+        format.js {} # create.js.erb
       else
-        format.js  do
+        format.js do
           render_ujs_error(@review, I18n.t(:review_created_error_message))
         end
       end
