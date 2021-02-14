@@ -2,9 +2,6 @@ class DoctorsController < ApplicationController
   # filters
   before_action :require_user, except: :appointments
 
-  # provides
-  respond_to :ics, only: [:appointments]
-
   def index
     @doctors = Doctor.with_practice(current_user.practice_id)
   end
@@ -72,6 +69,8 @@ class DoctorsController < ApplicationController
 
     @appointments = @doctor.appointments.find_between(start_of_week, end_of_week).includes(:patient)
 
-    respond_with(@appointments)
+    respond_to do |format|
+      format.ics { render ics: @appointments }
+    end
   end
 end

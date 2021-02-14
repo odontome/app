@@ -2,9 +2,6 @@ class AppointmentsController < ApplicationController
   # filters
   before_action :require_user, except: :show
 
-  # provides
-  respond_to :html, :json
-
   # layout
   layout false
 
@@ -18,7 +15,10 @@ class AppointmentsController < ApplicationController
                       datebook.appointments.find_between(params[:start], params[:end])
                     end
 
-    respond_with(@appointments, methods: %w[doctor patient])
+    respond_to do |format|
+      format.html # index.html
+      format.json { render json: @appointments, methods: %w[doctor patient] }
+    end
   end
 
   def new
@@ -58,8 +58,6 @@ class AppointmentsController < ApplicationController
 
     datebook = Datebook.includes(:practice).find(params[:datebook_id])
     appointment = Appointment.where(id: appointment_id_deciphered, datebook_id: datebook.id).first
-
-    # FIXME: Should I just don't show them at all?
   end
 
   def edit

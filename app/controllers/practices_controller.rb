@@ -4,9 +4,6 @@ class PracticesController < ApplicationController
   before_action :require_superadmin, only: %i[index destroy edit]
   before_action :require_practice_admin, only: %i[settings balance update close]
 
-  # provides
-  respond_to :html, :csv, only: :balance
-
   def index
     @practices = Practice.all
   end

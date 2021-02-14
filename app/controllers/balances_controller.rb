@@ -1,9 +1,6 @@
 class BalancesController < ApplicationController
   before_action :require_user
 
-  # provides
-  respond_to :html, :js, :csv
-
   def index
     @patient = Patient.with_practice(current_user.practice_id).find(params[:patient_id])
     @balances = Balance.where('patient_id = ?', @patient.id)
