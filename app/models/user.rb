@@ -7,7 +7,6 @@ class User < ApplicationRecord
   # associations
   belongs_to :practice, counter_cache: true
   has_many :notes, dependent: :delete_all
-  has_many :broadcasts, dependent: :delete_all
 
   has_secure_password
 

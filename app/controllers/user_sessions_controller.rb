@@ -14,7 +14,7 @@ class UserSessionsController < ApplicationController
     user = User.find_by(email: params[:signin][:email].downcase)
 
     # While users migrate to the new version, force them to reset their passwords
-    if !user.password_digest.present?
+    unless user.password_digest.present?
       flash[:alert] = I18n.t('errors.messages.reset_your_password_request')
       redirect_to new_password_reset_url
       return
