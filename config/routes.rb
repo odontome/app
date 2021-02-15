@@ -23,7 +23,6 @@ Odontome::Application.routes.draw do
   resources :password_resets, only: %i[new create edit update]
 
   # apps
-  resources :broadcasts
   resources :reviews
 
   # authentication

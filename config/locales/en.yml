@@ -39,11 +39,6 @@ en:
       balance:
         notes: Additional notes
         amount: Amount
-      broadcast:
-        subject: Subject
-        number_of_recipients: Number of recipients
-        number_of_opens: Number of opens
-        user_id: Sender
       datebook:
         name: Name
         starts_at: Day starts at
@@ -93,7 +88,6 @@ en:
         comment: Comments about your experience
     models:
       appointment: Appointment
-      broadcast: Broadcast
       datebook: Datebook
       doctor: Doctor
       patient: Patient
@@ -124,8 +118,6 @@ en:
     going back
   balance: Balance
   balance_created_error_message: There was a problem creating this item
-  broadcasts: Broadcasts
-  broadcast_created_success_message: Your broadcast has been scheduled. Your patients will be notified very shortly.
   cancel: Cancel
   cigarettes_per_day: Cigarettes per day
   close_account: Close account
@@ -136,7 +128,6 @@ en:
     image.
   contact_information: Contact information
   contact_us: Contact us
-  create_new_broadcast: Create new broadcast
   create_new_datebook: Create new datebook
   create_new_doctor: Create new doctor
   create_new_patient: Create new patient
@@ -195,7 +186,6 @@ en:
   inactive: Inactive
   incomplete: Incomplete
   instructions:
-    broadcasts: <p>Broadcasts are the way to communicate to your patients in bulk.</p><p>Need to send a notification to all your patients who last visit was 6 months ago? Do you want to send a promotion to all of them? This is where you do it.</p>
     datebooks: <p>Datebooks are the backbone of every practice.</p> <p>Because you
       can already filter your datebooks by doctor, one common usage is to create one
       datebook per each of your practices.</p>
