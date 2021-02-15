@@ -6,7 +6,6 @@ founder:
   email: raulriera@hotmail.com
   roles: admin
   password_digest: <%= BCrypt::Password.create("1234567890", cost: BCrypt::Engine::MIN_COST) %>
-  login_count: 5
   perishable_token: 5dVOE1WYuvuK9i76E2GR
 
 perishable: 
@@ -28,11 +27,3 @@ user_in_yet_another_practice:
   roles: user
   password_digest: <%= BCrypt::Password.create("1234567890", cost: BCrypt::Engine::MIN_COST) %>
   perishable_token: 6YVOE1WYkioK9i76E2GR
-  
-api_user:
-  id: 4
-  practice_id: 1
-  firstname: Api
-  lastname: User
-  email: api@bokanova.mx
-  authentication_token: dcea6d23634b6e1e2a21e462c7ca24cf25e152d6a1af49303069dc79d44c28e537905ad2c595639afa07654f1f75f380338c916b6f0f8801986e0797f4b19734
