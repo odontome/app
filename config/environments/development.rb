@@ -39,10 +39,6 @@ Rails.application.configure do
   # Raises error for missing translations
   config.action_view.raise_on_missing_translations = true
 
-  #### Odonto.me stuff
-
-  ENV['REDISTOGO_URL'] = 'redis://redistogo:681bdba6cde45dca00275208cac1a7a0@pearlfish.redistogo.com:9008/'
-
   # Configure the host for emails
   config.action_mailer.asset_host = 'https://0.0.0.0:3000'
   config.action_mailer.default_url_options = { host: '0.0.0.0:3000' }
