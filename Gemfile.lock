@@ -203,7 +203,7 @@ GEM
     sequel (3.20.0)
     sinatra (1.0)
       rack (>= 1.0)
-    spring (2.1.0)
+    spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
       spring (>= 1.2, < 3.0)
@@ -264,7 +264,7 @@ DEPENDENCIES
   rails_select_on_includes (~> 5.2.1)
   rubocop
   sass-rails (~> 5.0)
-  spring (~> 2.1.0)
+  spring (~> 2.1.1)
   spring-watcher-listen (~> 2.0.1)
   taps (~> 0.3.24)
   uglifier (~> 4.2.0)
