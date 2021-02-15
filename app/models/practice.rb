@@ -30,7 +30,7 @@ class Practice < ApplicationRecord
   end
 
   def populate_default_treatments
-    TREATMENTS[locale || 'en']['treatments'].each do |treatment|
+    Rails.configuration.patient_treatments[locale || 'en']['treatments'].each do |treatment|
       treatments << Treatment.new(name: treatment, price: 0)
     end
   end
