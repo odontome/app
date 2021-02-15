@@ -13,6 +13,13 @@ class UserSessionsController < ApplicationController
     # convert to lowercase to match email in db in case they had caps lock on:
     user = User.find_by(email: params[:signin][:email].downcase)
 
+    # While users migrate to the new version, force them to reset their passwords
+    if !user.password_digest.present?
+      flash[:alert] = I18n.t('errors.messages.reset_your_password_request')
+      redirect_to new_password_reset_url
+      return
+    end
+
     # Verify user exists in db and run has_secure_password's .authenticate()
     # method to see if the password submitted on the login form was correct:
     if user&.authenticate(params[:signin][:password])
