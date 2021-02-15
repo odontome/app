@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ReviewsHelper
   def ratings_widget(value = 0, size = 25)
     content = ''

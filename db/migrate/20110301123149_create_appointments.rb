@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateAppointments < ActiveRecord::Migration[5.0]
   def self.up
     create_table :appointments do |t|

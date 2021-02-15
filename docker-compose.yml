@@ -9,7 +9,3 @@ services:
       - .:/myapp
     ports:
       - "3000:3000"
-  cache:
-    image: redis:3.2-alpine
-    volumes:
-      - .redis:/data

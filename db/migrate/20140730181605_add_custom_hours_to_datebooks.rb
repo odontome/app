@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddCustomHoursToDatebooks < ActiveRecord::Migration[5.0]
   def change
     add_column :datebooks, :starts_at, :integer, default: 8

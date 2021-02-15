@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DoctorMailer < ApplicationMailer
   def today_agenda(agenda)
     @practice = Practice.find agenda.first['practice_id']

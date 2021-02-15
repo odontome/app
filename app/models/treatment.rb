@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Treatment < ApplicationRecord
   # permitted attributes
   attr_accessible :name, :price

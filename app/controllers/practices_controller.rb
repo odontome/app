@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PracticesController < ApplicationController
   before_action :require_user, only: %i[index destroy edit settings show close]
   before_action :require_no_user, only: %i[new create]

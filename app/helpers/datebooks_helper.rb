@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DatebooksHelper
   def hours_range(starts_at, ends_at)
     # turn the integers into a date

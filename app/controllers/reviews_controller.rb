@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ReviewsController < ApplicationController
   # filters
   before_action :require_user, except: %i[new create]

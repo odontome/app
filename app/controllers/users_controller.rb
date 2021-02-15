@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   before_action :require_user
   before_action :require_practice_admin, except: %i[show edit update]

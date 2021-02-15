@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Balance < ApplicationRecord
   # permitted attributes
   attr_accessible :patient_id, :amount, :notes

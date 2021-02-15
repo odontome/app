@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddMedicalHistoryToPatient < ActiveRecord::Migration[5.0]
   def self.up
     change_table :patients do |t|

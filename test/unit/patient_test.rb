@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class PatientTest < ActiveSupport::TestCase
@@ -138,7 +140,7 @@ class PatientTest < ActiveSupport::TestCase
     patient = patients(:one)
 
     assert patient.age.integer?
-    assert patient.age > 0
+    assert patient.age.positive?
   end
 
   test 'patient is invalid if it has no date of birth' do

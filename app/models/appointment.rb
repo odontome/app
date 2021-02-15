@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Appointment < ApplicationRecord
   # permitted attributes
   attr_accessible :datebook_id, :doctor_id, :patient_id, :starts_at, :ends_at, :notes, :status

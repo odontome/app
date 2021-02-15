@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreatePatientCommunications < ActiveRecord::Migration[5.0]
   def change
     create_table :patient_communications do |t|

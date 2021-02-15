@@ -5,9 +5,6 @@ en:
     is a mistake, please contact us as soon as possible.
   account_not_found: An account with the given information was not found. If you think this is a mistake, please contact with us
   activate: Activate
-  authlogic:
-    error_messages:
-      consecutive_failed_logins_limit_exceeded: Consecutive failed logins limit exceeded, account has been temporarily disabled.
   appointment: Appointment
   review: Review
   thank_you: Thank you!
@@ -180,6 +177,8 @@ en:
       unauthorised: You don't have permission to do this
       not_found: It may have been deleted or never existed
       server_error: Something went wrong, please try again later.
+      reset_your_password_request: Your account password needs to be reset. Sorry for the inconvenience.
+      consecutive_failed_logins_limit_exceeded: Consecutive failed logins limit exceeded, account has been temporarily disabled.
   everyone: Everyone
   family_diseases_hint: Please be as descriptive as possible.
   family_history: Family history

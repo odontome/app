@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DoctorsHelper
   def link_to_suspend_or_delete(doctor)
     if doctor.is_deleteable

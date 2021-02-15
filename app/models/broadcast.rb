@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Broadcast < ApplicationRecord
   # permitted attributes
   attr_accessible :user_id, :subject, :message, :number_of_recipients, :number_of_opens

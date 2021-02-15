@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # permitted attributes
   attr_accessible :firstname, :lastname, :email, :password, :password_confirmation
@@ -26,7 +28,6 @@ class User < ApplicationRecord
   before_create :set_admin_role_for_first_user
   before_update :reset_perishable_token
   before_destroy :check_if_admin
-  before_save :update_authentication_token
 
   def fullname
     [firstname, lastname].join(' ')
@@ -65,15 +66,7 @@ class User < ApplicationRecord
   end
 
   def set_admin_role_for_first_user
-    self.roles = 'admin' if User.where('practice_id = ?', practice_id).count == 0
-  end
-
-  def update_authentication_token
-    if crypted_password_changed?
-      begin
-        self.authentication_token = SecureRandom.hex
-      end while self.class.exists?(authentication_token: authentication_token)
-    end
+    self.roles = 'admin' if User.where('practice_id = ?', practice_id).count.zero?
   end
 
   def reset_perishable_token

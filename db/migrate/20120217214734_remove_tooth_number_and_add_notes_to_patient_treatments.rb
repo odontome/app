@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveToothNumberAndAddNotesToPatientTreatments < ActiveRecord::Migration[5.0]
   def self.up
     change_table :patient_treatments do |t|

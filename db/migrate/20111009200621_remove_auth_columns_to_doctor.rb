@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveAuthColumnsToDoctor < ActiveRecord::Migration[5.0]
   def self.up
     remove_column :doctors, :persistence_token

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Cipher
   def self.decode(string)
     cipher = Gibberish::AES.new(Rails.configuration.secret_token)
