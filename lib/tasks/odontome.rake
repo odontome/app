@@ -167,7 +167,7 @@ namespace :odontome do
 
       admins_of_these_practices = admin_of_practice(practice_ids)
 
-      patients_of_these_practices = Patient.select('practice_id, firstname, lastname, date_of_birth, email, practices.locale, practices.name as practice_name')
+      patients_of_these_practices = Patient.select('practice_id, firstname, lastname, date_of_birth, patients.email, practices.locale, practices.name as practice_name')
                                            .where(practice_id: practice_ids)
                                            .where("patients.email <> ''")
                                            .where('extract(month from date_of_birth) = ? AND extract(day from date_of_birth) = ?', today.strftime('%m'), today.strftime('%d'))
@@ -244,7 +244,7 @@ namespace :odontome do
 
   # find all the admins for the given @practice_ids
   def admin_of_practice(practice_ids)
-    User.select('firstname, lastname, practice_id, email, locale, timezone, currency_unit, subscribed_to_digest')
+    User.select('firstname, lastname, practice_id, users.email, locale, timezone, currency_unit, subscribed_to_digest')
         .where(practice_id: practice_ids)
         .where('roles = ?', 'admin')
         .joins(:practice)
