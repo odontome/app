@@ -35,7 +35,7 @@ gem 'airbrake'
 gem 'pg', '~> 1.2.3'
 
 group :development do
-  gem 'brakeman', '~> 4.9.0'
+  gem 'brakeman', '~> 5.0.0'
   gem 'i18n-tasks', '~> 0.9.23'
   gem 'listen', '~> 3.2.1'
   gem 'web-console', '~> 3.7.0'
