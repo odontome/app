@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Practice < ApplicationRecord
   # permitted attributes
   attr_accessible :name, :users_attributes, :locale, :timezone, :currency_unit, :email

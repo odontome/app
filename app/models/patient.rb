@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Patient < ApplicationRecord
   # permitted attributes
   attr_accessible :uid, :firstname, :lastname, :fullname, :date_of_birth, :past_illnesses, :surgeries, :medications,
@@ -76,7 +78,7 @@ class Patient < ApplicationRecord
     patient_id_or_name.gsub!(',', '')
 
     # Check if we are dealing with an integer or a string
-    if patient_id_or_name.to_i == 0
+    if patient_id_or_name.to_i.zero?
       # instantiate a new patient
       patient = new
       patient.fullname = patient_id_or_name

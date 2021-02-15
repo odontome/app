@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreatePatientBalance < ActiveRecord::Migration[5.0]
   def self.up
     create_table :balances do |t|

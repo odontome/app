@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Overwrite the error messages
 ActionView::Base.field_error_proc = proc do |html_tag, _instance|
   if html_tag.include? 'input'

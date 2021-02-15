@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class NotifierMailer < ApplicationMailer
   def deliver_password_reset_instructions(user)
     @user = user

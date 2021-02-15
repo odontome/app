@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   # overwrite to the pagination plugin
   def paginated_letter(available_letters, letter)

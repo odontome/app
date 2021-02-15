@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PracticeMailer < ApplicationMailer
   add_template_helper(ApplicationHelper)
 

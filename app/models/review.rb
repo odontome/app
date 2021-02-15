@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Review < ApplicationRecord
   # permitted attributes
   attr_accessible :appointment_id, :score, :comment

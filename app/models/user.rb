@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # permitted attributes
   attr_accessible :firstname, :lastname, :email, :password, :password_confirmation
@@ -65,14 +67,15 @@ class User < ApplicationRecord
   end
 
   def set_admin_role_for_first_user
-    self.roles = 'admin' if User.where('practice_id = ?', practice_id).count == 0
+    self.roles = 'admin' if User.where('practice_id = ?', practice_id).count.zero?
   end
 
   def update_authentication_token
     if crypted_password_changed?
-      begin
+      loop do
         self.authentication_token = SecureRandom.hex
-      end while self.class.exists?(authentication_token: authentication_token)
+        break unless self.class.exists?(authentication_token: authentication_token)
+      end
     end
   end
 

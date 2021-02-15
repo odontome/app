@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class NotesController < ApplicationController
   before_action :require_user
 
@@ -10,7 +12,7 @@ class NotesController < ApplicationController
       if @note.save
         format.js {} # create.js.erb
       else
-        format.js  do
+        format.js do
           render_ujs_error(@note, I18n.t(:note_created_error_message))
         end
       end

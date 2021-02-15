@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AppointmentsController < ApplicationController
   # filters
   before_action :require_user, except: :show

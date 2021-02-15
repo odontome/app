@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Odontome::Application.routes.draw do
   resources :datebooks do
     resources :appointments

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PatientMailer < ApplicationMailer
   def appointment_soon_email(patient_email, patient_name, start_time, end_time, practice_name, practice_locale, practice_timezone, doctor, practice_email)
     # temporarely set the locale and then change it back

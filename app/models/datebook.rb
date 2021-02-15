@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Datebook < ApplicationRecord
   # permitted attributes
   attr_accessible :name, :starts_at, :ends_at, :practice_id
@@ -23,7 +25,7 @@ class Datebook < ApplicationRecord
   before_destroy :check_if_is_deleteable
 
   def is_deleteable
-    return true if appointments.count == 0
+    return true if appointments.count.zero?
   end
 
   private

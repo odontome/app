@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreatePatientNotes < ActiveRecord::Migration[5.0]
   def self.up
     create_table :patient_notes do |t|

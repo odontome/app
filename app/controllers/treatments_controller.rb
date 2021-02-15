@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TreatmentsController < ApplicationController
   before_action :require_user
 
@@ -50,7 +52,7 @@ class TreatmentsController < ApplicationController
   # This loads the list of treatments fom treatments.yml into the user's practice
   def predefined_treatments
     # Don't load if already done
-    if Treatment.with_practice(current_user.practice_id).count == 0
+    if Treatment.with_practice(current_user.practice_id).count.zero?
       current_user.practice.populate_default_treatments
       flash[:notice] = t(:predefined_treatments_created_success_message)
     end

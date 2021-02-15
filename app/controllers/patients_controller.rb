@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PatientsController < ApplicationController
   before_action :require_user
   before_action :require_practice_admin, only: [:destroy]

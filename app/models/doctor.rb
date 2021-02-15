@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Doctor < ApplicationRecord
   # permitted attributes
   attr_accessible :uid, :firstname, :lastname, :email, :gender, :speciality, :color, :practice_id
@@ -34,7 +36,7 @@ class Doctor < ApplicationRecord
   end
 
   def is_deleteable
-    return true if appointments.count == 0
+    return true if appointments.count.zero?
   end
 
   def ciphered_feed_url

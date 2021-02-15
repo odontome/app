@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemovePatientsFromPlans < ActiveRecord::Migration[5.0]
   def self.up
     change_table :plans do |t|

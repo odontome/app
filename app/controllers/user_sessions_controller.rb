@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserSessionsController < ApplicationController
   # before_filter :require_no_user, :only => [:new, :create]
   before_action :require_user, only: %i[show destroy]
@@ -13,7 +15,7 @@ class UserSessionsController < ApplicationController
 
     # Verify user exists in db and run has_secure_password's .authenticate()
     # method to see if the password submitted on the login form was correct:
-    if user && user.authenticate(params[:signin][:password])
+    if user&.authenticate(params[:signin][:password])
       # Save the user in that user's session cookie:
       session[:user] = user
       redirect_to root_url

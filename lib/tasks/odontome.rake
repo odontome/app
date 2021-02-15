@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 namespace :odontome do
   desc 'Send appointment reminders to patients'
   task send_appointment_reminder_notifications: :environment do
-    Rails.logger = Logger.new(STDOUT) if defined?(Rails) && (Rails.env == 'development')
+    Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
 
     to_update = []
     appointment_notificacion_hours = 48.hours
@@ -25,7 +27,7 @@ namespace :odontome do
 
   desc 'Send appointment schedule notification to patients'
   task send_appointment_scheduled_notifications: :environment do
-    Rails.logger = Logger.new(STDOUT) if defined?(Rails) && (Rails.env == 'development')
+    Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
 
     to_update = []
 
@@ -48,25 +50,23 @@ namespace :odontome do
 
   desc 'Delete practices cancelled more than 15 days ago'
   task delete_practices_cancelled_a_while_ago: :environment do
-    Rails.logger = Logger.new(STDOUT) if defined?(Rails) && (Rails.env == 'development')
+    Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
 
     practices = Practice.where('cancelled_at < ?', 15.days.ago)
 
-    practices.each do |practice|
-      practice.destroy
-    end
+    practices.each(&:destroy)
   end
 
   desc 'Send an activity recap everyday at 8am in their timezone'
   task send_daily_recap_to_administrators: :environment do
-    Rails.logger = Logger.new(STDOUT) if defined?(Rails) && (Rails.env == 'development')
+    Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
 
     # configuration
     hour_to_send_emails = 8
     timezones_where_hour_is = timezones_where_hour_are(hour_to_send_emails)
     practice_ids = practices_in_timezones(timezones_where_hour_is)
 
-    if practice_ids.size > 0
+    if practice_ids.size.positive?
       today = Time.now.in_time_zone(timezones_where_hour_is.first).beginning_of_day
       yesterday = today - 1.day
 
@@ -76,7 +76,7 @@ namespace :odontome do
       practice_ids = admins_of_these_practices.pluck(:practice_id)
 
       # maybe this override cleared them all (very unlikely)
-      if practice_ids.size == 0
+      if practice_ids.size.zero?
         next # exits the task
       end
 
@@ -120,14 +120,14 @@ namespace :odontome do
 
   desc "Send today's appointments everyday in their timezone"
   task send_todays_appointments_to_doctors: :environment do
-    Rails.logger = Logger.new(STDOUT) if defined?(Rails) && (Rails.env == 'development')
+    Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
 
     # configuration
     hour_to_send_emails = 7
     timezones_where_hour_is = timezones_where_hour_are(hour_to_send_emails)
     practice_ids = practices_in_timezones(timezones_where_hour_is)
 
-    if practice_ids.size > 0
+    if practice_ids.size.positive?
       today = Time.now.in_time_zone(timezones_where_hour_is.first).beginning_of_day
       end_of_today = today.end_of_day
 
@@ -156,13 +156,13 @@ namespace :odontome do
 
   desc 'Send birthday wishes to patients in their timezone'
   task send_birthday_wishes_to_patients: :environment do
-    Rails.logger = Logger.new(STDOUT) if defined?(Rails) && (Rails.env == 'development')
+    Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
 
     hour_to_send_emails = 15
     timezones_where_hour_is = timezones_where_hour_are(hour_to_send_emails)
     practice_ids = practices_in_timezones(timezones_where_hour_is)
 
-    if practice_ids.size > 0
+    if practice_ids.size.positive?
       today = Time.now.in_time_zone(timezones_where_hour_is.first).beginning_of_day
 
       admins_of_these_practices = admin_of_practice(practice_ids)
@@ -198,7 +198,7 @@ namespace :odontome do
 
   desc 'Send appointment review request to patients in their timezone'
   task send_appointment_review_to_patients: :environment do
-    Rails.logger = Logger.new(STDOUT) if defined?(Rails) && (Rails.env == 'development')
+    Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
 
     appointments_pending_review = Datebook.select("practices.name as practice,
     practices.id as practice_id, practices.locale as practice_locale, datebooks.name as datebook,

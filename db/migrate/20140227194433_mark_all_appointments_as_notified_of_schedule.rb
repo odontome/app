@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MarkAllAppointmentsAsNotifiedOfSchedule < ActiveRecord::Migration[5.0]
   def up
     Appointment.update_all notified_of_schedule: true
