@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 class Patient < ApplicationRecord
-  # permitted attributes
-  attr_accessible :uid, :firstname, :lastname, :fullname, :date_of_birth, :past_illnesses, :surgeries, :medications,
-                  :drugs_use, :cigarettes_per_day, :drinks_per_day, :family_diseases, :emergency_telephone, :email, :telephone, :mobile, :address, :allergies, :practice_id
-
   # associations
   has_many :appointments, dependent: :delete_all
   has_many :balances, dependent: :delete_all
@@ -106,5 +102,10 @@ class Patient < ApplicationRecord
   def destroy_nils
     Patient.where(firstname: nil).destroy_all
     Appointment.where(patient_id: nil).destroy_all
+  end
+
+  def patient_params
+    params.require(:patient).permit(:uid, :firstname, :lastname, :fullname, :date_of_birth, :past_illnesses, :surgeries, :medications,
+      :drugs_use, :cigarettes_per_day, :drinks_per_day, :family_diseases, :emergency_telephone, :email, :telephone, :mobile, :address, :allergies, :practice_id)
   end
 end

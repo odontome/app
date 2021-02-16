@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  # permitted attributes
-  attr_accessible :firstname, :lastname, :email, :password, :password_confirmation
-
   # associations
   belongs_to :practice, counter_cache: true
   has_many :notes, dependent: :delete_all
@@ -74,5 +71,9 @@ class User < ApplicationRecord
 
   def reset_perishable_token!
     update_attribute(:perishable_token, SecureRandom.urlsafe_base64(15))
+  end
+
+  def user_params
+    params.require(:treausertment).permit(:firstname, :lastname, :email, :password, :password_confirmation)
   end
 end

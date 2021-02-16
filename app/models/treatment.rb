@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class Treatment < ApplicationRecord
-  # permitted attributes
-  attr_accessible :name, :price
-
   # associations
   belongs_to :practice
 
@@ -26,5 +23,11 @@ class Treatment < ApplicationRecord
 
   def missing_info?
     price.nil? || price <= 0
+  end
+
+  private
+
+  def treatment_params
+    params.require(:treatment).permit(:name, :price)
   end
 end

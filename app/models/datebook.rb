@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class Datebook < ApplicationRecord
-  # permitted attributes
-  attr_accessible :name, :starts_at, :ends_at, :practice_id
-
   # associations
   has_many :appointments
   belongs_to :practice, counter_cache: true
@@ -35,5 +32,9 @@ class Datebook < ApplicationRecord
       errors[:base] << I18n.t('errors.messages.has_appointments')
       false
     end
+  end
+
+  def datebook_params
+    params.require(:datebook).permit(:name, :starts_at, :ends_at, :practice_id)
   end
 end

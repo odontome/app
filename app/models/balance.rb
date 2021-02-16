@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class Balance < ApplicationRecord
-  # permitted attributes
-  attr_accessible :patient_id, :amount, :notes
-
   # associations
   belongs_to :patient
 
@@ -19,4 +16,10 @@ class Balance < ApplicationRecord
   validates_presence_of :amount, :patient_id
   validates_numericality_of :amount
   validates :notes, length: 0..160, presence: false
+
+  private
+
+  def balance_params
+    params.require(:balance).permit(:patient_id, :amount, :notes)
+  end
 end
