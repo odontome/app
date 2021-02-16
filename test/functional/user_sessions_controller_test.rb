@@ -15,6 +15,14 @@ class UserSessionsControllerTest < ActionController::TestCase
     assert_redirected_to root_url
   end
 
+  test 'should show login screen if email is not found' do
+    post :create, params: { signin: { email: "not-a-user@email.com", password: '1234567890' } }
+
+    assert_nil @controller.session['user']
+    assert_response :success
+    assert_template :new
+  end
+
   test 'should request user to reset password if not migrated' do
     non_migrated_user = users(:non_migrated_user)
     post :create, params: { signin: { email: non_migrated_user.email, password: '1234567890' } }

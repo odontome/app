@@ -14,15 +14,12 @@ class UserSessionsController < ApplicationController
     user = User.find_by(email: params[:signin][:email].downcase)
 
     # While users migrate to the new version, force them to reset their passwords
-    unless user.password_digest.present?
+    if !user.nil? && !user.password_digest.present?
       flash[:alert] = I18n.t('errors.messages.reset_your_password_request')
       redirect_to new_password_reset_url
-      return
-    end
-
     # Verify user exists in db and run has_secure_password's .authenticate()
     # method to see if the password submitted on the login form was correct:
-    if user&.authenticate(params[:signin][:password])
+    elsif user&.authenticate(params[:signin][:password])
       # Save the user in that user's session cookie:
       session[:user] = user
       redirect_to root_url
