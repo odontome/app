@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class Doctor < ApplicationRecord
-  # permitted attributes
-  attr_accessible :uid, :firstname, :lastname, :email, :gender, :speciality, :color, :practice_id
-
   # associations
   belongs_to :practice, counter_cache: true
   has_many :appointments
@@ -52,5 +49,9 @@ class Doctor < ApplicationRecord
       errors[:base] << I18n.t('errors.messages.has_appointments_or_treatments')
       false
     end
+  end
+
+  def doctor_params
+    params.require(:doctor).permit(:uid, :firstname, :lastname, :email, :gender, :speciality, :color, :practice_id)
   end
 end

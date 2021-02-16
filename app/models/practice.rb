@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class Practice < ApplicationRecord
-  # permitted attributes
-  attr_accessible :name, :users_attributes, :locale, :timezone, :currency_unit, :email
-
   # associations
   has_many :users, dependent: :delete_all # didn't work with :destroy 'cause if the before_destroy callback in User.rb
   has_many :datebooks, dependent: :delete_all
@@ -65,5 +62,9 @@ class Practice < ApplicationRecord
 
   def create_first_datebook
     Datebook.create({ name: I18n.t(:your_first_datebook) })
+  end
+
+  def practice_params
+    params.require(:practice).permit(:name, :users_attributes, :locale, :timezone, :currency_unit, :email)
   end
 end

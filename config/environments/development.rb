@@ -52,7 +52,4 @@ Rails.application.configure do
   # config.assets.precompile += %w(.svg .eot .woff .ttf)
 
   config.log_tags = %i[uuid remote_ip]
-
-  # Raise exception on mass assignment protection for Active Record models
-  config.active_record.mass_assignment_sanitizer = :strict
 end
