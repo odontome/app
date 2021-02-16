@@ -57,67 +57,6 @@ namespace :odontome do
     practices.each(&:destroy)
   end
 
-  desc 'Send an activity recap everyday at 8am in their timezone'
-  task send_daily_recap_to_administrators: :environment do
-    Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
-
-    # configuration
-    hour_to_send_emails = 8
-    timezones_where_hour_is = timezones_where_hour_are(hour_to_send_emails)
-    practice_ids = practices_in_timezones(timezones_where_hour_is)
-
-    if practice_ids.size.positive?
-      today = Time.now.in_time_zone(timezones_where_hour_is.first).beginning_of_day
-      yesterday = today - 1.day
-
-      admins_of_these_practices = admin_of_practice(practice_ids).where('subscribed_to_digest = ?', true)
-
-      # override the `practice_ids` with only the practices of subscribed admins
-      practice_ids = admins_of_these_practices.pluck(:practice_id)
-
-      # maybe this override cleared them all (very unlikely)
-      if practice_ids.size.zero?
-        next # exits the task
-      end
-
-      patients_created_today = Patient.select('patients.id, patients.firstname, patients.lastname, patients.practice_id, patients.email')
-                                      .where(practice_id: practice_ids)
-                                      .where('patients.created_at >= ? AND patients.created_at <= ?', yesterday, today)
-                                      .order(:practice_id)
-
-      appointments_created_today = Datebook.select('datebooks.practice_id, datebooks.name, appointments.starts_at, doctors.firstname as doctor_firstname, doctors.lastname as doctor_lastname, patients.firstname as patient_firstname, patients.lastname as patient_lastname')
-                                           .where('datebooks.practice_id' => practice_ids)
-                                           .where('appointments.created_at >= ? AND appointments.created_at <= ?', yesterday, today)
-                                           .joins(appointments: %i[doctor patient])
-                                           .order('datebooks.practice_id')
-
-      balance_created_today = Balance.select('SUM(balances.amount) as amount, patients.practice_id')
-                                     .joins('left outer join patients on balances.patient_id = patients.id')
-                                     .where('balances.created_at >= ? AND balances.created_at <= ?', yesterday, today)
-                                     .where('patients.practice_id' => practice_ids)
-                                     .group('patients.practice_id')
-
-      # create array of column values (hash) instead of an array of models
-      patients = ActiveRecord::Base.connection.select_all(patients_created_today)
-      appointments = ActiveRecord::Base.connection.select_all(appointments_created_today)
-      users = ActiveRecord::Base.connection.select_all(admins_of_these_practices)
-      balance = ActiveRecord::Base.connection.select_all(balance_created_today)
-
-      # group the arrays by practice_id
-      patients = patients.group_by { |patient| patient['practice_id'].to_s }
-      appointments = appointments.group_by { |appointment| appointment['practice_id'].to_s }
-      users = users.group_by { |user| user['practice_id'].to_s }
-      balance = balance.group_by { |balance| balance['practice_id'].to_s }
-
-      # go through every practice_id in this timezone and send them an
-      # email with their daily recap
-      practice_ids.each do |practice_id|
-        PracticeMailer.daily_recap_email(users[practice_id.to_s], patients[practice_id.to_s],
-                                         appointments[practice_id.to_s], balance[practice_id.to_s], yesterday).deliver_now
-      end
-    end
-  end
-
   desc "Send today's appointments everyday in their timezone"
   task send_todays_appointments_to_doctors: :environment do
     Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
