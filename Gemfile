@@ -3,9 +3,6 @@
 source 'https://rubygems.org'
 ruby '2.7.2'
 
-### default rails stuff
-
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'bcrypt', '~> 3.1.7'
 gem 'jquery-rails', '~> 4.4.0'
 gem 'puma', '~> 5.2.1'
@@ -24,7 +21,6 @@ gem 'gibberish', '~> 2.1.0'
 gem 'jquery-minicolors-rails', '~>2.2.6.2'
 
 gem 'premailer-rails', '~> 1.11.1'
-gem 'rails_select_on_includes', '~> 5.2.1'
 
 gem 'airbrake'
 gem 'pg', '~> 1.2.3'
@@ -47,7 +43,6 @@ group :test do
 end
 
 group :development, :test do
-  gem 'byebug', '~> 11.1.3'
   gem 'rails-controller-testing', '~> 1.0.5'
   gem 'spring', '~> 2.1.0'
 end
