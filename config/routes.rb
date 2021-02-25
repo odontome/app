@@ -50,7 +50,6 @@ Odontome::Application.routes.draw do
   # unsubscribe links
   get '/patients/:id/unsubscribe' => 'patients#unsubscribe', :as => :patients_unsubscribe
   get '/doctors/:id/unsubscribe' => 'doctors#unsubscribe', :as => :doctors_unsubscribe
-  get '/users/:id/unsubscribe' => 'users#unsubscribe', :as => :users_unsubscribe
 
   # error handling
   get '/404', to: 'errors#not_found'

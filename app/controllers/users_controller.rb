@@ -62,18 +62,4 @@ class UsersController < ApplicationController
       format.html { redirect_to(users_url) }
     end
   end
-
-  def unsubscribe
-    @user = User.with_practice(current_user.practice_id).find(params[:id])
-
-    @user.subscribed_to_digest = if params.key?(:undo)
-                                   true
-                                 else
-                                   false
-                                 end
-
-    @user.save
-
-    redirect_to @user
-  end
 end

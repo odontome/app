@@ -38,12 +38,6 @@ class User < ApplicationRecord
     NotifierMailer.deliver_password_reset_instructions(self).deliver_now
   end
 
-  def ciphered_unsubscribe_url
-    ciphered_url_encoded_id = Cipher.encode(id.to_s)
-
-    "https://my.odonto.me/users/#{ciphered_url_encoded_id}/unsubscribe"
-  end
-
   def is_admin?
     roles.include?('admin')
   end
