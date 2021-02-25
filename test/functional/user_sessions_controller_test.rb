@@ -16,7 +16,7 @@ class UserSessionsControllerTest < ActionController::TestCase
   end
 
   test 'should show login screen if email is not found' do
-    post :create, params: { signin: { email: "not-a-user@email.com", password: '1234567890' } }
+    post :create, params: { signin: { email: 'not-a-user@email.com', password: '1234567890' } }
 
     assert_nil @controller.session['user']
     assert_response :success
