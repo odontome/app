@@ -18,7 +18,7 @@ class PracticesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test 'should create practice and send welcome email' do
+  test 'should create practice, authenticate user, and send welcome email' do
     @controller.session['user'] = nil
 
     practice = { name: 'Odonto.me Demo Practice',
@@ -37,6 +37,7 @@ class PracticesControllerTest < ActionController::TestCase
     assert_equal I18n.t('mailers.practice.welcome.subject'), welcome_email.subject
     assert_match(/Welcome to Odonto.me/, welcome_email.encoded)
 
+    assert_equal @controller.session['user'].email, practice[:users_attributes]["0"]["email"]
     assert_redirected_to practice_path
   end
 
