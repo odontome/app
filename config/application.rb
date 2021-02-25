@@ -36,7 +36,7 @@ module Odontome
     config.i18n.enforce_available_locales = false
 
     # load the predefined list of treatments
-    config.patient_treatments = YAML::load(File.open("#{Rails.root}/config/treatments.yml")) 
+    config.patient_treatments = YAML.safe_load(File.open("#{Rails.root}/config/treatments.yml"))
 
     # disabled field error behavior
     config.action_view.field_error_proc = proc do |html_tag, _instance|
