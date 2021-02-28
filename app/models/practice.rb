@@ -61,7 +61,7 @@ class Practice < ApplicationRecord
   end
 
   def create_first_datebook
-    Datebook.create({ name: I18n.t(:your_first_datebook) })
+    Datebook.create({ practice_id: id, name: I18n.t(:your_first_datebook) })
   end
 
   def practice_params

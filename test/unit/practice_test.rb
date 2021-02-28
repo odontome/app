@@ -36,4 +36,13 @@ class PracticeTest < ActiveSupport::TestCase
     assert_equal practice.users.first.firstname, I18n.t(:administrator)
     assert_equal practice.users.first.lastname, I18n.t(:user).downcase
   end
+
+  test 'practice is created with a default datebook' do
+    practice = Practice.new(name: 'Testing')
+    practice.users << User.new(firstname: 'Firstname', lastname: 'Lastname', email: 'testing@odonto.me',
+                               password: '1234567', password_confirmation: '1234567')
+
+    assert practice.save
+    assert_equal practice.datebooks.first.name, 'Your first datebook'
+  end
 end
