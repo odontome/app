@@ -43,6 +43,7 @@ class Patient < ApplicationRecord
   validates_length_of :emergency_telephone, within: 5..20, allow_blank: true
 
   # callbacks
+  before_save :squish_whitespace
   after_create :destroy_nils
 
   def fullname
@@ -97,6 +98,11 @@ class Patient < ApplicationRecord
   end
 
   private
+
+  def squish_whitespace
+    firstname.squish! unless firstname.nil? 
+    lastname.squish! unless lastname.nil? 
+  end
 
   # this function is a small compromise to bypass that weird situation where a patient is created with everything set to nil
   def destroy_nils
