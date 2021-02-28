@@ -73,10 +73,13 @@ class AppointmentsController < ApplicationController
     datebook = Datebook.with_practice(current_user.practice_id).find params[:datebook_id]
     @appointment = Appointment.where(id: params[:id], datebook_id: datebook.id).first
 
-    # if "as_values_patient_id" is not empty use that, otherwise use "patient_id"
-    unless params[:appointment][:patient_id].nil?
-      params[:appointment][:patient_id] =
-        Patient.find_or_create_from(params[:as_values_patient_id] != '' ? params[:as_values_patient_id] : (params[:appointment][:patient_id]))
+    # clean up the 'as_values_patient_id'
+    as_values_patient_id = params[:as_values_patient_id].gsub!(',', '')
+
+    if as_values_patient_id.empty?
+      params[:appointment][:patient_id] = Patient.find_or_create_from(params[:appointment][:patient_id], current_user.practice_id)
+    else 
+      params[:appointment][:patient_id] = as_values_patient_id
     end
 
     respond_to do |format|
