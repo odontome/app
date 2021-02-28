@@ -149,4 +149,12 @@ class PatientTest < ActiveSupport::TestCase
 
     assert patient.invalid?
   end
+
+  test 'patient firstname, and lastname will be squished' do
+    patient = Patient.new(firstname: ' Peter ', lastname: ' Lopez ', practice_id: 1, date_of_birth: '1982-12-22')
+    
+    assert patient.save
+    assert_equal patient.firstname, 'Peter'
+    assert_equal patient.lastname, 'Lopez'
+  end
 end
