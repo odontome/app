@@ -74,11 +74,12 @@ class AppointmentsController < ApplicationController
     @appointment = Appointment.where(id: params[:id], datebook_id: datebook.id).first
 
     # clean up the 'as_values_patient_id'
-    as_values_patient_id = params[:as_values_patient_id].gsub!(',', '')
+    as_values_patient_id = params[:as_values_patient_id].nil? ? '' : params[:as_values_patient_id].gsub(',', '')
 
     if as_values_patient_id.empty?
-      params[:appointment][:patient_id] = Patient.find_or_create_from(params[:appointment][:patient_id], current_user.practice_id)
-    else 
+      params[:appointment][:patient_id] =
+        Patient.find_or_create_from(params[:appointment][:patient_id], current_user.practice_id)
+    else
       params[:appointment][:patient_id] = as_values_patient_id
     end
 

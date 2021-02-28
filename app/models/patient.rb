@@ -100,8 +100,8 @@ class Patient < ApplicationRecord
   private
 
   def squish_whitespace
-    firstname.squish! unless firstname.nil? 
-    lastname.squish! unless lastname.nil? 
+    firstname&.squish!
+    lastname&.squish!
   end
 
   # this function is a small compromise to bypass that weird situation where a patient is created with everything set to nil
