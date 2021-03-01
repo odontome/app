@@ -2,7 +2,6 @@
 es:
   tell_us_about_your_experience_at_practice: Cuentamos un poco sobre tu experiencia en %{practice_name}
   account_cancelled: Tu cuenta ha sido marcada para cancelación. Si crees que esto es un error, por favor contacta con nosotros lo más rápido posible.
-  account_not_found: No se encontró ninguna cuenta con esta información.
   activate: Activar
   appointment: Cita
   review: Calificación
@@ -160,6 +159,7 @@ es:
       not_found: Puede ser que haya sido borrado o nunca existió
       server_error: Ha ocurrido un error, por favor intentalo más tarde
       reset_your_password_request: Debe restablecer la contraseña de su cuenta. Lo sentimos por cualquier inconveniente que esto haya causado.
+      reset_your_password_token_expired: Ha pasado mucho tiempo desde la solicitud de cambio de contraseña.
       consecutive_failed_logins_limit_exceeded: Muchos intentos consecutivos para iniciar una sesión, la cuenta ha sido bloqueada temporalmente.
   everyone: Todos
   family_diseases_hint: Por favor sé lo más descriptivo posible.
