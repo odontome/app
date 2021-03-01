@@ -73,14 +73,18 @@ class AppointmentsController < ApplicationController
     datebook = Datebook.with_practice(current_user.practice_id).find params[:datebook_id]
     @appointment = Appointment.where(id: params[:id], datebook_id: datebook.id).first
 
-    # clean up the 'as_values_patient_id'
-    as_values_patient_id = params[:as_values_patient_id].nil? ? '' : params[:as_values_patient_id].gsub(',', '')
+    # if there is no `as_values_patient_id` the appointment is just getting moved
+    # otherwise, clean up the fields
+    if !params[:as_values_patient_id].nil?
+      # clean up the 'as_values_patient_id'
+      as_values_patient_id = params[:as_values_patient_id].nil? ? '' : params[:as_values_patient_id].gsub(',', '')
 
-    if as_values_patient_id.empty?
-      params[:appointment][:patient_id] =
-        Patient.find_or_create_from(params[:appointment][:patient_id], current_user.practice_id)
-    else
-      params[:appointment][:patient_id] = as_values_patient_id
+      if as_values_patient_id.empty?
+        params[:appointment][:patient_id] =
+          Patient.find_or_create_from(params[:appointment][:patient_id], current_user.practice_id)
+      else
+        params[:appointment][:patient_id] = as_values_patient_id
+      end
     end
 
     respond_to do |format|
