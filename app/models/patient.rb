@@ -72,7 +72,7 @@ class Patient < ApplicationRecord
   # this function tries to find a patient by an ID or it's NAME, otherwise it creates one
   def self.find_or_create_from(patient_id_or_name, practice_id)
     # remove any possible commas from this value
-    patient_id_or_name.gsub!(',', '')
+    patient_id_or_name&.gsub!(',', '')
 
     # Check if we are dealing with an integer or a string
     if patient_id_or_name.to_i.zero?
