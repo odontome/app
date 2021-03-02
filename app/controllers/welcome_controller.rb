@@ -9,7 +9,6 @@ class WelcomeController < ApplicationController
       if current_user_is_superadmin?
         home_url = practices_admin_url
       elsif session[:LAST_VISITED_DATEBOOK]
-
         begin
           home_url = Datebook.with_practice(current_user.practice_id).find(session[:LAST_VISITED_DATEBOOK])
         rescue ActiveRecord::RecordNotFound
@@ -17,9 +16,9 @@ class WelcomeController < ApplicationController
         end
       else
         home_url = Datebook.with_practice(current_user.practice_id).first
-
       end
-      redirect_to practice_url
+
+      redirect_to home_url
     else
       redirect_to :signin
     end
