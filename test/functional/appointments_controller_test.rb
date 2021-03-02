@@ -45,6 +45,24 @@ class AppointmentsControllerTest < ActionController::TestCase
     end
   end
 
+  test 'should update appointments by only changing dates' do
+    current_time = Time.now
+    new_ends_at = current_time + 60.minutes
+
+    appointment = {
+      id: 1,
+      datebook_id: 1,
+      starts_at: current_time,
+      ends_at: new_ends_at
+    }
+
+    patch :update, params: { appointment: appointment, datebook_id: appointment[:datebook_id], id: appointment[:id] },
+                   format: :js
+    updated_appointment = Appointment.find(appointment[:id])
+
+    assert_equal updated_appointment.ends_at.to_time.to_i, new_ends_at.to_time.to_i
+  end
+
   test 'should not create an appointment with in a foreign practice' do
     appointment = {
       doctor_id: 2,
