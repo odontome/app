@@ -45,6 +45,56 @@ class AppointmentsControllerTest < ActionController::TestCase
     end
   end
 
+  test 'should update existing appointment with a brand new patient' do
+    # in this particular `update` action, the practice_id will come as a string from the textfield
+    # with a combination of empty `as_values_patient_id` when adding a new patient, and a number
+    # when selecting an existing patient
+    appointment_params = {
+      starts_at: '2014-01-04 14:00:00 +0000',
+      ends_at: '2014-01-04 15:00:00 +0000',
+      patient_id: 'Another new patient'
+    }
+
+    appointment = Appointment.find(1)
+
+    assert_difference ['Patient.count'] do
+      patch :update, params: { appointment: appointment_params, datebook_id: 1, id: appointment.id, as_values_patient_id: '' },
+                    format: :js
+      # see Patient.find_or_create_from to understand the 'as_values_patient_id' property
+    end
+
+    updated_appointment = Appointment.find(1)
+
+    assert_not_equal appointment.patient, updated_appointment.patient
+    assert_equal updated_appointment.patient.firstname, 'Another'
+    assert_equal updated_appointment.patient.lastname, 'new patient'
+  end
+
+  test 'should update existing appointment with another existing patient' do
+    # in this particular `update` action, the practice_id will come as a string from the textfield
+    # with a combination of empty `as_values_patient_id` when adding a new patient, and a number
+    # when selecting an existing patient
+    appointment_params = {
+      starts_at: '2014-01-04 14:00:00 +0000',
+      ends_at: '2014-01-04 15:00:00 +0000',
+      patient_id: 'Raul Riera'
+    }
+
+    appointment = Appointment.find(1)
+
+    assert_no_difference ['Patient.count'] do
+      patch :update, params: { appointment: appointment_params, datebook_id: 1, id: appointment.id, as_values_patient_id: '2' },
+                    format: :js
+      # see Patient.find_or_create_from to understand the 'as_values_patient_id' property
+    end
+
+    updated_appointment = Appointment.find(1)
+
+    assert_not_equal appointment.patient, updated_appointment.patient
+    assert_equal updated_appointment.patient.firstname, 'Miguel'
+    assert_equal updated_appointment.patient.lastname, 'Camacho'
+  end
+
   test 'should update appointments by only changing dates' do
     current_time = Time.now
     new_ends_at = current_time + 60.minutes
