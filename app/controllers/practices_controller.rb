@@ -4,7 +4,7 @@ class PracticesController < ApplicationController
   before_action :require_user, only: %i[index destroy edit settings show close]
   before_action :require_no_user, only: %i[new create]
   before_action :require_superadmin, only: %i[index destroy edit]
-  before_action :require_practice_admin, only: %i[settings balance update close]
+  before_action :require_practice_admin, only: %i[show settings balance update close]
 
   def index
     @practices = Practice.all
