@@ -22,7 +22,6 @@ gem 'jquery-minicolors-rails', '~>2.2.6.2'
 
 gem 'premailer-rails', '~> 1.11.1'
 
-gem 'airbrake'
 gem 'pg', '~> 1.2.3'
 
 group :development do
@@ -31,9 +30,6 @@ group :development do
   gem 'rubocop'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring-watcher-listen', '~> 2.0.1'
-end
-
-group :production do
 end
 
 group :test do
@@ -45,3 +41,5 @@ group :development, :test do
   gem 'rails-controller-testing', '~> 1.0.5'
   gem 'spring', '~> 2.1.0'
 end
+
+gem "bugsnag", "~> 6.19"

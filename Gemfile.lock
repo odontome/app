@@ -44,13 +44,11 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
-    airbrake (11.0.1)
-      airbrake-ruby (~> 5.1)
-    airbrake-ruby (5.2.0)
-      rbtree3 (~> 0.5)
     arel (9.0.0)
     ast (2.4.2)
     bcrypt (3.1.16)
+    bugsnag (6.19.0)
+      concurrent-ruby (~> 1.0)
     builder (3.2.4)
     concurrent-ruby (1.1.8)
     crass (1.0.6)
@@ -162,7 +160,6 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    rbtree3 (0.6.0)
     regexp_parser (2.1.1)
     rest-client (1.6.14)
       mime-types (~> 1.16)
@@ -227,8 +224,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  airbrake
   bcrypt (~> 3.1.7)
+  bugsnag (~> 6.19)
   font-awesome-rails (~> 4.7.0.5)
   gibberish (~> 2.1.0)
   i18n-tasks (~> 0.9.34)
