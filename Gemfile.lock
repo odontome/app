@@ -76,7 +76,7 @@ GEM
       rails-i18n
       rainbow (>= 2.2.2, < 4.0)
       terminal-table (>= 1.5.1)
-    icalendar (2.7.0)
+    icalendar (2.7.1)
       ice_cube (~> 0.16)
     ice_cube (0.16.3)
     jquery-minicolors-rails (2.2.6.2)
@@ -229,7 +229,7 @@ DEPENDENCIES
   font-awesome-rails (~> 4.7.0.5)
   gibberish (~> 2.1.0)
   i18n-tasks (~> 0.9.34)
-  icalendar (~> 2.7.0)
+  icalendar (~> 2.7.1)
   jquery-minicolors-rails (~> 2.2.6.2)
   jquery-rails (~> 4.4.0)
   listen (~> 3.4.1)
