@@ -42,4 +42,4 @@ group :development, :test do
   gem 'spring', '~> 2.1.0'
 end
 
-gem "bugsnag", "~> 6.19"
+gem "bugsnag", "~> 6.20"
