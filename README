@@ -1,3 +1,9 @@
+## Local development
+
+- Install [Homebrew](https://brew.sh)
+- Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+- Run `bundle install`
+
 ## Database initialization
 Run the following command from the terminal `bundle exec rake db:setup` followed by `bundle exec rake db:migrate`.
 
