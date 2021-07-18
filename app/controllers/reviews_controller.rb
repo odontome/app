@@ -5,7 +5,7 @@ class ReviewsController < ApplicationController
   before_action :require_user, except: %i[new create]
 
   def index
-    reviews_per_page = 15
+    reviews_per_page = 20
     @current_page = 0
     @reviews = Review.with_practice(current_user.practice_id).limit(reviews_per_page)
 
@@ -23,6 +23,7 @@ class ReviewsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html
+      format.js
       format.json { render json: @reviews }
     end
   end
