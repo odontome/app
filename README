@@ -1,10 +1,11 @@
-## How to run locally.
-Docker is the recommended way to run this project locally. Just follow their [instructions](https://docs.docker.com) to get started.
+## Local development
 
-Once everything is configured, just run `docker-compose up` to get the application up and running. It may be required to run `docker-compose build` before running `up`.
+- Install [Homebrew](https://brew.sh)
+- Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+- Run `bundle install`
 
 ## Database initialization
-Run the following command from the terminal `docker-compose run web rake db:migrate`.
+Run the following command from the terminal `bundle exec rake db:setup` followed by `bundle exec rake db:migrate`.
 
 ## How to run the test suite
 Run the following command from the terminal `docker-compose run web rake test`.
