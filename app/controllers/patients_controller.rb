@@ -11,7 +11,8 @@ class PatientsController < ApplicationController
       # just send "A"
       if params[:letter].blank?
         alphabet = [*'A'..'Z']
-        first_patient_letter = Patient.with_practice(current_user.practice_id).order('firstname ASC').first.firstname[0]
+        first_patient = Patient.with_practice(current_user.practice_id).order('firstname ASC').first
+        first_patient_letter = first_patient&.firstname&.first || 'A'
         params[:letter] = alphabet.include?(first_patient_letter) ? first_patient_letter : 'A'
       end
 
