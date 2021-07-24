@@ -8,7 +8,7 @@
 Run the following command from the terminal `bundle exec rake db:setup` followed by `bundle exec rake db:migrate`.
 
 ## How to run the test suite
-Run the following command from the terminal `docker-compose run web rake test`.
+Run the following command from the terminal `bundle exec rake test`.
 
 ## Deployment instructions
 Heroku deploys automatically every commit on the `master` branch. So, is very important to keep that branch in a deployable state.
