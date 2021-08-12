@@ -47,7 +47,7 @@ GEM
     arel (9.0.0)
     ast (2.4.2)
     bcrypt (3.1.16)
-    bugsnag (6.21.0)
+    bugsnag (6.22.1)
       concurrent-ruby (~> 1.0)
     builder (3.2.4)
     concurrent-ruby (1.1.9)
@@ -223,7 +223,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt (~> 3.1.7)
-  bugsnag (~> 6.20)
+  bugsnag (~> 6.22)
   font-awesome-rails (~> 4.7.0.5)
   gibberish (~> 2.1.0)
   i18n-tasks (~> 0.9.34)
