@@ -116,6 +116,9 @@ namespace :odontome do
       patients = ActiveRecord::Base.connection.select_all(patients_of_these_practices)
       users = ActiveRecord::Base.connection.select_all(admins_of_these_practices)
 
+      next if patients.empty?
+      next if users.empty?
+
       # group the arrays by practice_id
       patients = patients.group_by { |patient| patient['practice_id'].to_s }
       users = users.group_by { |user| user['practice_id'].to_s }
@@ -125,7 +128,7 @@ namespace :odontome do
         patients_in_practice = patients[practice_id.to_s]
         admin_user = users[practice_id.to_s].first
 
-        next unless patients_in_practice
+        next if patients_in_practice.nil?
 
         patients_in_practice.each do |patient|
           PatientMailer.birthday_wishes(admin_user, patient).deliver_now
