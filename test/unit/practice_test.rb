@@ -11,12 +11,12 @@ class PracticeTest < ActiveSupport::TestCase
     assert practice.errors[:name].any?
   end
 
-  test 'practice is created with a free plan as default' do
+  test 'practice is created with a active status as default' do
     practice = Practice.new
     practice.users << User.new
 
     assert practice.invalid?
-    assert_equal practice.status, 'free'
+    assert_equal practice.status, 'active'
   end
 
   test 'practice can be set to cancelled' do

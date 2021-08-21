@@ -3,7 +3,6 @@ complete:
   name: Odonto.me demo practice
   locale: en
   timezone: Europe/London
-  status: free
   currency_unit: $
   email: raulriera@hotmail.com
 
@@ -12,6 +11,5 @@ complete_another_language:
   name: Odonto.me clinica demo
   locale: es
   timezone: America/Mexico_City
-  status: free
   currency_unit: $
   email: raulriera@hotmail.com
