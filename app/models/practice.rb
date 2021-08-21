@@ -22,8 +22,15 @@ class Practice < ApplicationRecord
   before_create :set_email_practice
 
   def set_as_cancelled
-    self.status = 'cancelled'
     self.cancelled_at = Time.now
+  end
+
+  def status 
+    if self.cancelled_at.nil?
+      'active'
+    else 
+      'cancelled'
+    end
   end
 
   def populate_default_treatments

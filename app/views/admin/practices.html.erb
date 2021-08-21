@@ -38,7 +38,7 @@
 						<td><%= practice.datebooks_count %></td>
 						<td><%= practice.patients_count %></td>
 						<td><%= practice.doctors_count %></td>
-						<td><%= practice.created_at %></td>
+						<td><%= practice.created_at.strftime('%F at %I:%M %P') %></td>
 					</tr>
 				<% end %>
 			</tbody>

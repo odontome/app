@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_15_185828) do
+ActiveRecord::Schema.define(version: 2021_08_21_155117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,13 +99,9 @@ ActiveRecord::Schema.define(version: 2021_02_15_185828) do
     t.string "name"
     t.string "locale", default: "en_US"
     t.string "timezone", default: "UTC"
-    t.string "status", default: "free"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "plan_id", default: 1
     t.datetime "cancelled_at"
-    t.integer "number_of_patients", default: 500
-    t.string "invitation_code"
     t.string "currency_unit", default: "$"
     t.integer "patients_count", default: 0
     t.integer "doctors_count", default: 0
