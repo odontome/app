@@ -40,6 +40,10 @@ class Practice < ApplicationRecord
     end
   end
 
+  def has_linked_subscription?
+    !self.stripe_customer_id.nil?
+  end
+
   def has_active_subscription?
     subscription = Subscription.find_by(practice: id, status: "active")
   
@@ -86,7 +90,7 @@ class Practice < ApplicationRecord
     Subscription.create(
       practice_id: id,
       status: 'active', 
-      cancel_at_period_end: true, 
+      cancel_at_period_end: false, 
       current_period_start: Time.now,
       current_period_end: 30.days.from_now)
   end

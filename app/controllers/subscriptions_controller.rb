@@ -9,8 +9,8 @@ class SubscriptionsController < ApplicationController
     session = nil
     #begin
       session = Stripe::Checkout::Session.create(
-        success_url: 'https://localhost:3000' + '/practice/?session_id={CHECKOUT_SESSION_ID}',
-        cancel_url: 'https://localhost:3000' + '/practice/',
+        success_url: 'http://localhost:3000' + '/practice/settings/?session_id={CHECKOUT_SESSION_ID}',
+        cancel_url: 'http://localhost:3000' + '/practice/settings/',
         payment_method_types: ['card'],
         mode: 'subscription',
         customer_email: current_user.email,
@@ -27,8 +27,14 @@ class SubscriptionsController < ApplicationController
     #     status: 400
     #   }
     # end
-    puts "*************"
-  puts session
     redirect_to session.url, status: 303
+  end
+
+  def update
+    portal_session = Stripe::BillingPortal::Session.create({
+      customer: current_user.practice.stripe_customer_id,
+      return_url: 'http://localhost:3000/practice/settings/',
+    })
+    redirect_to portal_session.url, status: 303
   end
 end

@@ -39,7 +39,6 @@
 					<%= f.select(:currency_unit, %w[$ € £ Bs. S/.], {}, { :class => "form-control"}) %>
 			  	</p>
 
-
 				<p class="form-group col-md-8">
 					<%= f.submit(t(:save), :class => "btn btn-primary", data: { disable_with: t(:please_wait) }) %>
 					<span class="cancel"><%= t :or %>
@@ -52,8 +51,21 @@
 
         <!-- side right column -->
         <div class="col-md-3 form-sidebar">
-            <h6><%= t :for_your_information %></h6>
+			<h6>Subscription</h6>
 
+			<%# 
+			has_linked_subscription + has_active_subscription == "Paying customer send to manage"
+			!has_linked_subscription + has_active_subscription == "Trial"
+			has_linked_subscription + canceled == "Needs to subscribe again" 
+			%>
+
+			<% if @practice.has_active_subscription? %>
+				Your subscription is <strong><%= @subscription.status %></strong>
+			<% else %>
+				Your subscription is no longer active, please <%= link_to "subscribe", subscriptions_url, method: :put %> to activate your account.
+			<% end %>
+			<hr />
+            <h6><%= t :for_your_information %></h6>
             <p><%= raw t("instructions.practice", close_url: (link_to (t(:close_your_account)).downcase, practice_cancel_url)).html_safe %></p>
         </div>
     </div>

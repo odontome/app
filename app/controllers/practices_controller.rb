@@ -102,6 +102,7 @@ class PracticesController < ApplicationController
 
   def settings
     @practice = current_user.practice
+    @subscription = @practice.subscription
   end
 
   def balance

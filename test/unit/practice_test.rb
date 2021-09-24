@@ -53,5 +53,6 @@ class PracticeTest < ActiveSupport::TestCase
 
     assert practice.save
     assert_equal practice.subscription.status, 'active'
+    assert_nil practice.stripe_customer_id
   end
 end

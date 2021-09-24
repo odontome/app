@@ -28,7 +28,7 @@ class AddSubscriptionsToPractices < ActiveRecord::Migration[5.2]
         subscription = Subscription.new(
           practice_id: practice.id,
           status: 'active', 
-          cancel_at_period_end: true, 
+          cancel_at_period_end: false, 
           current_period_start: Time.now,
           current_period_end: 30.days.from_now)
         subscription.save!
