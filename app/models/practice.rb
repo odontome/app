@@ -7,6 +7,7 @@ class Practice < ApplicationRecord
   has_many :doctors, dependent: :delete_all
   has_many :patients, dependent: :destroy # uses :destroy so User.rb deletes_all its children
   has_many :treatments, dependent: :delete_all
+  has_one :subscription
 
   accepts_nested_attributes_for :users, limit: 1
 
@@ -18,7 +19,7 @@ class Practice < ApplicationRecord
   # callbacks
   before_validation :set_timezone_and_locale, on: :create
   before_validation :set_first_user_data, on: :create
-  after_create :create_first_datebook
+  after_create :create_first_datebook, :create_trial_subscription
   before_create :set_email_practice
 
   def set_as_cancelled
@@ -36,6 +37,16 @@ class Practice < ApplicationRecord
   def populate_default_treatments
     Rails.configuration.patient_treatments[locale || 'en']['treatments'].each do |treatment|
       treatments << Treatment.new(name: treatment, price: 0)
+    end
+  end
+
+  def has_active_subscription?
+    subscription = Subscription.find_by(practice: id, status: "active")
+  
+    if subscription.present?
+      return true 
+    else
+      return false
     end
   end
 
@@ -69,6 +80,15 @@ class Practice < ApplicationRecord
 
   def create_first_datebook
     Datebook.create({ practice_id: id, name: I18n.t(:your_first_datebook) })
+  end
+
+  def create_trial_subscription
+    Subscription.create(
+      practice_id: id,
+      status: 'active', 
+      cancel_at_period_end: true, 
+      current_period_start: Time.now,
+      current_period_end: 30.days.from_now)
   end
 
   def practice_params
