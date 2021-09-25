@@ -2,4 +2,3 @@
 
 module PracticesHelper
 end
-  

@@ -27,10 +27,11 @@ class AddSubscriptionsToPractices < ActiveRecord::Migration[5.2]
         say "Creating subscription for practice: #{practice.id}"
         subscription = Subscription.new(
           practice_id: practice.id,
-          status: 'trialing', 
-          cancel_at_period_end: false, 
+          status: 'trialing',
+          cancel_at_period_end: false,
           current_period_start: Time.now,
-          current_period_end: 30.days.from_now)
+          current_period_end: 30.days.from_now
+        )
         subscription.save!
       end
     end

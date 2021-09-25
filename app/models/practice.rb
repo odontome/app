@@ -26,10 +26,10 @@ class Practice < ApplicationRecord
     self.cancelled_at = Time.now
   end
 
-  def status 
+  def status
     if self.cancelled_at.nil?
       'active'
-    else 
+    else
       'cancelled'
     end
   end
@@ -46,9 +46,9 @@ class Practice < ApplicationRecord
 
   def has_active_subscription?
     subscription = Subscription.find_by(practice: id, status: "active")
-  
+
     if subscription.present?
-      return true 
+      return true
     else
       return false
     end
@@ -89,10 +89,11 @@ class Practice < ApplicationRecord
   def create_trial_subscription
     Subscription.create(
       practice_id: id,
-      status: 'trialing', 
-      cancel_at_period_end: false, 
+      status: 'trialing',
+      cancel_at_period_end: false,
       current_period_start: Time.now,
-      current_period_end: 30.days.from_now)
+      current_period_end: 30.days.from_now
+    )
   end
 
   def practice_params
