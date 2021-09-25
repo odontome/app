@@ -46,13 +46,13 @@ class PracticeTest < ActiveSupport::TestCase
     assert_equal practice.datebooks.first.name, 'Your first datebook'
   end
 
-  test 'practice is created with an active subscription' do
+  test 'practice is created with an trial subscription' do
     practice = Practice.new(name: 'Testing')
     practice.users << User.new(firstname: 'Firstname', lastname: 'Lastname', email: 'testing@odonto.me',
                                password: '1234567', password_confirmation: '1234567')
 
     assert practice.save
-    assert_equal practice.subscription.status, 'active'
+    assert_equal practice.subscription.status, 'trialing'
     assert_nil practice.stripe_customer_id
   end
 end

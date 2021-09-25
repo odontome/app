@@ -7,7 +7,7 @@ class Practice < ApplicationRecord
   has_many :doctors, dependent: :delete_all
   has_many :patients, dependent: :destroy # uses :destroy so User.rb deletes_all its children
   has_many :treatments, dependent: :delete_all
-  has_one :subscription
+  has_one :subscription, dependent: :destroy
 
   accepts_nested_attributes_for :users, limit: 1
 
@@ -89,7 +89,7 @@ class Practice < ApplicationRecord
   def create_trial_subscription
     Subscription.create(
       practice_id: id,
-      status: 'active', 
+      status: 'trialing', 
       cancel_at_period_end: false, 
       current_period_start: Time.now,
       current_period_end: 30.days.from_now)

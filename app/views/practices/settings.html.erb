@@ -51,7 +51,7 @@
 
         <!-- side right column -->
         <div class="col-md-3 form-sidebar">
-			<h6>Subscription</h6>
+			<h6>Subscription <span class="label label-default"><%= @subscription.status %></span></h6>
 
 			<%# 
 			has_linked_subscription + has_active_subscription == "Paying customer send to manage"
@@ -64,7 +64,9 @@
 			<% else %>
 				Your subscription is no longer active, please <%= link_to "subscribe", subscriptions_url, method: :put %> to activate your account.
 			<% end %>
+
 			<hr />
+
             <h6><%= t :for_your_information %></h6>
             <p><%= raw t("instructions.practice", close_url: (link_to (t(:close_your_account)).downcase, practice_cancel_url)).html_safe %></p>
         </div>

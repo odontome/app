@@ -38,7 +38,7 @@
 					<tr>
 						<td><%= practice.id %></td>
 						<td><span data-toggle="tooltip" title="<%= practice.email %>"><%= practice.name %></span> <% if practice.cancelled_at %> <br /> <sub class="label label-danger">(Cancelled at <%= practice.cancelled_at %></sub> <% end %> </td>
-						<td><span data-toggle="tooltip" title="<%= practice.current_period_end.strftime('%F') %>"><%= practice.status.titlecase %></span></td>
+						<td><span data-toggle="tooltip" title="Next billing on <%= practice.current_period_end.strftime('%F') %>"><%= practice.subscription.status.titlecase %></span></td>
 						<td><%= practice.datebooks_count %></td>
 						<td><%= practice.patients_count %></td>
 						<td><%= practice.doctors_count %></td>

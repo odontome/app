@@ -9,15 +9,25 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_session, :current_user, :user_is_admin?
 
-  before_action :check_account_status
-  before_action :set_locale
-  before_action :set_timezone
-  before_action :find_datebooks
-
+  before_action :set_locale, :set_timezone, :check_account_status, :check_subscription_status, :find_datebooks
+  
   def check_account_status
     if current_user && (current_user.practice.status == 'cancelled')
       session.clear
       redirect_to signin_url, alert: I18n.t(:account_cancelled)
+    end
+  end
+
+  def check_subscription_status
+    if current_user && current_user.practice.subscription.is_trial_expiring?
+      flash[:warning] = "Your trial is expiring"
+    elsif current_user && !current_user.practice.subscription.active_or_trialing?      
+      if user_is_admin?
+        redirect_to practice_settings_url, error: "Your subscription has expired." unless !performed?
+      else        
+        session.clear
+        redirect_to signin_url, error: "Your subscription has expired, please consult with the owner of your account to renew it."
+      end
     end
   end
 

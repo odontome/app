@@ -15,6 +15,6 @@ class AdminController < ApplicationController
       practices.doctors_count, 
       practices.users_count, 
       subscriptions.status, 
-      subscriptions.current_period_end').joins(:subscription).order('created_at desc')
+      subscriptions.current_period_end').left_outer_joins(:subscription).order('created_at desc')
   end
 end
