@@ -51,6 +51,14 @@ Odontome::Application.routes.draw do
   get '/patients/:id/unsubscribe' => 'patients#unsubscribe', :as => :patients_unsubscribe
   get '/doctors/:id/unsubscribe' => 'doctors#unsubscribe', :as => :doctors_unsubscribe
 
+  # subscriptions
+  resource :subscriptions
+  namespace :api do
+    namespace :webhooks do
+      post "/stripe", to: "stripe#event"
+    end
+  end
+
   # error handling
   get '/404', to: 'errors#not_found'
   get '/401', to: 'errors#unauthorised'

@@ -178,12 +178,14 @@ es:
   incomplete: Incompleto
   instructions:
     datebooks: <p>Agendas son el centro de cada clínica.</p> <p>Debido a que ya puedes filtrar por doctores, un uso común de las agendas es crear una por cada clínica que poseas.</p>
-    doctors: <p>Para mejor organizar a tu personal, utiliza diferentes colores para cada doctor.</p>
+    doctors:
+      <p>Para mejor organizar a tu personal, utiliza diferentes colores para cada doctor.</p>
       <p>Recuerda que puedes suspender doctores que ya no trabajes para ti. De esta manera no aparecerán en tu Odonto.me pero igual mantendrás todo el historial de sus actividades.</p>
     patients: Lo más importante de tu clínica. Con solo unos cuantos clics puedes crear un paciente, aunque es recomendado que llenes la mayor cantidad de información posible.
     practice: <p>Configura tu clínica como prefieras.</p> <p>Si por algún motivo decides dejarnos. Puedes %{close_url} en cualquier momento.</p>
     treatments: Todo lo que le haces a tus pacientes. Esta sección está directamente relacionada con el estado de cuenta de tu clínica.
-    users: <p>Las personas que pueden accesar a tu Odonto.me.</p> <p>Ya que solo tú puedes ver esta información, Es recomendado que crees tantos usuarios quieras para manejar Odonto.me pero dejes a este usuario <strong>administrador</strong>
+    users:
+      <p>Las personas que pueden accesar a tu Odonto.me.</p> <p>Ya que solo tú puedes ver esta información, Es recomendado que crees tantos usuarios quieras para manejar Odonto.me pero dejes a este usuario <strong>administrador</strong>
       para la adminstración y configuración.</p>
   last_login_at_with_date: Última sesión hace %{date}
   logout: ¿Cerrar sesión?
@@ -293,6 +295,25 @@ es:
   speciality: Especialidad
   starts_at: Comienza el
   status: Estatus
+  subscriptions:
+    title: Subscripción
+    status:
+      trialing: 'en prueba'
+      active: 'activa'
+      past_due: 'vencida'
+      canceled: 'cancelada'
+    cta:
+      active: gestionar tu subscripción
+      expired: subscríbete
+      trialing: subscríbete
+    message_to_admin:
+      active: Tu subscripción esta activa, puedes %{stripe_url} en cualquier momento.
+      expired: Tu subscripción ha expirado, por favor %{stripe_url} para reactivar tu cuenta.
+      trialing: Estás usando una subscripción de prueba, por favor %{stripe_url} para activarla.
+    errors:
+      expiring: Tu subscripción va a expirar pronto. Por favor <a href="%{practice_settings_url}">subscríbete</a> para no perder acceso a tu cuenta.
+      expired: Tu subscripción ha expirado, por favor renueva la subscripción para obtener acceso a tu cuenta.
+      expired_non_admin: Tu subscripción ha expirado, por favor consulta con el administrador de tu cuenta. Solo ellos pueden renovar subscripciones.
   suspend: Suspender
   suspended: Suspendido
   telephone: Teléfono
@@ -332,4 +353,4 @@ es:
     title: Notificaciones por correo
     subscribe_message: "Ya no estás suscrito para recibir notificaciones de la <strong>%{name}</strong>. Suscríbete de nuevo <a href='%{url}?undo'>haciendo clic aquí</a>"
     unsubscribe_message: "Estás suscrito para recibir notificaciones sobre la  <strong>%{name}</strong>. Date de baja <a href='%{url}'>haciendo clic aquí</a>"
-    daily_digest: "actividad de tu clínica"
+    daily_digest: 'actividad de tu clínica'

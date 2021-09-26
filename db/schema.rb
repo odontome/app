@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_21_155117) do
+ActiveRecord::Schema.define(version: 2021_09_18_211631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(version: 2021_08_21_155117) do
     t.integer "users_count", default: 0
     t.integer "datebooks_count"
     t.string "email"
+    t.text "stripe_customer_id"
   end
 
   create_table "reviews", id: :serial, force: :cascade do |t|
@@ -116,6 +117,17 @@ ActiveRecord::Schema.define(version: 2021_08_21_155117) do
     t.string "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.bigint "practice_id", null: false
+    t.text "status", null: false
+    t.boolean "cancel_at_period_end", default: false, null: false
+    t.datetime "current_period_start", null: false
+    t.datetime "current_period_end", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["practice_id"], name: "index_subscriptions_on_practice_id"
   end
 
   create_table "treatments", id: :serial, force: :cascade do |t|
@@ -143,4 +155,5 @@ ActiveRecord::Schema.define(version: 2021_08_21_155117) do
     t.index ["perishable_token"], name: "index_users_on_perishable_token"
   end
 
+  add_foreign_key "subscriptions", "practices"
 end

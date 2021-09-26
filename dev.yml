@@ -1,8 +1,0 @@
-name: odontome
-
-up:
-  - ruby: 2.7.2
-  - node:
-      version: v12.18.4
-      yarn: 1.13.0
-  - bundler

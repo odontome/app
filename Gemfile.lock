@@ -199,6 +199,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    stripe (5.38.0)
     taps (0.3.24)
       rack (>= 1.0.1)
       rest-client (>= 1.4.0, < 1.7.0)
@@ -241,6 +242,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   spring (~> 2.1.0)
   spring-watcher-listen (~> 2.0.1)
+  stripe (~> 5.38.0)
   taps (~> 0.3.24)
   uglifier (~> 4.2.0)
 

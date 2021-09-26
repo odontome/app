@@ -17,18 +17,17 @@ class DatebooksController < ApplicationController
 
   def show
     begin
-    @doctors = Doctor.with_practice(current_user.practice_id).valid.order('firstname')
-    @filtered_by = params[:doctor_id] || nil
-    @datebook = Datebook.with_practice(current_user.practice_id).find params[:id]
+      @doctors = Doctor.with_practice(current_user.practice_id).valid.order('firstname')
+      @filtered_by = params[:doctor_id] || nil
+      @datebook = Datebook.with_practice(current_user.practice_id).find params[:id]
 
-    # store this variable in the session scope, the next time
-    # so when the user clicks on the logo it will send him
-    # to this datebook
-    session[:LAST_VISITED_DATEBOOK] = @datebook.id
+      # store this variable in the session scope, the next time
+      # so when the user clicks on the logo it will send him
+      # to this datebook
+      session[:LAST_VISITED_DATEBOOK] = @datebook.id
 
-    # Detect if this is coming from a mobile device
-    @is_mobile = request.user_agent =~ /iPhone|webOS|Android/
-    
+      # Detect if this is coming from a mobile device
+      @is_mobile = request.user_agent =~ /iPhone|webOS|Android/
     rescue Exception
       redirect_to(root_url, notice: I18n.t("errors.messages.not_found"))
     end
