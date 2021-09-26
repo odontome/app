@@ -1,0 +1,14 @@
+{
+  "name": "Odonto.me",
+  "description": "A barebones Odonto.me applicatoin using Ruby on Rails",
+  "website": "http://www.odonto.me",
+  "repository": "https://github.com/odontome/app",
+  "logo": "https://my.odonto.me/apple-touch-icon-precomposed.png",
+  "addons": [
+    "heroku-postgresql:hobby-dev", 
+    "scheduler:standard", 
+    "bugsnag:tauron2", 
+    "sendgrid:starter"
+  ],
+  "keywords": ["ruby", "ruby on rails", "odontome", "odonto", "raul", "riera"]
+}
