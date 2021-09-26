@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class UserSessionsController < ApplicationController
-  # before_filter :require_no_user, :only => [:new, :create]
   before_action :require_user, only: %i[show destroy]
+  skip_before_action :check_subscription_status
 
   def new; end
 

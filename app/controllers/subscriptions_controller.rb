@@ -2,12 +2,13 @@
 
 class SubscriptionsController < ApplicationController
   before_action :require_practice_admin
+  skip_before_action :check_subscription_status
   
   def create
     # Create new Checkout Session for the order
     # See https://stripe.com/docs/api/checkout/sessions/create for more info
     session = nil
-    #begin
+    begin
       session = Stripe::Checkout::Session.create(
         success_url: 'http://localhost:3000' + '/practice/settings/?session_id={CHECKOUT_SESSION_ID}',
         cancel_url: 'http://localhost:3000' + '/practice/settings/',
@@ -21,12 +22,12 @@ class SubscriptionsController < ApplicationController
             price: 'price_1JRPagABOdzKVszlVznnsr4Y',
         }],
       )
-    # rescue => e
-    #   render json: {
-    #     error: e,
-    #     status: 400
-    #   }
-    # end
+    rescue => e
+      render json: {
+        error: e,
+        status: 400
+      }
+    end
     redirect_to session.url, status: 303
   end
 

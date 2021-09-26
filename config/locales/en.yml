@@ -1,7 +1,8 @@
 ---
 en:
   tell_us_about_your_experience_at_practice: Tell us about your experience at %{practice_name}
-  account_cancelled: Your account is marked for cancellation. If you believe this
+  account_cancelled:
+    Your account is marked for cancellation. If you believe this
     is a mistake, please contact us as soon as possible.
   activate: Activate
   appointment: Appointment
@@ -96,7 +97,8 @@ en:
       review: Review
   additional_notes: Additional notes
   address: Address
-  admin_credentials_required: You need to be the administrator of the practice to
+  admin_credentials_required:
+    You need to be the administrator of the practice to
     do this
   administrator: Administrator
   age: Age
@@ -113,7 +115,8 @@ en:
   appointments: Appointments
   appointments_in_datebook: ! '%{count} appointments'
   are_you_sure: Are you sure?
-  are_you_sure_no_undo: Are you sure? All related data will be deleted, there is no
+  are_you_sure_no_undo:
+    Are you sure? All related data will be deleted, there is no
     going back
   balance: Balance
   balance_created_error_message: There was a problem creating this item
@@ -123,7 +126,8 @@ en:
   close_your_account: Close your account
   color: Color
   comments: Comments
-  consider_using_gravatar: Register this email with gravatar.org to use it as a profile
+  consider_using_gravatar:
+    Register this email with gravatar.org to use it as a profile
     image.
   contact_information: Contact information
   contact_us: Contact us
@@ -144,7 +148,8 @@ en:
   delete_appointment: Delete this appointment
   delete_patient: Delete this patient
   doctor_created_success_message: The doctor was created successfully
-  doctor_has_no_future_appointments: The schedule is free. How about if we schedule
+  doctor_has_no_future_appointments:
+    The schedule is free. How about if we schedule
     some %{datebooks_url}?
   doctor_updated_success_message: The doctor was updated successfully
   doctors: Doctors
@@ -186,22 +191,28 @@ en:
   inactive: Inactive
   incomplete: Incomplete
   instructions:
-    datebooks: <p>Datebooks are the backbone of every practice.</p> <p>Because you
+    datebooks:
+      <p>Datebooks are the backbone of every practice.</p> <p>Because you
       can already filter your datebooks by doctor, one common usage is to create one
       datebook per each of your practices.</p>
-    doctors: <p>To better organize your staff, use different colors for each doctor.</p>
+    doctors:
+      <p>To better organize your staff, use different colors for each doctor.</p>
       <p>Please note that you can suspend doctors that are no longer in your staff
       to prevent them from appearing in Odonto.me, while still keeping all their data
       in your records.</p>
-    patients: Easily the most important part of your practice. You can setup a patient
+    patients:
+      Easily the most important part of your practice. You can setup a patient
       fast by just filling out the few required fields, but it's strongly recommended
       you take the time to add as much info as possible.
-    practice: <p>From here, you can update everything about your practice. Please
+    practice:
+      <p>From here, you can update everything about your practice. Please
       take a moment to review all your options here.</p> <p>If from any reason you
       decide to leave us. You can %{close_url} at anytime.</p>
-    treatments: Everything you do to your patients. These items are directly connected
+    treatments:
+      Everything you do to your patients. These items are directly connected
       to the balance of your practice.
-    users: <p>These are the people who have access to your Odonto.me.</p> <p>Since
+    users:
+      <p>These are the people who have access to your Odonto.me.</p> <p>Since
       only you have access to these sections, it is recommended that you create users
       with less privilages to handle the day to day usage and leave your <strong>administrator</strong>
       account for management.</p>
@@ -244,11 +255,13 @@ en:
   no_reviews_message: No patients have reviewed their experience yet.<br /> Everytime a patient visits your practice, an email will be sent to ask them to review their experience.
   no_account: Don't have an account?
   no_doctors: Please create doctors before using this section
-  no_patient_found_new_one_will_be_created: No patient was found, a new one will be
+  no_patient_found_new_one_will_be_created:
+    No patient was found, a new one will be
     created
   no_patients: You haven't created any patients so far.
   no_treatments_message: You haven't created any treatments so far.
-  no_user_with_that_email: There seems to be a problem. If you are still having problems,
+  no_user_with_that_email:
+    There seems to be a problem. If you are still having problems,
     please contact us.
   none: none
   not_logged_in: Not logged in
@@ -260,7 +273,8 @@ en:
   or: or
   password: Password
   password_confirmation: Password confirmation
-  password_reset_instructions: We will send you instructions on how to change your
+  password_reset_instructions:
+    We will send you instructions on how to change your
     password after you enter your email below and press Reset password
   password_reset_instructions_sent_to_email: Instructions on how to reset your password have been sent to your email
   password_reset_success_message: Your password was reset.
@@ -269,11 +283,13 @@ en:
   past_surgeries: Past surgeries
   patient: Patient
   patient_created_success_message: The patient was created successfully
-  patient_has_no_appointments: No appointments. Would you like to %{datebooks_url}
+  patient_has_no_appointments:
+    No appointments. Would you like to %{datebooks_url}
     one?
   patient_incomplete: Patient incomplete
   patient_search_results_few: ! '%{patients_count} patients found.'
-  patient_search_results_many: Showing %{patients_count} of many patients. Try a more
+  patient_search_results_many:
+    Showing %{patients_count} of many patients. Try a more
     accurate search.
   more_information: More information
   patient_search_results_one: There was that patient!
@@ -286,7 +302,8 @@ en:
   personal_information: Personal information
   please_wait: Pleast wait...
   practice_cancellation: Practice cancellation
-  practice_cancellation_message: We are sorry that you wish to leave us, if there
+  practice_cancellation_message:
+    We are sorry that you wish to leave us, if there
     is anything we can improve or help you, please get in touch with us. To finialize
     the cancellation of your account please click on the top button.
   practice_close_active_message: ''
@@ -298,12 +315,14 @@ en:
   practice_name: Practice name
   practice_name_hint: Something like "My awesome dental practice"
   practice_email: Practice email
-  practice_not_completely_setup: Please finish completing the information about your
+  practice_not_completely_setup:
+    Please finish completing the information about your
     practice (doctors, treatments, etc) before using this section.
   practice_settings: Practice settings
   practice_updated_success_message: Your practice has been updated
   practices: Practices
-  predefined_treatments_created_success_message: Predefined treatments have been created
+  predefined_treatments_created_success_message:
+    Predefined treatments have been created
     for you. Feel free to update their name and prices to whatever fits you.
   price: Price
   privacy_policy: Privacy policy
@@ -327,6 +346,25 @@ en:
   speciality: Speciality
   starts_at: Starts at
   status: Status
+  subscriptions:
+    title: Subscription
+    status:
+      trialing: 'trialing'
+      active: 'active'
+      past_due: 'past due'
+      canceled: 'canceled'
+    cta:
+      active: manage your subscription
+      expired: subscribe
+      trialing: subscribe
+    message_to_admin:
+      active: Your subscription is %{status}, you can %{stripe_url} at any time.
+      expired: Your subscription is no longer active, please %{stripe_url} to activate your account.
+      trialing: This is a trial subcription, please %{stripe_url} before your trial period ends.
+    errors:
+      expiring: Your subscription will expire soon. Please <a href="%{practice_settings_url}">subscribe</a> in order to keep access to your account.
+      expired: Your subscription has expired, please renew it to regain access to your account.
+      expired_non_admin: Your subscription has expired, please consult with the owner of your account to renew it. Only administrator accounts can renew subscriptions.
   suspend: Suspend
   suspended: Suspended
   telephone: Telephone
@@ -359,7 +397,8 @@ en:
     practice: Don't forget to setup your language, timezone and currency in %{practice_settings_url}. Some of these may have already been setup for you, but it doesn't hurt to double check their current values.
   week: Week
   welcome: Welcome to Odonto.me
-  you_agree_to_our_terms_and_privacy_policy: You agree to our %{terms_url} and to
+  you_agree_to_our_terms_and_privacy_policy:
+    You agree to our %{terms_url} and to
     our %{privacy_url} when you register.
   your_first_datebook: Your first datebook
   email_notifications:

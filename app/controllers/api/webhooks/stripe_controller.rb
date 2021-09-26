@@ -1,6 +1,7 @@
 module Api::Webhooks
   class StripeController < ApplicationController
     skip_forgery_protection
+    skip_before_action :check_subscription_status
 
     def event
       event = nil

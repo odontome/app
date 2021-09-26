@@ -5,6 +5,7 @@ class PracticesController < ApplicationController
   before_action :require_no_user, only: %i[new create]
   before_action :require_superadmin, only: %i[index destroy edit]
   before_action :require_practice_admin, only: %i[show settings balance update close]
+  skip_before_action :check_subscription_status
 
   def index
     @practices = Practice.all
@@ -57,6 +58,8 @@ class PracticesController < ApplicationController
 
   def update
     @practice = current_user.practice
+    @subscription = @practice.subscription
+    
     session[:locale] = params[:practice][:locale]
 
     respond_to do |format|
@@ -73,20 +76,15 @@ class PracticesController < ApplicationController
   end
 
   def close
-    if current_user.practice.status == 'active'
-      flash[:alert] = I18n.t(:practice_close_active_message)
-      redirect_to practice_settings_url
+    @practice = current_user.practice
+    @practice.set_as_cancelled
+    if @practice.save
+      session.clear
+      flash.discard
+      redirect_to signin_url, notice: I18n.t(:practice_close_success_message)
     else
-      @practice = current_user.practice
-      @practice.set_as_cancelled
-      if @practice.save
-        session.clear
-        flash.discard
-        redirect_to signin_url, notice: I18n.t(:practice_close_success_message)
-      else
-        @practice.errors[:base] << I18n.t(:practice_close_error_message)
-        redirect_to practice_settings_url
-      end
+      @practice.errors[:base] << I18n.t(:practice_close_error_message)
+      redirect_to practice_settings_url
     end
   end
 
