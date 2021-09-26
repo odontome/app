@@ -8,10 +8,11 @@ class SubscriptionsController < ApplicationController
     # Create new Checkout Session for the order
     # See https://stripe.com/docs/api/checkout/sessions/create for more info
     session = nil
+
     begin
       session = Stripe::Checkout::Session.create(
-        success_url: 'http://localhost:3000' + '/practice/settings/?session_id={CHECKOUT_SESSION_ID}',
-        cancel_url: 'http://localhost:3000' + '/practice/settings/',
+        success_url: request.base_url + '/practice/settings/?session_id={CHECKOUT_SESSION_ID}',
+        cancel_url: request.base_url + '/practice/settings/',
         payment_method_types: ['card'],
         mode: 'subscription',
         customer_email: current_user.email,
@@ -19,7 +20,7 @@ class SubscriptionsController < ApplicationController
         automatic_tax: { enabled: true },
         line_items: [{
             quantity: 1,
-            price: 'price_1JRPagABOdzKVszlVznnsr4Y',
+            price: Rails.configuration.stripe[:price_id],
         }],
       )
     rescue => e
@@ -34,7 +35,7 @@ class SubscriptionsController < ApplicationController
   def update
     portal_session = Stripe::BillingPortal::Session.create({
       customer: current_user.practice.stripe_customer_id,
-      return_url: 'http://localhost:3000/practice/settings/',
+      return_url: request.base_url + '/practice/settings/',
     })
     redirect_to portal_session.url, status: 303
   end
