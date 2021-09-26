@@ -22,15 +22,23 @@ Heroku deploys automatically every commit on the `master` branch. So, is very im
 
 Include the following environment variables in your local and remote instance for the application to work correctly.
 
-| Key                    | Description                                       | Required |
-| ---------------------- | ------------------------------------------------- | -------- |
-| SECRET_KEY_BASE        | Rails secret key, used to secure your application | Yes      |
-| STRIPE_PUBLISHABLE_KEY | Used by Stripe for subscription management        | Yes      |
-| STRIPE_SECRET_KEY      | See `STRIPE_PUBLISHABLE_KEY`                      | Yes      |
-| STRIPE_WEBHOOK_SECRET  | Used by Stripe to authenticate your requests      | Yes      |
-| STRIPE_PRICE_ID        | Used by Stripe for the subscription price         | Yes      |
-| BUGSNAG_API_KEY        | Used by Bugsnag for error tracking                | No       |
-| SENDGRID_API_KEY       | Used by Sendgrid in order to use Rails Mailers    | No       |
-| SENDGRID_DOMAIN        | See `SENDGRID_API_KEY`                            | No       |
-| SENDGRID_USERNAME      | See `SENDGRID_API_KEY`                            | No       |
-| SENDGRID_PASSWORD      | See `SENDGRID_API_KEY`                            | No       |
+| Key                      | Description                                       | Required |
+| ------------------------ | ------------------------------------------------- | -------- |
+| `SECRET_KEY_BASE`        | Rails secret key, used to secure your application | Yes      |
+| `STRIPE_PUBLISHABLE_KEY` | Used by Stripe for subscription management        | Yes      |
+| `STRIPE_SECRET_KEY`      | See above                                         | Yes      |
+| `STRIPE_WEBHOOK_SECRET`  | Used by Stripe to authenticate your requests      | Yes      |
+| `STRIPE_PRICE_ID`        | Used by Stripe for the subscription price         | Yes      |
+| `BUGSNAG_API_KEY`        | Used by Bugsnag for error tracking                | No       |
+| `SENDGRID_API_KEY`       | Used by Sendgrid in order to use Rails Mailers    | No       |
+| `SENDGRID_DOMAIN`        | See above                                         | No       |
+| `SENDGRID_USERNAME`      | See above                                         | No       |
+| `SENDGRID_PASSWORD`      | See above                                         | No       |
+
+## Setting up Scheduler
+
+Add all the jobs in `/lib/tasks/odontome.rake` to your Scheduler Heroky extension.
+
+## Setting up Stripe
+
+Watch all the events in `/app/controllers/api/webhooks/stripe_controller.rb` in the developer section of your Stripe dashboard.
