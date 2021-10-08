@@ -33,7 +33,7 @@ module Api::Webhooks
         invoice = event.data.object
         subscription = Stripe::Subscription.retrieve(invoice.subscription)
         update_database_subscription(subscription)
-      when 'invoice.created', 'customer.subscription.deleted', 'customer.subscription.updated'
+      when 'customer.subscription.deleted', 'customer.subscription.updated'
         subscription = event.data.object
         update_database_subscription(subscription)
       when 'checkout.session.completed'
