@@ -1,5 +1,7 @@
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/odontome/app)
 
+☝️ For one-click deployment
+
 ## Local development
 
 - Install [Homebrew](https://brew.sh)
@@ -16,7 +18,7 @@ Run the following command from the terminal `bundle exec rake test`.
 
 ## Deployment instructions
 
-Heroku deploys automatically every commit on the `master` branch. So, is very important to keep that branch in a deployable state.
+Heroku deploys automatically every commit on the `master` branch to the staging environment. Is important to keep the branch in a deployable state.
 
 ## Required environment variables
 
@@ -29,11 +31,11 @@ Include the following environment variables in your local and remote instance fo
 | `STRIPE_SECRET_KEY`      | See above                                         | Yes      |
 | `STRIPE_WEBHOOK_SECRET`  | Used by Stripe to authenticate your requests      | Yes      |
 | `STRIPE_PRICE_ID`        | Used by Stripe for the subscription price         | Yes      |
+| `SENDGRID_API_KEY`       | Used by Sendgrid in order to use Rails Mailers    | Yes      |
+| `SENDGRID_DOMAIN`        | See above                                         | Yes      |
+| `SENDGRID_USERNAME`      | See above                                         | Yes      |
+| `SENDGRID_PASSWORD`      | See above                                         | Yes      |
 | `BUGSNAG_API_KEY`        | Used by Bugsnag for error tracking                | No       |
-| `SENDGRID_API_KEY`       | Used by Sendgrid in order to use Rails Mailers    | No       |
-| `SENDGRID_DOMAIN`        | See above                                         | No       |
-| `SENDGRID_USERNAME`      | See above                                         | No       |
-| `SENDGRID_PASSWORD`      | See above                                         | No       |
 
 ## Setting up Scheduler
 
