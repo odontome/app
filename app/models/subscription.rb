@@ -19,9 +19,13 @@ class Subscription < ApplicationRecord
     ACCESS_GRANTING_STATUSES.include?(status)
   end
 
+  def is_trialing?
+    status == 'trialing'
+  end
+
   def is_trial_expiring?
     days_left_in_subscription = (current_period_end.to_date - Time.now.to_date).to_i
-    active_or_trialing? && days_left_in_subscription < 14
+    is_trialing? && days_left_in_subscription < 14
   end
 
   def assign_stripe_attrs(stripe_sub)
