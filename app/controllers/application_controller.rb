@@ -10,7 +10,9 @@ class ApplicationController < ActionController::Base
   helper_method :current_session, :current_user, :user_is_admin?
 
   before_action :set_locale, :set_timezone, :check_account_status, :check_subscription_status, :find_datebooks
-  
+
+  before_bugsnag_notify :add_user_info_to_bugsnag
+
   def check_account_status
     if current_user && (current_user.practice.status == 'cancelled')
       session.clear
@@ -21,10 +23,10 @@ class ApplicationController < ActionController::Base
   def check_subscription_status
     if current_user && current_user.practice.subscription.is_trial_expiring?
       flash[:warning] = I18n.t('subscriptions.errors.expiring', practice_settings_url: practice_settings_url).html_safe
-    elsif current_user && !current_user.practice.subscription.active_or_trialing?      
+    elsif current_user && !current_user.practice.subscription.active_or_trialing?
       if user_is_admin?
         redirect_to practice_settings_url, flash: { error: I18n.t('subscriptions.errors.expired') }
-      else     
+      else
         session.clear
         redirect_to signin_url, flash: { error: I18n.t('subscriptions.errors.expired_non_admin') }
       end
@@ -114,5 +116,9 @@ class ApplicationController < ActionController::Base
              item: object,
              notice: message
            }
+  end
+
+  def add_user_info_to_bugsnag(event)
+    event.set_user(current_user.id, current_user.email, current_user.fullname) if current_user
   end
 end
