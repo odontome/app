@@ -24,5 +24,4 @@ $.each(errorIDs, function(index, value){
 });
 
 // Display all the error messages
-// $("<div id='modal_dialog' title='<%=notice %>'><ul><% item.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %></ul></div>").dialog({modal:true});
 alert("<%= j item.errors.full_messages.to_sentence %>");

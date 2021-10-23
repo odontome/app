@@ -103,7 +103,7 @@ class Appointment < ApplicationRecord
 
   def ends_at_should_be_later_than_starts_at
     if !starts_at.nil? && !ends_at.nil? && (starts_at >= ends_at)
-      errors[:base] << I18n.t('errors.messages.invalid_date_range')
+      errors.add(:base, I18n.t('errors.messages.invalid_date_range'))
     end
   end
 

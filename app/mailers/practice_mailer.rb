@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PracticeMailer < ApplicationMailer
-  add_template_helper(ApplicationHelper)
+  helper ApplicationHelper
 
   def welcome_email(practice)
     mail(to: practice.email, subject: I18n.t('mailers.practice.welcome.subject'))

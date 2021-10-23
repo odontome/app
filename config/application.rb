@@ -31,7 +31,7 @@ module Odontome
     config.autoload_paths << "#{Rails.root}/lib"
     
     ## Rails 6 upgrade
-    config.load_defaults 5.0
+    #config.load_defaults 5.0
     
     ### Odonto.me stuff
 

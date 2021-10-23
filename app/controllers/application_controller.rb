@@ -111,7 +111,8 @@ class ApplicationController < ActionController::Base
   end
 
   def render_ujs_error(object, message)
-    render template: 'shared/ujs/form_errors.js.erb',
+    render template: 'shared/ujs/form_errors',
+           formats: [:js],
            locals: {
              item: object,
              notice: message
