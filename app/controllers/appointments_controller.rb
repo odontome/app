@@ -88,7 +88,7 @@ class AppointmentsController < ApplicationController
     end
 
     respond_to do |format|
-      if @appointment.update_attributes(params[:appointment])
+      if @appointment.update(params[:appointment])
         format.js {} # update.js.erb
       else
         format.js do

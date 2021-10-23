@@ -38,7 +38,7 @@ class DoctorsController < ApplicationController
     @doctor = Doctor.with_practice(current_user.practice_id).find(params[:id])
 
     respond_to do |format|
-      if @doctor.update_attributes(params[:doctor])
+      if @doctor.update(params[:doctor])
         format.html { redirect_to(doctors_url, notice: t(:doctor_updated_success_message)) }
       else
         format.html { render action: 'edit' }
