@@ -67,7 +67,7 @@ class PatientsController < ApplicationController
     @patient = Patient.with_practice(current_user.practice_id).find(params[:id])
 
     respond_to do |format|
-      if @patient.update_attributes(params[:patient])
+      if @patient.update(params[:patient])
         format.html { redirect_to(@patient, notice: I18n.t(:patient_updated_success_message)) }
       else
         format.html { render action: 'edit' }

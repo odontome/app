@@ -29,7 +29,10 @@ module Odontome
 
     config.enable_dependency_loading = true
     config.autoload_paths << "#{Rails.root}/lib"
-
+    
+    ## Rails 6 upgrade
+    #config.load_defaults 5.0
+    
     ### Odonto.me stuff
 
     config.i18n.available_locales = %w[es en]

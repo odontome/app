@@ -46,7 +46,7 @@ class UsersController < ApplicationController
         format.html { render action: 'edit', error: I18n.t('errors.messages.unauthorised') }
       end
 
-      if @user.update_attributes(params[:user])
+      if @user.update(params[:user])
         format.html { redirect_to(@user, notice: I18n.t(:user_updated_success_message)) }
       else
         format.html { render action: 'edit' }

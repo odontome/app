@@ -63,7 +63,7 @@ class PracticesController < ApplicationController
     session[:locale] = params[:practice][:locale]
 
     respond_to do |format|
-      if @practice.update_attributes(params[:practice])
+      if @practice.update(params[:practice])
         format.html { redirect_to(practice_settings_url, notice: t(:practice_updated_success_message)) }
       else
         format.html { render action: 'settings' }

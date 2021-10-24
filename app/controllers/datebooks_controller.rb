@@ -58,7 +58,7 @@ class DatebooksController < ApplicationController
     @datebook = Datebook.with_practice(current_user.practice_id).find params[:id]
 
     respond_to do |format|
-      if @datebook.update_attributes(params[:datebook])
+      if @datebook.update(params[:datebook])
         format.html { redirect_to(datebooks_url, notice: t(:datebook_updated_success_message)) }
       else
         format.html { render action: 'edit' }
