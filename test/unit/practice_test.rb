@@ -55,4 +55,16 @@ class PracticeTest < ActiveSupport::TestCase
     assert_equal practice.subscription.status, 'trialing'
     assert_nil practice.stripe_customer_id
   end
+
+  test 'practice returns array of ids match the provided timezone' do
+    ids_in_london = Practice.ids_in_timezone(['Europe/London'])
+    
+    assert_equal [1], ids_in_london
+  end
+
+  test 'practice returns empty array of ids does not match the provided timezone' do
+    ids_in_auckland = Practice.ids_in_timezone(['Pacific/Auckland'])
+    
+    assert_equal [], ids_in_auckland
+  end
 end

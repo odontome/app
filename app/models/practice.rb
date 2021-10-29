@@ -11,6 +11,13 @@ class Practice < ApplicationRecord
 
   accepts_nested_attributes_for :users, limit: 1
 
+  # scopes
+  scope :ids_in_timezone, lambda { |timezones|
+    select(:id)
+    .where(timezone: timezones)
+    .pluck(:id)
+  }
+
   # validations
   validates_presence_of :name, :timezone, :locale
   validates_presence_of :email, on: :update

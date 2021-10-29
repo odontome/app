@@ -28,7 +28,7 @@ module Odontome
     # config.active_record.raise_in_transactional_callbacks = true
 
     config.enable_dependency_loading = true
-    config.autoload_paths << "#{Rails.root}/lib"
+    config.autoload_paths << "#{Rails.root}/lib/"
     
     ## Rails 6 upgrade
     #config.load_defaults 5.0
