@@ -21,15 +21,12 @@ class ApplicationController < ActionController::Base
   end
 
   def check_subscription_status
-    if current_user && current_user.practice.subscription.is_trial_expiring?
+    if current_user && !current_user.practice.subscription.active_or_trialing?
+      redirect_to_subscription_error
+    elsif current_user && current_user.practice.subscription.is_trial_expired?
+      redirect_to_subscription_error
+    elsif current_user && current_user.practice.subscription.is_trial_expiring?
       flash[:warning] = I18n.t('subscriptions.errors.expiring', practice_settings_url: practice_settings_url).html_safe
-    elsif current_user && !current_user.practice.subscription.active_or_trialing?
-      if user_is_admin?
-        redirect_to practice_settings_url, flash: { error: I18n.t('subscriptions.errors.expired') }
-      else
-        session.clear
-        redirect_to signin_url, flash: { error: I18n.t('subscriptions.errors.expired_non_admin') }
-      end
     end
   end
 
@@ -42,6 +39,15 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def redirect_to_subscription_error
+    if user_is_admin?
+      redirect_to practice_settings_url, flash: { error: I18n.t('subscriptions.errors.expired') }
+    else
+      session.clear
+      redirect_to signin_url, flash: { error: I18n.t('subscriptions.errors.expired_non_admin') }
+    end
+  end
 
   def current_user
     return @current_user if defined?(@current_user)

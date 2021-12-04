@@ -23,9 +23,16 @@ class Subscription < ApplicationRecord
     status == 'trialing'
   end
 
-  def is_trial_expiring?
+  def days_to_next_payment
     days_left_in_subscription = (current_period_end.to_date - Time.now.to_date).to_i
-    is_trialing? && days_left_in_subscription < 14
+  end
+
+  def is_trial_expiring?
+    is_trialing? && days_to_next_payment <= 14
+  end
+
+  def is_trial_expired?
+    is_trialing? && days_to_next_payment <= 0
   end
 
   def assign_stripe_attrs(stripe_sub)
