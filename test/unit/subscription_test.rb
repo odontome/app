@@ -21,6 +21,17 @@ class SubscriptionTest < ActiveSupport::TestCase
     assert !subscription.is_trial_expiring?
   end
 
+  test 'trial expires if past payment' do
+    subscription = subscriptions(:trialing)
+    assert !subscription.is_trial_expired?
+
+    subscription.current_period_end = Date.today
+    assert subscription.is_trial_expired?
+
+    subscription.current_period_end = 2.days.ago
+    assert subscription.is_trial_expired?
+  end
+
   test 'active subscriptions include trials, past due, and active' do
     trialing = subscriptions(:trialing)
     assert trialing.active_or_trialing?
