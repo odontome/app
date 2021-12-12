@@ -1,14 +1,6 @@
 class Rack::Attack
   ### Throttle Spammy Clients ###
 
-  # If any single client IP is making tons of requests, then they're
-  # probably malicious or a poorly-configured scraper. Either way, they
-  # don't deserve to hog all of the app server's CPU. Cut them off!
-  #
-  # Note: If you're serving assets through rack, those requests may be
-  # counted by rack-attack and this throttle may be activated too
-  # quickly. If so, enable the condition to exclude them from tracking.
-
   # Throttle all requests by IP (60rpm)
   #
   # Key: "rack::attack:#{Time.now.to_i/:period}:req/ip:#{req.ip}"
@@ -16,16 +8,7 @@ class Rack::Attack
     req.ip unless req.path.start_with?('/assets')
   end
 
-  ### Prevent Brute-Force Login Attacks ###
-
-  # The most common brute-force login attack is a brute-force password
-  # attack where an attacker simply tries a large number of emails and
-  # passwords to see if any credentials match.
-  #
-  # Another common method of attack is to use a swarm of computers with
-  # different IPs to try brute-forcing a password for a specific account.
-
-  # Throttle POST requests to /login by IP address
+  # Throttle POST requests to /user_session by IP address
   #
   # Key: "rack::attack:#{Time.now.to_i/:period}:logins/ip:#{req.ip}"
   throttle('logins/ip', limit: 5, period: 20.seconds) do |req|
@@ -34,7 +17,7 @@ class Rack::Attack
     end
   end
 
-  # Throttle POST requests to /login by email param
+  # Throttle POST requests to /user_session by email param
   #
   # Key: "rack::attack:#{Time.now.to_i/:period}:logins/email:#{normalized_email}"
   #
@@ -48,6 +31,16 @@ class Rack::Attack
       # protect against rate limit bypasses. Return the normalized email if present, nil otherwise.
       req.params['signin']['email'].to_s.downcase.gsub(/\s+/, "").presence
     end
+  end
+end
+
+# Block suspicious requests for sign ups.
+Rack::Attack.blocklist('block suspicious sign up requests') do |req|
+  if req.path == '/practice' && req.post?
+    practice_name = req.params['practice']['name']
+    # There have been multiple instances of spam practices with only a single word in their names and
+    # a vast number of uppercase and lowercase characters. 
+    practice_name.split.count == 1 && practice_name.scan(/[A-Z]/).count > 2
   end
 end
 
