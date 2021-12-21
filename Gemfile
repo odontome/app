@@ -17,7 +17,7 @@ gem 'icalendar', '~> 2.7.1'
 gem 'rails-i18n', '~> 6.0.0'
 gem 'taps', '~> 0.3.24'
 
-gem 'font-awesome-rails', '~> 4.7.0.5'
+gem 'font-awesome-rails', '~> 4.7.0.8'
 gem 'gibberish', '~> 2.1.0'
 gem 'jquery-minicolors-rails', '~>2.2.6.2'
 
