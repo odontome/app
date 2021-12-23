@@ -1,7 +1,7 @@
 {
   "name": "Odonto.me",
   "description": "A barebones Odonto.me applicatoin using Ruby on Rails",
-  "website": "http://www.odonto.me",
+  "website": "https://www.odonto.me",
   "repository": "https://github.com/odontome/app",
   "logo": "https://my.odonto.me/apple-touch-icon-precomposed.png",
   "addons": [
