@@ -242,7 +242,7 @@ es:
   password_reset_instructions: Te enviaremos instrucciones de como cambiar tu contraseña cuando nos digas tu email.
   password_reset_instructions_sent_to_email: Las instrucciones han sido enviadas a tu email.
   password_reset_success_message: Tu contraseña fue actualizada.
-  password_update_instructions: Ingresa tu nueva contraseña
+  password_update_instructions: Ingresa tu nueva contraseña abajo para continuar
   past_illnesses: Enfermedades pasadas
   past_surgeries: Cirugias pasadas
   patient: Paciente

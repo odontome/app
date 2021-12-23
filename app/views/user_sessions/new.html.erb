@@ -1,27 +1,37 @@
-<%= link_to (image_tag_with_at2x "logo.png", :title => t(:home), :class => "logo", :width => 100), root_path %>
+<%= form_for(:signin, url: user_session_path, html: { class: "card card-md" }) do
+|f| %>
 
-<div class="box">
-    <div class="content-wrap">
-        <%= form_for(:signin, :url => user_session_path) do |f| %>
-        
-        <%= f.email_field :email, :placeholder => t(:email), :autocapitalize => "off", :autocorrect => "off", :class => "form-control" %>
-        <%= f.password_field :password, :placeholder => t(:password), :class => "form-control" %>
-        
-        <div class="remember">
-        	<label for="user_session_remember_me">
-	            <%= f.check_box :remember_me %>
-	            <%= t :remember_me %>
-            </label>
-            <%= link_to t(:forgot_password), new_password_reset_path, :class => "forgot" %>
-        </div>
+<div class="card-body">
+  <div class="mb-3">
+    <%= f.email_field :email, :placeholder => t(:email), :autocapitalize =>
+    "off", :autocorrect => "off", :class => "form-control" %>
+  </div>
 
-        <%= f.submit(t(:signin), :class => "btn btn-primary login") %>
+  <div class="mb-3">
+    <%= f.password_field :password, :placeholder => t(:password), :class =>
+    "form-control" %>
+  </div>
 
-        <% end %>
+  <div class="mb-2">
+    <div class="row">
+      <div class="col">
+        <label class="form-check">
+          <%= f.check_box :remember_me, class: "form-check-input" %>
+          <span class="form-check-label"><%= t :remember_me %></span>
+        </label>
+      </div>
+      <div class="col text-end">
+        <%= link_to t(:forgot_password), new_password_reset_path %>
+      </div>
     </div>
-</div>
+  </div>
 
-<div class="no-account">
-    <p><%= t :no_account %> </p>
-    <%= link_to t(:signup), signup_url %>
+  <div class="form-footer">
+    <%= f.submit(t(:signin), :class => "btn btn-primary w-100") %>
+  </div>
+</div>
+<% end %>
+
+<div class="text-center text-muted mt-3">
+  <%= t :no_account %> <%= link_to t(:signup), signup_url %>
 </div>

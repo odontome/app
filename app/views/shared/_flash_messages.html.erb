@@ -3,9 +3,11 @@
 		when "notice" then key = "success"
 		when "error" then key = "danger"
 		when "alert" then key = "warning"
-    end %>
+		when "info" then key = "info"
+  end %>
 
-	<div class="flash-message alert alert-<%= key %>">
-		<%= msg %>
+  <%# FIXME: remove `flash-message` when the migration is complete. %>
+	<div class="flash-message alert alert-<%= key %>" role="alert">
+		<div class="text-muted"><%= msg %></div>
 	</div>
 <% end %>
