@@ -1,36 +1,37 @@
 <%= render "shared/error_messages", :target => @practice %>
 
-<%= link_to (image_tag_with_at2x "logo.png", :title => t(:home), :class => "logo", :width => 100), root_path %>
+<%= form_for(@practice, url: "/practice", method: :create, html: { class: "card card-md" }) do |practice_form| %>
+  <div class="card-body">
+    <div class="mb-3">
+      <%= practice_form.text_field :name, :placeholder => t(:practice_name), :class => "form-control" %> 
+    </div>
 
-<div class="box">
-    <div class="content-wrap">
-        <%= form_for(@practice, :url => "/practice", :method => :create) do |practice_form| %>
-        
-        <%= practice_form.text_field :name, :placeholder => t(:practice_name), :class => "form-control" %> 
+    <%= practice_form.fields_for :users do |user_form| %>
+      <div class="mb-3">
+        <%= user_form.email_field :email, :placeholder => t(:email), :autocapitalize => "off", :autocorrect => "off", :class => "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= user_form.password_field :password, :placeholder => t(:password), :class => "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= user_form.password_field :password_confirmation, :placeholder => t(:password_confirmation), :class => "form-control" %>
+      </div>
+    <% end %>
 
-        <%= practice_form.fields_for :users do |user_form| %>
-        	<%= user_form.email_field :email, :placeholder => t(:email), :autocapitalize => "off", :autocorrect => "off", :class => "form-control" %>
+    <div class="mb-2">
+      <%= raw t :you_agree_to_our_terms_and_privacy_policy, terms_url: link_to(t(:terms_of_service).downcase, "/terms", :target => "_blank"), privacy_url: link_to(t(:privacy_policy).downcase, "/privacy", :target => "_blank") %>
+    </div>
 
-        	<%= user_form.password_field :password, :placeholder => t(:password), :class => "form-control" %>
+    <%= practice_form.hidden_field :timezone, :class => "form-control" %> 
 
-		  	<%= user_form.password_field :password_confirmation, :placeholder => t(:password_confirmation), :class => "form-control" %>
-        <% end %>
-
-        <div class="remember">
-        	<%= raw t :you_agree_to_our_terms_and_privacy_policy, terms_url: link_to(t(:terms_of_service).downcase, "/terms", :target => "_blank"), privacy_url: link_to(t(:privacy_policy).downcase, "/privacy", :target => "_blank") %>
-        </div>
-
-        <%= practice_form.hidden_field :timezone, :class => "form-control" %> 
-
-        <%= practice_form.submit(t(:signup), :class => "btn btn-primary login", data: { disable_with: t(:please_wait) }) %>
-
-        <% end %>
+    <div class="form-footer">
+      <%= practice_form.submit(t(:signup), :class => "btn btn-primary w-100", data: { disable_with: t(:please_wait) }) %>
     </div>
 </div>
+<% end %>
 
-<div class="no-account">
-    <p><%= t :already_have_an_account %> </p>
-    <%= link_to t(:signin), signin_url %>
+<div class="text-center text-muted mt-3">
+  <%= t :already_have_an_account %> <%= link_to t(:signin), signin_url %>
 </div>
 
 <script>
