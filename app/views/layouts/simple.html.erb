@@ -1,43 +1,39 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="msapplication-TileColor" content="#206bc4" />
+    <meta name="theme-color" content="#206bc4" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
 	<title>Odonto.me</title>
-	<%= stylesheet_link_tag "application" %>
-	<%= javascript_include_tag "application" %>
-	<%= csrf_meta_tags %>
 
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' />
-	<style>
-		h3,h4 {
-			margin-bottom: 12px;
-		}
-		.logo {
-			margin-bottom: 20px;
-		}
-	</style>
+  <script src="https://unpkg.com/@tabler/core@latest/dist/js/tabler.min.js"></script>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/@tabler/core@latest/dist/css/tabler.min.css"
+  />
+
+  <%= csrf_meta_tags %>
 </head>
 
-<body>
-	<div class="content wide-content">
-    <div class="container">
-			<div id="pad-wrapper">
+<body class=" border-top-wide border-primary d-flex flex-column">
+  <div class="page page-center">
+    <div class="container-narrow py-4">
+      <div class="text-center mb-4">
+        <%= link_to (image_tag "logo.png", :title => t(:home), :class =>
+          "navbar-brand navbar-brand-autodark", :width => 75), root_path %>
+      </div>
 
-				<div align="center">
-					<%= link_to :root do
-						image_tag_with_at2x "logo.png", :title => t(:home), :class => "logo", :width => 80
-					end %>
-				</div>
-
-				<%= yield %>
-
-			</div>
-		</div>
-	</div>
+      <%= yield %>
+    </div>
+  </div>
 </body>
 </html>
