@@ -24,7 +24,7 @@ class ReviewsControllerTest < ActionController::TestCase
     ciphered_appointment_id = 'not-ciphered-correctly'
 
     get :new, params: { appointment_id: ciphered_appointment_id }
-    assert_redirected_to 'http://www.odonto.me'
+    assert_redirected_to 'https://www.odonto.me'
   end
 
   test 'should create review' do
