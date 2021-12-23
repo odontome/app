@@ -277,7 +277,7 @@ en:
     password after you enter your email below and press Reset password
   password_reset_instructions_sent_to_email: Instructions on how to reset your password have been sent to your email
   password_reset_success_message: Your password was reset.
-  password_update_instructions: Insert your new password
+  password_update_instructions: Enter your new password below and press Update password
   past_illnesses: Past illnesses
   past_surgeries: Past surgeries
   patient: Patient
