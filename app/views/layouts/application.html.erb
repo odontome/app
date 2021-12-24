@@ -1,34 +1,36 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
-<head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="msapplication-TileColor" content="#206bc4" />
+    <meta name="theme-color" content="#206bc4" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+	  <title>Odonto.me</title>
 
-  	<title>Odonto.me</title>
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
 
-	<%= stylesheet_link_tag "application" %>
-	<%= javascript_include_tag "application" %>
-	<%= csrf_meta_tags %>
-
-  	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' />
-	<link rel="shortcut icon" href="/favicon.ico">
+	  <link rel="shortcut icon" href="/favicon.ico">
 </head>
 
-<body>
-	<%= render "shared/navigation" %>
+<body class="theme-light">
+  <div class="wrapper">
+    <%= render "shared/navigation" %>
 
-	<div class="content wide-content">
-        <div class="container-fluid">
-		  	<%= render "shared/flash_messages" %>
-			<%= yield %>
-	  </div>
-	</div>
-
-	<%= render "shared/footer" %>
-
-	</body>
-
+    <div class="page-wrapper">
+      <%= render "shared/flash_messages" %>
+      <%= yield %>
+      <%= render "shared/footer" %>
+    </div>
+  </div>
+</body>
 </html>

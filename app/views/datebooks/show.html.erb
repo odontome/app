@@ -1,7 +1,6 @@
 <script type="text/javascript">
 
 	$(document).ready(function() {
-
 		function validateSubmit() {
 			var submitAppointmentElement = $('#appointment_submit');
 			var selectDoctorsElement = $('#appointment_doctor_id');
@@ -68,7 +67,7 @@
 					$.get(url, {"starts_at": timestamp}, function(data) {
 					  $('.modal-title').html($.fullCalendar.formatDate(dayDate, "dd, MMMM · hh:mm tt"));
 	    			  $('.body-container').html(data);
-					  $(".modal").modal();
+					  $("#modal-appointment").modal("toggle");
 					  validateSubmit();
 					});
 				} else {
@@ -78,12 +77,12 @@
 
 			},
 			eventClick: function(calEvent, jsEvent, view) {
-				var url = endpointURL + '/' + calEvent.id + "/edit?patient_id=" + calEvent.patient_id;
+				const url = endpointURL + '/' + calEvent.id + "/edit?patient_id=" + calEvent.patient_id;
 
 				$.get(url, function(data) {
 				  $('.modal-title').html($.fullCalendar.formatDate(calEvent.start, "dd, MMMM · hh:mm tt"));
-	    		  $('.body-container').html(data);
-				  $(".modal").modal();
+	    		$('.body-container').html(data);
+				  $("#modal-appointment").modal("toggle");
 				  validateSubmit();
 				});
 			},
@@ -127,39 +126,70 @@
 	});
 </script>
 
-<div id="pad-wrapper">
-    <div class="row-fluid calendar-wrapper">
-        <div class="span12">
+<div class="container-xl">
+  <!-- Page title -->
+  <div class="page-header d-print-none">
+    <div class="row">
+      <div class="col">
+        
+        <div id="calendar"></div>
 
-			<div id="calendar"></div>
+        <div class="row row-cards mt-2">
+          <div class="col-md-6 col-xl-3">
+            <a href="/" class="card card-link">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-auto">
+                    <span class="avatar rounded" style="background-image: url('')"></span>
+                  </div>
+                  <div class="col">
+                    <div class="font-weight-medium"><%= t :everyone %></div>
+                    <div class="text-muted">All appointments</div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
 
-			<div class="modal fade" tabindex="-1">
-			  <div class="modal-dialog">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			        <h4 class="modal-title"><%= t :please_wait %></h4>
-			      </div>
 
-			      <div class="body-container">
-			      	<%= t :please_wait %>
-			      </div>
-			    </div>
-			  </div>
-			</div>
+          <% @doctors.each do |doctor| %>
+            <div class="col-md-6 col-xl-3">
+              <a href="?doctor_id=<%=doctor.id%>" class="card card-link <%= @filtered_by.to_i == doctor.id ? 'bg-azure-lt' : ''%>">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-auto">
+                      <span class="avatar rounded" style="background-image: url(<%= avatar_url(doctor.email) %>)">
+                        <span class="badge" style="background-color: <%= doctor.color %>"></span></span>
+                      </span>
+                    </div>
+                    <div class="col">
+                      <div class="font-weight-medium"><%= doctor.fullname %></div>
+                      <div class="text-muted"><%= doctor.speciality.blank? ? "TRANSLATE SPECIALITY" : doctor.speciality %></div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          <% end %>
+        </div>
 
-			<br />
+      </div>
+    </div>
+  </div>
+</div>
 
-			<div class="col-md-3 col-sm-6 doctor-pill <%= @filtered_by.nil? ? 'active' : ''%>">
-				<a href="/"><i class="fa fa-circle-o" style="color: #333333"></i>&nbsp; <%= t :everyone %></a>
-			</div>
-
-			<% @doctors.each do |doctor| %>
-				<div class="col-md-3 col-sm-6 doctor-pill <%= @filtered_by.to_i == doctor.id ? 'active' : ''%>">
-					<a href="?doctor_id=<%=doctor.id%>"><i class="fa fa-circle-o" style="color: <%= doctor.color %>"></i>&nbsp; <%= doctor.fullname %></a>
-				</div>
-			<% end %>
-
-		</div>
-	</div>
+<div class="modal modal-blur fade" id="modal-appointment" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><%= t :please_wait %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="body-container">
+          <%= t :please_wait %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

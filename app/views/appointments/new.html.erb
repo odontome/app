@@ -5,5 +5,4 @@
 		// Setup autocomplete for patients
 		$("#appointment_patient_id").autoSuggest("/patients.json", {startText: "<%#= t(:enter_patient_name_or_uid)%>", minChars: 3, selectionLimit: 1, selectedValuesProp: "id", selectedItemProp: "fullname", searchObjProps: "uid,fullname", emptyText: "<%= t(:no_patient_found_new_one_will_be_created)%>", asHtmlID: "patient_id"});
 	});	
-
 </script>

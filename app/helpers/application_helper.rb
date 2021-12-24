@@ -14,10 +14,6 @@ module ApplicationHelper
     number_to_currency(number, unit: @current_user.practice.currency_unit, precision: precision)
   end
 
-  def new_tag
-    content_tag :span, t(:new), class: 'label label-primary'
-  end
-
   def incomplete_tag
     content_tag :span, t(:incomplete), class: 'label label-danger'
   end
@@ -28,17 +24,11 @@ module ApplicationHelper
 
   def avatar_url(email, size = 96)
     email ||= 'user_has_no@email.com'
-    default_url = "#{root_url}images/avatar.jpg"
     gravatar_id = Digest::MD5.hexdigest(email.downcase)
-    "https://gravatar.com/avatar/#{gravatar_id}?s=#{size}&d=mm"
+    "https://gravatar.com/avatar/#{gravatar_id}?s=#{size}&d=retro"
   end
 
   def is_current_datebook?(id)
     params[:controller] == 'datebooks' && params[:id] == id.to_s
-  end
-
-  def image_tag_with_at2x(name_at_1x, options = {})
-    name_at_2x = name_at_1x.gsub(/\.\w+$/, '@2x\0')
-    image_tag(name_at_1x, options.merge('data-at2x' => asset_path(name_at_2x)))
   end
 end
