@@ -7,6 +7,7 @@
 //= require jquery.autoSuggest
 //= require jstz.min
 //= require tabler.min
+//= require tom-select.base.min
 
 // This function prevents the session from ending
 window.iCallServerId = setInterval(function (){ var remoteURL = '/'; $.get(remoteURL); }, 900000);

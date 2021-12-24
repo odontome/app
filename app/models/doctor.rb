@@ -28,7 +28,7 @@ class Doctor < ApplicationRecord
   before_destroy :check_if_is_deleteable
 
   def fullname
-    [gender === 'female' ? I18n.t(:female_doctor_prefix) : I18n.t(:male_doctor_prefix), firstname,
+    [gender === 'female' || gender === 'mujer' ? I18n.t(:female_doctor_prefix) : I18n.t(:male_doctor_prefix), firstname,
      lastname].join(' ')
   end
 

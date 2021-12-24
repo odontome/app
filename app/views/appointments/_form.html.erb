@@ -1,26 +1,23 @@
 <%= form_for([@datebook, @appointment], :remote => true, :class => "form-horizontal") do |f| %>
 	<div class="modal-body">
-		<p class="form-group">
-			<%= f.label :patient_id %> *
+		<div class="form-group mb-3">
+			<%= f.label :patient_id, class: "form-label required" %> *
 			<%= text_field_tag "appointment[patient_id]", nil, :class => "form-control", :autocomplete => "off" %>
-		</p>
+		</div>
 
-		<p class="form-group">
+		<div class="form-group mb-3">
 			<% if @doctors.empty? %>
 				<%= link_to t(:no_doctors), doctors_path %>
 			<% else %>
-				<%= f.label :doctor_id %> *
-				<%= f.select(:doctor_id, options_from_collection_for_select(@doctors, "id", "fullname", :selected => @appointment.doctor_id), {}, { :class => "form-control", :title => t(:select_doctor) }) %>
-			<% end %>
-		</p>
+				<%= f.label :doctor_id, class: "form-label required" %>
+				<%= f.select(:doctor_id, options_from_collection_for_select(@doctors, "id", "fullname", :selected => @appointment.doctor_id), {}, { :class => "form-select", :title => t(:select_doctor) }) %>
+      <% end %>
+		</div>
 
-		<p>
+		<div class="form-group mb-3">
+      <label class="form-label"><%= t(:notes) %></label>
 			<%= f.text_area :notes, :placeholder => t(:additional_notes), :rows => 2, :maxlength => 255, :class => "form-control"  %>
-		</p>
-
-    <% if controller.action_name == "edit" %>
-      
-    <% end %>
+		</div>
 	</div>
 
 	<div class="modal-footer">
@@ -29,7 +26,7 @@
         <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown" aria-expanded="false">
           TRANSLATE
         </button>
-        <div class="dropdown-menu dropdown-menu-end" style="">
+        <div class="dropdown-menu dropdown-menu-end">
           <% if @appointment.is_confirmed %>
             <%= link_to [@datebook, @appointment], :method => :put, :remote => :true, data: { params: { appointment: { status: Appointment.status[:cancelled] } }.to_param }, :class => "dropdown-item" do %>
               <svg xmlns="http://www.w3.org/2000/svg" class="icon dropdown-item-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"></path> <circle cx="12" cy="12" r="9"></circle> <path d="M10 10l4 4m0 -4l-4 4"></path></svg> 

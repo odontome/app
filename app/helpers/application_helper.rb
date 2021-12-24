@@ -25,7 +25,7 @@ module ApplicationHelper
   def avatar_url(email, size = 96)
     email ||= 'user_has_no@email.com'
     gravatar_id = Digest::MD5.hexdigest(email.downcase)
-    "https://gravatar.com/avatar/#{gravatar_id}?s=#{size}&d=retro"
+    "https://gravatar.com/avatar/#{gravatar_id}?s=#{size}&d=identicon"
   end
 
   def is_current_datebook?(id)
