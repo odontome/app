@@ -1,0 +1,11 @@
+<% title = local_assigns[:title].presence || t(:actions) %>
+<% content = yield.presence || local_assigns.fetch(:content) %>
+
+<div class="dropdown">
+  <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown" aria-expanded="false">
+    <%= title %>
+  </button>
+  <div class="dropdown-menu dropdown-menu-end" style="">
+    <%= content %>
+  </div>
+</div>

@@ -51,15 +51,15 @@
 				}
 				opts.start.call(this);
 				var input = $(this);
-				input.attr("autocomplete","off").addClass("as-input").attr("id",x_id).val(opts.startText);
+				input.attr("autocomplete","off").addClass("as-input form-control").attr("id",x_id).val(opts.startText);
 				var input_focus = false;
 
 				// Setup basic elements and render them to the DOM
-				input.wrap('<ul class="as-selections" id="as-selections-'+x+'"></ul>').wrap('<li class="as-original" id="as-original-'+x+'"></li>');
+				input.wrap('<div class="as-selections" id="as-selections-'+x+'"></div>').wrap('<li class="as-original" id="as-original-'+x+'"></li>');
 				var selections_holder = $("#as-selections-"+x);
 				var org_li = $("#as-original-"+x);
 				var results_holder = $('<div class="as-results" id="as-results-'+x+'"></div>').hide();
-				var results_ul =  $('<ul class="as-list"></ul>');
+				var results_ul = $('<ul class="as-list dropdown-menu show"></ul>');
 				var values_input = $('<input type="hidden" class="as-values" name="as_values_'+x+'" id="as-values-'+x+'" />');
 				var prefill_value = "";
 				if(typeof opts.preFill == "string"){
@@ -185,7 +185,7 @@
 						default:
 							if(opts.showResultList){
 								if(opts.selectionLimit && $("li.as-selection-item", selections_holder).length >= opts.selectionLimit){
-									results_ul.html('<li class="as-message">'+opts.limitText+'</li>');
+									results_ul.html('<li class="as-message dropdown-item">'+opts.limitText+'</li>');
 									results_holder.show();
 								} else {
 									if (timeout){ clearTimeout(timeout); }

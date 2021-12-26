@@ -1,15 +1,6 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  # overwrite to the pagination plugin
-  def paginated_letter(available_letters, letter)
-    if available_letters.include?(letter)
-      link_to(letter, "#{request.path}?letter=#{letter}")
-    else
-      content_tag :span, letter
-    end
-  end
-
   def number_to_currency_with_symbol(number, precision = 2)
     number_to_currency(number, unit: @current_user.practice.currency_unit, precision: precision)
   end
@@ -18,8 +9,13 @@ module ApplicationHelper
     content_tag :span, t(:incomplete), class: 'label label-danger'
   end
 
-  def label_tag(message, type = 'info')
-    content_tag 'sub', message, class: "label label-#{type}"
+  def label_tag(message, color = :azure)
+    allowed_colors = [:green, :red, :azure]
+    unless color.in?(allowed_colors)
+      raise "#{color} is invalid. Allowed values: #{allowed_colors.join(', ')}."
+    end
+
+    content_tag 'span', message, class: "badge bg-#{color.to_s}-lt"
   end
 
   def avatar_url(email, size = 96)

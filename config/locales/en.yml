@@ -17,7 +17,7 @@ en:
   download_as_csv_file: Download as CSV
   developers: Developers
   calendar_feed: Subscribe to appointments
-  calendar_feed_message: You can subscribe to the appointments of %{doctor_name} by entering this address <strong class="selectable">%{feed_url}</strong> in your favorite calendar app.
+  calendar_feed_message: You can subscribe to the appointments of %{doctor_name} by entering this address <strong class="user-select-all">%{feed_url}</strong> in your favorite calendar app.
   update_password: Update password
   created_at: Created at
   sent_at: Sent at
@@ -29,6 +29,7 @@ en:
   subscribe_again: Subscribe again
   you_are_subscribed_again: You are subscribed again
   you_are_unsubscribed: You are unsubscribed
+  actions: Actions
   activerecord:
     attributes:
       appointment:
@@ -165,6 +166,7 @@ en:
       unauthorised: You can't do that
       not_found: Hmmm, I can't find that
       server_error: Oh oh...
+      form_update: Uh oh, something went wrong
     messages:
       invalid_date_range: The chosen dates are invalid
       invalid_email_format: Invalid format
@@ -335,7 +337,7 @@ en:
   load_more_reviews: Load more reviews
   continue: Continue
   schedule: Schedule
-  search: Search
+  search: Search…
   select_doctor: Select a doctor
   show_past_appointments: Show past appointments
   signin: Sign in

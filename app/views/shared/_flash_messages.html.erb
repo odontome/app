@@ -6,8 +6,7 @@
 		when "info" then key = "info"
   end %>
 
-  <%# FIXME: remove `flash-message` when the migration is complete. %>
-	<div class="flash-message alert alert-<%= key %>" role="alert">
+	<div class="alert alert-<%= key %>" role="alert">
 		<div class="text-muted"><%= msg %></div>
 	</div>
 <% end %>

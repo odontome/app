@@ -27,10 +27,13 @@
     <%= render "shared/navigation" %>
 
     <div class="page-wrapper">
-      <%= render "shared/flash_messages" %>
-      <%= yield %>
-      <%= render "shared/footer" %>
+      <div class="container-xl">
+        <%= render "shared/flash_messages" %>
+        <%= yield %>
+      </div>
     </div>
+
+    <%= render "shared/footer" %>
   </div>
 </body>
 </html>

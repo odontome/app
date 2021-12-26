@@ -4,7 +4,7 @@
 	  <div class="col-md-12 hidden-md hidden-lg">
       <%= form_tag patients_url, :method => :get do %>
         <p class="form-group">
-          <input name="q" class="search" type="text" value="<%= params[:q]%>">
+          <input name="q" class="search" type="text" value="<%= params[:q]%>" placeholder="<%= t :search %>" />
         </p>
       <% end %>
     </div>

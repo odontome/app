@@ -1,61 +1,75 @@
-<div id="pad-wrapper" class="table-wrapper users-list">
-
-	<div class="row header col-md-12">
-        <h3><%= t :doctors %></h3>
-
-        <div class="pull-right-lg">            
-            <%= link_to t(:create_new_doctor), new_doctor_url, "class" => "btn-flat primary pull-right" %>
-        </div>
+<div class="page-header mb-4">
+  <div class="row align-items-center">
+    <div class="col">
+      <div class="page-pretitle">
+        TRANSLATE
+      </div>
+      <h2 class="page-title">
+        <%= t :doctors %>
+      </h2>
     </div>
-
-	<div class="row">
-	    <div class="col-md-12">
-	        <table class="table table-hover">
-	            <thead>
-	                <tr>
-	                    <th class="col-md-4">
-	                        <%= t :name %>
-	                    </th>
-	                    <th class="col-md-4">
-	                        <span class="line"></span> <%= t :color %>
-	                    </th>
-	                    <th class="col-md-2">
-	                        <span class="line"></span> <%= t :status %>
-	                    </th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	            
-		            <% @doctors.each do |doctor| %>
-			            <tr class="<% if doctor.id == @doctors.first.id %>first<% end %>">	
-			            	<td>
-			                    <img src="<%= avatar_url(doctor.email)%>" alt="contact" class="img-circle avatar hidden-phone" />
-			                    <%= link_to doctor.fullname, doctor, :class => "name" %>
-			                    <span class="subtext">
-									<%= doctor.speciality %>
-			                    </span>
-			                </td>
-			                <td><i class="fa fa-circle-o" style="color: <%= doctor.color %>"></i></td>
-			                <td>
-			                	<% if doctor.is_active %>
-			                		<%= label_tag t(:active).downcase, "success" %>
-			                	<% else %>
-			                		<%= label_tag t(:suspended).downcase %>
-			                	<% end %>
-
-			                	<ul class="actions">
-                                    <li><%= link_to t(:edit), edit_doctor_path(doctor) %></li>
-									<li class="last">
-										<%= link_to_suspend_or_delete doctor %>
-									</li>
-                                </ul>								
-			                </td>
-			            </tr>
-			        <% end %>
-
-			    </tbody>
-			</table>
-		</div>
-	</div>
+    <div class="col-auto ms-auto">
+      <div class="btn-list">
+        <%= link_to new_doctor_url, class: "btn btn-primary d-none d-sm-inline-block" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg><!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+          <%= t(:create_new_doctor) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
 
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-vcenter table-mobile-md card-table">
+      <thead>
+        <tr>
+          <th><%= t :name %></th>
+          <th><%= t :color %></th>
+          <th><%= t :status %>
+          
+            <span class="form-help" data-bs-toggle="popover" data-bs-placement="top" data-bs-html="true" data-bs-content="Suspended doctors won't appear in your datebook">?</span>
+          </th>
+          <th class="w-1"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @doctors.each do |doctor| %>
+          <tr>
+            <td data-label="<%= t :name %>">
+              <div class="d-flex py-1 align-items-center">
+                <span class="avatar me-2" style="background-image: url(<%= avatar_url(doctor.email) %>)"></span>
+                <div class="flex-fill">
+                  <div class="font-weight-medium"><%= doctor.fullname %></div>
+                  <div class="text-muted"><a href="#" class="text-reset"><%= doctor.email %></a></div>
+                </div>
+              </div>
+            </td>
+            <td data-label="<%= t :color %>">
+              <div class="text-muted">
+                <span class="badge" style="background-color: <%= doctor.color %>"></span>
+                <%= doctor.color %>
+              </div>
+            </td>
+            <td class="text-muted" data-label="<%= t :status %>">
+              <% if doctor.is_active %>
+                <%= label_tag t(:active), :green %>
+              <% else %>
+                <%= label_tag t(:suspended), :red %>
+              <% end %>
+            </td>
+            <td>
+              <div class="btn-list flex-nowrap">
+                <%= render "components/dropdown" do %>
+                  <%= link_to t(:profile), doctor, class: "dropdown-item" %>
+                  <%= link_to t(:edit), edit_doctor_path(doctor), class: "dropdown-item" %>
+                  <%= link_to_suspend_or_delete doctor, class: "dropdown-item" %>
+                <% end %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

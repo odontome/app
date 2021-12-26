@@ -6,7 +6,7 @@ es:
   review: Calificación
   thank_you: ¡Gracias!
   range: Rango
-  active: Activa
+  active: Activo
   amount: Monto
   balance_discount_hint: Cualquier valor negativo será ingresado como egresos
   expense: Egreso
@@ -14,13 +14,14 @@ es:
   today_balance: Balance de hoy
   download_as_csv_file: Descargar como CSV
   calendar_feed: Suscripción a las citas
-  calendar_feed_message: Puedes suscribirte a las citas de %{doctor_name} utilizando la siguiente dirección <strong class="selectable">%{feed_url}</strong> en tu app de calendario favorita.
+  calendar_feed_message: Puedes suscribirte a las citas de %{doctor_name} utilizando la siguiente dirección <strong class="user-select-all">%{feed_url}</strong> en tu app de calendario favorita.
   created_at: Creado el
   developers: Desarrolladores
   update_password: Actualizar contraseña
   my_practice: Mi clínica
   chart_number: Número de historia
   subscribe_again: Suscríbete de nuevo
+  actions: Acciones
   activerecord:
     attributes:
       appointment:
@@ -151,6 +152,7 @@ es:
       unauthorised: No puedes hacer eso
       not_found: Mmm, no lo encontré
       server_error: Ay...
+      form_update: Oh oh, ourrió un problema
     messages:
       invalid_date_range: Las fechas son invalidas.
       invalid_email_format: Formato invalido.
@@ -284,7 +286,7 @@ es:
   save: Guardar
   load_more_reviews: Cargar más calificaciones
   schedule: Agendar
-  search: Buscar
+  search: Buscar…
   select_doctor: Selecciona un doctor
   show_past_appointments: Mostrar citas pasadas
   signin: Iniciar sesión
