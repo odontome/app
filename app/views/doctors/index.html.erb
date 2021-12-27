@@ -59,7 +59,7 @@
             </td>
             <td>
               <div class="btn-list flex-nowrap">
-                <%= render "components/dropdown" do %>
+                <%= component :dropdown do %>
                   <%= link_to t(:profile), doctor, class: "dropdown-item" %>
                   <%= link_to t(:edit), edit_doctor_path(doctor), class: "dropdown-item" %>
                   <%= link_to_suspend_or_delete doctor, class: "dropdown-item" %>

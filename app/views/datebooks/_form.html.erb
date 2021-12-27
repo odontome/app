@@ -1,26 +1,28 @@
-<%= form_for(@datebook, :class => "form-horizontal") do |f| %>
+<%= form_for(@datebook) do |f| %>
   <%= render "shared/error_messages", :target => @datebook %>
 
-  <p class="form-group col-md-8">
-  	<%= f.label :name %> *
-    <%= f.text_field :name, :class => "form-control" %>
-  </p>
+  <div class="card card-md">
+    <div class="card-body">
+      <div class="mb-3">
+        <%= f.label :name, class: "form-label required" %>
+        <%= f.text_field :name, :class => "form-control" %>
+      </div>
 
-  <p class="form-group col-md-8">
-    <%= f.label :starts_at %> *
-    <%= f.number_field :starts_at, :class => "form-control" %>
-  </p>
+      <div class="mb-3">
+        <%= f.label :starts_at, class: "form-label required" %>
+        <%= f.number_field :starts_at, :class => "form-control" %>
+      </div>
 
-  <p class="form-group col-md-8">
-    <%= f.label :ends_at %> *
-    <%= f.number_field :ends_at, :class => "form-control" %>
-  </p>
+      <div class="mb-3">
+        <%= f.label :ends_at, class: "form-label required" %>
+        <%= f.number_field :ends_at, :class => "form-control" %>
+      </div>
+    </div>
 
-  <p class="form-group col-md-8">
-	 <%= f.submit(t(:save), :class => "btn btn-primary", data: { disable_with: t(:please_wait) }) %>
-    <span class="cancel"><%= t :or %>
-      <%= link_to t(:cancel).downcase, datebooks_url %>
-    </span>
-  </p>
-
+    <div class="card-footer text-end">
+      <div class="d-flex">
+        <%= f.submit(t(:save), :class => "btn btn-primary ms-auto", data: { disable_with: t(:please_wait) }) %>
+      </div>
+    </div>
+  </div>
 <% end %>

@@ -14,17 +14,13 @@
 <div class="page-body">
   <div class="row row-cards">
     <div class="col-md-8">
-      <div class="card card-md">
-        <%= render 'form' %>
-      </div>
+      <%= render 'form' %>
     </div>
 
     <div class="col-md-4">
       <div class="px-4">
-          <h3 class="card-title"><%= t :for_your_information %></h3>
-
-          <%= raw t "instructions.doctors".html_safe %>
-        </div>
+        <h3 class="card-title"><%= t :for_your_information %></h3>
+        <%= raw t "instructions.doctors".html_safe %>
       </div>
     </div>
   </div>

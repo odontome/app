@@ -8,10 +8,11 @@
   <% raise "#{type} is invalid. Allowed values: #{allowed_types.join(', ')}." %>
 <% end %>
 
+<% id = local_assigns[:id].presence %>
 <% title = local_assigns[:title].presence %>
 <% message = yield.presence || local_assigns.fetch(:message) %>
 
-<div class="modal-dialog modal-sm" role="document">
+<div class="modal-dialog modal-sm" role="document" id="<%= id %>">
   <div class="modal-content">
     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
     <div class="modal-status <%= "bg-#{type}" %>"></div>

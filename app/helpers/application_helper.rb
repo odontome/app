@@ -54,4 +54,8 @@ module ApplicationHelper
 
     controller.controller_name == tab.to_s ? 'active' : ''
   end
+
+  def component(name, *options, &block)
+    render("components/#{name}", *options, &block)
+  end
 end
