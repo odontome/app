@@ -9,6 +9,7 @@ es:
   range: Rango
   active: Activa
   amount: Monto
+  create: Crear
   balance_discount_hint: Cualquier valor negativo será ingresado como egresos
   expense: Egreso
   income: Ingreso

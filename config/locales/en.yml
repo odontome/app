@@ -11,6 +11,7 @@ en:
   range: Range
   active: Active
   amount: Amount
+  create: Create
   balance_discount_hint: Any negative value will be entered as an expense
   expense: Expense
   income: Income
