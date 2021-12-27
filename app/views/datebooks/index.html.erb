@@ -41,9 +41,9 @@
 						<td><%= datebook.updated_at.to_formatted_s :short %></td>
 						<td>
 							<% if datebook.appointments_count.to_i > 0 %>
-							<%= label_tag t(:active).downcase, "success" %>
+							<%= label_tag t(:active), :green %>
 							<% else %>
-							<%= label_tag t(:inactive).downcase %>
+							<%= label_tag t(:inactive) %>
 							<% end %>
 
 							<ul class="actions">

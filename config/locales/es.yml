@@ -6,7 +6,7 @@ es:
   review: Calificación
   thank_you: ¡Gracias!
   range: Rango
-  active: Activo
+  active: Activa
   amount: Monto
   balance_discount_hint: Cualquier valor negativo será ingresado como egresos
   expense: Egreso
@@ -181,7 +181,7 @@ es:
     doctors:
       feed: Para iPhones, sigue las instrucciones en <a href="https://support.apple.com/en-ca/guide/iphone/iph3d1110d4/ios">este artículo</a> para agregar el calendario a tu teléfono.
       suspended: Doctores suspendidos no aparecen como opciones para nuevas citas. Las citas anteriores no se ven afectadas.
-  inactive: Inactivo
+  inactive: Inactiva
   incomplete: Incompleto
   instructions:
     datebooks: <p>Agendas son el centro de cada clínica.</p> <p>Debido a que ya puedes filtrar por doctores, un uso común de las agendas es crear una por cada clínica que poseas.</p>
