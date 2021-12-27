@@ -58,7 +58,7 @@ class DoctorsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to(doctors_url) }
+      format.html { redirect_to(doctors_url, notice: t(:doctor_deleted_success_message)) }
     end
   end
 

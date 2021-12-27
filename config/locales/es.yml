@@ -14,7 +14,7 @@ es:
   today_balance: Balance de hoy
   download_as_csv_file: Descargar como CSV
   calendar_feed: Suscripción a las citas
-  calendar_feed_message: Puedes suscribirte a las citas de %{doctor_name} utilizando la siguiente dirección <strong class="user-select-all">%{feed_url}</strong> en tu app de calendario favorita.
+  calendar_feed_message: Puedes suscribirte a las citas de %{doctor_name} utilizando la siguiente dirección en tu app de calendario favorita.
   created_at: Creado el
   developers: Desarrolladores
   update_password: Actualizar contraseña
@@ -114,7 +114,7 @@ es:
   close_your_account: Cerrar tu cuenta
   color: Color
   comments: Comentarios
-  consider_using_gravatar: Regístra este email en gravatar.org para utilizar imágenes de perfíl.
+  consider_using_gravatar: Regístra este email en gravatar.com para utilizar imágenes de perfil.
   contact_information: Información de contácto
   contact_us: Contacta con nosotros
   create_new_datebook: Nueva agenda
@@ -126,6 +126,7 @@ es:
   date:
     formats:
       day_and_date: ! '%A (%e %b)'
+      short: ! '%e %b'
   datebooks: Agendas
   day: Día
   delete: Borrar
@@ -136,6 +137,7 @@ es:
   doctor_created_success_message: El doctor ha sido creado con éxito.
   doctor_has_no_future_appointments: La agenda está libre. ¿Qué tal si %{datebooks_url} algo?
   doctor_updated_success_message: El doctor ha sido actualizado con éxito.
+  doctor_deleted_success_message: El doctor ha sido borrado con éxito.
   doctors: Doctores
   drinks_per_day: Tragos por día
   drugs_use: Drogas utilizadas
@@ -172,9 +174,13 @@ es:
   future_appointments: Próximas citas
   past_appointments: Citas anteriores
   gender: Sexo
-  gravatar_tooltip: Imagen de perfíl tomada de gravatar.org
+  gravatar_tooltip: Imagen de perfil tomada de gravatar.com
   hide_past_appointments: Esconder citas pasadas
   home: Inicio
+  help:
+    doctors:
+      feed: Para iPhones, sigue las instrucciones en <a href="https://support.apple.com/en-ca/guide/iphone/iph3d1110d4/ios">este artículo</a> para agregar el calendario a tu teléfono.
+      suspended: Doctores suspendidos no aparecen como opciones para nuevas citas. Las citas anteriores no se ven afectadas.
   inactive: Inactivo
   incomplete: Incompleto
   instructions:
@@ -278,7 +284,8 @@ es:
   predefined_treatments_created_success_message: Se han utilizado los tratamientos por defecto. Modifica los nombres y precios a tu mejor parecer.
   price: Precio
   privacy_policy: Política de privacidad
-  profile: Perfíl
+  profile: Perfil
+  view_profile: Ver perfil
   remember_me: Recordarme
   reset_password: Cambiar contraseña
   reviews: Calificaciones
@@ -325,6 +332,7 @@ es:
     formats:
       default: ! '%a, %d %b %Y %H:%M:%S %z'
       just_the_time: ! '%H:%M'
+      just_the_date: ! '%d %b'
       long: ! '%B %d, %Y %H:%M'
       short: ! '%d %b %H:%M'
       w3c: ! '%Y-%m-%dT%H:%M:%S%:z'

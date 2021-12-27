@@ -1,54 +1,48 @@
-<%= form_for(@doctor, :class => "form-horizontal") do |f| %>
+<%= form_for(@doctor) do |f| %>
+  <div class="card-body">
+    <%= render "shared/error_messages", :target => @doctor %>
 
-  <%= render "shared/error_messages", :target => @doctor %>
+    <div class="mb-3">
+      <%= f.label :firstname, class: "form-label required" %>
+      <%= f.text_field :firstname, :class => "form-control" %>
+    </div>
 
-  <p class="form-group col-md-8">
-  	<%= f.label :firstname %> *
-    <%= f.text_field :firstname, :class => "form-control" %>
-  </p>
+    <div class="mb-3">
+      <%= f.label :lastname, class: "form-label required" %>
+      <%= f.text_field :lastname, :class => "form-control"  %>
+    </div>
 
-  <p class="form-group col-md-8">
-  	<%= f.label :lastname %> *
-    <%= f.text_field :lastname, :class => "form-control"  %>
-  </p>
+    <div class="mb-3">
+      <%= f.label :uid, class: "form-label" %>
+      <%= f.text_field :uid, :class => "form-control" %>
+      <%= content_tag "small", t(:only_if_clinic_uses_uid), class: "text-muted" %>
+    </div>
 
-  <p class="form-group col-md-8">
-  	<%= f.label :uid %>
-    <%= f.text_field :uid, :class => "form-control" %>
-    <%= content_tag "sub", t(:only_if_clinic_uses_uid) %>
-  </p>
+    <div class="mb-3">
+      <%= f.label :email, class: "form-label" %>
+      <%= f.email_field :email, :class => "form-control" %>
+      <%= content_tag "small", t(:consider_using_gravatar), class: "text-muted" %>
+    </div>
 
-  <p class="form-group col-md-8">
-  	<%= f.label :email %>
-    <%= f.email_field :email, :class => "form-control" %>
-    <%= content_tag "sub", t(:consider_using_gravatar) %>
-  </p>
+    <div class="mb-3">
+      <%= f.label :gender, class: "form-label" %>
+      <%= f.select(:gender, [[t(:male),(t(:male)).downcase],[t(:female),(t(:female)).downcase]], {}, { :class => "form-control" }) %>
+    </div>
 
-  <p class="form-group col-md-8">
-  	<%= f.label :gender %>
-  	<%= f.select(:gender, [[t(:male),(t(:male)).downcase],[t(:female),(t(:female)).downcase]], {}, { :class => "form-control" }) %>
-  </p>
+    <div class="mb-3">
+      <%= f.label :speciality, class: "form-label" %>
+      <%= f.text_field :speciality, :class => "form-control" %>
+    </div>
 
-  <p class="form-group col-md-8">
-  	<%= f.label :speciality %>
-    <%= f.text_field :speciality, :class => "form-control" %>
-  </p>
+    <div class="mb-3">
+      <%= f.label :calendar_color, class: "form-label" %>
+      <%= f.color_field :color, :class => "form-control form-control-color" %>
+    </div>
+  </div>
 
-  <p class="form-group col-md-8">
-    <%= f.label :calendar_color %>
-    <%= f.text_field :color, :class => "form-control color-picker" %>
-  </p>
-
-  <p class="form-group col-md-8">
-  	<%= f.submit(t(:save), :class => "btn btn-primary", data: { disable_with: t(:please_wait) }) %>
-    <span class="cancel"><%= t :or %>
-      <%= link_to t(:cancel).downcase, doctors_url %>
-    </span>
-  </p>
+  <div class="card-footer text-end">
+    <div class="d-flex">
+      <%= f.submit(t(:save), :class => "btn btn-primary ms-auto", data: { disable_with: t(:please_wait) }) %>
+    </div>
+  </div>
 <% end %>
-
-<script>
-  $(document).ready(function(){
-    $('input.color-picker').minicolors({ theme: 'bootstrap' });
-  });
-</script>

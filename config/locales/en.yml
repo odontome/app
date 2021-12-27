@@ -17,7 +17,7 @@ en:
   download_as_csv_file: Download as CSV
   developers: Developers
   calendar_feed: Subscribe to appointments
-  calendar_feed_message: You can subscribe to the appointments of %{doctor_name} by entering this address <strong class="user-select-all">%{feed_url}</strong> in your favorite calendar app.
+  calendar_feed_message: You can subscribe to the appointments of %{doctor_name} by entering this address in your favorite calendar app.
   update_password: Update password
   created_at: Created at
   sent_at: Sent at
@@ -127,7 +127,7 @@ en:
   color: Color
   comments: Comments
   consider_using_gravatar:
-    Register this email with gravatar.org to use it as a profile
+    Register this email with gravatar.com to use it as a profile
     image.
   contact_information: Contact information
   contact_us: Contact us
@@ -152,6 +152,7 @@ en:
     The schedule is free. How about if we schedule
     some %{datebooks_url}?
   doctor_updated_success_message: The doctor was updated successfully
+  doctor_deleted_success_message: The doctor was deleted successfully
   doctors: Doctors
   drinks_per_day: Drinks per day
   drugs_use: Drugs used
@@ -186,9 +187,13 @@ en:
   future_appointments: Future appointments
   past_appointments: Past appointments
   gender: Gender
-  gravatar_tooltip: Avatar taken from gravatar.org
+  gravatar_tooltip: Avatar taken from gravatar.com
   hide_past_appointments: Hide past appointments
   home: Home
+  help:
+    doctors:
+      feed: For iPhones, follow the instruction in <a href="https://support.apple.com/en-ca/guide/iphone/iph3d1110d4/ios">this article</a> to add the calendar to your phone.
+      suspended: Suspended doctors won't appear as options for your new appointments. Previous appointments aren't affected.
   inactive: Inactive
   incomplete: Incomplete
   instructions:
@@ -328,6 +333,7 @@ en:
   price: Price
   privacy_policy: Privacy policy
   profile: Profile
+  view_profile: View profile
   remember_me: Remember me
   reset_password: Reset password
   reviews: Reviews
@@ -375,6 +381,7 @@ en:
     formats:
       default: ! '%a, %d %b %Y %H:%M:%S %z'
       just_the_time: ! '%H:%M'
+      just_the_date: ! '%d %b'
       long: ! '%B %d, %Y %H:%M'
       short: ! '%d %b %H:%M'
       w3c: ! '%Y-%m-%dT%H:%M:%S%:z'

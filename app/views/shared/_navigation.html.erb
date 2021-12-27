@@ -33,7 +33,7 @@
         <div class="container-xl">
           <ul class="navbar-nav">
             <%# Datebooks %>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown <%= is_active_tab? :datebooks %>">
               <a class="nav-link dropdown-toggle" href="#navbar-third" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                 <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from https://tabler-icons.io/i/calendar -->
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"></path> <rect x="4" y="5" width="16" height="16" rx="2"></rect> <line x1="16" y1="3" x2="16" y2="7"></line> <line x1="8" y1="3" x2="8" y2="7"></line> <line x1="4" y1="11" x2="20" y2="11"></line> <line x1="11" y1="15" x2="12" y2="15"></line> <line x1="12" y1="15" x2="12" y2="18"></line></svg>                </span>
@@ -43,11 +43,8 @@
               </a>
               <div class="dropdown-menu">
                 <% @datebooks.each do |datebook| %>
-                  <%= link_to datebook, class: "dropdown-item" do %>
+                  <%= link_to datebook, class: "dropdown-item #{is_current_datebook?(datebook.id) ? 'active' : ''}" do %>
                     <%= datebook.name %>
-                    <% if is_current_datebook?(datebook.id) %>
-                      <span class="badge bg-blue ms-auto"></span>
-                    <% end %>
                   <% end %>
                 <% end %> 
                 <% if user_is_admin? %>
@@ -58,7 +55,7 @@
             </li>
 
             <%# Patients %>
-            <li class="nav-item">
+            <li class="nav-item <%= is_active_tab? :patients %>">
               <%= link_to patients_url, class: "nav-link" do %>
                 <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from https://tabler-icons.io/i/users -->
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"></path> <circle cx="9" cy="7" r="4"></circle> <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path> <path d="M16 3.13a4 4 0 0 1 0 7.75"></path> <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path></svg>
@@ -70,7 +67,7 @@
             </li>
 
             <%# Doctors %>
-            <li class="nav-item">
+            <li class="nav-item <%= is_active_tab? :doctors %>">
               <%= link_to doctors_url, class: "nav-link" do %>
                 <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"></path> <circle cx="12" cy="7" r="4"></circle> <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path></svg>
@@ -83,7 +80,7 @@
 
             <%# Practice / Dashboard %>
             <% if user_is_admin? %>
-              <li class="nav-item">
+              <li class="nav-item <%= is_active_tab? :practices %>">
                 <%= link_to practice_url, class: "nav-link" do %>
                   <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dashboard" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"></path> <circle cx="12" cy="13" r="2"></circle> <line x1="13.45" y1="11.55" x2="15.5" y2="9.5"></line> <path d="M6.4 20a9 9 0 1 1 11.2 0z"></path></svg>
@@ -112,24 +109,3 @@
     </div>
   </div>
 </div>
-
-=begin
-hgj
-<ul class="dropdown-menu">
-    <li class="dropdown-header"><%= t(:manage) %></li>
-    <% if user_is_admin? %>
-        <li><%= link_to t(:datebooks), datebooks_url %></li>
-    <% end %>
-    <li><%= link_to t(:doctors), doctors_url %></li>
-    <li><%= link_to t(:treatments), treatments_url %></li>                        
-    <% if user_is_admin? %>
-        <li><%= link_to t(:users), users_url %></li>
-        <li><%= link_to t(:my_practice), practice_url %></li>
-    <% end %>
-    <li class="divider"></li>
-    <li><%= link_to t(:profile), current_user %></li>
-    <li class="divider"></li>
-    <li><%= link_to t(:signout), logout_url %></li>
-</ul>
-dsf
-=end

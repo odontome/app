@@ -18,6 +18,24 @@ module ApplicationHelper
     content_tag 'span', message, class: "badge bg-#{color.to_s}-lt"
   end
 
+  def value_tag(title, value)
+    aggregated_value = content_tag "strong", title
+
+    if value.empty?
+      content_tag "div" do
+        aggregated_value.concat content_tag "div", "—", class: "form-control-plaintext text-muted"
+      end
+    else
+      content_tag "div" do
+        aggregated_value.concat content_tag "div", value, class: "form-control-plaintext"
+      end
+    end
+  end
+
+  def help_tag(value)
+    content_tag :span, "?", class: 'form-help', data: {"bs-toggle": "popover", "bs-placement": "top", "bs-content": value, "bs-html": true}
+  end
+
   def avatar_url(email, size = 96)
     email ||= 'user_has_no@email.com'
     gravatar_id = Digest::MD5.hexdigest(email.downcase)
@@ -26,5 +44,14 @@ module ApplicationHelper
 
   def is_current_datebook?(id)
     params[:controller] == 'datebooks' && params[:id] == id.to_s
+  end
+
+  def is_active_tab?(tab)
+    allowed_values = [:datebooks, :patients, :doctors, :practices]
+    unless tab.in?(allowed_values)
+      raise "#{tab} is invalid. Allowed values: #{allowed_values.join(', ')}."
+    end
+
+    controller.controller_name == tab.to_s ? 'active' : ''
   end
 end

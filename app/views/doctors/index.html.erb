@@ -25,10 +25,10 @@
       <thead>
         <tr>
           <th><%= t :name %></th>
+          <th><%= t :email %></th>
           <th><%= t :color %></th>
           <th><%= t :status %>
-          
-            <span class="form-help" data-bs-toggle="popover" data-bs-placement="top" data-bs-html="true" data-bs-content="Suspended doctors won't appear in your datebook">?</span>
+            <%= help_tag t 'help.doctors.suspended' %>
           </th>
           <th class="w-1"></th>
         </tr>
@@ -41,9 +41,12 @@
                 <span class="avatar me-2" style="background-image: url(<%= avatar_url(doctor.email) %>)"></span>
                 <div class="flex-fill">
                   <div class="font-weight-medium"><%= doctor.fullname %></div>
-                  <div class="text-muted"><a href="#" class="text-reset"><%= doctor.email %></a></div>
+                  <div class="text-muted"><%= doctor.speciality %></div>
                 </div>
               </div>
+            </td>
+            <td class="text-muted" data-label="<%= t :email %>">
+              <%= doctor.email %>
             </td>
             <td data-label="<%= t :color %>">
               <div class="text-muted">
@@ -52,11 +55,7 @@
               </div>
             </td>
             <td class="text-muted" data-label="<%= t :status %>">
-              <% if doctor.is_active %>
-                <%= label_tag t(:active), :green %>
-              <% else %>
-                <%= label_tag t(:suspended), :red %>
-              <% end %>
+              <%= status_tag doctor %>
             </td>
             <td>
               <div class="btn-list flex-nowrap">

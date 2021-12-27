@@ -1,77 +1,98 @@
-<div id="pad-wrapper" class="user-profile">
-    <!-- header -->
-    <div class="row header">
-        <div class="col-md-8">
-            <img src="<%= avatar_url(@doctor.email,'100x100')%>" alt="contact" class="avatar img-circle" data-toggle="tooltip" title="<%= t :gravatar_tooltip %>" data-placement="bottom" />
-            <h3 class="name"><%= @doctor.fullname %></h3>
-            <span class="area"><%= @doctor.speciality %></span>
-        </div>
-
-        <% if !@doctor.is_active %>
-        	<div class="pull-right doctor-status">
-				<%= label_tag t(:suspended).downcase %>
-			</div>
-		<% end %>
-
+<div class="page-header mb-4">
+  <div class="row g-2 align-items-center">
+    <div class="col-auto me-2">
+      <span class="avatar avatar-lg" style="background-image: url(<%= avatar_url @doctor.email %>)"></span>
     </div>
-
-    <div class="row profile">
-        <div class="col-md-12 bio">
-            <div class="profile-box">
-
-              <% if @doctor.is_active %>
-                  <h6><%= t :calendar_feed %></h6>
-                  <p style="word-wrap: break-word;"><%= raw (t :calendar_feed_message, doctor_name: @doctor.firstname, feed_url: @doctor.ciphered_feed_url).html_safe %></p>
-                  <br />
-              <% end %>
-
-                <% if @appointments.size > 0 %>
-                    <h6><%= t :future_appointments %></h6>
-                    <br>
-                    <!-- recent orders table -->
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th class="col-md-3">
-                                    <span class="line"></span>
-                                    <%= t :appointment_date %>
-                                </th>
-                                <th class="col-md-4">
-                                    <span class="line"></span>
-                                    <%= t :patient %>
-                                </th>
-                                <th class="col-md-5">
-                                    <span class="line"></span>
-                                    <%= t :notes %>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- row -->
-                            <% @appointments.each do |appointment| %>
-                            <tr class="<% if appointment.id == @appointments.first.id %>first<% end %>">
-                                <td>
-                                	<sub><%=l appointment.starts_at.to_date, :format => :day_and_date %></sub> <br />
-                                    <%= appointment.starts_at.to_formatted_s :time %> -
-                                    <%= appointment.ends_at.to_formatted_s :time %>
-                                </td>
-                                <td>
-                                    <%= link_to appointment.patient.fullname, appointment.patient %>
-                                </td>
-                                <td>
-                                    <%= appointment.notes %>
-                                </td>
-                            <% end %>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                <% else %>
-                    <h6><%= t :future_appointments %></h6>
-                    <p><%= raw (t :doctor_has_no_future_appointments, datebooks_url: link_to(t(:appointments).downcase, root_url)).html_safe %></p>
-                <% end %>
-
-            </div>
-        </div>
+    <div class="col">
+      <h4 class="m-0">
+        <h2 class="page-title">
+          <%= @doctor.fullname %>
+        </h2>
+      </h4>
+      <div class="text-muted">
+        <%= @doctor.speciality %>
+      </div>
+      <div class="small mt-1">
+        <%= status_tag @doctor %>
+      </div>
     </div>
+    <div class="col-auto">
+      <div class="btn-list">
+        <%= link_to t(:edit), edit_doctor_path(@doctor), class: "btn" %>
+        <%= link_to_suspend_or_delete @doctor, class: "btn btn-outline-danger" %>
+      </div>
+    </div>
+  </div>
 </div>
+
+<div class="row row-cards">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Card title</h3>
+      </div>
+      <div class="card-body"> 
+        <%# Form values %>
+        <div class="row">
+          <div class="col-md-6 mb-2">
+            <%= value_tag t(:uid), @doctor.uid %>
+          </div>
+          <div class="col-md-6 mb-2">
+            <%= value_tag t(:email), @doctor.email %>
+          </div>
+          <div class="col-md-6 mb-2">
+             <%= value_tag t(:gender), @doctor.gender %>
+          </div>
+          <div class="col-md-6 mb-2">
+            <%= value_tag t(:speciality), @doctor.speciality %>
+          </div>
+          <div class="col-md-6 mb-2">
+            <%= value_tag t(:color), @doctor.color %>
+          </div>
+        </div>
+
+        <%# Feed %>
+
+        <% if @doctor.is_active %>
+          <hr>
+          <h3><%= t :calendar_feed %> <%= help_tag t 'help.doctors.feed' %></h3>
+          <p><%= t :calendar_feed_message, doctor_name: @doctor.firstname %></p>
+          <p class="text-muted user-select-all"><%= @doctor.ciphered_feed_url %></p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title"><%= t :future_appointments %></h3>
+      </div>
+      <div class="card-body">
+        <% if @appointments.size > 0 %>
+          <ul class="list list-timeline">
+            <% @appointments.each do |appointment| %>
+              <li>
+                <div class="list-timeline-icon bg-azure">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"></path> <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4"></path> <circle cx="18" cy="18" r="4"></circle> <path d="M15 3v4"></path> <path d="M7 3v4"></path> <path d="M3 11h16"></path> <path d="M18 16.496v1.504l1 1"></path></svg>
+                </div>
+                <div class="list-timeline-content">
+                  <div class="list-timeline-time"><%= l appointment.starts_at, format: :just_the_date %></div>
+                  <p class="list-timeline-title">
+                    <%= appointment.patient.fullname %> 
+                  </p>
+                  <p class="text-muted">
+                    <%= appointment.starts_at.to_formatted_s :time %> - <%= appointment.ends_at.to_formatted_s :time %>
+                  </p>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        <% elsif %>
+          <%= raw (t :doctor_has_no_future_appointments, datebooks_url: link_to(t(:appointments).downcase, root_url)).html_safe %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+

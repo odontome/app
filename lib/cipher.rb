@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
 class Cipher
+  KEY = Gibberish::AES.new(Rails.application.secrets.secret_key_base)
+
   def self.decode(string)
-    cipher = Gibberish::AES.new(Rails.application.secrets.secret_key_base)
-    encrypted = Base64.strict_decode64(string)
-    cipher.decrypt(encrypted)
+    cipher = KEY
+    decrypted = Base64.strict_decode64(string)
+    cipher.decrypt(decrypted)
   end
 
   def self.encode(string)
-    cipher = Gibberish::AES.new(Rails.application.secrets.secret_key_base)
+    cipher = KEY
     encrypted = cipher.encrypt(string)
     Base64.strict_encode64(encrypted)
   end

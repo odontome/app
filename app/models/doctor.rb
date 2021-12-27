@@ -38,7 +38,6 @@ class Doctor < ApplicationRecord
 
   def ciphered_feed_url
     ciphered_url_encoded_id = Cipher.encode(id.to_s)
-
     "https://my.odonto.me/doctors/#{ciphered_url_encoded_id}/appointments.ics"
   end
 
