@@ -193,6 +193,8 @@ en:
   hide_past_appointments: Hide past appointments
   home: Home
   help:
+    datebooks:
+      status: Inactive datebooks don't have any scheduled appointments. Only inactive datebooks can be deleted.
     doctors:
       feed: For iPhones, follow the instruction in <a href="https://support.apple.com/en-ca/guide/iphone/iph3d1110d4/ios">this article</a> to add the calendar to your phone.
       suspended: Suspended doctors won't appear as options for your new appointments. Previous appointments aren't affected.

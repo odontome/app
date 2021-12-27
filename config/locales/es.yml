@@ -180,6 +180,8 @@ es:
   hide_past_appointments: Esconder citas pasadas
   home: Inicio
   help:
+    datebooks:
+      status: Agendas inactivas son aquellas que no tienen ninguna cita. Solo agendas inactivas pueden ser borradas.
     doctors:
       feed: Para iPhones, sigue las instrucciones en <a href="https://support.apple.com/en-ca/guide/iphone/iph3d1110d4/ios">este artículo</a> para agregar el calendario a tu teléfono.
       suspended: Doctores suspendidos no aparecen como opciones para nuevas citas. Las citas anteriores no se ven afectadas.

@@ -19,56 +19,58 @@
   </div>
 </div>
 
-<div class="card">
-  <div class="table-responsive">
-    <table class="table table-vcenter table-mobile-md card-table">
-      <thead>
-        <tr>
-          <th><%= t :name %></th>
-          <th><%= t :email %></th>
-          <th><%= t :color %></th>
-          <th><%= t :status %>
-            <%= help_tag t 'help.doctors.suspended' %>
-          </th>
-          <th class="w-1"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @doctors.each do |doctor| %>
+<div class="page-body">
+  <div class="card">
+    <div class="table-responsive">
+      <table class="table table-vcenter table-mobile-md card-table">
+        <thead>
           <tr>
-            <td data-label="<%= t :name %>">
-              <div class="d-flex py-1 align-items-center">
-                <span class="avatar me-2" style="background-image: url(<%= avatar_url(doctor.email) %>)"></span>
-                <div class="flex-fill">
-                  <div class="font-weight-medium"><%= doctor.fullname %></div>
-                  <div class="text-muted"><%= doctor.speciality %></div>
-                </div>
-              </div>
-            </td>
-            <td class="text-muted" data-label="<%= t :email %>">
-              <%= doctor.email %>
-            </td>
-            <td data-label="<%= t :color %>">
-              <div class="text-muted">
-                <span class="badge" style="background-color: <%= doctor.color %>"></span>
-                <%= doctor.color %>
-              </div>
-            </td>
-            <td class="text-muted" data-label="<%= t :status %>">
-              <%= status_tag doctor %>
-            </td>
-            <td>
-              <div class="btn-list flex-nowrap">
-                <%= component :dropdown do %>
-                  <%= link_to t(:profile), doctor, class: "dropdown-item" %>
-                  <%= link_to t(:edit), edit_doctor_path(doctor), class: "dropdown-item" %>
-                  <%= link_to_suspend_or_delete doctor, class: "dropdown-item" %>
-                <% end %>
-              </div>
-            </td>
+            <th><%= t :name %></th>
+            <th><%= t :email %></th>
+            <th><%= t :color %></th>
+            <th><%= t :status %>
+              <%= help_tag t 'help.doctors.suspended' %>
+            </th>
+            <th class="w-1"></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @doctors.each do |doctor| %>
+            <tr>
+              <td data-label="<%= t :name %>">
+                <div class="d-flex py-1 align-items-center">
+                  <span class="avatar me-2" style="background-image: url(<%= avatar_url(doctor.email) %>)"></span>
+                  <div class="flex-fill">
+                    <div class="font-weight-medium"><%= doctor.fullname %></div>
+                    <div class="text-muted"><%= doctor.speciality %></div>
+                  </div>
+                </div>
+              </td>
+              <td class="text-muted" data-label="<%= t :email %>">
+                <%= doctor.email %>
+              </td>
+              <td data-label="<%= t :color %>">
+                <div class="text-muted">
+                  <span class="badge" style="background-color: <%= doctor.color %>"></span>
+                  <%= doctor.color %>
+                </div>
+              </td>
+              <td class="text-muted" data-label="<%= t :status %>">
+                <%= status_tag doctor %>
+              </td>
+              <td>
+                <div class="btn-list flex-nowrap">
+                  <%= component :dropdown do %>
+                    <%= link_to t(:profile), doctor, class: "dropdown-item" %>
+                    <%= link_to t(:edit), edit_doctor_path(doctor), class: "dropdown-item" %>
+                    <%= link_to_suspend_or_delete doctor, class: "dropdown-item" %>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
