@@ -1,0 +1,39 @@
+<%= form_for(@practice, :url => "/practice/#{@practice.id}", :method => :update) do |f| %>
+  <%= render "shared/error_messages", :target => @practice%>
+
+  <div class="card card-md mb-4">
+    <div class="card-body">
+      <div class="mb-2">
+        <%= f.label :name, class: "form-label required" %>
+        <%= f.text_field :name, :class => "form-control" %>
+        <%= content_tag "small", t(:practice_name_hint), class: "text-muted" %>
+      </div>
+
+      <div class="mb-2">
+        <%= f.label :email, t(:practice_email), class: "form-label required" %>
+        <%= f.text_field :email, :class => "form-control" %>
+      </div>
+
+      <div class="mb-2">
+        <%= f.label :locale, class: "form-label"  %>
+        <%= f.select(:locale, [[ t(:english), 'en'],[ t(:spanish),'es']], {}, { :class => "form-select"} ) %>
+      </div>
+
+      <div class="mb-2">
+        <%= f.label :timezone, class: "form-label"  %>
+        <%= f.time_zone_select :timezone, [ ActiveSupport::TimeZone[@practice.timezone]], {}, { :class => "form-select"} %>
+      </div>
+
+      <div class="mb-2">
+        <%= f.label :currency_unit, class: "form-label"  %>
+        <%= f.select(:currency_unit, %w[$ € £ Bs. S/.], {}, { :class => "form-select"}) %>
+      </div>
+    </div>
+
+    <div class="card-footer text-end">
+      <div class="d-flex">
+        <%= f.submit(t(:save), :class => "btn btn-primary ms-auto", data: { disable_with: t(:please_wait) }) %>
+      </div>
+    </div>
+  </div>
+<% end %>

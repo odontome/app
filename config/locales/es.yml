@@ -64,7 +64,7 @@ es:
         telephone: Teléfono
         uid: Número de historia
       practice:
-        currency_unit: Moneda
+        currency_unit: Moneda preferida
         locale: Idioma
         name: Nombre
         timezone: Huso horario
