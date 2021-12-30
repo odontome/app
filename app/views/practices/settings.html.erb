@@ -17,34 +17,43 @@
 
     <div class="col-md-4">
       <div class="row">
-        <div class="px-4">
-          <h3 class="card-title">
-            <%= t('subscriptions.title') %> 
-            <%= label_tag t("subscriptions.status.#{@subscription.status}") %>
-          </h3>
+        <div class="">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <%= t('subscriptions.title') %> 
+                
+              </h3>
+              <div class="card-actions">
+                  <%= label_tag t("subscriptions.status.#{@subscription.status}") %>
+                </div>
+            </div>
 
-          <% if !@practice.has_linked_subscription? && @practice.has_active_subscription? %>
-            <%= raw t('subscriptions.message_to_admin.trialing', stripe_url: link_to(t('subscriptions.cta.trialing'), subscriptions_url, method: :post).html_safe) %>
-          <% elsif @practice.has_linked_subscription? && @practice.has_active_subscription? %>
-            <%= raw t('subscriptions.message_to_admin.active', status: @subscription.status, stripe_url: link_to(t('subscriptions.cta.active'), subscriptions_url, method: :put).html_safe) %>
-          <% else %>
-            <%= raw t('subscriptions.message_to_admin.expired', stripe_url: link_to(t('subscriptions.cta.expired'), subscriptions_url, method: :post).html_safe) %>
-          <% end %>
+            <div class="card-body">
+              <% if !@practice.has_linked_subscription? && @practice.has_active_subscription? %>
+                <%= raw t('subscriptions.message_to_admin.trialing', stripe_url: link_to(t('subscriptions.cta.trialing'), subscriptions_url, method: :post).html_safe) %>
+              <% elsif @practice.has_linked_subscription? && @practice.has_active_subscription? %>
+                <%= raw t('subscriptions.message_to_admin.active', status: @subscription.status, stripe_url: link_to(t('subscriptions.cta.active'), subscriptions_url, method: :put).html_safe) %>
+              <% else %>
+                <%= raw t('subscriptions.message_to_admin.expired', stripe_url: link_to(t('subscriptions.cta.expired'), subscriptions_url, method: :post).html_safe) %>
+              <% end %>
+            </div>
+          </div>
         </div>
 	    </div>
 	  
       <div class="row">
-        <div class="px-4">
+        <div class="px-3">
 	        <hr />
         </div>
       </div>
 
-	  <div class="row">
-      <div class="px-4">
-        <h3 class="card-title"><%= t :for_your_information %></h3>
-        <%= raw t("instructions.practice", close_url: (link_to (t(:close_your_account)).downcase, practice_cancel_url)).html_safe %>
+      <div class="row">
+        <div class="px-3">
+          <h3 class="card-title"><%= t :for_your_information %></h3>
+          <%= raw t("instructions.practice", close_url: (link_to (t(:close_your_account)).downcase, practice_cancel_url)).html_safe %>
+        </div>
       </div>
-	  </div>
     </div>
   </div>
 </div>

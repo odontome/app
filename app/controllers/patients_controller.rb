@@ -6,7 +6,7 @@ class PatientsController < ApplicationController
 
   def index
     # this is the most frequent scenario, a simple list of patients
-    if params[:q].nil?
+    if params[:term].nil?
       # Always fetch the first letter of the first record, if not present
       # just send "A"
       if params[:letter].blank?
@@ -18,12 +18,14 @@ class PatientsController < ApplicationController
 
       @patients = Patient.alphabetically(params[:letter]).with_practice(current_user.practice_id)
     else
-      @patients = Patient.search(params[:q]).with_practice(current_user.practice_id)
+      @patients = Patient.search(params[:term]).with_practice(current_user.practice_id)
     end
 
     respond_to do |format|
       format.html # index.html
-      format.json { render json: @patients, methods: :fullname }
+      format.json { 
+        render json: @patients.map { |patient| { value: patient.id, label: patient.fullname } }
+      }
     end
   end
 
