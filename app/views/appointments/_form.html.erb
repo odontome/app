@@ -3,7 +3,7 @@
 		<div class="form-group mb-3">
 			<%= f.label :patient_id, class: "form-label required" %>
       <div class="input-icon mb-3">
-        <input type="text" name="as_values_patient_id" class="form-control autocomplete" autocomplete="off">
+        <input type="text" name="as_values_patient_id" class="form-control autocomplete" autocomplete="off" data-theme="none">
         <span class="input-icon-addon">
           <div class="spinner-border spinner-border-sm text-muted d-none" role="status"></div>
         </span>
@@ -30,7 +30,7 @@
     <% if controller.action_name == "edit" %>
       <span class="dropdown me-auto">
         <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown" aria-expanded="false">
-          TRANSLATE
+          <%= t :actions %>
         </button>
         <div class="dropdown-menu dropdown-menu-end">
           <% if @appointment.is_confirmed %>

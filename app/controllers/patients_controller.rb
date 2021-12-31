@@ -24,7 +24,7 @@ class PatientsController < ApplicationController
     respond_to do |format|
       format.html # index.html
       format.json { 
-        render json: @patients.map { |patient| { value: patient.id, label: patient.fullname } }
+        render json: @patients, methods: :fullname
       }
     end
   end
