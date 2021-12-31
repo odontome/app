@@ -9,7 +9,7 @@ $(function() {
       $('.spinner-border').removeClass('d-none');
     },
     select: function(event, ui) {  
-      $('#appointment_patient_id_').val(ui.item.id);
+      $('#appointment_patient_id').val(ui.item.id);
       $('.autocomplete').val(ui.item.fullname);
 
       // Don't replace the text field with the id
@@ -19,7 +19,7 @@ $(function() {
       $('.spinner-border').addClass('d-none');
     },
     change: function( event, ui ) {
-      $('#appointment_patient_id_').val(null);
+      $('#appointment_patient_id').val(null);
     },
   }).autocomplete("instance")._renderItem = function(ul, item) {
     var item = $('<a href="" class="dropdown-item" data-theme="none">' + item.fullname + '</a>')

@@ -163,7 +163,7 @@ en:
   edit_patient: Edit this patient
   email: Email
   english: English
-  enter_patient_name_or_uid: Patient name or chart number
+  enter_patient_name_or_uid: Patient name or chart number…
   errors:
     titles:
       unauthorised: You can't do that

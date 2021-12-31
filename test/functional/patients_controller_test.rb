@@ -43,12 +43,12 @@ class PatientsControllerTest < ActionController::TestCase
   end
 
   test 'should get search results' do
-    get :index, params: { q: patients(:four).firstname }
+    get :index, params: { term: patients(:four).firstname }
     assert_not_nil assigns(:patients)
   end
 
   test 'should not get search results' do
-    get :index, params: { q: patients(:four).email }
+    get :index, params: { term: patients(:four).email }
     assert assigns(:patients).empty?
   end
 

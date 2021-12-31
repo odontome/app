@@ -2,8 +2,8 @@
 <%= javascript_include_tag "jquery-autosuggest" %>
 
 <script type="text/javascript">
-$(function() { 
-  $('#appointment_patient_id_').val('<%= @patient.id %>');
-  $('.autocomplete').val('<%= @patient.fullname %>');
-});
+  $(function() { 
+    $('#appointment_patient_id').val('<%= @patient.id %>');
+    $('.autocomplete').val('<%= @patient.fullname %>');
+  });
 </script>

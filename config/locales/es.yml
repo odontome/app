@@ -150,7 +150,7 @@ es:
   datebook_created_success_message: Agenda creada con éxito
   email: Email
   english: Inglés
-  enter_patient_name_or_uid: Paciente o historia
+  enter_patient_name_or_uid: Paciente o número de historia…
   errors:
     titles:
       unauthorised: No puedes hacer eso

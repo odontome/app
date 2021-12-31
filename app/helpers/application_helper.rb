@@ -21,7 +21,7 @@ module ApplicationHelper
   def value_tag(title, value)
     aggregated_value = content_tag "strong", title
 
-    if value.empty?
+    if value.blank?
       content_tag "div" do
         aggregated_value.concat content_tag "div", "—", class: "form-control-plaintext text-muted"
       end

@@ -52,13 +52,13 @@ class AppointmentsControllerTest < ActionController::TestCase
     appointment_params = {
       starts_at: '2014-01-04 14:00:00 +0000',
       ends_at: '2014-01-04 15:00:00 +0000',
-      patient_id: 'Another new patient'
+      patient_id: nil 
     }
 
     appointment = Appointment.find(1)
 
     assert_difference ['Patient.count'] do
-      patch :update, params: { appointment: appointment_params, datebook_id: 1, id: appointment.id, as_values_patient_id: '' },
+      patch :update, params: { appointment: appointment_params, datebook_id: 1, id: appointment.id, as_values_patient_id: 'Another new patient' },
                     format: :js
       # see Patient.find_or_create_from to understand the 'as_values_patient_id' property
     end
@@ -77,13 +77,13 @@ class AppointmentsControllerTest < ActionController::TestCase
     appointment_params = {
       starts_at: '2014-01-04 14:00:00 +0000',
       ends_at: '2014-01-04 15:00:00 +0000',
-      patient_id: 'Raul Riera'
+      patient_id: '2'
     }
 
     appointment = Appointment.find(1)
 
     assert_no_difference ['Patient.count'] do
-      patch :update, params: { appointment: appointment_params, datebook_id: 1, id: appointment.id, as_values_patient_id: '2' },
+      patch :update, params: { appointment: appointment_params, datebook_id: 1, id: appointment.id, as_values_patient_id: 'Raul Riera' },
                     format: :js
       # see Patient.find_or_create_from to understand the 'as_values_patient_id' property
     end
