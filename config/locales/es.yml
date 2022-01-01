@@ -5,11 +5,22 @@ es:
   appointment: Cita
   all_appointments: Todas las citas
   review: Calificación
+  no_comment: No hay comentarios
+  showing_all_reviews: Mostrando todas las calificaciones
   thank_you: ¡Gracias!
   range: Rango
   active: Activa
   amount: Monto
   create: Crear
+  filters:
+    title: Filtrar
+    reviews:
+      all: Todas las calificaciones
+      five_stars: 5 estrellas
+      four_stars: 4 estrellas
+      three_stars: 3 estrellas
+      two_stars: 2 estrellas
+      one_star: 1 estrella
   balance_discount_hint: Cualquier valor negativo será ingresado como egresos
   expense: Egreso
   income: Ingreso
@@ -129,6 +140,7 @@ es:
     formats:
       day_and_date: ! '%A (%e %b)'
       short: ! '%e %b'
+      long: ! '%B %d, %Y'
   datebooks: Agendas
   day: Día
   delete: Borrar

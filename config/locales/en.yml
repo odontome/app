@@ -7,6 +7,8 @@ en:
   all_appointments: All appointments
   appointment: Appointment
   review: Review
+  no_comment: No comment was provided
+  showing_all_reviews: Showing all reviews
   thank_you: Thank you!
   range: Range
   active: Active
@@ -142,6 +144,8 @@ en:
   date:
     formats:
       day_and_date: ! '%A (%e %b)'
+      short: ! '%e %b'
+      long: ! '%B %d, %Y'
   datebooks: Datebooks
   day: Day
   delete: Delete
@@ -340,6 +344,15 @@ en:
   view_profile: View profile
   remember_me: Remember me
   reset_password: Reset password
+  filters:
+    title: Filters
+    reviews:
+      all: All reviews
+      five_stars: 5 stars
+      four_stars: 4 stars
+      three_stars: 3 stars
+      two_stars: 2 stars
+      one_star: 1 star
   reviews: Reviews
   review_created_success_message: This information will be used to improve the experience of everyone.
   save: Save
