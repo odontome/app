@@ -28,7 +28,7 @@ gem 'stripe', '~> 5.42.0'
 gem 'rack-attack', '~> 6.5.0'
 
 group :development do
-  gem 'i18n-tasks', '~> 0.9.36'
+  gem 'i18n-tasks', '~> 0.9.37'
   gem 'listen', '~> 3.7.0'
   gem 'rubocop'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

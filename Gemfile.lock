@@ -83,7 +83,7 @@ GEM
     htmlentities (4.3.4)
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
-    i18n-tasks (0.9.36)
+    i18n-tasks (0.9.37)
       activesupport (>= 4.0.2)
       ast (>= 2.1.0)
       erubi
@@ -256,7 +256,7 @@ DEPENDENCIES
   bugsnag (~> 6.24)
   font-awesome-rails (~> 4.7.0.8)
   gibberish (~> 2.1.0)
-  i18n-tasks (~> 0.9.36)
+  i18n-tasks (~> 0.9.37)
   icalendar (~> 2.7.1)
   jquery-minicolors-rails (~> 2.2.6.2)
   jquery-rails (~> 4.4.0)
