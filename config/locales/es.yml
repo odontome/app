@@ -123,7 +123,7 @@ es:
   balance_created_error_message: Ocurrió un problema al intentar crear esta entrada.
   cancel: Cancelar
   cigarettes_per_day: Cigarrillos por día
-  close_account: Cerra cuenta
+  close_account: Cerrar cuenta
   close_your_account: Cerrar tu cuenta
   color: Color
   comments: Comentarios
@@ -183,7 +183,7 @@ es:
   family_history: Historial familiar
   female: Mujer
   female_doctor_prefix: Dra.
-  for_your_information: Para tu información
+  for_your_information: Información adicional
   forgot_password: Olvidaste tu contraseña?
   future_appointments: Próximas citas
   past_appointments: Citas anteriores
@@ -206,6 +206,7 @@ es:
       <p>Recuerda que puedes suspender doctores que ya no trabajes para ti. De esta manera no aparecerán en tu Odonto.me pero igual mantendrás todo el historial de sus actividades.</p>
     patients: Lo más importante de tu clínica. Con solo unos cuantos clics puedes crear un paciente, aunque es recomendado que llenes la mayor cantidad de información posible.
     practice: <p>Configura tu clínica como prefieras.</p> <p>Si por algún motivo decides dejarnos. Puedes %{close_url} en cualquier momento.</p>
+    cancel: <p>Al cerrar tu cuenta, tu información será guardara por 14 días y después será borrada de nuestros servidores.</p>
     treatments: Todo lo que le haces a tus pacientes. Esta sección está directamente relacionada con el estado de cuenta de tu clínica.
     users:
       <p>Las personas que pueden accesar a tu Odonto.me.</p> <p>Ya que solo tú puedes ver esta información, Es recomendado que crees tantos usuarios quieras para manejar Odonto.me pero dejes a este usuario <strong>administrador</strong>

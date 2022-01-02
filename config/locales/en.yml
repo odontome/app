@@ -222,6 +222,8 @@ en:
       <p>From here, you can update everything about your practice. Please
       take a moment to review all your options here.</p> <p>If from any reason you
       decide to leave us. You can %{close_url} at anytime.</p>
+    cancel:
+      <p>If you cancel your account, your data will be preserved for 14 days. After that, it will be removed from our servers.</p>
     treatments:
       Everything you do to your patients. These items are directly connected
       to the balance of your practice.
