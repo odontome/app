@@ -1,86 +1,101 @@
-<div id="pad-wrapper" class="table-wrapper users-list">
-	<div class="row header col-md-12">
-      <h3><%= t :patients %></h3>
-
-      <div class="pull-right-lg">            
-          <%= link_to t(:create_new_patient), new_patient_url, "class" => "btn-flat primary pull-right" %>
+<div class="page-header mb-4">
+  <div class="row align-items-center">
+    <div class="col">
+      <div class="page-pretitle">
+        TRANSLATE
       </div>
+      <h2 class="page-title">
+        <%= t :patients %>
+      </h2>
+    </div>
+    <div class="col-auto ms-auto">
+      <div class="btn-list">
+        <%= link_to new_patient_url, class: "btn btn-primary d-none d-sm-inline-block" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg><!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+          <%= t(:create_new_patient) %>
+        <% end %>
+      </div>
+    </div>
   </div>
-
-	<div class="row">
-	    <div class="col-md-12">
-	        <table class="table table-hover">
-	            <thead>
-	                <tr>
-	                    <th class="col-md-4">
-	                        <%= t :name %>
-	                    </th>
-	                    <th class="col-md-2">
-	                        <span class="line"></span> <%= t :updated_at %>
-	                    </th>
-	                    <th class="col-md-3 align-right hidden-xs hidden-sm">
-	                        <span class="line"></span> <%= t :email %>
-	                    </th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	            
-		            <% @patients.each do |patient| %>
-			            <tr class="<% if patient.id == @patients.first.id %>first<% end %>">	
-			            	<td>
-			                    <img src="<%= avatar_url(patient.email)%>" alt="contact" class="img-circle avatar hidden-phone" />
-			                    <%= link_to patient.fullname, patient, :class => "name" %>
-			                    <span class="subtext">
-									<%= patient.uid %>
-			                    </span>
-			                </td>
-
-			                <% if !patient.missing_info? %>	 
-				                <td>
-				                    <%= patient.updated_at.to_formatted_s :long %>
-				                </td>
-				                <td class="align-right hidden-xs hidden-sm">
-				                    <%= mail_to patient.email %>
-				                </td>
-				            <% else %>
-				            	<td colspan="2">
-				            		<% if user_is_admin?(current_user) %>
-							  			<%= raw t :patient_without_required_info, delete_url: (link_to (t(:delete_patient)).downcase, patient, :method => :delete, data: { confirm: t(:are_you_sure_no_undo) }) %>
-									<% else %>
-										<%= t :patient_without_required_info, delete_url: t(:delete_patient).downcase  %>
-									<% end %>
-								</td>
-							<% end %>
-			            </tr>
-			        <% end %>
-
-			    </tbody>
-			</table>
-
-			<% if params[:term].nil? %>
-				<ul class ="pagination pull-right">
-				  <% letter_options.each do |letter| %>
-				    <% if params[:letter] == letter %>
-				    	<li class="active"><%= link_to letter, patients_url(:letter => letter)%></li>
-				    <% else %>
-				      <li><%= link_to letter, patients_url(:letter => letter)%></li>
-				    <% end %>
-				  <% end %>
-				</ul>
-			<% else %>
-				<span class="pull-right">
-					<% if @patients.size == 0 %>
-						<%= t :patient_search_results_zero, :patients_count => @patients.size %>
-					<% elsif @patients.size == 1 %>
-						<%= t :patient_search_results_one %>
-					<% elsif @patients.size <= 20 %>
-						<%= t :patient_search_results_few, :patients_count => @patients.size %>
-					<% else %>
-						<%= t :patient_search_results_many, :patients_count => @patients.size %>
-					<% end %>
-				</span>
-			<% end %>
-		</div>
-	</div>
 </div>
 
+<div class="page-body">
+  <div class="card">
+    <table class="table table-vcenter table-mobile-md card-table">
+      <thead>
+        <tr>
+          <th><%= t :name %></th>
+          <th><%= t :email %></th>
+          <th>
+            <%= t :status %>
+            <%= help_tag t 'help.patients.status' %>
+          </th>
+          <th><%= t :updated_at %></th>
+          <th class="w-1"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @patients.each do |patient| %>
+          <tr>
+            <td data-label="<%= t :name %>">
+              <div class="d-flex py-1 align-items-center">
+                <span class="avatar me-2 rounded-circle"><%= patient.initials %></span>
+                <div class="flex-fill">
+                  <div class="font-weight-medium"><%= patient.fullname %></div>
+                  <div class="text-muted"><%= patient.uid %></div>
+                </div>
+              </div>
+            </td>
+            <td class="text-muted" data-label="<%= t :email %>">
+              <%= mail_to patient.email %>
+            </td>
+            <td class="text-muted" data-label="<%= t :status %>">
+              <% if patient.missing_info? %>
+                <%= label_tag t(:incomplete), :red %>
+              <% else %>
+                <%= label_tag t(:active), :green %>
+              <% end %>
+            </td>
+            <td class="text-muted" data-label="<%= t :updated_at %>">
+              <%= time_ago_in_words patient.updated_at %>
+            </td>
+            <td>
+              <div class="btn-list flex-nowrap">
+                <%= component :dropdown do %>
+                  <%= link_to t(:profile), patient, class: "dropdown-item" %>
+                  <%= link_to t(:edit), edit_patient_path(patient), class: "dropdown-item" %>
+                  <% if user_is_admin?(current_user) %>
+                    <%= link_to t(:delete), patient, method: :delete, data: { confirm: t(:are_you_sure_no_undo) }, class: "dropdown-item text-red" %>
+                  <% end %>
+                <% end %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<% if params[:term].nil? %>
+  <ul class="pagination">
+    <% letter_options.each do |letter| %>
+      <li class="page-item <%= params[:letter] == letter[:value] ? 'active' : '' %> <%= letter[:included?] ? '' : 'disabled' %>">
+        <%= link_to letter[:value], patients_url(letter: letter[:value]), class: "page-link" %>
+      </li>      
+    <% end %>
+  </ul>
+
+<% else %>
+  <span class="text-muted">
+    <% if @patients.size == 0 %>
+      <%= t :patient_search_results_zero, :patients_count => @patients.size %>
+    <% elsif @patients.size == 1 %>
+      <%= t :patient_search_results_one %>
+    <% elsif @patients.size <= 20 %>
+      <%= t :patient_search_results_few, :patients_count => @patients.size %>
+    <% else %>
+      <%= t :patient_search_results_many, :patients_count => @patients.size %>
+    <% end %>
+  </span>
+<% end %>

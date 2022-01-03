@@ -197,6 +197,8 @@ en:
   hide_past_appointments: Hide past appointments
   home: Home
   help:
+    patients:
+      status: Patients without the required profile information are marked as "incomplete".
     datebooks:
       status: Inactive datebooks don't have any scheduled appointments. Only inactive datebooks can be deleted.
     doctors:
@@ -302,7 +304,6 @@ en:
   patient_has_no_appointments:
     No appointments. Would you like to %{datebooks_url}
     one?
-  patient_incomplete: Patient incomplete
   patient_search_results_few: ! '%{patients_count} patients found.'
   patient_search_results_many:
     Showing %{patients_count} of many patients. Try a more
@@ -313,7 +314,6 @@ en:
   patient_treatment_created_error_message: The item was created successfully
   patient_treatment_updated_error_message: There was a problem creating this item
   patient_updated_success_message: The patient was updated successfully
-  patient_without_required_info: Add the missing information, or simply %{delete_url}
   patients: Patients
   personal_information: Personal information
   please_wait: Pleast wait...

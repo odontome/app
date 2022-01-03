@@ -10,10 +10,8 @@ class PatientsController < ApplicationController
       # Always fetch the first letter of the first record, if not present
       # just send "A"
       if params[:letter].blank?
-        alphabet = [*'A'..'Z']
-        first_patient = Patient.with_practice(current_user.practice_id).order('firstname ASC').first
-        first_patient_letter = first_patient&.firstname&.first || 'A'
-        params[:letter] = alphabet.include?(first_patient_letter) ? first_patient_letter : 'A'
+        first_patient = Patient.with_practice(current_user.practice_id).order('firstname ASC').limit(1).first
+        params[:letter] = first_patient&.firstname&.first || 'A'
       end
 
       @patients = Patient.alphabetically(params[:letter]).with_practice(current_user.practice_id)
@@ -81,7 +79,7 @@ class PatientsController < ApplicationController
     @patient = Patient.with_practice(current_user.practice_id).find(params[:id])
     @patient.destroy
     respond_to do |format|
-      format.html { redirect_to(patients_url) }
+      format.html { redirect_to(request.referer) }
     end
   end
 end

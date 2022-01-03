@@ -192,6 +192,8 @@ es:
   hide_past_appointments: Esconder citas pasadas
   home: Inicio
   help:
+    patients:
+      status: Los pacientes sin toda la información necesaria para crear sus perfiles son marcados como "incompletos".
     datebooks:
       status: Agendas inactivas son aquellas que no tienen ninguna cita. Solo agendas inactivas pueden ser borradas.
     doctors:
@@ -274,7 +276,6 @@ es:
   patient_created_success_message: El paciente fue creado con éxito
   patient_has_no_appointments: Sin citas. ¿Quiéres %{datebooks_url}
     una?
-  patient_incomplete: Paciente incompleto
   patient_search_results_few: ! '%{patients_count} pacientes encontrados.'
   patient_search_results_many: Mostrado %{patients_count} de muchos pacientes. Intenta refinar tu búsqueda.
   patient_search_results_one: Lo encontré
@@ -282,7 +283,6 @@ es:
   patient_treatment_created_error_message: El item fue creado con éxito
   patient_treatment_updated_error_message: Ocurrió un problema para crear este item
   patient_updated_success_message: El paciente fue actualizado con éxito
-  patient_without_required_info: Agrega la información que falta, o simplemente puedes %{delete_url}
   patients: Pacientes
   personal_information: Información personal
   please_wait: Por favor espera...

@@ -22,53 +22,51 @@
 
 <div class="page-body">
   <div class="card">
-    <div class="table-responsive">
-      <table class="table table-vcenter table-mobile-md card-table">
-        <thead>
+    <table class="table table-vcenter table-mobile-md card-table">
+      <thead>
+        <tr>
+          <th><%= t :name %></th>
+          <th><%= t :range %></th>
+          <th><%= t :updated_at %></th>
+          <th><%= t :status %>
+            <%= help_tag t 'help.datebooks.status' %>
+          </th>
+          <th class="w-1"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @datebooks.each do |datebook| %>
           <tr>
-            <th><%= t :name %></th>
-            <th><%= t :range %></th>
-            <th><%= t :updated_at %></th>
-            <th><%= t :status %>
-              <%= help_tag t 'help.datebooks.status' %>
-            </th>
-            <th class="w-1"></th>
+            <td data-label="<%= t :name %>">
+              <%= datebook.name %> <br />
+      <span class="text-muted"><%= t :appointments_in_datebook, count: datebook.appointments_count %></span>
+            </td>
+            <td class="text-muted" data-label="<%= t :range %>">
+              <%= hours_range datebook.starts_at, datebook.ends_at %>
+            </td>
+            <td data-label="<%= t :updated_at %>">
+              <%= datebook.updated_at.to_formatted_s :short %>
+            </td>
+            <td class="text-muted" data-label="<%= t :status %>">
+              <% if datebook.appointments_count.to_i > 0 %>
+        <%= label_tag t(:active), :green %>
+      <% else %>
+        <%= label_tag t(:inactive) %>
+      <% end %>
+            </td>
+            <td>
+              <div class="btn-list flex-nowrap">
+                <%= component :dropdown do %>
+                  <%= link_to t(:edit), edit_datebook_path(datebook), class: "dropdown-item" %>
+        <% if datebook.appointments_count.to_i == 0 %>
+          <%= link_to t(:delete), datebook, :method => :delete, data: { confirm: t(:are_you_sure) }, class: "dropdown-item" %>
+        <% end %>
+                <% end %>
+              </div>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          <% @datebooks.each do |datebook| %>
-            <tr>
-              <td data-label="<%= t :name %>">
-                <%= datebook.name %> <br />
-				<span class="text-muted"><%= t :appointments_in_datebook, count: datebook.appointments_count %></span>
-              </td>
-              <td class="text-muted" data-label="<%= t :range %>">
-                <%= hours_range datebook.starts_at, datebook.ends_at %>
-              </td>
-              <td data-label="<%= t :updated_at %>">
-                <%= datebook.updated_at.to_formatted_s :short %>
-              </td>
-              <td class="text-muted" data-label="<%= t :status %>">
-                <% if datebook.appointments_count.to_i > 0 %>
-					<%= label_tag t(:active), :green %>
-				<% else %>
-					<%= label_tag t(:inactive) %>
-				<% end %>
-              </td>
-              <td>
-                <div class="btn-list flex-nowrap">
-                  <%= component :dropdown do %>
-                    <%= link_to t(:edit), edit_datebook_path(datebook), class: "dropdown-item" %>
-					<% if datebook.appointments_count.to_i == 0 %>
-						<%= link_to t(:delete), datebook, :method => :delete, data: { confirm: t(:are_you_sure) }, class: "dropdown-item" %>
-					<% end %>
-                  <% end %>
-                </div>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>

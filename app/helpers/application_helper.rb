@@ -5,10 +5,6 @@ module ApplicationHelper
     number_to_currency(number, unit: @current_user.practice.currency_unit, precision: precision)
   end
 
-  def incomplete_tag
-    content_tag :span, t(:incomplete), class: 'label label-danger'
-  end
-
   def label_tag(message, color = :azure)
     allowed_colors = [:green, :red, :azure]
     unless color.in?(allowed_colors)

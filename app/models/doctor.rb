@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Doctor < ApplicationRecord
+  # concerns
+  include Initials
+
   # associations
   belongs_to :practice, counter_cache: true
   has_many :appointments

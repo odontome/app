@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  # concerns
+  include Initials
+
   # associations
   belongs_to :practice, counter_cache: true
   has_many :notes, dependent: :delete_all
