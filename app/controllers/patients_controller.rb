@@ -81,10 +81,12 @@ class PatientsController < ApplicationController
   end
 
   def destroy
+    back_to = request.referer || patients_path
+
     @patient = Patient.with_practice(current_user.practice_id).find(params[:id])
     @patient.destroy
     respond_to do |format|
-      format.html { redirect_to(request.referer) }
+      format.html { redirect_to(back_to) }
     end
   end
 end
