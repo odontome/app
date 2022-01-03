@@ -14,7 +14,12 @@ class PatientsController < ApplicationController
         params[:letter] = first_patient&.firstname&.first || 'A'
       end
 
-      @patients = Patient.alphabetically(params[:letter]).with_practice(current_user.practice_id)
+      # iI the provided is not in the alphabet, send back anything else
+      if [*'a'..'z'].include?(params[:letter].downcase)
+        @patients = Patient.anything_with_letter(params[:letter]).with_practice(current_user.practice_id)
+      else
+        @patients = Patient.anything_not_in_alphabet.with_practice(current_user.practice_id)
+      end
     else
       @patients = Patient.search(params[:term]).with_practice(current_user.practice_id)
     end

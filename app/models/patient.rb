@@ -16,9 +16,14 @@ class Patient < ApplicationRecord
       .order('firstname')
   }
 
-  scope :alphabetically, lambda { |letter|
+  scope :anything_with_letter, lambda { |letter|
     select('firstname,lastname,uid,id,date_of_birth,allergies,email,updated_at')
-      .where('lower(firstname) LIKE ?', "#{letter.downcase}%")
+      .where('lower(substring(firstname,1,1)) = ?', "#{letter.downcase}")
+  }
+
+  scope :anything_not_in_alphabet, lambda {
+    select('firstname,lastname,uid,id,date_of_birth,allergies,email,updated_at')
+    .where('lower(substring(firstname,1,1)) NOT IN (?)', [*'a'..'z'])
   }
 
   scope :search, lambda { |q|
