@@ -25,7 +25,7 @@
       <thead>
         <tr>
           <th><%= t :name %></th>
-          <th><%= t :email %></th>
+          <th><%= t :uid %></th>
           <th>
             <%= t :status %>
             <%= help_tag t 'help.patients.status' %>
@@ -42,12 +42,12 @@
                 <span class="avatar me-2 rounded-circle"><%= patient.initials %></span>
                 <div class="flex-fill">
                   <div class="font-weight-medium"><%= patient.fullname %></div>
-                  <div class="text-muted"><%= patient.uid %></div>
+                  <div class="text-muted"><%= patient.email %></div>
                 </div>
               </div>
             </td>
-            <td class="text-muted" data-label="<%= t :email %>">
-              <%= mail_to patient.email %>
+            <td class="text-muted" data-label="<%= t :uid %>">
+              <%= patient.uid %>
             </td>
             <td class="text-muted" data-label="<%= t :status %>">
               <% if patient.missing_info? %>

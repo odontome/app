@@ -58,9 +58,9 @@
               <div class="btn-list flex-nowrap">
                 <%= component :dropdown do %>
                   <%= link_to t(:edit), edit_datebook_path(datebook), class: "dropdown-item" %>
-        <% if datebook.appointments_count.to_i == 0 %>
-          <%= link_to t(:delete), datebook, :method => :delete, data: { confirm: t(:are_you_sure) }, class: "dropdown-item" %>
-        <% end %>
+                  <% if datebook.appointments_count.to_i == 0 %>
+                    <%= link_to t(:delete), datebook, :method => :delete, data: { confirm: t(:are_you_sure) }, class: "dropdown-item text-red" %>
+                  <% end %>
                 <% end %>
               </div>
             </td>
