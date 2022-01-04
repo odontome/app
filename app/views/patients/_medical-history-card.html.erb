@@ -1,0 +1,13 @@
+<% title = local_assigns[:title].presence %>
+<% value = local_assigns[:value].presence || "" %>
+
+<% if !value.empty? %>
+  <div class="col-sm-6 col-lg-4">
+    <div class="card">
+      <div class="card-body">
+        <h3><%= title %></h3>
+        <p><%= value %></p>
+      </div>
+    </div>
+  </div>
+<% end %>

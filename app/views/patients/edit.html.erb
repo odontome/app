@@ -1,21 +1,27 @@
-<div id="pad-wrapper" class="new-user">
-    <div class="row header">
-        <div class="col-md-12">
-            <h3><%= @patient.fullname %></h3>
-        </div>                
+<div class="page-header mb-4">
+  <div class="row align-items-center">
+    <div class="col">
+      <div class="page-pretitle">
+        <%= t :edit %>
+      </div>
+      <h2 class="page-title">
+        <%= @patient.fullname %>
+      </h2>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="row row-cards">
+    <div class="col-md-8">
+      <%= render 'form' %>
     </div>
 
-    <div class="row form-wrapper">
-        <!-- left column -->
-        <div class="col-md-9 with-sidebar">
-            <%= render 'form' %>
-        </div>
-
-        <!-- side right column -->
-        <div class="col-md-3 form-sidebar">                       
-            <h6><%= t :for_your_information %></h6>
-            
-            <p><%= t "instructions.patients" %></p>
-        </div>
+    <div class="col-md-4">
+      <div class="px-4">
+        <h3 class="card-title"><%= t :for_your_information %></h3>
+        <%= raw t "instructions.patients".html_safe %>
+      </div>
     </div>
-</div>  
+  </div>
+</div>

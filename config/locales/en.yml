@@ -33,6 +33,7 @@ en:
   subscribe_again: Subscribe again
   you_are_subscribed_again: You are subscribed again
   you_are_unsubscribed: You are unsubscribed
+  emergency_telephone: Emergency telephone
   actions: Actions
   activerecord:
     attributes:
@@ -164,7 +165,6 @@ en:
   drugs_use: Drugs used
   drugs_use_hint: Please be as descriptive as possible.
   edit: Edit
-  edit_patient: Edit this patient
   email: Email
   english: English
   enter_patient_name_or_uid: Patient name or chart number…

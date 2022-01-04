@@ -8,6 +8,7 @@
 //= require tabler.min
 //= require tom-select.base.min
 //= require apexcharts.min
+//= require masonry.min
 
 // This function prevents the session from ending
 window.iCallServerId = setInterval(function (){ var remoteURL = '/'; $.get(remoteURL); }, 900000);

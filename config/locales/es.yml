@@ -35,6 +35,7 @@ es:
   chart_number: Número de historia
   subscribe_again: Suscríbete de nuevo
   actions: Acciones
+  emergency_telephone: Teléfono de emergencia
   activerecord:
     attributes:
       appointment:
@@ -157,7 +158,6 @@ es:
   drugs_use: Drogas utilizadas
   drugs_use_hint: Por favor sé lo más descriptivo posible.
   edit: Editar
-  edit_patient: Editar este paciente
   datebook_updated_success_message: Agenda actualizada con éxito
   datebook_created_success_message: Agenda creada con éxito
   email: Email

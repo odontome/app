@@ -1,106 +1,108 @@
-<%= form_for(@patient, :class => "form-horizontal") do |f| %>
-
+<%= form_for(@patient) do |f| %>
 	<%= render "shared/error_messages", :target => @patient%>
 
-	<p class="form-group col-md-8">
-		<%= f.label :firstname %> *
-		<%= f.text_field :firstname, :class => "form-control" %>
-	</p>
+	<div class="card card-md">
+    <div class="card-body">
+      <div class="mb-3">
+		    <%= f.label :firstname, class: "form-label required" %>
+		    <%= f.text_field :firstname, class: "form-control" %>
+      </div>
 
-	<p class="form-group col-md-8">
-		<%= f.label :lastname %> *
-		<%= f.text_field :lastname, :class => "form-control" %>
-	</p>
+      <div class="mb-3">
+        <%= f.label :lastname, class: "form-label required" %>
+        <%= f.text_field :lastname, class: "form-control" %>
+      </div>
 
-	<p class="form-group col-md-8">
-		<%= f.label :date_of_birth %>
-		<%= f.date_select :date_of_birth, :start_year => Time.now.year - 90, :end_year => Time.now.year - 3 %>
-	</p>
+      <div class="mb-3">
+		    <%= f.label :date_of_birth, class: "form-label" %>
+		    <%= f.date_select :date_of_birth, { start_year: Time.now.year - 90, end_year: Time.now.year - 3 } %>
+	    </div>
 
-	<p class="form-group col-md-8">
-		<%= f.label :uid %>
-		<%= f.text_field :uid, :class => "form-control" %>
-	</p>
+      <div class="mb-3">
+        <%= f.label :uid, class: "form-label" %>
+        <%= f.text_field :uid, class: "form-control" %>
+      </div>
 
-	<p class="form-group col-md-8 form-section">
-		<label><%= t :contact_information %></label>
-	</p>
+      <div class="hr-text py-3">
+        <%= t :contact_information %>
+      </div>
 
-	<p class="form-group col-md-8">
-		<%= f.label :email %>
-		<%= f.email_field :email, :class => "form-control" %>
-	</p>
+      <div class="mb-3">
+        <%= f.label :email, class: "form-label" %>
+        <%= f.email_field :email, class: "form-control" %>
+      </div>
 
-	<p class="form-group col-md-8">
-		<%= f.label :telephone %>
-		<%= f.telephone_field :telephone, :class => "form-control" %>
-	</p>
+      <div class="mb-3">
+        <%= f.label :telephone, class: "form-label" %>
+        <%= f.telephone_field :telephone, class: "form-control" %>
+      </div>
 
-	<p class="form-group col-md-8">
-		<%= f.label :mobile %>
-		<%= f.telephone_field :mobile, :class => "form-control" %>
-	</p>
+      <div class="mb-3">
+        <%= f.label :mobile, class: "form-label" %>
+        <%= f.telephone_field :mobile, class: "form-control" %>
+      </div>
 
-	<p class="form-group col-md-8">
-		<%= f.label :emergency_telephone %>
-		<%= f.telephone_field :emergency_telephone, :class => "form-control" %>
-	</p>
+      <div class="mb-3">
+        <%= f.label :emergency_telephone, class: "form-label" %>
+        <%= f.telephone_field :emergency_telephone, class: "form-control" %>
+      </div>
 
-	<p class="form-group col-md-8">
-		<%= f.label :address %>
-		<%= f.text_area :address, :maxlength => 100, :rows => 2, :class => "form-control" %>
-	</p>
+      <div class="mb-3">
+        <%= f.label :address, class: "form-label" %>
+        <%= f.text_area :address, maxlength: 100, rows: 2, class: "form-control" %>
+      </div>
 
-	<p class="form-group col-md-8 form-section">
-		<label><%= t :medical_history %></label>
-	</p>
+      <div class="hr-text py-3">
+        <%= t :medical_history %>
+      </div>
 
-	<p class="form-group col-md-8">
-		<%= f.label :allergies %>
-		<%= f.text_area :allergies, :rows => 2, :class => "form-control" %>
-	</p>
+      <div class="mb-3">
+        <%= f.label :allergies, class: "form-label" %>
+        <%= f.text_area :allergies, rows: 2, class: "form-control" %>
+      </div>
 
-	<p class="form-group col-md-8">
-		<%= f.label :past_illnesses %>
-		<%= f.text_area :past_illnesses, :rows => 2, :class => "form-control" %>
-	</p>
+      <div class="mb-3">
+        <%= f.label :past_illnesses, class: "form-label" %>
+        <%= f.text_area :past_illnesses, rows: 2, class: "form-control" %>
+      </div>
 
-	<p class="form-group col-md-8">
-		<%= f.label :surgeries %>
-		<%= f.text_area :surgeries, :rows => 2, :class => "form-control" %>
-	</p>
+      <div class="mb-3">
+        <%= f.label :surgerie, class: "form-label" %>
+        <%= f.text_area :surgeries, rows: 2, class: "form-control" %>
+      </div>
 
-	<p class="form-group col-md-8">
-		<%= f.label :medications %>
-		<%= f.text_area :medications, :rows => 4, :class => "form-control" %>
-	</p>
+      <div class="mb-3">
+        <%= f.label :medications, class: "form-label" %>
+        <%= f.text_area :medications, :rows => 4, :class => "form-control" %>
+      </div>
 
-	<p class="form-group col-md-8">
-		<%= f.label :cigarettes_per_day %>
-		<%= f.number_field :cigarettes_per_day, :class => "form-control" %>
-	</p>
+      <div class="mb-3">
+        <%= f.label :cigarettes_per_day, class: "form-label" %>
+        <%= f.number_field :cigarettes_per_day, class: "form-control" %>
+      </div>
 
-	<p class="form-group col-md-8">
-		<%= f.label :drinks_per_day %>
-		<%= f.number_field :drinks_per_day, :class => "form-control" %>
-	</p>
+      <div class="mb-3">
+        <%= f.label :drinks_per_day, class: "form-label" %>
+        <%= f.number_field :drinks_per_day, :class => "form-control" %>
+      </div>
 
-	<p class="form-group col-md-8">
-		<%= f.label :drugs_use %>
-		<%= f.text_area :drugs_use, :rows => 2, :class => "form-control" %>
-		<%= content_tag "sub", t(:drugs_use_hint) %>
-	</p>
+      <div class="mb-3">
+        <%= f.label :drugs_use, class: "form-label" %>
+		    <%= f.text_area :drugs_use, :rows => 2, :class => "form-control" %>
+		    <%= content_tag "small", t(:drugs_use_hint), class: "text-muted" %>
+      </div>
 
-	<p class="form-group col-md-8">
-		<%= f.label :family_diseases %>
-		<%= f.text_area :family_diseases, :rows => 4, :class => "form-control" %>
-		<%= content_tag "sub", t(:family_diseases_hint) %>
-	</p>
+      <div class="mb-3">
+        <%= f.label :family_diseases, class: "form-label" %>
+        <%= f.text_area :family_diseases, :rows => 4, :class => "form-control" %>
+        <%= content_tag "small", t(:family_diseases_hint), class: "text-muted" %>
+      </div>
+    </div>
 
-	<p class="form-group col-md-8">
-		<%= f.submit(t(:save), :class => "btn btn-primary", data: { disable_with: t(:please_wait) }) %>
-		<span class="cancel"><%= t :or %>
-			<%= link_to t(:cancel).downcase, patients_url %>
-		</span>
-	</p>
+    <div class="card-footer text-end">
+      <div class="d-flex">
+        <%= f.submit(t(:save), :class => "btn btn-primary ms-auto", data: { disable_with: t(:please_wait) }) %>
+      </div>
+    </div>
+  </div>
 <% end %>

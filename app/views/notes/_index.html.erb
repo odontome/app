@@ -1,6 +1,8 @@
-<% notes.each do |note| %>
-	<%= render :partial => "notes/show", :locals => {:note => note, :noteable => noteable}%>
-<% end %>
+<div class="list-group list-group-flush list-group-hoverable">
+  <% notes.each do |note| %>
+    <%= render :partial => "notes/show", :locals => {:note => note, :noteable => noteable}%>
+  <% end %>
+</div>
 
 <script>
 	$(document).ready(function() {
