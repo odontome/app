@@ -1,4 +1,6 @@
 $(function() {
+  var didSelect = false;
+
   $('.autocomplete').autocomplete({
     source: '/patients.json',
     delay: 500,
@@ -14,12 +16,19 @@ $(function() {
 
       $('#appointment_patient_id').val(ui.item.id);
       $('.autocomplete').val(ui.item.fullname);
+
+      didSelect = true;
     },
     response: function(event, ui) {
       $('.spinner-border').addClass('d-none');
     },
-    change: function( event, ui ) {
-      $('#appointment_patient_id').val(null);
+    open: function(event, ui) {
+      didSelect = false;
+    },
+    close: function(event, ui) {
+      if (!didSelect) {
+        $('#appointment_patient_id').val(null);
+      }
     },
   }).autocomplete("instance")._renderItem = function(ul, item) {
     var item = $('<a href="" class="dropdown-item" data-theme="none">' + item.fullname + '</a>')
