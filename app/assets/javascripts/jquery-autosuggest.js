@@ -8,12 +8,12 @@ $(function() {
     search: function(event, ui) {
       $('.spinner-border').removeClass('d-none');
     },
-    select: function(event, ui) {  
-      $('#appointment_patient_id').val(ui.item.id);
-      $('.autocomplete').val(ui.item.fullname);
-
+    select: function(event, ui) {
       // Don't replace the text field with the id
       event.preventDefault();
+
+      $('#appointment_patient_id').val(ui.item.id);
+      $('.autocomplete').val(ui.item.fullname);
     },
     response: function(event, ui) {
       $('.spinner-border').addClass('d-none');

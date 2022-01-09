@@ -6,6 +6,9 @@ en:
   activate: Activate
   all_appointments: All appointments
   appointment: Appointment
+  appointment_visit:
+    past_tense: <strong>%{patient_name}</strong> visited %{doctor_fullname}
+    future_tense: <strong>%{patient_name}</strong> will visit %{doctor_fullname}
   review: Review
   no_comment: No comment was provided
   showing_all_reviews: Showing all reviews
@@ -301,6 +304,9 @@ en:
   past_surgeries: Past surgeries
   patient: Patient
   patient_created_success_message: The patient was created successfully
+  no_appointments:
+    title: No appointments
+    description: They don't have any appointments scheduled.
   patient_has_no_appointments:
     No appointments. Would you like to %{datebooks_url}
     one?

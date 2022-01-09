@@ -3,6 +3,9 @@ es:
   account_cancelled: Tu cuenta ha sido marcada para cancelación. Si crees que esto es un error, por favor contacta con nosotros lo más rápido posible.
   activate: Activar
   appointment: Cita
+  appointment_visit:
+    past_tense: <strong>%{patient_name}</strong> vió al %{doctor_fullname}
+    future_tense: <strong>%{patient_name}</strong> verá al %{doctor_fullname}
   all_appointments: Todas las citas
   review: Calificación
   no_comment: No hay comentarios
@@ -274,6 +277,9 @@ es:
   past_surgeries: Cirugias pasadas
   patient: Paciente
   patient_created_success_message: El paciente fue creado con éxito
+  no_appointments:
+    title: Sin citas
+    description: No tienen ninguna cita programada.
   patient_has_no_appointments: Sin citas. ¿Quiéres %{datebooks_url}
     una?
   patient_search_results_few: ! '%{patients_count} pacientes encontrados.'
