@@ -113,6 +113,7 @@ en:
   years_old: Years old
   age_with_suffix: ! '%{age} years old'
   ago_in_words: ! '%{date} ago'
+  distance_in_words: ! '%{date} away'
   allergic_to: Allergic to
   already_have_an_account: Already have an account?
   annotate: Annotate

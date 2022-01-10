@@ -107,6 +107,11 @@
           <%= link_to t(:schedule), root_url, class: "btn btn-primary" %>
         <% end %>
       <% else %>
+        <div class="card-header">
+          <h3 class="card-title">
+            <%= t(:appointments) %>
+          </h3>
+        </div>
         <div class="card-body">
           <div class="divide-y">
             <% @appointments.each do |appointment| %>

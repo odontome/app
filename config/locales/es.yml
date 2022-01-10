@@ -112,6 +112,7 @@ es:
   years_old: Años de edad
   age_with_suffix: ! '%{age} años de edad'
   ago_in_words: ! 'hace %{date}'
+  distance_in_words: ! 'en %{date}'
   allergic_to: Alérgico a
   already_have_an_account: ¿Ya tienes una cuenta?
   annotate: Anotar
