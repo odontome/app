@@ -1,6 +1,8 @@
 <tr>
-	<td><%= l balance.created_at, :format => :long %><br />
-	<%= content_tag "sub", balance.notes %></td>
-	<td align="center"><% if (balance.amount < 0)%> <%=balance.amount %> <% end %></td>
-	<td align="center"><% if (balance.amount >= 0)%> <%=balance.amount %> <% end %></td>
+	<td>
+    <span class="text-muted"><%= l balance.created_at, format: :long %><span><br />
+	  <%= content_tag "span", balance.notes %>
+  </td>
+	<td class="text-end"><% if (balance.amount < 0)%> <%= number_to_currency_with_symbol balance.amount %> <% end %></td>
+	<td class="text-end"><% if (balance.amount >= 0)%> <%= number_to_currency_with_symbol balance.amount %> <% end %></td>
 </tr>
