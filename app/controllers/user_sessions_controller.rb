@@ -20,6 +20,9 @@ class UserSessionsController < ApplicationController
     # Verify user exists in db and run has_secure_password's .authenticate()
     # method to see if the password submitted on the login form was correct:
     elsif user&.authenticate(params[:signin][:password])
+      # Update the last time this person was seen online
+      user.update(last_login_at: user.current_login_at, current_login_at: Time.now)
+
       # Save the user in that user's session cookie:
       session[:user] = user
       redirect_to root_url
