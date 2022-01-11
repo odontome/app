@@ -3,28 +3,28 @@
 
   <div class="card card-md mb-4">
     <div class="card-body">
-      <div class="mb-2">
+      <div class="mb-3">
         <%= f.label :name, class: "form-label required" %>
         <%= f.text_field :name, :class => "form-control" %>
         <%= content_tag "small", t(:practice_name_hint), class: "text-muted" %>
       </div>
 
-      <div class="mb-2">
+      <div class="mb-3">
         <%= f.label :email, t(:practice_email), class: "form-label required" %>
         <%= f.text_field :email, :class => "form-control" %>
       </div>
 
-      <div class="mb-2">
+      <div class="mb-3">
         <%= f.label :locale, class: "form-label"  %>
         <%= f.select(:locale, [[ t(:english), 'en'],[ t(:spanish),'es']], {}, { :class => "form-select"} ) %>
       </div>
 
-      <div class="mb-2">
+      <div class="mb-3">
         <%= f.label :timezone, class: "form-label"  %>
         <%= f.time_zone_select :timezone, [ ActiveSupport::TimeZone[@practice.timezone]], {}, { :class => "form-select"} %>
       </div>
 
-      <div class="mb-2">
+      <div class="mb-3">
         <%= f.label :currency_unit, class: "form-label"  %>
         <%= f.select(:currency_unit, %w[$ € £ Bs. S/.], {}, { :class => "form-select"}) %>
       </div>
