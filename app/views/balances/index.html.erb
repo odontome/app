@@ -76,9 +76,9 @@
           <% if @treatments.empty? %>
             <p><%= t(:no_treatments_message) %></p>
           <% else %>
-            <ul>
+            <ul class="nav nav-pills nav-vertical">
               <% @treatments.each do |treatment| %>
-                <li><small><a class="quick-entry" href="#" data-price="<%=treatment.price%>"><%= treatment.name %></a></small></li>
+                <li class="nav-item"><a class="nav-link quick-entry" href="#" data-price="<%=treatment.price%>"><%= treatment.name %></a></small></li>
               <% end %>
             </ul>
           <% end %>
