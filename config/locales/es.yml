@@ -194,6 +194,8 @@ es:
   gender: Sexo
   gravatar_tooltip: Imagen de perfil tomada de gravatar.com
   hide_past_appointments: Esconder citas pasadas
+  valid: Valido
+  invalid: Invalido
   home: Inicio
   help:
     patients:
@@ -203,6 +205,8 @@ es:
     doctors:
       feed: Para iPhones, sigue las instrucciones en <a href="https://support.apple.com/en-ca/guide/iphone/iph3d1110d4/ios">este artículo</a> para agregar el calendario a tu teléfono.
       suspended: Doctores suspendidos no aparecen como opciones para nuevas citas. Las citas anteriores no se ven afectadas.
+    treatments:
+      status: Tratamientos invalidos no poseen precios. Debes corregir el precio antes de poder utilizarlo
   inactive: Inactiva
   incomplete: Incompleto
   instructions:
@@ -279,6 +283,11 @@ es:
   past_surgeries: Cirugias pasadas
   patient: Paciente
   patient_created_success_message: El paciente fue creado con éxito
+  empty:
+    treatments:
+      title: Aún no has creado ningún tratamiento.
+      description: Crea un tratamiento para empezara a utilizarlos en los perfiles de pacientes.
+      cta: Usar tratamientos sugeridos
   no_appointments:
     title: Sin citas
     description: No tienen ninguna cita programada.

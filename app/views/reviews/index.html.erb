@@ -27,7 +27,7 @@
 
 <div class="page-body">
   <% if @reviews.empty? %>
-    <%= component :empty, title: t("no_reviews.title"), description: t("no_reviews.description").html_safe, image_name: 'no-reviews' %>
+    <%= component :empty, title: t("no_reviews.title"), description: t("no_reviews.description").html_safe, image_name: 'heart' %>
   <% else %>
     <div class="card">
       <div class="card-body">

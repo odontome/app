@@ -172,6 +172,8 @@ en:
   email: Email
   english: English
   enter_patient_name_or_uid: Patient name or chart number…
+  valid: Valid
+  invalid: Invalid
   errors:
     titles:
       unauthorised: You can't do that
@@ -208,6 +210,8 @@ en:
     doctors:
       feed: For iPhones, follow the instruction in <a href="https://support.apple.com/en-ca/guide/iphone/iph3d1110d4/ios">this article</a> to add the calendar to your phone.
       suspended: Suspended doctors won't appear as options for your new appointments. Previous appointments aren't affected.
+    treatments:
+      status: Invalid treatments don't have a price specified, setting one is mandatory for the treatment to show up in the patient profile.
   inactive: Inactive
   incomplete: Incomplete
   instructions:
@@ -305,6 +309,11 @@ en:
   past_surgeries: Past surgeries
   patient: Patient
   patient_created_success_message: The patient was created successfully
+  empty:
+    treatments:
+      title: You haven't created any treatments yet.
+      description: Create a treatment to start using them in your patient profiles.
+      cta: Use suggested list
   no_appointments:
     title: No appointments
     description: They don't have any appointments scheduled.

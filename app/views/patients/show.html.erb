@@ -103,7 +103,7 @@
   <div class="col-sm-6 col-lg-4">
     <div class="card">
       <% if @appointments.empty? %>
-        <%= component :empty, title: t("no_appointments.title"), description: t("no_appointments.description"), image_name: 'no-appointments' do %>
+        <%= component :empty, title: t("no_appointments.title"), description: t("no_appointments.description"), image_name: 'options' do %>
           <%= link_to t(:schedule), root_url, class: "btn btn-primary" %>
         <% end %>
       <% else %>
