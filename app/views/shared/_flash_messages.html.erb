@@ -1,12 +1,16 @@
-<% flash.each do |key, msg|
-	case key
-		when "notice" then key = "success"
-		when "error" then key = "danger"
-		when "alert" then key = "warning"
-		when "info" then key = "info"
-  end %>
+<% if flash.any? %>
+	<div class="mt-3">
+		<% flash.each do |key, msg|
+			case key
+				when "notice" then key = "success"
+				when "error" then key = "danger"
+				when "alert" then key = "warning"
+				when "info" then key = "info"
+			end %>
 
-	<div class="alert alert-<%= key %>" role="alert">
-		<div class="text-muted"><%= msg %></div>
+			<div class="alert alert-<%= key %>" role="alert">
+				<div class="text-muted"><%= msg %></div>
+			</div>
+		<% end %>
 	</div>
 <% end %>

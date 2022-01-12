@@ -23,7 +23,7 @@
 </head>
 
 <body class="theme-light">
-  <div class="wrapper">
+  <div class="page">
     <%= render "shared/navigation" %>
 
     <div class="page-wrapper">
@@ -31,9 +31,9 @@
         <%= render "shared/flash_messages" %>
         <%= yield %>
       </div>
-    </div>
 
-    <%= render "shared/footer" %>
+      <%= render "shared/footer" %>
+    </div>
   </div>
 </body>
 </html>
