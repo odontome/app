@@ -239,6 +239,8 @@ en:
       with less privilages to handle the day to day usage and leave your <strong>administrator</strong>
       account for management.</p>
   last_login_at_with_date: Last login %{date} ago
+  last_login_at: Last login
+  roles: Roles
   logout: Logout?
   mailers:
     doctor:
@@ -271,7 +273,7 @@ en:
   month: Month
   name: Name
   never: Never
-  never_logged_in: Never has logged into Odonto.me
+  never_logged_in: Never
   new: New
   new_user: New user
   no_reviews_message: No patients have reviewed their experience yet.<br /> Everytime a patient visits your practice, an email will be sent to ask them to review their experience.

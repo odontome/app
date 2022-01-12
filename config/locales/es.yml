@@ -218,6 +218,8 @@ es:
       <p>Las personas que pueden accesar a tu Odonto.me.</p> <p>Ya que solo tú puedes ver esta información, Es recomendado que crees tantos usuarios quieras para manejar Odonto.me pero dejes a este usuario <strong>administrador</strong>
       para la adminstración y configuración.</p>
   last_login_at_with_date: Última sesión hace %{date}
+  last_login_at: Última sesión
+  roles: Roles
   logout: ¿Cerrar sesión?
   mailers:
     doctor:
@@ -250,7 +252,7 @@ es:
   month: Mes
   name: Nombre
   never: Nunca
-  never_logged_in: Nunca ha entrado a Odonto.me
+  never_logged_in: Nunca
   new: Nuevo
   new_user: Nuevo usuario
   no_reviews_message: Ningún paciente ha calificado su experiencia aún.<br /> Cada vez que un paciente haya visitado tu clínica, un email será enviado para solicitar una calificación.
