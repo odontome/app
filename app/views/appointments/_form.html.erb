@@ -1,9 +1,9 @@
-<%= form_for([@datebook, @appointment], :remote => true, :class => "form-horizontal") do |f| %>
+<%= form_for([@datebook, @appointment], remote: true, autocomplete: "off") do |f| %>
 	<div class="modal-body">
 		<div class="mb-3">
 			<%= f.label :patient_id, class: "form-label required" %>
       <div class="input-icon mb-3">
-        <input type="text" name="as_values_patient_id" class="form-control autocomplete" autocomplete="off" data-theme="none" placeholder="<%= t(:enter_patient_name_or_uid) %>">
+        <input type="text" name="as_values_patient_id" class="form-control autocomplete" autocomplete="off" placeholder="<%= t(:enter_patient_name_or_uid) %>">
         <span class="input-icon-addon">
           <div class="spinner-border spinner-border-sm text-muted d-none" role="status"></div>
         </span>

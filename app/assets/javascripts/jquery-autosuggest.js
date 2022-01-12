@@ -11,15 +11,21 @@ $(function() {
       $('.spinner-border').removeClass('d-none');
     },
     select: function(event, ui) {
+      if (ui.item.id) {
+        $('#appointment_patient_id').val(ui.item.id);
+        $('.autocomplete').val(ui.item.fullname);
+        didSelect = true;
+      }
+
       // Don't replace the text field with the id
       event.preventDefault();
-
-      $('#appointment_patient_id').val(ui.item.id);
-      $('.autocomplete').val(ui.item.fullname);
-
-      didSelect = true;
     },
     response: function(event, ui) {
+      if (ui.content.length === 0) {
+        const noResult = { id: undefined, fullname: "No results found" };
+        ui.content.push(noResult);
+      }
+
       $('.spinner-border').addClass('d-none');
     },
     open: function(event, ui) {
@@ -30,8 +36,10 @@ $(function() {
         $('#appointment_patient_id').val(null);
       }
     },
-  }).autocomplete("instance")._renderItem = function(ul, item) {
+  })
+  .autocomplete("instance")
+  ._renderItem = function(ul, item) {
     var item = $('<a href="" class="dropdown-item" data-theme="none">' + item.fullname + '</a>')
     return $("<li data-theme='none'>").append(item).appendTo(ul);
-  };
+  }
 });
