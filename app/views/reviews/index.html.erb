@@ -1,33 +1,33 @@
-<div class="page-header mb-4">
-  <div class="row align-items-center">
-    <div class="col">
-      <div class="page-pretitle">
-        TRANSLATE
+<% if !@reviews.empty? %>
+  <div class="page-header mb-4">
+    <div class="row align-items-center">
+      <div class="col">
+        <div class="page-pretitle">
+          TRANSLATE
+        </div>
+        <h2 class="page-title">
+          <%= t :reviews %>
+        </h2>
       </div>
-      <h2 class="page-title">
-        <%= t :reviews %>
-      </h2>
-    </div>
-    <div class="col-auto ms-auto">
-      <div class="btn-list">
-        <%= component :dropdown, title: t("filters.title") do %>
-          <%= link_to t("filters.reviews.all"), nil, class: "dropdown-item #{params[:score].nil? ? 'active' : ''}" %>
-          <%= link_to t("filters.reviews.five_stars"), "?score=5", class: "dropdown-item #{params[:score] == '5' ? 'active' : ''}" %>
-          <%= link_to t("filters.reviews.four_stars"), "?score=4", class: "dropdown-item #{params[:score] == '4' ? 'active' : ''}" %>
-          <%= link_to t("filters.reviews.three_stars"), "?score=3", class: "dropdown-item #{params[:score] == '3' ? 'active' : ''}" %>
-          <%= link_to t("filters.reviews.two_stars"), "?score=2", class: "dropdown-item #{params[:score] == '2' ? 'active' : ''}" %>
-          <%= link_to t("filters.reviews.one_star"), "?score=1", class: "dropdown-item #{params[:score] == '1' ? 'active' : ''}" %>
-        <% end %>
+      <div class="col-auto ms-auto">
+        <div class="btn-list">
+          <%= component :dropdown, title: t("filters.title") do %>
+            <%= link_to t("filters.reviews.all"), nil, class: "dropdown-item #{params[:score].nil? ? 'active' : ''}" %>
+            <%= link_to t("filters.reviews.five_stars"), "?score=5", class: "dropdown-item #{params[:score] == '5' ? 'active' : ''}" %>
+            <%= link_to t("filters.reviews.four_stars"), "?score=4", class: "dropdown-item #{params[:score] == '4' ? 'active' : ''}" %>
+            <%= link_to t("filters.reviews.three_stars"), "?score=3", class: "dropdown-item #{params[:score] == '3' ? 'active' : ''}" %>
+            <%= link_to t("filters.reviews.two_stars"), "?score=2", class: "dropdown-item #{params[:score] == '2' ? 'active' : ''}" %>
+            <%= link_to t("filters.reviews.one_star"), "?score=1", class: "dropdown-item #{params[:score] == '1' ? 'active' : ''}" %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
-</div>
+<% end %>
 
 <div class="page-body">
   <% if @reviews.empty? %>
-    <div class="alert alert-warning">
-        <p><%= t(:no_reviews_message).html_safe %></p>
-    </div>
+    <%= component :empty, title: t("no_reviews.title"), description: t("no_reviews.description").html_safe, image_name: 'no-reviews' %>
   <% else %>
     <div class="card">
       <div class="card-body">

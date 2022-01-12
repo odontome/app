@@ -1,11 +1,14 @@
 <% title = local_assigns[:title].presence %>
 <% description = local_assigns[:description].presence %>
+<% image_name = local_assigns[:image_name].presence %>
 <% action = yield.presence %>
 
 <div class="empty">
-  <div class="empty-img">
-    <%= image_tag "no-data", height: "128" %>
-  </div>
+  <%# if image_name.present? %>
+    <div class="empty-img">  
+      <%= image_tag image_name %>   
+    </div>
+  <%# end %>
   <p class="empty-title"><%= title %></p>
   <p class="empty-subtitle text-muted">
   <%= description %>

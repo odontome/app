@@ -255,7 +255,6 @@ es:
   never_logged_in: Nunca
   new: Nuevo
   new_user: Nuevo usuario
-  no_reviews_message: Ningún paciente ha calificado su experiencia aún.<br /> Cada vez que un paciente haya visitado tu clínica, un email será enviado para solicitar una calificación.
   no_account: ¿No tienes una cuenta?
   no_doctors: Por favor crea algunos doctores antes.
   no_patient_found_new_one_will_be_created: No se ha encontrado ningún paciente, se creara uno.
@@ -283,6 +282,9 @@ es:
   no_appointments:
     title: Sin citas
     description: No tienen ninguna cita programada.
+  no_reviews:
+    title: Sin calificaciones
+    description: Ningún paciente ha calificado su experiencia aún.<br /> Cada vez que un paciente haya visitado tu clínica, un email será enviado para solicitar una calificación.
   patient_has_no_appointments: Sin citas. ¿Quiéres %{datebooks_url}
     una?
   patient_search_results_few: ! '%{patients_count} pacientes encontrados.'

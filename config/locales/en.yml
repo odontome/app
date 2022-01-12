@@ -228,8 +228,7 @@ en:
       <p>From here, you can update everything about your practice. Please
       take a moment to review all your options here.</p> <p>If from any reason you
       decide to leave us. You can %{close_url} at anytime.</p>
-    cancel:
-      <p>If you cancel your account, your data will be preserved for 14 days. After that, it will be removed from our servers.</p>
+    cancel: <p>If you cancel your account, your data will be preserved for 14 days. After that, it will be removed from our servers.</p>
     treatments:
       Everything you do to your patients. These items are directly connected
       to the balance of your practice.
@@ -276,7 +275,6 @@ en:
   never_logged_in: Never
   new: New
   new_user: New user
-  no_reviews_message: No patients have reviewed their experience yet.<br /> Everytime a patient visits your practice, an email will be sent to ask them to review their experience.
   no_account: Don't have an account?
   no_doctors: Please create doctors before using this section
   no_patient_found_new_one_will_be_created:
@@ -310,6 +308,9 @@ en:
   no_appointments:
     title: No appointments
     description: They don't have any appointments scheduled.
+  no_reviews:
+    title: No reviews
+    description: No patients have reviewed their experience yet.<br /> Everytime a patient visits your practice, an email will be sent to ask them to review their experience.
   patient_has_no_appointments:
     No appointments. Would you like to %{datebooks_url}
     one?
