@@ -10,7 +10,7 @@
     </div>
     <div class="col-auto ms-auto">
       <div class="btn-list">
-        <%= link_to practice_settings_url, class: "btn d-none d-sm-inline-block" do %>
+        <%= link_to practice_settings_url, class: "btn btn-primary d-none d-sm-inline-block" do %>
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-adjustments" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"></path> <circle cx="6" cy="10" r="2"></circle> <line x1="6" y1="4" x2="6" y2="8"></line> <line x1="6" y1="12" x2="6" y2="20"></line> <circle cx="12" cy="16" r="2"></circle> <line x1="12" y1="4" x2="12" y2="14"></line> <line x1="12" y1="18" x2="12" y2="20"></line> <circle cx="18" cy="7" r="2"></circle> <line x1="18" y1="4" x2="18" y2="5"></line> <line x1="18" y1="9" x2="18" y2="20"></line></svg>          <%= t(:practice_settings) %>
         <% end %>
       </div>
@@ -20,178 +20,89 @@
 
 <%# Make this using the "wizard?" %>
 <% if @practice.patients_count == 0 || @practice.doctors_count == 0 %>
-    <div class="flash-message alert alert-warning row">
-        <div class="col-md-8 col-md-offset-2 tutorial">
-            <h4><%= I18n.t :welcome %></h4>
-            <p><%= I18n.t "tutorial.message" %></p>
+  <div class="alert alert-info">
+    <div class="col-md-8 col-md-offset-2 tutorial">
+      <h4><%= I18n.t :welcome %></h4>
+      <p><%= I18n.t "tutorial.message" %></p>
 
-            <hr />
+      <hr />
 
-            <% if @practice.datebooks_count == 1 %>
-                <p><%= raw I18n.t "tutorial.datebooks", :datebooks_url => link_to(I18n.t(:datebooks).downcase, datebooks_url) %></p>
-            <% end %>
-            <% if @practice.doctors_count == 0 %>
-                <p><%= raw I18n.t "tutorial.doctors", :doctors_url => link_to(I18n.t(:doctors).downcase, doctors_url) %></p>
-            <% end %>
-            <p><%= raw I18n.t "tutorial.practice", :practice_settings_url => link_to(I18n.t(:practice_settings).downcase, practice_settings_url) %></p>
-
-        </div>
+      <% if @practice.datebooks_count == 1 %>
+          <p><%= raw I18n.t "tutorial.datebooks", :datebooks_url => link_to(I18n.t(:datebooks).downcase, datebooks_url) %></p>
+      <% end %>
+      <% if @practice.doctors_count == 0 %>
+          <p><%= raw I18n.t "tutorial.doctors", :doctors_url => link_to(I18n.t(:doctors).downcase, doctors_url) %></p>
+      <% end %>
+      <p><%= raw I18n.t "tutorial.practice", :practice_settings_url => link_to(I18n.t(:practice_settings).downcase, practice_settings_url) %></p>
     </div>
+  </div>
 <% end %>
 
-<div id="pad-wrapper">
-    <div class="row">
-      <% [1,2,3].each do |x| %>
-      <div class="col-sm-2">
-          <div class="card">
-            <div class="card-body p-2 text-center">
-              <div class="text-end text-green">
-                <span class="text-green d-inline-flex align-items-center lh-1">
-                  6% <!-- Download SVG icon from http://tabler-icons.io/i/trending-up -->
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="14 7 21 7 21 14"></polyline></svg>
-                </span>
-              </div>
-              <div class="h1 m-0">43</div>
-              <div class="text-muted mb-3">New Tickets</div>
-            </div>
+<div class="page-body">
+  <div class="row row-deck row-cards">
+    <%# Datebooks %>
+    <div class="col-sm-4">
+      <div class="card">
+        <%= link_to datebooks_url, class: "card card-sm card-link" do %>
+          <div class="card-body p-3 text-center">
+            <div class="h1 m-2 text-primary"><%= number_to_human(@practice.datebooks_count) %></div>
+            <div class="text-muted mb-3"><%= t :datebooks %></div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
 
-    <div class="row stats">
-        <div class="col-md-3 col-xl-3">
-            <%= link_to datebooks_url, class: "card card-sm card-link" do %>
-              <div class="card-body">
-                <div class="row align-items-center">
-                  <div class="col-auto">
-                    <span class="bg-green-lt avatar"><!-- Download SVG icon from http://tabler-icons.io/i/arrow-up -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><line x1="12" y1="5" x2="12" y2="19"></line><line x1="18" y1="11" x2="12" y2="5"></line><line x1="6" y1="11" x2="12" y2="5"></line></svg>
-                    </span>
-                  </div>
-                  <div class="col">
-                    <div class="font-weight-medium">
-                      <%= number_to_human(@practice.datebooks_count) %>
-                      <%= t :datebooks %>
-                      <span class="float-right font-weight-medium text-green">+4%</span>
-                    </div>
-                    <div class="text-muted">
-                      Revenue last 30 days
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <% end %>
-        </div>
-
-        <div class="col-md-4">
-          <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex align-items-center">
-                      <div class="subheader">New clients</div>
-                      <div class="ms-auto lh-1">
-                        Last 7 days
-                      </div>
-                    </div>
-                    <div class="d-flex align-items-baseline">
-                      <div class="h1 mb-3 me-2">6,782</div>
-                      <div class="me-auto">
-                        <span class="text-yellow d-inline-flex align-items-center lh-1">
-                          0% <!-- Download SVG icon from http://tabler-icons.io/i/minus -->
-                          <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                        </span>
-                      </div>
-                    </div>
-                    <div id="chart-new-clients" class="chart-sm"></div>
-                  </div>
+    <%# Doctors %>
+    <div class="col-sm-4">
+      <div class="card">
+        <%= link_to doctors_url, class: "card card-sm card-link" do %>
+          <div class="card-body p-3 text-center">
+            <div class="h1 m-2 text-primary"><%= number_to_human(@practice.doctors_count) %></div>
+            <div class="text-muted mb-3"><%= t :doctors %></div>
           </div>
-        </div>
-
-
-        <div class="col-md-4 card">
-            <div>
-            	<h1><%= link_to number_to_human(@practice.doctors_count), doctors_url %></h1>
-            	<p><%= t :doctors %></p>
-            </div>
-        </div>
-        <div class="col-md-4 card">
-            <div>
-            	<h1><%= link_to number_to_human(@practice.patients_count), patients_url %></h1>
-            	<p><%= t :patients %></p>
-            </div>
-        </div>
-        <div class="col-md-4 card">
-            <div>
-              <h1><%= link_to number_to_currency_with_symbol(@today_balance, 0), practice_balance_url %></h1>
-              <p><%= t :today_balance %></p>
-            </div>
-        </div>
-        <div class="col-md-4 card">
-            <div>
-              <h1><%= link_to number_to_human(@reviews_count), reviews_url %></h1>
-              <p><%= t :reviews %></p>
-            </div>
-        </div>
+        <% end %>
+      </div>
     </div>
 
+    <%# Patients %>
+    <div class="col-sm-4">
+      <div class="card">
+        <%= link_to patients_url, class: "card card-sm card-link" do %>
+          <div class="card-body p-3 text-center">
+            <div class="h1 m-2 text-primary"><%= number_to_human(@practice.patients_count) %></div>
+            <div class="text-muted mb-3"><%= t :patients %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
 
-<script>
-  // @formatter:off
-  document.addEventListener("DOMContentLoaded", function () {
-    window.ApexCharts && (new ApexCharts(document.getElementById('chart-new-clients'), {
-      chart: {
-        type: "line",
-        fontFamily: 'inherit',
-        height: 40.0,
-        sparkline: {
-          enabled: true
-        },
-        animations: {
-          enabled: false
-        },
-      },
-      fill: {
-        opacity: 1,
-      },
-      stroke: {
-        width: [2, 1],
-        dashArray: [0, 3],
-        lineCap: "round",
-        curve: "smooth",
-      },
-      series: [{
-        name: "May",
-        data: [37, 35, 44, 28, 36, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53, 61, 27, 54, 43, 4, 46, 39, 62, 51, 35, 41, 67]
-      },{
-        name: "April",
-        data: [93, 54, 51, 24, 35, 35, 31, 67, 19, 43, 28, 36, 62, 61, 27, 39, 35, 41, 27, 35, 51, 46, 62, 37, 44, 53, 41, 65, 39, 37]
-      }],
-      grid: {
-        strokeDashArray: 4,
-      },
-      xaxis: {
-        labels: {
-          padding: 0,
-        },
-        tooltip: {
-          enabled: false
-        },
-        type: 'datetime',
-      },
-      yaxis: {
-        labels: {
-          padding: 4
-        },
-      },
-      labels: [
-        '2020-06-21', '2020-06-22', '2020-06-23', '2020-06-24', '2020-06-25', '2020-06-26', '2020-06-27', '2020-06-28', '2020-06-29', '2020-06-30', '2020-07-01', '2020-07-02', '2020-07-03', '2020-07-04', '2020-07-05', '2020-07-06', '2020-07-07', '2020-07-08', '2020-07-09', '2020-07-10', '2020-07-11', '2020-07-12', '2020-07-13', '2020-07-14', '2020-07-15', '2020-07-16', '2020-07-17', '2020-07-18', '2020-07-19', '2020-07-20'
-      ],
-      colors: ["#206bc4", "#a8aeb7"],
-      legend: {
-        show: false,
-      },
-    })).render();
-  });
-  // @formatter:on
-</script>
+<div class="page-body">
+  <div class="row row-deck row-cards">
+    <%# Balance %>
+    <div class="col-sm-4">
+      <div class="card">
+        <%= link_to practice_balance_url, class: "card card-sm card-link" do %>
+          <div class="card-body p-3 text-center">
+            <div class="h1 m-2 text-primary"><%= number_to_currency_with_symbol(@today_balance, 0) %></div>
+            <div class="text-muted mb-3"><%= t :today_balance %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <%# Reviews %>
+    <div class="col-sm-4">
+      <div class="card">
+        <%= link_to reviews_url, class: "card card-sm card-link" do %>
+          <div class="card-body p-3 text-center">
+            <div class="h1 m-2 text-primary"><%= number_to_human(@reviews_count) %></div>
+            <div class="text-muted mb-3"><%= t :reviews %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+</div>
