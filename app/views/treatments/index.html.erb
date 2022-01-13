@@ -65,7 +65,7 @@
 		</div>
 	</div>
 <% else %>
-	<%= component :empty, title: t("empty.treatments.title"), description: t("empty.treatments.description"), image_name: 'document' do %>
+	<%= component :empty, title: t("empty.treatments.title"), description: t("empty.treatments.description"), image_name: 'no-data' do %>
 		<div class="btn-list">
 			<%= link_to t(:create_new_treatment), new_treatment_url, class: "btn btn-primary d-none d-sm-inline-block" %>
 			<%= link_to t("empty.treatments.cta"), predefined_treatments_treatments_path, class: "btn" %>
