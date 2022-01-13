@@ -12,10 +12,12 @@
 		</div>
 
 		<div class="mb-3">
-			<% if @doctors.empty? %>
-				<%= link_to t(:no_doctors), doctors_path %>
+      <%= f.label :doctor_id, class: "form-label required" %>
+      
+      <% if @doctors.empty? %>
+        <%= link_to t(:no_doctors), doctors_path %>
+        <%= f.hidden_field :doctor_id %>
 			<% else %>
-				<%= f.label :doctor_id, class: "form-label required" %>
 				<%= f.select(:doctor_id, options_from_collection_for_select(@doctors, "id", "fullname", :selected => @appointment.doctor_id), {}, { :class => "form-select", :title => t(:select_doctor) }) %>
       <% end %>
 		</div>
