@@ -17,5 +17,8 @@ $(function(){
   var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
   popoverTriggerList.map(function (popoverTriggerEl) {
     return new bootstrap.Popover(popoverTriggerEl)
-  })
+  });
+
+  // Wrap every rails date_select element in a column
+  $('select[class*="date-select"]').wrap('<div class="col-4" />');
 });
