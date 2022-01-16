@@ -1,3 +1,6 @@
+// Display all the error messages
+alert("<%= j item.errors.full_messages.to_sentence %>");
+
 // to hold the form element IDs
 var errorIDs = new Array();
 
@@ -5,23 +8,15 @@ var errorIDs = new Array();
 var errorMessages = new Array();
 
 // Loop through all the error objects to story as JS objects
-<% item.errors.each do |error_object| %>
-    <% if params[:from_modal] %>
-    	errorIDs.push("#<%= item.class.to_s.underscore.downcase %>_<%= error_object %>");
-    <% else %>
-    	errorIDs.push("#<%= item.class.to_s.underscore.downcase %>_<%= error_object %>");
-    <% end %>
+<% item.errors.each do |error| %>
+  errorIDs.push("#<%= error.base.class.to_s.downcase %>_<%= error.attribute %>");
+  errorMessages.push("<%= error.message %>");
 <% end %>
 
-// Loop through all the error messages to store for use
-<% item.errors.full_messages.each do |msg| %>
-    errorMessages.push("<%= msg %>");
-<% end %>
+$('.invalid-feedback').remove();
 
 // Attach the messages to the error form objects and show some visibles
-$.each(errorIDs, function(index, value){
-    $(errorIDs[index]).attr("title", errorMessages[index]).addClass("error_field");
+$.each(errorIDs, function(index, value) {
+  $("<div class='invalid-feedback'>" + errorMessages[index] + "</div>").insertAfter(errorIDs[index]);
+  $(errorIDs[index]).addClass("is-invalid");
 });
-
-// Display all the error messages
-alert("<%= j item.errors.full_messages.to_sentence %>");

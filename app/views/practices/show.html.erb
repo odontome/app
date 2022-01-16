@@ -1,68 +1,108 @@
-<div id="pad-wrapper">
+<div class="page-header mb-4">
+  <div class="row align-items-center">
+    <div class="col">
+      <div class="page-pretitle">
+        TRANSLATE
+      </div>
+      <h2 class="page-title">
+        <%= @practice.name %>
+      </h2>
+    </div>
+    <div class="col-auto ms-auto">
+      <div class="btn-list">
+        <%= link_to practice_settings_url, class: "btn btn-primary d-none d-sm-inline-block" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-adjustments" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"></path> <circle cx="6" cy="10" r="2"></circle> <line x1="6" y1="4" x2="6" y2="8"></line> <line x1="6" y1="12" x2="6" y2="20"></line> <circle cx="12" cy="16" r="2"></circle> <line x1="12" y1="4" x2="12" y2="14"></line> <line x1="12" y1="18" x2="12" y2="20"></line> <circle cx="18" cy="7" r="2"></circle> <line x1="18" y1="4" x2="18" y2="5"></line> <line x1="18" y1="9" x2="18" y2="20"></line></svg>          <%= t(:practice_settings) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <% if @practice.patients_count == 0 || @practice.doctors_count == 0 %>
-        <div class="flash-message alert alert-warning row">
-            <div class="col-md-8 col-md-offset-2 tutorial">
-                <h4><%= I18n.t :welcome %></h4>
-                <p><%= I18n.t "tutorial.message" %></p>
+<%# Make this using the "wizard?" %>
+<% if @practice.patients_count == 0 || @practice.doctors_count == 0 %>
+  <div class="alert alert-info">
+    <div class="col-md-8 col-md-offset-2 tutorial">
+      <h4><%= I18n.t :welcome %></h4>
+      <p><%= I18n.t "tutorial.message" %></p>
 
-                <hr />
+      <hr />
 
-                <% if @practice.datebooks_count == 1 %>
-                    <p><%= raw I18n.t "tutorial.datebooks", :datebooks_url => link_to(I18n.t(:datebooks).downcase, datebooks_url) %></p>
-                <% end %>
-                <% if @practice.doctors_count == 0 %>
-                    <p><%= raw I18n.t "tutorial.doctors", :doctors_url => link_to(I18n.t(:doctors).downcase, doctors_url) %></p>
-                <% end %>
-                <p><%= raw I18n.t "tutorial.practice", :practice_settings_url => link_to(I18n.t(:practice_settings).downcase, practice_settings_url) %></p>
+      <% if @practice.datebooks_count == 1 %>
+          <p><%= raw I18n.t "tutorial.datebooks", :datebooks_url => link_to(I18n.t(:datebooks).downcase, datebooks_url) %></p>
+      <% end %>
+      <% if @practice.doctors_count == 0 %>
+          <p><%= raw I18n.t "tutorial.doctors", :doctors_url => link_to(I18n.t(:doctors).downcase, doctors_url) %></p>
+      <% end %>
+      <p><%= raw I18n.t "tutorial.practice", :practice_settings_url => link_to(I18n.t(:practice_settings).downcase, practice_settings_url) %></p>
+    </div>
+  </div>
+<% end %>
 
-            </div>
-        </div>
-    <% end %>
-
-    <!-- header -->
-    <div class="row header">
-        <div class="col-md-10">
-            <h3><%= @practice.name %></h3>
-        </div>
-
-        <div class="col-md-2">
-			<%= link_to t(:practice_settings), practice_settings_url, :class => "btn-flat primary" %>
-		</div>
+<div class="page-body">
+  <div class="row row-deck row-cards">
+    <%# Datebooks %>
+    <div class="col-sm-4">
+      <div class="card">
+        <%= link_to datebooks_url, class: "card card-sm card-link" do %>
+          <div class="card-body p-3 text-center">
+            <div class="h1 m-2 text-primary"><%= number_to_human(@practice.datebooks_count) %></div>
+            <div class="text-muted mb-3"><%= t :datebooks %></div>
+          </div>
+        <% end %>
+      </div>
     </div>
 
-
-    <div class="row stats">
-        <div class="col-md-4 card">
-            <div>
-            	<h1><%= link_to number_to_human(@practice.datebooks_count), datebooks_url %></h1>
-            	<p><%= t :datebooks %></p>
-            </div>
-        </div>
-        <div class="col-md-4 card">
-            <div>
-            	<h1><%= link_to number_to_human(@practice.doctors_count), doctors_url %></h1>
-            	<p><%= t :doctors %></p>
-            </div>
-        </div>
-        <div class="col-md-4 card">
-            <div>
-            	<h1><%= link_to number_to_human(@practice.patients_count), patients_url %></h1>
-            	<p><%= t :patients %></p>
-            </div>
-        </div>
-        <div class="col-md-4 card">
-            <div>
-              <h1><%= link_to number_to_currency_with_symbol(@today_balance, 0), practice_balance_url %></h1>
-              <p><%= t :today_balance %></p>
-            </div>
-        </div>
-        <div class="col-md-4 card">
-            <div>
-              <h1><%= link_to number_to_human(@reviews_count), reviews_url %></h1>
-              <p><%= t :reviews %></p>
-            </div>
-        </div>
+    <%# Doctors %>
+    <div class="col-sm-4">
+      <div class="card">
+        <%= link_to doctors_url, class: "card card-sm card-link" do %>
+          <div class="card-body p-3 text-center">
+            <div class="h1 m-2 text-primary"><%= number_to_human(@practice.doctors_count) %></div>
+            <div class="text-muted mb-3"><%= t :doctors %></div>
+          </div>
+        <% end %>
+      </div>
     </div>
 
+    <%# Patients %>
+    <div class="col-sm-4">
+      <div class="card">
+        <%= link_to patients_url, class: "card card-sm card-link" do %>
+          <div class="card-body p-3 text-center">
+            <div class="h1 m-2 text-primary"><%= number_to_human(@practice.patients_count) %></div>
+            <div class="text-muted mb-3"><%= t :patients %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="row row-deck row-cards">
+    <%# Balance %>
+    <div class="col-sm-4">
+      <div class="card">
+        <%= link_to practice_balance_url, class: "card card-sm card-link" do %>
+          <div class="card-body p-3 text-center">
+            <div class="h1 m-2 text-primary"><%= number_to_currency_with_symbol(@today_balance, 0) %></div>
+            <div class="text-muted mb-3"><%= t :today_balance %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <%# Reviews %>
+    <div class="col-sm-4">
+      <div class="card">
+        <%= link_to reviews_url, class: "card card-sm card-link" do %>
+          <div class="card-body p-3 text-center">
+            <div class="h1 m-2 text-primary"><%= number_to_human(@reviews_count) %></div>
+            <div class="text-muted mb-3"><%= t :reviews %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
 </div>

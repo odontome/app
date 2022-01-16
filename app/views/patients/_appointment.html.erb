@@ -1,0 +1,34 @@
+<% doctor = local_assigns[:doctor].presence %>
+<% patient = local_assigns[:patient].presence %>
+<% appointment = local_assigns[:appointment].presence %>
+<% past_tense = local_assigns[:past_tense].presence %>
+
+<div class="row">
+  <div class="col-auto">
+    <span class="avatar">
+      <%= doctor.initials %>
+      <span class="badge" style="background-color: <%= doctor.color %>"></span>
+    </span>
+  </div>
+  <div class="col">
+    <div class="text-truncate">
+      <% if !past_tense %>
+        <%= raw t('appointment_visit.future_tense', doctor_fullname: doctor.fullname, patient_name: patient.firstname) %>
+      <% else %>
+        <%= raw t('appointment_visit.past_tense', doctor_fullname: doctor.fullname, patient_name: patient.firstname) %>
+      <% end %>
+    </div>
+    <div class="text-muted">
+      <% if past_tense %>
+        <%= t :ago_in_words, date: time_ago_in_words(appointment.starts_at) %>
+      <% else %>
+        <%= t :distance_in_words, date: distance_of_time_in_words_to_now(appointment.starts_at) %>
+      <% end %>
+    </div>
+  </div>
+  <% if !past_tense %>
+    <div class="col-auto align-self-center">
+      <div class="badge bg-primary"></div>
+    </div>
+  <% end %>
+</div>

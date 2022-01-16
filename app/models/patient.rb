@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Patient < ApplicationRecord
+  # concerns
+  include Initials
+
   # associations
   has_many :appointments, dependent: :delete_all
   has_many :balances, dependent: :delete_all
@@ -13,9 +16,14 @@ class Patient < ApplicationRecord
       .order('firstname')
   }
 
-  scope :alphabetically, lambda { |letter|
+  scope :anything_with_letter, lambda { |letter|
     select('firstname,lastname,uid,id,date_of_birth,allergies,email,updated_at')
-      .where('lower(firstname) LIKE ?', "#{letter.downcase}%")
+      .where('lower(substring(firstname,1,1)) = ?', "#{letter.downcase}")
+  }
+
+  scope :anything_not_in_alphabet, lambda {
+    select('firstname,lastname,uid,id,date_of_birth,allergies,email,updated_at')
+    .where('lower(substring(firstname,1,1)) NOT IN (?)', [*'a'..'z'])
   }
 
   scope :search, lambda { |q|
@@ -23,6 +31,10 @@ class Patient < ApplicationRecord
       .where("uid LIKE ? OR lower(firstname || ' ' || lastname) LIKE ?", q, "%#{q.downcase}%")
       .limit(25)
       .order('firstname')
+  }
+
+  scope :only_initials, lambda {
+    select('DISTINCT substring(firstname,1,1) as firstname')
   }
 
   # validations

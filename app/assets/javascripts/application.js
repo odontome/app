@@ -1,35 +1,24 @@
 
-//= require jquery
+//= require jquery3
 //= require jquery_ujs
-//= require bootstrap
 //= require fullcalendar.min
-//= require jquery-ui-1.10.2.custom.min
+//= require jquery-ui.min
 //= require jquery.ui.touch
-//= require jquery.autoSuggest
-//= require jquery.minicolors
-//= require retina-1.1.0
 //= require jstz.min
-//= require picker
-//= require picker.date
-//= require theme
+//= require tabler.min
+//= require tom-select.base.min
+//= require apexcharts.min
+//= require masonry.min
 
 // This function prevents the session from ending
 window.iCallServerId = setInterval(function (){ var remoteURL = '/'; $.get(remoteURL); }, 900000);
 
-function selectText(element) {
-  var doc = document
-      , text = element
-      , range, selection
-  ;
-  if (doc.body.createTextRange) {
-      range = document.body.createTextRange();
-      range.moveToElementText(text);
-      range.select();
-  } else if (window.getSelection) {
-      selection = window.getSelection();
-      range = document.createRange();
-      range.selectNodeContents(text);
-      selection.removeAllRanges();
-      selection.addRange(range);
-  }
-}
+$(function(){
+  var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+  popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl)
+  });
+
+  // Wrap every rails date_select element in a column
+  $('select[class*="date-select"]').wrap('<div class="col-4" />');
+});

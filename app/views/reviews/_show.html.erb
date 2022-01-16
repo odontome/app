@@ -1,17 +1,19 @@
-<tr class="<% if review.id == @reviews.first.id %>first<% end %>">
-    <td>
-        <span class="name">
-          <%= link_to review.appointment.patient.fullname, review.appointment.patient %> <br />
-          <%= link_to review.appointment.doctor.fullname, review.appointment.doctor %> <br />
-          <%= review.appointment.starts_at.to_formatted_s :long %>
-        </span>
-    </td>
-    <td>
-        <%= ratings_widget review.score %> <br />
-        <p><%= review.comment.html_safe %></p>
-    </td>
-
-    <td>
-      <%= review.created_at.to_formatted_s :long %>
-    </td>
-</tr>
+<div class="list-group-item">
+  <div class="row py-2">
+    <div class="col-3">
+      <p class="text-muted"><%= l review.created_at.to_date, format: :long %></p>
+    </div>
+    <div class="col-3">
+        <%= component :rating, value: review.score %>
+        <span class="mx-2"><%= review.score %></span>
+    </div>
+    <div class="col-6">
+      <strong><%= link_to review.appointment.patient.fullname, review.appointment.patient %></strong>
+      <% if review.comment.blank? %>
+        <p class="text-muted"><%= t :no_comment %></p>
+      <% else %>
+        <p class="text-muted"><%= review.comment.html_safe %></p>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -4,12 +4,19 @@ en:
     Your account is marked for cancellation. If you believe this
     is a mistake, please contact us as soon as possible.
   activate: Activate
+  all_appointments: All appointments
   appointment: Appointment
+  appointment_visit:
+    past_tense: <strong>%{patient_name}</strong> visited %{doctor_fullname}
+    future_tense: <strong>%{patient_name}</strong> will visit %{doctor_fullname}
   review: Review
+  no_comment: No comment was provided
+  showing_all_reviews: Showing all reviews
   thank_you: Thank you!
   range: Range
   active: Active
   amount: Amount
+  create: Create
   balance_discount_hint: Any negative value will be entered as an expense
   expense: Expense
   income: Income
@@ -17,7 +24,7 @@ en:
   download_as_csv_file: Download as CSV
   developers: Developers
   calendar_feed: Subscribe to appointments
-  calendar_feed_message: You can subscribe to the appointments of %{doctor_name} by entering this address <strong class="selectable">%{feed_url}</strong> in your favorite calendar app.
+  calendar_feed_message: You can subscribe to the appointments of %{doctor_name} by entering this address in your favorite calendar app.
   update_password: Update password
   created_at: Created at
   sent_at: Sent at
@@ -29,6 +36,8 @@ en:
   subscribe_again: Subscribe again
   you_are_subscribed_again: You are subscribed again
   you_are_unsubscribed: You are unsubscribed
+  emergency_telephone: Emergency telephone
+  actions: Actions
   activerecord:
     attributes:
       appointment:
@@ -104,6 +113,7 @@ en:
   years_old: Years old
   age_with_suffix: ! '%{age} years old'
   ago_in_words: ! '%{date} ago'
+  distance_in_words: ! '%{date} away'
   allergic_to: Allergic to
   already_have_an_account: Already have an account?
   annotate: Annotate
@@ -126,7 +136,7 @@ en:
   color: Color
   comments: Comments
   consider_using_gravatar:
-    Register this email with gravatar.org to use it as a profile
+    Register this email with gravatar.com to use it as a profile
     image.
   contact_information: Contact information
   contact_us: Contact us
@@ -139,6 +149,8 @@ en:
   date:
     formats:
       day_and_date: ! '%A (%e %b)'
+      short: ! '%e %b'
+      long: ! '%B %d, %Y'
   datebooks: Datebooks
   day: Day
   delete: Delete
@@ -151,20 +163,23 @@ en:
     The schedule is free. How about if we schedule
     some %{datebooks_url}?
   doctor_updated_success_message: The doctor was updated successfully
+  doctor_deleted_success_message: The doctor was deleted successfully
   doctors: Doctors
   drinks_per_day: Drinks per day
   drugs_use: Drugs used
   drugs_use_hint: Please be as descriptive as possible.
   edit: Edit
-  edit_patient: Edit this patient
   email: Email
   english: English
-  enter_patient_name_or_uid: Patient name or chart number
+  enter_patient_name_or_uid: Patient name or chart number…
+  valid: Valid
+  invalid: Invalid
   errors:
     titles:
       unauthorised: You can't do that
       not_found: Hmmm, I can't find that
       server_error: Oh oh...
+      form_update: Uh oh, something went wrong
     messages:
       invalid_date_range: The chosen dates are invalid
       invalid_email_format: Invalid format
@@ -184,9 +199,19 @@ en:
   future_appointments: Future appointments
   past_appointments: Past appointments
   gender: Gender
-  gravatar_tooltip: Avatar taken from gravatar.org
+  gravatar_tooltip: Avatar taken from gravatar.com
   hide_past_appointments: Hide past appointments
   home: Home
+  help:
+    patients:
+      status: Patients without the required profile information are marked as "incomplete".
+    datebooks:
+      status: Inactive datebooks don't have any scheduled appointments. Only inactive datebooks can be deleted.
+    doctors:
+      feed: For iPhones, follow the instruction in <a href="https://support.apple.com/en-ca/guide/iphone/iph3d1110d4/ios">this article</a> to add the calendar to your phone.
+      suspended: Suspended doctors won't appear as options for your new appointments. Previous appointments aren't affected.
+    treatments:
+      status: Invalid treatments don't have a price specified, setting one is mandatory for the treatment to show up in the patient profile.
   inactive: Inactive
   incomplete: Incomplete
   instructions:
@@ -207,6 +232,7 @@ en:
       <p>From here, you can update everything about your practice. Please
       take a moment to review all your options here.</p> <p>If from any reason you
       decide to leave us. You can %{close_url} at anytime.</p>
+    cancel: <p>If you cancel your account, your data will be preserved for 14 days. After that, it will be removed from our servers.</p>
     treatments:
       Everything you do to your patients. These items are directly connected
       to the balance of your practice.
@@ -216,6 +242,8 @@ en:
       with less privilages to handle the day to day usage and leave your <strong>administrator</strong>
       account for management.</p>
   last_login_at_with_date: Last login %{date} ago
+  last_login_at: Last login
+  roles: Roles
   logout: Logout?
   mailers:
     doctor:
@@ -248,10 +276,9 @@ en:
   month: Month
   name: Name
   never: Never
-  never_logged_in: Never has logged into Odonto.me
+  never_logged_in: Never
   new: New
   new_user: New user
-  no_reviews_message: No patients have reviewed their experience yet.<br /> Everytime a patient visits your practice, an email will be sent to ask them to review their experience.
   no_account: Don't have an account?
   no_doctors: Please create doctors before using this section
   no_patient_found_new_one_will_be_created:
@@ -282,10 +309,20 @@ en:
   past_surgeries: Past surgeries
   patient: Patient
   patient_created_success_message: The patient was created successfully
+  empty:
+    treatments:
+      title: You haven't created any treatments yet.
+      description: Create a treatment to start using them in your patient profiles.
+      cta: Use suggested list
+  no_appointments:
+    title: No appointments
+    description: They don't have any appointments scheduled.
+  no_reviews:
+    title: No reviews
+    description: No patients have reviewed their experience yet.<br /> Everytime a patient visits your practice, an email will be sent to ask them to review their experience.
   patient_has_no_appointments:
     No appointments. Would you like to %{datebooks_url}
     one?
-  patient_incomplete: Patient incomplete
   patient_search_results_few: ! '%{patients_count} patients found.'
   patient_search_results_many:
     Showing %{patients_count} of many patients. Try a more
@@ -296,7 +333,6 @@ en:
   patient_treatment_created_error_message: The item was created successfully
   patient_treatment_updated_error_message: There was a problem creating this item
   patient_updated_success_message: The patient was updated successfully
-  patient_without_required_info: Add the missing information, or simply %{delete_url}
   patients: Patients
   personal_information: Personal information
   please_wait: Pleast wait...
@@ -326,8 +362,18 @@ en:
   price: Price
   privacy_policy: Privacy policy
   profile: Profile
+  view_profile: View profile
   remember_me: Remember me
   reset_password: Reset password
+  filters:
+    title: Filters
+    reviews:
+      all: All reviews
+      five_stars: 5 stars
+      four_stars: 4 stars
+      three_stars: 3 stars
+      two_stars: 2 stars
+      one_star: 1 star
   reviews: Reviews
   review_created_success_message: This information will be used to improve the experience of everyone.
   save: Save
@@ -335,7 +381,7 @@ en:
   load_more_reviews: Load more reviews
   continue: Continue
   schedule: Schedule
-  search: Search
+  search: Search…
   select_doctor: Select a doctor
   show_past_appointments: Show past appointments
   signin: Sign in
@@ -373,6 +419,7 @@ en:
     formats:
       default: ! '%a, %d %b %Y %H:%M:%S %z'
       just_the_time: ! '%H:%M'
+      just_the_date: ! '%d %b'
       long: ! '%B %d, %Y %H:%M'
       short: ! '%d %b %H:%M'
       w3c: ! '%Y-%m-%dT%H:%M:%S%:z'

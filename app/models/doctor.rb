@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Doctor < ApplicationRecord
+  # concerns
+  include Initials
+
   # associations
   belongs_to :practice, counter_cache: true
   has_many :appointments
@@ -28,7 +31,7 @@ class Doctor < ApplicationRecord
   before_destroy :check_if_is_deleteable
 
   def fullname
-    [gender === 'female' ? I18n.t(:female_doctor_prefix) : I18n.t(:male_doctor_prefix), firstname,
+    [gender === 'female' || gender === 'mujer' ? I18n.t(:female_doctor_prefix) : I18n.t(:male_doctor_prefix), firstname,
      lastname].join(' ')
   end
 
@@ -38,7 +41,6 @@ class Doctor < ApplicationRecord
 
   def ciphered_feed_url
     ciphered_url_encoded_id = Cipher.encode(id.to_s)
-
     "https://my.odonto.me/doctors/#{ciphered_url_encoded_id}/appointments.ics"
   end
 

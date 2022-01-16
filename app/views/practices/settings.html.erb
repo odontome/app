@@ -1,70 +1,59 @@
-<div id="pad-wrapper" class="new-user">
-    <div class="row header">
-        <div class="col-md-12">
-            <h3><%= t :practice_settings %></h3>
+<div class="page-header mb-4">
+  <div class="row align-items-center">
+    <div class="col">
+      <div class="page-pretitle">
+        <%= t :edit %>
+      </div>
+      <h2 class="page-title"><%= t :practice_settings %></h2>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="row row-cards">
+    <div class="col-md-8">
+      <%= render 'form-settings' %>
+    </div>
+
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-auto">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <%= t('subscriptions.title') %> 
+                
+              </h3>
+              <div class="card-actions">
+                <%= label_tag t("subscriptions.status.#{@subscription.status}") %>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <% if !@practice.has_linked_subscription? && @practice.has_active_subscription? %>
+                <%= raw t('subscriptions.message_to_admin.trialing', stripe_url: link_to(t('subscriptions.cta.trialing'), subscriptions_url, method: :post).html_safe) %>
+              <% elsif @practice.has_linked_subscription? && @practice.has_active_subscription? %>
+                <%= raw t('subscriptions.message_to_admin.active', status: @subscription.status, stripe_url: link_to(t('subscriptions.cta.active'), subscriptions_url, method: :put).html_safe) %>
+              <% else %>
+                <%= raw t('subscriptions.message_to_admin.expired', stripe_url: link_to(t('subscriptions.cta.expired'), subscriptions_url, method: :post).html_safe) %>
+              <% end %>
+            </div>
+          </div>
         </div>
-    </div>
-
-    <div class="row form-wrapper">
-			<!-- left column -->
-			<div class="col-md-9 with-sidebar">
-				<%= form_for(@practice, :url => "/practice/#{@practice.id}", :method => :update, :class => "form-horizontal") do |f| %>
-
-					<%= render "shared/error_messages", :target => @practice%>
-
-					<p class="form-group col-md-8">
-						<%= f.label :name %> *
-						<%= f.text_field :name, :class => "form-control" %>
-						<%= content_tag "sub", t(:practice_name_hint) %>
-					</p>
-
-					<p class="form-group col-md-8">
-						<%= f.label :email, t(:practice_email) %> *
-						<%= f.text_field :email, :class => "form-control" %>
-						<%= content_tag "sub" %>
-					</p>
-
-					<p class="form-group col-md-8">
-						<%= f.label :locale %>
-						<%= f.select(:locale, [[ t(:english), 'en'],[ t(:spanish),'es']], {}, { :class => "form-control"} ) %>
-					</p>
-
-					<p class="form-group col-md-8">
-						<%= f.label :timezone %>
-						<%= f.time_zone_select :timezone, [ ActiveSupport::TimeZone[@practice.timezone]], {}, { :class => "form-control"} %>
-					</p>
-
-					<p class="form-group col-md-8">
-						<%= f.label :currency_unit %>
-						<%= f.select(:currency_unit, %w[$ € £ Bs. S/.], {}, { :class => "form-control"}) %>
-					</p>
-
-					<p class="form-group col-md-8">
-						<%= f.submit(t(:save), :class => "btn btn-primary", data: { disable_with: t(:please_wait) }) %>
-						<span class="cancel"><%= t :or %>
-							<%= link_to t(:cancel).downcase, practice_url %>
-						</span>
-					</p>
-
-				<% end %>
+	    </div>
+	  
+      <div class="row">
+        <div class="px-3">
+	        <hr />
+        </div>
       </div>
 
-      <!-- side right column -->
-      <div class="col-md-3 form-sidebar">
-				<h6><%= t('subscriptions.title') %> <span class="label label-default"><%= t("subscriptions.status.#{@subscription.status}") %></span></h6>
-
-				<% if !@practice.has_linked_subscription? && @practice.has_active_subscription? %>
-					<%= raw t('subscriptions.message_to_admin.trialing', stripe_url: link_to(t('subscriptions.cta.trialing'), subscriptions_url, method: :post).html_safe) %>
-				<% elsif @practice.has_linked_subscription? && @practice.has_active_subscription? %>
-					<%= raw t('subscriptions.message_to_admin.active', status: @subscription.status, stripe_url: link_to(t('subscriptions.cta.active'), subscriptions_url, method: :put).html_safe) %>
-				<% else %>
-					<%= raw t('subscriptions.message_to_admin.expired', stripe_url: link_to(t('subscriptions.cta.expired'), subscriptions_url, method: :post).html_safe) %>
-				<% end %>
-
-				<hr />
-
-        <h6><%= t :for_your_information %></h6>
-          <p><%= raw t("instructions.practice", close_url: (link_to (t(:close_your_account)).downcase, practice_cancel_url)).html_safe %></p>
+      <div class="row">
+        <div class="px-3">
+          <h3 class="card-title"><%= t :for_your_information %></h3>
+          <%= raw t("instructions.practice", close_url: (link_to (t(:close_your_account)).downcase, practice_cancel_url)).html_safe %>
+        </div>
       </div>
     </div>
+  </div>
 </div>

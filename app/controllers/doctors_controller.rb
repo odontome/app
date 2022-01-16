@@ -10,7 +10,7 @@ class DoctorsController < ApplicationController
 
   def show
     @doctor = Doctor.with_practice(current_user.practice_id).find(params[:id])
-    @appointments = @doctor.appointments.joins(:patient).where('starts_at > ?', Date.today).order('starts_at desc')
+    @appointments = @doctor.appointments.joins(:patient).where('starts_at > ?', Date.today).order('starts_at asc')
   end
 
   def new
@@ -58,7 +58,7 @@ class DoctorsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to(doctors_url) }
+      format.html { redirect_to(doctors_url, notice: t(:doctor_deleted_success_message)) }
     end
   end
 

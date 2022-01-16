@@ -1,22 +1,23 @@
-<%= form_for(@treatment, :class => "form-horizontal") do |f| %>
-
+<%= form_for(@treatment) do |f| %>
   <%= render "shared/error_messages", :target => @treatment %>
 
-  <p class="form-group col-md-8">
-  	<%= f.label :name %> *
-    <%= f.text_field :name, :class => "form-control" %>
-  </p>
+  <div class="card card-md">
+    <div class="card-body">
+  	  <div class="mb-3">
+        <%= f.label :name, class: "form-label required" %>
+        <%= f.text_field :name, :class => "form-control" %>
+      </div>
 
-  <p class="form-group col-md-8">
-  	<%= f.label :price %> *
-    <%= f.number_field :price, :class => "form-control"  %>
-  </p>
-
-  <p class="form-group col-md-8">
-   <%= f.submit(t(:save), :class => "btn btn-primary", data: { disable_with: t(:please_wait) }) %>
-   <span class="cancel"><%= t :or %>
-    <%= link_to t(:cancel).downcase, treatments_url %>
-    </span>
-  </p>
-
+      <div class="mb-3">
+        <%= f.label :price, class: "form-label required" %>
+        <%= f.number_field :price, :class => "form-control"  %>
+      </div>
+    </div>
+  
+    <div class="card-footer text-end">
+      <div class="d-flex">
+        <%= f.submit(t(:save), :class => "btn btn-primary ms-auto", data: { disable_with: t(:please_wait) }) %>
+      </div>
+    </div>
+  </div>
 <% end %>

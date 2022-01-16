@@ -9,6 +9,10 @@ class ReviewsController < ApplicationController
     @current_page = 0
     @reviews = Review.with_practice(current_user.practice_id).limit(reviews_per_page)
 
+    if params[:score].present?
+      @reviews = @reviews.where(score: params[:score].to_i)
+    end
+
     if params[:page].nil?
       @reviews = @reviews.offset(0)
     else

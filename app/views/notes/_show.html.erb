@@ -1,10 +1,17 @@
-<div id="note<%=note.id%>" class="alert alert-dismissable">
-	<%= link_to raw("&times;"), [noteable, note], :method => :delete, :remote => true, :class => "close" %>
-	<p><%= note.notes %></p>
-	<sub>	
-		<% if not note.user.nil? %>
-			<%= note.user.fullname %>
-		<% end %>
-		<%= t :ago_in_words, date: time_ago_in_words(note.created_at) %> 
-	</sub>
+<div id="note<%=note.id%>" class="list-group-item">
+  <div class="row">
+    <div class="col-auto">
+      <span class="avatar rounded-circle"><%= note.user.initials %></span>
+    </div>
+    <div class="col">
+      <small class="text-body d-block text-truncate"><%= note.user.fullname %> — <%= t :ago_in_words, date: time_ago_in_words(note.created_at) %></small>
+      <span class="d-block text-muted mt-n1"><%= note.notes %></span>
+    </div>
+    <div class="col-auto">
+      <%= link_to [noteable, note], method: :delete, remote: true, class: "list-group-item-actions text-dark" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"></path> <line x1="18" y1="6" x2="6" y2="18"></line> <line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      <% end %>
+      </a>
+    </div>
+  </div>
 </div>

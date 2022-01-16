@@ -72,7 +72,7 @@ class PracticesController < ApplicationController
   end
 
   def cancel
-    # LOL this does nothing
+    # Intentionally left blank
   end
 
   def close
@@ -114,6 +114,8 @@ class PracticesController < ApplicationController
     ends_at = starts_at + 24.hours
 
     @selected_date = starts_at.strftime('%A, %d %B %y')
+    @min_date = @current_user.practice.created_at.strftime('%Y-%m-%d')
+    @max_date = 1.day.from_now.strftime('%Y-%m-%d')
 
     @balances = Balance.find_between starts_at, ends_at, @current_user.practice_id
     @total = @balances.sum(:amount)

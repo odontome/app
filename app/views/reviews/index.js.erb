@@ -1,10 +1,10 @@
 <% @reviews.each do |review| %>
-  $("<%=escape_javascript(render :partial => 'show', :locals => {:review => review })%>").appendTo("tbody").addClass("animated fadeInUp");
+  $("<%= escape_javascript(render partial: 'show', locals: { review: review })%>").appendTo(".card-body").addClass("animated fadeInUp");
 <% end %>
 
 <% if @should_display_load_more %>
   // Update the URL with the new page number
-  $("tfoot > tr > td").html("<%=escape_javascript(link_to t(:load_more_reviews), reviews_url(:page => @current_page), remote: true) %>");
+  $(".card-footer").html("<%=escape_javascript(link_to t(:load_more_reviews), reviews_url(:page => @current_page), remote: true, class: "btn") %>");
 <% else %>
-  $("tfoot").addClass("animated fadeOut");
+  $(".card-footer").html('<%= t(:showing_all_reviews) %>');
 <% end %>

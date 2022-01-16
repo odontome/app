@@ -3,24 +3,42 @@ es:
   account_cancelled: Tu cuenta ha sido marcada para cancelación. Si crees que esto es un error, por favor contacta con nosotros lo más rápido posible.
   activate: Activar
   appointment: Cita
+  appointment_visit:
+    past_tense: <strong>%{patient_name}</strong> vió al %{doctor_fullname}
+    future_tense: <strong>%{patient_name}</strong> verá al %{doctor_fullname}
+  all_appointments: Todas las citas
   review: Calificación
+  no_comment: No hay comentarios
+  showing_all_reviews: Mostrando todas las calificaciones
   thank_you: ¡Gracias!
   range: Rango
   active: Activa
   amount: Monto
+  create: Crear
+  filters:
+    title: Filtrar
+    reviews:
+      all: Todas las calificaciones
+      five_stars: 5 estrellas
+      four_stars: 4 estrellas
+      three_stars: 3 estrellas
+      two_stars: 2 estrellas
+      one_star: 1 estrella
   balance_discount_hint: Cualquier valor negativo será ingresado como egresos
   expense: Egreso
   income: Ingreso
   today_balance: Balance de hoy
   download_as_csv_file: Descargar como CSV
   calendar_feed: Suscripción a las citas
-  calendar_feed_message: Puedes suscribirte a las citas de %{doctor_name} utilizando la siguiente dirección <strong class="selectable">%{feed_url}</strong> en tu app de calendario favorita.
+  calendar_feed_message: Puedes suscribirte a las citas de %{doctor_name} utilizando la siguiente dirección en tu app de calendario favorita.
   created_at: Creado el
   developers: Desarrolladores
   update_password: Actualizar contraseña
   my_practice: Mi clínica
   chart_number: Número de historia
   subscribe_again: Suscríbete de nuevo
+  actions: Acciones
+  emergency_telephone: Teléfono de emergencia
   activerecord:
     attributes:
       appointment:
@@ -61,7 +79,7 @@ es:
         telephone: Teléfono
         uid: Número de historia
       practice:
-        currency_unit: Moneda
+        currency_unit: Moneda preferida
         locale: Idioma
         name: Nombre
         timezone: Huso horario
@@ -94,6 +112,7 @@ es:
   years_old: Años de edad
   age_with_suffix: ! '%{age} años de edad'
   ago_in_words: ! 'hace %{date}'
+  distance_in_words: ! 'en %{date}'
   allergic_to: Alérgico a
   already_have_an_account: ¿Ya tienes una cuenta?
   annotate: Anotar
@@ -109,11 +128,11 @@ es:
   balance_created_error_message: Ocurrió un problema al intentar crear esta entrada.
   cancel: Cancelar
   cigarettes_per_day: Cigarrillos por día
-  close_account: Cerra cuenta
+  close_account: Cerrar cuenta
   close_your_account: Cerrar tu cuenta
   color: Color
   comments: Comentarios
-  consider_using_gravatar: Regístra este email en gravatar.org para utilizar imágenes de perfíl.
+  consider_using_gravatar: Regístra este email en gravatar.com para utilizar imágenes de perfil.
   contact_information: Información de contácto
   contact_us: Contacta con nosotros
   create_new_datebook: Nueva agenda
@@ -125,6 +144,8 @@ es:
   date:
     formats:
       day_and_date: ! '%A (%e %b)'
+      short: ! '%e %b'
+      long: ! '%B %d, %Y'
   datebooks: Agendas
   day: Día
   delete: Borrar
@@ -135,22 +156,23 @@ es:
   doctor_created_success_message: El doctor ha sido creado con éxito.
   doctor_has_no_future_appointments: La agenda está libre. ¿Qué tal si %{datebooks_url} algo?
   doctor_updated_success_message: El doctor ha sido actualizado con éxito.
+  doctor_deleted_success_message: El doctor ha sido borrado con éxito.
   doctors: Doctores
   drinks_per_day: Tragos por día
   drugs_use: Drogas utilizadas
   drugs_use_hint: Por favor sé lo más descriptivo posible.
   edit: Editar
-  edit_patient: Editar este paciente
   datebook_updated_success_message: Agenda actualizada con éxito
   datebook_created_success_message: Agenda creada con éxito
   email: Email
   english: Inglés
-  enter_patient_name_or_uid: Paciente o historia
+  enter_patient_name_or_uid: Paciente o número de historia…
   errors:
     titles:
       unauthorised: No puedes hacer eso
       not_found: Mmm, no lo encontré
       server_error: Ay...
+      form_update: Oh oh, ourrió un problema
     messages:
       invalid_date_range: Las fechas son invalidas.
       invalid_email_format: Formato invalido.
@@ -165,15 +187,27 @@ es:
   family_history: Historial familiar
   female: Mujer
   female_doctor_prefix: Dra.
-  for_your_information: Para tu información
+  for_your_information: Información adicional
   forgot_password: Olvidaste tu contraseña?
   future_appointments: Próximas citas
   past_appointments: Citas anteriores
   gender: Sexo
-  gravatar_tooltip: Imagen de perfíl tomada de gravatar.org
+  gravatar_tooltip: Imagen de perfil tomada de gravatar.com
   hide_past_appointments: Esconder citas pasadas
+  valid: Valido
+  invalid: Invalido
   home: Inicio
-  inactive: Inactivo
+  help:
+    patients:
+      status: Los pacientes sin toda la información necesaria para crear sus perfiles son marcados como "incompletos".
+    datebooks:
+      status: Agendas inactivas son aquellas que no tienen ninguna cita. Solo agendas inactivas pueden ser borradas.
+    doctors:
+      feed: Para iPhones, sigue las instrucciones en <a href="https://support.apple.com/en-ca/guide/iphone/iph3d1110d4/ios">este artículo</a> para agregar el calendario a tu teléfono.
+      suspended: Doctores suspendidos no aparecen como opciones para nuevas citas. Las citas anteriores no se ven afectadas.
+    treatments:
+      status: Tratamientos invalidos no poseen precios. Debes corregir el precio antes de poder utilizarlo
+  inactive: Inactiva
   incomplete: Incompleto
   instructions:
     datebooks: <p>Agendas son el centro de cada clínica.</p> <p>Debido a que ya puedes filtrar por doctores, un uso común de las agendas es crear una por cada clínica que poseas.</p>
@@ -182,11 +216,14 @@ es:
       <p>Recuerda que puedes suspender doctores que ya no trabajes para ti. De esta manera no aparecerán en tu Odonto.me pero igual mantendrás todo el historial de sus actividades.</p>
     patients: Lo más importante de tu clínica. Con solo unos cuantos clics puedes crear un paciente, aunque es recomendado que llenes la mayor cantidad de información posible.
     practice: <p>Configura tu clínica como prefieras.</p> <p>Si por algún motivo decides dejarnos. Puedes %{close_url} en cualquier momento.</p>
+    cancel: <p>Al cerrar tu cuenta, tu información será guardara por 14 días y después será borrada de nuestros servidores.</p>
     treatments: Todo lo que le haces a tus pacientes. Esta sección está directamente relacionada con el estado de cuenta de tu clínica.
     users:
       <p>Las personas que pueden accesar a tu Odonto.me.</p> <p>Ya que solo tú puedes ver esta información, Es recomendado que crees tantos usuarios quieras para manejar Odonto.me pero dejes a este usuario <strong>administrador</strong>
       para la adminstración y configuración.</p>
   last_login_at_with_date: Última sesión hace %{date}
+  last_login_at: Última sesión
+  roles: Roles
   logout: ¿Cerrar sesión?
   mailers:
     doctor:
@@ -219,10 +256,9 @@ es:
   month: Mes
   name: Nombre
   never: Nunca
-  never_logged_in: Nunca ha entrado a Odonto.me
+  never_logged_in: Nunca
   new: Nuevo
   new_user: Nuevo usuario
-  no_reviews_message: Ningún paciente ha calificado su experiencia aún.<br /> Cada vez que un paciente haya visitado tu clínica, un email será enviado para solicitar una calificación.
   no_account: ¿No tienes una cuenta?
   no_doctors: Por favor crea algunos doctores antes.
   no_patient_found_new_one_will_be_created: No se ha encontrado ningún paciente, se creara uno.
@@ -247,9 +283,19 @@ es:
   past_surgeries: Cirugias pasadas
   patient: Paciente
   patient_created_success_message: El paciente fue creado con éxito
+  empty:
+    treatments:
+      title: Aún no has creado ningún tratamiento.
+      description: Crea un tratamiento para empezara a utilizarlos en los perfiles de pacientes.
+      cta: Usar tratamientos sugeridos
+  no_appointments:
+    title: Sin citas
+    description: No tienen ninguna cita programada.
+  no_reviews:
+    title: Sin calificaciones
+    description: Ningún paciente ha calificado su experiencia aún.<br /> Cada vez que un paciente haya visitado tu clínica, un email será enviado para solicitar una calificación.
   patient_has_no_appointments: Sin citas. ¿Quiéres %{datebooks_url}
     una?
-  patient_incomplete: Paciente incompleto
   patient_search_results_few: ! '%{patients_count} pacientes encontrados.'
   patient_search_results_many: Mostrado %{patients_count} de muchos pacientes. Intenta refinar tu búsqueda.
   patient_search_results_one: Lo encontré
@@ -257,7 +303,6 @@ es:
   patient_treatment_created_error_message: El item fue creado con éxito
   patient_treatment_updated_error_message: Ocurrió un problema para crear este item
   patient_updated_success_message: El paciente fue actualizado con éxito
-  patient_without_required_info: Agrega la información que falta, o simplemente puedes %{delete_url}
   patients: Pacientes
   personal_information: Información personal
   please_wait: Por favor espera...
@@ -276,7 +321,8 @@ es:
   predefined_treatments_created_success_message: Se han utilizado los tratamientos por defecto. Modifica los nombres y precios a tu mejor parecer.
   price: Precio
   privacy_policy: Política de privacidad
-  profile: Perfíl
+  profile: Perfil
+  view_profile: Ver perfil
   remember_me: Recordarme
   reset_password: Cambiar contraseña
   reviews: Calificaciones
@@ -284,7 +330,7 @@ es:
   save: Guardar
   load_more_reviews: Cargar más calificaciones
   schedule: Agendar
-  search: Buscar
+  search: Buscar…
   select_doctor: Selecciona un doctor
   show_past_appointments: Mostrar citas pasadas
   signin: Iniciar sesión
@@ -323,6 +369,7 @@ es:
     formats:
       default: ! '%a, %d %b %Y %H:%M:%S %z'
       just_the_time: ! '%H:%M'
+      just_the_date: ! '%d %b'
       long: ! '%B %d, %Y %H:%M'
       short: ! '%d %b %H:%M'
       w3c: ! '%Y-%m-%dT%H:%M:%S%:z'

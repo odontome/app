@@ -1,37 +1,38 @@
-<%= form_for(@user, :class => "form-horizontal") do |f| %>
+<%= form_for(@user) do |f| %>
+  <%= render "shared/error_messages", :target => @user %>
+  
+  <div class="card card-md">
+    <div class="card-body">
+      <div class="mb-3">
+        <%= f.label :firstname, class: "form-label required" %>
+        <%= f.text_field :firstname, :class => "form-control" %>
+      </div>
 
-	<%= render "shared/error_messages", :target => @user%>
+      <div class="mb-3">
+        <%= f.label :lastname, class: "form-label required" %>
+        <%= f.text_field :lastname, :class => "form-control"  %>
+      </div>
 
-	<p class="form-group col-md-8">
-		<%= f.label :firstname %> *
-		<%= f.text_field :firstname, :class => "form-control" %>
-	</p>
+      <div class="mb-3">
+        <%= f.label :email, class: "form-label required" %>
+        <%= f.email_field :email, :class => "form-control" %>
+      </div>
 
-	<p class="form-group col-md-8">
-		<%= f.label :lastname %> *
-		<%= f.text_field :lastname, :class => "form-control"  %>
-	</p>
+      <div class="mb-3">
+        <%= f.label :password, class: "form-label required" %>
+        <%= f.password_field :password, :class => "form-control" %>
+      </div>
 
-	<p class="form-group col-md-8">
-		<%= f.label :email %> *
-		<%= f.email_field :email, :class => "form-control" %>
-	</p>
+      <div class="mb-3">
+        <%= f.label :password_confirmation, class: "form-label required" %>
+        <%= f.password_field :password_confirmation, :class => "form-control" %>
+      </div>
+    </div>
 
-	<p class="form-group col-md-8">
-		<%= f.label :password %> *
-		<%= f.password_field :password, :class => "form-control" %>
-	</p>
-
-	<p class="form-group col-md-8">
-		<%= f.label :password_confirmation %> *
-		<%= f.password_field :password_confirmation, :class => "form-control" %>
-	</p>
-
-	<p class="form-group col-md-8">
-		<%= f.submit(t(:save), :class => "btn btn-primary", data: { disable_with: t(:please_wait) }) %>
-		<span class="cancel"><%= t :or %>
-			<%= link_to t(:cancel).downcase, users_url %>
-		</span>
-	</p>
-
+    <div class="card-footer text-end">
+      <div class="d-flex">
+        <%= f.submit(t(:save), :class => "btn btn-primary ms-auto", data: { disable_with: t(:please_wait) }) %>
+      </div>
+    </div>
+  </div>
 <% end %>

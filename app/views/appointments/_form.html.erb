@@ -1,37 +1,66 @@
-<%= form_for([@datebook, @appointment], :remote => true, :class => "form-horizontal") do |f| %>
+<%= form_for([@datebook, @appointment], remote: true, autocomplete: "off") do |f| %>
 	<div class="modal-body">
-		<p class="form-group">
-			<%= f.label :patient_id %> *
-			<%= text_field_tag "appointment[patient_id]", nil, :class => "form-control", :autocomplete => "off" %>
-		</p>
+		<div class="mb-3">
+			<%= f.label :patient_id, class: "form-label required" %>
+      <div class="input-icon mb-3">
+        <input type="text" name="as_values_patient_id" class="form-control autocomplete" autocomplete="off" placeholder="<%= t(:enter_patient_name_or_uid) %>">
+        <span class="input-icon-addon">
+          <div class="spinner-border spinner-border-sm text-muted d-none" role="status"></div>
+        </span>
+      </div>
+      <input class="form-control" autocomplete="off" type="hidden" name="appointment[patient_id]" id="appointment_patient_id">
+		</div>
 
-		<p class="form-group">
-			<% if @doctors.empty? %>
-				<%= link_to t(:no_doctors), doctors_path %>
+		<div class="mb-3">
+      <%= f.label :doctor_id, class: "form-label required" %>
+      
+      <% if @doctors.empty? %>
+        <%= link_to t(:no_doctors), doctors_path %>
+        <%= f.hidden_field :doctor_id %>
 			<% else %>
-				<%= f.label :doctor_id %> *
-				<%= f.select(:doctor_id, options_from_collection_for_select(@doctors, "id", "fullname", :selected => @appointment.doctor_id), {}, { :class => "form-control", :title => t(:select_doctor) }) %>
-			<% end %>
-		</p>
+				<%= f.select(:doctor_id, options_from_collection_for_select(@doctors, "id", "fullname", :selected => @appointment.doctor_id), {}, { :class => "form-select", :title => t(:select_doctor) }) %>
+      <% end %>
+		</div>
 
-		<p>
+		<div class="mb-3">
+      <label class="form-label"><%= t(:notes) %></label>
 			<%= f.text_area :notes, :placeholder => t(:additional_notes), :rows => 2, :maxlength => 255, :class => "form-control"  %>
-		</p>
+		</div>
 	</div>
 
 	<div class="modal-footer">
-		<% if controller.action_name == "edit" %>
-			<% if @appointment.is_confirmed %>
-				<%= link_to t(:cancel_appointment), [@datebook, @appointment], :method => :put, :remote => :true, data: { params: { appointment: { status: Appointment.status[:cancelled] } }.to_param }, :class => "btn" %>
-			<% else %>
-				<%= link_to t(:confirm_appointment), [@datebook, @appointment], :method => :put, :remote => :true, data: { params: { appointment: { status: Appointment.status[:confirmed] } }.to_param }, :class => "btn" %>
-			<% end %>
-			<%= link_to t(:delete_appointment), [@datebook, @appointment], :method => :delete, :remote => :true, data: { confirm: t(:are_you_sure) }, :class => "btn btn-danger" %>
-		<% else %>
-			<%= f.hidden_field :starts_at %>
-		<% end %>
+    <% if controller.action_name == "edit" %>
+      <span class="dropdown me-auto">
+        <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown" aria-expanded="false">
+          <%= t :actions %>
+        </button>
+        <div class="dropdown-menu dropdown-menu-end">
+          <% if @appointment.is_confirmed %>
+            <%= link_to [@datebook, @appointment], :method => :put, :remote => :true, data: { params: { appointment: { status: Appointment.status[:cancelled] } }.to_param }, :class => "dropdown-item" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon dropdown-item-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"></path> <circle cx="12" cy="12" r="9"></circle> <path d="M10 10l4 4m0 -4l-4 4"></path></svg> 
+              <%= t(:cancel_appointment) %>
+            <% end %>
+          <% else %>
+            <%= link_to [@datebook, @appointment], :method => :put, :remote => :true, data: { params: { appointment: { status: Appointment.status[:confirmed] } }.to_param }, :class => "dropdown-item" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon dropdown-item-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"></path> <path d="M7 12l5 5l10 -10"></path> <path d="M2 12l5 5m5 -5l5 -5"></path></svg> 
+              <%= t(:confirm_appointment) %>
+            <% end %>
+          <% end %>
 
-		<%= f.submit(t(:save), :class => "btn btn-primary", :id => 'appointment_submit', data: { disable_with: t(:please_wait) }) %>
+          <%= link_to [@datebook, @appointment], :method => :delete, :remote => :true, data: { confirm: t(:are_you_sure) }, :class => "dropdown-item danger text-red" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon dropdown-item-icon text-red" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"></path> <path d="M4 7h16"></path> <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path> <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path> <path d="M10 12l4 4m0 -4l-4 4"></path></svg> 
+            <%= t(:delete_appointment) %>
+          <% end %>
+        </div>
+      </span>
+
+    <% else %>
+      <%= f.hidden_field :starts_at %>
+    <% end %>
+
+    <%= button_tag(type: 'submit', class: "btn btn-primary", id: 'appointment_submit', data: { disable_with: t(:please_wait) }) do %>
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg><!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+      <%= t(:save) %>
+    <% end %>
 	</div>
-
 <% end %>

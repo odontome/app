@@ -1,238 +1,130 @@
-<div id="pad-wrapper">
-    <div class="row">
-        <div class="col-md-12">
-
-            <div class="pull-right">
-              <p><%= link_to t(:edit_patient), edit_patient_path(@patient) %>
-
-              <% if user_is_admin?(current_user) %>
-                  • <%= link_to t(:delete_patient), @patient, :method => :delete, data: { confirm: t(:are_you_sure_no_undo) }, "class" => "danger" %>
-              <% end %>
-              </p>
-            </div>
-
-            <div class="masonry cols">
-                <div class="masonry-box centered unstyled">
-                    <img src="<%= avatar_url(@patient.email,'100x100')%>" alt="contact" class="avatar img-circle" data-toggle="tooltip" title="<%= t :gravatar_tooltip %>" data-placement="bottom" />
-                    <h3 class="name"><%= @patient.fullname.titleize %></h3>
-
-                    <% if !@patient.allergies.nil? && !@patient.allergies != "" %>
-                        <span class="label label-danger"><%= t(:allergic_to).downcase %> <%= @patient.allergies %></span>
-                    <% end %>
-
-                </div>
-
-                <div class="masonry-box">
-                    <h6><%= t :chart_number %></h6>
-                    <p><%= @patient.uid %></p>
-                </div>
-
-                <div class="masonry-box">
-                    <h6><%= t :contact_information %></h6>
-                    <% if @patient.email != "" %>
-                    <p><i class="fa fa-envelope-o"></i> <%= mail_to @patient.email %></p>
-                    <% end %>
-                    <% if @patient.telephone != "" %>
-                    <p><i class="fa fa-phone"></i> <%= @patient.telephone %></p>
-                    <% end %>
-                    <% if @patient.mobile != "" %>
-                    <p><i class="fa fa-mobile"></i> <%= @patient.mobile %></p>
-                    <% end %>
-                    <% if @patient.emergency_telephone != "" %>
-                    <p><i class="fa fa-exclamation"></i> <%= @patient.emergency_telephone %></p>
-                    <% end %>
-                    <% if @patient.address != "" %>
-                    <p><i class="fa fa-home"></i> <%= @patient.address %></p>
-                    <% end %>
-                </div>
-
-                <div class="masonry-box centered">
-                    <h2 data-toggle="tooltip" title="<%= @patient.date_of_birth.to_formatted_s(:long) %>" data-placement="top"><%= @patient.age%></h2>
-                     <p><%= t(:years_old).downcase %></p>
-                </div>
-
-                <div class="masonry-box centered">
-                    <h2><%= link_to @appointments[:future].size, "#future_appointments" %></h2>
-                    <p><%= t :future_appointments %></p>
-                </div>
-
-                <div class="masonry-box centered">
-                    <h2><%= link_to @appointments[:past].size, "#past_appointments" %></h2>
-                    <p><%= t :past_appointments %></p>
-                </div>
-
-                <div class="masonry-box">
-                    <h6><%= t :comments %></h6>
-                    <div class="comment">
-                        <%= render :partial => "notes/index", :locals => {:notes => @patient_notes, :noteable => @patient} %>
-                        <%= render :partial => "notes/new", :locals => {:noteable => @patient} %>
-                    </div>
-                </div>
-
-                <% if @patient.past_illnesses != "" %>
-                <div class="masonry-box">
-                    <h6><%= t :past_illnesses%></h6>
-                    <p><%= @patient.past_illnesses %></p>
-                </div>
-                <% end %>
-
-                <% if @patient.surgeries != "" %>
-                <div class="masonry-box">
-                    <h6><%= t :past_surgeries%></h6>
-                    <p><%= @patient.surgeries %></p>
-                </div>
-                <% end %>
-
-                <% if @patient.cigarettes_per_day != "" %>
-                <div class="masonry-box centered">
-                    <h2><%= @patient.cigarettes_per_day%></h2>
-                    <p><%= t :cigarettes_per_day %></p>
-                </div>
-                <% end %>
-
-                <% if @patient.drinks_per_day != "" %>
-                <div class="masonry-box centered">
-                    <h2><%= @patient.drinks_per_day%></h2>
-                    <p><%= t :drinks_per_day %></p>
-                </div>
-                <% end %>
-
-                <% if @patient.medications != "" %>
-                <div class="masonry-box">
-                    <h6><%= t :current_medications%></h6>
-                    <p><%= @patient.medications %></p>
-                </div>
-                <% end %>
-
-                <% if @patient.drugs_use != "" %>
-                <div class="masonry-box">
-                    <h6><%= t :drugs_use%></h6>
-                    <p><%= @patient.drugs_use %></p>
-                </div>
-                <% end %>
-
-                <% if @patient.family_diseases != "" %>
-                <div class="masonry-box">
-                    <h6><%= t :family_history%></h6>
-                    <p><%= @patient.family_diseases %></p>
-                </div>
-                <% end %>
-
-                <div class="masonry-box centered">
-                    <h2><%= link_to number_to_currency_with_symbol(@total_balance, 0), patient_balances_path(@patient) %></h2>
-                    <p><%= t :balance %></p>
-                </div>
-
-            </div>
-        </div>
+<div class="page-header mb-4">
+  <div class="row g-2 align-items-center">
+    <div class="col-auto me-2">
+      <span class="avatar rounded-circle avatar-lg"><%= @patient.initials %></span>
     </div>
+    <div class="col">
+      <h4 class="m-0">
+        <h2 class="page-title">
+          <%= @patient.fullname %>
+        </h2>
+      </h4>
+      <div class="text-muted">
+        <%= @patient.uid %><br />
+        <span data-toggle="tooltip" title="<%= @patient.date_of_birth.to_formatted_s(:long) %>" data-placement="top"><%= @patient.age%> <%= t(:years_old).downcase %></span>
+      </div>
+    </div>
+    <div class="col-auto">
+      <div class="btn-list">
+        <%= link_to t(:edit), edit_patient_path(@patient), class: "btn" %>
+        <% if user_is_admin?(current_user) %>
+          <%= link_to t(:delete), @patient, :method => :delete, data: { confirm: t(:are_you_sure_no_undo) }, class: "btn btn-outline-danger" %>
+        <% end %>
+      </div>
+    </div>
+  </div>    
+</div>
 
-
-  <div class="modal fade" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title"><%= t :appointments %></h4>
+<div class="row row-cards" data-masonry='{"percentPosition": false }'>   
+  <% if !@patient.allergies.blank? %>
+    <div class="col-sm-6 col-lg-4">
+      <div class="card">
+        <div class="card-status-top bg-danger"></div>
+        
+        <div class="card-header">
+          <h3 class="card-title">
+            <%= t(:allergic_to) %>
+          </h3>
+          
+          <div class="card-actions text-red">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"></path> <circle cx="12" cy="12" r="9"></circle> <line x1="12" y1="8" x2="12" y2="12"></line> <line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          </div>
         </div>
 
-        <div class="body-container">
-
-            <div id="future_appointments" class="hidden">
-              <table class="table table-hover">
-                <tbody>
-                  <% if @appointments[:future].empty? %>
-                    <tr>
-                        <td>
-                          <p><%= raw (t :patient_has_no_appointments, datebooks_url: link_to(t(:schedule).downcase, root_url)).html_safe %></p>
-                        </td>
-                    </tr>
-                  <% else %>
-                    <% @appointments[:future].each do |appointment| %>
-                      <tr>
-                          <td style="border-left: <%= appointment.doctor.color %> 2px solid">
-                              <% if appointment.is_cancelled %><del><% end %>
-                              <sub><%=l appointment.starts_at.to_date, :format => :day_and_date %></sub> <br />
-                              <%= appointment.starts_at.to_formatted_s :time %> -
-                              <%= appointment.ends_at.to_formatted_s :time %>
-                              <% if appointment.is_cancelled %></del><% end %>
-                          </td>
-                          <td>
-                              <%= appointment.doctor.fullname %><br />
-                              <sub><%= appointment.notes %></sub>
-                          </td>
-                      </tr>
-                    <% end %>
-                <% end %>
-                </tbody>
-              </table>
-            </div>
-
-            <div id="past_appointments" class="hidden">
-              <table class="table table-hover">
-                <tbody>
-                  <% if @appointments[:past].empty? %>
-                    <tr>
-                        <td>
-                          <p><%= raw (t :patient_has_no_appointments, datebooks_url: link_to(t(:schedule).downcase, root_url)).html_safe %></p>
-                        </td>
-                    </tr>
-                  <% else %>
-                    <% @appointments[:past].each do |appointment| %>
-
-                      <tr>
-                          <td style="border-left: <%= appointment.doctor.color %> 2px solid">
-                              <% if appointment.is_cancelled %><del><% end %>
-                              <sub><%=l appointment.starts_at.to_date, :format => :day_and_date %></sub> <br />
-                              <%= appointment.starts_at.to_formatted_s :time %> -
-                              <%= appointment.ends_at.to_formatted_s :time %>
-                              <% if appointment.is_cancelled %></del><% end %>
-                          </td>
-                          <td>
-                              <%= appointment.doctor.fullname %><br />
-                              <sub><%= appointment.notes %></sub>
-                          </td>
-                      </tr>
-
-                    <% end %>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
-
+        <div class="card-body">
+          <p><%= @patient.allergies %></p>
         </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="col-sm-6 col-lg-4">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">
+          <%= t(:contact_information) %>
+        </h3>
+      </div>
+      <div class="card-body">
+        <%= value_tag t(:email), @patient.email %>
+        <%= value_tag t(:telephone), @patient.telephone %>
+        <%= value_tag t(:mobile), @patient.mobile %>
+        <%= value_tag t(:emergency_telephone), @patient.emergency_telephone %>
+        <%= value_tag t(:address), @patient.address %>
       </div>
     </div>
   </div>
 
+  <div class="col-sm-6 col-lg-4">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">
+          <%= t(:comments) %>
+        </h3>
+      </div>
+
+      <div class="comment">
+        <%= render partial: "notes/index", :locals => {:notes => @patient_notes, :noteable => @patient} %>
+      </div>
+
+      <div class="card-body">
+        <%= render partial: "notes/new", :locals => {:noteable => @patient} %>
+      </div>
+    </div>
+  </div>
+
+  <%= render 'medical-history-card', title: t(:past_illnesses), value: @patient.past_illnesses %>
+  <%= render 'medical-history-card', title: t(:past_surgeries), value: @patient.surgeries %>
+  <%= render 'medical-history-card', title: t(:cigarettes_per_day), value: @patient.cigarettes_per_day %>
+  <%= render 'medical-history-card', title: t(:drinks_per_day), value: @patient.drinks_per_day %>
+  <%= render 'medical-history-card', title: t(:current_medications), value: @patient.medications %>
+  <%= render 'medical-history-card', title: t(:drugs_use), value: @patient.drugs_use %>
+  <%= render 'medical-history-card', title: t(:family_history), value: @patient.family_diseases %>
+
+  <div class="col-sm-6 col-lg-4">
+    <div class="card">
+      <div class="card-body mt-2 text-center">
+        <div class="h1 text-primary"><%= link_to number_to_currency_with_symbol(@total_balance, 0), patient_balances_path(@patient) %></div>
+        <div class="text-muted mb-3"><%= t :balance %></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-lg-4">
+    <div class="card">
+      <% if @appointments.empty? %>
+        <%= component :empty, title: t("no_appointments.title"), description: t("no_appointments.description"), image_name: 'calendar.svg' do %>
+          <%= link_to t(:schedule), root_url, class: "btn btn-primary" %>
+        <% end %>
+      <% else %>
+        <div class="card-header">
+          <h3 class="card-title">
+            <%= t(:appointments) %>
+          </h3>
+        </div>
+        <div class="card-body">
+          <div class="divide-y">
+            <% @appointments.each do |appointment| %>
+              <%= render 'appointment', 
+                appointment: appointment,
+                patient: @patient,
+                doctor: appointment.doctor,
+                past_tense: appointment.starts_at < Date.today.beginning_of_day
+              %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>
-
-<script>
-$(document).ready(function() {
-  $("a[href='#future_appointments']" ).click(function() {
-    showDialog("future");
-  });
-
-  $("a[href='#past_appointments']" ).click(function() {
-    showDialog("past");
-  });
-
-  function showDialog(type){
-
-    if (type == "future") {
-      $("div#future_appointments").removeClass("hidden");
-      $("div#past_appointments").addClass("hidden");
-
-    } else {
-      $("div#future_appointments").addClass("hidden");
-      $("div#past_appointments").removeClass("hidden");
-
-    }
-
-    $(".modal").modal();
-
-    return false;
-  }
-
-});
-</script>

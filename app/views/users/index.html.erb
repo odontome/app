@@ -1,59 +1,75 @@
-<div id="pad-wrapper" class="table-wrapper users-list">
-
-	<div class="row header col-md-12">
-        <h3><%= t :users %></h3>
-
-        <div class="pull-right-lg">            
-            <%= link_to t(:create_new_user), new_user_url, "class" => "btn-flat primary pull-right" %>
-        </div>
+<div class="page-header mb-4">
+  <div class="row align-items-center">
+    <div class="col">
+      <div class="page-pretitle">
+        TRANSLATE
+      </div>
+      <h2 class="page-title">
+        <%= t :users %>
+      </h2>
     </div>
-
-	<div class="row">
-	    <div class="col-md-12">
-	        <table class="table table-hover">
-	            <thead>
-	                <tr>
-	                    <th class="col-md-4">
-	                        <%= t :name %>
-	                    </th>
-	                    <th class="col-md-2 hidden-xs hidden-sm">
-	                        <span class="line"></span> <%= t :email %>
-	                    </th>
-	                    <th class="col-md-2">
-	                        
-	                    </th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	            
-		            <% @users.each do |user| %>
-			            <tr class="<% if user.id == @users.first.id %>first<% end %>">	
-			            	<td>
-			            		<img src="<%= avatar_url(user.email)%>" alt="contact" class="img-circle avatar hidden-phone" />
-			                    <%= link_to user.fullname, user, :class => "name" %>
-			                    <span class="subtext">
-			                    	<% if !user.last_login_at.nil? %>
-			                    		<%= t :last_login_at_with_date, date:(time_ago_in_words user.last_login_at) %>
-			                    	<% else %>
-            							<%= t :never_logged_in %>
-			                    	<% end %>
-			                    </span>
-			                </td>
-			                <td class="hidden-xs hidden-sm"><%= mail_to user.email %></td>
-			                <td>
-			                	<ul class="actions">
-                                    <li><%= link_to t(:edit), edit_user_path(user) %></li>
-									<li class="last">
-										<%= link_to t(:delete), user, :method => :delete, data: { confirm: t(:are_you_sure) } %>
-									</li>
-                                </ul>								
-			                </td>
-			            </tr>
-			        <% end %>
-
-			    </tbody>
-			</table>
-		</div>
-	</div>
+    <div class="col-auto ms-auto">
+      <div class="btn-list">
+        <%= link_to new_user_url, class: "btn btn-primary d-none d-sm-inline-block" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg><!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+          <%= t(:create_new_user) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
 
+<div class="page-body">
+  <div class="card">
+    <table class="table table-vcenter table-mobile-md card-table">
+      <thead>
+        <tr>
+          <th><%= t :name %></th>
+          <th><%= t :last_login_at %></th>
+          <th><%= t :roles %></th>
+          <th class="w-1"></th>
+        </tr>
+      </thead>
+      <tbody>
+         <% @users.each do |user| %>
+          <tr>
+            <td data-label="<%= t :name %>">
+              <div class="d-flex py-1 align-items-center">
+                <span class="avatar me-2 rounded-circle"><%= user.initials %></span>
+                <div class="flex-fill">
+                  <div class="font-weight-medium"><%= user.fullname %></div>
+                  <div class="text-muted"><%= user.email %></div>
+                </div>
+              </div>
+            </td>
+            <td class="text-muted" data-label="<%= t :last_login_at %>">
+              <% if !user.last_login_at.nil? %>
+                <%= time_ago_in_words user.last_login_at %>
+              <% else %>
+                <%= t :never_logged_in %>
+              <% end %>
+            </td>
+            <td class="text-muted" data-label="<%= t :roles %>">
+              <% if user_is_admin?(user) %>
+                <%= label_tag user.roles, :red %>
+              <% else %>
+                <%= label_tag user.roles, :green %>
+              <% end %>
+            </td>
+            <td>
+              <div class="btn-list flex-nowrap">
+                <%= component :dropdown do %>
+                  <%= link_to t(:profile), user, class: "dropdown-item" %>
+                  <%= link_to t(:edit), edit_user_path(user), class: "dropdown-item" %>
+                  <% if user_is_admin? && user != current_user %>
+                    <%= link_to t(:delete), user, method: :delete, data: { confirm: t(:are_you_sure_no_undo) }, class: "dropdown-item text-red" %>
+                  <% end %>
+                <% end %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

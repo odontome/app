@@ -6,24 +6,29 @@ class PatientsController < ApplicationController
 
   def index
     # this is the most frequent scenario, a simple list of patients
-    if params[:q].nil?
+    if params[:term].nil?
       # Always fetch the first letter of the first record, if not present
       # just send "A"
       if params[:letter].blank?
-        alphabet = [*'A'..'Z']
-        first_patient = Patient.with_practice(current_user.practice_id).order('firstname ASC').first
-        first_patient_letter = first_patient&.firstname&.first || 'A'
-        params[:letter] = alphabet.include?(first_patient_letter) ? first_patient_letter : 'A'
+        first_patient = Patient.with_practice(current_user.practice_id).order('firstname ASC').limit(1).first
+        params[:letter] = first_patient&.firstname&.first || 'A'
       end
 
-      @patients = Patient.alphabetically(params[:letter]).with_practice(current_user.practice_id)
+      # iI the provided is not in the alphabet, send back anything else
+      if [*'a'..'z'].include?(params[:letter].downcase)
+        @patients = Patient.anything_with_letter(params[:letter]).with_practice(current_user.practice_id)
+      else
+        @patients = Patient.anything_not_in_alphabet.with_practice(current_user.practice_id)
+      end
     else
-      @patients = Patient.search(params[:q]).with_practice(current_user.practice_id)
+      @patients = Patient.search(params[:term]).with_practice(current_user.practice_id)
     end
 
     respond_to do |format|
       format.html # index.html
-      format.json { render json: @patients, methods: :fullname }
+      format.json { 
+        render json: @patients, methods: :fullname
+      }
     end
   end
 
@@ -76,10 +81,12 @@ class PatientsController < ApplicationController
   end
 
   def destroy
+    back_to = request.referer || patients_path
+
     @patient = Patient.with_practice(current_user.practice_id).find(params[:id])
     @patient.destroy
     respond_to do |format|
-      format.html { redirect_to(patients_url) }
+      format.html { redirect_to(back_to) }
     end
   end
 end

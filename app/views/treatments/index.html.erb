@@ -1,65 +1,74 @@
-<div id="pad-wrapper" class="table-wrapper users-list">
-
-	<div class="row header col-md-12">
-        <h3><%= t :treatments %></h3>
-
-        <div class="pull-right-lg">            
-            <%= link_to t(:create_new_treatment), new_treatment_url, "class" => "btn-flat primary pull-right" %>
-        </div>
-    </div>
-
-    <div class="row">
-		    <div class="col-md-12">
-			    <% if @treatments.empty? %>
-					<div class="alert alert-warning">
-						<p><%= t(:no_treatments_message)%></p>
-						<p><%= link_to t(:use_preloaded_treatments), predefined_treatments_treatments_path %></p>
-					</div>			
-				<% else %>
-			        <table class="table table-hover">
-			            <thead>
-			                <tr>
-			                    <th class="col-md-4">
-			                        <%= t :name %>
-			                    </th>
-			                    <th class="col-md-2">
-			                        <span class="line"></span> <%= t :price %>
-			                    </th>
-			                    <th class="col-md-2">
-			                    </th>
-			                </tr>
-			            </thead>
-			            <tbody>
-			            
-				            <% @treatments.each do |treatment| %>
-					            <tr class="<% if treatment.id == @treatments.first.id %>first<% end %>">	
-					            	<td>
-					                    <span class="name">
-					                    	<%= treatment.name %>
-					                   	</span>
-					                </td>
-					                <td>
-						                <% if !treatment.missing_info? %>	 
-							                <%= number_to_currency_with_symbol(treatment.price)%>
-							            <% else %>
-						  					<%= t :treatment_without_price %>					  				
-										<% end %>
-									</td>
-
-					                <td>
-					                	<ul class="actions">
-		                                    <li><%= link_to t(:edit), edit_treatment_path(treatment) %></li>
-											<li class="last"><%= link_to t(:delete), treatment, :method => :delete, data: { confirm: t(:are_you_sure) } %>
-											</li>
-		                                </ul>								
-					                </td>
-					            </tr>
-					        <% end %>
-
-					    </tbody>
-					</table>
-				<% end %>
+<% if !@treatments.empty? %>
+	<div class="page-header mb-4">
+		<div class="row align-items-center">
+			<div class="col">
+				<div class="page-pretitle">
+					TRANSLATE
+				</div>
+				<h2 class="page-title">
+					<%= t :treatments %>
+				</h2>
+			</div>
+			<div class="col-auto ms-auto">
+				<div class="btn-list">
+					<%= link_to new_treatment_url, class: "btn btn-primary d-none d-sm-inline-block" do %>
+						<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg><!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+						<%= t(:create_new_treatment) %>
+					<% end %>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
 
+	<div class="page-body">
+		<div class="card">
+			<table class="table table-vcenter table-mobile-md card-table">
+				<thead>
+					<tr>
+						<th><%= t :name %></th>
+						<th><%= t :price %></th>
+						<th><%= t :status %>
+							<%= help_tag t 'help.treatments.status' %>
+						</th>
+						<th class="w-1"></th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<% @treatments.each do |treatment| %>
+						<tr>
+							<td data-label="<%= t :name %>">
+								<%= treatment.name %>
+							</td>
+							<td class="text-muted" data-label="<%= t :price %>">
+								<%= number_to_currency_with_symbol treatment.price %>
+							</td>
+							<td class="text-muted" data-label="<%= t :status %>">
+								<% if !treatment.missing_info? %>	 
+									<%= label_tag t(:valid) %>
+								<% else %>
+									<%= label_tag t(:invalid), :red %>
+								<% end %>
+							</td>
+							<td>
+								<div class="btn-list flex-nowrap">
+									<%= component :dropdown do %>
+										<%= link_to t(:edit), edit_treatment_path(treatment), class: "dropdown-item" %>
+										<%= link_to t(:delete), treatment, :method => :delete, data: { confirm: t(:are_you_sure) }, class: "dropdown-item text-red" %>
+									<% end %>
+								</div>
+							</td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+<% else %>
+	<%= component :empty, title: t("empty.treatments.title"), description: t("empty.treatments.description"), image_name: 'no-data.svg' do %>
+		<div class="btn-list">
+			<%= link_to t(:create_new_treatment), new_treatment_url, class: "btn btn-primary d-none d-sm-inline-block" %>
+			<%= link_to t("empty.treatments.cta"), predefined_treatments_treatments_path, class: "btn" %>
+		</div>
+	<% end %>
+<% end %>

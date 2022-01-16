@@ -1,64 +1,91 @@
-<div id="pad-wrapper" class="user-profile">
-
-	<!-- header -->
-	<div class="row header">
-			<div class="col-md-8">
-					<img src="<%= avatar_url(@patient.email,'100x100')%>" alt="contact" class="avatar img-circle" data-toggle="tooltip" title="<%= t :gravatar_tooltip %>" data-placement="bottom" />
-					<h3 class="name"><%= @patient.fullname %></h3>
-					<span class="area"><%= t :uid %> <%= @patient.uid %></span>
-			</div>
-
-	</div>
+<div class="page-header mb-4">
+  <div class="row g-2 align-items-center">
+    <div class="col-auto me-2">
+      <span class="avatar rounded-circle avatar-lg"><%= @patient.initials %></span>
+    </div>
+    <div class="col">
+      <h4 class="m-0">
+        <h2 class="page-title">
+          <%= @patient.fullname %>
+        </h2>
+      </h4>
+      <div class="text-muted">
+        <%= @patient.uid %><br />
+        <span data-toggle="tooltip" title="<%= @patient.date_of_birth.to_formatted_s(:long) %>" data-placement="top"><%= @patient.age%> <%= t(:years_old).downcase %></span>
+      </div>
+    </div>
+    <div class="col-auto">
+      <div class="btn-list">
+        <%= link_to @patient, class: "btn d-none d-sm-inline-block" do %>
+		      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"></path> <line x1="5" y1="12" x2="19" y2="12"></line> <line x1="5" y1="12" x2="11" y2="18"></line> <line x1="5" y1="12" x2="11" y2="6"></line></svg>
+          <%= t(:profile) %>
+        <% end %>
+      </div>
+    </div>
+  </div>    
 </div>
 
-<div id="pad-wrapper" class="new-user">
-	<div class="row form-wrapper">
-			<div class="col-md-8 with-sidebar">
+<div class="page-body">
+  <div class="row row-cards">
+    <div class="col-md-8">
+      <div class="card mb-3">
+        <!-- Balance table -->
+        <div class="card-table table-responsive">
+          <table id="patient_balance" class="table table-vcenter">
+            <thead>
+              <tr>
+                <th><%= t :notes %></th>
+                <th class="text-end"><%= t :expense %></th>
+                <th class="text-end"><%= t :income %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @balances.each do |balance| %>
+                <%= render :partial => "show", :locals => {:balance => balance}%>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
 
-				<!-- Balance table -->
-				<table id="patient_balance" class="table table-hover">
-					<thead>
-						<tr>
-							<th width="col-md-6"><%=t :notes %></th>
-							<th width="col-md-3"><span class="line"></span> <%=t :expense %></th>
-							<th width="col-md-3"><span class="line"></span> <%=t :income %></th>
-						</tr>
-					</thead>
-					<tbody>
-						<% @balances.each do |balance| %>
-							<%= render :partial => "show", :locals => {:balance => balance}%>
-						<% end %>
-					</tbody>
-					<tfoot>
-						<tr>
-							<td></td>
-							<td></td>
-							<td><h5><%=link_to number_to_currency_with_symbol(@total), patient_balances_path(:format => :csv), :title => t(:download_as_csv_file) %></h5></td>
-						</tr>
-					</tfoot>
-				</table>
+        <div class="card-footer text-end">
+          <%= link_to patient_balances_path(:format => :csv), :title => t(:download_as_csv_file) do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"></path> <path d="M14 3v4a1 1 0 0 0 1 1h4"></path> <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path> <line x1="12" y1="11" x2="12" y2="17"></line> <polyline points="9 14 12 17 15 14"></polyline></svg>
+            
+            <span id="total-price"><%= number_to_currency_with_symbol(@total) %></span>
+          <% end %>
+        </div>
+      </div>
+    
+      <div class="card">
+        <div class="card-body">
+          <!-- Entry form -->
+          <%= render "new" %>
+        </div>
+      </div>  
+    </div>
 
-				<!-- Entry form -->
-				<%= render "new" %>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <%= t :treatments %> 
+          </h3>
+        </div>
 
-			</div>
-
-			<div class="col-md-4 hidden-xs form-sidebar">
-				<h6><%= t :treatments %></h6>
-
-				<% if @treatments.empty? %>
-					<p><%= t(:no_treatments_message) %></p>
-				<% else %>
-					<ul>
-						<% @treatments.each do |treatment| %>
-							<li><small><a class="quick-entry" href="#" data-price="<%=treatment.price%>"><%= treatment.name %></a></small></li>
-						<% end %>
-					</ul>
-				<% end %>
-
-			</div>
-	</div>
-
+        <div class="card-body">
+          <% if @treatments.empty? %>
+            <p><%= t(:no_treatments_message) %></p>
+          <% else %>
+            <ul class="nav nav-pills nav-vertical">
+              <% @treatments.each do |treatment| %>
+                <li class="nav-item"><a class="nav-link quick-entry" href="#" data-price="<%=treatment.price%>"><%= treatment.name %></a></small></li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>

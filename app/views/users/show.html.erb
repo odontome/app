@@ -1,31 +1,32 @@
-<div id="pad-wrapper" class="user-profile">
-    <!-- header -->
-    <div class="row header">
-        <div class="col-md-8">
-            <img src="<%= avatar_url(@user.email,'100x100')%>" alt="contact" class="avatar img-circle" data-toggle="tooltip" title="<%= t :gravatar_tooltip %>" data-placement="bottom" />
-            <h3 class="name"><%= @user.fullname %></h3>
-            <span class="area">
-            	<% if !@user.last_login_at.nil? %>
-            		<%= t :last_login_at_with_date, date:(time_ago_in_words @user.last_login_at) %>
-            	<% else %>
-            		<%= t :never_logged_in %>
-            	<% end %>
-            </span>
-        </div>
-
-    	<div class="pull-right doctor-status">
-			<% if user_is_admin?(@user) %>
-				<%= label_tag @user.roles %>
-			<% end %>
-		</div>
-
+<div class="page-header mb-4">
+  <div class="row g-2 align-items-center">
+    <div class="col-auto me-2">
+      <span class="avatar avatar-lg rounded-circle"><%= @user.initials %></span>
     </div>
-
-    <div class="row profile">
-        <div class="col-md-12 bio">
-            <div class="profile-box">
-
-            </div>
-        </div>
+    <div class="col">
+      <h4 class="m-0">
+        <h2 class="page-title">
+          <%= @user.fullname %>
+        </h2>
+      </h4>
+      <div class="text-muted">
+        <%= @user.email %>
+      </div>
+      <div class="small mt-1">
+        <% if user_is_admin?(@user) %>
+          <%= label_tag @user.roles, :red %>
+        <% else %>
+          <%= label_tag @user.roles, :green %>
+        <% end %>
+      </div>
     </div>
+    <div class="col-auto">
+      <div class="btn-list">
+        <%= link_to t(:edit), edit_user_path(@user), class: "btn" %>
+        <% if user_is_admin? && @user != current_user %>
+          <%= link_to t(:delete), @user, method: :delete, data: { confirm: t(:are_you_sure_no_undo) }, class: "btn btn-outline-danger" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

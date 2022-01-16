@@ -37,8 +37,7 @@ class AppointmentsController < ApplicationController
     @appointment.starts_at = Time.at(params[:appointment][:starts_at].to_i)
     @appointment.datebook_id = params[:datebook_id]
 
-    # if "as_values_patient_id" is not empty use that, otherwise use "patient_id"
-    patient_id_or_name = params[:as_values_patient_id] != '' ? params[:as_values_patient_id] : (params[:appointment][:patient_id])
+    patient_id_or_name = params[:appointment][:patient_id].blank? ? params[:as_values_patient_id] : params[:appointment][:patient_id]
     @appointment.patient_id = Patient.find_or_create_from(patient_id_or_name, current_user.practice_id)
 
     # since the datebook_id can be freely passed, make sure its ours
@@ -75,16 +74,9 @@ class AppointmentsController < ApplicationController
 
     # if there is no `as_values_patient_id` the appointment is just getting moved
     # otherwise, clean up the fields
-    if !params[:as_values_patient_id].nil?
-      # clean up the 'as_values_patient_id'
-      as_values_patient_id = params[:as_values_patient_id].nil? ? '' : params[:as_values_patient_id].gsub(',', '')
-
-      if as_values_patient_id.empty?
-        params[:appointment][:patient_id] =
-          Patient.find_or_create_from(params[:appointment][:patient_id], current_user.practice_id)
-      else
-        params[:appointment][:patient_id] = as_values_patient_id
-      end
+    if params[:appointment][:patient_id].blank? && params[:as_values_patient_id].present?
+      params[:appointment][:patient_id] =
+        Patient.find_or_create_from(params[:as_values_patient_id], current_user.practice_id)
     end
 
     respond_to do |format|

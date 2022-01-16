@@ -1,21 +1,14 @@
 <%= form_tag(patient_balances_path, :method => "post", :remote => true, :id => "entry-form") do %>
-
-	<p class="form-group col-md-12">
-			<label for="balance_amount"> <%=t :amount %></label> *
+	<div class="mb-3">
+			<label for="balance_amount" class="form-label required"> <%= t :amount %></label>
 	    <%= number_field_tag "balance[amount]", nil, { :class => "form-control" } %>
-	    <sub><%= t :balance_discount_hint %></sub>
-	</p>
+      <%= content_tag "small", t(:balance_discount_hint), class: "text-muted" %>
+	</div>
 
-	<p class="form-group col-md-12">
-		<label for="balance_notes"> <%=t :additional_notes %></label> *
+	<div class="mb-3">
+		<label for="balance_notes" class="form-label"> <%=t :additional_notes %></label>
 	  <%= text_area_tag "balance[notes]", nil, { :rows => 2, :maxlength => 160, :class => "form-control" }  %>
-	</p>
+	</div>
 
-	<p class="form-group col-md-12">
-		<%= submit_tag(t(:save), :class => "btn btn-primary", data: { disable_with: t(:please_wait) }) %>
-		<span class="cancel"><%= t :or %>
-			<%= link_to t(:cancel).downcase, @patient %>
-		</span>
-	</p>
-
+	<%= submit_tag(t(:save), :class => "btn btn-primary ms-auto", data: { disable_with: t(:please_wait) }) %>
 <% end %>
