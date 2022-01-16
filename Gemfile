@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '2.7.2'
+ruby '2.7.5'
 
 gem 'bcrypt', '~> 3.1.7'
 gem 'jquery-rails', '~> 4.4.0'
