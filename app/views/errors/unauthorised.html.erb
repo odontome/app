@@ -1,9 +1,14 @@
-<div id="pad-wrapper">
-    <!-- header -->
-    <div class="row">
-        <div class="col-md-12 error-page">
-          <h1><%= t "errors.titles.unauthorised" %></h1>
-          <p><%= t "errors.messages.unauthorised" %></p>
-        </div>
-    </div>
+<div class="empty">
+  <div class="empty-header">401</div>
+  <p class="empty-title"><%= t "errors.titles.unauthorised" %></p>
+  <p class="empty-subtitle text-muted">
+    <%= t "errors.messages.unauthorised" %>
+  </p>
+  <div class="empty-action">
+    <a href="/" class="btn btn-primary">
+      <!-- Download SVG icon from http://tabler-icons.io/i/arrow-left -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="5" y1="12" x2="19" y2="12" /><line x1="5" y1="12" x2="11" y2="18" /><line x1="5" y1="12" x2="11" y2="6" /></svg>
+      <%= t "errors.cta.go_home" %>
+    </a>
+  </div>
 </div>

@@ -173,6 +173,9 @@ es:
       not_found: Mmm, no lo encontré
       server_error: Ay...
       form_update: Oh oh, ourrió un problema
+    cta:
+      try_again: ¡Inténtalo de nuevo!
+      go_home: Ir a la página principal
     messages:
       invalid_date_range: Las fechas son invalidas.
       invalid_email_format: Formato invalido.

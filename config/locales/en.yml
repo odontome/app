@@ -180,6 +180,9 @@ en:
       not_found: Hmmm, I can't find that
       server_error: Oh oh...
       form_update: Uh oh, something went wrong
+    cta:
+      try_again: Try again
+      go_home: Go home
     messages:
       invalid_date_range: The chosen dates are invalid
       invalid_email_format: Invalid format

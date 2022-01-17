@@ -20,12 +20,11 @@
   <%= csrf_meta_tags %>
 </head>
 
-<body class=" border-top-wide border-primary d-flex flex-column">
+<body class="border-top-wide border-primary d-flex flex-column">
   <div class="page page-center">
     <div class="container-narrow py-4">
-      <div class="text-center mb-4">
-        <%= link_to (image_tag "logo.png", :title => t(:home), :class =>
-          "navbar-brand navbar-brand-autodark", :width => 75), root_path %>
+      <div class="text-center mb-2">
+        <%= link_to (image_tag "logo.png", :title => t(:home), width: 60), root_path %>
       </div>
 
       <%= yield %>
