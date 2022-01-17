@@ -27,31 +27,31 @@ jobs:
           - 5432:5432
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.7.2
-        bundler-cache: true
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.5
+          bundler-cache: true
 
-    - name: Install PostgreSQL client
-      run: |
-        sudo apt-get -yqq install libpq-dev
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get -yqq install libpq-dev
 
-    - name: Build App
-      env:
-        PGHOST: localhost
-        PGUSER: postgres
-        PGPASSWORD: postgres
-        RAILS_ENV: test
-      run: |
-        bin/rails db:setup
+      - name: Build App
+        env:
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          RAILS_ENV: test
+        run: |
+          bin/rails db:setup
 
-    - name: Run Tests
-      env:
-        PGHOST: localhost
-        PGUSER: postgres
-        PGPASSWORD: postgres
-        RAILS_ENV: test
-      run: |
-        bundle exec rake test
+      - name: Run Tests
+        env:
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          RAILS_ENV: test
+        run: |
+          bundle exec rake test
