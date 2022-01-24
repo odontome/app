@@ -256,6 +256,9 @@ en:
         subject: Your appointment with %{practice_name} is soon
       appointment_scheduled_email:
         subject: Your appointment with %{practice_name}
+        invite:
+          summary: Dentist appointment
+          description: '%{doctor_name} has scheduled an appointment with you.'
       birthday:
         subject: Happy birthday!
       review:
