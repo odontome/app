@@ -24,6 +24,10 @@ class PatientMailer < ApplicationMailer
   def appointment_scheduled_email(patient_email, patient_name, start_time, end_time, practice_name, practice_locale, practice_timezone, doctor, practice_email)
     # create the invite
     cal = Icalendar::Calendar.new
+    cal.timezone do |t|
+      t.tzid = practice_timezone
+    end
+
     cal.event do |e|
       e.dtstart     = Icalendar::Values::DateTime.new(start_time)
       e.dtend       = Icalendar::Values::DateTime.new(end_time)

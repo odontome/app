@@ -15,6 +15,6 @@ class PatientMailerPreview < ActionMailer::Preview
 
   def appointment_scheduled_email
     doctor = Doctor.last
-    PatientMailer.appointment_scheduled_email("rieraraul@gmail.com", "Raul Riera", 12.hours.from_now, 13.hours.from_now, "Odonto Dev Practice", "es", "UTC", doctor, "practice@practice.com")
+    PatientMailer.appointment_scheduled_email("rieraraul@gmail.com", "Raul Riera", 12.hours.from_now, 13.hours.from_now, "Odonto Dev Practice", "es", "Eastern Time (US & Canada)", doctor, "practice@practice.com")
   end
 end
