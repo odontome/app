@@ -238,6 +238,9 @@ es:
         subject: Tu cita con %{practice_name} se acerca
       appointment_scheduled_email:
         subject: Tu cita con %{practice_name}
+        invite:
+          summary: Cita odontologica
+          description: '%{doctor_name} te ha invitado a una cita odontologica.'
       birthday:
         subject: ¡Feliz cumpleaños!
       review:

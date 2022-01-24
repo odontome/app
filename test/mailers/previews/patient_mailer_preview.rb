@@ -2,7 +2,6 @@
 
 # Preview all emails at http://localhost:3000/rails/mailers/patient_mailer
 class PatientMailerPreview < ActionMailer::Preview
-  # Preview this email at http://localhost:3000/rails/mailers/patient_mailer/review_recent_appointment
   def review_recent_appointment
     appointment = {
       'appointment_id' => 1,
@@ -12,5 +11,10 @@ class PatientMailerPreview < ActionMailer::Preview
     }
 
     PatientMailer.review_recent_appointment appointment
+  end
+
+  def appointment_scheduled_email
+    doctor = Doctor.last
+    PatientMailer.appointment_scheduled_email("rieraraul@gmail.com", "Raul Riera", 12.hours.from_now, 13.hours.from_now, "Odonto Dev Practice", "es", "UTC", doctor, "practice@practice.com")
   end
 end
