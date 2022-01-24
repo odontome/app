@@ -135,9 +135,6 @@ en:
   close_your_account: Close your account
   color: Color
   comments: Comments
-  consider_using_gravatar:
-    Register this email with gravatar.com to use it as a profile
-    image.
   contact_information: Contact information
   contact_us: Contact us
   create_new_datebook: Create new datebook
@@ -202,7 +199,6 @@ en:
   future_appointments: Future appointments
   past_appointments: Past appointments
   gender: Gender
-  gravatar_tooltip: Avatar taken from gravatar.com
   hide_past_appointments: Hide past appointments
   home: Home
   help:

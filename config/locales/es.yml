@@ -132,7 +132,6 @@ es:
   close_your_account: Cerrar tu cuenta
   color: Color
   comments: Comentarios
-  consider_using_gravatar: Regístra este email en gravatar.com para utilizar imágenes de perfil.
   contact_information: Información de contácto
   contact_us: Contacta con nosotros
   create_new_datebook: Nueva agenda
@@ -195,7 +194,6 @@ es:
   future_appointments: Próximas citas
   past_appointments: Citas anteriores
   gender: Sexo
-  gravatar_tooltip: Imagen de perfil tomada de gravatar.com
   hide_past_appointments: Esconder citas pasadas
   valid: Valido
   invalid: Invalido
