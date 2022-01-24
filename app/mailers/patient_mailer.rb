@@ -35,10 +35,6 @@ class PatientMailer < ApplicationMailer
 
       # create the invite
       cal = Icalendar::Calendar.new
-      cal.timezone do |t|
-        t.tzid = practice_timezone
-      end
-
       cal.event do |e|
         e.dtstart     = Icalendar::Values::DateTime.new(start_time.in_time_zone(@practice_timezone))
         e.dtend       = Icalendar::Values::DateTime.new(end_time.in_time_zone(@practice_timezone))
