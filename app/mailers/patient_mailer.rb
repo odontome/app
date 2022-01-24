@@ -21,27 +21,7 @@ class PatientMailer < ApplicationMailer
     end
   end
 
-  def appointment_scheduled_email(patient_email, patient_name, start_time, end_time, practice_name, practice_locale, practice_timezone, doctor, practice_email)
-    # create the invite
-    cal = Icalendar::Calendar.new
-    cal.timezone do |t|
-      t.tzid = practice_timezone
-    end
-
-    cal.event do |e|
-      e.dtstart     = Icalendar::Values::DateTime.new(start_time)
-      e.dtend       = Icalendar::Values::DateTime.new(end_time)
-      e.summary     = I18n.t 'mailers.patient.appointment_scheduled_email.invite.summary'
-      e.description = I18n.t 'mailers.patient.appointment_scheduled_email.invite.description', doctor_name: doctor.fullname
-
-      e.alarm do |a|
-        a.action  = "AUDIO"
-        a.trigger = "-PT15M"
-      end
-    end
-
-    cal.publish
-    
+  def appointment_scheduled_email(patient_email, patient_name, start_time, end_time, practice_name, practice_locale, practice_timezone, doctor, practice_email)    
     # temporarely set the locale and then change it back
     # when the block finishes
     I18n.with_locale(practice_locale) do
@@ -52,6 +32,26 @@ class PatientMailer < ApplicationMailer
       @appointment_date = I18n.l start_time.in_time_zone(@practice_timezone).to_date, format: :day_and_date
       @appointment_start_time = I18n.l start_time.to_time.in_time_zone(@practice_timezone), format: :just_the_time
       @appointment_end_time = I18n.l end_time.to_time.in_time_zone(@practice_timezone), format: :just_the_time
+
+      # create the invite
+      cal = Icalendar::Calendar.new
+      cal.timezone do |t|
+        t.tzid = practice_timezone
+      end
+
+      cal.event do |e|
+        e.dtstart     = Icalendar::Values::DateTime.new(start_time.in_time_zone(@practice_timezone))
+        e.dtend       = Icalendar::Values::DateTime.new(end_time.in_time_zone(@practice_timezone))
+        e.summary     = I18n.t 'mailers.patient.appointment_scheduled_email.invite.summary'
+        e.description = I18n.t 'mailers.patient.appointment_scheduled_email.invite.description', doctor_name: doctor.fullname
+
+        e.alarm do |a|
+          a.action  = "AUDIO"
+          a.trigger = "-PT15M"
+        end
+      end
+
+      cal.publish
 
       attachments['invite.ics'] = { 
         mime_type: 'text/calendar',
