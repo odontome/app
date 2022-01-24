@@ -163,7 +163,7 @@
 			<div class="card-body">
 			<div class="row">
 				<div class="col-auto">
-				  <span class="avatar rounded"></span>
+				  <span class="avatar rounded-circle">∞</span>
 				</div>
 				<div class="col">
 				  <div class="font-weight-medium"><%= t :everyone %></div>
@@ -180,8 +180,9 @@
         <div class="card-body">
           <div class="row">
             <div class="col-auto">
-              <span class="avatar rounded" style="background-image: url(<%= avatar_url(doctor.email) %>)">
-              <span class="badge" style="background-color: <%= doctor.color %>"></span></span>
+              <span class="avatar rounded-circle">
+								<%= doctor.initials %>
+              	<span class="badge" style="background-color: <%= doctor.color %>"></span>
               </span>
             </div>
           <div class="col">
