@@ -14,6 +14,9 @@ $(function() {
       if (ui.item.id) {
         $('#appointment_patient_id').val(ui.item.id);
         $('.autocomplete').val(ui.item.fullname);
+        // Update the patient's URL in the actions menu
+        $('#patient-profile-link').attr('href', '/patients/' + ui.item.id);
+
         didSelect = true;
       }
 
