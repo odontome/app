@@ -157,4 +157,14 @@ class PatientTest < ActiveSupport::TestCase
     assert_equal patient.firstname, 'Peter'
     assert_equal patient.lastname, 'Lopez'
   end
+
+  test 'patient name can be used as initials' do
+    patient = Patient.new(firstname: 'Antonio', lastname: 'Santos')
+    patient_empty_firstname = Patient.new(firstname: '', lastname: 'Santos')
+    patient_empty_lastname = Patient.new(firstname: 'Antonio', lastname: '')
+
+    assert_equal patient.initials, 'AS'
+    assert_equal patient_empty_firstname.initials, 'S'
+    assert_equal patient_empty_lastname.initials, 'A'
+  end
 end

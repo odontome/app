@@ -66,4 +66,10 @@ class DoctorTest < ActiveSupport::TestCase
 
     assert !doctor.is_deleteable
   end
+
+  test 'doctor name can be used as initials' do
+    doctor = Doctor.new(firstname: 'Ruth', lastname: 'Roberts')
+
+    assert_equal doctor.initials, 'RR'
+  end
 end

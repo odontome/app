@@ -83,4 +83,10 @@ class UserTest < ActiveSupport::TestCase
     assert user.save
     assert_not_equal initial_token, user.perishable_token
   end
+
+  test 'user name can be used as initials' do
+    user = User.new(firstname: 'Esteban', lastname: 'Roberts')
+
+    assert_equal user.initials, 'ER'
+  end
 end
