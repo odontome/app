@@ -1,53 +1,58 @@
-<div id="pad-wrapper" class="table-wrapper users-list">
-
-	<div class="row header col-md-12">
-        <h3><%= @practices.size %> practices</h3>
+<div class="page-header mb-4">
+  <div class="row align-items-center">
+    <div class="col">
+			<div class="page-pretitle">
+			  Showing <%= @practices.count %> of <%= @total_practices %> results
+      </div>
+      <h2 class="page-title">
+        Practices
+      </h2>
     </div>
+  </div>
+</div>
 
-	<div class="row">
-	    <div class="col-md-12">
-	        <table class="table table-hover">
-	            <thead>
-	                <tr>
-	                    <th class="col-md-1">
-	                        ID
-	                    </th>
-	                    <th class="col-md-3">
-	                        <span class="line"></span> Name
-	                    </th>
-						<th class="col-md-1">
-	                        <span class="line"></span> Subscription
-	                    </th>
-	                    <th class="col-md-1">
-	                        <span class="line"></span> Datebooks
-	                    </th>
-	                    <th class="col-md-1">
-	                        <span class="line"></span> Patients
-	                    </th>
-	                    <th class="col-md-1">
-	                        <span class="line"></span> Doctors
-	                    </th>
-	                    <th class="col-md-4">
-	                        <span class="line"></span> Joined
-	                    </th>
-	                </tr>
-	            </thead>
-	            <tbody>
-
-				<% @practices.each do |practice| %>
+<div class="page-body">
+  <div class="card">
+		<div class="table-responsive">
+			<table class="table table-vcenter">
+				<thead>
 					<tr>
-						<td><%= practice.id %></td>
-						<td><span data-toggle="tooltip" title="<%= practice.email %>"><%= practice.name %></span> <% if practice.cancelled_at %> <br /> <sub class="label label-danger">(Cancelled at <%= practice.cancelled_at %></sub> <% end %> </td>
-						<td><span data-toggle="tooltip" title="Next billing on <%= practice.current_period_end.strftime('%F') %>"><%= practice.subscription.status.titlecase %></span></td>
-						<td><%= practice.datebooks_count %></td>
-						<td><%= practice.patients_count %></td>
-						<td><%= practice.doctors_count %></td>
-						<td><%= practice.created_at.strftime('%F at %I:%M %P') %></td>
+						<th>id</th>
+						<th>name</th>
+						<th>subscription</th>
+						<th>datebooks</th>
+						<th>patients</th>
+						<th>doctors</th>
+						<th>joined</th>
 					</tr>
-				<% end %>
-			</tbody>
-
-		</table>
-
+				</thead>
+				<tbody>
+					<% @practices.each do |practice| %>
+						<tr>
+							<td><%= practice.id %></td>
+							<td>
+								<strong><%= practice.name %></strong>
+								<br /> 
+								<small class="text-muted"><%= practice.email %></small>
+								
+								<% if practice.cancelled_at %> 
+									<br /> 
+									<small class="text-muted">Cancelled at <%= practice.cancelled_at %></small>
+								<% end %>
+							</td>
+							<td>
+								<%= practice.subscription.status.titlecase %>
+								<br />
+								<small class="text-muted">Next billing on <%= practice.subscription.current_period_end.strftime('%F') %></small>
+							</td>
+							<td><%= practice.datebooks_count %></td>
+							<td><%= practice.patients_count %></td>
+							<td><%= practice.doctors_count %></td>
+							<td><%= practice.created_at.strftime('%F at %I:%M %P') %></td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
