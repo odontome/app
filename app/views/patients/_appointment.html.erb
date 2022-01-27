@@ -25,6 +25,12 @@
         <%= t :distance_in_words, date: distance_of_time_in_words_to_now(appointment.starts_at) %>
       <% end %>
     </div>
+
+    <% if !appointment.notes.blank? %>
+      <div class="text-muted pt-1">
+        <mark><%= appointment.notes %></mark>
+      </div>
+    <% end %>
   </div>
   <% if !past_tense %>
     <div class="col-auto align-self-center">
