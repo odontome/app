@@ -80,7 +80,7 @@ class AppointmentsController < ApplicationController
     end
 
     respond_to do |format|
-      if @appointment.update(params[:appointment])
+      if @appointment.update(appointment_params)
         format.js {} # update.js.erb
       else
         format.js do
@@ -103,5 +103,11 @@ class AppointmentsController < ApplicationController
         end
       end
     end
+  end
+
+  private
+
+  def appointment_params
+    params.require(:appointment).permit(:datebook_id, :doctor_id, :patient_id, :starts_at, :ends_at, :notes, :status)
   end
 end

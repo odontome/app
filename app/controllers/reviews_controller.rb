@@ -47,7 +47,7 @@ class ReviewsController < ApplicationController
         @review.appointment_id = params[:appointment_id]
       end
     rescue Exception
-      redirect_to 'https://www.odonto.me'
+      redirect_to 'https://www.odonto.me', allow_other_host: true
       return
     end
 

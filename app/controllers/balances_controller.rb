@@ -19,7 +19,7 @@ class BalancesController < ApplicationController
   end
 
   def create
-    @balance = Balance.new(params[:balance])
+    @balance = Balance.new(balance_params)
     patient = Patient.with_practice(current_user.practice_id).find(params[:patient_id])
     @balance.patient_id = patient.id
 
@@ -34,5 +34,11 @@ class BalancesController < ApplicationController
         end
       end
     end
+  end
+
+  private
+
+  def balance_params
+    params.require(:balance).permit(:patient_id, :amount, :notes)
   end
 end

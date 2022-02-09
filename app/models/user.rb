@@ -69,8 +69,4 @@ class User < ApplicationRecord
   def reset_perishable_token!
     update_attribute(:perishable_token, SecureRandom.urlsafe_base64(15))
   end
-
-  def user_params
-    params.require(:treausertment).permit(:firstname, :lastname, :email, :password, :password_confirmation)
-  end
 end

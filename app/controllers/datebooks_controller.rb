@@ -38,7 +38,7 @@ class DatebooksController < ApplicationController
   end
 
   def create
-    @datebook = Datebook.new(params[:datebook])
+    @datebook = Datebook.new(datebook_params)
     @datebook.practice_id = current_user.practice_id
 
     respond_to do |format|
@@ -58,7 +58,7 @@ class DatebooksController < ApplicationController
     @datebook = Datebook.with_practice(current_user.practice_id).find params[:id]
 
     respond_to do |format|
-      if @datebook.update(params[:datebook])
+      if @datebook.update(datebook_params)
         format.html { redirect_to(datebooks_url, notice: t(:datebook_updated_success_message)) }
       else
         format.html { render action: 'edit' }
@@ -76,5 +76,11 @@ class DatebooksController < ApplicationController
         format.html { redirect_to(datebooks_url, error: I18n.t('errors.messages.has_appointments')) }
       end
     end
+  end
+
+  private
+
+  def datebook_params
+    params.require(:datebook).permit(:name, :starts_at, :ends_at, :practice_id)
   end
 end

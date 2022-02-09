@@ -16,10 +16,4 @@ class Review < ApplicationRecord
   validates_numericality_of :score, :appointment_id
   validates_uniqueness_of :appointment_id
   validates :comment, length: { within: 0..255 }
-
-  private
-
-  def review_params
-    params.require(:review).permit(:appointment_id, :score, :comment)
-  end
 end

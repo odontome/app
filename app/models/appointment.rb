@@ -95,8 +95,4 @@ class Appointment < ApplicationRecord
   def set_ends_at
     self.ends_at = starts_at + 60.minutes if ends_at.nil?
   end
-
-  def appointment_params
-    params.require(:appointment).permit(:datebook_id, :doctor_id, :patient_id, :starts_at, :ends_at, :notes, :status)
-  end
 end

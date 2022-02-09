@@ -5,7 +5,7 @@ class NotesController < ApplicationController
 
   def create
     @noteable = find_noteable
-    @note = @noteable.notes.build(params[:note])
+    @note = @noteable.notes.build(note_params)
     @note.user_id = current_user.id
 
     respond_to do |format|
@@ -36,5 +36,9 @@ class NotesController < ApplicationController
       return Regexp.last_match(1).classify.constantize.find(value) if name =~ /(.+)_id$/
     end
     nil
+  end
+
+  def note_params
+    params.require(:note).permit(:notes)
   end
 end

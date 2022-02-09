@@ -29,7 +29,7 @@ module Odontome
 
     config.enable_dependency_loading = true
     config.autoload_paths << "#{Rails.root}/lib"
-    config.load_defaults 6.0
+    config.load_defaults 7.0
     
     ### Odonto.me stuff
 

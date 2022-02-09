@@ -33,7 +33,7 @@ class PracticesController < ApplicationController
   end
 
   def create
-    @practice = Practice.new(params[:practice])
+    @practice = Practice.new(practice_params)
 
     respond_to do |format|
       if @practice.save
@@ -63,7 +63,7 @@ class PracticesController < ApplicationController
     session[:locale] = params[:practice][:locale]
 
     respond_to do |format|
-      if @practice.update(params[:practice])
+      if @practice.update(practice_params)
         format.html { redirect_to(practice_settings_url, notice: t(:practice_updated_success_message)) }
       else
         format.html { render action: 'settings' }
@@ -127,5 +127,11 @@ class PracticesController < ApplicationController
         headers['Content-disposition'] = "attachment; filename=#{starts_at}.csv"
       end
     end
+  end
+
+  private
+
+  def practice_params
+    params.require(:practice).permit(:name, :locale, :timezone, :currency_unit, :email, users_attributes: [:firstname, :lastname, :email, :password, :password_confirmation])
   end
 end

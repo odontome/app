@@ -33,8 +33,4 @@ class Datebook < ApplicationRecord
       false
     end
   end
-
-  def datebook_params
-    params.require(:datebook).permit(:name, :starts_at, :ends_at, :practice_id)
-  end
 end

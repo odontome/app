@@ -25,7 +25,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params[:user])
+    @user = User.new(user_params)
     @user.practice_id = current_user.practice_id
 
     respond_to do |format|
@@ -46,7 +46,7 @@ class UsersController < ApplicationController
         format.html { render action: 'edit', error: I18n.t('errors.messages.unauthorised') }
       end
 
-      if @user.update(params[:user])
+      if @user.update(user_params)
         format.html { redirect_to(@user, notice: I18n.t(:user_updated_success_message)) }
       else
         format.html { render action: 'edit' }
@@ -61,5 +61,11 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(users_url) }
     end
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:firstname, :lastname, :email, :password, :password_confirmation)
   end
 end
