@@ -52,8 +52,4 @@ class Doctor < ApplicationRecord
       false
     end
   end
-
-  def doctor_params
-    params.require(:doctor).permit(:uid, :firstname, :lastname, :email, :gender, :speciality, :color, :practice_id)
-  end
 end

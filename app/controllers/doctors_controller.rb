@@ -22,7 +22,7 @@ class DoctorsController < ApplicationController
   end
 
   def create
-    @doctor = Doctor.new(params[:doctor])
+    @doctor = Doctor.new(doctor_params)
     @doctor.practice_id = current_user.practice_id
 
     respond_to do |format|
@@ -38,7 +38,7 @@ class DoctorsController < ApplicationController
     @doctor = Doctor.with_practice(current_user.practice_id).find(params[:id])
 
     respond_to do |format|
-      if @doctor.update(params[:doctor])
+      if @doctor.update(doctor_params)
         format.html { redirect_to(doctors_url, notice: t(:doctor_updated_success_message)) }
       else
         format.html { render action: 'edit' }
@@ -74,5 +74,11 @@ class DoctorsController < ApplicationController
     respond_to do |format|
       format.ics { render ics: @appointments }
     end
+  end
+
+  private
+
+  def doctor_params
+    params.require(:doctor).permit(:uid, :firstname, :lastname, :email, :gender, :speciality, :color, :practice_id)
   end
 end

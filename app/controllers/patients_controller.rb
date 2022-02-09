@@ -56,7 +56,7 @@ class PatientsController < ApplicationController
   end
 
   def create
-    @patient = Patient.new(params[:patient])
+    @patient = Patient.new(patient_params)
     @patient.practice_id = current_user.practice_id
 
     respond_to do |format|
@@ -72,7 +72,7 @@ class PatientsController < ApplicationController
     @patient = Patient.with_practice(current_user.practice_id).find(params[:id])
 
     respond_to do |format|
-      if @patient.update(params[:patient])
+      if @patient.update(patient_params)
         format.html { redirect_to(@patient, notice: I18n.t(:patient_updated_success_message)) }
       else
         format.html { render action: 'edit' }
@@ -88,5 +88,12 @@ class PatientsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(back_to) }
     end
+  end
+
+  private
+
+  def patient_params
+    params.require(:patient).permit(:uid, :firstname, :lastname, :fullname, :date_of_birth, :past_illnesses, :surgeries, :medications,
+                                    :drugs_use, :cigarettes_per_day, :drinks_per_day, :family_diseases, :emergency_telephone, :email, :telephone, :mobile, :address, :allergies, :practice_id)
   end
 end

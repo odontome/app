@@ -95,8 +95,4 @@ class Practice < ApplicationRecord
       current_period_end: 30.days.from_now
     )
   end
-
-  def practice_params
-    params.require(:practice).permit(:name, :users_attributes, :locale, :timezone, :currency_unit, :email)
-  end
 end

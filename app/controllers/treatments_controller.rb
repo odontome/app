@@ -16,7 +16,7 @@ class TreatmentsController < ApplicationController
   end
 
   def create
-    @treatment = Treatment.new(params[:treatment])
+    @treatment = Treatment.new(treatment_params)
     @treatment.practice_id = current_user.practice_id
 
     respond_to do |format|
@@ -32,7 +32,7 @@ class TreatmentsController < ApplicationController
     @treatment = Treatment.with_practice(current_user.practice_id).find(params[:id])
 
     respond_to do |format|
-      if @treatment.update(params[:treatment])
+      if @treatment.update(treatment_params)
         format.html { redirect_to(treatments_url, notice: t(:treatments_updated_success_message)) }
       else
         format.html { render action: 'edit' }
@@ -57,5 +57,11 @@ class TreatmentsController < ApplicationController
       flash[:notice] = t(:predefined_treatments_created_success_message)
     end
     redirect_to treatments_url
+  end
+
+  private
+
+  def treatment_params
+    params.require(:treatment).permit(:name, :price)
   end
 end
