@@ -29,7 +29,7 @@ class SubscriptionsController < ApplicationController
         status: 400
       }
     end
-    redirect_to session.url, status: 303
+    redirect_to session.url, status: 303, allow_other_host: true
   end
 
   def update
@@ -37,6 +37,6 @@ class SubscriptionsController < ApplicationController
       customer: current_user.practice.stripe_customer_id,
       return_url: request.base_url + '/practice/settings/',
     })
-    redirect_to portal_session.url, status: 303
+    redirect_to portal_session.url, status: 303, allow_other_host: true
   end
 end
