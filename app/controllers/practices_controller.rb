@@ -60,8 +60,6 @@ class PracticesController < ApplicationController
     @practice = current_user.practice
     @subscription = @practice.subscription
     
-    session[:locale] = params[:practice][:locale]
-
     respond_to do |format|
       if @practice.update(practice_params)
         format.html { redirect_to(practice_settings_url, notice: t(:practice_updated_success_message)) }

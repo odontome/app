@@ -31,11 +31,11 @@ class ApplicationController < ActionController::Base
   end
 
   def set_locale
-    I18n.locale = session[:locale] || I18n.default_locale
+    I18n.locale = current_user&.practice&.locale || I18n.default_locale
   end
 
   def set_timezone
-    Time.zone = current_user.practice.timezone if current_user
+    Time.zone = current_user&.practice&.timezone if current_user
   end
 
   private
