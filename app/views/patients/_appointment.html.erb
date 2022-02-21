@@ -19,11 +19,13 @@
       <% end %>
     </div>
     <div class="text-muted">
-      <% if past_tense %>
-        <%= t :ago_in_words, date: time_ago_in_words(appointment.starts_at) %>
-      <% else %>
-        <%= t :distance_in_words, date: distance_of_time_in_words_to_now(appointment.starts_at) %>
-      <% end %>
+      <span data-bs-toggle="tooltip" data-bs-placement="top" title="<%= l appointment.starts_at, format: :long %>">
+        <% if past_tense %>
+          <%= t :ago_in_words, date: time_ago_in_words(appointment.starts_at) %>
+        <% else %>
+          <%= t :distance_in_words, date: distance_of_time_in_words_to_now(appointment.starts_at) %>
+        <% end %>
+      </span>
     </div>
 
     <% if !appointment.notes.blank? %>
