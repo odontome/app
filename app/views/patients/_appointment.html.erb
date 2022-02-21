@@ -19,7 +19,7 @@
       <% end %>
     </div>
     <div class="text-muted">
-      <span data-bs-toggle="tooltip" data-bs-placement="top" title="<%= l appointment.starts_at, format: :long %>">
+      <span data-bs-toggle="tooltip" data-bs-placement="top" title="<%= l appointment.starts_at.in_time_zone(current_user.practice.timezone), format: :long %>">
         <% if past_tense %>
           <%= t :ago_in_words, date: time_ago_in_words(appointment.starts_at) %>
         <% else %>
