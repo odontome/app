@@ -29,10 +29,7 @@ gem 'rack-attack', '~> 6.6.0'
 
 group :development do
   gem 'i18n-tasks', '~> 0.9.37'
-  gem 'listen', '~> 3.7.0'
   gem 'rubocop'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring-watcher-listen', '~> 2.0.1'
 end
 
 group :test do
@@ -42,7 +39,6 @@ end
 
 group :development, :test do
   gem 'rails-controller-testing', '~> 1.0.5'
-  gem 'spring', '~> 2.1.0'
 end
 
 gem "bugsnag", "~> 6.24"
