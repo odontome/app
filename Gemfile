@@ -14,7 +14,7 @@ gem "webpacker", '~> 5.4.3'
 ### odonto.me specifc
 
 gem 'icalendar', '~> 2.7.1'
-gem 'rails-i18n', '~> 7.0.1'
+gem 'rails-i18n', '~> 7.0.3'
 gem 'taps', '~> 0.3.24'
 
 gem 'font-awesome-rails', '~> 4.7.0.8'
