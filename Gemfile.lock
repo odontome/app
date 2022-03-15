@@ -69,7 +69,7 @@ GEM
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.2)
-    bcrypt (3.1.16)
+    bcrypt (3.1.17)
     bugsnag (6.24.2)
       concurrent-ruby (~> 1.0)
     builder (3.2.4)
@@ -270,7 +270,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bcrypt (~> 3.1.7)
+  bcrypt (~> 3.1.17)
   bugsnag (~> 6.24)
   font-awesome-rails (~> 4.7.0.8)
   gibberish (~> 2.1.0)
