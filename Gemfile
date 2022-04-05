@@ -28,7 +28,7 @@ gem 'stripe', '~> 5.48.0'
 gem 'rack-attack', '~> 6.6.0'
 
 group :development do
-  gem 'i18n-tasks', '~> 0.9.37'
+  gem 'i18n-tasks', '~> 1.0.6'
   gem 'rubocop'
 end
 
