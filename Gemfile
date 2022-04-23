@@ -25,7 +25,7 @@ gem 'premailer-rails', '~> 1.11.1'
 
 gem 'pg', '~> 1.3.5'
 gem 'stripe', '~> 5.53.0'
-gem 'rack-attack', '~> 6.6.0'
+gem 'rack-attack', '~> 6.6.1'
 
 group :development do
   gem 'i18n-tasks', '~> 1.0.8'
