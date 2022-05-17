@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 ruby '3.1.0'
 
-gem 'bcrypt', '~> 3.1.17'
+gem 'bcrypt', '~> 3.1.18'
 gem 'jquery-rails', '~> 4.4.0'
 gem 'puma', '~> 5.6.4'
 gem 'rails', '~> 7.0'
