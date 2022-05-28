@@ -286,7 +286,7 @@ en:
   no_patient_found_new_one_will_be_created:
     No patient was found, a new one will be
     created
-  no_patients: You haven't created any patients so far.
+  no_patients: You haven't created any patients that start with this letter.
   no_treatments_message: You haven't created any treatments so far.
   no_user_with_that_email:
     There seems to be a problem. If you are still having problems,
