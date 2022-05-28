@@ -18,59 +18,65 @@
 
 <div class="page-body">
   <div class="card">
-    <table class="table table-vcenter table-mobile-md card-table">
-      <thead>
-        <tr>
-          <th><%= t :name %></th>
-          <th><%= t :uid %></th>
-          <th>
-            <%= t :status %>
-            <%= help_tag t 'help.patients.status' %>
-          </th>
-          <th><%= t :updated_at %></th>
-          <th class="w-1"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @patients.each do |patient| %>
+    <% if @patients.empty? %>
+      <div class="card-body">
+        <%= t :no_patients %>
+      </div>
+    <% else %>
+      <table class="table table-vcenter table-mobile-md card-table">
+        <thead>
           <tr>
-            <td data-label="<%= t :name %>">
-              <div class="d-flex py-1 align-items-center">
-                <span class="avatar me-2 rounded-circle"><%= patient.initials %></span>
-                <div class="flex-fill">
-                  <div class="font-weight-medium"><%= patient.fullname %></div>
-                  <div class="text-muted"><%= patient.email %></div>
-                </div>
-              </div>
-            </td>
-            <td class="text-muted" data-label="<%= t :uid %>">
-              <%= patient.uid %>
-            </td>
-            <td class="text-muted" data-label="<%= t :status %>">
-              <% if patient.missing_info? %>
-                <%= label_tag t(:incomplete), :red %>
-              <% else %>
-                <%= label_tag t(:active), :green %>
-              <% end %>
-            </td>
-            <td class="text-muted" data-label="<%= t :updated_at %>">
-              <%= time_ago_in_words patient.updated_at %>
-            </td>
-            <td>
-              <div class="btn-list flex-nowrap">
-                <%= component :dropdown do %>
-                  <%= link_to t(:profile), patient, class: "dropdown-item" %>
-                  <%= link_to t(:edit), edit_patient_path(patient), class: "dropdown-item" %>
-                  <% if user_is_admin?(current_user) %>
-                    <%= link_to t(:delete), patient, method: :delete, data: { confirm: t(:are_you_sure_no_undo) }, class: "dropdown-item text-red" %>
-                  <% end %>
-                <% end %>
-              </div>
-            </td>
+            <th><%= t :name %></th>
+            <th><%= t :uid %></th>
+            <th>
+              <%= t :status %>
+              <%= help_tag t 'help.patients.status' %>
+            </th>
+            <th><%= t :updated_at %></th>
+            <th class="w-1"></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @patients.each do |patient| %>
+            <tr>
+              <td data-label="<%= t :name %>">
+                <div class="d-flex py-1 align-items-center">
+                  <span class="avatar me-2 rounded-circle"><%= patient.initials %></span>
+                  <div class="flex-fill">
+                    <div class="font-weight-medium"><%= patient.fullname %></div>
+                    <div class="text-muted"><%= patient.email %></div>
+                  </div>
+                </div>
+              </td>
+              <td class="text-muted" data-label="<%= t :uid %>">
+                <%= patient.uid %>
+              </td>
+              <td class="text-muted" data-label="<%= t :status %>">
+                <% if patient.missing_info? %>
+                  <%= label_tag t(:incomplete), :red %>
+                <% else %>
+                  <%= label_tag t(:active), :green %>
+                <% end %>
+              </td>
+              <td class="text-muted" data-label="<%= t :updated_at %>">
+                <%= time_ago_in_words patient.updated_at %>
+              </td>
+              <td>
+                <div class="btn-list flex-nowrap">
+                  <%= component :dropdown do %>
+                    <%= link_to t(:profile), patient, class: "dropdown-item" %>
+                    <%= link_to t(:edit), edit_patient_path(patient), class: "dropdown-item" %>
+                    <% if user_is_admin?(current_user) %>
+                      <%= link_to t(:delete), patient, method: :delete, data: { confirm: t(:are_you_sure_no_undo) }, class: "dropdown-item text-red" %>
+                    <% end %>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
   </div>
 </div>
 

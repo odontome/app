@@ -266,7 +266,7 @@ es:
   no_account: ¿No tienes una cuenta?
   no_doctors: Por favor crea algunos doctores antes.
   no_patient_found_new_one_will_be_created: No se ha encontrado ningún paciente, se creara uno.
-  no_patients: Aún no has creado ningún paciente.
+  no_patients: Aún no has creado ningún paciente que empiece con esta letra.
   no_treatments_message: Aún no has creado ningún tratamiento.
   no_user_with_that_email: Parece haber un problema. Si esto continua, por favor contacta con nosotros.
   none: Ninguna
