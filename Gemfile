@@ -24,7 +24,7 @@ gem 'jquery-minicolors-rails', '~>2.2.6.2'
 gem 'premailer-rails', '~> 1.11.1'
 
 gem 'pg', '~> 1.4.2'
-gem 'stripe', '~> 5.53.0'
+gem 'stripe', '~> 7.0.0'
 gem 'rack-attack', '~> 6.6.1'
 
 group :development do
