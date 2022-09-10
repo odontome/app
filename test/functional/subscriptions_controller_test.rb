@@ -9,6 +9,6 @@ class SubscriptionsControllerTest < ActionController::TestCase
 
   test 'should be redirected to stripe when using a valid configuration' do
     post :create
-    assert_redirected_to %r(\Ahttps://checkout.stripe.com/pay/)
+    assert_redirected_to %r(\Ahttps://checkout.stripe.com/c/pay/)
   end
 end

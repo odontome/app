@@ -10,7 +10,7 @@ class AdminController < ApplicationController
     if @filter == 'all'
       @practices = Practice.includes(:subscription).order('created_at desc').limit(250)
     elsif @filter == 'active'
-      @practices = Practice.includes(:subscription).where(subscriptions: { status: 'active' }).order('created_at desc').limit(250)
+      @practices = Practice.includes(:subscription).where(subscriptions: { status: 'active' }).order('practices.created_at desc').limit(250)
     end
   end
 end
