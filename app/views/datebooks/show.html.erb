@@ -89,26 +89,36 @@
 			},
 
 			eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc){
-				//update the event with the new data
-				$.ajax({
-				    type: "PUT",
-				    url: endpointURL + "/" + JSON.stringify(event.id),
-				    data: {
-				    	"appointment[starts_at]": event.start,
-							"appointment[ends_at]": event.end
-						  }
-				});
+				// Show confirmation modal before updating
+				if (confirm('<%= t(:confirm_reschedule) %>')) {
+					//update the event with the new data
+					$.ajax({
+							type: "PUT",
+							url: endpointURL + "/" + event.id,
+							data: {
+								"appointment[starts_at]": event.start,
+								"appointment[ends_at]": event.end
+								}
+					});
+				} else {
+					revertFunc(); // Revert the event if user cancels
+				}
 			},
 			eventResize: function(calEvent, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) {
-				// update the event with the new data
-				$.ajax({
-				    type: "PUT",
-				    url: endpointURL + "/" + calEvent.id,
-				    data: {
-				    	"appointment[starts_at]": calEvent.start,
+				// Show confirmation modal before updating
+				if (confirm('<%= t(:confirm_resize) %>')) {
+					// update the event with the new data
+					$.ajax({
+						type: "PUT",
+						url: endpointURL + "/" + calEvent.id,
+						data: {
+							"appointment[starts_at]": calEvent.start,
 							"appointment[ends_at]": calEvent.end,
-						  }
-				});
+							}
+					});
+				} else {
+					revertFunc(); // Revert the event if user cancels
+				}
 			},
 			eventAfterRender: function(event, element, view) {
 				element.find('.fc-event-time').append(" " + event.firstname + " " + event.lastname);

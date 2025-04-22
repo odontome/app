@@ -111,9 +111,9 @@ en:
   administrator: Administrator
   age: Age
   years_old: Years old
-  age_with_suffix: ! '%{age} years old'
-  ago_in_words: ! '%{date} ago'
-  distance_in_words: ! '%{date} away'
+  age_with_suffix: ! "%{age} years old"
+  ago_in_words: ! "%{date} ago"
+  distance_in_words: ! "%{date} away"
   allergic_to: Allergic to
   already_have_an_account: Already have an account?
   annotate: Annotate
@@ -122,7 +122,7 @@ en:
   appointment_deleted_error_message: There was a problem deleting the appointment
   appointment_updated_error_message: There was a problem updating the appointment
   appointments: Appointments
-  appointments_in_datebook: ! '%{count} appointments'
+  appointments_in_datebook: ! "%{count} appointments"
   are_you_sure: Are you sure?
   are_you_sure_no_undo:
     Are you sure? All related data will be deleted, there is no
@@ -145,14 +145,16 @@ en:
   current_medications: Current medications
   date:
     formats:
-      day_and_date: ! '%A (%e %b)'
-      short: ! '%e %b'
-      long: ! '%B %d, %Y'
+      day_and_date: ! "%A (%e %b)"
+      short: ! "%e %b"
+      long: ! "%B %d, %Y"
   datebooks: Datebooks
   day: Day
   delete: Delete
   cancel_appointment: Cancel this appointment
   confirm_appointment: Confirm this appointment
+  confirm_reschedule: Are you sure you want to reschedule this appointment?
+  confirm_resize: Are you sure you want to change the duration of this appointment?
   delete_appointment: Delete this appointment
   delete_patient: Delete this patient
   doctor_created_success_message: The doctor was created successfully
@@ -258,7 +260,7 @@ en:
         subject: Your appointment with %{practice_name}
         invite:
           summary: Dentist appointment
-          description: '%{doctor_name} has scheduled an appointment with you.'
+          description: "%{doctor_name} has scheduled an appointment with you."
       birthday:
         subject: Happy birthday!
       review:
@@ -325,7 +327,7 @@ en:
   patient_has_no_appointments:
     No appointments. Would you like to %{datebooks_url}
     one?
-  patient_search_results_few: ! '%{patients_count} patients found.'
+  patient_search_results_few: ! "%{patients_count} patients found."
   patient_search_results_many:
     Showing %{patients_count} of many patients. Try a more
     accurate search.
@@ -343,7 +345,7 @@ en:
     We are sorry that you wish to leave us, if there
     is anything we can improve or help you, please get in touch with us. To finialize
     the cancellation of your account please click on the top button.
-  practice_close_active_message: ''
+  practice_close_active_message: ""
   practice_close_error_message: Oops, there was a problem trying to close your account. Please contact us.
   practice_close_success_message: We are sorry to see you go. Your data is schedule for deletion.
   practice_information: Practice information
@@ -397,10 +399,10 @@ en:
   subscriptions:
     title: Subscription
     status:
-      trialing: 'trialing'
-      active: 'active'
-      past_due: 'past due'
-      canceled: 'canceled'
+      trialing: "trialing"
+      active: "active"
+      past_due: "past due"
+      canceled: "canceled"
     cta:
       active: manage your subscription
       expired: subscribe
@@ -420,12 +422,12 @@ en:
   time:
     am: am
     formats:
-      default: ! '%a, %d %b %Y %H:%M:%S %z'
-      just_the_time: ! '%H:%M'
-      just_the_date: ! '%d %b'
-      long: ! '%B %d, %Y %H:%M'
-      short: ! '%d %b %H:%M'
-      w3c: ! '%Y-%m-%dT%H:%M:%S%:z'
+      default: ! "%a, %d %b %Y %H:%M:%S %z"
+      just_the_time: ! "%H:%M"
+      just_the_date: ! "%d %b"
+      long: ! "%B %d, %Y %H:%M"
+      short: ! "%d %b %H:%M"
+      w3c: ! "%Y-%m-%dT%H:%M:%S%:z"
     pm: pm
   today: Today
   treatment_without_price: Add a price to this treatment, or simply delete it

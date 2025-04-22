@@ -110,9 +110,9 @@ es:
   administrator: Administrador
   age: Edad
   years_old: Años de edad
-  age_with_suffix: ! '%{age} años de edad'
-  ago_in_words: ! 'hace %{date}'
-  distance_in_words: ! 'en %{date}'
+  age_with_suffix: ! "%{age} años de edad"
+  ago_in_words: ! "hace %{date}"
+  distance_in_words: ! "en %{date}"
   allergic_to: Alérgico a
   already_have_an_account: ¿Ya tienes una cuenta?
   annotate: Anotar
@@ -121,7 +121,7 @@ es:
   appointment_deleted_error_message: Ocurrió un problema al intentar borrar la cita.
   appointment_updated_error_message: Ocurrió un problema al intentar actualizar la cita.
   appointments: Citas
-  appointments_in_datebook: ! '%{count} citas'
+  appointments_in_datebook: ! "%{count} citas"
   are_you_sure: ¿Estás seguro?
   are_you_sure_no_undo: ¿Estás seguro? Toda la información relacionada será borrada.
   balance: Estado de cuenta
@@ -142,14 +142,16 @@ es:
   current_medications: Medicamentos actuales
   date:
     formats:
-      day_and_date: ! '%A (%e %b)'
-      short: ! '%e %b'
-      long: ! '%B %d, %Y'
+      day_and_date: ! "%A (%e %b)"
+      short: ! "%e %b"
+      long: ! "%B %d, %Y"
   datebooks: Agendas
   day: Día
   delete: Borrar
   cancel_appointment: Cancelar esta cita
   confirm_appointment: Confirmar esta cita
+  confirm_reschedule: ¿Estás seguro de que quieres reprogramar esta cita?
+  confirm_resize: ¿Estás seguro de que quieres cambiar la duración de esta cita?
   delete_appointment: Borrar esta cita
   delete_patient: Borrar este paciente
   doctor_created_success_message: El doctor ha sido creado con éxito.
@@ -240,7 +242,7 @@ es:
         subject: Tu cita con %{practice_name}
         invite:
           summary: Cita odontologica
-          description: '%{doctor_name} te ha invitado a una cita odontologica.'
+          description: "%{doctor_name} te ha invitado a una cita odontologica."
       birthday:
         subject: ¡Feliz cumpleaños!
       review:
@@ -300,7 +302,7 @@ es:
     description: Ningún paciente ha calificado su experiencia aún.<br /> Cada vez que un paciente haya visitado tu clínica, un email será enviado para solicitar una calificación.
   patient_has_no_appointments: Sin citas. ¿Quiéres %{datebooks_url}
     una?
-  patient_search_results_few: ! '%{patients_count} pacientes encontrados.'
+  patient_search_results_few: ! "%{patients_count} pacientes encontrados."
   patient_search_results_many: Mostrado %{patients_count} de muchos pacientes. Intenta refinar tu búsqueda.
   patient_search_results_one: Lo encontré
   patient_search_results_zero: Ningún paciente encontrado.
@@ -312,7 +314,7 @@ es:
   please_wait: Por favor espera...
   practice_cancellation: Cancelación de cuenta
   practice_cancellation_message: Lamentamos que quieras dejarnos, si hay algo que podamos hacer para ayudarte, por favor ponte en contacto con nosotros. Para continuar con la cancelación presiona el siguiente botón.
-  practice_close_active_message: ''
+  practice_close_active_message: ""
   practice_close_error_message: Ha ocurrido un error al intentar cerrar tu cuenta. Por favor contact con nosotros para solucionarlo.
   practice_close_success_message: Que lastima que has decidido dejarnos. Tu información ha sido marcada para ser borrada.
   practice_information: Información de la clínica
@@ -348,10 +350,10 @@ es:
   subscriptions:
     title: Subscripción
     status:
-      trialing: 'en prueba'
-      active: 'activa'
-      past_due: 'vencida'
-      canceled: 'cancelada'
+      trialing: "en prueba"
+      active: "activa"
+      past_due: "vencida"
+      canceled: "cancelada"
     cta:
       active: gestionar tu subscripción
       expired: subscríbete
@@ -372,12 +374,12 @@ es:
   time:
     am: am
     formats:
-      default: ! '%a, %d %b %Y %H:%M:%S %z'
-      just_the_time: ! '%H:%M'
-      just_the_date: ! '%d %b'
-      long: ! '%B %d, %Y %H:%M'
-      short: ! '%d %b %H:%M'
-      w3c: ! '%Y-%m-%dT%H:%M:%S%:z'
+      default: ! "%a, %d %b %Y %H:%M:%S %z"
+      just_the_time: ! "%H:%M"
+      just_the_date: ! "%d %b"
+      long: ! "%B %d, %Y %H:%M"
+      short: ! "%d %b %H:%M"
+      w3c: ! "%Y-%m-%dT%H:%M:%S%:z"
     pm: pm
   today: Hoy
   treatment_without_price: Agrega un precio a este tratamiento, o simplemente borralo
@@ -404,4 +406,4 @@ es:
     title: Notificaciones por correo
     subscribe_message: "Ya no estás suscrito para recibir notificaciones de la <strong>%{name}</strong>. Suscríbete de nuevo <a href='%{url}?undo'>haciendo clic aquí</a>"
     unsubscribe_message: "Estás suscrito para recibir notificaciones sobre la  <strong>%{name}</strong>. Date de baja <a href='%{url}'>haciendo clic aquí</a>"
-    daily_digest: 'actividad de tu clínica'
+    daily_digest: "actividad de tu clínica"
