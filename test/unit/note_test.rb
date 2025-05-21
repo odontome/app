@@ -24,4 +24,18 @@ class NoteTest < ActiveSupport::TestCase
     assert !note.save
     assert_equal I18n.t('errors.messages.too_long', count: 500), note.errors[:notes].join('; ')
   end
+
+  test 'belongs to user' do
+    user = users(:founder)
+    note = Note.new(notes: 'This is a test note', user: user, noteable: patients(:one))
+    assert note.save
+    assert_equal user, note.user
+  end
+
+  test 'belongs to noteable' do
+    patient = patients(:one)
+    note = Note.new(notes: 'This is a test note for noteable', user: users(:founder), noteable: patient)
+    assert note.save
+    assert_equal patient, note.noteable
+  end
 end
