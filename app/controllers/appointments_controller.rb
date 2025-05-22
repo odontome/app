@@ -69,22 +69,36 @@ class AppointmentsController < ApplicationController
   end
 
   def update
-    datebook = Datebook.with_practice(current_user.practice_id).find params[:datebook_id]
-    @appointment = Appointment.where(id: params[:id], datebook_id: datebook.id).first
+    datebook = Datebook.with_practice(current_user.practice_id).find_by(id: params[:datebook_id])
 
-    # if there is no `as_values_patient_id` the appointment is just getting moved
-    # otherwise, clean up the fields
-    if params[:appointment][:patient_id].blank? && params[:as_values_patient_id].present?
-      params[:appointment][:patient_id] =
-        Patient.find_or_create_from(params[:as_values_patient_id], current_user.practice_id)
+    if datebook.nil?
+      respond_to do |format|
+        format.js { render js: "alert('#{I18n.t('appointments.update.datebook_not_found', default: 'Datebook not found.')}');", status: :not_found }
+      end
+      return
     end
 
-    respond_to do |format|
-      if @appointment.update(appointment_params)
-        format.js {} # update.js.erb
-      else
-        format.js do
-          render_ujs_error(@appointment, I18n.t(:appointment_updated_error_message))
+    @appointment = Appointment.where(id: params[:id], datebook_id: datebook.id).first
+
+    if @appointment.nil?
+      respond_to do |format|
+        format.js { render js: "alert('#{I18n.t('appointments.update.appointment_not_found', default: 'Appointment not found.')}');", status: :not_found }
+      end
+    else
+      # if there is no `as_values_patient_id` the appointment is just getting moved
+      # otherwise, clean up the fields
+      if params[:appointment][:patient_id].blank? && params[:as_values_patient_id].present?
+        params[:appointment][:patient_id] =
+          Patient.find_or_create_from(params[:as_values_patient_id], current_user.practice_id)
+      end
+
+      respond_to do |format|
+        if @appointment.update(appointment_params)
+          format.js {} # update.js.erb
+        else
+          format.js do
+            render_ujs_error(@appointment, I18n.t(:appointment_updated_error_message))
+          end
         end
       end
     end
