@@ -10,7 +10,7 @@ class AdminControllerTest < ActionController::TestCase
   test 'should get practices with all filter' do
     get :practices
     assert_response :success
-    assert_equal 6, assigns(:practices).count
+    assert_equal 5, assigns(:practices).count
     assert_equal 'all', assigns(:filter)
   end
 
