@@ -13,3 +13,36 @@ complete_another_language:
   timezone: America/Mexico_City
   currency_unit: $
   email: raulriera@hotmail.com
+
+trialing_practice:
+  id: 3
+  name: Trialing Practice
+  locale: en
+  timezone: Europe/London
+  currency_unit: $
+  email: trialing@odonto.me
+
+past_due_practice:
+  id: 4
+  name: Past Due Practice
+  locale: en
+  timezone: Europe/London
+  currency_unit: $
+  email: pastdue@odonto.me
+
+canceled_practice:
+  id: 5
+  name: Canceled Practice
+  locale: en
+  timezone: Europe/London
+  currency_unit: $
+  email: canceled@odonto.me
+
+cancelled_practice:
+  id: 6
+  name: Cancelled Practice
+  locale: en
+  timezone: Europe/London
+  currency_unit: $
+  email: cancelled@odonto.me
+  cancelled_at: <%= 30.days.ago %>

@@ -8,24 +8,40 @@ trialing:
 
 active:
   id: 2
-  practice_id: 1
+  practice_id: 2
   status: 'active'
   cancel_at_period_end: false
   current_period_start: <%= 2.days.ago %>
   current_period_end: <%= 28.days.from_now %>
 
-canceled:
+trialing_practice_sub:
   id: 3
-  practice_id: 1
+  practice_id: 3
+  status: 'trialing'
+  cancel_at_period_end: false
+  current_period_start: <%= Time.now %>
+  current_period_end: <%= 25.days.from_now %>
+
+past_due_practice_sub:
+  id: 4
+  practice_id: 4
+  status: 'past_due'
+  cancel_at_period_end: false
+  current_period_start: <%= 30.days.ago %>
+  current_period_end: <%= 28.days.ago %>
+
+canceled_practice_sub:
+  id: 5
+  practice_id: 5
   status: 'canceled'
   cancel_at_period_end: false
   current_period_start: <%= 60.days.ago %>
   current_period_end: <%= 30.days.ago %>
 
-past_due:
-  id: 4
-  practice_id: 1
-  status: 'past_due'
+cancelled_practice_sub:
+  id: 6
+  practice_id: 6
+  status: 'active'
   cancel_at_period_end: false
-  current_period_start: <%= 30.days.ago %>
-  current_period_end: <%= 28.days.ago %>
+  current_period_start: <%= 2.days.ago %>
+  current_period_end: <%= 28.days.from_now %>
