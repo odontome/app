@@ -84,6 +84,11 @@ class Appointment < ApplicationRecord
     Cipher.encode(id.to_s)
   end
 
+  def self.ciphered_review_url_for_id(appointment_id)
+    encoded_appointment_id = Cipher.encode(appointment_id.to_s)
+    "https://my.odonto.me/reviews/new/?appointment_id=#{encoded_appointment_id}"
+  end
+
   private
 
   def ends_at_should_be_later_than_starts_at

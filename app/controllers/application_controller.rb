@@ -128,4 +128,17 @@ class ApplicationController < ActionController::Base
   def add_user_info_to_bugsnag(event)
     event.set_user(current_user.id, current_user.email, current_user.fullname) if current_user
   end
+
+  def authenticate_and_set_session(user, password)
+    if user&.authenticate(password)
+      # Update the last time this person was seen online (only for existing users)
+      user.update(last_login_at: user.current_login_at, current_login_at: Time.now) if user.persisted?
+      
+      # Save the user in that user's session cookie:
+      session[:user] = user
+      true
+    else
+      false
+    end
+  end
 end

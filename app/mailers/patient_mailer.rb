@@ -3,7 +3,7 @@ require 'icalendar'
 
 class PatientMailer < ApplicationMailer
   def appointment_soon_email(patient_email, patient_name, start_time, end_time, practice_name, practice_locale, practice_timezone, doctor, practice_email)
-    # temporarely set the locale and then change it back
+    # temporarily set the locale and then change it back
     # when the block finishes
     I18n.with_locale(practice_locale) do
       @patient_name = patient_name
@@ -22,7 +22,7 @@ class PatientMailer < ApplicationMailer
   end
 
   def appointment_scheduled_email(patient_email, patient_name, start_time, end_time, practice_name, practice_locale, practice_timezone, doctor, practice_email)    
-    # temporarely set the locale and then change it back
+    # temporarily set the locale and then change it back
     # when the block finishes
     I18n.with_locale(practice_locale) do
       @patient_name = patient_name
@@ -64,7 +64,7 @@ class PatientMailer < ApplicationMailer
     @admin = admin
     @patient = patient
 
-    # temporarely set the locale and then change it back
+    # temporarily set the locale and then change it back
     # when the block finishes
     I18n.with_locale(@patient['locale']) do
       mail(from: "#{@patient['practice_name']} <hello@odonto.me>",
@@ -76,13 +76,9 @@ class PatientMailer < ApplicationMailer
 
   def review_recent_appointment(appointment)
     @appointment = appointment
-    # since we can't init the object with an id
-    # create one temporarely
-    temporary_appointment = Appointment.new
-    temporary_appointment.id = @appointment['appointment_id']
-    @ciphered_review_url = temporary_appointment.ciphered_review_url
+    @ciphered_review_url = Appointment.ciphered_review_url_for_id(@appointment['appointment_id'])
 
-    # temporarely set the locale and then change it back
+    # temporarily set the locale and then change it back
     # when the block finishes
     I18n.with_locale(@appointment['practice_locale']) do
       mail(from: "#{@appointment.practice.name} <hello@odonto.me>",
