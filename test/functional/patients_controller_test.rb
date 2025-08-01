@@ -52,6 +52,25 @@ class PatientsControllerTest < ActionController::TestCase
     assert assigns(:patients).empty?
   end
 
+  test 'should handle search with backslash character' do
+    # This test ensures the SQL injection vulnerability is fixed
+    # Previously, searching with a term ending in backslash would cause a PostgreSQL error
+    get :index, params: { term: 'test\\' }
+    assert_response :success
+    assert_not_nil assigns(:patients)
+    # Should return empty results but not cause an error
+    assert assigns(:patients).empty?
+  end
+
+  test 'should handle search with other special characters' do
+    # Test searching with other LIKE pattern special characters
+    get :index, params: { term: 'test%_' }
+    assert_response :success
+    assert_not_nil assigns(:patients)
+    # Should return empty results but not cause an error
+    assert assigns(:patients).empty?
+  end
+
   test 'should update patient' do
     put :update, params: { id: patients(:one).to_param, patient: @new_patient }
     assert_redirected_to patient_path(assigns(:patient))
