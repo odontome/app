@@ -1,0 +1,78 @@
+require:
+  - rubocop-rails
+  - rubocop-performance
+
+AllCops:
+  TargetRubyVersion: 3.1
+  NewCops: enable
+  Exclude:
+    - 'bin/**/*'
+    - 'config.ru'
+    - 'db/**/*'
+    - 'vendor/**/*'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+    - 'log/**/*'
+    - 'public/**/*'
+
+# Rails-specific configurations
+Rails:
+  Enabled: true
+
+# Layout and formatting
+Layout/LineLength:
+  Max: 120
+  AllowedPatterns: ['\A#']
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+# Style preferences aligned with Rails conventions
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: always
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+  ConsistentQuotesInMultiline: true
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+# Metrics - be reasonable for a small-to-medium Rails app
+Metrics/AbcSize:
+  Max: 20
+
+Metrics/MethodLength:
+  Max: 15
+  CountAsOne: ['array', 'hash', 'heredoc']
+
+Metrics/ClassLength:
+  Max: 150
+
+Metrics/CyclomaticComplexity:
+  Max: 8
+
+# Rails-specific relaxations
+Rails/Output:
+  Exclude:
+    - 'db/seeds.rb'
+
+Rails/SkipsModelValidations:
+  AllowedMethods: ['touch']
+
+# Performance optimizations
+Performance/StringReplacement:
+  Enabled: true
+
+Performance/RedundantMerge:
+  Enabled: true

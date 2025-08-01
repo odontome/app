@@ -29,12 +29,17 @@ gem 'rack-attack', '~> 6.6.1'
 
 group :development do
   gem 'i18n-tasks', '~> 1.0.8'
-  gem 'rubocop'
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-performance', require: false
 end
 
 group :test do
-  # pretty printed test output
-  # gem 'turn'
+  # Test coverage tracking
+  gem 'simplecov', require: false
+  gem 'simplecov-console', require: false
+  # Security testing
+  gem 'bundler-audit', require: false
 end
 
 group :development, :test do

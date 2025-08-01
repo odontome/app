@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# Load coverage tracking if enabled
+require_relative 'coverage_helper' if ENV['COVERAGE']
+
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'

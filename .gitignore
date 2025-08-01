@@ -10,6 +10,11 @@ ssl-cert
 .postgres
 .byebug_history
 
+# Testing and coverage
+coverage/
+.rspec_status
+.simplecov_*
+
 # Bundler
 
 # files from using dev?

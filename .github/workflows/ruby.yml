@@ -1,23 +1,69 @@
-name: Ruby
+name: Ruby CI
 
 on:
   pull_request:
-    branches:
-      - 'master'
   push:
-    branches:
-      - 'master'
+    branches: [ main, master ]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  RAILS_ENV: test
+  PGHOST: localhost
+  PGUSER: postgres
+  PGPASSWORD: postgres
+  POSTGRES_DB: odonto_test
 
 jobs:
-  build:
+  # Quality checks that can run quickly without database
+  quality:
+    name: Code Quality & Security
     runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version-file: .ruby-version
+          bundler-cache: true
+
+      - name: Run Rubocop
+        run: bundle exec rubocop --parallel --format github
+
+      - name: Security audit
+        run: |
+          gem install bundler-audit
+          bundle exec bundler-audit --update
+
+      - name: Check for vulnerable gems
+        run: |
+          gem install ruby_audit
+          ruby-audit check
+
+  # Database and Rails-specific testing
+  test:
+    name: Test Suite
+    runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['3.1.0', '3.2.0']
+        test-suite: ['unit', 'functional', 'integration']
+    
     services:
       postgres:
-        image: postgres
+        image: postgres:14-alpine
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: odonto_test
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -27,31 +73,163 @@ jobs:
           - 5432:5432
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - uses: ruby/setup-ruby@v1
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.1.0
+          ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
 
-      - name: Install PostgreSQL client
-        run: |
-          sudo apt-get -yqq install libpq-dev
+      - name: Cache Rails cache
+        uses: actions/cache@v4
+        with:
+          path: tmp/cache
+          key: rails-cache-${{ runner.os }}-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: rails-cache-${{ runner.os }}-
 
-      - name: Build App
-        env:
-          PGHOST: localhost
-          PGUSER: postgres
-          PGPASSWORD: postgres
-          RAILS_ENV: test
+      - name: Install system dependencies
         run: |
-          bin/rails db:setup
+          sudo apt-get update -qq
+          sudo apt-get install -yqq libpq-dev
 
-      - name: Run Tests
+      - name: Database setup
+        run: |
+          bin/rails db:create db:schema:load
+
+      - name: Run tests
+        run: |
+          case "${{ matrix.test-suite }}" in
+            "unit")
+              bundle exec rake test:units
+              ;;
+            "functional") 
+              bundle exec rake test:functionals
+              ;;
+            "integration")
+              bundle exec rake test:integration
+              ;;
+            *)
+              bundle exec rake test
+              ;;
+          esac
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-ruby-${{ matrix.ruby-version }}-${{ matrix.test-suite }}
+          path: |
+            log/test.log
+            tmp/screenshots/
+          retention-days: 7
+
+  # Comprehensive test run with coverage
+  coverage:
+    name: Test Coverage
+    runs-on: ubuntu-latest
+    needs: [quality]
+    
+    services:
+      postgres:
+        image: postgres:14-alpine
         env:
-          PGHOST: localhost
-          PGUSER: postgres
-          PGPASSWORD: postgres
-          RAILS_ENV: test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: odonto_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version-file: .ruby-version
+          bundler-cache: true
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -yqq libpq-dev
+
+      - name: Add SimpleCov for coverage
+        run: |
+          bundle add simplecov --group test
+          bundle add simplecov-console --group test
+
+      - name: Database setup
+        run: |
+          bin/rails db:create db:schema:load
+
+      - name: Run full test suite with coverage
+        env:
+          COVERAGE: true
         run: |
           bundle exec rake test
+
+      - name: Upload coverage reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 30
+
+  # Performance and load testing
+  performance:
+    name: Performance Tests
+    runs-on: ubuntu-latest
+    needs: [quality]
+    if: github.event_name == 'pull_request'
+    
+    services:
+      postgres:
+        image: postgres:14-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: odonto_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version-file: .ruby-version
+          bundler-cache: true
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -yqq libpq-dev
+
+      - name: Database setup
+        run: |
+          bin/rails db:create db:schema:load
+
+      - name: Run performance tests
+        run: |
+          # Run tests with profiling enabled
+          bundle exec rake test TESTOPTS="--profile=10"
+
+      - name: Performance regression check
+        run: |
+          echo "Performance metrics would be compared against baseline here"
+          # This could integrate with tools like benchmark-ips or memory_profiler
