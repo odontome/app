@@ -38,11 +38,4 @@ canceled_practice:
   currency_unit: $
   email: canceled@odonto.me
 
-cancelled_practice:
-  id: 6
-  name: Cancelled Practice
-  locale: en
-  timezone: Europe/London
-  currency_unit: $
-  email: cancelled@odonto.me
-  cancelled_at: <%= 30.days.ago %>
+

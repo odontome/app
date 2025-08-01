@@ -38,10 +38,4 @@ canceled:
   current_period_start: <%= 60.days.ago %>
   current_period_end: <%= 30.days.ago %>
 
-cancelled_practice_sub:
-  id: 6
-  practice_id: 6
-  status: 'active'
-  cancel_at_period_end: false
-  current_period_start: <%= 2.days.ago %>
-  current_period_end: <%= 28.days.from_now %>
+
