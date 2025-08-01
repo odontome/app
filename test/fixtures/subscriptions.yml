@@ -22,7 +22,7 @@ trialing_practice_sub:
   current_period_start: <%= Time.now %>
   current_period_end: <%= 25.days.from_now %>
 
-past_due_practice_sub:
+past_due:
   id: 4
   practice_id: 4
   status: 'past_due'
@@ -30,7 +30,7 @@ past_due_practice_sub:
   current_period_start: <%= 30.days.ago %>
   current_period_end: <%= 28.days.ago %>
 
-canceled_practice_sub:
+canceled:
   id: 5
   practice_id: 5
   status: 'canceled'
