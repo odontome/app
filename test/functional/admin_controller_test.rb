@@ -50,14 +50,6 @@ class AdminControllerTest < ActionController::TestCase
     assert_equal 'canceled', assigns(:filter)
   end
 
-  test 'should get practices with cancelled filter' do
-    get :practices, params: { filter: 'cancelled' }
-    assert_response :success
-    # Should include practices with cancelled_at set
-    cancelled_practices = assigns(:practices)
-    assert cancelled_practices.any? { |p| p.cancelled_at.present? }
-    assert_equal 'cancelled', assigns(:filter)
-  end
 
   test 'should require superadmin access' do
     @controller.session['user'] = users(:founder) # Regular admin, not superadmin

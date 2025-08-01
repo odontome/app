@@ -18,8 +18,6 @@ class AdminController < ApplicationController
       @practices = Practice.includes(:subscription).where(subscriptions: { status: 'past_due' }).order('practices.created_at desc').limit(250)
     when 'canceled'
       @practices = Practice.includes(:subscription).where(subscriptions: { status: 'canceled' }).order('practices.created_at desc').limit(250)
-    when 'cancelled'
-      @practices = Practice.includes(:subscription).where.not(cancelled_at: nil).order('practices.created_at desc').limit(250)
     else
       @practices = Practice.includes(:subscription).order('created_at desc').limit(250)
     end
