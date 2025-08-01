@@ -40,13 +40,10 @@ class PracticesController < ApplicationController
         # find the previously created user
         new_user = @practice.users.first
 
-        # extra the user password from the request
+        # extract the user password from the request
         user_password = params[:practice][:users_attributes]['0']['password']
-        # authenticate the user. FIXME: this code is duplicated from user_sessions_controller
-        if new_user.authenticate(user_password)
-          # Save the user in that user's session cookie:
-          session[:user] = new_user
-        end
+        # authenticate the user using shared method
+        authenticate_and_set_session(new_user, user_password)
 
         PracticeMailer.welcome_email(@practice).deliver_now
         format.html { redirect_to(practice_path) }

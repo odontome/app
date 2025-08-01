@@ -17,14 +17,8 @@ class UserSessionsController < ApplicationController
     if !user.nil? && !user.password_digest.present?
       flash[:alert] = I18n.t('errors.messages.reset_your_password_request')
       redirect_to new_password_reset_url
-    # Verify user exists in db and run has_secure_password's .authenticate()
-    # method to see if the password submitted on the login form was correct:
-    elsif user&.authenticate(params[:signin][:password])
-      # Update the last time this person was seen online
-      user.update(last_login_at: user.current_login_at, current_login_at: Time.now)
-
-      # Save the user in that user's session cookie:
-      session[:user] = user
+    # Verify user exists in db and authenticate using shared method
+    elsif authenticate_and_set_session(user, params[:signin][:password])
       redirect_to root_url
     else
       # if email or password incorrect, re-render login page:
