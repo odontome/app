@@ -1,3 +1,5 @@
+<%= render "shared/form_validation_i18n" %>
+
 <%= render "shared/error_messages", :target => @practice %>
 
 <%= form_for(@practice, url: "/practice", method: :create, html: { class: "card card-md" }) do |practice_form| %>
