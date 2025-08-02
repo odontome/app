@@ -19,11 +19,65 @@
 
     <%= stylesheet_link_tag "application" %>
     <%= javascript_include_tag "application" %>
+    
+    <script>
+      // Theme Switcher functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeText = document.getElementById('theme-text');
+        const lightIcon = document.querySelector('.light-icon');
+        const darkIcon = document.querySelector('.dark-icon');
+        const body = document.body;
+
+        // Get current theme from localStorage or default to light
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        
+        // Apply the current theme
+        applyTheme(currentTheme);
+
+        // Theme toggle click handler
+        if (themeToggle) {
+          themeToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            const newTheme = body.classList.contains('theme-dark') ? 'light' : 'dark';
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+          });
+        }
+
+        function applyTheme(theme) {
+          if (theme === 'dark') {
+            body.classList.remove('theme-light');
+            body.classList.add('theme-dark');
+            if (themeText) themeText.textContent = 'Light Mode';
+            if (lightIcon) lightIcon.style.display = 'none';
+            if (darkIcon) darkIcon.style.display = 'inline';
+          } else {
+            body.classList.remove('theme-dark');
+            body.classList.add('theme-light');
+            if (themeText) themeText.textContent = 'Dark Mode';
+            if (lightIcon) lightIcon.style.display = 'inline';
+            if (darkIcon) darkIcon.style.display = 'none';
+          }
+        }
+      });
+    </script>
 
 	  <link rel="shortcut icon" href="/favicon.ico">
 </head>
 
-<body class="theme-light">
+<body class="theme-light" id="app-body">
+  <!-- Inline script to prevent flash of unstyled content -->
+  <script>
+    (function() {
+      const theme = localStorage.getItem('theme') || 'light';
+      const body = document.getElementById('app-body');
+      if (theme === 'dark') {
+        body.classList.remove('theme-light');
+        body.classList.add('theme-dark');
+      }
+    })();
+  </script>
   <div class="page">
     <%= render "shared/navigation" %>
 
