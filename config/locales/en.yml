@@ -394,6 +394,9 @@ en:
   enter_search_term: Enter a search term
   no_search_results: No results found
   no_search_results_help: Try different keywords or check spelling
+  form_validation:
+    required_field: This field is required
+    invalid_email: Please enter a valid email address
   select_doctor: Select a doctor
   show_past_appointments: Show past appointments
   signin: Sign in

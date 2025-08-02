@@ -48,12 +48,12 @@ $(function(){
     // Basic validation
     if (isRequired && (!fieldValue || fieldValue.trim() === '')) {
       field.addClass('is-invalid');
-      field.after('<div class="invalid-feedback">This field is required</div>');
+      field.after('<div class="invalid-feedback">' + window.I18n.required_field + '</div>');
     } else if (field.attr('type') === 'email' && fieldValue) {
       var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(fieldValue)) {
         field.addClass('is-invalid');
-        field.after('<div class="invalid-feedback">Please enter a valid email address</div>');
+        field.after('<div class="invalid-feedback">' + window.I18n.invalid_email + '</div>');
       } else {
         field.addClass('is-valid');
       }

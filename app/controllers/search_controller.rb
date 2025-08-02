@@ -8,9 +8,26 @@ class SearchController < ApplicationController
     @results = { patients: [], doctors: [], treatments: [] }
 
     if @search_term.present?
-      @results[:patients] = Patient.search(@search_term).with_practice(current_user.practice_id)
-      @results[:doctors] = Doctor.search(@search_term).with_practice(current_user.practice_id)
-      @results[:treatments] = Treatment.search(@search_term).with_practice(current_user.practice_id)
+      begin
+        @results[:patients] = Patient.search(@search_term).with_practice(current_user.practice_id)
+      rescue => e
+        Rails.logger.error "Patient search failed: #{e.message}"
+        @results[:patients] = []
+      end
+      
+      begin
+        @results[:doctors] = Doctor.search(@search_term).with_practice(current_user.practice_id)
+      rescue => e
+        Rails.logger.error "Doctor search failed: #{e.message}"
+        @results[:doctors] = []
+      end
+      
+      begin
+        @results[:treatments] = Treatment.search(@search_term).with_practice(current_user.practice_id)
+      rescue => e
+        Rails.logger.error "Treatment search failed: #{e.message}"
+        @results[:treatments] = []
+      end
     end
 
     respond_to do |format|

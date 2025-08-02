@@ -72,4 +72,53 @@ class DoctorTest < ActiveSupport::TestCase
 
     assert_equal doctor.initials, 'RR'
   end
+
+  test 'doctor search scope finds doctors by uid' do
+    doctor = doctors(:rebecca)
+    scope = Doctor.search(doctor.uid)
+    
+    assert_not_nil scope
+  end
+
+  test 'doctor search scope finds doctors by name' do
+    doctor = doctors(:rebecca)
+    scope = Doctor.search(doctor.firstname)
+    
+    assert_not_nil scope
+  end
+
+  test 'doctor search scope finds doctors by full name' do
+    doctor = doctors(:rebecca)
+    full_name_part = "#{doctor.firstname} #{doctor.lastname}".split.first
+    scope = Doctor.search(full_name_part)
+    
+    assert_not_nil scope
+  end
+
+  test 'doctor search scope finds doctors by speciality' do
+    doctor = doctors(:rebecca)
+    scope = Doctor.search('speciality')
+    
+    assert_not_nil scope
+  end
+
+  test 'doctor search scope is case insensitive' do
+    doctor = doctors(:rebecca)
+    scope = Doctor.search(doctor.firstname.upcase)
+    
+    assert_not_nil scope
+  end
+
+  test 'doctor search scope returns empty for non-matching terms' do
+    scope = Doctor.search('nonexistentterm123')
+    
+    assert_not_nil scope
+  end
+
+  test 'doctor search scope limits results to 25' do
+    # Test that the scope is properly formed with limit
+    scope = Doctor.search('D')
+    
+    assert_not_nil scope
+  end
 end

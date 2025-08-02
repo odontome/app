@@ -402,6 +402,16 @@ es:
   welcome: Bienvenido a Odonto.me
   you_agree_to_our_terms_and_privacy_policy: Aceptas nuestras %{terms_url} y nuestra %{privacy_url} cuando continuas.
   your_first_datebook: Tu agenda
+  search_global: Buscar pacientes, doctores, tratamientos…
+  search_results: Resultados de búsqueda
+  search_help_text: Ingresa palabras clave para buscar en pacientes, doctores y tratamientos
+  search_more_results_available: Más resultados disponibles
+  enter_search_term: Ingresa un término de búsqueda
+  no_search_results: No se encontraron resultados
+  no_search_results_help: Intenta con diferentes palabras clave o verifica la ortografía
+  form_validation:
+    required_field: Este campo es obligatorio
+    invalid_email: Por favor ingresa una dirección de correo válida
   email_notifications:
     title: Notificaciones por correo
     subscribe_message: "Ya no estás suscrito para recibir notificaciones de la <strong>%{name}</strong>. Suscríbete de nuevo <a href='%{url}?undo'>haciendo clic aquí</a>"
