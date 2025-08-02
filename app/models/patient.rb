@@ -30,7 +30,7 @@ class Patient < ApplicationRecord
     # Escape special characters to prevent SQL injection and PostgreSQL LIKE pattern errors
     escaped_q = ActiveRecord::Base.sanitize_sql_like(q)
     select('id, uid, firstname, lastname, email, updated_at, date_of_birth')
-      .where("uid ILIKE ? OR LOWER(firstname || ' ' || lastname) ILIKE ?", "%#{escaped_q}%", "%#{escaped_q.downcase}%")
+      .where("uid ILIKE ? OR (firstname || ' ' || lastname) ILIKE ?", "%#{escaped_q}%", "%#{escaped_q}%")
       .limit(25)
       .order('firstname')
   }
