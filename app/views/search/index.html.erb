@@ -139,12 +139,7 @@
                 <%= link_to treatment, class: "list-group-item list-group-item-action" do %>
                   <div>
                     <div class="fw-bold"><%= treatment.name %></div>
-                    <div class="text-muted small d-flex justify-content-between">
-                      <span>
-                        <% if treatment.description.present? %>
-                          <%= truncate(treatment.description, length: 50) %>
-                        <% end %>
-                      </span>
+                    <div class="text-muted small d-flex justify-content-end">
                       <span class="fw-bold text-primary">
                         <%= number_to_currency(treatment.price) %>
                       </span>

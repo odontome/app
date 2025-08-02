@@ -26,21 +26,11 @@ class TreatmentTest < ActiveSupport::TestCase
     assert_includes results, treatment
   end
 
-  test 'treatment search scope finds treatments by description' do
-    # Create a test treatment with description since fixtures don't have descriptions
-    treatment = Treatment.new(
-      name: 'Dental Cleaning', 
-      description: 'Professional teeth cleaning service',
-      price: 100,
-      practice_id: 1
-    )
+  test 'treatment search scope finds treatments by name case insensitive' do
+    treatment = treatments(:complete)
+    results = Treatment.search('tooth')
     
-    # Skip validation-based tests that require database saves for search testing
-    # This is a unit test for the search scope logic
-    if treatment.valid?
-      # Test would work with a saved record
-      assert_equal 'Professional teeth cleaning service', treatment.description
-    end
+    assert_includes results, treatment
   end
 
   test 'treatment search scope is case insensitive' do

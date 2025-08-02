@@ -17,9 +17,8 @@ class Treatment < ApplicationRecord
   scope :search, lambda { |q|
     # Escape special characters to prevent SQL injection and PostgreSQL LIKE pattern errors
     escaped_q = ActiveRecord::Base.sanitize_sql_like(q)
-    select('id,name,price,description')
-      .where("lower(name) LIKE ? OR lower(description) LIKE ?", 
-             "%#{escaped_q.downcase}%", "%#{escaped_q.downcase}%")
+    select('id,name,price')
+      .where("lower(name) LIKE ?", "%#{escaped_q.downcase}%")
       .limit(25)
       .order('name')
   }
