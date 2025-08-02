@@ -1,0 +1,185 @@
+<div class="page-header mb-4">
+  <div class="row align-items-center">
+    <div class="col">
+      <h2 class="page-title">
+        <%= t :search_results %>
+        <% if @search_term.present? %>
+          <span class="text-muted">for "<%= @search_term %>"</span>
+        <% end %>
+      </h2>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+  <% if @search_term.blank? %>
+    <div class="empty">
+      <div class="empty-header">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <circle cx="10" cy="10" r="7"></circle>
+          <line x1="21" y1="21" x2="15" y2="15"></line>
+        </svg>
+      </div>
+      <p class="empty-title"><%= t :enter_search_term %></p>
+      <p class="empty-subtitle text-muted">
+        <%= t :search_help_text %>
+      </p>
+    </div>
+  <% else %>
+    <div class="row">
+      <!-- Patients Results -->
+      <% if @results[:patients].any? %>
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <circle cx="7" cy="5" r="2"></circle>
+                  <path d="M5 22v-5l-1 -1v-4a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4l-1 1v5"></path>
+                  <circle cx="17" cy="5" r="2"></circle>
+                  <path d="M15 22v-4h-2l2 -6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1l2 6h-2v4"></path>
+                </svg>
+                <%= t :patients %> (<%= @results[:patients].size %>)
+              </h3>
+            </div>
+            <div class="list-group list-group-flush">
+              <% @results[:patients].each do |patient| %>
+                <%= link_to patient, class: "list-group-item list-group-item-action" do %>
+                  <div class="d-flex align-items-center">
+                    <span class="avatar me-3 rounded-circle"><%= patient.initials %></span>
+                    <div>
+                      <div class="fw-bold"><%= patient.fullname %></div>
+                      <div class="text-muted small">
+                        <% if patient.uid.present? %>
+                          ID: <%= patient.uid %> •
+                        <% end %>
+                        <%= patient.email %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+            <% if @results[:patients].size == 25 %>
+              <div class="card-footer">
+                <small class="text-muted"><%= t :search_more_results_available %></small>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- Doctors Results -->
+      <% if @results[:doctors].any? %>
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path>
+                </svg>
+                <%= t :doctors %> (<%= @results[:doctors].size %>)
+              </h3>
+            </div>
+            <div class="list-group list-group-flush">
+              <% @results[:doctors].each do |doctor| %>
+                <%= link_to doctor, class: "list-group-item list-group-item-action" do %>
+                  <div class="d-flex align-items-center">
+                    <span class="avatar me-3 rounded-circle"><%= doctor.initials %></span>
+                    <div>
+                      <div class="fw-bold"><%= doctor.fullname %></div>
+                      <div class="text-muted small">
+                        <% if doctor.speciality.present? %>
+                          <%= doctor.speciality %> •
+                        <% end %>
+                        <% if doctor.uid.present? %>
+                          ID: <%= doctor.uid %> •
+                        <% end %>
+                        <%= doctor.email %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+            <% if @results[:doctors].size == 25 %>
+              <div class="card-footer">
+                <small class="text-muted"><%= t :search_more_results_available %></small>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- Treatments Results -->
+      <% if @results[:treatments].any? %>
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path>
+                  <rect x="9" y="3" width="6" height="4" rx="2"></rect>
+                  <path d="M9 14h.01"></path>
+                  <path d="M9 17h.01"></path>
+                  <path d="M12 16l1 1l3 -3"></path>
+                </svg>
+                <%= t :treatments %> (<%= @results[:treatments].size %>)
+              </h3>
+            </div>
+            <div class="list-group list-group-flush">
+              <% @results[:treatments].each do |treatment| %>
+                <%= link_to treatment, class: "list-group-item list-group-item-action" do %>
+                  <div>
+                    <div class="fw-bold"><%= treatment.name %></div>
+                    <div class="text-muted small d-flex justify-content-between">
+                      <span>
+                        <% if treatment.description.present? %>
+                          <%= truncate(treatment.description, length: 50) %>
+                        <% end %>
+                      </span>
+                      <span class="fw-bold text-primary">
+                        <%= number_to_currency(treatment.price) %>
+                      </span>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+            <% if @results[:treatments].size == 25 %>
+              <div class="card-footer">
+                <small class="text-muted"><%= t :search_more_results_available %></small>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- No Results -->
+      <% if @results[:patients].empty? && @results[:doctors].empty? && @results[:treatments].empty? %>
+        <div class="col-12">
+          <div class="empty">
+            <div class="empty-header">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <circle cx="10" cy="10" r="7"></circle>
+                <line x1="21" y1="21" x2="15" y2="15"></line>
+              </svg>
+            </div>
+            <p class="empty-title"><%= t :no_search_results %></p>
+            <p class="empty-subtitle text-muted">
+              <%= t :no_search_results_help %>
+            </p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

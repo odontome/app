@@ -18,6 +18,16 @@ class Doctor < ApplicationRecord
     where('doctors.is_active = ?', true)
   }
 
+  scope :search, lambda { |q|
+    # Escape special characters to prevent SQL injection and PostgreSQL LIKE pattern errors
+    escaped_q = ActiveRecord::Base.sanitize_sql_like(q)
+    select('id,uid,firstname,lastname,email,speciality')
+      .where("uid LIKE ? OR lower(firstname || ' ' || lastname) LIKE ? OR lower(speciality) LIKE ?", 
+             "%#{escaped_q}%", "%#{escaped_q.downcase}%", "%#{escaped_q.downcase}%")
+      .limit(25)
+      .order('firstname')
+  }
+
   # validations
   validates_presence_of :practice_id, :firstname, :lastname
   validates_uniqueness_of :uid, scope: :practice_id, allow_nil: true, allow_blank: true

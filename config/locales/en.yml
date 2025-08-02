@@ -387,6 +387,13 @@ en:
   continue: Continue
   schedule: Schedule
   search: Search…
+  search_global: Search patients, doctors, treatments…
+  search_results: Search Results
+  search_help_text: Enter keywords to search across patients, doctors, and treatments
+  search_more_results_available: More results available
+  enter_search_term: Enter a search term
+  no_search_results: No results found
+  no_search_results_help: Try different keywords or check spelling
   select_doctor: Select a doctor
   show_past_appointments: Show past appointments
   signin: Sign in

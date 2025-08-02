@@ -9,3 +9,39 @@
 .ui-autocomplete {
   z-index: 1100;
 }
+
+/* Enhanced Form Validation Styles */
+.form-control.is-invalid {
+  border-color: #d63384;
+  box-shadow: 0 0 0 0.2rem rgba(214, 51, 132, 0.25);
+}
+
+.form-control.is-valid {
+  border-color: #198754;
+  box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+}
+
+.invalid-feedback {
+  display: block;
+  color: #d63384;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.valid-feedback {
+  display: block;
+  color: #198754;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.form-label.required::after {
+  content: " *";
+  color: #d63384;
+}
+
+/* Flash message improvements */
+.alert .icon-success { color: #198754; }
+.alert .icon-danger { color: #dc3545; }
+.alert .icon-warning { color: #fd7e14; }
+.alert .icon-info { color: #0dcaf0; }

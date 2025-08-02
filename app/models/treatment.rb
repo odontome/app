@@ -14,6 +14,16 @@ class Treatment < ApplicationRecord
       .where('price != 0')
   }
 
+  scope :search, lambda { |q|
+    # Escape special characters to prevent SQL injection and PostgreSQL LIKE pattern errors
+    escaped_q = ActiveRecord::Base.sanitize_sql_like(q)
+    select('id,name,price,description')
+      .where("lower(name) LIKE ? OR lower(description) LIKE ?", 
+             "%#{escaped_q.downcase}%", "%#{escaped_q.downcase}%")
+      .limit(25)
+      .order('name')
+  }
+
   # validations
   validates_presence_of :practice_id, :name, :price
   validates_length_of :name, within: 1..100

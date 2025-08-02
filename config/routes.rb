@@ -31,6 +31,9 @@ Rails.application.routes.draw do
   get '/logout' => 'user_sessions#destroy', :as => :logout
   get '/signup' => 'practices#new', :as => :signup
 
+  # global search
+  get '/search' => 'search#index', :as => :search
+
   # practice management
   get '/practice' => 'practices#show', :as => :practice
   post '/practice' => 'practices#create'

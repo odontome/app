@@ -8,8 +8,42 @@
 				when "info" then key = "info"
 			end %>
 
-			<div class="alert alert-<%= key %>" role="alert">
-				<div class="text-muted"><%= msg %></div>
+			<div class="alert alert-<%= key %> alert-dismissible fade show" role="alert" data-auto-dismiss="true">
+				<div class="d-flex align-items-center">
+					<div class="me-2">
+						<% case key %>
+						<% when "success" %>
+							<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-success" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+								<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+								<path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+								<path d="M9 12l2 2l4 -4"></path>
+							</svg>
+						<% when "danger" %>
+							<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-danger" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+								<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+								<path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+								<path d="M12 8l0 4"></path>
+								<path d="M12 16l.01 0"></path>
+							</svg>
+						<% when "warning" %>
+							<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-warning" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+								<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+								<path d="M12 9v4"></path>
+								<path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"></path>
+								<path d="M12 16h.01"></path>
+							</svg>
+						<% when "info" %>
+							<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-info" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+								<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+								<path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+								<path d="M12 8l.01 0"></path>
+								<path d="M11 12l1 0l0 4l1 0"></path>
+							</svg>
+						<% end %>
+					</div>
+					<div class="flex-fill"><%= msg %></div>
+				</div>
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 			</div>
 		<% end %>
 	</div>
