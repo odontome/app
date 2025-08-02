@@ -74,26 +74,44 @@ brew tap heroku/brew && brew install heroku
 
 Follow these steps to set up the application on your macOS machine:
 
-### Quick Setup (Automated)
-The repository includes an automated setup script that handles most of the installation:
+### Quick Setup (Recommended)
+The easiest way to run the application locally is using Heroku Local, which uses the same configuration as production:
 
 ```bash
 # Clone the repository
 git clone https://github.com/odontome/app.git
 cd app
 
-# Run the automated setup script
+# Install dependencies
+bundle install
+yarn install
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your values (see Environment Variables section below)
+
+# Set up the database
+bundle exec rails db:setup
+
+# Start the application using Heroku Local
+heroku local
+```
+
+This approach:
+- Uses the same Procfile as production
+- Automatically loads environment variables from .env file
+- Runs both web and background processes as configured
+- Provides the most production-like local environment
+
+**Note**: Make sure you have the prerequisites installed first (see "Prerequisites" section above).
+
+### Alternative: Automated Setup Script
+If you prefer the traditional Rails setup script:
+
+```bash
 # Prerequisites: rbenv, PostgreSQL, and Homebrew must be installed first
 ./bin/setup
 ```
-
-This script will:
-- Install the correct Ruby version (3.1.0) via rbenv
-- Install gem dependencies with bundler
-- Set up the database and run migrations
-- Install Homebrew dependencies (if Brewfile exists)
-
-**Note**: The setup script assumes you have rbenv and PostgreSQL already installed. If you don't, follow the "Prerequisites" section first.
 
 ### Manual Setup (Step by Step)
 If you prefer to set up manually or need to troubleshoot:
@@ -115,12 +133,17 @@ yarn install
 ```
 
 #### 3. Configure Environment Variables
-Set the required environment variables (see "Environment Variables" section below).
+Copy the environment template and configure your local settings:
 
-For minimal local development, you need at least:
 ```bash
-export SECRET_KEY_BASE=$(bundle exec rails secret)
+# Copy the example file
+cp .env.example .env
+
+# Generate a secret key and add it to .env
+echo "SECRET_KEY_BASE=$(bundle exec rails secret)" >> .env
 ```
+
+For more environment variable options, see the "Environment Variables" section below.
 
 #### 4. Database Setup
 ```bash
@@ -144,8 +167,20 @@ bundle exec rails assets:precompile
 ```
 
 #### 6. Start the Application
+
+**Recommended: Using Heroku Local**
 ```bash
-# Start the Rails server
+# Create .env file from template
+cp .env.example .env
+# Edit .env with your values
+
+# Start using Heroku Local (uses Procfile)
+heroku local
+```
+
+**Alternative: Direct Rails server**
+```bash
+# Start the Rails server directly
 bundle exec rails server
 
 # Or using the bin script
@@ -188,6 +223,37 @@ Or compile assets manually when needed:
 ./bin/webpack --watch
 ```
 
+## Using Heroku Local
+
+Heroku Local is the recommended way to run the application locally as it closely mirrors the production environment:
+
+```bash
+# Start all processes defined in Procfile
+heroku local
+
+# Start only the web process
+heroku local web
+
+# Start with a different port
+heroku local -p 5000
+```
+
+### Benefits of Heroku Local:
+- **Production parity**: Uses the same Procfile as production
+- **Environment variables**: Automatically loads from .env file
+- **Process management**: Handles multiple processes (web, worker, etc.)
+- **Easy scaling**: Can run multiple instances of processes
+
+### Procfile Configuration
+The application's Procfile defines:
+- `web`: The main Rails server process
+- `release`: Database migrations for deployment
+
+You can view the current Procfile configuration:
+```bash
+cat Procfile
+```
+
 ## Deployment
 
 Heroku deploys automatically every commit on the `master` branch to the staging environment. It's important to keep the branch in a deployable state.
@@ -216,9 +282,19 @@ Include the following environment variables in your production instance:
 
 ### Setting Up Environment Variables Locally
 
-Since this application doesn't include the `dotenv` gem, you'll need to set environment variables using one of these methods:
+#### Option 1: Using .env file (Recommended with Heroku Local)
+```bash
+# Copy the example file
+cp .env.example .env
 
-#### Option 1: Export in your shell (Recommended)
+# Edit .env with your values
+# Add at minimum:
+SECRET_KEY_BASE=$(bundle exec rails secret)
+```
+
+This method works automatically with `heroku local` and is the most convenient for local development.
+
+#### Option 2: Export in your shell
 Add to your `~/.zshrc` or `~/.bash_profile`:
 
 ```bash
@@ -229,7 +305,7 @@ export DATABASE_URL="postgresql://localhost/odonto_development"
 source ~/.zshrc
 ```
 
-#### Option 2: Set variables when running commands
+#### Option 3: Set variables when running commands
 ```bash
 SECRET_KEY_BASE=your_key_here bundle exec rails server
 
@@ -242,17 +318,15 @@ chmod +x start_server.sh
 ./start_server.sh
 ```
 
-#### Option 3: Add dotenv gem (Optional)
-If you prefer using `.env` files, you can add the dotenv gem:
+#### Option 4: Add dotenv gem (Optional)
+If you want to use .env files with direct Rails commands (not just Heroku Local):
 
 ```bash
 # Add to Gemfile in development group
 echo 'gem "dotenv-rails", groups: [:development, :test]' >> Gemfile
 bundle install
 
-# Then create and use .env file as described above
-cp .env.example .env
-# Edit .env with your values
+# Then use .env file as described in Option 1
 ```
 
 ### Generating a Secret Key
