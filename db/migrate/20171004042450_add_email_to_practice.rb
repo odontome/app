@@ -3,9 +3,9 @@
 class AddEmailToPractice < ActiveRecord::Migration[5.1]
   def up
     add_column :practices, :email, :string
-    Practice.update_all 'email = (select email from users
-    		where practice_id = practices.id
-    		order by id asc limit 1)'
+    Practice.update_all('email = (SELECT email FROM users
+      WHERE practice_id = practices.id
+      ORDER BY id ASC LIMIT 1)')
   end
 
   def down

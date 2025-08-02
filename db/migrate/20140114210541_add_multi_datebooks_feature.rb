@@ -16,7 +16,7 @@ class AddMultiDatebooksFeature < ActiveRecord::Migration[5.0]
     end
 
     Datebook.all.each do |datebook|
-      Appointment.update_all "datebook_id = #{datebook.id}", "appointments.practice_id = #{datebook.practice_id}"
+      Appointment.where(practice_id: datebook.practice_id).update_all(datebook_id: datebook.id)
     end
 
     remove_column :appointments, :practice_id
@@ -26,7 +26,7 @@ class AddMultiDatebooksFeature < ActiveRecord::Migration[5.0]
     add_column :appointments, :practice_id, :integer
 
     Datebook.all.each do |datebook|
-      Appointment.update_all "practice_id = #{datebook.practice_id}", "appointments.datebook_id = #{datebook.id}"
+      Appointment.where(datebook_id: datebook.id).update_all(practice_id: datebook.practice_id)
     end
 
     remove_column :appointments, :datebook_id

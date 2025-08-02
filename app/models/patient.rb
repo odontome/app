@@ -17,26 +17,26 @@ class Patient < ApplicationRecord
   }
 
   scope :anything_with_letter, lambda { |letter|
-    select('firstname,lastname,uid,id,date_of_birth,allergies,email,updated_at')
-      .where('lower(substring(firstname,1,1)) = ?', "#{letter.downcase}")
+    select('firstname, lastname, uid, id, date_of_birth, allergies, email, updated_at')
+      .where('LOWER(SUBSTRING(firstname, 1, 1)) = ?', letter.downcase)
   }
 
   scope :anything_not_in_alphabet, lambda {
-    select('firstname,lastname,uid,id,date_of_birth,allergies,email,updated_at')
-    .where('lower(substring(firstname,1,1)) NOT IN (?)', [*'a'..'z'])
+    select('firstname, lastname, uid, id, date_of_birth, allergies, email, updated_at')
+      .where('LOWER(SUBSTRING(firstname, 1, 1)) NOT IN (?)', [*'a'..'z'])
   }
 
   scope :search, lambda { |q|
     # Escape special characters to prevent SQL injection and PostgreSQL LIKE pattern errors
     escaped_q = ActiveRecord::Base.sanitize_sql_like(q)
-    select('id,uid,firstname,lastname,email,updated_at,date_of_birth')
-      .where("uid LIKE ? OR lower(firstname || ' ' || lastname) LIKE ?", "%#{escaped_q}%", "%#{escaped_q.downcase}%")
+    select('id, uid, firstname, lastname, email, updated_at, date_of_birth')
+      .where("uid ILIKE ? OR (firstname || ' ' || lastname) ILIKE ?", "%#{escaped_q}%", "%#{escaped_q}%")
       .limit(25)
       .order('firstname')
   }
 
   scope :only_initials, lambda {
-    select('DISTINCT substring(firstname,1,1) as firstname')
+    select('DISTINCT SUBSTRING(firstname, 1, 1) as firstname')
   }
 
   # validations
