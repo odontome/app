@@ -87,7 +87,7 @@ GEM
       addressable
     digest (3.1.0)
     erubi (1.11.0)
-    execjs (2.8.1)
+    execjs (2.10.0)
     ffi (1.15.5)
     font-awesome-rails (4.7.0.8)
       railties (>= 3.2, < 8.0)
@@ -264,7 +264,7 @@ GEM
     timeout (0.3.0)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
-    uglifier (4.2.0)
+    uglifier (4.2.1)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (2.2.0)
     webpacker (5.4.3)
@@ -300,7 +300,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   stripe (~> 5.53.0)
   taps (~> 0.3.24)
-  uglifier (~> 4.2.0)
+  uglifier (~> 4.2.1)
   webpacker (~> 5.4.3)
 
 RUBY VERSION
