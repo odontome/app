@@ -5,7 +5,7 @@ ruby '3.2.3'
 
 gem 'bcrypt', '~> 3.1.17'
 gem 'jquery-rails', '~> 4.5.0'
-gem 'puma', '~> 5.6.4'
+gem 'puma', '~> 6.6.1'
 gem 'rails', '~> 7.2.2.1'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '~> 4.2.0'
