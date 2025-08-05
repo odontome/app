@@ -38,3 +38,7 @@ man/*
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# Environment variables
+.env
+.env.local
