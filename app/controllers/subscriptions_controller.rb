@@ -28,6 +28,7 @@ class SubscriptionsController < ApplicationController
         error: e,
         status: 400
       }
+      return
     end
     redirect_to session.url, status: 303, allow_other_host: true
   end

@@ -17,7 +17,7 @@ xcode-select --install
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-### 2. Ruby 3.1.0
+### 2. Ruby 3.2.3
 We recommend using rbenv for Ruby version management:
 
 ```bash
@@ -28,12 +28,12 @@ brew install rbenv ruby-build
 echo 'if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi' >> ~/.zshrc
 source ~/.zshrc
 
-# Install Ruby 3.1.0
-rbenv install 3.1.0
-rbenv global 3.1.0
+# Install Ruby 3.2.3
+rbenv install 3.2.3
+rbenv global 3.2.3
 
 # Verify installation
-ruby --version  # Should show ruby 3.1.0
+ruby --version  # Should show ruby 3.2.3
 ```
 
 ### 3. Node.js and Yarn
@@ -65,9 +65,6 @@ createuser -s $(whoami)
 ```bash
 # Install Git (if not already installed)
 brew install git
-
-# Install Heroku CLI (for deployment)
-brew tap heroku/brew && brew install heroku
 ```
 
 ## Local Development Setup
@@ -75,8 +72,6 @@ brew tap heroku/brew && brew install heroku
 Follow these steps to set up the application on your macOS machine:
 
 ### Quick Setup (Recommended)
-The easiest way to run the application locally is using Heroku Local, which uses the same configuration as production:
-
 ```bash
 # Clone the repository
 git clone https://github.com/odontome/app.git
@@ -93,15 +88,11 @@ cp .env.example .env
 # Set up the database
 bundle exec rails db:setup
 
-# Start the application using Heroku Local
-heroku local
+# Start the application
+bundle exec rails server
 ```
 
-This approach:
-- Uses the same Procfile as production
-- Automatically loads environment variables from .env file
-- Runs both web and background processes as configured
-- Provides the most production-like local environment
+The application will be available at [http://localhost:3000](http://localhost:3000)
 
 **Note**: Make sure you have the prerequisites installed first (see "Prerequisites" section above).
 
@@ -168,19 +159,8 @@ bundle exec rails assets:precompile
 
 #### 6. Start the Application
 
-**Recommended: Using Heroku Local**
 ```bash
-# Create .env file from template
-cp .env.example .env
-# Edit .env with your values
-
-# Start using Heroku Local (uses Procfile)
-heroku local
-```
-
-**Alternative: Direct Rails server**
-```bash
-# Start the Rails server directly
+# Start the Rails server
 bundle exec rails server
 
 # Or using the bin script
@@ -223,40 +203,9 @@ Or compile assets manually when needed:
 ./bin/webpack --watch
 ```
 
-## Using Heroku Local
-
-Heroku Local is the recommended way to run the application locally as it closely mirrors the production environment:
-
-```bash
-# Start all processes defined in Procfile
-heroku local
-
-# Start only the web process
-heroku local web
-
-# Start with a different port
-heroku local -p 5000
-```
-
-### Benefits of Heroku Local:
-- **Production parity**: Uses the same Procfile as production
-- **Environment variables**: Automatically loads from .env file
-- **Process management**: Handles multiple processes (web, worker, etc.)
-- **Easy scaling**: Can run multiple instances of processes
-
-### Procfile Configuration
-The application's Procfile defines:
-- `web`: The main Rails server process
-- `release`: Database migrations for deployment
-
-You can view the current Procfile configuration:
-```bash
-cat Procfile
-```
-
 ## Deployment
 
-Heroku deploys automatically every commit on the `master` branch to the staging environment. It's important to keep the branch in a deployable state.
+Deploys automatically every commit on the `master` branch to the staging environment. It's important to keep the branch in a deployable state.
 
 ## Environment Variables
 
@@ -282,7 +231,7 @@ Include the following environment variables in your production instance:
 
 ### Setting Up Environment Variables Locally
 
-#### Option 1: Using .env file (Recommended with Heroku Local)
+#### Using .env file (Recommended)
 ```bash
 # Copy the example file
 cp .env.example .env
@@ -292,7 +241,7 @@ cp .env.example .env
 SECRET_KEY_BASE=$(bundle exec rails secret)
 ```
 
-This method works automatically with `heroku local` and is the most convenient for local development.
+The .env file will be automatically loaded when you start the Rails application.
 
 #### Option 2: Export in your shell
 Add to your `~/.zshrc` or `~/.bash_profile`:
@@ -318,17 +267,6 @@ chmod +x start_server.sh
 ./start_server.sh
 ```
 
-#### Option 4: Add dotenv gem (Optional)
-If you want to use .env files with direct Rails commands (not just Heroku Local):
-
-```bash
-# Add to Gemfile in development group
-echo 'gem "dotenv-rails", groups: [:development, :test]' >> Gemfile
-bundle install
-
-# Then use .env file as described in Option 1
-```
-
 ### Generating a Secret Key
 ```bash
 # Generate a new secret key
@@ -337,8 +275,8 @@ bundle exec rails secret
 
 ## Setting up Scheduler
 
-### For Heroku Production
-Add all the jobs in `/lib/tasks/odontome.rake` to your Scheduler Heroku extension:
+### For Production
+Add all the jobs in `/lib/tasks/odontome.rake` to your scheduler:
 
 - `odontome:send_appointment_reminder_notifications` - Every hour
 - `odontome:send_appointment_scheduled_notifications` - Every 5 minutes  
