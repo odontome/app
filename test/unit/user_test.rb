@@ -133,4 +133,21 @@ class UserTest < ActiveSupport::TestCase
 
     assert user.remember_token_valid?
   end
+
+  test 'should clear remember tokens when password is changed' do
+    user = users(:founder)
+    user.remember_me!
+    assert user.remember_token.present?
+    assert user.remember_token_expires_at.present?
+
+    # Change password
+    user.password = 'newpassword123'
+    user.password_confirmation = 'newpassword123'
+    user.save!
+
+    # Reload to get fresh data
+    user.reload
+    assert user.remember_token.blank?
+    assert user.remember_token_expires_at.blank?
+  end
 end

@@ -91,4 +91,20 @@ class UserSessionsControllerTest < ActionController::TestCase
     assert user.remember_token_expires_at.blank?
     assert_redirected_to root_url
   end
+
+  test 'should handle login with expired remember token gracefully' do
+    user = users(:founder)
+    user.remember_token = 'expired_token'
+    user.remember_token_expires_at = 1.day.ago
+    user.save!(validate: false)
+    
+    # Simulate having an expired remember token cookie
+    @request.cookies[:remember_token] = 'expired_token'
+    
+    get :new
+    
+    # Should not be logged in with expired token
+    assert_nil @controller.session['user']
+    assert_response :success
+  end
 end
