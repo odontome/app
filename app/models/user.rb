@@ -27,6 +27,7 @@ class User < ApplicationRecord
   before_create :set_admin_role_for_first_user
   before_update :reset_perishable_token
   before_destroy :check_if_admin
+  after_update :clear_remember_tokens_on_password_change
 
   def fullname
     [firstname, lastname].join(' ')
@@ -43,6 +44,23 @@ class User < ApplicationRecord
 
   def is_admin?
     roles.include?('admin')
+  end
+
+  # Remember token functionality for persistent login
+  def remember_me!
+    self.remember_token = SecureRandom.urlsafe_base64(32)
+    self.remember_token_expires_at = 2.weeks.from_now
+    save!(validate: false)
+  end
+
+  def forget_me!
+    self.remember_token = nil
+    self.remember_token_expires_at = nil
+    save!(validate: false)
+  end
+
+  def remember_token_valid?
+    remember_token.present? && remember_token_expires_at.present? && Time.current < remember_token_expires_at
   end
 
   private
@@ -68,5 +86,13 @@ class User < ApplicationRecord
 
   def reset_perishable_token!
     update_attribute(:perishable_token, SecureRandom.urlsafe_base64(15))
+  end
+
+  def clear_remember_tokens_on_password_change
+    if saved_change_to_password_digest?
+      self.remember_token = nil
+      self.remember_token_expires_at = nil
+      update_columns(remember_token: nil, remember_token_expires_at: nil)
+    end
   end
 end

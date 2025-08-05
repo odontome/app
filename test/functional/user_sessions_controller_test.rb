@@ -47,4 +47,64 @@ class UserSessionsControllerTest < ActionController::TestCase
     assert_nil @controller.session['user']
     assert_redirected_to new_password_reset_url
   end
+
+  test 'should create persistent login when remember me is checked' do
+    post :create, params: { signin: { email: users(:founder).email, password: '1234567890', remember_me: '1' } }
+
+    assert_equal @controller.session['user'], users(:founder)
+    assert_redirected_to root_url
+    
+    # Check that remember token was set
+    users(:founder).reload
+    assert users(:founder).remember_token.present?
+    assert users(:founder).remember_token_expires_at.present?
+    assert users(:founder).remember_token_valid?
+    
+    # Check that cookie was set
+    assert @response.cookies['remember_token'].present?
+  end
+
+  test 'should not create persistent login when remember me is not checked' do
+    post :create, params: { signin: { email: users(:founder).email, password: '1234567890', remember_me: '0' } }
+
+    assert_equal @controller.session['user'], users(:founder)
+    assert_redirected_to root_url
+    
+    # Check that remember token was not set
+    users(:founder).reload
+    assert users(:founder).remember_token.blank?
+    assert users(:founder).remember_token_expires_at.blank?
+    
+    # Check that cookie was not set
+    assert @response.cookies['remember_token'].blank?
+  end
+
+  test 'should clear remember token on logout' do
+    user = users(:founder)
+    user.remember_me!
+    @controller.session[:user] = user
+
+    delete :destroy
+
+    user.reload
+    assert user.remember_token.blank?
+    assert user.remember_token_expires_at.blank?
+    assert_redirected_to root_url
+  end
+
+  test 'should handle login with expired remember token gracefully' do
+    user = users(:founder)
+    user.remember_token = 'expired_token'
+    user.remember_token_expires_at = 1.day.ago
+    user.save!(validate: false)
+    
+    # Simulate having an expired remember token cookie
+    @request.cookies[:remember_token] = 'expired_token'
+    
+    get :new
+    
+    # Should not be logged in with expired token
+    assert_nil @controller.session['user']
+    assert_response :success
+  end
 end

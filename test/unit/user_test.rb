@@ -89,4 +89,65 @@ class UserTest < ActiveSupport::TestCase
 
     assert_equal user.initials, 'ER'
   end
+
+  test 'remember_me! sets remember token and expiration' do
+    user = users(:founder)
+    assert user.remember_token.blank?
+    assert user.remember_token_expires_at.blank?
+
+    user.remember_me!
+
+    assert user.remember_token.present?
+    assert user.remember_token_expires_at.present?
+    assert user.remember_token_expires_at > Time.current
+    assert user.remember_token_valid?
+  end
+
+  test 'forget_me! clears remember token and expiration' do
+    user = users(:founder)
+    user.remember_me!
+    assert user.remember_token.present?
+    assert user.remember_token_expires_at.present?
+
+    user.forget_me!
+
+    assert user.remember_token.blank?
+    assert user.remember_token_expires_at.blank?
+    assert_not user.remember_token_valid?
+  end
+
+  test 'remember_token_valid? returns false for expired tokens' do
+    user = users(:founder)
+    user.remember_token = 'valid_token'
+    user.remember_token_expires_at = 1.day.ago
+    user.save!(validate: false)
+
+    assert_not user.remember_token_valid?
+  end
+
+  test 'remember_token_valid? returns true for valid tokens' do
+    user = users(:founder)
+    user.remember_token = 'valid_token'
+    user.remember_token_expires_at = 1.day.from_now
+    user.save!(validate: false)
+
+    assert user.remember_token_valid?
+  end
+
+  test 'should clear remember tokens when password is changed' do
+    user = users(:founder)
+    user.remember_me!
+    assert user.remember_token.present?
+    assert user.remember_token_expires_at.present?
+
+    # Change password
+    user.password = 'newpassword123'
+    user.password_confirmation = 'newpassword123'
+    user.save!
+
+    # Reload to get fresh data
+    user.reload
+    assert user.remember_token.blank?
+    assert user.remember_token_expires_at.blank?
+  end
 end

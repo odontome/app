@@ -18,7 +18,7 @@ class UserSessionsController < ApplicationController
       flash[:alert] = I18n.t('errors.messages.reset_your_password_request')
       redirect_to new_password_reset_url
     # Verify user exists in db and authenticate using shared method
-    elsif authenticate_and_set_session(user, params[:signin][:password])
+    elsif authenticate_and_set_session(user, params[:signin][:password], params[:signin][:remember_me] == '1')
       redirect_to root_url
     else
       # if email or password incorrect, re-render login page:
@@ -28,6 +28,9 @@ class UserSessionsController < ApplicationController
   end
 
   def destroy
+    # Clear remember token if user is logged in
+    current_user&.forget_me!
+    cookies.delete(:remember_token)
     session.clear
     redirect_to root_url
   end
