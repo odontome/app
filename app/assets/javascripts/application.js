@@ -40,7 +40,6 @@ $(function(){
 
   // Theme Switcher functionality
   const themeToggle = document.getElementById('theme-toggle');
-  const themeText = document.getElementById('theme-text');
   const lightIcon = document.querySelector('.light-icon');
   const darkIcon = document.querySelector('.dark-icon');
   const body = document.body;
@@ -65,13 +64,11 @@ $(function(){
     if (theme === 'dark') {
       body.classList.remove('theme-light');
       body.classList.add('theme-dark');
-      if (themeText) themeText.textContent = 'Light Mode';
       if (lightIcon) lightIcon.style.display = 'none';
       if (darkIcon) darkIcon.style.display = 'inline';
     } else {
       body.classList.remove('theme-dark');
       body.classList.add('theme-light');
-      if (themeText) themeText.textContent = 'Dark Mode';
       if (lightIcon) lightIcon.style.display = 'inline';
       if (darkIcon) darkIcon.style.display = 'none';
     }
