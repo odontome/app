@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Theme Test</title>
+    <style>
+        /* Include the key CSS for testing */
+        body.theme-light {
+            --tblr-body-color: #1e293b;
+            --tblr-body-bg: #fff;
+            --tblr-card-bg: #fff;
+            --tblr-border-color: #e6e7e9;
+            color: #1e293b;
+            background-color: #fff;
+        }
+        
+        body.theme-dark {
+            --tblr-body-color: #f8fafc;
+            --tblr-body-bg: #1b2434;
+            --tblr-card-bg: #1e293b;
+            --tblr-border-color: #2c3c56;
+            color: #f8fafc;
+            background-color: #1b2434;
+        }
+        
+        .card {
+            background: var(--tblr-card-bg);
+            border: 1px solid var(--tblr-border-color);
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        /* Theme-aware doctor badges */
+        body.theme-dark .badge[style*="background-color"] {
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+        }
+        
+        body.theme-light .badge[style*="background-color"] {
+            border: 1px solid rgba(0, 0, 0, 0.1) !important;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        .theme-toggle {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--tblr-card-bg);
+            border: 1px solid var(--tblr-border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 1rem;
+        }
+        
+        .light-icon, .dark-icon {
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+        }
+        
+        body.theme-light .light-icon { display: inline-block; }
+        body.theme-light .dark-icon { display: none; }
+        body.theme-dark .light-icon { display: none; }
+        body.theme-dark .dark-icon { display: inline-block; }
+    </style>
+</head>
+<body class="theme-light" id="app-body">
+    <div class="card">
+        <h2>Theme Test</h2>
+        <p>This tests the theme implementation consistency.</p>
+        
+        <div class="theme-toggle" onclick="toggleTheme()">
+            <span class="light-icon">☀️</span>
+            <span class="dark-icon">🌙</span>
+            <span id="theme-text">Switch to Dark Mode</span>
+        </div>
+        
+        <h3>Doctor Badges Test:</h3>
+        <span class="badge" style="background-color: #ff6b6b;">Dr. Smith</span>
+        <span class="badge" style="background-color: #4ecdc4;">Dr. Johnson</span>
+        <span class="badge" style="background-color: #45b7d1;">Dr. Brown</span>
+        <span class="badge" style="background-color: #f9ca24;">Dr. Davis</span>
+        <span class="badge" style="background-color: #6c5ce7;">Dr. Wilson</span>
+    </div>
+    
+    <script>
+        function toggleTheme() {
+            const body = document.getElementById('app-body');
+            const themeText = document.getElementById('theme-text');
+            
+            if (body.classList.contains('theme-dark')) {
+                body.classList.remove('theme-dark');
+                body.classList.add('theme-light');
+                themeText.textContent = 'Switch to Dark Mode';
+            } else {
+                body.classList.remove('theme-light');
+                body.classList.add('theme-dark');
+                themeText.textContent = 'Switch to Light Mode';
+            }
+        }
+    </script>
+</body>
+</html>
