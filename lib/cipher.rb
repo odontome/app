@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Cipher
-  KEY = Gibberish::AES.new(Rails.application.secrets.secret_key_base)
+  KEY = Gibberish::AES.new(Rails.application.secret_key_base)
 
   def self.decode(string)
     cipher = KEY
