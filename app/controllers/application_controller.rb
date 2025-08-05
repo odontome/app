@@ -52,7 +52,31 @@ class ApplicationController < ActionController::Base
   def current_user
     return @current_user if defined?(@current_user)
 
+    # First, try to find user from session
     @current_user ||= User.find(session[:user]['id']) if session[:user]
+    
+    # If no session user, check for remember token in cookies
+    if @current_user.nil? && cookies[:remember_token].present?
+      user = User.find_by(remember_token: cookies[:remember_token])
+      if user&.remember_token_valid?
+        # Extend the remember token and set session
+        user.remember_me!
+        session[:user] = user
+        cookies[:remember_token] = { 
+          value: user.remember_token, 
+          expires: user.remember_token_expires_at,
+          secure: Rails.application.config.force_ssl,
+          httponly: true,
+          same_site: :lax
+        }
+        @current_user = user
+      else
+        # Clear invalid remember token
+        cookies.delete(:remember_token)
+      end
+    end
+    
+    @current_user
   end
 
   def user_is_admin?(user = current_user)
@@ -129,13 +153,26 @@ class ApplicationController < ActionController::Base
     event.set_user(current_user.id, current_user.email, current_user.fullname) if current_user
   end
 
-  def authenticate_and_set_session(user, password)
+  def authenticate_and_set_session(user, password, remember_me = false)
     if user&.authenticate(password)
       # Update the last time this person was seen online (only for existing users)
       user.update(last_login_at: user.current_login_at, current_login_at: Time.now) if user.persisted?
       
       # Save the user in that user's session cookie:
       session[:user] = user
+      
+      # Set remember token if remember_me is checked
+      if remember_me
+        user.remember_me!
+        cookies[:remember_token] = { 
+          value: user.remember_token, 
+          expires: user.remember_token_expires_at,
+          secure: Rails.application.config.force_ssl,
+          httponly: true,
+          same_site: :lax
+        }
+      end
+      
       true
     else
       false

@@ -45,6 +45,23 @@ class User < ApplicationRecord
     roles.include?('admin')
   end
 
+  # Remember token functionality for persistent login
+  def remember_me!
+    self.remember_token = SecureRandom.urlsafe_base64(32)
+    self.remember_token_expires_at = 2.weeks.from_now
+    save!(validate: false)
+  end
+
+  def forget_me!
+    self.remember_token = nil
+    self.remember_token_expires_at = nil
+    save!(validate: false)
+  end
+
+  def remember_token_valid?
+    remember_token.present? && remember_token_expires_at.present? && Time.current < remember_token_expires_at
+  end
+
   private
 
   def validate_password?
