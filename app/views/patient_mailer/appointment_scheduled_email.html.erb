@@ -13,8 +13,17 @@
 
 <tr>
 	<td class="content-block">
+		<div itemscope itemtype="http://schema.org/Event">
+			<meta itemprop="name" content="Dental Appointment with <%= @doctor_name %>"/>
+			<meta itemprop="startDate" content="<%= @appointment_start_datetime.iso8601 %>"/>
+			<meta itemprop="endDate" content="<%= @appointment_end_datetime.iso8601 %>"/>
+			<div itemprop="location" itemscope itemtype="http://schema.org/Place">
+				<meta itemprop="name" content="<%= @practice_name %>"/>
+			</div>
+		</div>
 		It starts at: <strong><%= @appointment_start_time %></strong><br />
-		and ends at: <strong><%= @appointment_end_time %></strong>
+		and ends at: <strong><%= @appointment_end_time %></strong><br />
+		<em>(<%= @practice_timezone %> time)</em>
 	</td>
 </tr>
 

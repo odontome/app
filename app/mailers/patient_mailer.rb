@@ -13,6 +13,9 @@ class PatientMailer < ApplicationMailer
       @appointment_date = I18n.l start_time.in_time_zone(@practice_timezone).to_date, format: :day_and_date
       @appointment_start_time = I18n.l start_time.to_time.in_time_zone(@practice_timezone), format: :just_the_time
       @appointment_end_time = I18n.l end_time.to_time.in_time_zone(@practice_timezone), format: :just_the_time
+      # Add raw datetime objects for structured data
+      @appointment_start_datetime = start_time.in_time_zone(@practice_timezone)
+      @appointment_end_datetime = end_time.in_time_zone(@practice_timezone)
 
       mail(from: "#{practice_name} <hello@odonto.me>",
            to: patient_email,
@@ -32,6 +35,9 @@ class PatientMailer < ApplicationMailer
       @appointment_date = I18n.l start_time.in_time_zone(@practice_timezone).to_date, format: :day_and_date
       @appointment_start_time = I18n.l start_time.to_time.in_time_zone(@practice_timezone), format: :just_the_time
       @appointment_end_time = I18n.l end_time.to_time.in_time_zone(@practice_timezone), format: :just_the_time
+      # Add raw datetime objects for structured data
+      @appointment_start_datetime = start_time.in_time_zone(@practice_timezone)
+      @appointment_end_datetime = end_time.in_time_zone(@practice_timezone)
 
       # create the invite
       cal = Icalendar::Calendar.new
