@@ -604,3 +604,175 @@ table.fc-border-separate {
 	}
 	
 	
+/* Dark Theme Overrides
+------------------------------------------------------------------------*/
+
+/* Apply dark theme styles when body has theme-dark class */
+body.theme-dark .fc {
+	color: #f8fafc;
+}
+
+/* Calendar container background */
+body.theme-dark .fc-content {
+	background-color: #1e293b;
+}
+
+/* Header styling */
+body.theme-dark .fc-header {
+	color: #f8fafc;
+}
+
+body.theme-dark .fc-header-title h2 {
+	color: #f8fafc;
+}
+
+/* Cell borders and backgrounds */
+body.theme-dark .fc-widget-header,
+body.theme-dark .fc-widget-content {
+	border-color: #2c3c56;
+	background-color: #1e293b;
+	color: #f8fafc;
+}
+
+/* Today cell highlighting */
+body.theme-dark .fc-state-highlight {
+	background: #253249;
+	color: #f8fafc;
+}
+
+/* Day headers */
+body.theme-dark .fc-grid th {
+	color: #94a3b8;
+	border-color: #2c3c56;
+	background-color: #1b2434;
+}
+
+/* Day numbers */
+body.theme-dark .fc-grid .fc-day-number {
+	color: #94a3b8;
+}
+
+body.theme-dark .fc-state-highlight .fc-day-number {
+	color: #f8fafc;
+	font-weight: 600;
+}
+
+/* Buttons */
+body.theme-dark .fc-state-default {
+	color: #f8fafc;
+	background: #2c3c56;
+	border-color: #374151;
+}
+
+body.theme-dark .fc-state-default:hover,
+body.theme-dark .fc-state-hover {
+	color: #206bc4;
+	background: #374151;
+	border-color: #206bc4;
+}
+
+body.theme-dark .fc-state-down,
+body.theme-dark .fc-state-active {
+	color: #f8fafc;
+	background: #206bc4;
+	border-color: #206bc4;
+}
+
+/* Events */
+body.theme-dark .fc-event {
+	background-color: #206bc4;
+	border-color: #1d60b0;
+	color: #f8fafc;
+}
+
+body.theme-dark a.fc-event:hover {
+	color: #f8fafc;
+}
+
+/* Agenda view styles */
+body.theme-dark .fc-agenda-slots td {
+	background: #1e293b;
+	border-color: #2c3c56;
+}
+
+body.theme-dark .fc-agenda-slots th {
+	background: #1b2434;
+	border-color: #2c3c56;
+	color: #94a3b8;
+}
+
+body.theme-dark .fc-widget-header {
+	color: #94a3b8;
+	background: #1b2434;
+}
+
+body.theme-dark .fc-widget-header .fc-agenda-divider-inner {
+	background: #2c3c56;
+}
+
+/* Time axis styling */
+body.theme-dark .fc-agenda .fc-agenda-axis {
+	color: #94a3b8;
+	border-color: #2c3c56;
+	background: #1b2434;
+}
+
+/* Cell overlay for dragging */
+body.theme-dark .fc-cell-overlay {
+	background: #206bc4;
+	opacity: .3;
+}
+
+/* Calendar range selection */
+body.theme-dark .calendar-range:before {
+	background: rgba(32,107,196,.2);
+}
+
+/* Month view other month days */
+body.theme-dark .fc-grid .fc-other-month .fc-day-number {
+	opacity: 0.4;
+	color: #64748b;
+}
+
+/* Vertical events in agenda view */
+body.theme-dark .fc-event-vert .fc-event-bg {
+	background: #1e293b;
+}
+
+/* Button text arrows */
+body.theme-dark .fc-text-arrow {
+	color: #f8fafc;
+}
+
+/* All day area */
+body.theme-dark .fc-agenda-allday th {
+	background: #1b2434;
+	border-color: #2c3c56;
+	color: #94a3b8;
+}
+
+/* Week numbers */
+body.theme-dark .fc .fc-week-number {
+	color: #94a3b8;
+	background: #1b2434;
+}
+
+/* Calendar border separation */
+body.theme-dark .fc-border-separate th,
+body.theme-dark .fc-border-separate td {
+	border-color: #2c3c56;
+}
+
+/* Event time styling */
+body.theme-dark .fc-event-time {
+	color: #f8fafc;
+}
+
+body.theme-dark .fc-event-title {
+	color: #f8fafc;
+}
+
+/* Resizable handles */
+body.theme-dark .fc-event-vert .ui-resizable-s {
+	background: #374151;
+}
