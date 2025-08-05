@@ -3,5 +3,27 @@
 }
 
 .fc-content {
-  background-color: white;
+  background-color: var(--tblr-card-bg, #fff);
+}
+
+/* Theme-aware calendar content */
+body.theme-light .fc-content {
+  background-color: #fff;
+}
+
+body.theme-dark .fc-content {
+  background-color: #1e293b;
+}
+
+/* Theme-aware doctor badges - ensures good contrast in both themes */
+body.theme-dark .badge[style*="background-color"] {
+  /* Add subtle border and adjust opacity in dark theme for better readability */
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.theme-light .badge[style*="background-color"] {
+  /* Ensure good contrast in light theme */
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
 }

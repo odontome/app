@@ -9,11 +9,17 @@
       </a>
     </h1>
     <div class="navbar-nav flex-row order-md-last">
-        <a href="#" class="ms-2 nav-link text-reset p-0" id="theme-toggle">
-            <span id="theme-icon">
+        <a href="#" class="ms-2 nav-link text-reset p-0" id="theme-toggle-navbar">
+            <span class="theme-icon-container">
               <!-- Brightness icon for light theme -->
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brightness theme-icon light-icon" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg>
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <circle cx="12" cy="12" r="9"/>
+                <line x1="12" y1="3" x2="12" y2="21"/>
+                <line x1="16.24" y1="7.76" x2="7.76" y2="16.24"/>
+                <line x1="21" y1="12" x2="3" y2="12"/>
+                <line x1="16.24" y1="16.24" x2="7.76" y2="7.76"/>
+              </svg>
               <!-- Moon icon for dark theme -->
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon theme-icon dark-icon" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -35,16 +41,16 @@
         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
           <%= link_to t(:profile), current_user, class: "dropdown-item" %>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item" id="theme-toggle">
-            <span id="theme-icon">
+          <a href="#" class="dropdown-item" id="theme-toggle-dropdown">
+            <span class="theme-icon-container">
               <!-- Brightness icon for light theme -->
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brightness theme-icon light-icon" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <circle cx="12" cy="12" r="9"></circle>
-                <line x1="12" y1="3" x2="12" y2="21"></line>
-                <line x1="16.24" y1="7.76" x2="7.76" y2="16.24"></line>
-                <line x1="21" y1="12" x2="3" y2="12"></line>
-                <line x1="16.24" y1="16.24" x2="7.76" y2="7.76"></line>
+                <circle cx="12" cy="12" r="9"/>
+                <line x1="12" y1="3" x2="12" y2="21"/>
+                <line x1="16.24" y1="7.76" x2="7.76" y2="16.24"/>
+                <line x1="21" y1="12" x2="3" y2="12"/>
+                <line x1="16.24" y1="16.24" x2="7.76" y2="7.76"/>
               </svg>
               <!-- Moon icon for dark theme -->
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon theme-icon dark-icon" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
@@ -52,7 +58,7 @@
                 <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
               </svg>
             </span>
-            <span id="theme-text">Dark Mode</span>
+            <span class="theme-text">Dark Mode</span>
           </a>
           <div class="dropdown-divider"></div>
           <%= link_to t(:signout), logout_url, class: "dropdown-item" %>

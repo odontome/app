@@ -39,10 +39,11 @@ $(function(){
   $('select[class*="date-select"]').wrap('<div class="col-4" />');
 
   // Theme Switcher functionality
-  const themeToggle = document.getElementById('theme-toggle');
-  const themeText = document.getElementById('theme-text');
-  const lightIcon = document.querySelector('.light-icon');
-  const darkIcon = document.querySelector('.dark-icon');
+  const themeToggleNavbar = document.getElementById('theme-toggle-navbar');
+  const themeToggleDropdown = document.getElementById('theme-toggle-dropdown');
+  const themeText = document.querySelector('.theme-text');
+  const lightIcons = document.querySelectorAll('.light-icon');
+  const darkIcons = document.querySelectorAll('.dark-icon');
   const body = document.body;
 
   // Get current theme from localStorage or default to light
@@ -51,14 +52,20 @@ $(function(){
   // Apply the current theme
   applyTheme(currentTheme);
 
-  // Theme toggle click handler
-  if (themeToggle) {
-    themeToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      const newTheme = body.classList.contains('theme-dark') ? 'light' : 'dark';
-      applyTheme(newTheme);
-      localStorage.setItem('theme', newTheme);
-    });
+  // Theme toggle click handler for both elements
+  function handleThemeToggle(e) {
+    e.preventDefault();
+    const newTheme = body.classList.contains('theme-dark') ? 'light' : 'dark';
+    applyTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+  }
+
+  if (themeToggleNavbar) {
+    themeToggleNavbar.addEventListener('click', handleThemeToggle);
+  }
+
+  if (themeToggleDropdown) {
+    themeToggleDropdown.addEventListener('click', handleThemeToggle);
   }
 
   function applyTheme(theme) {
@@ -66,14 +73,14 @@ $(function(){
       body.classList.remove('theme-light');
       body.classList.add('theme-dark');
       if (themeText) themeText.textContent = 'Light Mode';
-      if (lightIcon) lightIcon.style.display = 'none';
-      if (darkIcon) darkIcon.style.display = 'inline';
+      lightIcons.forEach(icon => icon.style.display = 'none');
+      darkIcons.forEach(icon => icon.style.display = 'inline');
     } else {
       body.classList.remove('theme-dark');
       body.classList.add('theme-light');
       if (themeText) themeText.textContent = 'Dark Mode';
-      if (lightIcon) lightIcon.style.display = 'inline';
-      if (darkIcon) darkIcon.style.display = 'none';
+      lightIcons.forEach(icon => icon.style.display = 'inline');
+      darkIcons.forEach(icon => icon.style.display = 'none');
     }
   }
 });

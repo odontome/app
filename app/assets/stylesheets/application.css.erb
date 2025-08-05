@@ -11,13 +11,14 @@
 }
 
 /* Theme switcher styles */
-#theme-toggle {
+#theme-toggle-navbar,
+#theme-toggle-dropdown {
   display: flex;
   align-items: center;
   cursor: pointer;
 }
 
-#theme-icon {
+.theme-icon-container {
   display: flex;
   align-items: center;
   margin-right: 0.5rem;
@@ -26,6 +27,45 @@
 .theme-icon {
   width: 16px;
   height: 16px;
+}
+
+/* Explicit light theme styles */
+body.theme-light {
+  --tblr-body-color: #1e293b;
+  --tblr-body-color-rgb: 30, 41, 59;
+  --tblr-body-bg: #fff;
+  --tblr-body-bg-rgb: 255, 255, 255;
+  --tblr-card-bg: #fff;
+  --tblr-card-bg-rgb: 255, 255, 255;
+  --tblr-border-color: #e6e7e9;
+  --tblr-border-color-light: #f1f5f9;
+  color: #1e293b;
+  background-color: #fff;
+}
+
+/* Light theme calendar override */
+body.theme-light .fc-content {
+  background-color: #fff;
+}
+
+/* Light theme hiding utility */
+body.theme-light .hide-theme-light {
+  display: none !important;
+}
+
+/* Theme-aware doctor badges - improve readability across themes */
+body.theme-dark .badge[style*="background-color"] {
+  /* Add subtle border and shadow in dark theme for better visibility */
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+  font-weight: 600 !important;
+}
+
+body.theme-light .badge[style*="background-color"] {
+  /* Ensure good contrast in light theme */
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+  font-weight: 600 !important;
 }
 
 /* Smooth transition for theme changes */
