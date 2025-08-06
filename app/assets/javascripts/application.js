@@ -64,13 +64,13 @@ $(function(){
     if (theme === 'dark') {
       body.classList.remove('theme-light');
       body.classList.add('theme-dark');
-      if (lightIcon) lightIcon.style.display = 'none';
-      if (darkIcon) darkIcon.style.display = 'inline';
+      if (lightIcon) lightIcon.style.display = 'inline';
+      if (darkIcon) darkIcon.style.display = 'none';
     } else {
       body.classList.remove('theme-dark');
       body.classList.add('theme-light');
-      if (lightIcon) lightIcon.style.display = 'inline';
-      if (darkIcon) darkIcon.style.display = 'none';
+      if (lightIcon) lightIcon.style.display = 'none';
+      if (darkIcon) darkIcon.style.display = 'inline';
     }
   }
 });
