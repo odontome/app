@@ -12,7 +12,7 @@
       <% if review.comment.blank? %>
         <p class="text-muted"><%= t :no_comment %></p>
       <% else %>
-        <p class="text-muted"><%= review.comment.html_safe %></p>
+        <p class="text-muted"><%= sanitize(review.comment, tags: %w[], attributes: %w[]) %></p>
       <% end %>
     </div>
   </div>

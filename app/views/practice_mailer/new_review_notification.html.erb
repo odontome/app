@@ -11,7 +11,7 @@
 
 <tr>
   <td class="aligncenter content-block">
-    <i>"<%= @review.comment.html_safe %>"</i>
+    <i>"<%= sanitize(@review.comment, tags: %w[], attributes: %w[]) %>"</i>
   </td>
 </tr>
 

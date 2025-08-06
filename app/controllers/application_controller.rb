@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
     elsif current_user && current_user.practice.subscription.is_trial_expired?
       redirect_to_subscription_error
     elsif current_user && current_user.practice.subscription.is_trial_expiring?
-      flash[:warning] = I18n.t('subscriptions.errors.expiring', practice_settings_url: practice_settings_url).html_safe
+      flash[:warning] = I18n.t('subscriptions.errors.expiring', practice_settings_url: practice_settings_url)
     end
   end
 
@@ -53,7 +53,9 @@ class ApplicationController < ActionController::Base
     return @current_user if defined?(@current_user)
 
     # First, try to find user from session
-    @current_user ||= User.find(session[:user]['id']) if session[:user]
+    if session[:user].is_a?(Hash) && session[:user]['id'].present?
+      @current_user ||= User.find_by(id: session[:user]['id'])
+    end
     
     # If no session user, check for remember token in cookies
     if @current_user.nil? && cookies[:remember_token].present?
@@ -61,7 +63,7 @@ class ApplicationController < ActionController::Base
       if user&.remember_token_valid?
         # Extend the remember token and set session
         user.remember_me!
-        session[:user] = user
+        session[:user] = { 'id' => user.id }
         cookies[:remember_token] = { 
           value: user.remember_token, 
           expires: user.remember_token_expires_at,
@@ -159,7 +161,7 @@ class ApplicationController < ActionController::Base
       user.update(last_login_at: user.current_login_at, current_login_at: Time.now) if user.persisted?
       
       # Save the user in that user's session cookie:
-      session[:user] = user
+      session[:user] = { 'id' => user.id }
       
       # Set remember token if remember_me is checked
       if remember_me

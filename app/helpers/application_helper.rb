@@ -22,8 +22,10 @@ module ApplicationHelper
         aggregated_value.concat content_tag "div", "—", class: "form-control-plaintext text-muted"
       end
     else
+      # Sanitize the value to prevent XSS attacks
+      sanitized_value = sanitize(value, tags: %w[], attributes: %w[])
       content_tag "div" do
-        aggregated_value.concat content_tag "div", value, class: "form-control-plaintext"
+        aggregated_value.concat content_tag "div", sanitized_value, class: "form-control-plaintext"
       end
     end
   end

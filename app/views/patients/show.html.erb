@@ -42,7 +42,7 @@
         </div>
 
         <div class="card-body">
-          <p><%= @patient.allergies %></p>
+          <p><%= sanitize(@patient.allergies, tags: %w[], attributes: %w[]) %></p>
         </div>
       </div>
     </div>

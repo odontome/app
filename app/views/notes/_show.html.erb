@@ -5,7 +5,7 @@
     </div>
     <div class="col">
       <small class="text-body d-block text-truncate"><%= note.user.fullname %> — <%= t :ago_in_words, date: time_ago_in_words(note.created_at) %></small>
-      <span class="d-block text-muted mt-n1"><%= note.notes %></span>
+      <span class="d-block text-muted mt-n1"><%= sanitize(note.notes, tags: %w[], attributes: %w[]) %></span>
     </div>
     <div class="col-auto">
       <%= link_to [noteable, note], method: :delete, remote: true, class: "list-group-item-actions text-dark" do %>
