@@ -10,8 +10,8 @@ Rails.application.configure do
     policy.font_src    :self, :https, :data
     policy.img_src     :self, :https, :data
     policy.object_src  :none
-    policy.script_src  :self, :https
-    policy.style_src   :self, :https, :unsafe_inline  # Allow inline styles for CSS frameworks
+    policy.script_src  :self, :https, :unsafe_inline, 'unpkg.com'  # Allow inline scripts and unpkg.com CDN
+    policy.style_src   :self, :https, :unsafe_inline, 'unpkg.com'  # Allow inline styles and unpkg.com CDN
     policy.connect_src :self, :https
     policy.frame_ancestors :none  # Prevent clickjacking
     # Specify URI for violation reports if needed
