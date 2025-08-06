@@ -1,6 +1,8 @@
 <%= CSV.generate(:col_sep => ";") do |csv|
   csv << [t(:created_at), t(:notes), t(:amount)]
   @balances.each do |balance|
-    csv << [ l( balance[:created_at], :format => :long), balance[:notes], balance[:amount]]
+    # Sanitize notes to prevent CSV injection  
+    safe_notes = balance[:notes].to_s.gsub(/[=+@-]/, '') if balance[:notes]
+    csv << [ l( balance[:created_at], :format => :long), safe_notes, balance[:amount]]
   end
 end.html_safe %>

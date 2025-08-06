@@ -60,7 +60,9 @@ class User < ApplicationRecord
   end
 
   def remember_token_valid?
-    remember_token.present? && remember_token_expires_at.present? && Time.current < remember_token_expires_at
+    return false unless remember_token.present? && remember_token_expires_at.present?
+    return false unless remember_token.match?(/\A[A-Za-z0-9_-]+\z/)  # Validate token format
+    Time.current < remember_token_expires_at
   end
 
   private
