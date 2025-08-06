@@ -4,7 +4,7 @@ require 'test_helper'
 
 class DatebooksControllerTest < ActionController::TestCase
   setup do
-    @controller.session['user'] = users(:founder)
+    @controller.session['user'] = { 'id' => users(:founder).id }
     @datebook = { name: 'Bokanova Dental' }
   end
 
@@ -20,7 +20,7 @@ class DatebooksControllerTest < ActionController::TestCase
   end
 
   test 'should not get new if not admin' do
-    @controller.session['user'] = users(:perishable)
+    @controller.session['user'] = { 'id' => users(:perishable).id }
 
     get :new
     assert_response :redirect
@@ -44,7 +44,7 @@ class DatebooksControllerTest < ActionController::TestCase
   end
 
   test 'should not get edit if not admin' do
-    @controller.session['user'] = users(:perishable)
+    @controller.session['user'] = { 'id' => users(:perishable).id }
 
     get :edit, params: { id: datebooks(:playa_del_carmen).to_param }
     assert_response :redirect

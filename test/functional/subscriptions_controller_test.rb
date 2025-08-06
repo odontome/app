@@ -4,7 +4,7 @@ require 'test_helper'
 
 class SubscriptionsControllerTest < ActionController::TestCase
   setup do
-    @controller.session['user'] = users(:founder)
+    @controller.session['user'] = { 'id' => users(:founder).id }
   end
 
   test 'should be redirected to stripe when using a valid configuration' do

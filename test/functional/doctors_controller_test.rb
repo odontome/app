@@ -4,7 +4,7 @@ require 'test_helper'
 
 class DoctorsControllerTest < ActionController::TestCase
   setup do
-    @controller.session['user'] = users(:founder)
+    @controller.session['user'] = { 'id' => users(:founder).id }
 
     @new_doctor = { firstname: 'Ruth',
                     lastname: 'Riera',

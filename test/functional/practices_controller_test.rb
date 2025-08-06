@@ -4,7 +4,7 @@ require 'test_helper'
 
 class PracticesControllerTest < ActionController::TestCase
   setup do
-    @controller.session['user'] = users(:founder)
+    @controller.session['user'] = { 'id' => users(:founder).id }
   end
 
   test 'should get new' do
@@ -37,7 +37,9 @@ class PracticesControllerTest < ActionController::TestCase
     assert_equal I18n.t('mailers.practice.welcome.subject'), welcome_email.subject
     assert_match(/Welcome to Odonto.me/, welcome_email.encoded)
 
-    assert_equal @controller.session['user'].email, practice[:users_attributes]['0']['email']
+    # Get the created user and verify session was set correctly
+    created_user = User.find(@controller.session['user']['id'])
+    assert_equal created_user.email, practice[:users_attributes]['0']['email']
     assert_redirected_to practice_path
   end
 

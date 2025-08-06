@@ -4,7 +4,7 @@ require 'test_helper'
 
 class AdminControllerTest < ActionController::TestCase
   setup do
-    @controller.session['user'] = users(:superadmin)
+    @controller.session['user'] = { 'id' => users(:superadmin).id }
   end
 
   test 'should get practices with all filter' do
@@ -52,7 +52,7 @@ class AdminControllerTest < ActionController::TestCase
 
 
   test 'should require superadmin access' do
-    @controller.session['user'] = users(:founder) # Regular admin, not superadmin
+    @controller.session['user'] = { 'id' => users(:founder).id } # Regular admin, not superadmin
     get :practices
     assert_redirected_to '/'
   end

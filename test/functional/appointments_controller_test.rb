@@ -4,7 +4,7 @@ require 'test_helper'
 
 class AppointmentsControllerTest < ActionController::TestCase
   setup do
-    @controller.session['user'] = users(:founder)
+    @controller.session['user'] = { 'id' => users(:founder).id }
   end
 
   test 'should get index' do

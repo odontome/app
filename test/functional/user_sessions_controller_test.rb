@@ -11,7 +11,7 @@ class UserSessionsControllerTest < ActionController::TestCase
   test 'should create user session if valid params are given' do
     post :create, params: { signin: { email: users(:founder).email, password: '1234567890' } }
 
-    assert_equal @controller.session['user'], users(:founder)
+    assert_equal @controller.session['user']['id'], users(:founder).id
     assert_redirected_to root_url
   end
 
@@ -51,7 +51,7 @@ class UserSessionsControllerTest < ActionController::TestCase
   test 'should create persistent login when remember me is checked' do
     post :create, params: { signin: { email: users(:founder).email, password: '1234567890', remember_me: '1' } }
 
-    assert_equal @controller.session['user'], users(:founder)
+    assert_equal @controller.session['user']['id'], users(:founder).id
     assert_redirected_to root_url
     
     # Check that remember token was set
@@ -67,7 +67,7 @@ class UserSessionsControllerTest < ActionController::TestCase
   test 'should not create persistent login when remember me is not checked' do
     post :create, params: { signin: { email: users(:founder).email, password: '1234567890', remember_me: '0' } }
 
-    assert_equal @controller.session['user'], users(:founder)
+    assert_equal @controller.session['user']['id'], users(:founder).id
     assert_redirected_to root_url
     
     # Check that remember token was not set
@@ -82,7 +82,7 @@ class UserSessionsControllerTest < ActionController::TestCase
   test 'should clear remember token on logout' do
     user = users(:founder)
     user.remember_me!
-    @controller.session[:user] = user
+    @controller.session[:user] = { 'id' => user.id }
 
     delete :destroy
 
