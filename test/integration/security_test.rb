@@ -6,7 +6,6 @@ class SecurityTest < ActionDispatch::IntegrationTest
   test "should sanitize patient allergies field to prevent XSS" do
     practice = Practice.create!(
       name: 'Test Practice',
-      owner_name: 'Test Owner',
       email: 'test@example.com',
       locale: 'en',
       timezone: 'UTC'
@@ -50,7 +49,6 @@ class SecurityTest < ActionDispatch::IntegrationTest
   test "should sanitize note content to prevent XSS" do
     practice = Practice.create!(
       name: 'Test Practice',
-      owner_name: 'Test Owner', 
       email: 'test@example.com',
       locale: 'en',
       timezone: 'UTC'
@@ -99,7 +97,6 @@ class SecurityTest < ActionDispatch::IntegrationTest
   test "should use secure session handling" do
     practice = Practice.create!(
       name: 'Test Practice',
-      owner_name: 'Test Owner',
       email: 'test@example.com',
       locale: 'en',
       timezone: 'UTC'
