@@ -629,21 +629,22 @@ body.theme-dark .fc-header-title h2 {
 /* Cell borders and backgrounds */
 body.theme-dark .fc-widget-header,
 body.theme-dark .fc-widget-content {
-	border-color: #2c3c56;
+	border-color: #475569;
 	background-color: #1e293b;
 	color: #f8fafc;
 }
 
 /* Today cell highlighting */
 body.theme-dark .fc-state-highlight {
-	background: #253249;
+	background: #1e40af;
 	color: #f8fafc;
+	border-color: #3b82f6;
 }
 
 /* Day headers */
 body.theme-dark .fc-grid th {
 	color: #94a3b8;
-	border-color: #2c3c56;
+	border-color: #475569;
 	background-color: #1b2434;
 }
 
@@ -692,12 +693,12 @@ body.theme-dark a.fc-event:hover {
 /* Agenda view styles */
 body.theme-dark .fc-agenda-slots td {
 	background: #1e293b;
-	border-color: #2c3c56;
+	border-color: #475569;
 }
 
 body.theme-dark .fc-agenda-slots th {
 	background: #1b2434;
-	border-color: #2c3c56;
+	border-color: #475569;
 	color: #94a3b8;
 }
 
@@ -707,13 +708,13 @@ body.theme-dark .fc-widget-header {
 }
 
 body.theme-dark .fc-widget-header .fc-agenda-divider-inner {
-	background: #2c3c56;
+	background: #475569;
 }
 
 /* Time axis styling */
 body.theme-dark .fc-agenda .fc-agenda-axis {
 	color: #94a3b8;
-	border-color: #2c3c56;
+	border-color: #475569;
 	background: #1b2434;
 }
 
@@ -747,7 +748,7 @@ body.theme-dark .fc-text-arrow {
 /* All day area */
 body.theme-dark .fc-agenda-allday th {
 	background: #1b2434;
-	border-color: #2c3c56;
+	border-color: #475569;
 	color: #94a3b8;
 }
 
@@ -760,7 +761,7 @@ body.theme-dark .fc .fc-week-number {
 /* Calendar border separation */
 body.theme-dark .fc-border-separate th,
 body.theme-dark .fc-border-separate td {
-	border-color: #2c3c56;
+	border-color: #475569;
 }
 
 /* Event time styling */
