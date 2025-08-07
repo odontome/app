@@ -630,7 +630,6 @@ body.theme-dark .fc-header-title h2 {
 body.theme-dark .fc-widget-header,
 body.theme-dark .fc-widget-content {
 	border-color: #2c3c56;
-	background-color: #1e293b;
 	color: #f8fafc;
 }
 
@@ -691,7 +690,6 @@ body.theme-dark a.fc-event:hover {
 
 /* Agenda view styles */
 body.theme-dark .fc-agenda-slots td {
-	background: #1e293b;
 	border-color: #2c3c56;
 }
 
