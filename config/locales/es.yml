@@ -120,6 +120,7 @@ es:
   appointment_date: Fecha
   appointment_deleted_error_message: Ocurrió un problema al intentar borrar la cita.
   appointment_updated_error_message: Ocurrió un problema al intentar actualizar la cita.
+  appointment_not_found: No se pudo encontrar la cita o no tienes permisos para acceder a ella
   appointments: Citas
   appointments_in_datebook: ! "%{count} citas"
   are_you_sure: ¿Estás seguro?

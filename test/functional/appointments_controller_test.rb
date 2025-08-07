@@ -126,4 +126,25 @@ class AppointmentsControllerTest < ActionController::TestCase
       # see Patient.find_or_create_from to understand the 'as_values_patient_id' property
     end
   end
+
+  test 'should handle update of non-existent appointment gracefully' do
+    appointment_params = {
+      starts_at: '2014-01-04 14:00:00 +0000',
+      ends_at: '2014-01-04 15:00:00 +0000',
+      patient_id: '1'
+    }
+
+    patch :update, params: { appointment: appointment_params, datebook_id: 1, id: 999999 },
+                   format: :js
+    
+    assert_response :success
+    # Should not raise NoMethodError and should handle the case gracefully
+  end
+
+  test 'should handle destroy of non-existent appointment gracefully' do
+    delete :destroy, params: { datebook_id: 1, id: 999999 }, format: :js
+    
+    assert_response :success
+    # Should not raise NoMethodError and should handle the case gracefully
+  end
 end

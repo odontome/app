@@ -121,6 +121,7 @@ en:
   appointment_date: Date
   appointment_deleted_error_message: There was a problem deleting the appointment
   appointment_updated_error_message: There was a problem updating the appointment
+  appointment_not_found: The appointment could not be found or you don't have permission to access it
   appointments: Appointments
   appointments_in_datebook: ! "%{count} appointments"
   are_you_sure: Are you sure?

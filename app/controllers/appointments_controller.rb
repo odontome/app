@@ -64,6 +64,12 @@ class AppointmentsController < ApplicationController
   def edit
     @datebook = Datebook.with_practice(current_user.practice_id).find params[:datebook_id]
     @appointment = Appointment.where(id: params[:id], datebook_id: @datebook.id).first
+    
+    if @appointment.nil?
+      redirect_to "/401", alert: I18n.t(:appointment_not_found)
+      return
+    end
+    
     @patient = Patient.with_practice(current_user.practice_id).find(params[:patient_id])
     @doctors = Doctor.with_practice(current_user.practice_id).valid
   end
@@ -72,19 +78,25 @@ class AppointmentsController < ApplicationController
     datebook = Datebook.with_practice(current_user.practice_id).find params[:datebook_id]
     @appointment = Appointment.where(id: params[:id], datebook_id: datebook.id).first
 
-    # if there is no `as_values_patient_id` the appointment is just getting moved
-    # otherwise, clean up the fields
-    if params[:appointment][:patient_id].blank? && params[:as_values_patient_id].present?
-      params[:appointment][:patient_id] =
-        Patient.find_or_create_from(params[:as_values_patient_id], current_user.practice_id)
-    end
-
     respond_to do |format|
-      if @appointment.update(appointment_params)
-        format.js {} # update.js.erb
-      else
+      if @appointment.nil?
         format.js do
-          render_ujs_error(@appointment, I18n.t(:appointment_updated_error_message))
+          render_ujs_error(nil, I18n.t(:appointment_not_found))
+        end
+      else
+        # if there is no `as_values_patient_id` the appointment is just getting moved
+        # otherwise, clean up the fields
+        if params[:appointment][:patient_id].blank? && params[:as_values_patient_id].present?
+          params[:appointment][:patient_id] =
+            Patient.find_or_create_from(params[:as_values_patient_id], current_user.practice_id)
+        end
+
+        if @appointment.update(appointment_params)
+          format.js {} # update.js.erb
+        else
+          format.js do
+            render_ujs_error(@appointment, I18n.t(:appointment_updated_error_message))
+          end
         end
       end
     end
@@ -95,7 +107,11 @@ class AppointmentsController < ApplicationController
     @appointment = Appointment.where(id: params[:id], datebook_id: datebook.id).first
 
     respond_to do |format|
-      if @appointment.destroy
+      if @appointment.nil?
+        format.js do
+          render_ujs_error(nil, I18n.t(:appointment_not_found))
+        end
+      elsif @appointment.destroy
         format.js { render action: :create } # reuses create.js.erb
       else
         format.js do
