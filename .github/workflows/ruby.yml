@@ -54,4 +54,61 @@ jobs:
           PGPASSWORD: postgres
           RAILS_ENV: test
         run: |
-          bundle exec rake test
+          # Run tests and capture output
+          set +e  # Don't exit on test failures
+          bundle exec rake test 2>&1 | tee test_output.txt
+          TEST_EXIT_CODE=${PIPESTATUS[0]}
+          set -e
+          
+          # Parse test results
+          TOTAL_TESTS=$(grep -E "^[0-9]+ runs," test_output.txt | sed -E 's/^([0-9]+) runs,.*/\1/' || echo "0")
+          FAILURES=$(grep -E "^[0-9]+ runs, [0-9]+ assertions, ([0-9]+) failures" test_output.txt | sed -E 's/^.*[, ]([0-9]+) failures.*/\1/' || echo "0")
+          ERRORS=$(grep -E "^[0-9]+ runs, [0-9]+ assertions, [0-9]+ failures, ([0-9]+) errors" test_output.txt | sed -E 's/^.*[, ]([0-9]+) errors.*/\1/' || echo "0")
+          SKIPS=$(grep -E "^[0-9]+ runs, [0-9]+ assertions, [0-9]+ failures, [0-9]+ errors, ([0-9]+) skips" test_output.txt | sed -E 's/^.*[, ]([0-9]+) skips.*/\1/' || echo "0")
+          
+          # Calculate passed tests
+          PASSED=$((TOTAL_TESTS - FAILURES - ERRORS - SKIPS))
+          
+          # Create test summary
+          echo "## Test Results Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Count |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| **Total Tests** | $TOTAL_TESTS |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Passed** | $PASSED |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Failed** | $FAILURES |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Errors** | $ERRORS |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Skipped** | $SKIPS |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Add status badge and annotations
+          if [ $TEST_EXIT_CODE -eq 0 ]; then
+            echo "### ✅ All tests passed!" >> $GITHUB_STEP_SUMMARY
+            echo "::notice title=Test Results::All $TOTAL_TESTS tests passed successfully!"
+          else
+            echo "### ❌ Tests failed" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "#### Failed Test Details:" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            grep -A 10 -B 2 "FAIL\|ERROR" test_output.txt || echo "Check test output for details" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            
+            # Add error annotations for visibility
+            echo "::error title=Test Failures::$FAILURES test(s) failed, $ERRORS error(s) occurred out of $TOTAL_TESTS total tests"
+            
+            # Add individual failure annotations
+            grep -n "FAIL\|ERROR" test_output.txt | head -5 | while IFS=: read -r line_num content; do
+              echo "::warning title=Test Failure::$content"
+            done || true
+          fi
+          
+          # Exit with the original test exit code
+          exit $TEST_EXIT_CODE
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
+        if: always()  # Upload even if tests fail
+        with:
+          name: test-results
+          path: test_output.txt
+          retention-days: 30
