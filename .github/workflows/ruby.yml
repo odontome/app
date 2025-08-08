@@ -60,11 +60,21 @@ jobs:
           TEST_EXIT_CODE=${PIPESTATUS[0]}
           set -e
           
-          # Parse test results
-          TOTAL_TESTS=$(grep -E "^[0-9]+ runs," test_output.txt | sed -E 's/^([0-9]+) runs,.*/\1/' || echo "0")
-          FAILURES=$(grep -E "^[0-9]+ runs, [0-9]+ assertions, ([0-9]+) failures" test_output.txt | sed -E 's/^.*[, ]([0-9]+) failures.*/\1/' || echo "0")
-          ERRORS=$(grep -E "^[0-9]+ runs, [0-9]+ assertions, [0-9]+ failures, ([0-9]+) errors" test_output.txt | sed -E 's/^.*[, ]([0-9]+) errors.*/\1/' || echo "0")
-          SKIPS=$(grep -E "^[0-9]+ runs, [0-9]+ assertions, [0-9]+ failures, [0-9]+ errors, ([0-9]+) skips" test_output.txt | sed -E 's/^.*[, ]([0-9]+) skips.*/\1/' || echo "0")
+          # Parse test results from minitest output
+          # Expected format: "166 runs, 412 assertions, 0 failures, 0 errors, 0 skips"
+          SUMMARY_LINE=$(grep -E "^[0-9]+ runs, [0-9]+ assertions," test_output.txt | tail -1)
+          
+          if [ -n "$SUMMARY_LINE" ]; then
+            TOTAL_TESTS=$(echo "$SUMMARY_LINE" | sed -E 's/^([0-9]+) runs,.*/\1/')
+            FAILURES=$(echo "$SUMMARY_LINE" | sed -E 's/.*[, ]([0-9]+) failures.*/\1/' | grep -E '^[0-9]+$' || echo "0")
+            ERRORS=$(echo "$SUMMARY_LINE" | sed -E 's/.*[, ]([0-9]+) errors.*/\1/' | grep -E '^[0-9]+$' || echo "0")
+            SKIPS=$(echo "$SUMMARY_LINE" | sed -E 's/.*[, ]([0-9]+) skips.*/\1/' | grep -E '^[0-9]+$' || echo "0")
+          else
+            TOTAL_TESTS="0"
+            FAILURES="0"
+            ERRORS="0"
+            SKIPS="0"
+          fi
           
           # Calculate passed tests
           PASSED=$((TOTAL_TESTS - FAILURES - ERRORS - SKIPS))
