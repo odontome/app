@@ -457,3 +457,25 @@ en:
     subscribe_message: "You are no longer subscribed to recieve emails about <strong>%{name}</strong>. Enable it again, <a href='%{url}?undo'>clicking here</a>"
     unsubscribe_message: "You are subscribed to recieve emails about <strong>%{name}</strong>. To stop, <a href='%{url}'>click here</a>"
     daily_digest: "your daily practice's activity"
+  analytics:
+    vs_last_week: "vs last week"
+    kpis:
+      appointments: "Appointments"
+      revenue: "Revenue"
+      new_patients: "New patients"
+      reviews: "Reviews"
+    charts:
+      appointments_this_week: "Appointments this week"
+      revenue_this_week: "Revenue this week"
+      top_doctors_by_unique_patients: "Top doctors by unique patients"
+      hours_worked_by_doctors: "Hours worked by doctors"
+      most_recurring_patients: "Most recurring patients"
+      avg_time_gap_between_appointments_minutes: "Avg time gap between appointments (minutes)"
+    series:
+      patients: "Patients"
+      hours: "Hours"
+      appointments: "Appointments"
+      avg_gap_min: "Avg gap (min)"
+    labels:
+      new: "New"
+      returning: "Returning"

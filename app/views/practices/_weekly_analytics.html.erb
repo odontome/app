@@ -1,0 +1,217 @@
+<div class="row row-cards">
+  <!-- KPI cards -->
+  <div class="col-sm-3">
+    <div class="card card-link">
+      <%= link_to datebooks_url, class: "card-body p-3 d-flex align-items-center justify-content-between card-link" do %>
+        <div>
+          <div class="text-muted"><%= t('analytics.kpis.appointments') %></div>
+          <div class="h2 m-0"><%= number_with_delimiter(@kpi_appointments_this_week) %></div>
+          <div class="text-muted"><%= t('analytics.vs_last_week') %> <span class="text-<%= @kpi_appointments_delta >= 0 ? 'green' : 'red' %>"><%= @kpi_appointments_delta %>%</span></div>
+        </div>
+        <div class="chart-sparkline">
+          <div id="spark-appts"></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="card card-link">
+      <%= link_to practice_balance_url, class: "card-body p-3 d-flex align-items-center justify-content-between card-link" do %>
+        <div>
+          <div class="text-muted"><%= t('analytics.kpis.revenue') %></div>
+          <div class="h2 m-0"><%= number_to_currency_with_symbol(@kpi_revenue_this_week, 0) %></div>
+          <div class="text-muted"><%= t('analytics.vs_last_week') %> <span class="text-<%= @kpi_revenue_delta >= 0 ? 'green' : 'red' %>"><%= @kpi_revenue_delta %>%</span></div>
+        </div>
+        <div class="chart-sparkline">
+          <div id="spark-revenue"></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="card card-link">
+      <%= link_to patients_url, class: "card-body p-3 d-flex align-items-center justify-content-between card-link" do %>
+        <div>
+          <div class="text-muted"><%= t('analytics.kpis.new_patients') %></div>
+          <div class="h2 m-0"><%= number_with_delimiter(@kpi_new_patients) %></div>
+          <div class="text-muted"><%= t('analytics.vs_last_week') %> <span class="text-<%= @kpi_new_patients_delta >= 0 ? 'green' : 'red' %>"><%= @kpi_new_patients_delta %>%</span></div>
+        </div>
+        <div class="chart-sparkline">
+          <div id="spark-new"></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="card card-link">
+      <%= link_to reviews_url, class: "card-body p-3 d-flex align-items-center justify-content-between card-link" do %>
+        <div>
+          <div class="text-muted"><%= t('analytics.kpis.reviews') %></div>
+          <div class="h2 m-0"><%= number_with_delimiter(@kpi_reviews_this_week) %></div>
+          <div class="text-muted"><%= t('analytics.vs_last_week') %> <span class="text-<%= @kpi_reviews_delta >= 0 ? 'green' : 'red' %>"><%= @kpi_reviews_delta %>%</span></div>
+        </div>
+        <div class="chart-sparkline">
+          <div id="spark-reviews"></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Row 2 charts -->
+  <div class="col-md-6">
+    <div class="card">
+  <div class="card-header"><h3 class="card-title"><%= t('analytics.charts.appointments_this_week') %></h3></div>
+      <div class="card-body"><div id="chart-appts-per-day" class="chart chart-lg"></div></div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+  <div class="card-header"><h3 class="card-title"><%= t('analytics.charts.revenue_this_week') %></h3></div>
+      <div class="card-body"><div id="chart-revenue-per-day" class="chart chart-lg"></div></div>
+    </div>
+  </div>
+
+  <!-- Row 3 charts -->
+  <div class="col-md-6">
+    <div class="card">
+  <div class="card-header"><h3 class="card-title"><%= t('analytics.charts.top_doctors_by_unique_patients') %></h3></div>
+      <div class="card-body"><div id="chart-top-doctors" class="chart chart-lg"></div></div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+  <div class="card-header"><h3 class="card-title"><%= t('analytics.charts.hours_worked_by_doctors') %></h3></div>
+      <div class="card-body"><div id="chart-hours-doctors" class="chart chart-lg"></div></div>
+    </div>
+  </div>
+
+  <!-- Row 4 charts -->
+  <div class="col-md-6">
+    <div class="card">
+  <div class="card-header"><h3 class="card-title"><%= t('analytics.charts.most_recurring_patients') %></h3></div>
+      <div class="card-body"><div id="chart-recurring-patients" class="chart chart-lg"></div></div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+  <div class="card-header"><h3 class="card-title"><%= t('analytics.charts.avg_time_gap_between_appointments_minutes') %></h3></div>
+      <div class="card-body"><div id="chart-avg-gap" class="chart chart-lg"></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  if (!window.ApexCharts) return;
+
+  const palette = {
+    primary: getComputedStyle(document.body).getPropertyValue('--tblr-primary-rgb') || '48,127,221',
+    green: getComputedStyle(document.body).getPropertyValue('--tblr-success-rgb') || '35,197,94',
+    orange: getComputedStyle(document.body).getPropertyValue('--tblr-warning-rgb') || '250,173,20',
+    red: getComputedStyle(document.body).getPropertyValue('--tblr-danger-rgb') || '239,68,68'
+  }
+  const color = (rgb, a=1) => `rgba(${rgb}, ${a})`;
+
+  const charts = [];
+  // simple helper to choose theme-aware grid/labels
+  const foreColor = getComputedStyle(document.querySelector('.apexcharts-text') || document.body).color || '#94a3b8';
+  const gridColor = getComputedStyle(document.body).getPropertyValue('--tblr-border-color') || '#2c3c56';
+
+  // Top doctors by unique patients
+  charts.push(new ApexCharts(document.querySelector('#chart-top-doctors'), {
+    chart: { type: 'bar', height: 300, toolbar: { show: false } },
+  series: [{ name: '<%= j t('analytics.series.patients') %>', data: <%= raw(@weekly_top_doctors_values.to_json) %> }],
+    xaxis: { categories: <%= raw(@weekly_top_doctors_names.to_json) %> },
+    plotOptions: { bar: { horizontal: true } },
+    colors: [color(palette.primary)]
+  }));
+
+  // Hours worked by doctors
+  charts.push(new ApexCharts(document.querySelector('#chart-hours-doctors'), {
+    chart: { type: 'bar', height: 300, toolbar: { show: false } },
+  series: [{ name: '<%= j t('analytics.series.hours') %>', data: <%= raw(@weekly_hours_doctor_values.to_json) %> }],
+    xaxis: { categories: <%= raw(@weekly_hours_doctor_names.to_json) %> },
+    plotOptions: { bar: { horizontal: true } },
+    colors: [color(palette.green)]
+  }));
+
+  // Most recurring patients
+  charts.push(new ApexCharts(document.querySelector('#chart-recurring-patients'), {
+    chart: { type: 'bar', height: 300, toolbar: { show: false } },
+  series: [{ name: '<%= j t('analytics.series.appointments') %>', data: <%= raw(@weekly_recurring_patient_values.to_json) %> }],
+    xaxis: { categories: <%= raw(@weekly_recurring_patient_names.to_json) %> },
+    plotOptions: { bar: { horizontal: true } },
+    colors: [color(palette.orange)]
+  }));
+
+  // Average gap between appointments
+  charts.push(new ApexCharts(document.querySelector('#chart-avg-gap'), {
+    chart: { type: 'bar', height: 300, toolbar: { show: false } },
+  series: [{ name: '<%= j t('analytics.series.avg_gap_min') %>', data: <%= raw(@weekly_avg_gap_doctor_values.to_json) %> }],
+    xaxis: { categories: <%= raw(@weekly_avg_gap_doctor_names.to_json) %> },
+    plotOptions: { bar: { horizontal: true } },
+    colors: [color(palette.red)]
+  }));
+
+  // Appointments per day line
+  const areaOpts = { toolbar: { show: false }, foreColor: foreColor };
+
+  charts.push(new ApexCharts(document.querySelector('#chart-appts-per-day'), {
+    chart: { type: 'line', height: 300, toolbar: { show: false } },
+  series: [{ name: '<%= j t('analytics.series.appointments') %>', data: <%= raw(@weekly_appointments_per_day.to_json) %> }],
+    xaxis: { categories: <%= raw(@weekly_days_labels.to_json) %> },
+    stroke: { width: 3 },
+    colors: [color(palette.primary)]
+  }));
+
+  // New vs Returning
+  charts.push(new ApexCharts(document.querySelector('#chart-new-vs-returning'), {
+    chart: { type: 'donut', height: 300, toolbar: { show: false } },
+  series: <%= raw(@weekly_new_vs_returning.to_json) %>,
+  labels: ['<%= j t('analytics.labels.new') %>', '<%= j t('analytics.labels.returning') %>'],
+    colors: [color(palette.primary), color(palette.green)]
+  }));
+
+  // Revenue per day area
+  charts.push(new ApexCharts(document.querySelector('#chart-revenue-per-day'), {
+    chart: { type: 'area', height: 300, toolbar: { show: false } },
+  series: [{ name: '<%= j t('analytics.kpis.revenue') %>', data: <%= raw(@weekly_revenue_per_day.to_json) %> }],
+    xaxis: { categories: <%= raw(@weekly_days_labels.to_json) %> },
+    stroke: { width: 3 },
+    colors: [color(palette.primary)]
+  }));
+
+  charts.forEach(c => c.render());
+
+  // Sparkline minis
+  const sparkOpts = (data, col, name, labels) => ({
+    chart: { type: 'line', height: 40, sparkline: { enabled: true } },
+    stroke: { width: 2 },
+    series: [{ name, data }],
+    colors: [col],
+    xaxis: { categories: labels },
+    tooltip: {
+      x: {
+        formatter: function (val, opts) {
+          const i = opts && opts.dataPointIndex != null ? opts.dataPointIndex : null;
+          return (i != null && labels && labels[i]) ? labels[i] : val;
+        }
+      },
+      y: {
+        title: {
+          formatter: function () { return name; }
+        }
+      }
+    }
+  });
+  const kpiLabels = <%= raw(@weekly_days_labels.to_json) %>;
+  const apptsData = <%= raw(@weekly_appointments_per_day.to_json) %>;
+  new ApexCharts(document.querySelector('#spark-appts'), sparkOpts(apptsData, color(palette.primary), '<%= j t('analytics.kpis.appointments') %>', kpiLabels)).render();
+  const revData = <%= raw(@weekly_revenue_per_day.to_json) %>;
+  new ApexCharts(document.querySelector('#spark-revenue'), sparkOpts(revData, color(palette.green), '<%= j t('analytics.kpis.revenue') %>', kpiLabels)).render();
+  const newPatientsData = <%= raw(@weekly_new_patients_per_day.to_json) %>;
+  new ApexCharts(document.querySelector('#spark-new'), sparkOpts(newPatientsData, color(palette.orange), '<%= j t('analytics.kpis.new_patients') %>', kpiLabels)).render();
+  const reviewsData = <%= raw(@weekly_reviews_per_day.to_json) %>;
+  new ApexCharts(document.querySelector('#spark-reviews'), sparkOpts(reviewsData, color(palette.red), '<%= j t('analytics.kpis.reviews') %>', kpiLabels)).render();
+})();
+</script>

@@ -1,9 +1,8 @@
 <div class="page-header mb-4">
   <div class="row align-items-center">
     <div class="col">
-      <h2 class="page-title">
-        <%= @practice.name %>
-      </h2>
+      <div class="page-pretitle">From <%= @week_start.strftime('%b %d') %> to <%= @week_end.strftime('%b %d') %></div>
+      <h2 class="page-title"><%= @practice.name %></h2>
     </div>
     <div class="col-auto ms-auto">
       <div class="btn-list">
@@ -37,69 +36,6 @@
 
 <div class="page-body">
   <div class="row row-deck row-cards">
-    <%# Datebooks %>
-    <div class="col-sm-4">
-      <div class="card">
-        <%= link_to datebooks_url, class: "card card-sm card-link" do %>
-          <div class="card-body p-3 text-center">
-            <div class="h1 m-2 text-primary"><%= number_to_human(@practice.datebooks_count) %></div>
-            <div class="text-muted mb-3"><%= t :datebooks %></div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-
-    <%# Doctors %>
-    <div class="col-sm-4">
-      <div class="card">
-        <%= link_to doctors_url, class: "card card-sm card-link" do %>
-          <div class="card-body p-3 text-center">
-            <div class="h1 m-2 text-primary"><%= number_to_human(@practice.doctors_count) %></div>
-            <div class="text-muted mb-3"><%= t :doctors %></div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-
-    <%# Patients %>
-    <div class="col-sm-4">
-      <div class="card">
-        <%= link_to patients_url, class: "card card-sm card-link" do %>
-          <div class="card-body p-3 text-center">
-            <div class="h1 m-2 text-primary"><%= number_to_human(@practice.patients_count) %></div>
-            <div class="text-muted mb-3"><%= t :patients %></div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="page-body">
-  <div class="row row-deck row-cards">
-    <%# Balance %>
-    <div class="col-sm-4">
-      <div class="card">
-        <%= link_to practice_balance_url, class: "card card-sm card-link" do %>
-          <div class="card-body p-3 text-center">
-            <div class="h1 m-2 text-primary"><%= number_to_currency_with_symbol(@today_balance, 0) %></div>
-            <div class="text-muted mb-3"><%= t :today_balance %></div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-
-    <%# Reviews %>
-    <div class="col-sm-4">
-      <div class="card">
-        <%= link_to reviews_url, class: "card card-sm card-link" do %>
-          <div class="card-body p-3 text-center">
-            <div class="h1 m-2 text-primary"><%= number_to_human(@reviews_count) %></div>
-            <div class="text-muted mb-3"><%= t :reviews %></div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-
+    <%= render partial: 'practices/weekly_analytics' %>
   </div>
 </div>

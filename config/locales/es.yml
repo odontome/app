@@ -407,3 +407,25 @@ es:
     subscribe_message: "Ya no estás suscrito para recibir notificaciones de la <strong>%{name}</strong>. Suscríbete de nuevo <a href='%{url}?undo'>haciendo clic aquí</a>"
     unsubscribe_message: "Estás suscrito para recibir notificaciones sobre la  <strong>%{name}</strong>. Date de baja <a href='%{url}'>haciendo clic aquí</a>"
     daily_digest: "actividad de tu clínica"
+  analytics:
+    vs_last_week: "vs semana pasada"
+    kpis:
+      appointments: "Citas"
+      revenue: "Ingresos"
+      new_patients: "Pacientes nuevos"
+      reviews: "Calificaciones"
+    charts:
+      appointments_this_week: "Citas de esta semana"
+      revenue_this_week: "Ingresos de esta semana"
+      top_doctors_by_unique_patients: "Doctores con más pacientes únicos"
+      hours_worked_by_doctors: "Horas trabajadas por doctor"
+      most_recurring_patients: "Pacientes que más repiten"
+      avg_time_gap_between_appointments_minutes: "Promedio de tiempo entre citas (minutos)"
+    series:
+      patients: "Pacientes"
+      hours: "Horas"
+      appointments: "Citas"
+      avg_gap_min: "Promedio (min)"
+    labels:
+      new: "Nuevos"
+      returning: "Recurrentes"

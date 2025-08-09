@@ -769,8 +769,3 @@ body.theme-dark .fc-event-time {
 body.theme-dark .fc-event-title {
 	color: #f8fafc;
 }
-
-/* Resizable handles */
-body.theme-dark .fc-event-vert .ui-resizable-s {
-	background: #374151;
-}

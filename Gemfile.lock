@@ -92,6 +92,8 @@ GEM
     erb (5.0.2)
     erubi (1.13.1)
     execjs (2.10.0)
+    faker (3.5.2)
+      i18n (>= 1.8.11, < 2)
     ffi (1.17.2-aarch64-linux-gnu)
     ffi (1.17.2-aarch64-linux-musl)
     ffi (1.17.2-arm-linux-gnu)
@@ -331,6 +333,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt (~> 3.1.17)
   bugsnag (~> 6.24)
+  faker (~> 3.2)
   font-awesome-rails (~> 4.7.0.8)
   gibberish (~> 2.1.0)
   icalendar (~> 2.7.1)
