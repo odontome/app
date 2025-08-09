@@ -189,10 +189,21 @@ namespace :odontome do
                                    .where(patients: { practice_id: practice_ids })
                                    .group('patients.id, patients.email, patients.firstname, patients.lastname, practices.id, practices.name, practices.locale, practices.timezone, practices.email')
 
+  # Patients with a future confirmed appointment should not receive this reminder
+  future_confirmed_patient_ids = Appointment.joins(:patient)
+                        .where('appointments.starts_at > ?', Time.now)
+                        .where('appointments.status = ?', Appointment.status[:confirmed])
+                        .where(patients: { practice_id: practice_ids })
+                        .distinct
+                        .pluck(:patient_id)
+
     # Filter out patients already notified
     notified_ids = Patient.where(id: last_appointments.map(&:patient_id)).where(notified_of_six_month_reminder: true).pluck(:id)
 
     last_appointments.each do |row|
+    # Skip if they already have a future confirmed appointment
+    pid = (row['patient_id'] || row.patient_id)
+    next if future_confirmed_patient_ids.include?(pid)
       next if notified_ids.include?(row['patient_id'] || row.patient_id)
 
       full_name = [row['patient_firstname'] || row.patient_firstname, row['patient_lastname'] || row.patient_lastname].compact.join(' ')
