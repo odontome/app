@@ -47,19 +47,19 @@ class PracticesController < ApplicationController
     # KPIs and deltas
     @kpi_appointments_this_week = appt_analytics.count(range)
     prev_appts = appt_analytics.count(prev_range)
-    @kpi_appointments_delta = prev_appts.zero? ? 100.0 : (((@kpi_appointments_this_week - prev_appts) / prev_appts.to_f) * 100.0).round(1)
+    @kpi_appointments_delta = prev_appts.zero? ? 0 : (((@kpi_appointments_this_week - prev_appts) / prev_appts.to_f) * 100.0).round(1)
 
     @kpi_revenue_this_week = balance_analytics.sum(range)
     prev_rev = balance_analytics.sum(prev_range)
-    @kpi_revenue_delta = prev_rev.zero? ? 100.0 : (((@kpi_revenue_this_week - prev_rev) / prev_rev.to_f) * 100.0).round(1)
+    @kpi_revenue_delta = prev_rev.zero? ? 0 : (((@kpi_revenue_this_week - prev_rev) / prev_rev.to_f) * 100.0).round(1)
 
     @kpi_new_patients = patient_analytics.new_count(range)
     prev_new = patient_analytics.new_count(prev_range)
-    @kpi_new_patients_delta = prev_new.zero? ? 100.0 : (((@kpi_new_patients - prev_new) / prev_new.to_f) * 100.0).round(1)
+    @kpi_new_patients_delta = prev_new.zero? ? 0 : (((@kpi_new_patients - prev_new) / prev_new.to_f) * 100.0).round(1)
 
     @kpi_reviews_this_week = review_analytics.count(range)
     prev_reviews = review_analytics.count(prev_range)
-    @kpi_reviews_delta = prev_reviews.zero? ? 100.0 : (((@kpi_reviews_this_week - prev_reviews) / prev_reviews.to_f) * 100.0).round(1)
+    @kpi_reviews_delta = prev_reviews.zero? ? 0 : (((@kpi_reviews_this_week - prev_reviews) / prev_reviews.to_f) * 100.0).round(1)
   end
 
   def new
