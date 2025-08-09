@@ -29,6 +29,7 @@ gem 'rack-attack', '~> 6.6.1'
 
 group :development do
   gem 'rubocop'
+  gem 'faker', '~> 3.2'
 end
 
 group :test do
