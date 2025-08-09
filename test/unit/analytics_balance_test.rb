@@ -4,7 +4,7 @@ require 'test_helper'
 
 class AnalyticsBalanceTest < ActiveSupport::TestCase
   def setup
-  @practice_id = practices(:complete).id
+    @practice_id = practices(:complete).id
     @analytics = Analytics::BalanceAnalytics.new(@practice_id)
   end
 

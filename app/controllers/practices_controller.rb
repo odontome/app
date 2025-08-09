@@ -17,10 +17,10 @@ class PracticesController < ApplicationController
     # Weekly analytics (Mon-Sun) for charts
     @week_start = DateTime.now.beginning_of_week
     @week_end = DateTime.now.end_of_week
-  @prev_week_start = (@week_start - 1.week).beginning_of_week
-  @prev_week_end = (@week_end - 1.week).end_of_week
+    @prev_week_start = (@week_start - 1.week).beginning_of_week
+    @prev_week_end = (@week_end - 1.week).end_of_week
 
-  # Delegated per-model analytics
+    # Delegated per-model analytics
   range = @week_start..@week_end
   prev_range = @prev_week_start..@prev_week_end
 
