@@ -4,7 +4,7 @@ require 'test_helper'
 
 class AnalyticsPatientTest < ActiveSupport::TestCase
   def setup
-  @practice_id = practices(:complete).id
+    @practice_id = practices(:complete).id
     @analytics = Analytics::PatientAnalytics.new(@practice_id)
   end
 

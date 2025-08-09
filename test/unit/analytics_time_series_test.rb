@@ -44,9 +44,9 @@ class AnalyticsTimeSeriesTest < ActiveSupport::TestCase
     d1 = Time.zone.local(2020, 3, 5, 11, 0, 0)
     d2 = Time.zone.local(2020, 3, 6, 12, 0, 0)
 
-  b1 = Balance.create!(patient_id: patient.id, amount: 10.0, notes: '', created_at: d1)
-  b2 = Balance.create!(patient_id: patient.id, amount: -5.0, notes: '', created_at: d1 + 2.hours)
-  b3 = Balance.create!(patient_id: patient.id, amount: 7.0, notes: '', created_at: d2)
+    b1 = Balance.create!(patient_id: patient.id, amount: 10.0, notes: '', created_at: d1)
+    b2 = Balance.create!(patient_id: patient.id, amount: -5.0, notes: '', created_at: d1 + 2.hours)
+    b3 = Balance.create!(patient_id: patient.id, amount: 7.0, notes: '', created_at: d2)
 
     rel = Balance.where(id: [b1.id, b2.id, b3.id])
     sums = Analytics::TimeSeries.sum_by_day(rel, 'balances.created_at', :amount)
