@@ -184,19 +184,34 @@
   charts.forEach(c => c.render());
 
   // Sparkline minis
-  const sparkOpts = (data, col) => ({
+  const sparkOpts = (data, col, name, labels) => ({
     chart: { type: 'line', height: 40, sparkline: { enabled: true } },
     stroke: { width: 2 },
-    series: [{ data }],
-    colors: [col]
+    series: [{ name, data }],
+    colors: [col],
+    xaxis: { categories: labels },
+    tooltip: {
+      x: {
+        formatter: function (val, opts) {
+          const i = opts && opts.dataPointIndex != null ? opts.dataPointIndex : null;
+          return (i != null && labels && labels[i]) ? labels[i] : val;
+        }
+      },
+      y: {
+        title: {
+          formatter: function () { return name; }
+        }
+      }
+    }
   });
+  const kpiLabels = <%= raw(@weekly_days_labels.to_json) %>;
   const apptsData = <%= raw(@weekly_appointments_per_day.to_json) %>;
-  new ApexCharts(document.querySelector('#spark-appts'), sparkOpts(apptsData, color(palette.primary))).render();
+  new ApexCharts(document.querySelector('#spark-appts'), sparkOpts(apptsData, color(palette.primary), 'Appointments', kpiLabels)).render();
   const revData = <%= raw(@weekly_revenue_per_day.to_json) %>;
-  new ApexCharts(document.querySelector('#spark-revenue'), sparkOpts(revData, color(palette.green))).render();
+  new ApexCharts(document.querySelector('#spark-revenue'), sparkOpts(revData, color(palette.green), 'Revenue', kpiLabels)).render();
   const newPatientsData = <%= raw(@weekly_new_patients_per_day.to_json) %>;
-  new ApexCharts(document.querySelector('#spark-new'), sparkOpts(newPatientsData, color(palette.orange))).render();
+  new ApexCharts(document.querySelector('#spark-new'), sparkOpts(newPatientsData, color(palette.orange), 'New patients', kpiLabels)).render();
   const reviewsData = <%= raw(@weekly_reviews_per_day.to_json) %>;
-  new ApexCharts(document.querySelector('#spark-reviews'), sparkOpts(reviewsData, color(palette.red))).render();
+  new ApexCharts(document.querySelector('#spark-reviews'), sparkOpts(reviewsData, color(palette.red), 'Reviews', kpiLabels)).render();
 })();
 </script>
