@@ -21,7 +21,7 @@ gem 'font-awesome-rails', '~> 4.7.0.8'
 gem 'gibberish', '~> 2.1.0'
 gem 'jquery-minicolors-rails', '~>2.2.6.2'
 
-gem 'premailer-rails', '~> 1.11.1'
+gem 'premailer-rails', '~> 1.12.0'
 
 gem 'pg', '~> 1.3.5'
 gem 'stripe', '~> 5.53.0'
