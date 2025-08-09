@@ -22,4 +22,26 @@ class PatientMailerPreview < ActionMailer::Preview
     doctor = Doctor.last
     PatientMailer.appointment_soon_email("patient@example.com", "John Doe", 24.hours.from_now, 25.hours.from_now, "Dental Practice Example", "en", "Eastern Time (US & Canada)", doctor, "practice@example.com")
   end
+
+  def six_month_checkup_reminder_en
+    PatientMailer.six_month_checkup_reminder(
+      "patient@example.com",
+      "John Doe",
+      "Dental Practice Example",
+      "en",
+      "Eastern Time (US & Canada)",
+      "practice@example.com"
+    )
+  end
+
+  def six_month_checkup_reminder_es
+    PatientMailer.six_month_checkup_reminder(
+      "paciente@example.com",
+      "Juan Pérez",
+      "Clínica Dental Ejemplo",
+      "es",
+      "Eastern Time (US & Canada)",
+      "practica@example.com"
+    )
+  end
 end

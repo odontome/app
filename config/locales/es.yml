@@ -247,6 +247,8 @@ es:
         subject: ¡Feliz cumpleaños!
       review:
         subject: ¿Cómo estuvo tu cita en %{practice_name}?
+      six_month_checkup_reminder:
+        subject: Es hora de tu revisión en %{practice_name}
     practice:
       welcome:
         subject: Bienvenido a Odonto.me

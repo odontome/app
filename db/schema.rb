@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_01_01_000001) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_09_000100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -120,6 +120,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_01_01_000001) do
     t.string "drinks_per_day"
     t.text "drugs_use"
     t.text "family_diseases"
+    t.boolean "notified_of_six_month_reminder", default: false, null: false
   end
 
   create_table "practices", id: :serial, force: :cascade do |t|
