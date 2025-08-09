@@ -21,45 +21,45 @@ class PracticesController < ApplicationController
     @prev_week_end = (@week_end - 1.week).end_of_week
 
     # Delegated per-model analytics
-  range = @week_start..@week_end
-  prev_range = @prev_week_start..@prev_week_end
+    range = @week_start..@week_end
+    prev_range = @prev_week_start..@prev_week_end
 
-  appt_analytics = Analytics::AppointmentAnalytics.new(current_user.practice_id)
-  patient_analytics = Analytics::PatientAnalytics.new(current_user.practice_id)
-  balance_analytics = Analytics::BalanceAnalytics.new(current_user.practice_id)
-  review_analytics = Analytics::ReviewAnalytics.new(current_user.practice_id)
+    appt_analytics = Analytics::AppointmentAnalytics.new(current_user.practice_id)
+    patient_analytics = Analytics::PatientAnalytics.new(current_user.practice_id)
+    balance_analytics = Analytics::BalanceAnalytics.new(current_user.practice_id)
+    review_analytics = Analytics::ReviewAnalytics.new(current_user.practice_id)
 
-  # Leaderboards and distributions
-  @weekly_top_doctors_names, @weekly_top_doctors_values = appt_analytics.top_doctors_by_unique_patients(range, limit: 10)
-  @weekly_hours_doctor_names, @weekly_hours_doctor_values = appt_analytics.hours_worked_by_doctor(range, limit: 10)
-  @weekly_recurring_patient_names, @weekly_recurring_patient_values = appt_analytics.recurring_patients(range, limit: 10)
-  @weekly_avg_gap_doctor_names, @weekly_avg_gap_doctor_values = appt_analytics.average_gap_minutes_by_doctor(range, limit: 10)
+    # Leaderboards and distributions
+    @weekly_top_doctors_names, @weekly_top_doctors_values = appt_analytics.top_doctors_by_unique_patients(range, limit: 10)
+    @weekly_hours_doctor_names, @weekly_hours_doctor_values = appt_analytics.hours_worked_by_doctor(range, limit: 10)
+    @weekly_recurring_patient_names, @weekly_recurring_patient_values = appt_analytics.recurring_patients(range, limit: 10)
+    @weekly_avg_gap_doctor_names, @weekly_avg_gap_doctor_values = appt_analytics.average_gap_minutes_by_doctor(range, limit: 10)
 
-  # Time series
-  @weekly_days_labels, @weekly_appointments_per_day = appt_analytics.appointments_per_day(range)
-  @weekly_new_patients_per_day = patient_analytics.new_patients_per_day(range)
-  @weekly_revenue_per_day = balance_analytics.revenue_per_day(range)
-  @weekly_reviews_per_day = review_analytics.reviews_per_day(range)
+    # Time series
+    @weekly_days_labels, @weekly_appointments_per_day = appt_analytics.appointments_per_day(range)
+    @weekly_new_patients_per_day = patient_analytics.new_patients_per_day(range)
+    @weekly_revenue_per_day = balance_analytics.revenue_per_day(range)
+    @weekly_reviews_per_day = review_analytics.reviews_per_day(range)
 
-  # Composition
-  @weekly_new_vs_returning = appt_analytics.new_vs_returning(range)
+    # Composition
+    @weekly_new_vs_returning = appt_analytics.new_vs_returning(range)
 
-  # KPIs and deltas
-  @kpi_appointments_this_week = appt_analytics.count(range)
-  prev_appts = appt_analytics.count(prev_range)
-  @kpi_appointments_delta = prev_appts.zero? ? 100.0 : (((@kpi_appointments_this_week - prev_appts) / prev_appts.to_f) * 100.0).round(1)
+    # KPIs and deltas
+    @kpi_appointments_this_week = appt_analytics.count(range)
+    prev_appts = appt_analytics.count(prev_range)
+    @kpi_appointments_delta = prev_appts.zero? ? 100.0 : (((@kpi_appointments_this_week - prev_appts) / prev_appts.to_f) * 100.0).round(1)
 
-  @kpi_revenue_this_week = balance_analytics.sum(range)
-  prev_rev = balance_analytics.sum(prev_range)
-  @kpi_revenue_delta = prev_rev.zero? ? 100.0 : (((@kpi_revenue_this_week - prev_rev) / prev_rev.to_f) * 100.0).round(1)
+    @kpi_revenue_this_week = balance_analytics.sum(range)
+    prev_rev = balance_analytics.sum(prev_range)
+    @kpi_revenue_delta = prev_rev.zero? ? 100.0 : (((@kpi_revenue_this_week - prev_rev) / prev_rev.to_f) * 100.0).round(1)
 
-  @kpi_new_patients = patient_analytics.new_count(range)
-  prev_new = patient_analytics.new_count(prev_range)
-  @kpi_new_patients_delta = prev_new.zero? ? 100.0 : (((@kpi_new_patients - prev_new) / prev_new.to_f) * 100.0).round(1)
+    @kpi_new_patients = patient_analytics.new_count(range)
+    prev_new = patient_analytics.new_count(prev_range)
+    @kpi_new_patients_delta = prev_new.zero? ? 100.0 : (((@kpi_new_patients - prev_new) / prev_new.to_f) * 100.0).round(1)
 
-  @kpi_reviews_this_week = review_analytics.count(range)
-  prev_reviews = review_analytics.count(prev_range)
-  @kpi_reviews_delta = prev_reviews.zero? ? 100.0 : (((@kpi_reviews_this_week - prev_reviews) / prev_reviews.to_f) * 100.0).round(1)
+    @kpi_reviews_this_week = review_analytics.count(range)
+    prev_reviews = review_analytics.count(prev_range)
+    @kpi_reviews_delta = prev_reviews.zero? ? 100.0 : (((@kpi_reviews_this_week - prev_reviews) / prev_reviews.to_f) * 100.0).round(1)
   end
 
   def new
