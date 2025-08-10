@@ -166,6 +166,56 @@ namespace :odontome do
     end
   end
 
+  desc 'Send six-month checkup reminder to patients (one-time)'
+  task send_six_month_checkup_reminders: :environment do
+    Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
+
+    # Consider practices where local time is mid-morning to avoid odd-hour sends
+    hour_to_send_emails = 10
+    timezones_where_hour_is = timezones_where_hour_are(hour_to_send_emails)
+    practice_ids = practices_in_timezones(timezones_where_hour_is)
+
+    next if practice_ids.empty?
+
+    # Find patients whose last confirmed appointment was > 6 months ago but not older than 7 months, and who have an email
+    # Group by patient to only send once, and respect per-practice locale/timezone
+    six_months_ago = 6.months.ago
+    seven_months_ago = 7.months.ago
+
+    last_appointments = Appointment.select('patients.id as patient_id, patients.email as patient_email, patients.firstname as patient_firstname, patients.lastname as patient_lastname, practices.id as practice_id, practices.name as practice_name, practices.locale as practice_locale, practices.timezone as practice_timezone, practices.email as practice_email, MAX(appointments.ends_at) as last_visit_at')
+                                   .joins(:patient, datebook: :practice)
+                                   .where('appointments.status = ?', Appointment.status[:confirmed])
+                                   .where('appointments.ends_at < ?', six_months_ago)
+                                   .where('appointments.ends_at > ?', seven_months_ago)
+                                   .where("patients.email <> ''")
+                                   .where(patients: { practice_id: practice_ids, notified_of_six_month_reminder: [false, nil] })
+                                   .group('patients.id, patients.email, patients.firstname, patients.lastname, practices.id, practices.name, practices.locale, practices.timezone, practices.email')
+
+    # Patients with a future confirmed appointment should not receive this reminder
+    future_confirmed_patient_ids = Appointment.joins(:patient)
+                        .where('appointments.starts_at > ?', Time.now)
+                        .where('appointments.status = ?', Appointment.status[:confirmed])
+                        .where(patients: { practice_id: practice_ids })
+                        .distinct
+                        .pluck(:patient_id)
+
+    last_appointments.each do |row|
+    # Skip if they already have a future confirmed appointment
+    pid = (row['patient_id'] || row.patient_id)
+    next if future_confirmed_patient_ids.include?(pid)
+
+      full_name = [row['patient_firstname'] || row.patient_firstname, row['patient_lastname'] || row.patient_lastname].compact.join(' ')
+      PatientMailer.six_month_checkup_reminder(row['patient_email'] || row.patient_email,
+                                               full_name,
+                                               row['practice_name'] || row.practice_name,
+                                               row['practice_locale'] || row.practice_locale,
+                                               row['practice_timezone'] || row.practice_timezone,
+                                               row['practice_email'] || row.practice_email).deliver_now
+
+      Patient.where(id: row['patient_id'] || row.patient_id).update_all(notified_of_six_month_reminder: true)
+    end
+  end
+
   # find all the timezones where the hour is @hour
   def timezones_where_hour_are(hour)
     time = Time.now
@@ -181,7 +231,11 @@ namespace :odontome do
   def practices_in_timezones(timezones)
     return [] if timezones.empty?
 
-    Practice.select(:id).where(timezone: timezones).pluck(:id)
+    # Only include practices that are active or trialing, and not cancelled
+    Practice.joins(:subscription)
+            .where(timezone: timezones)
+            .where(subscriptions: { status: %w[trialing active] })
+            .pluck(:id)
   end
 
   # find all the admins for the given @practice_ids

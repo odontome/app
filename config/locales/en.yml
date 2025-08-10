@@ -265,6 +265,8 @@ en:
         subject: Happy birthday!
       review:
         subject: How was your appointment with %{practice_name}?
+      six_month_checkup_reminder:
+        subject: It's time for your checkup at %{practice_name}
     practice:
       welcome:
         subject: Welcome to Odonto.me

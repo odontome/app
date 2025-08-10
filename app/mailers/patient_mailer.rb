@@ -2,6 +2,19 @@
 require 'icalendar'
 
 class PatientMailer < ApplicationMailer
+  def six_month_checkup_reminder(patient_email, patient_name, practice_name, practice_locale, practice_timezone, practice_email)
+    I18n.with_locale(practice_locale) do
+      @patient_name = patient_name
+      @practice_name = practice_name
+      @practice_timezone = practice_timezone
+      @practice_email = practice_email
+
+      mail(from: "#{practice_name} <hello@odonto.me>",
+           to: patient_email,
+           subject: I18n.t('mailers.patient.six_month_checkup_reminder.subject', practice_name: practice_name),
+           reply_to: practice_email)
+    end
+  end
   def appointment_soon_email(patient_email, patient_name, start_time, end_time, practice_name, practice_locale, practice_timezone, doctor, practice_email)
     # temporarily set the locale and then change it back
     # when the block finishes

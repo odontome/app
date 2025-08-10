@@ -284,6 +284,7 @@ Add all the jobs in `/lib/tasks/odontome.rake` to your scheduler:
 - `odontome:send_todays_appointments_to_doctors` - Daily at 7 AM
 - `odontome:send_birthday_wishes_to_patients` - Daily at 3 PM
 - `odontome:send_appointment_review_to_patients` - Every hour
+- `odontome:send_six_month_checkup_reminders` - Every hour (targets 10 AM local time per practice)
 
 ### For Local Development
 You can run these tasks manually for testing:
@@ -291,6 +292,9 @@ You can run these tasks manually for testing:
 ```bash
 # Test a specific task
 bundle exec rake odontome:send_appointment_reminder_notifications
+
+# Test six-month checkup reminders
+bundle exec rake odontome:send_six_month_checkup_reminders
 
 # See all available tasks
 bundle exec rake -T odontome

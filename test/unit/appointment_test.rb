@@ -82,4 +82,58 @@ class AppointmentTest < ActiveSupport::TestCase
     decoded_id = Cipher.decode(encoded_id)
     assert_equal appointment_id.to_s, decoded_id
   end
+
+  test 'resets six-month reminder flag when creating a confirmed appointment' do
+    patient = patients(:one)
+    # Simulate patient already notified
+    patient.update_column(:notified_of_six_month_reminder, true)
+
+    appt = Appointment.create!(
+      datebook_id: datebooks(:playa_del_carmen).id,
+      doctor_id: doctors(:rebecca).id,
+      patient_id: patient.id,
+      starts_at: Time.now + 1.day,
+      ends_at: Time.now + 1.day + 1.hour,
+      status: Appointment.status[:confirmed]
+    )
+
+    assert appt.persisted?
+    assert_equal false, patient.reload.notified_of_six_month_reminder
+  end
+
+  test 'resets six-month reminder flag when updating appointment to confirmed' do
+    patient = patients(:one)
+    patient.update_column(:notified_of_six_month_reminder, true)
+
+    appt = Appointment.create!(
+      datebook_id: datebooks(:playa_del_carmen).id,
+      doctor_id: doctors(:rebecca).id,
+      patient_id: patient.id,
+      starts_at: Time.now + 2.days,
+      ends_at: Time.now + 2.days + 1.hour,
+      status: Appointment.status[:cancelled]
+    )
+
+    assert_equal true, patient.reload.notified_of_six_month_reminder
+
+    appt.update!(status: Appointment.status[:confirmed])
+    assert_equal false, patient.reload.notified_of_six_month_reminder
+  end
+
+  test 'does not reset six-month reminder flag when appointment is not confirmed' do
+    patient = patients(:one)
+    patient.update_column(:notified_of_six_month_reminder, true)
+
+    appt = Appointment.create!(
+      datebook_id: datebooks(:playa_del_carmen).id,
+      doctor_id: doctors(:rebecca).id,
+      patient_id: patient.id,
+      starts_at: Time.now + 3.days,
+      ends_at: Time.now + 3.days + 1.hour,
+      status: Appointment.status[:cancelled]
+    )
+
+    assert appt.persisted?
+    assert_equal true, patient.reload.notified_of_six_month_reminder
+  end
 end
