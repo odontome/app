@@ -417,6 +417,7 @@ en:
       expiring: Your subscription will expire soon. Please <a href="%{practice_settings_url}">subscribe</a> in order to keep access to your account.
       expired: Your subscription has expired, please renew it to regain access to your account.
       expired_non_admin: Your subscription has expired, please consult with the owner of your account to renew it. Only administrator accounts can renew subscriptions.
+      past_due: Your payment is past due. Please <a href="%{practice_settings_url}">update your billing</a> to avoid interruption of service.
   suspend: Suspend
   suspended: Suspended
   telephone: Telephone

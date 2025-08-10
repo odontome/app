@@ -368,6 +368,7 @@ es:
       expiring: Tu subscripción va a expirar pronto. Por favor <a href="%{practice_settings_url}">subscríbete</a> para no perder acceso a tu cuenta.
       expired: Tu subscripción ha expirado, por favor renueva la subscripción para obtener acceso a tu cuenta.
       expired_non_admin: Tu subscripción ha expirado, por favor consulta con el administrador de tu cuenta. Solo ellos pueden renovar subscripciones.
+      past_due: Tu pago está vencido. Por favor <a href="%{practice_settings_url}">actualiza tu forma de pago</a> para evitar interrupciones en el servicio.
   suspend: Suspender
   suspended: Suspendido
   telephone: Teléfono

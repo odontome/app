@@ -27,6 +27,8 @@ class ApplicationController < ActionController::Base
       redirect_to_subscription_error
     elsif current_user && current_user.practice.subscription.is_trial_expiring?
       flash[:warning] = I18n.t('subscriptions.errors.expiring', practice_settings_url: practice_settings_url).html_safe
+    elsif current_user && current_user.practice.subscription.status == 'past_due'
+      flash[:warning] = I18n.t('subscriptions.errors.past_due', practice_settings_url: practice_settings_url).html_safe
     end
   end
 
