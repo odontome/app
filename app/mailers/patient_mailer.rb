@@ -7,6 +7,7 @@ class PatientMailer < ApplicationMailer
       @patient_name = patient_name
       @practice_name = practice_name
       @practice_timezone = practice_timezone
+      @practice_email = practice_email
 
       mail(from: "#{practice_name} <hello@odonto.me>",
            to: patient_email,

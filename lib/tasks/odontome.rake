@@ -177,16 +177,18 @@ namespace :odontome do
 
     next if practice_ids.empty?
 
-    # Find patients whose last confirmed appointment was > 6 months ago and who have an email
+    # Find patients whose last confirmed appointment was > 6 months ago but not older than 7 months, and who have an email
     # Group by patient to only send once, and respect per-practice locale/timezone
     six_months_ago = 6.months.ago
+    seven_months_ago = 7.months.ago
 
     last_appointments = Appointment.select('patients.id as patient_id, patients.email as patient_email, patients.firstname as patient_firstname, patients.lastname as patient_lastname, practices.id as practice_id, practices.name as practice_name, practices.locale as practice_locale, practices.timezone as practice_timezone, practices.email as practice_email, MAX(appointments.ends_at) as last_visit_at')
                                    .joins(:patient, datebook: :practice)
                                    .where('appointments.status = ?', Appointment.status[:confirmed])
                                    .where('appointments.ends_at < ?', six_months_ago)
+                                   .where('appointments.ends_at > ?', seven_months_ago)
                                    .where("patients.email <> ''")
-                                   .where(patients: { practice_id: practice_ids })
+                                   .where(patients: { practice_id: practice_ids, notified_of_six_month_reminder: [false, nil] })
                                    .group('patients.id, patients.email, patients.firstname, patients.lastname, practices.id, practices.name, practices.locale, practices.timezone, practices.email')
 
     # Patients with a future confirmed appointment should not receive this reminder
@@ -197,14 +199,10 @@ namespace :odontome do
                         .distinct
                         .pluck(:patient_id)
 
-    # Filter out patients already notified
-    notified_ids = Patient.where(id: last_appointments.map(&:patient_id)).where(notified_of_six_month_reminder: true).pluck(:id)
-
     last_appointments.each do |row|
     # Skip if they already have a future confirmed appointment
     pid = (row['patient_id'] || row.patient_id)
     next if future_confirmed_patient_ids.include?(pid)
-      next if notified_ids.include?(row['patient_id'] || row.patient_id)
 
       full_name = [row['patient_firstname'] || row.patient_firstname, row['patient_lastname'] || row.patient_lastname].compact.join(' ')
       PatientMailer.six_month_checkup_reminder(row['patient_email'] || row.patient_email,

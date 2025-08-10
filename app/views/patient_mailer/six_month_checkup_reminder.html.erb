@@ -1,5 +1,5 @@
 <p>Hi <strong><%= @patient_name %></strong>,</p>
 <p>It's been about six months since your last visit with <strong><%= @practice_name %></strong>. Regular checkups help keep your smile healthy. We'd be happy to see you again.</p>
-<p><a href="https://my.odonto.me" target="_blank" rel="noopener">Schedule your appointment</a> at your convenience.</p>
+<p><a href="mailto:<%= @practice_email %>" target="_blank" rel="noopener">Schedule your appointment</a> at your convenience.</p>
 <p>Thank you,<br/>
 <%= @practice_name %></p>
