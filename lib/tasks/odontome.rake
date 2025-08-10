@@ -189,8 +189,8 @@ namespace :odontome do
                                    .where(patients: { practice_id: practice_ids })
                                    .group('patients.id, patients.email, patients.firstname, patients.lastname, practices.id, practices.name, practices.locale, practices.timezone, practices.email')
 
-  # Patients with a future confirmed appointment should not receive this reminder
-  future_confirmed_patient_ids = Appointment.joins(:patient)
+    # Patients with a future confirmed appointment should not receive this reminder
+    future_confirmed_patient_ids = Appointment.joins(:patient)
                         .where('appointments.starts_at > ?', Time.now)
                         .where('appointments.status = ?', Appointment.status[:confirmed])
                         .where(patients: { practice_id: practice_ids })
@@ -233,7 +233,11 @@ namespace :odontome do
   def practices_in_timezones(timezones)
     return [] if timezones.empty?
 
-    Practice.select(:id).where(timezone: timezones).pluck(:id)
+    # Only include practices that are active or trialing, and not cancelled
+    Practice.joins(:subscription)
+            .where(timezone: timezones)
+            .where(subscriptions: { status: %w[trialing active] })
+            .pluck(:id)
   end
 
   # find all the admins for the given @practice_ids
