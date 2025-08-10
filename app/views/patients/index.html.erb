@@ -80,7 +80,7 @@
   </div>
 </div>
 
-<% if params[:term].nil? %>
+<% if params[:term].nil? and params[:segment].nil? %>
   <ul class="pagination">
     <li class="page-item <%= params[:letter] == '#' ? 'active' : '' %>">
       <%= link_to "#", patients_url(letter: "#"), class: "page-link" %>

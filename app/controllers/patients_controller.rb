@@ -5,8 +5,11 @@ class PatientsController < ApplicationController
   before_action :require_practice_admin, only: [:destroy]
 
   def index
-    # this is the most frequent scenario, a simple list of patients
-    if params[:term].nil?
+    if params[:term].present?
+      @patients = Patient.search(params[:term]).with_practice(current_user.practice_id)
+    elsif params[:segment].present? and params[:segment] == 'new_this_week'
+      @patients = Patient.where('created_at >= ?', 1.week.ago).with_practice(current_user.practice_id)
+    else
       # Always fetch the first letter of the first record, if not present
       # just send "A"
       if params[:letter].blank?
@@ -20,8 +23,6 @@ class PatientsController < ApplicationController
       else
         @patients = Patient.anything_not_in_alphabet.with_practice(current_user.practice_id)
       end
-    else
-      @patients = Patient.search(params[:term]).with_practice(current_user.practice_id)
     end
 
     respond_to do |format|

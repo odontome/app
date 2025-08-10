@@ -30,7 +30,7 @@
   </div>
   <div class="col-sm-3">
     <div class="card card-link">
-      <%= link_to patients_url, class: "card-body p-3 d-flex align-items-center justify-content-between card-link" do %>
+      <%= link_to patients_url(segment: :new_this_week), class: "card-body p-3 d-flex align-items-center justify-content-between card-link" do %>
         <div>
           <div class="text-muted"><%= t('analytics.kpis.new_patients') %></div>
           <div class="h2 m-0"><%= number_with_delimiter(@kpi_new_patients) %></div>
