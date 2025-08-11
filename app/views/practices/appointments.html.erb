@@ -31,9 +31,7 @@
               <% if @appointments.blank? %>
                 <tr>
                   <td colspan="6">
-                    <%= component :empty, title: t("no_appointments.title"), description: t("no_appointments.description"), image_name: 'calendar.svg' do %>
-                      <%= link_to t(:schedule), root_url, class: "btn btn-primary" %>
-                    <% end %>
+                    <%= t("no_appointments.title") %>
                   </td>
                 </tr>
               <% else %>
