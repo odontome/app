@@ -7,8 +7,14 @@ class PatientsController < ApplicationController
   def index
     if params[:term].present?
       @patients = Patient.search(params[:term]).with_practice(current_user.practice_id)
-    elsif params[:segment].present? and params[:segment] == 'new_this_week'
-      @patients = Patient.where('created_at >= ?', 1.week.ago).with_practice(current_user.practice_id)
+    elsif params[:segment].present? && params[:segment] == 'new_this_week'
+      # Align with KPI: use practice timezone and current calendar week (Mon–Sun), inclusive
+      tz = ActiveSupport::TimeZone[current_user.practice.timezone] || Time.zone
+      week_start = tz.now.beginning_of_week
+      week_end = tz.now.end_of_week
+      @patients = Patient
+                    .with_practice(current_user.practice_id)
+                    .where('created_at >= ? AND created_at <= ?', week_start, week_end)
     else
       # Always fetch the first letter of the first record, if not present
       # just send "A"

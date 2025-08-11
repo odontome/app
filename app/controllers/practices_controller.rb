@@ -15,8 +15,9 @@ class PracticesController < ApplicationController
     @practice = current_user.practice
 
     # Weekly analytics (Mon-Sun) for charts
-    @week_start = DateTime.now.beginning_of_week
-    @week_end = DateTime.now.end_of_week
+    tz = ActiveSupport::TimeZone[current_user.practice.timezone] || Time.zone
+    @week_start = tz.now.beginning_of_week
+    @week_end = tz.now.end_of_week
     @prev_week_start = (@week_start - 1.week).beginning_of_week
     @prev_week_end = (@week_end - 1.week).end_of_week
 
