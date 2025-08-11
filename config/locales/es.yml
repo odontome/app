@@ -116,9 +116,10 @@ es:
   allergic_to: Alérgico a
   already_have_an_account: ¿Ya tienes una cuenta?
   annotate: Anotar
-  appointment_created_error_message: La cita ha sido creada con éxito
+  appointment_created_error_message: Ocurrió un problema al intentar crear la cita.
   appointment_date: Fecha
   appointment_deleted_error_message: Ocurrió un problema al intentar borrar la cita.
+  appointment_updated_success_message: La cita ha sido actualizada con éxito.
   appointment_updated_error_message: Ocurrió un problema al intentar actualizar la cita.
   appointments: Citas
   appointments_in_datebook: ! "%{count} citas"
@@ -432,3 +433,9 @@ es:
     labels:
       new: "Nuevos"
       returning: "Recurrentes"
+
+  # Appointments list footer counts (similar to patient search results)
+  appointments_results_zero: No se encontraron citas.
+  appointments_results_one: ¡Ahí estaba esa cita!
+  appointments_results_few: "%{appointments_count} citas."
+  appointments_results_many: "Mostrando %{appointments_count} citas. Intenta refinar el rango."

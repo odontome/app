@@ -120,6 +120,7 @@ en:
   appointment_created_error_message: The appointment was created successfully
   appointment_date: Date
   appointment_deleted_error_message: There was a problem deleting the appointment
+  appointment_updated_success_message: The appointment was updated successfully
   appointment_updated_error_message: There was a problem updating the appointment
   appointments: Appointments
   appointments_in_datebook: ! "%{count} appointments"
@@ -482,3 +483,9 @@ en:
     labels:
       new: "New"
       returning: "Returning"
+
+  # Appointments list footer counts (similar to patient search results)
+  appointments_results_zero: No appointments were found.
+  appointments_results_one: There was that appointment!
+  appointments_results_few: "%{appointments_count} appointments."
+  appointments_results_many: "Showing %{appointments_count} appointments. Try refining your range."
