@@ -175,12 +175,12 @@ class PracticesController < ApplicationController
     date_range = week_start..week_end
 
     # Scope to current practice via patients join
-  @appointments = Appointment
-      .joins(:patient, :doctor, :datebook)
-      .includes(:patient, :doctor, :datebook)
-      .where(patients: { practice_id: @current_user.practice_id })
-      .where('appointments.starts_at >= ? AND appointments.starts_at <= ?', date_range.begin, date_range.end)
-      .order('datebooks.name ASC, appointments.starts_at ASC')
+    @appointments = Appointment
+                      .joins(:patient, :doctor, :datebook)
+                      .includes(:patient, :doctor, :datebook)
+                      .where(patients: { practice_id: @current_user.practice_id })
+                      .where('appointments.starts_at >= ? AND appointments.starts_at <= ?', date_range.begin, date_range.end)
+                      .order('datebooks.name ASC, appointments.starts_at ASC')
 
     respond_to do |format|
       format.html

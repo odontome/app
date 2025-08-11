@@ -37,12 +37,12 @@
                   </td>
                 </tr>
               <% else %>
-        <% current_datebook = nil %>
+                <% current_datebook = nil %>
                 <% @appointments.each do |appointment| %>
                   <% if current_datebook != appointment.datebook_id %>
                     <% current_datebook = appointment.datebook_id %>
                     <tr class="table-active">
-          <td colspan="6"><strong><%= appointment.datebook.name %></strong></td>
+                      <td colspan="6"><strong><%= appointment.datebook.name %></strong></td>
                     </tr>
                   <% end %>
                   <tr>
