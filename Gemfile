@@ -6,7 +6,7 @@ ruby '3.2.3'
 gem 'bcrypt', '~> 3.1.17'
 gem 'jquery-rails', '~> 4.5.0'
 gem 'puma', '~> 5.6.4'
-gem 'rails', '~> 7.2.2.1'
+gem 'rails', '~> 8.0.2'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '~> 4.2.0'
 gem "webpacker", '~> 5.4.3'
@@ -14,7 +14,7 @@ gem "webpacker", '~> 5.4.3'
 ### odonto.me specifc
 
 gem 'icalendar', '~> 2.7.1'
-gem 'rails-i18n', '~> 7.0.3'
+gem 'rails-i18n', '~> 8.0.1'
 gem 'taps', '~> 0.3.24'
 
 gem 'font-awesome-rails', '~> 4.7.0.8'
