@@ -1,0 +1,121 @@
+<div class="page-header mb-4">
+  <div class="row align-items-center">
+    <div class="col">
+      <div class="page-pretitle">
+        <%= @range_label %>
+      </div>
+      <h2 class="page-title">
+        <%= t :appointments %>
+      </h2>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="row row-cards">
+    <div class="col-md-12">
+      <div class="card mb-3">
+        <div class="card-table table-responsive">
+          <table class="table table-vcenter table-hover table-mobile-md card-table">
+            <thead>
+              <tr>
+                <th><%= t :patient %></th>
+                <th><%= t('activerecord.attributes.appointment.doctor_id') %></th>
+                <th><%= t :starts_at %></th>
+                <th><%= t :status %></th>
+                <th><%= t :notes %></th>
+                <th class="w-1"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if @appointments.blank? %>
+                <tr>
+                  <td colspan="6">
+                    <%= t("no_appointments.title") %>
+                  </td>
+                </tr>
+              <% else %>
+                <% current_datebook = nil %>
+                <% @appointments.each do |appointment| %>
+                  <% if current_datebook != appointment.datebook_id %>
+                    <% current_datebook = appointment.datebook_id %>
+                    <tr class="table-active">
+                      <td colspan="6"><strong><%= appointment.datebook.name %></strong></td>
+                    </tr>
+                  <% end %>
+                  <tr>
+                    <td data-label="<%= t :patient %>">
+                      <%= link_to appointment.patient.fullname, patient_path(appointment.patient) %>
+                    </td>
+                    <td data-label="<%= t('activerecord.attributes.appointment.doctor_id') %>">
+                      <div class="d-flex py-1 align-items-center">
+                        <span class="avatar me-2" title="<%= appointment.doctor.fullname %>">
+                          <%= appointment.doctor.initials %>
+                          <span class="badge" style="background-color: <%= appointment.doctor.color %>"></span>
+                        </span>
+                        <div class="flex-fill">
+                          <div class="font-weight-medium"><%= appointment.doctor.fullname %></div>
+                        </div>
+                      </div>
+                    </td>
+                    <td data-label="<%= t :starts_at %>">
+                      <span data-bs-toggle="tooltip" data-bs-placement="top" title="<%= l appointment.starts_at.in_time_zone(current_user.practice.timezone), format: :long %>">
+                        <%= l appointment.starts_at.in_time_zone(current_user.practice.timezone), format: :short %>
+                      </span>
+                    </td>
+                    <td data-label="<%= t :status %>">
+                      <% if appointment.is_confirmed %>
+                        <%= label_tag t(:valid), :green %>
+                      <% elsif appointment.is_cancelled %>
+                        <%= label_tag t(:cancel), :red %>
+                      <% else %>
+                        <%= label_tag t(:invalid) %>
+                      <% end %>
+                    </td>
+                    <td data-label="<%= t :notes %>">
+                      <% note = appointment.notes.to_s %>
+                      <% if note.present? %>
+                        <%= content_tag(:span,
+                              truncate(note, length: 25),
+                              title: note,
+                              data: { bs_toggle: 'tooltip', bs_placement: 'top' }) %>
+                      <% end %>
+                    </td>
+                    <td>
+                      <%= component :dropdown do %>
+                        <% if appointment.is_confirmed %>
+                          <%= link_to t(:cancel_appointment),
+                                datebook_appointment_path(appointment.datebook_id, appointment.id, appointment: { status: Appointment.status[:cancelled] }),
+                                method: :patch,
+                                class: "dropdown-item" %>
+                        <% else %>
+                          <%= link_to t(:confirm_appointment),
+                                datebook_appointment_path(appointment.datebook_id, appointment.id, appointment: { status: Appointment.status[:confirmed] }),
+                                method: :patch,
+                                class: "dropdown-item" %>
+                        <% end %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-2">
+  <span class="text-muted">
+    <% count = @appointments.size %>
+    <% if count == 1 %>
+      <%= t :appointments_results_one %>
+    <% elsif count <= 20 and count > 1 %>
+      <%= t :appointments_results_few, appointments_count: count %>
+    <% else %>
+      <%= t :appointments_results_many, appointments_count: count %>
+    <% end %>
+  </span>
+</div>

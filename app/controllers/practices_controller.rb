@@ -4,7 +4,7 @@ class PracticesController < ApplicationController
   before_action :require_user, only: %i[index destroy edit settings show close]
   before_action :require_no_user, only: %i[new create]
   before_action :require_superadmin, only: %i[index destroy edit]
-  before_action :require_practice_admin, only: %i[show settings balance update close]
+  before_action :require_practice_admin, only: %i[show settings balance appointments update close]
   skip_before_action :check_subscription_status
 
   def index
@@ -163,6 +163,27 @@ class PracticesController < ApplicationController
         headers['Content-Type'] = 'text/csv'
         headers['Content-disposition'] = "attachment; filename=#{starts_at}.csv"
       end
+    end
+  end
+
+  def appointments
+    week_start = DateTime.now.beginning_of_week
+    week_end = DateTime.now.end_of_week
+    @range_label = t('analytics.charts.appointments_this_week')
+    @min_date = @current_user.practice.created_at.strftime('%Y-%m-%d')
+    @max_date = 1.day.from_now.strftime('%Y-%m-%d')
+    date_range = week_start..week_end
+
+    # Scope to current practice via patients join
+    @appointments = Appointment
+                      .joins(:patient, :doctor, :datebook)
+                      .includes(:patient, :doctor, :datebook)
+                      .where(patients: { practice_id: @current_user.practice_id })
+                      .where('appointments.starts_at >= ? AND appointments.starts_at <= ?', date_range.begin, date_range.end)
+                      .order('datebooks.name ASC, appointments.starts_at ASC')
+
+    respond_to do |format|
+      format.html
     end
   end
 

@@ -82,9 +82,17 @@ class AppointmentsController < ApplicationController
     respond_to do |format|
       if @appointment.update(appointment_params)
         format.js {} # update.js.erb
+        format.html do
+          redirect_back fallback_location: practice_appointments_url,
+                        notice: I18n.t(:appointment_updated_success_message)
+        end
       else
         format.js do
           render_ujs_error(@appointment, I18n.t(:appointment_updated_error_message))
+        end
+        format.html do
+          redirect_back fallback_location: practice_appointments_url,
+                        alert: I18n.t(:appointment_updated_error_message)
         end
       end
     end
