@@ -7,9 +7,9 @@ class ApplicationController < ActionController::Base
 
   helper :all
 
-  helper_method :current_session, :current_user, :user_is_admin?, :current_user_is_superadmin?
+  helper_method :current_session, :current_user, :user_is_admin?, :current_user_is_superadmin?, :impersonating?
 
-  before_action :set_locale, :set_timezone, :check_account_status, :check_subscription_status, :find_datebooks
+  before_action :set_locale, :set_timezone, :check_account_status, :check_subscription_status, :find_datebooks, :prevent_impersonation_mutations
 
   before_bugsnag_notify :add_user_info_to_bugsnag
 
@@ -93,6 +93,10 @@ class ApplicationController < ActionController::Base
     current_user&.roles&.include?('superadmin')
   end
 
+  def impersonating?
+    session[:impersonator_id].present?
+  end
+
   def require_user
     unless current_user
       store_location
@@ -122,7 +126,15 @@ class ApplicationController < ActionController::Base
   end
 
   def require_superadmin
-    unless current_user_is_superadmin?
+    is_superadmin = if session[:impersonator_id].present?
+      # Check if the original impersonating user is a superadmin
+      original_user = User.find_by(id: session[:impersonator_id])
+      original_user&.roles&.include?('superadmin')
+    else
+      current_user_is_superadmin?
+    end
+
+    unless is_superadmin
       redirect_back_or_default('/401', I18n.t(:admin_credentials_required))
       return
     end
@@ -150,6 +162,23 @@ class ApplicationController < ActionController::Base
 
   def add_user_info_to_bugsnag(event)
     event.set_user(current_user.id, current_user.email, current_user.fullname) if current_user
+  end
+
+  def prevent_impersonation_mutations
+    return unless session[:impersonator_id].present?
+    return if request.get? || request.head?
+    
+    respond_to do |format|
+      format.html { 
+        redirect_back_or_default(request.referer || root_path, I18n.t(:impersonation_mutation_blocked, default: 'Data modification is not allowed while impersonating.'))
+      }
+      format.json { 
+        render json: { error: I18n.t(:impersonation_mutation_blocked, default: 'Data modification is not allowed while impersonating.') }, status: :forbidden 
+      }
+      format.js { 
+        render json: { error: I18n.t(:impersonation_mutation_blocked, default: 'Data modification is not allowed while impersonating.') }, status: :forbidden 
+      }
+    end
   end
 
   def authenticate_and_set_session(user, password, remember_me = false)

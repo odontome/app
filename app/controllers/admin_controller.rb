@@ -3,6 +3,7 @@
 class AdminController < ApplicationController
   before_action :require_superadmin
   skip_before_action :require_superadmin, only: %i[stop_impersonating]
+  skip_before_action :prevent_impersonation_mutations, only: %i[impersonate stop_impersonating]
 
   def practices
     @filter = params[:filter] || 'all'
@@ -25,15 +26,22 @@ class AdminController < ApplicationController
   end
 
   def impersonate
+    # Prevent nested impersonation
+    if session[:impersonator_id].present?
+      redirect_back_or_default('/401', I18n.t('errors.messages.unauthorised'))
+      return
+    end
+
     practice = Practice.find(params[:id])
     target_user = practice.users.order('id ASC').first
 
     unless target_user
-      redirect_back_or_default(practices_admin_path, I18n.t('errors.messages.unauthorised')) and return
+      redirect_back_or_default(practices_admin_path, I18n.t('errors.messages.unauthorised'))
+      return
     end
 
     # Store the superadmin id to allow reverting
-    session[:impersonator_id] ||= current_user.id
+    session[:impersonator_id] = current_user.id
 
     # Switch session to target user (do not copy cookies or remember tokens)
     session[:user] = target_user
@@ -48,7 +56,8 @@ class AdminController < ApplicationController
       session.delete(:impersonator_id)
       if admin
         session[:user] = admin
-        redirect_to practices_admin_path, notice: I18n.t(:impersonation_stopped, default: 'Stopped impersonation.') and return
+        redirect_to practices_admin_path, notice: I18n.t(:impersonation_stopped, default: 'Stopped impersonation.')
+        return
       end
     end
 

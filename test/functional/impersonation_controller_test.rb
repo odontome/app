@@ -45,4 +45,28 @@ class ImpersonationControllerTest < ActionController::TestCase
     # Either blocked by guard or by superadmin requirement
     assert_response :redirect
   end
+
+  test 'impersonation blocks mutation via POST requests' do
+    # Start impersonation
+    post :impersonate, params: { id: @practice.id }
+    assert @controller.session['impersonator_id'].present?
+    
+    # Simulate a POST request that would normally create data
+    @controller.request.env['REQUEST_METHOD'] = 'POST'
+    @controller.request.env['PATH_INFO'] = '/patients'
+    
+    # This should be blocked by prevent_impersonation_mutations filter
+    post :practices  # Try to access a different action that requires POST
+    assert_response :redirect
+  end
+
+  test 'impersonation allows read operations via GET requests' do
+    # Start impersonation  
+    post :impersonate, params: { id: @practice.id }
+    assert @controller.session['impersonator_id'].present?
+    
+    # GET requests should be allowed
+    get :practices
+    assert_response :success
+  end
 end
