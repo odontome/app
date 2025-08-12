@@ -24,7 +24,7 @@ class ImpersonationControllerTest < ActionController::TestCase
     assert @controller.session['impersonator_id'].present?
 
     post :impersonate, params: { id: @practice.id }
-  assert_redirected_to '/401'
+    assert_redirected_to '/401'
   end
 
   test 'stop impersonating restores original admin' do
