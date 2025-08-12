@@ -34,6 +34,9 @@
         </a>
         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
           <%= link_to t(:profile), current_user, class: "dropdown-item" %>
+          <% if session[:impersonator_id].present? %>
+            <%= button_to 'Stop impersonating', admin_stop_impersonating_path, method: :delete, class: 'dropdown-item text-danger', form: { data: { turbo: false } } %>
+          <% end %>
           <div class="dropdown-divider"></div>
           <%= link_to t(:signout), logout_url, class: "dropdown-item" %>
         </div>

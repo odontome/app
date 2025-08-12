@@ -1,0 +1,6 @@
+<%# frozen_string_literal: true %>
+<% if session[:impersonator_id].present? %>
+    <div class="impersonation-banner" role="alert">
+        You are impersonating <%= current_user.practice.name %>
+    </div>
+<% end %>

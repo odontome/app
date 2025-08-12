@@ -36,3 +36,23 @@ body {
 .navbar, .card, .dropdown-menu, .page-wrapper {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
+
+/* Impersonation banner styles */
+.impersonation-banner {
+    background-color: #fff3cd;
+    color: #856404;
+    font-size: 0.75rem;
+    padding: 4px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.theme-dark .impersonation-banner {
+    background-color: #d4c584;
+    color: #111111;
+}
+
+.impersonation-banner .alert-action {
+    margin-left: 12px;
+}

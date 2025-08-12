@@ -22,6 +22,7 @@ class User < ApplicationRecord
   validates :firstname, :lastname, length: { maximum: 20 }
   validates :password, length: { minimum: 7 }, if: :validate_password?
   validates :password_confirmation, length: { minimum: 7 }, if: :validate_password?
+  validate :prevent_superadmin_elevation
 
   # callbacks
   before_create :set_admin_role_for_first_user
@@ -94,5 +95,15 @@ class User < ApplicationRecord
       self.remember_token_expires_at = nil
       update_columns(remember_token: nil, remember_token_expires_at: nil)
     end
+  end
+
+  def prevent_superadmin_elevation
+    return unless roles&.include?('superadmin')
+
+    # Allow if this record is already persisted as superadmin in the DB (fixtures/seeds)
+    already_superadmin = id.present? && User.where(id: id, roles: 'superadmin').exists?
+    return if already_superadmin
+
+    errors.add(:roles, I18n.t('errors.messages.unauthorised'))
   end
 end

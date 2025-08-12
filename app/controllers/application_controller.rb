@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   helper :all
 
-  helper_method :current_session, :current_user, :user_is_admin?
+  helper_method :current_session, :current_user, :user_is_admin?, :current_user_is_superadmin?
 
   before_action :set_locale, :set_timezone, :check_account_status, :check_subscription_status, :find_datebooks
 
@@ -90,7 +90,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user_is_superadmin?
-    return true if current_user&.roles&.include?('superadmin')
+    current_user&.roles&.include?('superadmin')
   end
 
   def require_user
@@ -122,12 +122,9 @@ class ApplicationController < ActionController::Base
   end
 
   def require_superadmin
-    if current_user
-      redirect_back_or_default('/') unless current_user_is_superadmin?
-      false
-    else
-      redirect_back_or_default('/')
-      false
+    unless current_user_is_superadmin?
+      redirect_back_or_default('/401', I18n.t(:admin_credentials_required))
+      return
     end
   end
 

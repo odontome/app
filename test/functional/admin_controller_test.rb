@@ -54,12 +54,12 @@ class AdminControllerTest < ActionController::TestCase
   test 'should require superadmin access' do
     @controller.session['user'] = users(:founder) # Regular admin, not superadmin
     get :practices
-    assert_redirected_to '/'
+    assert_redirected_to '/401'
   end
 
   test 'should require authentication' do
     @controller.session['user'] = nil
     get :practices
-    assert_redirected_to '/'
+    assert_redirected_to '/401'
   end
 end

@@ -35,6 +35,7 @@
 						<th>patients</th>
 						<th>doctors</th>
 						<th>joined</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -60,6 +61,11 @@
 							<td><%= practice.patients_count %></td>
 							<td><%= practice.doctors_count %></td>
 							<td><%= practice.created_at.strftime('%F at %I:%M %P') %></td>
+							<td class="text-end">
+								<% if current_user_is_superadmin? %>
+									<%= button_to 'Impersonate', admin_practice_impersonate_path(practice), method: :post, class: 'btn btn-1', data: { turbo: false } %>
+								<% end %>
+							</td>
 						</tr>
 					<% end %>
 				</tbody>

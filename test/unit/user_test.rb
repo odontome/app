@@ -150,4 +150,25 @@ class UserTest < ActiveSupport::TestCase
     assert user.remember_token.blank?
     assert user.remember_token_expires_at.blank?
   end
+
+  test 'cannot elevate roles to superadmin for new user' do
+    user = User.new(firstname: 'New', lastname: 'User', email: 'new@odonto.me', roles: 'superadmin')
+    user.password = '1234567890'
+    user.password_confirmation = '1234567890'
+    assert_not user.save
+    assert_includes user.errors[:roles], I18n.t('errors.messages.unauthorised')
+  end
+
+  test 'cannot elevate existing non-superadmin to superadmin' do
+    user = users(:founder)
+    user.roles = 'superadmin'
+    assert_not user.save
+    assert_includes user.errors[:roles], I18n.t('errors.messages.unauthorised')
+  end
+
+  test 'allows persisting existing superadmin fixture' do
+    user = users(:superadmin)
+    user.firstname = 'Super'
+    assert user.save
+  end
 end
