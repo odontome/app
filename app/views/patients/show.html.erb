@@ -16,17 +16,9 @@
     </div>
     <div class="col-auto">
       <div class="btn-list">
-        <% if impersonating? %>
-          <%= button_tag t(:edit), class: "btn", disabled: true, title: "Data modification is not allowed while impersonating" %>
-        <% else %>
-          <%= link_to t(:edit), edit_patient_path(@patient), class: "btn" %>
-        <% end %>
+        <%= link_to t(:edit), edit_patient_path(@patient), class: "btn" %>
         <% if user_is_admin?(current_user) %>
-          <% if impersonating? %>
-            <%= button_tag t(:delete), class: "btn btn-outline-danger", disabled: true, title: "Data modification is not allowed while impersonating" %>
-          <% else %>
-            <%= link_to t(:delete), @patient, :method => :delete, data: { confirm: t(:are_you_sure_no_undo) }, class: "btn btn-outline-danger" %>
-          <% end %>
+          <%= link_to t(:delete), @patient, :method => :delete, data: { confirm: t(:are_you_sure_no_undo) }, class: "btn btn-outline-danger" %>
         <% end %>
       </div>
     </div>

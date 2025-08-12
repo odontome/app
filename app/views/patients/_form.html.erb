@@ -107,11 +107,7 @@
 
     <div class="card-footer text-end">
       <div class="d-flex">
-        <% if impersonating? %>
-          <%= button_tag(t(:save), class: "btn btn-primary ms-auto", disabled: true, title: "Data modification is not allowed while impersonating") %>
-        <% else %>
-          <%= f.submit(t(:save), :class => "btn btn-primary ms-auto", data: { disable_with: t(:please_wait) }) %>
-        <% end %>
+        <%= f.submit(t(:save), :class => "btn btn-primary ms-auto", data: { disable_with: t(:please_wait) }) %>
       </div>
     </div>
   </div>
