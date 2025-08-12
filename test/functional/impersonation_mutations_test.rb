@@ -9,7 +9,7 @@ class ImpersonationMutationsTest < ActionController::TestCase
     @superadmin = users(:superadmin)
     @admin      = users(:founder)
     @practice   = practices(:complete)
-    @patient    = patients(:john_smith)
+    @patient    = patients(:one)
   end
 
   test 'patient creation is blocked during impersonation' do

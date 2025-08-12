@@ -126,7 +126,15 @@ class ApplicationController < ActionController::Base
   end
 
   def require_superadmin
-    unless current_user_is_superadmin?
+    is_superadmin = if session[:impersonator_id].present?
+      # Check if the original impersonating user is a superadmin
+      original_user = User.find_by(id: session[:impersonator_id])
+      original_user&.roles&.include?('superadmin')
+    else
+      current_user_is_superadmin?
+    end
+
+    unless is_superadmin
       redirect_back_or_default('/401', I18n.t(:admin_credentials_required))
       return
     end
