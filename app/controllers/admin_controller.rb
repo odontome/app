@@ -2,6 +2,7 @@
 
 class AdminController < ApplicationController
   before_action :require_superadmin
+  skip_before_action :require_superadmin, only: %i[stop_impersonating]
 
   def practices
     @filter = params[:filter] || 'all'
@@ -21,5 +22,36 @@ class AdminController < ApplicationController
     else
       @practices = Practice.includes(:subscription).order('created_at desc').limit(250)
     end
+  end
+
+  def impersonate
+    practice = Practice.find(params[:id])
+    target_user = practice.users.order('id ASC').first
+
+    unless target_user
+      redirect_back_or_default(practices_admin_path, I18n.t('errors.messages.unauthorised')) and return
+    end
+
+    # Store the superadmin id to allow reverting
+    session[:impersonator_id] ||= current_user.id
+
+    # Switch session to target user (do not copy cookies or remember tokens)
+    session[:user] = target_user
+
+    flash.discard
+    redirect_to practice_path, notice: I18n.t(:impersonation_started, default: 'You are now impersonating this practice.')
+  end
+
+  def stop_impersonating
+    if session[:impersonator_id]
+      admin = User.find_by(id: session[:impersonator_id])
+      session.delete(:impersonator_id)
+      if admin
+        session[:user] = admin
+        redirect_to practices_admin_path, notice: I18n.t(:impersonation_stopped, default: 'Stopped impersonation.') and return
+      end
+    end
+
+    redirect_to root_path, alert: I18n.t('errors.messages.unauthorised')
   end
 end

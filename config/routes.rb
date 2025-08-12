@@ -47,6 +47,8 @@ Rails.application.routes.draw do
 
   # admin
   get '/admin/practices' => 'admin#practices', :as => :practices_admin
+  post '/admin/practices/:id/impersonate' => 'admin#impersonate', as: :admin_practice_impersonate
+  delete '/admin/impersonate' => 'admin#stop_impersonating', as: :admin_stop_impersonating
 
   # unsubscribe links
   get '/patients/:id/unsubscribe' => 'patients#unsubscribe', :as => :patients_unsubscribe
