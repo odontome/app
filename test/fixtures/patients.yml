@@ -17,6 +17,7 @@ one:
   drinks_per_day: 0
   drugs_use: '-'
   family_diseases: '-'
+  notified_of_six_month_reminder: false
   
 two:
   id: 2
@@ -25,6 +26,8 @@ two:
   firstname: Miguel
   lastname: Camacho
   email: nonosisi@gmail.com
+  date_of_birth: '1985-06-15'
+  notified_of_six_month_reminder: false
   
 three:
   id: 3
@@ -33,6 +36,8 @@ three:
   firstname: Daniella
   lastname: Sanguino
   email: daniella.sanguino@gmail.com
+  date_of_birth: '1990-03-10'
+  notified_of_six_month_reminder: false
 
 four:
   id: 4
@@ -41,3 +46,5 @@ four:
   firstname: Raul
   lastname: Riera
   email: raulriera@hotmail.com
+  date_of_birth: '1988-11-20'
+  notified_of_six_month_reminder: false
