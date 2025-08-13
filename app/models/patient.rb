@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Patient < ApplicationRecord
+  # auditing
+  has_paper_trail
+
   # concerns
   include Initials
 

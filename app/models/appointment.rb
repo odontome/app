@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Appointment < ApplicationRecord
+  # auditing
+  has_paper_trail
+
   # associations
   belongs_to :datebook
   belongs_to :doctor

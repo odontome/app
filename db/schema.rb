@@ -10,15 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_09_000100) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
+ActiveRecord::Schema[7.2].define(version: 2025_08_13_051345) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.bigint "record_id", null: false
-    t.bigint "blob_id", null: false
+    t.integer "record_id", null: false
+    t.integer "blob_id", null: false
     t.datetime "created_at", precision: nil, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -37,12 +34,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_09_000100) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.bigint "blob_id", null: false
+    t.integer "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "appointments", id: :serial, force: :cascade do |t|
+  create_table "appointments", force: :cascade do |t|
     t.integer "doctor_id"
     t.integer "patient_id"
     t.string "notes", limit: 255
@@ -58,7 +55,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_09_000100) do
     t.index ["starts_at", "ends_at"], name: "index_appointments_on_starts_at_and_ends_at"
   end
 
-  create_table "balances", id: :serial, force: :cascade do |t|
+  create_table "balances", force: :cascade do |t|
     t.integer "patient_id"
     t.float "amount"
     t.string "notes"
@@ -66,7 +63,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_09_000100) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
-  create_table "datebooks", id: :serial, force: :cascade do |t|
+  create_table "datebooks", force: :cascade do |t|
     t.integer "practice_id"
     t.string "name", limit: 100
     t.datetime "created_at", precision: nil, null: false
@@ -75,7 +72,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_09_000100) do
     t.integer "ends_at", default: 20
   end
 
-  create_table "doctors", id: :serial, force: :cascade do |t|
+  create_table "doctors", force: :cascade do |t|
     t.string "uid"
     t.integer "practice_id"
     t.string "firstname"
@@ -89,7 +86,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_09_000100) do
     t.string "color", limit: 7, default: "#3366CC"
   end
 
-  create_table "notes", id: :serial, force: :cascade do |t|
+  create_table "notes", force: :cascade do |t|
     t.string "notes", limit: 500
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -99,7 +96,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_09_000100) do
     t.index ["noteable_type", "noteable_id"], name: "index_notes_on_noteable_type_and_noteable_id"
   end
 
-  create_table "patients", id: :serial, force: :cascade do |t|
+  create_table "patients", force: :cascade do |t|
     t.string "uid"
     t.integer "practice_id"
     t.string "firstname"
@@ -123,7 +120,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_09_000100) do
     t.boolean "notified_of_six_month_reminder", default: false, null: false
   end
 
-  create_table "practices", id: :serial, force: :cascade do |t|
+  create_table "practices", force: :cascade do |t|
     t.string "name"
     t.string "locale", default: "en_US"
     t.string "timezone", default: "UTC"
@@ -139,7 +136,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_09_000100) do
     t.text "stripe_customer_id"
   end
 
-  create_table "reviews", id: :serial, force: :cascade do |t|
+  create_table "reviews", force: :cascade do |t|
     t.integer "appointment_id"
     t.integer "score"
     t.string "comment"
@@ -148,7 +145,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_09_000100) do
   end
 
   create_table "subscriptions", force: :cascade do |t|
-    t.bigint "practice_id", null: false
+    t.integer "practice_id", null: false
     t.text "status", null: false
     t.boolean "cancel_at_period_end", default: false, null: false
     t.datetime "current_period_start", precision: nil, null: false
@@ -158,7 +155,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_09_000100) do
     t.index ["practice_id"], name: "index_subscriptions_on_practice_id"
   end
 
-  create_table "treatments", id: :serial, force: :cascade do |t|
+  create_table "treatments", force: :cascade do |t|
     t.integer "practice_id"
     t.string "name", limit: 100
     t.float "price"
@@ -166,7 +163,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_09_000100) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
-  create_table "users", id: :serial, force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "firstname"
     t.string "lastname"
     t.string "email"
@@ -184,6 +181,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_09_000100) do
     t.datetime "remember_token_expires_at"
     t.index ["perishable_token"], name: "index_users_on_perishable_token"
     t.index ["remember_token"], name: "index_users_on_remember_token"
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string "whodunnit"
+    t.datetime "created_at"
+    t.bigint "item_id", null: false
+    t.string "item_type", null: false
+    t.string "event", null: false
+    t.text "object", limit: 1073741823
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
