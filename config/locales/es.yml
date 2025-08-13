@@ -439,3 +439,36 @@ es:
   appointments_results_one: ¡Ahí estaba esa cita!
   appointments_results_few: "%{appointments_count} citas."
   appointments_results_many: "Mostrando %{appointments_count} citas. Intenta refinar el rango."
+
+  # Audit Trail
+  audit_trail: Registro de Auditoría
+  audit_trail_description: Ver todos los cambios realizados a los datos de su consulta
+  audit_record: Registro de Auditoría
+  audit_record_details: Detalles del Registro de Auditoría
+  back_to_audit_trail: Volver al Registro de Auditoría
+  basic_information: Información Básica
+  current_record: Registro Actual
+  changes_made: Cambios Realizados
+  old_value: Valor Anterior
+  new_value: Valor Nuevo
+  nil_value: (vacío)
+  record_created: Este registro fue creado
+  record_deleted: Este registro fue eliminado
+  no_changes_recorded: No se registraron cambios
+  no_audit_records_found: No se encontraron registros de auditoría
+  model_type: Tipo de Modelo
+  event_type: Tipo de Evento
+  timestamp: Marca de Tiempo
+  record_id: ID de Registro
+  changes: Cambios
+  ip_address: Dirección IP
+  user_agent: Agente de Usuario
+  model: Modelo
+  action: Acción
+  filters: Filtros
+  filter: Filtrar
+  clear: Limpiar
+  date_from: Fecha Desde
+  date_to: Fecha Hasta
+  view: Ver
+  showing_entries: "Mostrando %{from} a %{to} de %{total} entradas"
