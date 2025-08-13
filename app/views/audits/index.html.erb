@@ -1,0 +1,199 @@
+<div class="page-header mb-4">
+  <div class="row align-items-center">
+    <div class="col">
+      <h2 class="page-title">
+        <%= t(:audit_trail, default: 'Audit Trail') %>
+      </h2>
+      <div class="text-muted">
+        <%= t(:audit_trail_description, default: 'View all changes made to your practice data') %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+  <!-- Filters -->
+  <div class="card mb-3">
+    <div class="card-header">
+      <h3 class="card-title"><%= t(:filters, default: 'Filters') %></h3>
+    </div>
+    <div class="card-body">
+      <%= form_with url: audits_path, method: :get, local: true, class: "row g-3" do |form| %>
+        <div class="col-md-3">
+          <%= form.label :item_type, t(:model_type, default: 'Model Type'), class: "form-label" %>
+          <%= form.select :item_type, 
+                options_for_select([['All', '']] + @available_item_types.map {|type| [type, type]}, params[:item_type]), 
+                {}, {class: "form-select"} %>
+        </div>
+        
+        <div class="col-md-3">
+          <%= form.label :event, t(:event_type, default: 'Event Type'), class: "form-label" %>
+          <%= form.select :event, 
+                options_for_select([
+                  ['All', ''],
+                  ['Created', 'create'],
+                  ['Updated', 'update'],
+                  ['Deleted', 'destroy']
+                ], params[:event]), 
+                {}, {class: "form-select"} %>
+        </div>
+        
+        <div class="col-md-3">
+          <%= form.label :user_id, t(:user, default: 'User'), class: "form-label" %>
+          <%= form.select :user_id, 
+                options_for_select([['All', '']] + @available_users.map {|user| ["#{user.firstname} #{user.lastname}", user.id]}, params[:user_id]), 
+                {}, {class: "form-select"} %>
+        </div>
+        
+        <div class="col-md-3">
+          <%= form.label :date_from, t(:date_from, default: 'Date From'), class: "form-label" %>
+          <%= form.date_field :date_from, value: params[:date_from], class: "form-control" %>
+        </div>
+        
+        <div class="col-md-3">
+          <%= form.label :date_to, t(:date_to, default: 'Date To'), class: "form-label" %>
+          <%= form.date_field :date_to, value: params[:date_to], class: "form-control" %>
+        </div>
+        
+        <div class="col-md-3 d-flex align-items-end">
+          <%= form.submit t(:filter, default: 'Filter'), class: "btn btn-primary me-2" %>
+          <%= link_to audits_path, class: "btn btn-secondary" do %>
+            <%= t(:clear, default: 'Clear') %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="card">
+    <% if @versions.empty? %>
+      <div class="card-body">
+        <%= t(:no_audit_records_found, default: 'No audit records found') %>
+      </div>
+    <% else %>
+      <table class="table table-vcenter table-mobile-md card-table">
+        <thead>
+          <tr>
+            <th><%= t(:timestamp, default: 'Timestamp') %></th>
+            <th><%= t(:user, default: 'User') %></th>
+            <th><%= t(:action, default: 'Action') %></th>
+            <th><%= t(:model, default: 'Model') %></th>
+            <th><%= t(:record_id, default: 'Record ID') %></th>
+            <th><%= t(:changes, default: 'Changes') %></th>
+            <th class="w-1"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @versions.each do |version| %>
+            <tr>
+              <td data-label="<%= t(:timestamp, default: 'Timestamp') %>">
+                <div class="text-muted">
+                  <%= l(version.created_at, format: :short) %>
+                </div>
+              </td>
+              <td data-label="<%= t(:user, default: 'User') %>">
+                <% if version.whodunnit %>
+                  <% user = User.find_by(id: version.whodunnit) %>
+                  <%= user ? user.fullname : "User ##{version.whodunnit}" %>
+                <% else %>
+                  <span class="text-muted">System</span>
+                <% end %>
+              </td>
+              <td data-label="<%= t(:action, default: 'Action') %>">
+                <span class="badge bg-<%= version.event == 'create' ? 'success' : version.event == 'update' ? 'warning' : 'danger' %>">
+                  <%= version.event.capitalize %>
+                </span>
+              </td>
+              <td data-label="<%= t(:model, default: 'Model') %>">
+                <%= version.item_type %>
+              </td>
+              <td data-label="<%= t(:record_id, default: 'Record ID') %>">
+                #<%= version.item_id %>
+                <% if version.item %>
+                  <div class="text-muted">
+                    <% case version.item_type %>
+                    <% when 'Patient' %>
+                      <%= version.item.fullname if version.item.respond_to?(:fullname) %>
+                    <% when 'User' %>
+                      <%= version.item.fullname if version.item.respond_to?(:fullname) %>
+                    <% when 'Doctor' %>
+                      <%= version.item.fullname if version.item.respond_to?(:fullname) %>
+                    <% when 'Appointment' %>
+                      <%= version.item.notes if version.item.respond_to?(:notes) %>
+                    <% else %>
+                      <%= version.item.to_s.truncate(30) %>
+                    <% end %>
+                  </div>
+                <% end %>
+              </td>
+              <td data-label="<%= t(:changes, default: 'Changes') %>">
+                <% changeset = version.changeset %>
+                <% if changeset.present? %>
+                  <div class="text-muted small">
+                    <%= changeset.keys.first(3).join(', ') %>
+                    <% if changeset.keys.length > 3 %>
+                      + <%= changeset.keys.length - 3 %> more
+                    <% end %>
+                  </div>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to audit_path(version), class: "btn btn-sm btn-outline-primary" do %>
+                  <%= t(:view, default: 'View') %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      
+      <!-- Pagination -->
+      <% if @total_pages > 1 %>
+        <div class="card-footer d-flex align-items-center">
+          <p class="m-0 text-muted">
+            <%= t(:showing_entries, default: 'Showing %{from} to %{to} of %{total} entries',
+                  from: (@page - 1) * @per_page + 1,
+                  to: [@page * @per_page, @total_count].min,
+                  total: @total_count) %>
+          </p>
+          <ul class="pagination m-0 ms-auto">
+            <% if @page > 1 %>
+              <li class="page-item">
+                <%= link_to audits_path(params.except(:page).merge(page: @page - 1)), class: "page-link" do %>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><polyline points="15,18 9,12 15,6"></polyline></svg>
+                  prev
+                <% end %>
+              </li>
+            <% end %>
+            
+            <% (1..@total_pages).each do |page| %>
+              <% if page == @page %>
+                <li class="page-item active">
+                  <span class="page-link"><%= page %></span>
+                </li>
+              <% elsif (page - @page).abs <= 2 || page == 1 || page == @total_pages %>
+                <li class="page-item">
+                  <%= link_to page, audits_path(params.except(:page).merge(page: page)), class: "page-link" %>
+                </li>
+              <% elsif (page - @page).abs == 3 %>
+                <li class="page-item disabled">
+                  <span class="page-link">…</span>
+                </li>
+              <% end %>
+            <% end %>
+            
+            <% if @page < @total_pages %>
+              <li class="page-item">
+                <%= link_to audits_path(params.except(:page).merge(page: @page + 1)), class: "page-link" do %>
+                  next
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><polyline points="9,18 15,12 9,6"></polyline></svg>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

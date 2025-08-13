@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Note < ApplicationRecord
+  # auditing
+  has_paper_trail meta: { practice_id: ->(note) { note.user&.practice_id } }
+
   # associations
   belongs_to :noteable, polymorphic: true
   belongs_to :user

@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_session, :current_user, :user_is_admin?, :current_user_is_superadmin?, :impersonating?
 
-  before_action :set_locale, :set_timezone, :check_account_status, :check_subscription_status, :find_datebooks, :prevent_impersonation_mutations
+  before_action :set_locale, :set_timezone, :check_account_status, :check_subscription_status, :find_datebooks, :prevent_impersonation_mutations, :set_paper_trail_whodunnit
 
   before_bugsnag_notify :add_user_info_to_bugsnag
 
@@ -138,6 +138,18 @@ class ApplicationController < ActionController::Base
       redirect_back_or_default('/401', I18n.t(:admin_credentials_required))
       return
     end
+  end
+  
+  def user_for_paper_trail
+    current_user&.id
+  end
+
+  def info_for_paper_trail
+    {
+      practice_id: current_user&.practice_id,
+      user_agent: request.user_agent,
+      remote_ip: request.remote_ip
+    }
   end
 
   def require_practice_admin

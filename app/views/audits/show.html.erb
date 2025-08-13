@@ -1,0 +1,171 @@
+<div class="page-header mb-4">
+  <div class="row align-items-center">
+    <div class="col">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <%= link_to audits_path do %>
+              <%= t(:audit_trail, default: 'Audit Trail') %>
+            <% end %>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            <%= t(:audit_record, default: 'Audit Record') %> #<%= @version.id %>
+          </li>
+        </ol>
+      </nav>
+      <h2 class="page-title">
+        <%= t(:audit_record_details, default: 'Audit Record Details') %>
+      </h2>
+    </div>
+    <div class="col-auto">
+      <%= link_to audits_path, class: "btn btn-outline-primary" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><polyline points="15,18 9,12 15,6"></polyline></svg>
+        <%= t(:back_to_audit_trail, default: 'Back to Audit Trail') %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="row">
+    <div class="col-md-6">
+      <!-- Basic Information -->
+      <div class="card mb-3">
+        <div class="card-header">
+          <h3 class="card-title"><%= t(:basic_information, default: 'Basic Information') %></h3>
+        </div>
+        <div class="card-body">
+          <dl class="row">
+            <dt class="col-sm-4"><%= t(:timestamp, default: 'Timestamp') %>:</dt>
+            <dd class="col-sm-8"><%= l(@version.created_at, format: :long) %></dd>
+            
+            <dt class="col-sm-4"><%= t(:action, default: 'Action') %>:</dt>
+            <dd class="col-sm-8">
+              <span class="badge bg-<%= @version.event == 'create' ? 'success' : @version.event == 'update' ? 'warning' : 'danger' %>">
+                <%= @version.event.capitalize %>
+              </span>
+            </dd>
+            
+            <dt class="col-sm-4"><%= t(:model_type, default: 'Model Type') %>:</dt>
+            <dd class="col-sm-8"><%= @version.item_type %></dd>
+            
+            <dt class="col-sm-4"><%= t(:record_id, default: 'Record ID') %>:</dt>
+            <dd class="col-sm-8">#<%= @version.item_id %></dd>
+            
+            <dt class="col-sm-4"><%= t(:user, default: 'User') %>:</dt>
+            <dd class="col-sm-8">
+              <% if @user %>
+                <%= @user.fullname %> 
+                <span class="text-muted">(<%= @user.email %>)</span>
+              <% elsif @version.whodunnit %>
+                User #<%= @version.whodunnit %> 
+                <span class="text-muted">(user not found)</span>
+              <% else %>
+                <span class="text-muted">System</span>
+              <% end %>
+            </dd>
+            
+            <% if @version.remote_ip %>
+              <dt class="col-sm-4"><%= t(:ip_address, default: 'IP Address') %>:</dt>
+              <dd class="col-sm-8"><%= @version.remote_ip %></dd>
+            <% end %>
+            
+            <% if @version.user_agent %>
+              <dt class="col-sm-4"><%= t(:user_agent, default: 'User Agent') %>:</dt>
+              <dd class="col-sm-8">
+                <small class="text-muted"><%= @version.user_agent.truncate(100) %></small>
+              </dd>
+            <% end %>
+          </dl>
+        </div>
+      </div>
+
+      <!-- Current Record -->
+      <% if @item %>
+        <div class="card mb-3">
+          <div class="card-header">
+            <h3 class="card-title"><%= t(:current_record, default: 'Current Record') %></h3>
+          </div>
+          <div class="card-body">
+            <% case @version.item_type %>
+            <% when 'Patient' %>
+              <p><strong><%= t(:name, default: 'Name') %>:</strong> <%= @item.fullname %></p>
+              <p><strong><%= t(:email, default: 'Email') %>:</strong> <%= @item.email %></p>
+              <p><strong><%= t(:date_of_birth, default: 'Date of Birth') %>:</strong> <%= @item.date_of_birth %></p>
+            <% when 'User' %>
+              <p><strong><%= t(:name, default: 'Name') %>:</strong> <%= @item.fullname %></p>
+              <p><strong><%= t(:email, default: 'Email') %>:</strong> <%= @item.email %></p>
+              <p><strong><%= t(:roles, default: 'Roles') %>:</strong> <%= @item.roles %></p>
+            <% when 'Doctor' %>
+              <p><strong><%= t(:name, default: 'Name') %>:</strong> <%= @item.fullname %></p>
+              <p><strong><%= t(:email, default: 'Email') %>:</strong> <%= @item.email %></p>
+              <p><strong><%= t(:speciality, default: 'Speciality') %>:</strong> <%= @item.speciality %></p>
+            <% when 'Appointment' %>
+              <p><strong><%= t(:patient, default: 'Patient') %>:</strong> <%= @item.patient&.fullname %></p>
+              <p><strong><%= t(:doctor, default: 'Doctor') %>:</strong> <%= @item.doctor&.fullname %></p>
+              <p><strong><%= t(:notes, default: 'Notes') %>:</strong> <%= @item.notes %></p>
+              <p><strong><%= t(:status, default: 'Status') %>:</strong> <%= @item.status %></p>
+            <% else %>
+              <p><%= @item.inspect %></p>
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+        <div class="card mb-3">
+          <div class="card-header">
+            <h3 class="card-title"><%= t(:current_record, default: 'Current Record') %></h3>
+          </div>
+          <div class="card-body">
+            <p class="text-muted"><%= t(:record_deleted, default: 'This record has been deleted') %></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="col-md-6">
+      <!-- Changes -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"><%= t(:changes_made, default: 'Changes Made') %></h3>
+        </div>
+        <div class="card-body">
+          <% if @changeset.present? %>
+            <% @changeset.each do |field, (old_value, new_value)| %>
+              <div class="mb-3">
+                <h5 class="text-capitalize"><%= field.humanize %></h5>
+                <div class="row">
+                  <div class="col-6">
+                    <small class="text-muted"><%= t(:old_value, default: 'Old Value') %>:</small>
+                    <div class="bg-light p-2 rounded border">
+                      <% if old_value.nil? %>
+                        <em class="text-muted"><%= t(:nil_value, default: '(empty)') %></em>
+                      <% else %>
+                        <code><%= old_value.to_s.truncate(100) %></code>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <small class="text-muted"><%= t(:new_value, default: 'New Value') %>:</small>
+                    <div class="bg-light p-2 rounded border">
+                      <% if new_value.nil? %>
+                        <em class="text-muted"><%= t(:nil_value, default: '(empty)') %></em>
+                      <% else %>
+                        <code><%= new_value.to_s.truncate(100) %></code>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% elsif @version.event == 'create' %>
+            <p class="text-muted"><%= t(:record_created, default: 'This record was created') %></p>
+          <% elsif @version.event == 'destroy' %>
+            <p class="text-muted"><%= t(:record_deleted, default: 'This record was deleted') %></p>
+          <% else %>
+            <p class="text-muted"><%= t(:no_changes_recorded, default: 'No changes recorded') %></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

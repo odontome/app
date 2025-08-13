@@ -50,6 +50,9 @@ Rails.application.routes.draw do
   post '/admin/practices/:id/impersonate' => 'admin#impersonate', as: :admin_practice_impersonate
   delete '/admin/impersonate' => 'admin#stop_impersonating', as: :admin_stop_impersonating
 
+  # audit trail (admin only)
+  resources :audits, only: [:index, :show]
+
   # unsubscribe links
   get '/patients/:id/unsubscribe' => 'patients#unsubscribe', :as => :patients_unsubscribe
   get '/doctors/:id/unsubscribe' => 'doctors#unsubscribe', :as => :doctors_unsubscribe

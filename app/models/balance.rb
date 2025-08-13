@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Balance < ApplicationRecord
+  # auditing
+  has_paper_trail meta: { practice_id: ->(balance) { balance.patient&.practice_id } }
+
   # associations
   belongs_to :patient
 

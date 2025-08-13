@@ -37,7 +37,7 @@ module ApplicationHelper
   end
 
   def is_active_tab?(tab)
-    allowed_values = [:datebooks, :patients, :doctors, :practices, :users, :treatments, :reviews]
+    allowed_values = [:datebooks, :patients, :doctors, :practices, :users, :treatments, :reviews, :audits]
     unless tab.in?(allowed_values)
       raise "#{tab} is invalid. Allowed values: #{allowed_values.join(', ')}."
     end

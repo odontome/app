@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Patient < ApplicationRecord
+  # auditing
+  has_paper_trail meta: { practice_id: :practice_id }
+
   # concerns
   include Initials
 

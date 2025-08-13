@@ -16,6 +16,7 @@ gem "webpacker", '~> 5.4.3'
 gem 'icalendar', '~> 2.7.1'
 gem 'rails-i18n', '~> 7.0.3'
 gem 'taps', '~> 0.3.24'
+gem 'paper_trail', '~> 15.0'
 
 gem 'font-awesome-rails', '~> 4.7.0.8'
 gem 'gibberish', '~> 2.1.0'
