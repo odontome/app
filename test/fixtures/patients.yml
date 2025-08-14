@@ -9,16 +9,17 @@ one:
   telephone: 7773179398
   mobile: 62*15*3000
   emergency_telephone: 7773179398
-  date_of_birth: '1982-12-22'
-  past_illnesses: '-'
-  surgeries: '-'
-  medications: '-'
+  date_of_birth: "1982-12-22"
+  past_illnesses: "-"
+  surgeries: "-"
+  medications: "-"
   cigarettes_per_day: 0
   drinks_per_day: 0
-  drugs_use: '-'
-  family_diseases: '-'
+  drugs_use: "-"
+  family_diseases: "-"
   notified_of_six_month_reminder: false
-  
+  deleted_at: null
+
 two:
   id: 2
   uid: 0002
@@ -26,9 +27,10 @@ two:
   firstname: Miguel
   lastname: Camacho
   email: nonosisi@gmail.com
-  date_of_birth: '1985-06-15'
+  date_of_birth: "1985-06-15"
   notified_of_six_month_reminder: false
-  
+  deleted_at: null
+
 three:
   id: 3
   uid: 0003
@@ -36,8 +38,9 @@ three:
   firstname: Daniella
   lastname: Sanguino
   email: daniella.sanguino@gmail.com
-  date_of_birth: '1990-03-10'
+  date_of_birth: "1990-03-10"
   notified_of_six_month_reminder: false
+  deleted_at: null
 
 four:
   id: 4
@@ -46,5 +49,18 @@ four:
   firstname: Raul
   lastname: Riera
   email: raulriera@hotmail.com
-  date_of_birth: '1988-11-20'
+  date_of_birth: "1988-11-20"
   notified_of_six_month_reminder: false
+  deleted_at: null
+
+# Soft deleted patient for testing
+five:
+  id: 5
+  uid: 0005
+  practice_id: 1
+  firstname: Deleted
+  lastname: Patient
+  email: deleted@example.com
+  date_of_birth: "1990-01-01"
+  notified_of_six_month_reminder: false
+  deleted_at: "2024-01-01 10:00:00"

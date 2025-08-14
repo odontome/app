@@ -83,4 +83,41 @@ class PatientsControllerTest < ActionController::TestCase
 
     assert_redirected_to patients_path
   end
+
+  test 'should suspend patient when has appointments' do
+    patient = patients(:two) # This patient should have appointments based on fixtures
+    assert patient.is_active
+
+    # Should not actually delete the patient, just set deleted_at
+    assert_no_difference('Patient.count') do
+      delete :destroy, params: { id: patient.to_param }
+    end
+
+    patient.reload
+    assert patient.deleted?
+    assert_redirected_to patients_path
+  end
+
+  test 'should activate suspended patient' do
+    patient = patients(:two)
+    patient.update(deleted_at: Time.current)
+
+    # Should toggle back to active (clear deleted_at)
+    assert_no_difference('Patient.count') do
+      delete :destroy, params: { id: patient.to_param }
+    end
+
+    patient.reload
+    assert patient.is_active
+    assert_redirected_to patients_path
+  end
+
+  test 'should only show active patients in index' do
+    patient = patients(:two)
+    patient.update(deleted_at: Time.current)
+
+    get :index
+
+    assert_not assigns(:patients).include?(patient)
+  end
 end

@@ -12,6 +12,7 @@ namespace :odontome do
                               .where('appointments.starts_at > ? AND appointments.ends_at < ?', Time.now, Time.now + appointment_notificacion_hours)
                               .where('appointments.notified_of_reminder = ?', false)
                               .where("patients.email <> ''")
+                              .where('patients.deleted_at IS NULL')
                               .where('appointments.status = ?', Appointment.status[:confirmed])
 
     appointments.each do |appointment|
@@ -35,6 +36,7 @@ namespace :odontome do
                               .where('appointments.created_at < ? AND appointments.notified_of_schedule = ?', 5.minutes.ago, false)
                               .where('appointments.status = ?', Appointment.status[:confirmed])
                               .where("patients.email <> ''")
+                              .where('patients.deleted_at IS NULL')
 
     appointments.each do |appointment|
       practice = appointment.datebook.practice
@@ -109,6 +111,7 @@ namespace :odontome do
       patients_of_these_practices = Patient.select('practice_id, firstname, lastname, date_of_birth, patients.email, practices.locale, practices.name as practice_name')
                                            .where(practice_id: practice_ids)
                                            .where("patients.email <> ''")
+                                           .where('patients.deleted_at IS NULL')
                                            .where('extract(month from date_of_birth) = ? AND extract(day from date_of_birth) = ?', today.strftime('%m'), today.strftime('%d'))
                                            .joins(:practice)
 
@@ -147,6 +150,7 @@ namespace :odontome do
     patients.email as patient_email, patients.firstname as patient_name,
     appointments.id as appointment_id, appointments.starts_at, appointments.ends_at")
                                           .where("patients.email <> ''")
+                                          .where('patients.deleted_at IS NULL')
                                           .where('appointments.ends_at < ?', 45.minutes.ago)
                                           .where('appointments.ends_at > ?', 3.days.ago)
                                           .where('appointments.notified_of_review = ?', false)
@@ -188,6 +192,7 @@ namespace :odontome do
                                    .where('appointments.ends_at < ?', six_months_ago)
                                    .where('appointments.ends_at > ?', seven_months_ago)
                                    .where("patients.email <> ''")
+                                   .where('patients.deleted_at IS NULL')
                                    .where(patients: { practice_id: practice_ids, notified_of_six_month_reminder: [false, nil] })
                                    .group('patients.id, patients.email, patients.firstname, patients.lastname, practices.id, practices.name, practices.locale, practices.timezone, practices.email')
 

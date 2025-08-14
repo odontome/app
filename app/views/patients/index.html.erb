@@ -55,7 +55,7 @@
                 <% if patient.missing_info? %>
                   <%= label_tag t(:incomplete), :red %>
                 <% else %>
-                  <%= label_tag t(:active), :green %>
+                  <%= status_tag patient %>
                 <% end %>
               </td>
               <td class="text-muted" data-label="<%= t :updated_at %>">
@@ -67,7 +67,7 @@
                     <%= link_to t(:profile), patient, class: "dropdown-item" %>
                     <%= link_to t(:edit), edit_patient_path(patient), class: "dropdown-item" %>
                     <% if user_is_admin?(current_user) %>
-                      <%= link_to t(:delete), patient, method: :delete, data: { confirm: t(:are_you_sure_no_undo) }, class: "dropdown-item text-red" %>
+                      <%= link_to_suspend_or_delete patient, class: "dropdown-item" %>
                     <% end %>
                   <% end %>
                 </div>

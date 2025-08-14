@@ -167,4 +167,45 @@ class PatientTest < ActiveSupport::TestCase
     assert_equal patient_empty_firstname.initials, 'S'
     assert_equal patient_empty_lastname.initials, 'A'
   end
+
+  test 'patient should be active by default' do
+    patient = patients(:one)
+    assert patient.is_active
+  end
+
+  test 'patient valid scope should only return active patients' do
+    patient = patients(:one)
+    patient.update(deleted_at: Time.current)
+
+    valid_patients = Patient.valid
+    assert_not valid_patients.include?(patient)
+  end
+
+  test 'patient should be deleted when deleted_at is set' do
+    patient = patients(:one)
+    patient.update(deleted_at: Time.current)
+
+    assert patient.deleted?
+    assert_not patient.is_active
+  end
+
+  test 'patient should be active when deleted_at is nil' do
+    patient = patients(:one)
+    patient.update(deleted_at: nil)
+
+    assert patient.is_active
+    assert_not patient.deleted?
+  end
+
+  test 'patient should be deleteable when has no appointments' do
+    patient = Patient.new(practice_id: 1, firstname: 'Test', lastname: 'Patient', date_of_birth: '1990-01-01')
+
+    assert patient.is_deleteable
+  end
+
+  test 'patient should not be deleteable when has appointments' do
+    patient = patients(:four)
+
+    assert_not patient.is_deleteable
+  end
 end
