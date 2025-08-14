@@ -46,7 +46,7 @@
               <tr>
                 <td>
                   <% if version.whodunnit.present? %>
-                    <% user = User.find_by(id: version.whodunnit) %>
+                    <% user = @users_hash[version.whodunnit.to_i] %>
                     <% if user %>
                       <div class="d-flex align-items-center">
                         <span class="avatar avatar-sm rounded-circle me-2">

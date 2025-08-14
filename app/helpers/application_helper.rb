@@ -39,10 +39,6 @@ module ApplicationHelper
     allowed_values = %i[datebooks patients doctors practices users treatments reviews audits]
     raise "#{tab} is invalid. Allowed values: #{allowed_values.join(', ')}." unless tab.in?(allowed_values)
 
-    puts '&&&&&&&&&&&&&&&'
-    puts controller.controller_name
-    puts tab
-
     controller.controller_name == tab.to_s ? 'active' : ''
   end
 
