@@ -412,6 +412,7 @@ es:
     unsubscribe_message: "Estás suscrito para recibir notificaciones sobre la  <strong>%{name}</strong>. Date de baja <a href='%{url}'>haciendo clic aquí</a>"
     daily_digest: "actividad de tu clínica"
   analytics:
+    title: "Analíticas"
     vs_last_week: "vs semana pasada"
     kpis:
       appointments: "Citas"
@@ -442,7 +443,7 @@ es:
 
   # Audit Trail
   audit_trail: "Registro de Auditoría"
-  audit_trail_description: "Ver todos los cambios realizados en los datos de tu clínica"
+  audit_trail_description: "Ver todos los cambios realizados en los datos de tu clínica en los últimos 30 días."
   audit_details: "Detalles de Auditoría"
   back_to_audit_log: "Volver al Registro de Auditoría"
   basic_information: "Información Básica"

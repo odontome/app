@@ -462,6 +462,7 @@ en:
     unsubscribe_message: "You are subscribed to recieve emails about <strong>%{name}</strong>. To stop, <a href='%{url}'>click here</a>"
     daily_digest: "your daily practice's activity"
   analytics:
+    title: Analytics
     vs_last_week: "vs last week"
     kpis:
       appointments: "Appointments"
@@ -492,7 +493,7 @@ en:
 
   # Audit Trail
   audit_trail: "Audit Trail"
-  audit_trail_description: "View all changes made to your practice data"
+  audit_trail_description: "View all changes made to your practice data in the last 30 days."
   audit_details: "Audit Details"
   back_to_audit_log: "Back to Audit Log"
   basic_information: "Basic Information"

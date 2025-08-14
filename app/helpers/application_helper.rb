@@ -6,30 +6,29 @@ module ApplicationHelper
   end
 
   def label_tag(message, color = :azure)
-    allowed_colors = [:green, :red, :azure]
-    unless color.in?(allowed_colors)
-      raise "#{color} is invalid. Allowed values: #{allowed_colors.join(', ')}."
-    end
+    allowed_colors = %i[green red azure]
+    raise "#{color} is invalid. Allowed values: #{allowed_colors.join(', ')}." unless color.in?(allowed_colors)
 
-    content_tag 'span', message, class: "badge bg-#{color.to_s}-lt"
+    content_tag 'span', message, class: "badge bg-#{color}-lt"
   end
 
   def value_tag(title, value)
-    aggregated_value = content_tag "strong", title
+    aggregated_value = content_tag 'strong', title
 
     if value.blank?
-      content_tag "div" do
-        aggregated_value.concat content_tag "div", "—", class: "form-control-plaintext text-muted"
+      content_tag 'div' do
+        aggregated_value.concat content_tag 'div', '—', class: 'form-control-plaintext text-muted'
       end
     else
-      content_tag "div" do
-        aggregated_value.concat content_tag "div", value, class: "form-control-plaintext"
+      content_tag 'div' do
+        aggregated_value.concat content_tag 'div', value, class: 'form-control-plaintext'
       end
     end
   end
 
   def help_tag(value)
-    content_tag :span, "?", class: 'form-help', data: {"bs-toggle": "popover", "bs-placement": "top", "bs-content": value, "bs-html": true}
+    content_tag :span, '?', class: 'form-help',
+                            data: { "bs-toggle": 'popover', "bs-placement": 'top', "bs-content": value, "bs-html": true }
   end
 
   def is_current_datebook?(id)
@@ -37,10 +36,12 @@ module ApplicationHelper
   end
 
   def is_active_tab?(tab)
-    allowed_values = [:datebooks, :patients, :doctors, :practices, :users, :treatments, :reviews, :audits]
-    unless tab.in?(allowed_values)
-      raise "#{tab} is invalid. Allowed values: #{allowed_values.join(', ')}."
-    end
+    allowed_values = %i[datebooks patients doctors practices users treatments reviews audits]
+    raise "#{tab} is invalid. Allowed values: #{allowed_values.join(', ')}." unless tab.in?(allowed_values)
+
+    puts '&&&&&&&&&&&&&&&'
+    puts controller.controller_name
+    puts tab
 
     controller.controller_name == tab.to_s ? 'active' : ''
   end
@@ -51,7 +52,7 @@ module ApplicationHelper
 
   def parse_version_object_data(version)
     return nil unless version.object.present?
-    
+
     begin
       JSON.parse(version.object)
     rescue JSON::ParserError => e
@@ -62,7 +63,7 @@ module ApplicationHelper
 
   def parse_version_changes_data(version)
     return nil unless version.object_changes.present?
-    
+
     begin
       JSON.parse(version.object_changes)
     rescue JSON::ParserError => e
@@ -73,10 +74,10 @@ module ApplicationHelper
 
   def deleted_item_display_name(version)
     return I18n.t('audits.deleted_item_with_id', id: version.item_id) unless version.object.present?
-    
+
     object_data = parse_version_object_data(version)
     return I18n.t('audits.deleted_item_with_id', id: version.item_id) unless object_data.is_a?(Hash)
-    
+
     case version.item_type
     when 'Patient', 'Doctor', 'User'
       if object_data['firstname'] && object_data['lastname']
@@ -115,7 +116,7 @@ module ApplicationHelper
 
   def audit_item_display_name(item, version)
     return deleted_item_display_name(version) unless item
-    
+
     case version.item_type
     when 'Patient', 'Doctor', 'User'
       item.fullname
