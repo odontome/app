@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Treatment < ApplicationRecord
+  # PaperTrail for audit logging
+  has_paper_trail meta: { practice_id: :practice_id }
+
   # associations
   belongs_to :practice
 

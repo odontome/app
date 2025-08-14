@@ -2,9 +2,20 @@
 
 This document provides comprehensive coding guidelines and best practices for the Odontome dental practice management system built with Ruby on Rails 7. Follow these patterns to maintain consistency, security, and maintainability.
 
+## 🚨 CORE PRINCIPLE: SIMPLICITY IS A HARD REQUIREMENT
+
+**SIMPLICITY MUST BE A HARD REQUIREMENT FOR EVERYTHING WE BUILD.**
+
+- Favor simple, straightforward solutions over clever or complex ones
+- Avoid unnecessary features, options, or configurations
+- Write code that is easy to understand and maintain
+- Remove complexity wherever possible
+- If in doubt, choose the simpler approach
+
 ## Core Rails 7 Principles
 
 ### 1. Always Use Frozen String Literals
+
 All Ruby files must start with the frozen string literal comment:
 
 ```ruby
@@ -18,6 +29,7 @@ end
 **Why**: Improves performance and prevents string mutation bugs.
 
 ### 2. Favor Simplicity and Readability
+
 Write code that is easy to understand and maintain. Prefer explicit over clever.
 
 ```ruby
@@ -35,6 +47,7 @@ end
 ## Model Best Practices
 
 ### 1. Consistent Model Structure
+
 Follow this order in models (as seen in `app/models/patient.rb`):
 
 ```ruby
@@ -79,17 +92,19 @@ end
 ```
 
 ### 2. Use Counter Caches for Performance
+
 When you have `has_many` relationships that need counting:
 
 ```ruby
 # In Practice model
 has_many :patients
 
-# In Patient model  
+# In Patient model
 belongs_to :practice, counter_cache: true
 ```
 
 ### 3. Secure Scopes with Proper SQL Escaping
+
 Always escape user input to prevent SQL injection:
 
 ```ruby
@@ -100,6 +115,7 @@ scope :search, lambda { |q|
 ```
 
 ### 4. Use Includes to Prevent N+1 Queries
+
 When accessing related data:
 
 ```ruby
@@ -111,6 +127,7 @@ scope :find_between, lambda { |starts_at, ends_at|
 ```
 
 ### 5. Optimize Queries with Select
+
 Only fetch needed columns for performance:
 
 ```ruby
@@ -121,13 +138,14 @@ scope :anything_with_letter, lambda { |letter|
 ```
 
 ### 6. Use Concerns for Shared Behavior
+
 Create reusable modules for shared functionality:
 
 ```ruby
 # app/models/concerns/initials.rb
 module Initials
   extend ActiveSupport::Concern
-  
+
   def initials
     "#{firstname.chars.first&.upcase}#{lastname.chars.first&.upcase}"
   end
@@ -137,6 +155,7 @@ end
 ## Controller Best Practices
 
 ### 1. Consistent Controller Structure
+
 Follow this pattern (as seen in `app/controllers/patients_controller.rb`):
 
 ```ruby
@@ -172,12 +191,13 @@ end
 ```
 
 ### 2. Always Use Strong Parameters
+
 Never permit all parameters:
 
 ```ruby
 # Good
 def patient_params
-  params.require(:patient).permit(:uid, :firstname, :lastname, :date_of_birth, 
+  params.require(:patient).permit(:uid, :firstname, :lastname, :date_of_birth,
                                  :past_illnesses, :surgeries, :medications)
 end
 
@@ -188,6 +208,7 @@ end
 ```
 
 ### 3. Scope Data to Current User's Practice
+
 Always scope data to prevent unauthorized access:
 
 ```ruby
@@ -202,6 +223,7 @@ end
 ```
 
 ### 4. Use Proper Authorization Filters
+
 Implement granular authorization:
 
 ```ruby
@@ -212,13 +234,14 @@ end
 ```
 
 ### 5. Handle Different Response Formats
+
 Support multiple formats when needed:
 
 ```ruby
 def index
   respond_to do |format|
     format.html # index.html
-    format.json { 
+    format.json {
       render json: @patients, methods: :fullname
     }
   end
@@ -228,6 +251,7 @@ end
 ## Security Best Practices
 
 ### 1. CSRF Protection
+
 Always enabled in ApplicationController:
 
 ```ruby
@@ -237,6 +261,7 @@ end
 ```
 
 ### 2. Authentication and Authorization
+
 Implement proper filters as shown in ApplicationController:
 
 ```ruby
@@ -258,6 +283,7 @@ end
 ```
 
 ### 3. Session Management
+
 Clear sessions on security-relevant actions:
 
 ```ruby
@@ -272,12 +298,15 @@ end
 ## Performance Optimization
 
 ### 1. Database Indexing
+
 Ensure proper indexes for frequently queried fields:
+
 - Foreign keys (practice_id, patient_id, etc.)
 - Search fields (firstname, lastname, email)
 - Timestamp fields used in ordering
 
 ### 2. Eager Loading
+
 Use `includes` to prevent N+1 queries:
 
 ```ruby
@@ -285,6 +314,7 @@ Use `includes` to prevent N+1 queries:
 ```
 
 ### 3. Limit Large Queries
+
 Always limit search results:
 
 ```ruby
@@ -298,19 +328,21 @@ scope :search, lambda { |q|
 ## Validation Best Practices
 
 ### 1. Use Appropriate Validation Types
+
 Be specific with validations:
 
 ```ruby
 validates_presence_of :practice_id, :firstname, :lastname, :date_of_birth
 validates_uniqueness_of :uid, scope: :practice_id, allow_nil: true, allow_blank: true
-validates_numericality_of :cigarettes_per_day, only_integer: true, 
+validates_numericality_of :cigarettes_per_day, only_integer: true,
                          greater_than_or_equal_to: 0, allow_blank: true
 validates_length_of :firstname, within: 1..25
-validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, 
+validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i },
                  allow_nil: true, allow_blank: true
 ```
 
 ### 2. Use Scoped Uniqueness
+
 When uniqueness should be scoped to a practice:
 
 ```ruby
@@ -320,6 +352,7 @@ validates_uniqueness_of :email, scope: :practice_id, allow_nil: true, allow_blan
 ## Internationalization (i18n)
 
 ### 1. Always Use i18n Keys
+
 Never hardcode user-facing text:
 
 ```ruby
@@ -331,6 +364,7 @@ flash[:notice] = "Patient created successfully"
 ```
 
 ### 2. Support Multiple Locales
+
 Configure available locales in application.rb:
 
 ```ruby
@@ -341,6 +375,7 @@ config.i18n.enforce_available_locales = false
 ## Testing Guidelines
 
 ### 1. Write Focused Tests
+
 Test one thing at a time and use descriptive names:
 
 ```ruby
@@ -357,11 +392,13 @@ end
 ```
 
 ### 2. Use Fixtures or Factories
+
 Prefer fixtures for simple, stable test data.
 
 ## Error Handling
 
 ### 1. Graceful Error Handling
+
 Handle errors gracefully and provide meaningful feedback:
 
 ```ruby
@@ -375,6 +412,7 @@ end
 ```
 
 ### 2. Use Flash Messages Appropriately
+
 Provide clear feedback to users:
 
 ```ruby
@@ -388,6 +426,7 @@ end
 ## Routing Best Practices
 
 ### 1. Use RESTful Routes
+
 Prefer RESTful conventions:
 
 ```ruby
@@ -398,6 +437,7 @@ end
 ```
 
 ### 2. Namespace Related Routes
+
 Group related functionality:
 
 ```ruby
@@ -411,6 +451,7 @@ end
 ## Code Organization
 
 ### 1. Use Helper Methods
+
 Extract complex logic to helper methods:
 
 ```ruby
@@ -418,6 +459,7 @@ helper_method :current_session, :current_user, :user_is_admin?
 ```
 
 ### 2. Keep Methods Small
+
 Prefer small, focused methods:
 
 ```ruby
@@ -438,6 +480,7 @@ end
 ## Common Patterns in This Application
 
 ### 1. Practice Scoping
+
 Always scope data to the current user's practice:
 
 ```ruby
@@ -447,6 +490,7 @@ scope :with_practice, lambda { |practice_id|
 ```
 
 ### 2. Safe Navigation
+
 Use safe navigation operators for potentially nil objects:
 
 ```ruby
@@ -456,6 +500,7 @@ end
 ```
 
 ### 3. String Cleaning
+
 Clean user input consistently:
 
 ```ruby
@@ -472,6 +517,7 @@ end
 ## What to Avoid
 
 ### 1. Don't Use Raw SQL Unless Necessary
+
 Prefer ActiveRecord methods:
 
 ```ruby
@@ -483,6 +529,7 @@ Patient.where("practice_id = #{practice.id}")
 ```
 
 ### 2. Don't Skip Validations Without Good Reason
+
 Only skip validations when absolutely necessary:
 
 ```ruby
@@ -491,9 +538,11 @@ patient.save!(validate: false)
 ```
 
 ### 3. Don't Put Business Logic in Views
+
 Keep views simple and logic in models/controllers.
 
 ### 4. Don't Use Global Variables
+
 Use proper Rails patterns instead of global state.
 
 ---

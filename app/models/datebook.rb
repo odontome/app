@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Datebook < ApplicationRecord
+  # PaperTrail for audit logging
+  has_paper_trail meta: { practice_id: :practice_id }
+
   # associations
   has_many :appointments
   belongs_to :practice, counter_cache: true

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_09_000100) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_14_004154) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -184,6 +184,20 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_09_000100) do
     t.datetime "remember_token_expires_at"
     t.index ["perishable_token"], name: "index_users_on_perishable_token"
     t.index ["remember_token"], name: "index_users_on_remember_token"
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string "whodunnit"
+    t.datetime "created_at"
+    t.bigint "item_id", null: false
+    t.string "item_type", null: false
+    t.string "event", null: false
+    t.text "object"
+    t.text "object_changes"
+    t.integer "practice_id"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
+    t.index ["practice_id", "created_at"], name: "index_versions_on_practice_id_and_created_at"
+    t.index ["practice_id"], name: "index_versions_on_practice_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

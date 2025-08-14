@@ -37,7 +37,7 @@ module ApplicationHelper
   end
 
   def is_active_tab?(tab)
-    allowed_values = [:datebooks, :patients, :doctors, :practices, :users, :treatments, :reviews]
+    allowed_values = [:datebooks, :patients, :doctors, :practices, :users, :treatments, :reviews, :audits]
     unless tab.in?(allowed_values)
       raise "#{tab} is invalid. Allowed values: #{allowed_values.join(', ')}."
     end
@@ -47,5 +47,57 @@ module ApplicationHelper
 
   def component(name, *options, &block)
     render("components/#{name}", *options, &block)
+  end
+
+  def parse_version_object_data(version)
+    return nil unless version.object.present?
+    
+    begin
+      JSON.parse(version.object)
+    rescue JSON::ParserError => e
+      Rails.logger.error "Failed to parse version object data: #{e.message}"
+      nil
+    end
+  end
+
+  def parse_version_changes_data(version)
+    return nil unless version.object_changes.present?
+    
+    begin
+      JSON.parse(version.object_changes)
+    rescue JSON::ParserError => e
+      Rails.logger.error "Failed to parse version changes data: #{e.message}"
+      nil
+    end
+  end
+
+  def deleted_item_display_name(version)
+    return "[Deleted] ID: #{version.item_id}" unless version.object.present?
+    
+    object_data = parse_version_object_data(version)
+    return "[Deleted] ID: #{version.item_id}" unless object_data.is_a?(Hash)
+    
+    case version.item_type
+    when 'Patient', 'Doctor', 'User'
+      if object_data['firstname'] && object_data['lastname']
+        "#{object_data['firstname']} #{object_data['lastname']} [Deleted]"
+      else
+        "[Deleted] ID: #{version.item_id}"
+      end
+    when 'Practice'
+      object_data['name'] ? "#{object_data['name']} [Deleted]" : "[Deleted] ID: #{version.item_id}"
+    when 'Treatment'
+      object_data['name'] ? "#{object_data['name']} [Deleted]" : "[Deleted] ID: #{version.item_id}"
+    when 'Datebook'
+      object_data['name'] ? "#{object_data['name']} [Deleted]" : "[Deleted] ID: #{version.item_id}"
+    when 'Appointment'
+      if object_data['notes'].present?
+        "#{object_data['notes']} [Deleted]"
+      else
+        "Appointment ##{version.item_id} [Deleted]"
+      end
+    else
+      "[Deleted] ID: #{version.item_id}"
+    end
   end
 end

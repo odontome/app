@@ -216,6 +216,18 @@ namespace :odontome do
     end
   end
 
+  desc 'Clean up audit logs older than 30 days to prevent database bloat'
+  task cleanup_audit_logs: :environment do
+    Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
+
+    # Delete audit versions older than 30 days
+    cutoff_date = 30.days.ago
+    sql = ActiveRecord::Base.sanitize_sql_array(["DELETE FROM versions WHERE created_at < ?", cutoff_date])
+    deleted_count = ActiveRecord::Base.connection.exec_delete(sql)
+
+    Rails.logger.info "Cleaned up #{deleted_count} audit log entries older than #{cutoff_date.strftime('%Y-%m-%d')}"
+  end
+
   # find all the timezones where the hour is @hour
   def timezones_where_hour_are(hour)
     time = Time.now

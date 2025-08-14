@@ -26,6 +26,7 @@ gem 'premailer-rails', '~> 1.11.1'
 gem 'pg', '~> 1.3.5'
 gem 'stripe', '~> 5.53.0'
 gem 'rack-attack', '~> 6.6.1'
+gem 'paper_trail', '~> 15.0'
 
 group :development do
   gem 'rubocop'
