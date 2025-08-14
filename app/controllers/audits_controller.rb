@@ -37,5 +37,6 @@ class AuditsController < ApplicationController
   def show
     @version = PaperTrail::Version.where(practice_id: current_user.practice_id).find(params[:id])
     @item = @version.item
+    @whodunnit_user = @version.whodunnit.present? ? User.find_by(id: @version.whodunnit) : nil
   end
 end

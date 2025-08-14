@@ -112,4 +112,21 @@ module ApplicationHelper
       I18n.t('audits.deleted_item_with_id', id: version.item_id)
     end
   end
+
+  def audit_item_display_name(item, version)
+    return deleted_item_display_name(version) unless item
+    
+    case version.item_type
+    when 'Patient', 'Doctor', 'User'
+      item.fullname
+    when 'Practice'
+      item.name
+    when 'Treatment', 'Datebook'
+      item.name
+    when 'Appointment'
+      item.notes.present? ? item.notes : "Appointment ##{item.id}"
+    else
+      "ID: #{version.item_id}"
+    end
+  end
 end

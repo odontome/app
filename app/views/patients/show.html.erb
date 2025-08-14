@@ -10,7 +10,9 @@
         </h2>
       </h4>
       <div class="text-muted">
-        <%= @patient.uid %><br />
+        <% if @patient.uid.present? %>
+          <%= @patient.uid %><br />
+        <% end %>
         <span data-toggle="tooltip" title="<%= @patient.date_of_birth.to_formatted_s(:long) %>" data-placement="top"><%= @patient.age%> <%= t(:years_old).downcase %></span>
       </div>
     </div>
