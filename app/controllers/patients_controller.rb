@@ -91,9 +91,17 @@ class PatientsController < ApplicationController
     back_to = request.referer || patients_path
 
     @patient = Patient.with_practice(current_user.practice_id).find(params[:id])
-    @patient.destroy
+    
+    # Check if this patient can be deleted, otherwise toggle their active status
+    if @patient.is_deleteable
+      @patient.destroy
+    else
+      @patient.is_active = !@patient.is_active
+      @patient.save
+    end
+
     respond_to do |format|
-      format.html { redirect_to(back_to) }
+      format.html { redirect_to(back_to, notice: I18n.t(:patient_deleted_success_message)) }
     end
   end
 

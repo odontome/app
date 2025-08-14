@@ -18,6 +18,7 @@ one:
   drugs_use: '-'
   family_diseases: '-'
   notified_of_six_month_reminder: false
+  is_active: true
   
 two:
   id: 2
@@ -28,6 +29,7 @@ two:
   email: nonosisi@gmail.com
   date_of_birth: '1985-06-15'
   notified_of_six_month_reminder: false
+  is_active: true
   
 three:
   id: 3
@@ -38,6 +40,7 @@ three:
   email: daniella.sanguino@gmail.com
   date_of_birth: '1990-03-10'
   notified_of_six_month_reminder: false
+  is_active: true
 
 four:
   id: 4
@@ -48,3 +51,4 @@ four:
   email: raulriera@hotmail.com
   date_of_birth: '1988-11-20'
   notified_of_six_month_reminder: false
+  is_active: true
