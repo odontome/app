@@ -462,6 +462,7 @@ en:
     unsubscribe_message: "You are subscribed to recieve emails about <strong>%{name}</strong>. To stop, <a href='%{url}'>click here</a>"
     daily_digest: "your daily practice's activity"
   analytics:
+    title: Analytics
     vs_last_week: "vs last week"
     kpis:
       appointments: "Appointments"
@@ -489,3 +490,45 @@ en:
   appointments_results_one: There was that appointment!
   appointments_results_few: "%{appointments_count} appointments."
   appointments_results_many: "Showing %{appointments_count} appointments. Try refining your range."
+
+  # Audit Trail
+  audit_trail: "Audit Trail"
+  audit_trail_description: "View all changes made to your practice data in the last 30 days."
+  audit_details: "Audit Details"
+  back_to_audit_log: "Back to Audit Log"
+  basic_information: "Basic Information"
+  changes_made: "Changes Made"
+  created_data: "Created Data"
+  deleted_data: "Deleted Data"
+  date_time: "Date & Time"
+  item_type: "Type"
+  item_id: "Item ID"
+  item_name: "Item Name"
+  field: "Field"
+  old_value: "Old Value"
+  new_value: "New Value"
+  value: "Value"
+  empty: "(empty)"
+  error_parsing_data: "Error parsing object data"
+  error_parsing_changes: "Error parsing changes data"
+  no_changes_recorded: "No changes recorded"
+  no_object_data: "No object data available"
+  no_audit_records: "No audit records found"
+  view_details: "View Details"
+  load_more: "Load More"
+  system: "System"
+  pagination_info: "Showing %{start} to %{end} of %{total} records"
+
+  audit:
+    create: "Created"
+    update: "Updated"
+    destroy: "Deleted"
+
+  audits:
+    deleted_item_with_id: "␡ ID: %{id}"
+    deleted_person: "␡ %{name}"
+    deleted_practice: "␡ %{name}"
+    deleted_treatment: "␡ %{name}"
+    deleted_datebook: "␡ %{name}"
+    deleted_appointment_with_notes: "␡ %{notes}"
+    deleted_appointment_with_id: "␡ Appointment #%{id}"

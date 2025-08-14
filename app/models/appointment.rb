@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Appointment < ApplicationRecord
+  # PaperTrail for audit logging
+  has_paper_trail meta: { practice_id: ->(appointment) { appointment.datebook.practice_id } }
+
   # associations
   belongs_to :datebook
   belongs_to :doctor

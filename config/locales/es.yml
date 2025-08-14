@@ -412,6 +412,7 @@ es:
     unsubscribe_message: "Estás suscrito para recibir notificaciones sobre la  <strong>%{name}</strong>. Date de baja <a href='%{url}'>haciendo clic aquí</a>"
     daily_digest: "actividad de tu clínica"
   analytics:
+    title: "Analíticas"
     vs_last_week: "vs semana pasada"
     kpis:
       appointments: "Citas"
@@ -439,3 +440,45 @@ es:
   appointments_results_one: ¡Ahí estaba esa cita!
   appointments_results_few: "%{appointments_count} citas."
   appointments_results_many: "Mostrando %{appointments_count} citas. Intenta refinar el rango."
+
+  # Audit Trail
+  audit_trail: "Registro de Auditoría"
+  audit_trail_description: "Ver todos los cambios realizados en los datos de tu clínica en los últimos 30 días."
+  audit_details: "Detalles de Auditoría"
+  back_to_audit_log: "Volver al Registro de Auditoría"
+  basic_information: "Información Básica"
+  changes_made: "Cambios Realizados"
+  created_data: "Datos Creados"
+  deleted_data: "Datos Eliminados"
+  date_time: "Fecha y Hora"
+  item_type: "Tipo"
+  item_id: "ID del Elemento"
+  item_name: "Nombre del Elemento"
+  field: "Campo"
+  old_value: "Valor Anterior"
+  new_value: "Valor Nuevo"
+  value: "Valor"
+  empty: "(vacío)"
+  error_parsing_data: "Error al procesar los datos del objeto"
+  error_parsing_changes: "Error al procesar los datos de cambios"
+  no_changes_recorded: "No se registraron cambios"
+  no_object_data: "No hay datos del objeto disponibles"
+  no_audit_records: "No se encontraron registros de auditoría"
+  view_details: "Ver Detalles"
+  load_more: "Cargar Más"
+  system: "Sistema"
+  pagination_info: "Mostrando %{start} a %{end} de %{total} registros"
+
+  audit:
+    create: "Creado"
+    update: "Actualizado"
+    destroy: "Eliminado"
+
+  audits:
+    deleted_item_with_id: "␡ ID: %{id}"
+    deleted_person: "␡ %{name}"
+    deleted_practice: "␡ %{name}"
+    deleted_treatment: "␡ %{name}"
+    deleted_datebook: "␡ %{name}"
+    deleted_appointment_with_notes: "␡ %{notes}"
+    deleted_appointment_with_id: "␡ Cita #%{id}"

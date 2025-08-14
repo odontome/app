@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Doctor < ApplicationRecord
+  # PaperTrail for audit logging
+  has_paper_trail meta: { practice_id: ->(doctor) { doctor.practice_id } }
+
   # concerns
   include Initials
 

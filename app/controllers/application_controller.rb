@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_session, :current_user, :user_is_admin?, :current_user_is_superadmin?, :impersonating?
 
-  before_action :set_locale, :set_timezone, :check_account_status, :check_subscription_status, :find_datebooks, :prevent_impersonation_mutations
+  before_action :set_locale, :set_timezone, :check_account_status, :check_subscription_status, :find_datebooks, :prevent_impersonation_mutations, :set_paper_trail_whodunnit
 
   before_bugsnag_notify :add_user_info_to_bugsnag
 
@@ -179,6 +179,10 @@ class ApplicationController < ActionController::Base
         render json: { error: I18n.t(:impersonation_mutation_blocked, default: 'Data modification is not allowed while impersonating.') }, status: :forbidden 
       }
     end
+  end
+
+  def set_paper_trail_whodunnit
+    PaperTrail.request.whodunnit = current_user&.id
   end
 
   def authenticate_and_set_session(user, password, remember_me = false)

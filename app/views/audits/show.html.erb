@@ -1,0 +1,216 @@
+<div class="page-header d-print-none">
+    <div class="row g-2 align-items-center">
+      <div class="col">
+        <div class="page-pretitle">
+          <%= link_to audits_path, class: 'text-muted' do %>
+            <%= t(:audit_trail) %>
+          <% end %>
+        </div>
+        <h2 class="page-title">
+          <%= t(:audit_details) %>
+        </h2>
+      </div>
+  </div>
+</div>
+
+<div class="page-body">
+    <div class="row">
+      <!-- Basic Information -->
+      <div class="col-12">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h3 class="card-title"><%= t(:basic_information) %></h3>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <dl class="row">
+                  <dt class="col-5"><%= t(:date_time) %>:</dt>
+                  <dd class="col-7"><%= @version.created_at.strftime('%Y-%m-%d %H:%M:%S %Z') %></dd>
+                  
+                  <dt class="col-5"><%= t(:user) %>:</dt>
+                  <dd class="col-7">
+                    <% if @whodunnit_user %>
+                      <div class="d-flex align-items-center">
+                        <span class="avatar avatar-sm rounded-circle me-2">
+                          <%= @whodunnit_user.initials %>
+                        </span>
+                        <%= @whodunnit_user.fullname %>
+                      </div>
+                    <% elsif @version.whodunnit.present? %>
+                      <span class="text-muted">ID: <%= @version.whodunnit %></span>
+                    <% else %>
+                      <span class="text-muted"><%= t(:system) %></span>
+                    <% end %>
+                  </dd>
+                  
+                  <dt class="col-5"><%= t(:action) %>:</dt>
+                  <dd class="col-7">
+                    <% case @version.event %>
+                      <% when 'create' %>
+                        <%= label_tag t("audit.create"), :green %> 
+                      <% when 'update' %>
+                        <%= label_tag t("audit.update"), :azure %>
+                      <% when 'destroy' %>
+                        <%= label_tag t("audit.destroy"), :red %>
+                    <% end %>
+                  </dd>
+                </dl>
+              </div>
+              
+              <div class="col-md-6">
+                <dl class="row">
+                  <dt class="col-5"><%= t(:item_type) %>:</dt>
+                  <dd class="col-7">
+                    <%= @version.item_type %>
+                  </dd>
+                  
+                  <dt class="col-5"><%= t(:item_id) %>:</dt>
+                  <dd class="col-7"><%= @version.item_id %></dd>
+                  
+                  <dt class="col-5"><%= t(:item_name) %>:</dt>
+                  <dd class="col-7">
+                    <%= audit_item_display_name(@item, @version) %>
+                  </dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Changes (for update events) -->
+      <% if @version.event == 'update' && @version.object_changes.present? %>
+        <div class="col-12">
+          <div class="card mb-3">
+            <div class="card-table">
+            <div class="card-header">
+              <h3 class="card-title"><%= t(:changes_made) %></h3>
+            </div>
+            
+              <table class="table table-vcenter table-mobile-md card-table">
+                <thead>
+                  <tr>
+                    <th><%= t(:field) %></th>
+                    <th><%= t(:old_value) %></th>
+                    <th><%= t(:new_value) %></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% begin %>
+                    <% changes = parse_version_changes_data(@version) %>
+                    
+                    <% if changes.present? %>
+                      <% changes.each do |field, change_data| %>
+                        <% 
+                          # Handle different formats of change data
+                          if change_data.is_a?(Array) && change_data.length == 2
+                            old_value, new_value = change_data
+                          else
+                            # Skip if not in expected format
+                            next
+                          end
+                        %>
+                        <% next if field.in?(['updated_at', 'created_at', 'id']) %>
+                        <tr>
+                          <td>
+                            <strong><%= field.humanize %></strong>
+                          </td>
+                          <td>
+                            <% if old_value.present? %>
+                              <%= truncate(old_value.to_s, length: 100) %>
+                            <% else %>
+                              <span class="text-muted"><%= t(:empty) %></span>
+                            <% end %>
+                          </td>
+                          <td>
+                            <% if new_value.present? %>
+                              <%= truncate(new_value.to_s, length: 100) %>
+                            <% else %>
+                              <span class="text-muted"><%= t(:empty) %></span>
+                            <% end %>
+                          </td>
+                        </tr>
+                      <% end %>
+                    <% else %>
+                      <tr>
+                        <td colspan="3">
+                          <div class="alert alert-info">
+                            <%= t(:no_changes_recorded) %>
+                          </div>
+                        </td>
+                      </tr>
+                    <% end %>
+                  <% rescue => e %>
+                    <tr>
+                      <td colspan="3">
+                        <div class="alert alert-warning">
+                          <%= t(:error_parsing_changes) %>: <%= e.message %>
+                          <br><small class="text-muted">Debug: <%= @version.object_changes.present? ? 'Data present' : 'No data' %></small>
+                        </div>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+      <% end %>
+
+      <!-- Object Data (for create and destroy events) -->
+      <% if (@version.event == 'create' || @version.event == 'destroy') && @version.object.present? %>
+        <div class="col-12">
+          <div class="card">
+            <div class="card-table">
+            <div class="card-header">
+              <h3 class="card-title">
+                <% if @version.event == 'create' %>
+                  <%= t(:created_data) %>
+                <% else %>
+                  <%= t(:deleted_data) %>
+                <% end %>
+              </h3>
+            </div>
+            
+              <% begin %>
+                <% object_data = parse_version_object_data(@version) %> 
+                <% if object_data.present? %>
+                  <table class="table table-vcenter table-mobile-md card-table">
+                    <thead>
+                      <tr>
+                        <th><%= t(:field) %></th>
+                        <th><%= t(:value) %></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% object_data.each do |field, value| %>
+                        <tr>
+                          <td><strong><%= field.humanize %></strong></td>
+                          <td>
+                            <% if value.present? %>
+                              <%= truncate(value.to_s, length: 100) %>
+                            <% else %>
+                              <span class="text-muted"><%= t(:empty) %></span>
+                            <% end %>
+                          </td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                <% else %>
+                <div class="alert alert-info">
+                  <%= t(:no_object_data) %>
+                </div>
+                <% end %>
+              <% rescue => e %>
+                <div class="alert alert-warning">
+                  <%= t(:error_parsing_data) %>
+                </div>
+              <% end %>
+            
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+</div>

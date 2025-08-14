@@ -95,7 +95,7 @@
             <% end %>
           </li>
 
-          <%# Practice / Dashboard %>
+          <%# Treatments %>
           <% if user_is_admin? %>
             <li class="nav-item <%= is_active_tab? :treatments %>">
               <%= link_to treatments_url, class: "nav-link" do %>
@@ -130,15 +130,43 @@
               <% end %>
             </li>
 
-            <li class="nav-item <%= is_active_tab? :practices %>">
-              <%= link_to practice_url, class: "nav-link" do %>
-                <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
+            <%# Practice / Dashboard %>
+            <li class="nav-item dropdown <%= is_active_tab?(:practices) || is_active_tab?(:audits) ? 'active' : '' %>">
+              <a class="nav-link dropdown-toggle" href="#navbar-practice" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
+                <span class="nav-link-icon d-md-none d-lg-inline-block">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-store" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"></path> <line x1="3" y1="21" x2="21" y2="21"></line> <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4"></path> <line x1="5" y1="21" x2="5" y2="10.85"></line> <line x1="19" y1="21" x2="19" y2="10.85"></line> <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4"></path></svg>
                 </span>
                 <span class="nav-link-title">
                   <%= t(:my_practice) %>
                 </span>
-              <% end %>
+              </a>
+              <div class="dropdown-menu">
+                <%= link_to practice_url, class: "dropdown-item" do %>
+                  <span class="nav-link-icon d-md-none d-lg-inline-block">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-graph"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 18v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M7 14l3 -3l2 2l3 -3l2 2" /></svg>
+                  </span>
+                  <span class="nav-link-title">
+                    <%= t("analytics.title") %>
+                  </span>
+                <% end %>
+                <%= link_to audits_url, class: "dropdown-item" do %>
+                  <span class="nav-link-icon d-md-none d-lg-inline-block">
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M12 18c-.328 0 -.652 -.017 -.97 -.05c-3.172 -.332 -5.85 -2.315 -8.03 -5.95c2.4 -4 5.4 -6 9 -6c3.465 0 6.374 1.853 8.727 5.558" /><path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M20.2 20.2l1.8 1.8" /></svg>
+                  </span>
+                  <span class="nav-link-title">
+                    <%= t(:audit_trail) %>
+                  </span>
+                <% end %>
+                <div class="dropdown-divider"></div>
+                <%= link_to practice_settings_url, class: "dropdown-item" do %>
+                  <span class="nav-link-icon d-md-none d-lg-inline-block">
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-adjustments-horizontal"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M4 6l8 0" /><path d="M16 6l4 0" /><path d="M8 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M4 12l2 0" /><path d="M10 12l10 0" /><path d="M17 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M4 18l11 0" /><path d="M19 18l1 0" /></svg>
+                  </span>
+                  <span class="nav-link-title">
+                    <%= t(:practice_settings) %>
+                  </span>
+                <% end %>
+              </div>
             </li>
           <% end %>
         </ul>

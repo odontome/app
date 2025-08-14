@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  # PaperTrail for audit logging
+  has_paper_trail meta: { practice_id: ->(user) { user.practice_id } }, skip: [:password_digest, :perishable_token]
+
   # concerns
   include Initials
 
