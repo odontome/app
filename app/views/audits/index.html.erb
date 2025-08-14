@@ -28,167 +28,170 @@
 
 <div class="page-body">
   <div class="card mb-3">
-    <!-- Audit Log -->
-      <table class="table table-vcenter table-mobile-md card-table">
-        <thead>
-          <tr>
-            <th><%= t(:user) %></th>
-            <th><%= t(:action) %></th>
-            <th><%= t(:item_type) %></th>
-            <th><%= t(:item) %></th>
-            <th><%= t(:date_time) %></th>
-            <th class="w-1"><%= t(:actions) %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% if @versions.any? %>
-            <% @versions.each do |version| %>
-              <tr>
-                <td>
-                  <% if version.whodunnit.present? %>
-                    <% user = @users_hash[version.whodunnit.to_i] %>
-                    <% if user %>
-                      <div class="d-flex align-items-center">
-                        <span class="avatar avatar-sm rounded-circle me-2">
-                          <%= user.initials %>
-                        </span>
-                        <%= user.fullname %>
-                      </div>
+    <table class="table table-vcenter table-mobile-md card-table">
+      <thead>
+        <tr>
+          <th><%= t(:user) %></th>
+          <th><%= t(:action) %></th>
+          <th><%= t(:item_type) %></th>
+          <th><%= t(:item) %></th>
+          <th><%= t(:date_time) %></th>
+          <th class="w-1"><%= t(:actions) %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @versions.any? %>
+          <% @versions.each do |version| %>
+            <tr>
+              <td>
+                <% if version.whodunnit.present? %>
+                  <% user = @users_hash[version.whodunnit.to_i] %>
+                  <% if user %>
+                    <div class="d-flex align-items-center">
+                      <span class="avatar avatar-sm rounded-circle me-2">
+                        <%= user.initials %>
+                      </span>
+                      <%= user.fullname %>
+                    </div>
+                  <% else %>
+                    <span class="text-muted">ID: <%= version.whodunnit %></span>
+                  <% end %>
+                <% else %>
+                  <span class="text-muted">System</span>
+                <% end %>
+              </td>
+              <td>
+                <% case version.event %>
+                <% when 'create' %>
+                  <%= label_tag t("audit.create"), :green %> 
+                <% when 'update' %>
+                  <%= label_tag t("audit.update"), :azure %>
+                <% when 'destroy' %>
+                  <%= label_tag t("audit.destroy"), :red %>
+                <% end %>
+              </td>
+              <td>
+                <%= version.item_type %>
+              </td>
+              <td>
+                <div class="text-truncate" style="max-width: 200px;">
+                  <% if version.item %>
+                    <% case version.item_type %>
+                    <% when 'Patient' %>
+                      <%= version.item.fullname %>
+                    <% when 'Doctor' %>
+                      <%= version.item.fullname %>
+                    <% when 'User' %>
+                      <%= version.item.fullname %>
+                    <% when 'Practice' %>
+                      <%= version.item.name %>
+                    <% when 'Appointment' %>
+                      <%= version.item.notes.present? ? version.item.notes : "Appointment ##{version.item.id}" %>
+                    <% when 'Treatment' %>
+                      <%= version.item.name %>
+                    <% when 'Datebook' %>
+                      <%= version.item.name %>
                     <% else %>
-                      <span class="text-muted">ID: <%= version.whodunnit %></span>
+                      ID: <%= version.item_id %>
                     <% end %>
                   <% else %>
-                    <span class="text-muted">System</span>
+                    <span class="text-muted"><%= deleted_item_display_name(version) %></span>
                   <% end %>
-                </td>
-                <td>
-                  <% case version.event %>
-                  <% when 'create' %>
-                    <%= label_tag t("audit.create"), :green %> 
-                  <% when 'update' %>
-                    <%= label_tag t("audit.update"), :azure %>
-                  <% when 'destroy' %>
-                    <%= label_tag t("audit.destroy"), :red %>
+                </div>
+              </td>
+              <td>
+                <div class="text-truncate">
+                  <%= t :ago_in_words, date: time_ago_in_words(version.created_at) %>
+                </div>
+              </td>
+              <td>
+                <div class="btn-list flex-nowrap">
+                  <%= component :dropdown do %>
+                    <%= link_to t(:view_details), audit_path(version), class: "dropdown-item" %>
                   <% end %>
-                </td>
-                <td>
-                  <%= version.item_type %>
-                </td>
-                <td>
-                  <div class="text-truncate" style="max-width: 200px;">
-                    <% if version.item %>
-                      <% case version.item_type %>
-                      <% when 'Patient' %>
-                        <%= version.item.fullname %>
-                      <% when 'Doctor' %>
-                        <%= version.item.fullname %>
-                      <% when 'User' %>
-                        <%= version.item.fullname %>
-                      <% when 'Practice' %>
-                        <%= version.item.name %>
-                      <% when 'Appointment' %>
-                        <%= version.item.notes.present? ? version.item.notes : "Appointment ##{version.item.id}" %>
-                      <% when 'Treatment' %>
-                        <%= version.item.name %>
-                      <% when 'Datebook' %>
-                        <%= version.item.name %>
-                      <% else %>
-                        ID: <%= version.item_id %>
-                      <% end %>
-                    <% else %>
-                      <span class="text-muted"><%= deleted_item_display_name(version) %></span>
-                    <% end %>
-                  </div>
-                </td>
-                <td>
-                  <div class="text-truncate">
-                    <%= t :ago_in_words, date: time_ago_in_words(version.created_at) %>
-                  </div>
-                </td>
-                <td>
-                  <div class="btn-list flex-nowrap">
-                    <%= component :dropdown do %>
-                      <%= link_to t(:view_details), audit_path(version), class: "dropdown-item" %>
-                    <% end %>
-                  </div>
-                </td>
-              </tr>
-            <% end %>
-          <% else %>
-            <tr>
-              <td colspan="6" class="text-center text-muted py-4">
-                <%= t(:no_audit_records) %>
+                </div>
               </td>
             </tr>
           <% end %>
-        </tbody>
-      </table>
-  </div>
-  
-  <!-- Pagination Controls -->
-  <% if @total_pages > 1 %>
-    <div class="mt-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="row align-items-center">
-            <div class="col">
-              <p class="text-muted mb-0">
-                Showing <%= (@page * @per_page) + 1 %> to <%= [(@page + 1) * @per_page, @total_count].min %> 
-                of <%= @total_count %> <%= t(:records) %>
-              </p>
-            </div>
-            <div class="col-auto">
-              <div class="btn-group" role="group">
-                <%= link_to audits_path(page: 0, **@filter_params.compact), 
-                      class: "btn btn-outline-primary #{'disabled' unless @has_prev_page}" do %>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                  </svg>
-                  <%= t(:first) %>
+        <% else %>
+          <tr>
+            <td colspan="6" class="text-center text-muted py-4">
+              <%= t(:no_audit_records) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <% if @total_pages > 1 %>
+      <div class="card-footer">
+        <div class="row g-2 justify-content-center justify-content-sm-between">
+          <div class="col-auto d-flex align-items-center">
+            <p class="m-0 text-secondary">
+              <%= t(:pagination_info, 
+                    start: (@page * @per_page) + 1, 
+                    end: [(@page + 1) * @per_page, @total_count].min, 
+                    total: @total_count, 
+                    records: t(:records)) %>
+            </p>
+          </div>
+          <div class="col-auto">
+            <ul class="pagination m-0 ms-auto">
+              <!-- Previous page -->
+              <li class="page-item <%= @has_prev_page ? '' : 'disabled' %>">
+                <% if @has_prev_page %>
+                  <%= link_to audits_path(@filter_params.merge(page: @page - 1)), class: "page-link" do %>
+                    <!-- Download SVG icon from http://tabler.io/icons/icon/chevron-left -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                      <path d="M15 6l-6 6l6 6"></path>
+                    </svg>
+                  <% end %>
+                <% else %>
+                  <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                    <!-- Download SVG icon from http://tabler.io/icons/icon/chevron-left -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                      <path d="M15 6l-6 6l6 6"></path>
+                    </svg>
+                  </a>
                 <% end %>
-                
-                <%= link_to audits_path(page: @page - 1, **@filter_params.compact), 
-                      class: "btn btn-outline-primary #{'disabled' unless @has_prev_page}" do %>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <line x1="12" y1="19" x2="5" y2="12"></line>
-                    <line x1="12" y1="5" x2="5" y2="12"></line>
-                  </svg>
-                  <%= t(:previous) %>
+              </li>
+
+              <!-- Page numbers -->
+              <% 
+                # Calculate which pages to show (up to 5 pages)
+                start_page = [@page - 2, 0].max
+                end_page = [start_page + 4, @total_pages - 1].min
+                start_page = [end_page - 4, 0].max if end_page - start_page < 4
+              %>
+              
+              <% (start_page..end_page).each do |page_num| %>
+                <li class="page-item <%= page_num == @page ? 'active' : '' %>">
+                  <%= link_to page_num + 1, audits_path(@filter_params.merge(page: page_num)), class: "page-link" %>
+                </li>
+              <% end %>
+
+              <!-- Next page -->
+              <li class="page-item <%= @has_next_page ? '' : 'disabled' %>">
+                <% if @has_next_page %>
+                  <%= link_to audits_path(@filter_params.merge(page: @page + 1)), class: "page-link" do %>
+                    <!-- Download SVG icon from http://tabler.io/icons/icon/chevron-right -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                      <path d="M9 6l6 6l-6 6"></path>
+                    </svg>
+                  <% end %>
+                <% else %>
+                  <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                    <!-- Download SVG icon from http://tabler.io/icons/icon/chevron-right -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                      <path d="M9 6l6 6l-6 6"></path>
+                    </svg>
+                  </a>
                 <% end %>
-                
-                <span class="btn btn-primary">
-                  <%= t(:page) %> <%= @page + 1 %> <%= t(:of) %> <%= @total_pages %>
-                </span>
-                
-                <%= link_to audits_path(page: @page + 1, **@filter_params.compact), 
-                      class: "btn btn-outline-primary #{'disabled' unless @has_next_page}" do %>
-                  <%= t(:next) %>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <line x1="12" y1="5" x2="19" y2="12"></line>
-                    <line x1="12" y1="19" x2="19" y2="12"></line>
-                  </svg>
-                <% end %>
-                
-                <%= link_to audits_path(page: @total_pages - 1, **@filter_params.compact), 
-                      class: "btn btn-outline-primary #{'disabled' unless @has_next_page}" do %>
-                  <%= t(:last) %>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                    <line x1="6" y1="18" x2="18" y2="6"></line>
-                  </svg>
-                <% end %>
-              </div>
-            </div>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>

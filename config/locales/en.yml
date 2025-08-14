@@ -517,6 +517,7 @@ en:
   view_details: "View Details"
   load_more: "Load More"
   system: "System"
+  pagination_info: "Showing %{start} to %{end} of %{total} records"
 
   audit:
     create: "Created"

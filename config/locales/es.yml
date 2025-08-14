@@ -467,6 +467,7 @@ es:
   view_details: "Ver Detalles"
   load_more: "Cargar Más"
   system: "Sistema"
+  pagination_info: "Mostrando %{start} a %{end} de %{total} registros"
 
   audit:
     create: "Creado"
