@@ -6,8 +6,6 @@ class AuditsController < ApplicationController
 
   def index
     @filter_params = {
-      item_type: params[:item_type],
-      event: params[:event],
       user_id: params[:user_id],
     }
 
@@ -15,8 +13,6 @@ class AuditsController < ApplicationController
     @versions = PaperTrail::Version.where(practice_id: current_user.practice_id)
 
     # Apply filters
-    @versions = @versions.where(item_type: @filter_params[:item_type]) if @filter_params[:item_type].present?
-    @versions = @versions.where(event: @filter_params[:event]) if @filter_params[:event].present?
     @versions = @versions.where(whodunnit: @filter_params[:user_id]) if @filter_params[:user_id].present?
 
     # Pagination setup
@@ -35,20 +31,6 @@ class AuditsController < ApplicationController
                         .limit(@per_page)
                         .offset(@page * @per_page)
 
-    @available_types = [
-      ['Patient', I18n.t('activerecord.models.patient')],
-      ['Doctor', I18n.t('activerecord.models.doctor')],
-      ['User', I18n.t('activerecord.models.user')],
-      ['Appointment', I18n.t('activerecord.models.appointment')],
-      ['Practice', I18n.t('activerecord.models.practice')],
-      ['Treatment', I18n.t('activerecord.models.treatment')],
-      ['Datebook', I18n.t('activerecord.models.datebook')]
-    ]
-    @available_events = [
-      ['create', I18n.t('audit.create')],
-      ['update', I18n.t('audit.update')],
-      ['destroy', I18n.t('audit.destroy')]
-    ]
     @practice_users = User.with_practice(current_user.practice_id).order('firstname')
   end
 

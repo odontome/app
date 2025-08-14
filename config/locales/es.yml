@@ -462,7 +462,6 @@ es:
   no_audit_records: "No se encontraron registros de auditoría"
   view_details: "Ver Detalles"
   load_more: "Cargar Más"
-  clear: "Limpiar"
   system: "Sistema"
 
   audit:

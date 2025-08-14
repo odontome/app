@@ -512,7 +512,6 @@ en:
   no_audit_records: "No audit records found"
   view_details: "View Details"
   load_more: "Load More"
-  clear: "Clear"
   system: "System"
 
   audit:

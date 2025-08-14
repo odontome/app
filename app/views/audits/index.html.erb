@@ -12,32 +12,18 @@
     </div>
 
 		<div class="col-auto ms-auto">
-      <%= form_tag audits_path, { method: :get, local: true } do %>
-        <div class="row g-2">
+        <div class="row g-2">          
           <div class="col-auto">
-            <%= select_tag :item_type, 
-                  options_for_select([[t(:type), '']] + @available_types.map { |value, label| [label, value] }, @filter_params[:item_type]),
-                  { class: 'form-select' } %>
-          </div>
-          
-          <div class="col-auto">
-            <%= select_tag :event,
-                  options_for_select([[t(:action), '']] + @available_events.map { |value, label| [label, value] }, @filter_params[:event]),
-                  { class: 'form-select' } %>
-          </div>
-          
-          <div class="col-auto">
-            <%= select_tag :user_id,
-                  options_for_select([[t(:user), '']] + @practice_users.map { |user| [user.fullname, user.id] }, @filter_params[:user_id]),
-                  { class: 'form-select' } %>
-          </div>
-                    
-          <div class="col-auto">
-            <%= submit_tag t("filters.title"), { class: 'btn btn-primary me-2' } %>
-            <%= link_to t(:clear), audits_path, class: 'btn' %>
+            <%= form_tag audits_path, method: :get, local: true, class: 'filter-form' do %>
+              <%= select_tag :user_id,
+                    options_for_select([[t("filters.title"), '']] + @practice_users.map { |user| [user.fullname, user.id] }, @filter_params[:user_id]),
+                    { class: 'form-select', onchange: 'this.form.submit();' } %>
+              <% @filter_params.except(:user_id).each do |key, value| %>
+                <%= hidden_field_tag key, value %>
+              <% end %>
+            <% end %>
           </div>
         </div>
-      <% end %>
     </div>
   </div>
 </div>
@@ -45,27 +31,21 @@
 <div class="page-body">
   <div class="card mb-3">
     <!-- Audit Log -->
-    <div class="table-responsive">
-      <table class="table table-vcenter card-table">
+      <table class="table table-vcenter table-mobile-md card-table">
         <thead>
           <tr>
-            <th><%= t(:date_time) %></th>
             <th><%= t(:user) %></th>
             <th><%= t(:action) %></th>
             <th><%= t(:item_type) %></th>
             <th><%= t(:item) %></th>
-            <th><%= t(:actions) %></th>
+            <th><%= t(:date_time) %></th>
+            <th class="w-1"><%= t(:actions) %></th>
           </tr>
         </thead>
         <tbody>
           <% if @versions.any? %>
             <% @versions.each do |version| %>
               <tr>
-                <td>
-                  <div class="text-truncate">
-                    <%= time_ago_in_words(version.created_at) %> <%= t(:ago) %>
-                  </div>
-                </td>
                 <td>
                   <% if version.whodunnit.present? %>
                     <% user = User.find_by(id: version.whodunnit) %>
@@ -86,11 +66,11 @@
                 <td>
                   <% case version.event %>
                   <% when 'create' %>
-                    <span class="badge bg-success"><%= t('audit.create') %></span>
+                    <%= label_tag t("audit.create"), :green %> 
                   <% when 'update' %>
-                    <span class="badge bg-warning"><%= t('audit.update') %></span>
+                    <%= label_tag t("audit.update"), :azure %>
                   <% when 'destroy' %>
-                    <span class="badge bg-danger"><%= t('audit.destroy') %></span>
+                    <%= label_tag t("audit.destroy"), :red %>
                   <% end %>
                 </td>
                 <td>
@@ -123,8 +103,16 @@
                   </div>
                 </td>
                 <td>
-                  <%= link_to t(:view_details), audit_path(version), 
-                        class: 'btn btn-sm btn-outline-primary' %>
+                  <div class="text-truncate">
+                    <%= t :ago_in_words, date: time_ago_in_words(version.created_at) %>
+                  </div>
+                </td>
+                <td>
+                  <div class="btn-list flex-nowrap">
+                    <%= component :dropdown do %>
+                      <%= link_to t(:view_details), audit_path(version), class: "dropdown-item" %>
+                    <% end %>
+                  </div>
                 </td>
               </tr>
             <% end %>
@@ -137,7 +125,6 @@
           <% end %>
         </tbody>
       </table>
-    </div>
   </div>
   
   <!-- Pagination Controls -->
