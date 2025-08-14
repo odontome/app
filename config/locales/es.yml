@@ -463,11 +463,18 @@ es:
   view_details: "Ver Detalles"
   load_more: "Cargar Más"
   clear: "Limpiar"
-  filters: "Filtros"
-  date_from: "Fecha Desde"
-  date_to: "Fecha Hasta"
-  
+  system: "Sistema"
+
   audit:
     create: "Creado"
     update: "Actualizado"
     destroy: "Eliminado"
+
+  audits:
+    deleted_item_with_id: "␡ ID: %{id}"
+    deleted_person: "␡ %{name}"
+    deleted_practice: "␡ %{name}"
+    deleted_treatment: "␡ %{name}"
+    deleted_datebook: "␡ %{name}"
+    deleted_appointment_with_notes: "␡ %{notes}"
+    deleted_appointment_with_id: "␡ Cita #%{id}"

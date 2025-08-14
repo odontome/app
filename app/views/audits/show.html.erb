@@ -1,4 +1,4 @@
-<% content_for(:title, t(:audit_details, default: 'Audit Details')) %>
+<% content_for(:title, t(:audit_details)) %>
 
 <div class="page-header d-print-none">
   <div class="container-fluid">
@@ -6,11 +6,11 @@
       <div class="col">
         <div class="page-pretitle">
           <%= link_to audits_path, class: 'text-muted' do %>
-            <%= t(:audit_trail, default: 'Audit Trail') %>
+            <%= t(:audit_trail) %>
           <% end %>
         </div>
         <h2 class="page-title">
-          <%= t(:audit_details, default: 'Audit Details') %>
+          <%= t(:audit_details) %>
         </h2>
       </div>
       <div class="col-auto ms-auto d-print-none">
@@ -21,7 +21,7 @@
             <line x1="5" y1="12" x2="11" y2="18"></line>
             <line x1="5" y1="12" x2="11" y2="6"></line>
           </svg>
-          <%= t(:back_to_audit_log, default: 'Back to Audit Log') %>
+          <%= t(:back_to_audit_log) %>
         <% end %>
       </div>
     </div>
@@ -35,16 +35,16 @@
       <div class="col-12">
         <div class="card mb-3">
           <div class="card-header">
-            <h3 class="card-title"><%= t(:basic_information, default: 'Basic Information') %></h3>
+            <h3 class="card-title"><%= t(:basic_information) %></h3>
           </div>
           <div class="card-body">
             <div class="row">
               <div class="col-md-6">
                 <dl class="row">
-                  <dt class="col-5"><%= t(:date_time, default: 'Date & Time') %>:</dt>
+                  <dt class="col-5"><%= t(:date_time) %>:</dt>
                   <dd class="col-7"><%= @version.created_at.strftime('%Y-%m-%d %H:%M:%S %Z') %></dd>
                   
-                  <dt class="col-5"><%= t(:user, default: 'User') %>:</dt>
+                  <dt class="col-5"><%= t(:user) %>:</dt>
                   <dd class="col-7">
                     <% if @version.whodunnit.present? %>
                       <% user = User.find_by(id: @version.whodunnit) %>
@@ -63,15 +63,15 @@
                     <% end %>
                   </dd>
                   
-                  <dt class="col-5"><%= t(:action, default: 'Action') %>:</dt>
+                  <dt class="col-5"><%= t(:action) %>:</dt>
                   <dd class="col-7">
                     <% case @version.event %>
                     <% when 'create' %>
-                      <span class="badge bg-success"><%= t('audit.create', default: 'Created') %></span>
+                      <span class="badge bg-success"><%= t('audit.create') %></span>
                     <% when 'update' %>
-                      <span class="badge bg-warning"><%= t('audit.update', default: 'Updated') %></span>
+                      <span class="badge bg-warning"><%= t('audit.update') %></span>
                     <% when 'destroy' %>
-                      <span class="badge bg-danger"><%= t('audit.destroy', default: 'Deleted') %></span>
+                      <span class="badge bg-danger"><%= t('audit.destroy') %></span>
                     <% end %>
                   </dd>
                 </dl>
@@ -79,17 +79,17 @@
               
               <div class="col-md-6">
                 <dl class="row">
-                  <dt class="col-5"><%= t(:item_type, default: 'Type') %>:</dt>
+                  <dt class="col-5"><%= t(:item_type) %>:</dt>
                   <dd class="col-7">
                     <span class="badge bg-outline text-primary">
                       <%= @version.item_type %>
                     </span>
                   </dd>
                   
-                  <dt class="col-5"><%= t(:item_id, default: 'Item ID') %>:</dt>
+                  <dt class="col-5"><%= t(:item_id) %>:</dt>
                   <dd class="col-7"><%= @version.item_id %></dd>
                   
-                  <dt class="col-5"><%= t(:item_name, default: 'Item Name') %>:</dt>
+                  <dt class="col-5"><%= t(:item_name) %>:</dt>
                   <dd class="col-7">
                     <% if @item %>
                       <% case @version.item_type %>
@@ -126,16 +126,16 @@
         <div class="col-12">
           <div class="card mb-3">
             <div class="card-header">
-              <h3 class="card-title"><%= t(:changes_made, default: 'Changes Made') %></h3>
+              <h3 class="card-title"><%= t(:changes_made) %></h3>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-vcenter">
                   <thead>
                     <tr>
-                      <th><%= t(:field, default: 'Field') %></th>
-                      <th><%= t(:old_value, default: 'Old Value') %></th>
-                      <th><%= t(:new_value, default: 'New Value') %></th>
+                      <th><%= t(:field) %></th>
+                      <th><%= t(:old_value) %></th>
+                      <th><%= t(:new_value) %></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -166,7 +166,7 @@
                                   <code><%= truncate(old_value.to_s, length: 100) %></code>
                                 <% end %>
                               <% else %>
-                                <span class="text-muted"><%= t(:empty, default: '(empty)') %></span>
+                                <span class="text-muted"><%= t(:empty) %></span>
                               <% end %>
                             </td>
                             <td>
@@ -177,7 +177,7 @@
                                   <code><%= truncate(new_value.to_s, length: 100) %></code>
                                 <% end %>
                               <% else %>
-                                <span class="text-muted"><%= t(:empty, default: '(empty)') %></span>
+                                <span class="text-muted"><%= t(:empty) %></span>
                               <% end %>
                             </td>
                           </tr>
@@ -186,7 +186,7 @@
                         <tr>
                           <td colspan="3">
                             <div class="alert alert-info">
-                              <%= t(:no_changes_recorded, default: 'No detailed changes recorded for this update.') %>
+                              <%= t(:no_changes_recorded) %>
                             </div>
                           </td>
                         </tr>
@@ -195,7 +195,7 @@
                       <tr>
                         <td colspan="3">
                           <div class="alert alert-warning">
-                            <%= t(:error_parsing_changes, default: 'Error parsing change data') %>: <%= e.message %>
+                            <%= t(:error_parsing_changes) %>: <%= e.message %>
                             <br><small class="text-muted">Debug: <%= @version.object_changes.present? ? 'Data present' : 'No data' %></small>
                           </div>
                         </td>
@@ -216,9 +216,9 @@
             <div class="card-header">
               <h3 class="card-title">
                 <% if @version.event == 'create' %>
-                  <%= t(:created_data, default: 'Created Data') %>
+                  <%= t(:created_data) %>
                 <% else %>
-                  <%= t(:deleted_data, default: 'Deleted Data') %>
+                  <%= t(:deleted_data) %>
                 <% end %>
               </h3>
             </div>
@@ -230,8 +230,8 @@
                   <table class="table table-vcenter">
                     <thead>
                       <tr>
-                        <th><%= t(:field, default: 'Field') %></th>
-                        <th><%= t(:value, default: 'Value') %></th>
+                        <th><%= t(:field) %></th>
+                        <th><%= t(:value) %></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -246,7 +246,7 @@
                                 <code><%= truncate(value.to_s, length: 100) %></code>
                               <% end %>
                             <% else %>
-                              <span class="text-muted"><%= t(:empty, default: '(empty)') %></span>
+                              <span class="text-muted"><%= t(:empty) %></span>
                             <% end %>
                           </td>
                         </tr>
@@ -256,12 +256,12 @@
                 </div>
                 <% else %>
                 <div class="alert alert-info">
-                  <%= t(:no_object_data, default: 'No object data available for this record.') %>
+                  <%= t(:no_object_data) %>
                 </div>
                 <% end %>
               <% rescue => e %>
                 <div class="alert alert-warning">
-                  <%= t(:error_parsing_data, default: 'Error parsing object data') %>
+                  <%= t(:error_parsing_data) %>
                 </div>
               <% end %>
             </div>

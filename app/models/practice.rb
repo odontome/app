@@ -2,7 +2,7 @@
 
 class Practice < ApplicationRecord
   # PaperTrail for audit logging
-  has_paper_trail meta: { practice_id: :id }
+  has_paper_trail meta: { practice_id: ->(practice) { practice.id } }
 
   # associations
   has_many :users, dependent: :delete_all # didn't work with :destroy 'cause if the before_destroy callback in User.rb

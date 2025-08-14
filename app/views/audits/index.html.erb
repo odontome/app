@@ -1,232 +1,209 @@
 <% content_for(:title, t(:audit_trail)) %>
 
-<div class="page-header d-print-none">
-  <div class="container-fluid">
-    <div class="row g-2 align-items-center">
-      <div class="col">
-        <h2 class="page-title">
-          <%= t(:audit_trail) %>
-        </h2>
-        <div class="text-muted">
-          <%= t(:audit_trail_description) %>
-        </div>
+<div class="page-header mb-4">
+  <div class="row align-items-center">
+    <div class="col">
+      <h2 class="page-title">
+        <%= t(:audit_trail) %>
+      </h2>
+      <div class="text-muted">
+        <%= t(:audit_trail_description) %>
       </div>
+    </div>
+
+		<div class="col-auto ms-auto">
+      <%= form_tag audits_path, { method: :get, local: true } do %>
+        <div class="row g-2">
+          <div class="col-auto">
+            <%= select_tag :item_type, 
+                  options_for_select([[t(:type), '']] + @available_types.map { |value, label| [label, value] }, @filter_params[:item_type]),
+                  { class: 'form-select' } %>
+          </div>
+          
+          <div class="col-auto">
+            <%= select_tag :event,
+                  options_for_select([[t(:action), '']] + @available_events.map { |value, label| [label, value] }, @filter_params[:event]),
+                  { class: 'form-select' } %>
+          </div>
+          
+          <div class="col-auto">
+            <%= select_tag :user_id,
+                  options_for_select([[t(:user), '']] + @practice_users.map { |user| [user.fullname, user.id] }, @filter_params[:user_id]),
+                  { class: 'form-select' } %>
+          </div>
+                    
+          <div class="col-auto">
+            <%= submit_tag t("filters.title"), { class: 'btn btn-primary me-2' } %>
+            <%= link_to t(:clear), audits_path, class: 'btn' %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
 
 <div class="page-body">
-  <div class="container-fluid">
-    <!-- Filters -->
-    <div class="card mb-3">
-      <div class="card-header">
-        <h3 class="card-title"><%= t(:filters) %></h3>
-      </div>
-      <div class="card-body">
-        <%= form_tag audits_path, { method: :get, local: true, class: 'row g-3' } do %>
-          <div class="col-md-3">
-            <label for="item_type" class="form-label"><%= t(:type) %></label>
-            <%= select_tag :item_type, 
-                  options_for_select([['All', '']] + @available_types.map { |type| [type, type] }, @filter_params[:item_type]),
-                  { class: 'form-select' } %>
-          </div>
-          
-          <div class="col-md-3">
-            <label for="event" class="form-label"><%= t(:action) %></label>
-            <%= select_tag :event,
-                  options_for_select([['All', '']] + @available_events.map { |event| [t("audit.#{event}"), event] }, @filter_params[:event]),
-                  { class: 'form-select' } %>
-          </div>
-          
-          <div class="col-md-3">
-            <label for="user_id" class="form-label"><%= t(:user) %></label>
-            <%= select_tag :user_id,
-                  options_for_select([['All', '']] + @practice_users.map { |user| [user.fullname, user.id] }, @filter_params[:user_id]),
-                  { class: 'form-select' } %>
-          </div>
-          
-          <div class="col-md-3">
-            <label for="date_from" class="form-label"><%= t(:date_from) %></label>
-            <%= date_field_tag :date_from, @filter_params[:date_from], { class: 'form-control' } %>
-          </div>
-          
-          <div class="col-md-3">
-            <label for="date_to" class="form-label"><%= t(:date_to) %></label>
-            <%= date_field_tag :date_to, @filter_params[:date_to], { class: 'form-control' } %>
-          </div>
-          
-          <div class="col-md-3 d-flex align-items-end">
-            <%= submit_tag t(:filter), { class: 'btn btn-primary me-2' } %>
-            <%= link_to t(:clear), audits_path, { class: 'btn btn-outline-secondary' } %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-
+  <div class="card mb-3">
     <!-- Audit Log -->
-    <div class="card">
-      <div class="table-responsive">
-        <table class="table table-vcenter card-table">
-          <thead>
-            <tr>
-              <th><%= t(:date_time) %></th>
-              <th><%= t(:user) %></th>
-              <th><%= t(:action) %></th>
-              <th><%= t(:item_type) %></th>
-              <th><%= t(:item) %></th>
-              <th><%= t(:actions) %></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% if @versions.any? %>
-              <% @versions.each do |version| %>
-                <tr>
-                  <td>
-                    <div class="text-truncate">
-                      <%= time_ago_in_words(version.created_at) %> <%= t(:ago) %>
-                    </div>
-                  </td>
-                  <td>
-                    <% if version.whodunnit.present? %>
-                      <% user = User.find_by(id: version.whodunnit) %>
-                      <% if user %>
-                        <div class="d-flex align-items-center">
-                          <span class="avatar avatar-sm rounded-circle me-2">
-                            <%= user.initials %>
-                          </span>
-                          <%= user.fullname %>
-                        </div>
+    <div class="table-responsive">
+      <table class="table table-vcenter card-table">
+        <thead>
+          <tr>
+            <th><%= t(:date_time) %></th>
+            <th><%= t(:user) %></th>
+            <th><%= t(:action) %></th>
+            <th><%= t(:item_type) %></th>
+            <th><%= t(:item) %></th>
+            <th><%= t(:actions) %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @versions.any? %>
+            <% @versions.each do |version| %>
+              <tr>
+                <td>
+                  <div class="text-truncate">
+                    <%= time_ago_in_words(version.created_at) %> <%= t(:ago) %>
+                  </div>
+                </td>
+                <td>
+                  <% if version.whodunnit.present? %>
+                    <% user = User.find_by(id: version.whodunnit) %>
+                    <% if user %>
+                      <div class="d-flex align-items-center">
+                        <span class="avatar avatar-sm rounded-circle me-2">
+                          <%= user.initials %>
+                        </span>
+                        <%= user.fullname %>
+                      </div>
+                    <% else %>
+                      <span class="text-muted">ID: <%= version.whodunnit %></span>
+                    <% end %>
+                  <% else %>
+                    <span class="text-muted">System</span>
+                  <% end %>
+                </td>
+                <td>
+                  <% case version.event %>
+                  <% when 'create' %>
+                    <span class="badge bg-success"><%= t('audit.create') %></span>
+                  <% when 'update' %>
+                    <span class="badge bg-warning"><%= t('audit.update') %></span>
+                  <% when 'destroy' %>
+                    <span class="badge bg-danger"><%= t('audit.destroy') %></span>
+                  <% end %>
+                </td>
+                <td>
+                  <%= version.item_type %>
+                </td>
+                <td>
+                  <div class="text-truncate" style="max-width: 200px;">
+                    <% if version.item %>
+                      <% case version.item_type %>
+                      <% when 'Patient' %>
+                        <%= version.item.fullname %>
+                      <% when 'Doctor' %>
+                        <%= version.item.fullname %>
+                      <% when 'User' %>
+                        <%= version.item.fullname %>
+                      <% when 'Practice' %>
+                        <%= version.item.name %>
+                      <% when 'Appointment' %>
+                        <%= version.item.notes.present? ? version.item.notes : "Appointment ##{version.item.id}" %>
+                      <% when 'Treatment' %>
+                        <%= version.item.name %>
+                      <% when 'Datebook' %>
+                        <%= version.item.name %>
                       <% else %>
-                        <span class="text-muted">ID: <%= version.whodunnit %></span>
+                        ID: <%= version.item_id %>
                       <% end %>
                     <% else %>
-                      <span class="text-muted">System</span>
+                      <span class="text-muted"><%= deleted_item_display_name(version) %></span>
                     <% end %>
-                  </td>
-                  <td>
-                    <% case version.event %>
-                    <% when 'create' %>
-                      <span class="badge bg-success"><%= t('audit.create') %></span>
-                    <% when 'update' %>
-                      <span class="badge bg-warning"><%= t('audit.update') %></span>
-                    <% when 'destroy' %>
-                      <span class="badge bg-danger"><%= t('audit.destroy') %></span>
-                    <% end %>
-                  </td>
-                  <td>
-                    <span class="badge bg-outline text-primary">
-                      <%= version.item_type %>
-                    </span>
-                  </td>
-                  <td>
-                    <div class="text-truncate" style="max-width: 200px;">
-                      <% if version.item %>
-                        <% case version.item_type %>
-                        <% when 'Patient' %>
-                          <%= version.item.fullname %>
-                        <% when 'Doctor' %>
-                          <%= version.item.fullname %>
-                        <% when 'User' %>
-                          <%= version.item.fullname %>
-                        <% when 'Practice' %>
-                          <%= version.item.name %>
-                        <% when 'Appointment' %>
-                          <%= version.item.notes.present? ? version.item.notes : "Appointment ##{version.item.id}" %>
-                        <% when 'Treatment' %>
-                          <%= version.item.name %>
-                        <% when 'Datebook' %>
-                          <%= version.item.name %>
-                        <% else %>
-                          ID: <%= version.item_id %>
-                        <% end %>
-                      <% else %>
-                        <span class="text-muted"><%= deleted_item_display_name(version) %></span>
-                      <% end %>
-                    </div>
-                  </td>
-                  <td>
-                    <%= link_to t(:view_details), audit_path(version), 
-                          class: 'btn btn-sm btn-outline-primary' %>
-                  </td>
-                </tr>
-              <% end %>
-            <% else %>
-              <tr>
-                <td colspan="6" class="text-center text-muted py-4">
-                  <%= t(:no_audit_records) %>
+                  </div>
+                </td>
+                <td>
+                  <%= link_to t(:view_details), audit_path(version), 
+                        class: 'btn btn-sm btn-outline-primary' %>
                 </td>
               </tr>
             <% end %>
-          </tbody>
-        </table>
-      </div>
+          <% else %>
+            <tr>
+              <td colspan="6" class="text-center text-muted py-4">
+                <%= t(:no_audit_records) %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
-    
-    <!-- Pagination Controls -->
-    <% if @total_pages > 1 %>
-      <div class="mt-4">
-        <div class="card">
-          <div class="card-body">
-            <div class="row align-items-center">
-              <div class="col">
-                <p class="text-muted mb-0">
-                  Showing <%= (@page * @per_page) + 1 %> to <%= [(@page + 1) * @per_page, @total_count].min %> 
-                  of <%= @total_count %> <%= t(:records) %>
-                </p>
-              </div>
-              <div class="col-auto">
-                <div class="btn-group" role="group">
-                  <%= link_to audits_path(page: 0, **@filter_params.compact), 
-                        class: "btn btn-outline-primary #{'disabled' unless @has_prev_page}" do %>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                      <line x1="18" y1="6" x2="6" y2="18"></line>
-                      <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                    <%= t(:first) %>
-                  <% end %>
-                  
-                  <%= link_to audits_path(page: @page - 1, **@filter_params.compact), 
-                        class: "btn btn-outline-primary #{'disabled' unless @has_prev_page}" do %>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                      <line x1="19" y1="12" x2="5" y2="12"></line>
-                      <line x1="12" y1="19" x2="5" y2="12"></line>
-                      <line x1="12" y1="5" x2="5" y2="12"></line>
-                    </svg>
-                    <%= t(:previous) %>
-                  <% end %>
-                  
-                  <span class="btn btn-primary">
-                    <%= t(:page) %> <%= @page + 1 %> <%= t(:of) %> <%= @total_pages %>
-                  </span>
-                  
-                  <%= link_to audits_path(page: @page + 1, **@filter_params.compact), 
-                        class: "btn btn-outline-primary #{'disabled' unless @has_next_page}" do %>
-                    <%= t(:next) %>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                      <line x1="12" y1="5" x2="19" y2="12"></line>
-                      <line x1="12" y1="19" x2="19" y2="12"></line>
-                    </svg>
-                  <% end %>
-                  
-                  <%= link_to audits_path(page: @total_pages - 1, **@filter_params.compact), 
-                        class: "btn btn-outline-primary #{'disabled' unless @has_next_page}" do %>
-                    <%= t(:last) %>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                      <line x1="6" y1="6" x2="18" y2="18"></line>
-                      <line x1="6" y1="18" x2="18" y2="6"></line>
-                    </svg>
-                  <% end %>
-                </div>
+  </div>
+  
+  <!-- Pagination Controls -->
+  <% if @total_pages > 1 %>
+    <div class="mt-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col">
+              <p class="text-muted mb-0">
+                Showing <%= (@page * @per_page) + 1 %> to <%= [(@page + 1) * @per_page, @total_count].min %> 
+                of <%= @total_count %> <%= t(:records) %>
+              </p>
+            </div>
+            <div class="col-auto">
+              <div class="btn-group" role="group">
+                <%= link_to audits_path(page: 0, **@filter_params.compact), 
+                      class: "btn btn-outline-primary #{'disabled' unless @has_prev_page}" do %>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                  <%= t(:first) %>
+                <% end %>
+                
+                <%= link_to audits_path(page: @page - 1, **@filter_params.compact), 
+                      class: "btn btn-outline-primary #{'disabled' unless @has_prev_page}" do %>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <line x1="12" y1="19" x2="5" y2="12"></line>
+                    <line x1="12" y1="5" x2="5" y2="12"></line>
+                  </svg>
+                  <%= t(:previous) %>
+                <% end %>
+                
+                <span class="btn btn-primary">
+                  <%= t(:page) %> <%= @page + 1 %> <%= t(:of) %> <%= @total_pages %>
+                </span>
+                
+                <%= link_to audits_path(page: @page + 1, **@filter_params.compact), 
+                      class: "btn btn-outline-primary #{'disabled' unless @has_next_page}" do %>
+                  <%= t(:next) %>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <line x1="12" y1="5" x2="19" y2="12"></line>
+                    <line x1="12" y1="19" x2="19" y2="12"></line>
+                  </svg>
+                <% end %>
+                
+                <%= link_to audits_path(page: @total_pages - 1, **@filter_params.compact), 
+                      class: "btn btn-outline-primary #{'disabled' unless @has_next_page}" do %>
+                  <%= t(:last) %>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                    <line x1="6" y1="18" x2="18" y2="6"></line>
+                  </svg>
+                <% end %>
               </div>
             </div>
           </div>
         </div>
       </div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </div>

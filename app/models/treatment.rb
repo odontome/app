@@ -2,7 +2,7 @@
 
 class Treatment < ApplicationRecord
   # PaperTrail for audit logging
-  has_paper_trail meta: { practice_id: :practice_id }
+  has_paper_trail meta: { practice_id: ->(treatment) { treatment.practice_id } }
 
   # associations
   belongs_to :practice

@@ -2,7 +2,7 @@
 
 class Doctor < ApplicationRecord
   # PaperTrail for audit logging
-  has_paper_trail meta: { practice_id: :practice_id }
+  has_paper_trail meta: { practice_id: ->(doctor) { doctor.practice_id } }
 
   # concerns
   include Initials

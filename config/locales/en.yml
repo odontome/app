@@ -513,11 +513,18 @@ en:
   view_details: "View Details"
   load_more: "Load More"
   clear: "Clear"
-  filters: "Filters"
-  date_from: "Date From"
-  date_to: "Date To"
-  
+  system: "System"
+
   audit:
     create: "Created"
     update: "Updated"
     destroy: "Deleted"
+
+  audits:
+    deleted_item_with_id: "␡ ID: %{id}"
+    deleted_person: "␡ %{name}"
+    deleted_practice: "␡ %{name}"
+    deleted_treatment: "␡ %{name}"
+    deleted_datebook: "␡ %{name}"
+    deleted_appointment_with_notes: "␡ %{notes}"
+    deleted_appointment_with_id: "␡ Appointment #%{id}"

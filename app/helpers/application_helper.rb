@@ -72,32 +72,44 @@ module ApplicationHelper
   end
 
   def deleted_item_display_name(version)
-    return "[Deleted] ID: #{version.item_id}" unless version.object.present?
+    return I18n.t('audits.deleted_item_with_id', id: version.item_id) unless version.object.present?
     
     object_data = parse_version_object_data(version)
-    return "[Deleted] ID: #{version.item_id}" unless object_data.is_a?(Hash)
+    return I18n.t('audits.deleted_item_with_id', id: version.item_id) unless object_data.is_a?(Hash)
     
     case version.item_type
     when 'Patient', 'Doctor', 'User'
       if object_data['firstname'] && object_data['lastname']
-        "#{object_data['firstname']} #{object_data['lastname']} [Deleted]"
+        I18n.t('audits.deleted_person', name: "#{object_data['firstname']} #{object_data['lastname']}")
       else
-        "[Deleted] ID: #{version.item_id}"
+        I18n.t('audits.deleted_item_with_id', id: version.item_id)
       end
     when 'Practice'
-      object_data['name'] ? "#{object_data['name']} [Deleted]" : "[Deleted] ID: #{version.item_id}"
+      if object_data['name']
+        I18n.t('audits.deleted_practice', name: object_data['name'])
+      else
+        I18n.t('audits.deleted_item_with_id', id: version.item_id)
+      end
     when 'Treatment'
-      object_data['name'] ? "#{object_data['name']} [Deleted]" : "[Deleted] ID: #{version.item_id}"
+      if object_data['name']
+        I18n.t('audits.deleted_treatment', name: object_data['name'])
+      else
+        I18n.t('audits.deleted_item_with_id', id: version.item_id)
+      end
     when 'Datebook'
-      object_data['name'] ? "#{object_data['name']} [Deleted]" : "[Deleted] ID: #{version.item_id}"
+      if object_data['name']
+        I18n.t('audits.deleted_datebook', name: object_data['name'])
+      else
+        I18n.t('audits.deleted_item_with_id', id: version.item_id)
+      end
     when 'Appointment'
       if object_data['notes'].present?
-        "#{object_data['notes']} [Deleted]"
+        I18n.t('audits.deleted_appointment_with_notes', notes: object_data['notes'])
       else
-        "Appointment ##{version.item_id} [Deleted]"
+        I18n.t('audits.deleted_appointment_with_id', id: version.item_id)
       end
     else
-      "[Deleted] ID: #{version.item_id}"
+      I18n.t('audits.deleted_item_with_id', id: version.item_id)
     end
   end
 end

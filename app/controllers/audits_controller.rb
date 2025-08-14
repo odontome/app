@@ -9,8 +9,6 @@ class AuditsController < ApplicationController
       item_type: params[:item_type],
       event: params[:event],
       user_id: params[:user_id],
-      date_from: params[:date_from],
-      date_to: params[:date_to]
     }
 
     # Start with practice-scoped versions using the metadata
@@ -20,24 +18,6 @@ class AuditsController < ApplicationController
     @versions = @versions.where(item_type: @filter_params[:item_type]) if @filter_params[:item_type].present?
     @versions = @versions.where(event: @filter_params[:event]) if @filter_params[:event].present?
     @versions = @versions.where(whodunnit: @filter_params[:user_id]) if @filter_params[:user_id].present?
-
-    if @filter_params[:date_from].present?
-      begin
-        date_from = Date.parse(@filter_params[:date_from]).beginning_of_day
-        @versions = @versions.where('versions.created_at >= ?', date_from)
-      rescue ArgumentError
-        # Invalid date format, ignore filter
-      end
-    end
-
-    if @filter_params[:date_to].present?
-      begin
-        date_to = Date.parse(@filter_params[:date_to]).end_of_day
-        @versions = @versions.where('versions.created_at <= ?', date_to)
-      rescue ArgumentError
-        # Invalid date format, ignore filter
-      end
-    end
 
     # Pagination setup
     @page = params[:page].to_i
@@ -55,9 +35,20 @@ class AuditsController < ApplicationController
                         .limit(@per_page)
                         .offset(@page * @per_page)
 
-    # Get available filter options
-    @available_types = ['Patient', 'Doctor', 'User', 'Appointment', 'Practice', 'Treatment', 'Datebook']
-    @available_events = ['create', 'update', 'destroy']
+    @available_types = [
+      ['Patient', I18n.t('activerecord.models.patient')],
+      ['Doctor', I18n.t('activerecord.models.doctor')],
+      ['User', I18n.t('activerecord.models.user')],
+      ['Appointment', I18n.t('activerecord.models.appointment')],
+      ['Practice', I18n.t('activerecord.models.practice')],
+      ['Treatment', I18n.t('activerecord.models.treatment')],
+      ['Datebook', I18n.t('activerecord.models.datebook')]
+    ]
+    @available_events = [
+      ['create', I18n.t('audit.create')],
+      ['update', I18n.t('audit.update')],
+      ['destroy', I18n.t('audit.destroy')]
+    ]
     @practice_users = User.with_practice(current_user.practice_id).order('firstname')
   end
 
@@ -65,11 +56,4 @@ class AuditsController < ApplicationController
     @version = PaperTrail::Version.where(practice_id: current_user.practice_id).find(params[:id])
     @item = @version.item
   end
-
-  private
-
-  # No longer needed since we filter by practice_id in the query
-  # def version_belongs_to_practice?(version)
-  #   ...
-  # end
 end

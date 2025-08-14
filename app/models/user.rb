@@ -2,7 +2,7 @@
 
 class User < ApplicationRecord
   # PaperTrail for audit logging
-  has_paper_trail meta: { practice_id: :practice_id }
+  has_paper_trail meta: { practice_id: ->(user) { user.practice_id } }
 
   # concerns
   include Initials
