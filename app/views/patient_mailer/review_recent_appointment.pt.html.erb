@@ -1,0 +1,13 @@
+<tr>
+  <td class="aligncenter content-block">
+    <h2><%= @appointment["patient_name"] %>, como foi sua experiência conosco na <%= @appointment["practice"] %>?</h2>
+  </td>
+</tr>
+
+<tr>
+  <td class="aligncenter content-block">
+    <% (1..5).each do |i| %>
+      <a href="<%= @ciphered_review_url %>&score=<%=i%>" target="_blank"><%= image_tag "rating-star@2x.png", :width => 35 %></a>
+    <% end %>
+  </td>
+</tr>
