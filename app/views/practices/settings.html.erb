@@ -17,7 +17,7 @@
 
     <div class="col-md-4">
       <div class="row">
-        <div class="col-auto">
+        <div class="col">
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">
@@ -37,6 +37,27 @@
               <% else %>
                 <%= raw t('subscriptions.message_to_admin.expired', stripe_url: link_to(t('subscriptions.cta.expired'), subscriptions_url, method: :post).html_safe) %>
               <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row py-3">
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <%= t('stripe_payment_processing.title') %>
+              </h3>
+              <div class="card-actions">
+                <%= content_tag :span, connect_account_status_i18n(@practice.connect_onboarding_status)[:title], 
+                                class: "badge bg-#{connect_account_status_badge_class(@practice.connect_onboarding_status)}-lt" %>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <p><%= connect_account_status_i18n(@practice.connect_onboarding_status)[:description] %></p>
+              <p><%= link_to connect_account_status_i18n(@practice.connect_onboarding_status)[:cta], connect_account_path, class: "btn btn-outline-secondary" %></p>
             </div>
           </div>
         </div>

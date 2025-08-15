@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_14_004154) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_27_171915) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -64,6 +64,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_14_004154) do
     t.string "notes"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.string "currency"
   end
 
   create_table "datebooks", id: :serial, force: :cascade do |t|
@@ -121,6 +122,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_14_004154) do
     t.text "drugs_use"
     t.text "family_diseases"
     t.boolean "notified_of_six_month_reminder", default: false, null: false
+    t.datetime "deleted_at", precision: nil
+    t.index ["deleted_at"], name: "index_patients_on_deleted_at"
   end
 
   create_table "practices", id: :serial, force: :cascade do |t|
@@ -130,13 +133,20 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_14_004154) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.datetime "cancelled_at", precision: nil
-    t.string "currency_unit", default: "$"
     t.integer "patients_count", default: 0
     t.integer "doctors_count", default: 0
     t.integer "users_count", default: 0
     t.integer "datebooks_count"
     t.string "email"
     t.text "stripe_customer_id"
+    t.text "stripe_account_id"
+    t.string "connect_onboarding_status", default: "not_started"
+    t.boolean "connect_charges_enabled", default: false
+    t.boolean "connect_payouts_enabled", default: false
+    t.boolean "connect_details_submitted", default: false
+    t.string "currency", default: "mxn", null: false
+    t.index ["connect_onboarding_status"], name: "index_practices_on_connect_onboarding_status"
+    t.index ["stripe_account_id"], name: "index_practices_on_stripe_account_id"
   end
 
   create_table "reviews", id: :serial, force: :cascade do |t|

@@ -1,0 +1,63 @@
+<div class="page-header mb-4">
+  <div class="row align-items-center">
+    <div class="col">
+      <h2 class="page-title"><%= t :create_new_payment %></h2>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="row row-cards">
+    <div class="col-md-8">
+      <%= form_with url: payments_path, local: true, class: "card" do |form| %>
+        <div class="card-header">
+          <h3 class="card-title">
+            <%= t "payments.form.title" %>
+          </h3>
+        </div>
+
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <%= form.label :currency, t("payments.attributes.currency"), class: "form-label required" %>
+              <%= form.select(:currency, options_for_select([
+                [t("currencies.mxn"), 'mxn'], 
+                [t("currencies.cad"), 'cad'], 
+                [t("currencies.usd"), 'usd'], 
+                [t("currencies.eur"), 'eur']], @practice.currency), {}, { :class => "form-select"}) %>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <%= form.label :amount, t("payments.attributes.amount"), class: "form-label required" %>
+              <div class="input-group">
+                <span class="input-group-text">$</span>
+                <%= form.number_field :amount, class: "form-control", step: 0.1, min: 5, required: true %>
+              </div>
+              <small class="form-hint"><%= t("payments.form.fee_hint") %></small>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label"><%= t(:notes) %></label>
+            <%= form.text_area :patient_name, placeholder: t(:additional_notes), rows: 2, maxlength: 100, class: "form-control" %>
+             <small class="form-hint"><%= t("payments.form.notes_hint") %></small>
+          </div>
+        </div>
+
+        <div class="card-footer text-end">
+          <div class="d-flex">
+            <input type="hidden" id="patient_id" name="patient_id" value="<%= @patient_id %>" />
+            <%= form.submit t(:save), class: "btn btn-primary ms-auto", data: { disable_with: t(:please_wait) } %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="col-md-4">
+      <div class="px-4">
+        <h3 class="card-title"><%= t(:for_your_information) %></h3>
+        <p><%= t("payments.form.for_your_information") %></p>
+      </div>
+    </div>
+  </div>
+</div>

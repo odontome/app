@@ -312,95 +312,20 @@ stripe login
 stripe listen --forward-to localhost:3000/api/webhooks/stripe
 ```
 
-## Troubleshooting (macOS)
+### Stripe Connect Setup
 
-### Common Issues and Solutions
+The application also supports Stripe Connect for enabling practices to accept payments directly from patients:
 
-#### PostgreSQL Connection Issues
+1. **Platform Account**: Set up your main Stripe account for the platform
+2. **Connect Application**: Create a Connect application in your Stripe dashboard
 
-```bash
-# If PostgreSQL isn't running
-brew services start postgresql@14
+**Connect Features:**
 
-# If you get permission errors
-createuser -s $(whoami)
-
-# If database doesn't exist
-bundle exec rails db:create
-```
-
-#### Gem Installation Issues
-
-```bash
-# If you get permission errors
-gem install bundler --user-install
-
-# If pg gem fails to install
-gem install pg -- --with-pg-config=/opt/homebrew/bin/pg_config
-# Or for Intel Macs:
-gem install pg -- --with-pg-config=/usr/local/bin/pg_config
-```
-
-#### Node.js/Yarn Issues
-
-```bash
-# If yarn install fails
-yarn install --network-timeout 100000
-
-# If webpack compilation fails
-yarn cache clean
-yarn install
-```
-
-#### M1/M2 Mac Specific Issues
-
-```bash
-# If you encounter native gem compilation issues
-bundle config build.pg --with-pg-config=/opt/homebrew/bin/pg_config
-bundle install
-
-# For other native gems
-arch -arm64 bundle install
-```
-
-#### Rails Server Issues
-
-```bash
-# If port 3000 is already in use
-bundle exec rails server -p 3001
-
-# If you get "Spring is running" issues
-bundle exec spring stop
-bundle exec rails server
-```
-
-#### Asset Compilation Issues
-
-```bash
-# Clear precompiled assets
-bundle exec rails assets:clobber
-
-# Recompile assets
-bundle exec rails assets:precompile
-
-# For development mode, clear webpack cache
-rm -rf public/packs
-rm -rf tmp/cache/webpacker
-./bin/webpack
-
-# If webpack-dev-server has issues
-./bin/webpack-dev-server --mode=development
-```
-
-### Getting Help
-
-If you encounter issues not covered here:
-
-1. Check the Rails logs: `tail -f log/development.log`
-2. Check that all prerequisites are properly installed
-3. Ensure all environment variables are set correctly
-4. Try restarting your development server
-5. Clear browser cache and cookies
+- Express accounts for quick practice onboarding
+- Application fees (configurable platform commission)
+- Automatic transfers to practice bank accounts
+- Real-time payment processing
+- Webhook-based account status monitoring
 
 ### Useful Development Commands
 

@@ -263,7 +263,7 @@ namespace :odontome do
 
   # find all the admins for the given @practice_ids
   def admin_of_practice(practice_ids)
-    User.select('firstname, lastname, practice_id, users.email, locale, timezone, currency_unit, subscribed_to_digest')
+    User.select('firstname, lastname, practice_id, users.email, locale, timezone, practices.currency, subscribed_to_digest')
         .where(practice_id: practice_ids)
         .where('roles = ?', 'admin')
         .joins(:practice)

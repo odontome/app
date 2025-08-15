@@ -1,0 +1,51 @@
+<% payment, latest_charge = payment_item %>
+<tr>
+  <td>
+    <%= payment.metadata&.[]('patient_name') || '–' %>
+  </td>
+  <td>
+    <%= payment_status(payment.status) %>
+  </td>
+  <td>
+    <% if latest_charge %>
+      <% if latest_charge.refunded %>
+        <span class="badge bg-danger me-1"></span> <%= t("payments.charge_status.refunded") %>
+        <small class="text-muted">
+          <br />
+          <%= number_to_currency_with_code(latest_charge.amount_refunded / 100.0, latest_charge.currency) %>
+        </small>
+      <% elsif latest_charge.amount_refunded && latest_charge.amount_refunded > 0 %>
+        <span class="badge bg-warning me-1"></span> <%= t("payments.charge_status.partially_refunded") %>
+        <small class="text-muted">
+          <br />
+          <%= number_to_currency_with_code(latest_charge.amount_refunded / 100.0, latest_charge.currency) %>
+        </small>
+      <% else %>
+        <span class="badge bg-success me-1"></span> <%= t("payments.charge_status.charged") %>
+        <small class="text-muted">
+          <br />
+          <%= number_to_currency_with_code(latest_charge.amount / 100.0, latest_charge.currency) %>
+        </small>
+      <% end %>
+    <% elsif payment.status == 'succeeded' %>
+      <span class="badge bg-warning"></span><%= t("payments.charge_status.processing") %>
+    <% else %>
+      <span class="text-muted">–</span>
+    <% end %>
+  </td>
+  <td class="text-muted">
+    <%= payment.created ? l(Time.at(payment.created), format: :long) : '–' %>
+  </td>
+  <td>
+    <div class="btn-list flex-nowrap">
+      <%= component :dropdown do %>
+        <% if payment.status == 'succeeded' %>
+          <%= link_to t("payments.view_payment"), success_payments_path(payment_intent: payment.id), class: "dropdown-item", target: "_blank" %>
+        <% end %>
+        <% if latest_charge.nil? %>
+          <%= link_to t("payments.copy_payment_link"), "#", class: "dropdown-item", data: { clipboard: pay_payment_url(payment.client_secret) } %>
+        <% end %>
+      <% end %>
+    </div>
+  </td>
+</tr>

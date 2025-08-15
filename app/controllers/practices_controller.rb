@@ -31,10 +31,13 @@ class PracticesController < ApplicationController
     review_analytics = Analytics::ReviewAnalytics.new(current_user.practice_id)
 
     # Leaderboards and distributions
-    @weekly_top_doctors_names, @weekly_top_doctors_values = appt_analytics.top_doctors_by_unique_patients(range, limit: 10)
+    @weekly_top_doctors_names, @weekly_top_doctors_values = appt_analytics.top_doctors_by_unique_patients(range,
+                                                                                                          limit: 10)
     @weekly_hours_doctor_names, @weekly_hours_doctor_values = appt_analytics.hours_worked_by_doctor(range, limit: 10)
-    @weekly_recurring_patient_names, @weekly_recurring_patient_values = appt_analytics.recurring_patients(range, limit: 10)
-    @weekly_avg_gap_doctor_names, @weekly_avg_gap_doctor_values = appt_analytics.average_gap_minutes_by_doctor(range, limit: 10)
+    @weekly_recurring_patient_names, @weekly_recurring_patient_values = appt_analytics.recurring_patients(range,
+                                                                                                          limit: 10)
+    @weekly_avg_gap_doctor_names, @weekly_avg_gap_doctor_values = appt_analytics.average_gap_minutes_by_doctor(range,
+                                                                                                               limit: 10)
 
     # Time series
     @weekly_days_labels, @weekly_appointments_per_day = appt_analytics.appointments_per_day(range)
@@ -99,7 +102,7 @@ class PracticesController < ApplicationController
   def update
     @practice = current_user.practice
     @subscription = @practice.subscription
-    
+
     respond_to do |format|
       if @practice.update(practice_params)
         format.html { redirect_to(practice_settings_url, notice: t(:practice_updated_success_message)) }
@@ -139,6 +142,16 @@ class PracticesController < ApplicationController
   def settings
     @practice = current_user.practice
     @subscription = @practice.subscription
+
+    # Refresh Connect account status if account exists
+    return unless @practice.has_connect_account?
+
+    begin
+      @practice.refresh_connect_account_status!
+    rescue Stripe::StripeError => e
+      Rails.logger.error "Failed to refresh Connect account status in settings: #{e.message}"
+      # Don't show error to user, just log it
+    end
   end
 
   def balance
@@ -177,11 +190,11 @@ class PracticesController < ApplicationController
 
     # Scope to current practice via patients join
     @appointments = Appointment
-                      .joins(:patient, :doctor, :datebook)
-                      .includes(:patient, :doctor, :datebook)
-                      .where(patients: { practice_id: @current_user.practice_id })
-                      .where('appointments.starts_at >= ? AND appointments.starts_at <= ?', date_range.begin, date_range.end)
-                      .order('datebooks.name ASC, appointments.starts_at ASC')
+                    .joins(:patient, :doctor, :datebook)
+                    .includes(:patient, :doctor, :datebook)
+                    .where(patients: { practice_id: @current_user.practice_id })
+                    .where('appointments.starts_at >= ? AND appointments.starts_at <= ?', date_range.begin, date_range.end)
+                    .order('datebooks.name ASC, appointments.starts_at ASC')
 
     respond_to do |format|
       format.html
@@ -191,6 +204,7 @@ class PracticesController < ApplicationController
   private
 
   def practice_params
-    params.require(:practice).permit(:name, :locale, :timezone, :currency_unit, :email, users_attributes: [:firstname, :lastname, :email, :password, :password_confirmation])
+    params.require(:practice).permit(:name, :locale, :timezone, :currency, :email,
+                                     users_attributes: %i[firstname lastname email password password_confirmation])
   end
 end

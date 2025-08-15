@@ -1,0 +1,60 @@
+<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+
+<div class="page-header mb-4">
+  <div class="row align-items-center">
+    <div class="col">
+      <h2 class="page-title">
+        <%= t("payments.qr.title") %>
+      </h2>
+    </div>
+    <div class="col-auto ms-auto">
+      <div class="btn-list">
+        <% if current_user.practice.has_connect_account? %>
+          <%= link_to new_payment_path, class: "btn btn-primary d-sm-inline-block" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg><!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+            <%= t("payments.create_new_payment") %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="py-3 d-flex justify-content-center">
+                            <div id="qrcode"></div>
+                        </div>
+
+                        <label class="form-label" for="payment_code"><%= t("payments.qr.cant_scan") %></label>
+                        <p class="text-muted"><%= t("payments.qr.copy_paste_instruction") %></p>
+                        <div class="input-icon">
+                            <input type="text" value="<%= @payment_url %>" class="form-control" readonly="" id="payment_code">
+                            <span class="input-icon-addon">
+                                <!-- Download SVG icon from http://tabler.io/icons/icon/files -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                                <path d="M15 3v4a1 1 0 0 0 1 1h4"></path>
+                                <path d="M18 17h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h4l5 5v7a2 2 0 0 1 -2 2z"></path>
+                                <path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2"></path>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  var qrcode = new QRCode(document.getElementById("qrcode"), {
+    text: "<%= @payment_url %>",
+    width: 368,
+    height: 368,
+    correctLevel : QRCode.CorrectLevel.L
+  });
+</script>

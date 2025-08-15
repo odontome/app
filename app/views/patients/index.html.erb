@@ -66,6 +66,7 @@
                   <%= component :dropdown do %>
                     <%= link_to t(:profile), patient, class: "dropdown-item" %>
                     <%= link_to t(:edit), edit_patient_path(patient), class: "dropdown-item" %>
+                    <%= link_to t(:create_new_payment), new_payment_path(patient_id: patient.id), class: "dropdown-item" %>
                     <% if user_is_admin?(current_user) %>
                       <%= link_to t(:delete), patient, method: :delete, data: { confirm: t(:are_you_sure_no_undo) }, class: "dropdown-item text-red" %>
                     <% end %>

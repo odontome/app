@@ -8,6 +8,7 @@ class BalancesController < ApplicationController
     @balances = Balance.where('patient_id = ?', @patient.id)
     @total = Balance.where('patient_id = ?', params[:patient_id]).sum(:amount)
     @treatments = Treatment.with_practice(current_user.practice_id).order('name')
+    @practice = @patient.practice
 
     respond_to do |format|
       format.html
@@ -39,6 +40,6 @@ class BalancesController < ApplicationController
   private
 
   def balance_params
-    params.require(:balance).permit(:patient_id, :amount, :notes)
+    params.require(:balance).permit(:patient_id, :amount, :notes, :currency)
   end
 end

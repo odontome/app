@@ -3,6 +3,6 @@
     <span class="text-muted"><%= l balance.created_at, format: :long %><span><br />
 	  <%= content_tag "span", balance.notes %>
   </td>
-	<td class="text-end"><% if (balance.amount < 0)%> <%= number_to_currency_with_symbol balance.amount %> <% end %></td>
-	<td class="text-end"><% if (balance.amount >= 0)%> <%= number_to_currency_with_symbol balance.amount %> <% end %></td>
+	<td class="text-end"><% if (balance.amount < 0)%> <%= number_to_currency_with_code balance.amount, balance.currency %> <% end %></td>
+	<td class="text-end"><% if (balance.amount >= 0)%> <%= number_to_currency_with_code balance.amount, balance.currency %> <% end %></td>
 </tr>

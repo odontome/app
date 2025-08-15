@@ -3,15 +3,20 @@ complete:
   name: Odonto.me demo practice
   locale: en
   timezone: Europe/London
-  currency_unit: $
+  currency: usd
   email: raulriera@hotmail.com
+  stripe_account_id: acct_test_123456789
+  connect_onboarding_status: complete
+  connect_charges_enabled: true
+  connect_payouts_enabled: true
+  connect_details_submitted: true
 
 complete_another_language:
   id: 2
   name: Odonto.me clinica demo
   locale: es
   timezone: America/Mexico_City
-  currency_unit: $
+  currency: mxn
   email: raulriera@hotmail.com
 
 trialing_practice:
@@ -19,7 +24,7 @@ trialing_practice:
   name: Trialing Practice
   locale: en
   timezone: Europe/London
-  currency_unit: $
+  currency: usd
   email: trialing@odonto.me
 
 past_due_practice:
@@ -27,7 +32,7 @@ past_due_practice:
   name: Past Due Practice
   locale: en
   timezone: Europe/London
-  currency_unit: $
+  currency: usd
   email: pastdue@odonto.me
 
 canceled_practice:
@@ -35,5 +40,5 @@ canceled_practice:
   name: Canceled Practice
   locale: en
   timezone: Europe/London
-  currency_unit: $
+  currency: usd
   email: canceled@odonto.me

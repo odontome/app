@@ -59,6 +59,26 @@ Rails.application.routes.draw do
 
   # subscriptions
   resource :subscriptions
+
+  # stripe connect
+  resource :connect_account, only: %i[show create] do
+    member do
+      get :onboarding
+      post :refresh_status
+    end
+  end
+
+  # payments (demo)
+  resources :payments, only: %i[index new create] do
+    collection do
+      get :success
+      get :failed
+    end
+  end
+
+  # Public payment completion using Stripe client_secret (no auth required)
+  get '/pay/:client_secret', to: 'payments#pay', as: 'pay_payment'
+
   namespace :api do
     namespace :webhooks do
       post '/stripe', to: 'stripe#event'

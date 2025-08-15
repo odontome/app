@@ -1,6 +1,6 @@
 <%= CSV.generate(:col_sep => ";") do |csv|
-  csv << [t(:name),t(:created_at), t(:notes), t(:amount)]
+  csv << [t(:name),t(:created_at), t(:notes), t("payments.attributes.currency"), t(:amount)]
   @balances.each do |balance|
-    csv << [ "#{balance[:firstname]} #{balance[:lastname]}", l(balance[:created_at], :format => :long), balance[:notes], balance[:amount]]
+    csv << [ "#{balance[:firstname]} #{balance[:lastname]}", l(balance[:created_at], :format => :long), balance[:notes], balance[:currency], balance[:amount]]
   end
 end.html_safe %>

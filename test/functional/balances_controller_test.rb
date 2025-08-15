@@ -16,6 +16,7 @@ class BalancesControllerTest < ActionController::TestCase
   test 'should create an income entry' do
     entry = {
       amount: 9.99,
+      currency: 'usd',
       notes: 'Can of soda'
     }
 
@@ -27,6 +28,7 @@ class BalancesControllerTest < ActionController::TestCase
   test 'should create an expense entry' do
     entry = {
       amount: -9.99,
+      currency: 'usd',
       notes: 'Returned the can of soda'
     }
 

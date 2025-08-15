@@ -46,6 +46,7 @@ es:
       balance:
         notes: Comentarios adicionales
         amount: Monto
+        currency: Moneda
       datebook:
         name: Nombre
         starts_at: Día comienza a las
@@ -77,7 +78,7 @@ es:
         telephone: Teléfono
         uid: Número de historia
       practice:
-        currency_unit: Moneda preferida
+        currency: Moneda preferida
         locale: Idioma
         name: Nombre
         timezone: Huso horario
@@ -139,7 +140,13 @@ es:
   create_new_patient: Nuevo paciente
   create_new_treatment: Nuevo tratamiento
   create_new_user: Nuevo usario
+  create_new_payment: Nuevo pago
   current_medications: Medicamentos actuales
+  currencies:
+    usd: Dólar estadounidense (USD)
+    mxn: Peso mexicano (MXN)
+    cad: Dólar canadiense (CAD)
+    eur: Euro (EUR)
   date:
     formats:
       day_and_date: ! "%A (%e %b)"
@@ -201,6 +208,8 @@ es:
   valid: Valido
   invalid: Invalido
   home: Inicio
+  "yes": Sí
+  "no": "No"
   help:
     patients:
       status: Los pacientes sin toda la información necesaria para crear sus perfiles son marcados como "incompletos".
@@ -211,6 +220,9 @@ es:
       suspended: Doctores suspendidos no aparecen como opciones para nuevas citas. Las citas anteriores no se ven afectadas.
     treatments:
       status: Tratamientos invalidos no poseen precios. Debes corregir el precio antes de poder utilizarlo
+    payments:
+      status: Pagos con estado "Requiere Método de Pago" están incompletos y no pueden ser procesados hasta que se adjunte un método de pago válido.
+      charge_status: El estado del cargo indica el estado actual del proceso de pago. Los pagos que no están "Exitosos" pueden requerir acción adicional para completarse.
   inactive: Inactiva
   incomplete: Incompleto
   instructions:
@@ -298,6 +310,9 @@ es:
       title: Aún no has creado ningún tratamiento.
       description: Crea un tratamiento para empezara a utilizarlos en los perfiles de pacientes.
       cta: Usar tratamientos sugeridos
+    payments:
+      title: Aún no has creado ningún pago.
+      description: Comienza a cobrar pagos de tus pacientes configurando tu clínica en la configuración.
   no_appointments:
     title: Sin citas
     description: No tienen ninguna cita programada.
@@ -340,6 +355,8 @@ es:
   review_created_success_message: Esta información será utilizada para mejorar la experiencia de todos.
   save: Guardar
   load_more_reviews: Cargar más calificaciones
+  load_more_payments: Cargar más pagos
+  showing_all_payments: Mostrando todos los pagos
   schedule: Agendar
   search: Buscar…
   select_doctor: Selecciona un doctor
@@ -468,6 +485,104 @@ es:
   load_more: "Cargar Más"
   system: "Sistema"
   pagination_info: "Mostrando %{start} a %{end} de %{total} registros"
+  pagination_info_cursor: "Mostrando página %{page} de registros"
+
+  payments:
+    title: "Pagos"
+    create_new_payment: "Crear nuevo pago"
+    view_payment: "Ver pago"
+    view_receipt: "Ver recibo"
+    copy_payment_link: "Copiar enlace de pago"
+    qr:
+      title: Pago
+      cant_scan: ¿No puedes escanear el código QR?
+      copy_paste_instruction: Copia y pega este enlace y envíalo al paciente
+    pay:
+      title: Pago para %{practice_name}
+      no_note: No se proporcionó ninguna nota.
+      cta: Completar Pago
+      secure_payment: Pago Seguro
+      secure_payment_description: Tu pago se procesa de forma segura utilizando la tecnología de encriptación líder en la industria de Stripe.
+    form:
+      title: Información de pago
+      fee_hint: La tarifa de la plataforma se deducirá automáticamente.
+      notes_hint: "Estas notas se mostrarán en el formulario de pago y en el recibo."
+      for_your_information: Se generará un enlace único y seguro utilizando la seguridad integrada de Stripe. El enlace caduca automáticamente en 24 horas.
+    attributes:
+      payment_notes: "Notas del pago"
+      status: "Estado"
+      charge_status: "Estado del cargo"
+      created_at: "Creado el"
+      currency: "Moneda"
+      amount: "Cantidad"
+    status:
+      requires_payment_method: "Requiere Método de Pago"
+      requires_confirmation: "Requiere Confirmación"
+      requires_action: "Requiere Acción"
+      processing: "Procesando"
+      succeeded: "Exitoso"
+      unknown: "Desconocido"
+    charge_status:
+      processing: "Procesando"
+      refunded: "Reembolsado"
+      partially_refunded: "Reembolso Parcial"
+      charged: "Cobrado"
+    success:
+      title: "Pago exitoso"
+      message: "Gracias por tu pago de <strong>%{amount_formatted}</strong>. Tu transacción ha sido procesada exitosamente."
+    error:
+      title: "Pago fallido"
+      message: "Hubo un error procesando tu pago. Por favor contacta a la clínica."
+
+  stripe_account:
+    account_created_error_message: "Hubo un error creando tu cuenta de Stripe."
+    account_onboarding_error_message: "No pudimos encontrar tu cuenta de Stripe."
+    account_refresh_success_message: "Estado de la cuenta actualizado exitosamente."
+    account_refresh_error_message: "Hubo un error actualizando el estado de tu cuenta."
+    account:
+      attributes:
+        id: "ID de Cuenta"
+        status: "Estado"
+        charges_enabled: "Cargos habilitados"
+        payouts_enabled: "Pagos habilitados"
+        details_submitted: "Detalles enviados"
+      status:
+        in_progress:
+          title: "En progreso"
+          description: "Tu clínica está en progreso. Completa la configuración de tu cuenta para comenzar a aceptar pagos directamente de pacientes."
+          cta: "Completar configuración"
+        complete:
+          title: "Completo"
+          description: "Tu clínica está configurada para aceptar pagos directamente de pacientes."
+          cta: "Administrar cuenta"
+        disabled:
+          title: "Deshabilitado"
+          description: "Tu clínica no está permitida para aceptar pagos directamente de pacientes. Por favor contacta soporte para asistencia."
+          cta: "Verificar cuenta"
+        not_started:
+          title: "No iniciado"
+          description: "Habilita tu clínica para aceptar pagos directamente de pacientes."
+          cta: "Comenzar"
+
+  stripe_payment_processing:
+    title: "Procesamiento de pagos"
+    account_not_onboarded: "Clínica no lista para aceptar pagos"
+    link_created_success_message: "Solicitud de pago creada exitosamente."
+    link_created_error_message: "Error creando solicitud de pago: %{message}"
+    setup:
+      title: Estado de la cuenta conectada
+      cta: Configurar procesamiento de pagos
+      description: "Presionar el botón a continuación te redirigirá a Stripe para crear de forma segura una cuenta Connect."
+      subtitle: "Configuración"
+      for_your_information:
+        description: "Sigue estos pasos para configurar el procesamiento de pagos para tu clínica."
+        steps:
+          - "Crea tu cuenta de Stripe Connect"
+          - "Proporciona información del negocio"
+          - "Conecta tu cuenta bancaria"
+          - "Comienza a aceptar pagos"
+      refresh_cta: "Actualizar cuenta"
+      continue_cta: "Continuar configuración"
 
   audits:
     create: "Creado"

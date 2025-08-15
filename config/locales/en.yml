@@ -42,6 +42,7 @@ en:
         notes: Additional notes
         patient_id: Patient
       balance:
+        currency: Currency
         notes: Additional notes
         amount: Amount
       datebook:
@@ -75,7 +76,7 @@ en:
         telephone: Telephone number
         uid: Chart number
       practice:
-        currency_unit: Preferred currency
+        currency: Preferred currency
         locale: Preferred language
         name: Name
         timezone: Timezone
@@ -141,7 +142,13 @@ en:
   create_new_patient: Create new patient
   create_new_treatment: Create new treatment
   create_new_user: Create new user
+  create_new_payment: Create new payment
   current_medications: Current medications
+  currencies:
+    usd: US Dollar (USD)
+    mxn: Mexican Peso (MXN)
+    cad: Canadian Dollar (CAD)
+    eur: Euro (EUR)
   date:
     formats:
       day_and_date: ! "%A (%e %b)"
@@ -203,6 +210,8 @@ en:
   gender: Gender
   hide_past_appointments: Hide past appointments
   home: Home
+  yes: Yes
+  no: No
   help:
     patients:
       status: Patients without the required profile information are marked as "incomplete".
@@ -213,6 +222,9 @@ en:
       suspended: Suspended doctors won't appear as options for your new appointments. Previous appointments aren't affected.
     treatments:
       status: Invalid treatments don't have a price specified, setting one is mandatory for the treatment to show up in the patient profile.
+    payments:
+      status: Payments with "Requires Payment Method" status are incomplete and cannot be processed until a valid payment method is attached to them.
+      charge_status: The charge status indicates the current state of the payment process. Payments that are not "Succeeded" may require further action to complete.
   inactive: Inactive
   incomplete: Incomplete
   instructions:
@@ -321,6 +333,9 @@ en:
       title: You haven't created any treatments yet.
       description: Create a treatment to start using them in your patient profiles.
       cta: Use suggested list
+    payments:
+      title: You haven't created any payments yet.
+      description: Start collecting payments from your patients by configuring your practice in your settings.
   no_appointments:
     title: No appointments
     description: They don't have any appointments scheduled.
@@ -387,6 +402,8 @@ en:
   save: Save
   send: Send
   load_more_reviews: Load more reviews
+  load_more_payments: Load more payments
+  showing_all_payments: Showing all payments
   continue: Continue
   schedule: Schedule
   search: Search…
@@ -429,7 +446,7 @@ en:
       default: ! "%a, %d %b %Y %H:%M:%S %z"
       just_the_time: ! "%H:%M (UTC %:z)"
       just_the_date: ! "%d %b"
-      long: ! "%B %d, %Y %H:%M"
+      long: ! "%B %d, %Y %I:%M %p"
       short: ! "%d %b %H:%M"
       w3c: ! "%Y-%m-%dT%H:%M:%S%:z"
     pm: pm
@@ -517,6 +534,7 @@ en:
   load_more: "Load More"
   system: "System"
   pagination_info: "Showing %{start} to %{end} of %{total} records"
+  pagination_info_cursor: "Showing page %{page} of records"
 
   audits:
     create: "Created"
@@ -530,3 +548,100 @@ en:
     deleted_appointment_with_notes: "␡ %{notes}"
     deleted_appointment_with_id: "␡ Appointment #%{id}"
     empty: "(Empty)"
+
+  payments:
+    title: "Payments"
+    create_new_payment: "Create new payment"
+    view_payment: "View payment"
+    view_receipt: "View receipt"
+    copy_payment_link: "Copy payment link"
+    qr:
+      title: Payment
+      cant_scan: Can't scan the QR code?
+      copy_paste_instruction: Copy and paste this link and send it to the patient
+    pay:
+      title: Payment for %{practice_name}
+      no_note: No note was provided.
+      cta: Complete Payment
+      secure_payment: Secure Payment
+      secure_payment_description: Your payment is processed securely using Stripe's industry-leading encryption technology.
+    form:
+      title: Payment information
+      fee_hint: Platform fee will be deducted automatically.
+      notes_hint: "These notes will be displayed on the payment form and receipt."
+      for_your_information: A unique, secure link will be generated using Stripe's built-in security. The link expires automatically in 24 hours.
+    attributes:
+      payment_notes: "Payment notes"
+      status: "Status"
+      charge_status: "Charge status"
+      created_at: "Created at"
+      currency: "Currency"
+      amount: "Amount"
+    status:
+      requires_payment_method: "Requires Payment Method"
+      requires_confirmation: "Requires Confirmation"
+      requires_action: "Requires Action"
+      processing: "Processing"
+      succeeded: "Succeeded"
+      unknown: "Unknown"
+    charge_status:
+      processing: "Processing"
+      refunded: "Refunded"
+      partially_refunded: "Partially Refunded"
+      charged: "Charged"
+    success:
+      title: "Payment successful"
+      message: "Thank you for your payment of <strong>%{amount_formatted}</strong>. Your transaction has been processed successfully."
+    error:
+      title: "Payment failed"
+      message: "There was an error processing your payment. Please contact the practice."
+
+  stripe_account:
+    account_created_error_message: "There was an error creating your Stripe account."
+    account_onboarding_error_message: "We couldn't find your Stripe account."
+    account_refresh_success_message: "Account status refreshed successfully."
+    account_refresh_error_message: "There was an error refreshing your account status."
+    account:
+      attributes:
+        id: "Account ID"
+        status: "Status"
+        charges_enabled: "Charges enabled"
+        payouts_enabled: "Payouts enabled"
+        details_submitted: "Details submitted"
+      status:
+        in_progress:
+          title: "In progress"
+          description: "Your practice is in progress. Complete your account setup to start accepting payments directly from patients."
+          cta: "Complete setup"
+        complete:
+          title: "Complete"
+          description: "Your practice is configured to accept payments directly from patients."
+          cta: "Manage account"
+        disabled:
+          title: "Disabled"
+          description: "Your practice is not allowed to accept payments directly from patients. Please contact support for assistance."
+          cta: "Check account"
+        not_started:
+          title: "Not started"
+          description: "Enable your practice to accept payments directly from patients."
+          cta: "Get started"
+
+  stripe_payment_processing:
+    title: "Payment processing"
+    account_not_onboarded: "Practice not ready to accept payments"
+    link_created_success_message: "Payment request created successfully."
+    link_created_error_message: "Error creating payment request: %{message}"
+    setup:
+      title: Connect account status
+      cta: Set up payment processing
+      description: "Pressing the button below will redirect you to Stripe to securely create a Connect account."
+      subtitle: "Setup"
+      for_your_information:
+        description: "Follow these steps to set up payment processing for your practice."
+        steps:
+          - "Create your Stripe Connect account"
+          - "Provide business information"
+          - "Connect your bank account"
+          - "Start accepting payments"
+      refresh_cta: "Refresh account"
+      continue_cta: "Continue setup"
