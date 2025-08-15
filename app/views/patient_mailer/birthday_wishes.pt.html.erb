@@ -1,0 +1,24 @@
+<tr>
+  <td class="aligncenter content-block">
+    <h1>Feliz aniversário <%= @patient["firstname"] %>!</h1>
+  </td>
+</tr>
+
+<tr>
+  <td class="aligncenter content-block">
+    <%= image_tag "bday-muffin@2x.png", :width => 300 %>
+  </td>
+</tr>
+
+<tr>
+  <td class="content-block">
+    Gostaríamos de desejar a você o melhor aniversário de todos. Nós "fizemos" este doce especial para você. Não se esqueça de nos visitar se comer todo esse açúcar :)
+  </td>
+</tr>
+
+<tr>
+  <td class="content-block">
+    Esperamos vê-lo em breve!,<br />
+    <%= @patient['practice_name'] %>
+  </td>
+</tr>

@@ -33,7 +33,7 @@ module Odontome
     
     ### Odonto.me stuff
 
-    config.i18n.available_locales = %w[es en]
+    config.i18n.available_locales = %w[es en pt]
     config.i18n.enforce_available_locales = false
 
     # load the predefined list of treatments

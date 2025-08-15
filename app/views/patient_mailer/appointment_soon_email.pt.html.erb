@@ -1,0 +1,26 @@
+<tr>
+	<td class="content-block">
+		Olá <%= @patient_name %>,<br />
+		Sua consulta está chegando!
+	</td>
+</tr>
+
+<tr>
+	<td class="content-block">
+		Este é um lembrete de que você tem uma consulta marcada para <strong><%= @appointment_date %></strong> com <%= @doctor_name %>.
+	</td>
+</tr>
+
+<tr>
+	<td class="content-block">
+		Começa às: <strong><%= @appointment_start_time %></strong><br />
+		e termina às: <strong><%= @appointment_end_time %></strong>
+	</td>
+</tr>
+
+<tr>
+	<td class="content-block">
+		Aguardamos você!,<br />
+		<%= @practice_name %>
+	</td>
+</tr>
