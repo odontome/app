@@ -6,7 +6,7 @@ class PatientsController < ApplicationController
 
   def index
     if params[:term].present?
-      @patients = Patient.search(params[:term]).with_practice(current_user.practice_id)
+      @patients = Patient.search(params[:term]).with_practice(current_user.practice_id).valid
     elsif params[:segment].present? && params[:segment] == 'new_this_week'
       # Align with KPI: use practice timezone and current calendar week (Mon–Sun), inclusive
       tz = ActiveSupport::TimeZone[current_user.practice.timezone] || Time.zone
@@ -14,20 +14,21 @@ class PatientsController < ApplicationController
       week_end = tz.now.end_of_week
       @patients = Patient
                     .with_practice(current_user.practice_id)
+                    .valid
                     .where('created_at >= ? AND created_at <= ?', week_start, week_end)
     else
       # Always fetch the first letter of the first record, if not present
       # just send "A"
       if params[:letter].blank?
-        first_patient = Patient.with_practice(current_user.practice_id).order('firstname ASC').limit(1).first
+        first_patient = Patient.with_practice(current_user.practice_id).valid.order('firstname ASC').limit(1).first
         params[:letter] = first_patient&.firstname&.first || 'A'
       end
 
       # iI the provided is not in the alphabet, send back anything else
       if [*'a'..'z'].include?(params[:letter].downcase)
-        @patients = Patient.anything_with_letter(params[:letter]).with_practice(current_user.practice_id)
+        @patients = Patient.anything_with_letter(params[:letter]).with_practice(current_user.practice_id).valid
       else
-        @patients = Patient.anything_not_in_alphabet.with_practice(current_user.practice_id)
+        @patients = Patient.anything_not_in_alphabet.with_practice(current_user.practice_id).valid
       end
     end
 
@@ -91,9 +92,17 @@ class PatientsController < ApplicationController
     back_to = request.referer || patients_path
 
     @patient = Patient.with_practice(current_user.practice_id).find(params[:id])
-    @patient.destroy
+    
+    # Check if this patient can be deleted, otherwise toggle their active status
+    if @patient.is_deleteable
+      @patient.destroy
+    else
+      @patient.is_active = !@patient.is_active
+      @patient.save
+    end
+
     respond_to do |format|
-      format.html { redirect_to(back_to) }
+      format.html { redirect_to(back_to, notice: I18n.t(:patient_deleted_success_message)) }
     end
   end
 

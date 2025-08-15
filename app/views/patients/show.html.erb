@@ -15,12 +15,19 @@
         <% end %>
         <span data-toggle="tooltip" title="<%= @patient.date_of_birth.to_formatted_s(:long) %>" data-placement="top"><%= @patient.age%> <%= t(:years_old).downcase %></span>
       </div>
+      <div class="small mt-1">
+        <% if @patient.missing_info? %>
+          <%= label_tag t(:incomplete), :red %>
+        <% else %>
+          <%= status_tag @patient %>
+        <% end %>
+      </div>
     </div>
     <div class="col-auto">
       <div class="btn-list">
         <%= link_to t(:edit), edit_patient_path(@patient), class: "btn" %>
         <% if user_is_admin?(current_user) %>
-          <%= link_to t(:delete), @patient, :method => :delete, data: { confirm: t(:are_you_sure_no_undo) }, class: "btn btn-outline-danger" %>
+          <%= link_to_suspend_or_delete @patient, class: "btn btn-outline-danger" %>
         <% end %>
       </div>
     </div>

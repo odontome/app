@@ -19,6 +19,10 @@ class Patient < ApplicationRecord
       .order('firstname')
   }
 
+  scope :valid, lambda {
+    where('patients.is_active = ?', true)
+  }
+
   scope :anything_with_letter, lambda { |letter|
     select('firstname, lastname, uid, id, date_of_birth, allergies, email, updated_at')
       .where('LOWER(SUBSTRING(firstname, 1, 1)) = ?', letter.downcase)
@@ -61,6 +65,7 @@ class Patient < ApplicationRecord
 
   # callbacks
   before_save :squish_whitespace
+  before_destroy :check_if_is_deleteable
   after_create :destroy_nils
 
   def fullname
@@ -84,6 +89,10 @@ class Patient < ApplicationRecord
   # this functions checks if the user was created from the datebook (skipped all validation, so most of the data is invalid)
   def missing_info?
     date_of_birth.nil?
+  end
+
+  def is_deleteable
+    return true if appointments.count.zero?
   end
 
   # this function tries to find a patient by an ID or it's NAME, otherwise it creates one
@@ -119,6 +128,13 @@ class Patient < ApplicationRecord
   def squish_whitespace
     firstname&.squish!
     lastname&.squish!
+  end
+
+  def check_if_is_deleteable
+    unless is_deleteable
+      errors[:base] << I18n.t('errors.messages.has_appointments_or_treatments')
+      false
+    end
   end
 
   # this function is a small compromise to bypass that weird situation where a patient is created with everything set to nil

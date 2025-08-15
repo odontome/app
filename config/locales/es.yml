@@ -313,6 +313,7 @@ es:
   patient_treatment_created_error_message: El item fue creado con éxito
   patient_treatment_updated_error_message: Ocurrió un problema para crear este item
   patient_updated_success_message: El paciente fue actualizado con éxito
+  patient_deleted_success_message: El paciente fue borrado con éxito
   patients: Pacientes
   personal_information: Información personal
   please_wait: Por favor espera...
