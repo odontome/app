@@ -1,0 +1,10 @@
+<% @payments_with_transfers.each do |payment_item| %>
+  $("<%= escape_javascript(render partial: 'payment_row', locals: { payment_item: payment_item })%>").appendTo("tbody").addClass("animated fadeInUp");
+<% end %>
+
+<% if @should_display_load_more %>
+  // Update the URL with the new starting_after cursor
+  $(".card-footer").html("<%=escape_javascript(link_to t(:load_more_payments), payments_url(:starting_after => @next_starting_after), remote: true, class: "btn") %>");
+<% else %>
+  $(".card-footer").html('<%= t(:showing_all_payments) %>');
+<% end %>

@@ -5,6 +5,11 @@ complete:
   timezone: Europe/London
   currency_unit: $
   email: raulriera@hotmail.com
+  stripe_account_id: acct_test_123456789
+  connect_onboarding_status: complete
+  connect_charges_enabled: true
+  connect_payouts_enabled: true
+  connect_details_submitted: true
 
 complete_another_language:
   id: 2

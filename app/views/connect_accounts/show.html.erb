@@ -1,0 +1,97 @@
+<% content_for :title, "Stripe Connect Account" %>
+
+<div class="row">
+  <div class="col-md-8">
+    <h2>Payment Processing Setup</h2>
+    
+    <% if @practice.has_connect_account? %>
+      <div class="card">
+        <div class="card-header">
+          <h4>Connect Account Status</h4>
+        </div>
+        <div class="card-body">
+          <p><strong>Account ID:</strong> <%= @practice.stripe_account_id %></p>
+          <p><strong>Onboarding Status:</strong> 
+            <span class="badge badge-<%= connect_account_status_badge_class(@practice.connect_onboarding_status) %>">
+              <%= @practice.connect_onboarding_status.humanize %>
+            </span>
+          </p>
+          <p><strong>Charges Enabled:</strong> 
+            <%= @practice.connect_charges_enabled? ? "✅ Yes" : "❌ No" %>
+          </p>
+          <p><strong>Payouts Enabled:</strong> 
+            <%= @practice.connect_payouts_enabled? ? "✅ Yes" : "❌ No" %>
+          </p>
+          <p><strong>Details Submitted:</strong> 
+            <%= @practice.connect_details_submitted? ? "✅ Yes" : "❌ No" %>
+          </p>
+          
+          <% unless @practice.connect_account_complete? %>
+            <div class="alert alert-warning">
+              <strong>Setup Required:</strong> Your account setup is not complete. 
+              <%= link_to "Continue Setup", onboarding_connect_account_path, class: "btn btn-warning btn-sm" %>
+            </div>
+          <% else %>
+            <div class="alert alert-success">
+              <strong>Account Ready:</strong> You can now accept payments!
+            </div>
+            
+            <!-- Demo payment link -->
+            <p>
+              <%= link_to "Demo Payment ($50)", new_payment_path(practice_id: @practice.id, amount: 50), 
+                          class: "btn btn-primary", target: "_blank" %>
+              <%= link_to "Demo Payment ($100)", new_payment_path(practice_id: @practice.id, amount: 100), 
+                          class: "btn btn-primary", target: "_blank" %>
+            </p>
+          <% end %>
+          
+          <div class="mt-3">
+            <%= form_with url: refresh_status_connect_account_path, method: :post, local: true, class: "d-inline" do %>
+              <%= submit_tag "Refresh Status", class: "btn btn-secondary btn-sm" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <div class="card">
+        <div class="card-header">
+          <h4>Enable Payment Processing</h4>
+        </div>
+        <div class="card-body">
+          <p>Set up Stripe Connect to accept payments from your patients directly.</p>
+          <p><strong>Benefits:</strong></p>
+          <ul>
+            <li>Accept payments directly from patients</li>
+            <li>Automatic transfers to your bank account</li>
+            <li>Integrated with your practice management</li>
+            <li>Secure and PCI compliant</li>
+          </ul>
+          
+          <%= form_with url: connect_account_path, method: :post, local: true do %>
+            <%= submit_tag "Set Up Payment Processing", class: "btn btn-primary" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header">
+        <h5>How It Works</h5>
+      </div>
+      <div class="card-body">
+        <ol>
+          <li>Create your Stripe Connect account</li>
+          <li>Provide business information</li>
+          <li>Connect your bank account</li>
+          <li>Start accepting payments!</li>
+        </ol>
+        
+        <p><small class="text-muted">
+          Platform fee: 5% per transaction for demo purposes.
+        </small></p>
+      </div>
+    </div>
+  </div>
+</div>

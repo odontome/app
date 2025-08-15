@@ -321,6 +321,9 @@ en:
       title: You haven't created any treatments yet.
       description: Create a treatment to start using them in your patient profiles.
       cta: Use suggested list
+    payments:
+      title: You haven't created any payments yet.
+      description: Start collecting payments from your patients with just a few clicks.
   no_appointments:
     title: No appointments
     description: They don't have any appointments scheduled.
@@ -387,6 +390,8 @@ en:
   save: Save
   send: Send
   load_more_reviews: Load more reviews
+  load_more_payments: Load more payments
+  showing_all_payments: Showing all payments
   continue: Continue
   schedule: Schedule
   search: Search…
@@ -429,7 +434,7 @@ en:
       default: ! "%a, %d %b %Y %H:%M:%S %z"
       just_the_time: ! "%H:%M (UTC %:z)"
       just_the_date: ! "%d %b"
-      long: ! "%B %d, %Y %H:%M"
+      long: ! "%B %d, %Y %I:%M %p"
       short: ! "%d %b %H:%M"
       w3c: ! "%Y-%m-%dT%H:%M:%S%:z"
     pm: pm
@@ -517,6 +522,7 @@ en:
   load_more: "Load More"
   system: "System"
   pagination_info: "Showing %{start} to %{end} of %{total} records"
+  pagination_info_cursor: "Showing page %{page} of records"
 
   audits:
     create: "Created"
@@ -530,3 +536,39 @@ en:
     deleted_appointment_with_notes: "␡ %{notes}"
     deleted_appointment_with_id: "␡ Appointment #%{id}"
     empty: "(Empty)"
+
+  payments:
+    title: "Payments"
+    create_new_payment: "Create new payment"
+    view_payment: "View payment"
+    copy_payment_link: "Copy payment link"
+    status:
+      requires_payment_method: "Requires Payment Method"
+      requires_confirmation: "Requires Confirmation"
+      requires_action: "Requires Action"
+      processing: "Processing"
+      succeeded: "Succeeded"
+      unknown: "Unknown"
+
+  stripe_account:
+    account:
+      status:
+        in_progress:
+          title: "In Progress"
+          description: "Your practice is in progress. Complete your account setup to start accepting payments directly from patients."
+          cta: "Complete Setup"
+        complete:
+          title: "Complete"
+          description: "Your practice is configured to accept payments directly from patients."
+          cta: "Manage Account"
+        disabled:
+          title: "Disabled"
+          description: "Your practice is not allowed to accept payments directly from patients. Please contact support for assistance."
+          cta: "" # CTA is intentionally hidden
+        not_started:
+          title: "Not Started"
+          description: "Enable your practice to accept payments directly from patients."
+          cta: "Complete Setup"
+
+  stripe_payment_processing:
+    title: "Payment Processing"

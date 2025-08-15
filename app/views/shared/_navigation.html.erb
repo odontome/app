@@ -131,7 +131,7 @@
             </li>
 
             <%# Practice / Dashboard %>
-            <li class="nav-item dropdown <%= is_active_tab?(:practices) || is_active_tab?(:audits) ? 'active' : '' %>">
+            <li class="nav-item dropdown <%= is_active_tab?(:practices) || is_active_tab?(:audits) || is_active_tab?(:payments) ? 'active' : '' %>">
               <a class="nav-link dropdown-toggle" href="#navbar-practice" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-store" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"></path> <line x1="3" y1="21" x2="21" y2="21"></line> <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4"></path> <line x1="5" y1="21" x2="5" y2="10.85"></line> <line x1="19" y1="21" x2="19" y2="10.85"></line> <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4"></path></svg>
@@ -155,6 +155,14 @@
                   </span>
                   <span class="nav-link-title">
                     <%= t(:audit_trail) %>
+                  </span>
+                <% end %>
+                <%= link_to payments_url, class: "dropdown-item" do %>
+                  <span class="nav-link-icon d-md-none d-lg-inline-block">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-credit-card"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 5m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z" /><path d="M3 10l18 0" /><path d="M7 15l.01 0" /><path d="M11 15l2 0" /></svg>
+                  </span>
+                  <span class="nav-link-title">
+                    Payments
                   </span>
                 <% end %>
                 <div class="dropdown-divider"></div>

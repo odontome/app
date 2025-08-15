@@ -378,6 +378,8 @@ pt:
   save: Salvar
   send: Enviar
   load_more_reviews: Carregar mais avaliações
+  load_more_payments: Carregar mais pagamentos
+  showing_all_payments: Mostrando todos os pagamentos
   continue: Continuar
   schedule: Agendar
   search: Buscar…

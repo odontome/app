@@ -340,6 +340,8 @@ es:
   review_created_success_message: Esta información será utilizada para mejorar la experiencia de todos.
   save: Guardar
   load_more_reviews: Cargar más calificaciones
+  load_more_payments: Cargar más pagos
+  showing_all_payments: Mostrando todos los pagos
   schedule: Agendar
   search: Buscar…
   select_doctor: Selecciona un doctor
