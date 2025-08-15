@@ -1,0 +1,50 @@
+<% content_for :title, "Payment Successful" %>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body text-center">
+          <div class="text-success mb-3">
+            <i class="fa fa-check-circle" style="font-size: 3rem;"></i>
+          </div>
+          
+          <h3 class="text-success">Payment Successful!</h3>
+          
+          <% if @payment_intent %>
+            <div class="mt-4">
+              <p><strong>Payment ID:</strong> <%= @payment_intent.id %></p>
+              <p><strong>Amount:</strong> $<%= sprintf("%.2f", @payment_intent.amount / 100.0) %></p>
+              <% if @payment_intent.application_fee_amount %>
+                <p><strong>Platform Fee:</strong> $<%= sprintf("%.2f", @payment_intent.application_fee_amount / 100.0) %></p>
+                <p><strong>Practice Receives:</strong> $<%= sprintf("%.2f", (@payment_intent.amount - @payment_intent.application_fee_amount) / 100.0) %></p>
+              <% end %>
+              <% if @practice %>
+                <p><strong>Paid to:</strong> <%= @practice.name %></p>
+              <% end %>
+              <% if @payment_intent.metadata&.patient_name %>
+                <p><strong>Patient:</strong> <%= @payment_intent.metadata.patient_name %></p>
+              <% end %>
+            </div>
+          <% else %>
+            <p class="mt-3">Your payment has been processed successfully.</p>
+          <% end %>
+          
+          <div class="mt-4">
+            <%= link_to "Back to Practice", practice_path, class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card mt-3">
+        <div class="card-body">
+          <small class="text-muted">
+            <strong>Demo Mode:</strong> This was a test payment in demonstration mode. 
+            No actual money was charged. In production, both the practice and the platform 
+            would receive their respective portions automatically.
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

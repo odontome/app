@@ -59,9 +59,26 @@ Rails.application.routes.draw do
 
   # subscriptions
   resource :subscriptions
+  
+  # stripe connect
+  resource :connect_account, only: [:show, :create] do
+    member do
+      get :onboarding
+      post :refresh_status
+    end
+  end
+  
+  # payments (demo)
+  resources :payments, only: [:new, :create] do
+    collection do
+      get :success
+    end
+  end
+  
   namespace :api do
     namespace :webhooks do
       post "/stripe", to: "stripe#event"
+      post "/stripe_connect", to: "stripe_connect#event"
     end
   end
 
