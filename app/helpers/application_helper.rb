@@ -126,4 +126,19 @@ module ApplicationHelper
       "ID: #{version.item_id}"
     end
   end
+
+  def status_badge_class(status)
+    case status.to_s
+    when 'complete'
+      'success'
+    when 'pending_review'
+      'warning'
+    when 'pending'
+      'info'
+    when 'not_started'
+      'secondary'
+    else
+      'secondary'
+    end
+  end
 end

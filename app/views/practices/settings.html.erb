@@ -40,6 +40,39 @@
             </div>
           </div>
         </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-auto">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">
+                Payment Processing
+              </h3>
+              <div class="card-actions">
+                <% if @practice.has_connect_account? %>
+                  <%= content_tag :span, @practice.connect_onboarding_status.humanize, 
+                                 class: "badge bg-#{status_badge_class(@practice.connect_onboarding_status)}-lt" %>
+                <% else %>
+                  <%= content_tag :span, "Not Configured", class: "badge bg-secondary-lt" %>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <% if @practice.connect_account_complete? %>
+                <p class="text-success">✅ Your practice can accept payments directly from patients.</p>
+                <p><%= link_to "Manage Payment Settings", connect_account_path, class: "btn btn-primary btn-sm" %></p>
+              <% elsif @practice.has_connect_account? %>
+                <p class="text-warning">⏳ Setup in progress. Complete your account setup to start accepting payments.</p>
+                <p><%= link_to "Complete Setup", connect_account_path, class: "btn btn-warning btn-sm" %></p>
+              <% else %>
+                <p>Enable direct payment processing for your practice.</p>
+                <p><%= link_to "Set Up Payments", connect_account_path, class: "btn btn-outline-primary btn-sm" %></p>
+              <% end %>
+            </div>
+          </div>
+        </div>
 	    </div>
 	  
       <div class="row">

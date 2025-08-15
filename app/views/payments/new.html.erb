@@ -1,0 +1,197 @@
+<% content_for :title, "Make a Payment" %>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4>Payment to <%= @practice.name %></h4>
+        </div>
+        <div class="card-body">
+          <div id="payment-form">
+            <div class="form-group">
+              <label for="patient-name">Patient Name</label>
+              <input type="text" id="patient-name" class="form-control" placeholder="Enter patient name" value="Demo Patient">
+            </div>
+            
+            <div class="form-group">
+              <label for="amount">Amount</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">$</span>
+                </div>
+                <input type="number" id="amount" class="form-control" value="<%= @amount %>" step="0.01" min="1">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="card-element">Credit or debit card</label>
+              <div id="card-element" class="form-control" style="height: 40px; padding: 10px;">
+                <!-- A Stripe Element will be inserted here. -->
+              </div>
+              <!-- Used to display form errors. -->
+              <div id="card-errors" role="alert" class="text-danger mt-2"></div>
+            </div>
+            
+            <button id="submit-button" class="btn btn-primary btn-block">
+              <span id="button-text">Pay Now</span>
+              <span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></span>
+            </button>
+            
+            <div id="payment-result" class="mt-3" style="display: none;"></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card mt-3">
+        <div class="card-body">
+          <small class="text-muted">
+            <strong>Demo Mode:</strong> This is a demonstration of Stripe Connect payment processing.
+            Use test card number: 4242 4242 4242 4242 with any future expiry date and any CVC.
+            Platform fee: 5% of transaction amount.
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+// Create a Stripe client
+var stripe = Stripe('<%= Rails.configuration.stripe[:publishable_key] %>');
+
+// Create an instance of Elements
+var elements = stripe.elements();
+
+// Custom styling can be passed to options when creating an Element
+var style = {
+  base: {
+    color: '#32325d',
+    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+    fontSmoothing: 'antialiased',
+    fontSize: '16px',
+    '::placeholder': {
+      color: '#aab7c4'
+    }
+  },
+  invalid: {
+    color: '#fa755a',
+    iconColor: '#fa755a'
+  }
+};
+
+// Create an instance of the card Element
+var card = elements.create('card', {style: style});
+
+// Add an instance of the card Element into the `card-element` <div>
+card.mount('#card-element');
+
+// Handle real-time validation errors from the card Element
+card.on('change', function(event) {
+  var displayError = document.getElementById('card-errors');
+  if (event.error) {
+    displayError.textContent = event.error.message;
+  } else {
+    displayError.textContent = '';
+  }
+});
+
+// Handle form submission
+var form = document.getElementById('payment-form');
+var submitButton = document.getElementById('submit-button');
+
+submitButton.addEventListener('click', function(event) {
+  event.preventDefault();
+  
+  var patientName = document.getElementById('patient-name').value;
+  var amount = parseFloat(document.getElementById('amount').value);
+  
+  if (!patientName.trim()) {
+    document.getElementById('card-errors').textContent = 'Please enter patient name';
+    return;
+  }
+  
+  if (!amount || amount < 1) {
+    document.getElementById('card-errors').textContent = 'Please enter a valid amount';
+    return;
+  }
+  
+  setLoading(true);
+
+  // Create the payment intent on the server
+  fetch('<%= payments_path %>', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    },
+    body: JSON.stringify({
+      practice_id: '<%= @practice.id %>',
+      amount: amount,
+      patient_name: patientName
+    })
+  })
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(data) {
+    if (data.error) {
+      showError(data.error);
+      setLoading(false);
+      return;
+    }
+    
+    // Confirm the payment with the card element
+    stripe.confirmCardPayment(data.client_secret, {
+      payment_method: {
+        card: card,
+        billing_details: {
+          name: patientName
+        }
+      }
+    }).then(function(result) {
+      setLoading(false);
+      
+      if (result.error) {
+        showError(result.error.message);
+      } else {
+        // Payment succeeded
+        showSuccess(result.paymentIntent);
+      }
+    });
+  })
+  .catch(function(error) {
+    setLoading(false);
+    showError('Network error: ' + error.message);
+  });
+});
+
+function setLoading(loading) {
+  if (loading) {
+    submitButton.disabled = true;
+    document.getElementById('button-text').style.display = 'none';
+    document.getElementById('spinner').style.display = 'inline-block';
+  } else {
+    submitButton.disabled = false;
+    document.getElementById('button-text').style.display = 'inline';
+    document.getElementById('spinner').style.display = 'none';
+  }
+}
+
+function showError(errorMessage) {
+  var errorElement = document.getElementById('card-errors');
+  errorElement.textContent = errorMessage;
+}
+
+function showSuccess(paymentIntent) {
+  var resultElement = document.getElementById('payment-result');
+  resultElement.innerHTML = '<div class="alert alert-success">Payment succeeded! Payment ID: ' + paymentIntent.id + '</div>';
+  resultElement.style.display = 'block';
+  
+  // Optionally redirect to success page
+  setTimeout(function() {
+    window.location.href = '<%= payments_success_path %>?payment_intent=' + paymentIntent.id;
+  }, 2000);
+}
+</script>

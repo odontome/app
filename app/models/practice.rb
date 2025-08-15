@@ -57,6 +57,90 @@ class Practice < ApplicationRecord
     end
   end
 
+  # Stripe Connect methods
+  def has_connect_account?
+    !self.stripe_account_id.nil?
+  end
+
+  def connect_account_complete?
+    has_connect_account? && connect_charges_enabled? && connect_payouts_enabled?
+  end
+
+  def create_connect_account!
+    return if has_connect_account?
+
+    begin
+      account = Stripe::Account.create({
+        type: 'express',
+        country: 'US', # Could be made configurable
+        email: self.email,
+        business_type: 'individual', # Could be made configurable
+        metadata: {
+          practice_id: self.id.to_s,
+          practice_name: self.name
+        }
+      })
+
+      self.update!(
+        stripe_account_id: account.id,
+        connect_onboarding_status: 'pending'
+      )
+      
+      account
+    rescue Stripe::StripeError => e
+      Rails.logger.error "Failed to create Stripe Connect account for practice #{id}: #{e.message}"
+      raise e
+    end
+  end
+
+  def create_connect_onboarding_link(return_url, refresh_url)
+    raise "No Connect account found" unless has_connect_account?
+
+    begin
+      Stripe::AccountLink.create({
+        account: stripe_account_id,
+        return_url: return_url,
+        refresh_url: refresh_url,
+        type: 'account_onboarding'
+      })
+    rescue Stripe::StripeError => e
+      Rails.logger.error "Failed to create onboarding link for practice #{id}: #{e.message}"
+      raise e
+    end
+  end
+
+  def refresh_connect_account_status!
+    return unless has_connect_account?
+
+    begin
+      account = Stripe::Account.retrieve(stripe_account_id)
+      
+      self.update!(
+        connect_charges_enabled: account.charges_enabled,
+        connect_payouts_enabled: account.payouts_enabled,
+        connect_details_submitted: account.details_submitted,
+        connect_onboarding_status: determine_onboarding_status(account)
+      )
+      
+      account
+    rescue Stripe::StripeError => e
+      Rails.logger.error "Failed to refresh Connect account status for practice #{id}: #{e.message}"
+      raise e
+    end
+  end
+
+  private
+
+  def determine_onboarding_status(account)
+    if account.details_submitted && account.charges_enabled
+      'complete'
+    elsif account.details_submitted
+      'pending_review'
+    else
+      'pending'
+    end
+  end
+
   private
 
   def set_email_practice

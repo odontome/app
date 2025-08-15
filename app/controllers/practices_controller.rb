@@ -139,6 +139,16 @@ class PracticesController < ApplicationController
   def settings
     @practice = current_user.practice
     @subscription = @practice.subscription
+    
+    # Refresh Connect account status if account exists
+    if @practice.has_connect_account?
+      begin
+        @practice.refresh_connect_account_status!
+      rescue Stripe::StripeError => e
+        Rails.logger.error "Failed to refresh Connect account status in settings: #{e.message}"
+        # Don't show error to user, just log it
+      end
+    end
   end
 
   def balance
