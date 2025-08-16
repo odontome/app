@@ -110,9 +110,15 @@ module ApplicationHelper
     end
   end
 
-  def audit_item_display_name(item, version)
+  def audit_item_link(item, version)
     return deleted_item_display_name(version) unless item
 
+    link_to audit_item_display_name(item, version), item
+  end
+
+  private
+
+  def audit_item_display_name(item, version)
     case version.item_type
     when 'Patient', 'Doctor', 'User'
       item.fullname
