@@ -35,8 +35,8 @@ es:
   developers: Desarrolladores
   update_password: Actualizar contraseña
   my_practice: Mi clínica
-  chart_number: Número de historia
-  subscribe_again: Suscríbete de nuevo
+
+
   actions: Acciones
   emergency_telephone: Teléfono de emergencia
   activerecord:

@@ -29,13 +29,11 @@ pt:
   created_at: Criado em
   sent_at: Enviado em
   my_practice: Minha clínica
-  chart_number: Número do prontuário
+
   number_of_recipients: Destinatários
   number_of_opens: Aberturas
   subject: Assunto
-  subscribe_again: Inscrever-se novamente
-  you_are_subscribed_again: Você está inscrito novamente
-  you_are_unsubscribed: Você não está mais inscrito
+
   emergency_telephone: Telefone de emergência
   actions: Ações
   activerecord:
