@@ -9,6 +9,7 @@
 Before setting up the application locally, ensure you have the following installed:
 
 ### 1. Command Line Tools and Homebrew
+
 ```bash
 # Install Xcode Command Line Tools
 xcode-select --install
@@ -18,6 +19,7 @@ xcode-select --install
 ```
 
 ### 2. Ruby 3.2.3
+
 We recommend using rbenv for Ruby version management:
 
 ```bash
@@ -36,20 +38,8 @@ rbenv global 3.2.3
 ruby --version  # Should show ruby 3.2.3
 ```
 
-### 3. Node.js and Yarn
-```bash
-# Install Node.js (LTS version recommended)
-brew install node
+### 3. PostgreSQL
 
-# Install Yarn package manager
-brew install yarn
-
-# Verify installations
-node --version  # Should show v18+ or v20+
-yarn --version  # Should show 1.22+
-```
-
-### 4. PostgreSQL
 ```bash
 # Install PostgreSQL
 brew install postgresql@14
@@ -57,14 +47,8 @@ brew install postgresql@14
 # Start PostgreSQL service
 brew services start postgresql@14
 
-# Create a database user (optional, for development)
-createuser -s $(whoami)
-```
-
-### 5. Additional Tools
-```bash
-# Install Git (if not already installed)
-brew install git
+# Stop PostgreSQL service
+brew services stop postgresql@14
 ```
 
 ## Local Development Setup
@@ -72,6 +56,7 @@ brew install git
 Follow these steps to set up the application on your macOS machine:
 
 ### Quick Setup (Recommended)
+
 ```bash
 # Clone the repository
 git clone https://github.com/odontome/app.git
@@ -79,11 +64,6 @@ cd app
 
 # Install dependencies
 bundle install
-yarn install
-
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your values (see Environment Variables section below)
 
 # Set up the database
 bundle exec rails db:setup
@@ -97,6 +77,7 @@ The application will be available at [http://localhost:3000](http://localhost:30
 **Note**: Make sure you have the prerequisites installed first (see "Prerequisites" section above).
 
 ### Alternative: Automated Setup Script
+
 If you prefer the traditional Rails setup script:
 
 ```bash
@@ -105,15 +86,18 @@ If you prefer the traditional Rails setup script:
 ```
 
 ### Manual Setup (Step by Step)
+
 If you prefer to set up manually or need to troubleshoot:
 
 #### 1. Clone the Repository
+
 ```bash
 git clone https://github.com/odontome/app.git
 cd app
 ```
 
 #### 2. Install Dependencies
+
 ```bash
 # Install Ruby gems
 gem install bundler
@@ -124,6 +108,7 @@ yarn install
 ```
 
 #### 3. Configure Environment Variables
+
 Copy the environment template and configure your local settings:
 
 ```bash
@@ -137,6 +122,7 @@ echo "SECRET_KEY_BASE=$(bundle exec rails secret)" >> .env
 For more environment variable options, see the "Environment Variables" section below.
 
 #### 4. Database Setup
+
 ```bash
 # Create the databases
 bundle exec rails db:create
@@ -149,6 +135,7 @@ bundle exec rails db:seed
 ```
 
 #### 5. Compile Assets
+
 ```bash
 # Compile JavaScript and CSS assets for production
 bundle exec rails assets:precompile
@@ -195,6 +182,7 @@ bundle exec rails server
 ```
 
 Or compile assets manually when needed:
+
 ```bash
 # Compile once
 ./bin/webpack
@@ -210,28 +198,30 @@ Deploys automatically every commit on the `master` branch to the staging environ
 ## Environment Variables
 
 ### Required for Production
+
 Include the following environment variables in your production instance:
 
-| Key                      | Description                                       | Required | Local Dev |
-| ------------------------ | ------------------------------------------------- | -------- | --------- |
-| `SECRET_KEY_BASE`        | Rails secret key, used to secure your application | Yes      | Yes       |
-| `STRIPE_PUBLISHABLE_KEY` | Used by Stripe for subscription management        | Yes      | Optional* |
-| `STRIPE_SECRET_KEY`      | See above                                         | Yes      | Optional* |
-| `STRIPE_WEBHOOK_SECRET`  | Used by Stripe to authenticate your requests      | Yes      | Optional* |
-| `STRIPE_PRICE_ID`        | Used by Stripe for the subscription price         | Yes      | Optional* |
-| `SENDGRID_API_KEY`       | Used by Sendgrid in order to use Rails Mailers    | Yes      | Optional* |
-| `SENDGRID_DOMAIN`        | See above                                         | Yes      | Optional* |
-| `SENDGRID_USERNAME`      | See above                                         | Yes      | Optional* |
-| `SENDGRID_PASSWORD`      | See above                                         | Yes      | Optional* |
-| `BUGSNAG_API_KEY`        | Used by Bugsnag for error tracking                | No       | No        |
-| `DATABASE_URL`           | PostgreSQL connection string                       | Yes**    | Optional  |
+| Key                      | Description                                       | Required | Local Dev  |
+| ------------------------ | ------------------------------------------------- | -------- | ---------- |
+| `SECRET_KEY_BASE`        | Rails secret key, used to secure your application | Yes      | Yes        |
+| `STRIPE_PUBLISHABLE_KEY` | Used by Stripe for subscription management        | Yes      | Optional\* |
+| `STRIPE_SECRET_KEY`      | See above                                         | Yes      | Optional\* |
+| `STRIPE_WEBHOOK_SECRET`  | Used by Stripe to authenticate your requests      | Yes      | Optional\* |
+| `STRIPE_PRICE_ID`        | Used by Stripe for the subscription price         | Yes      | Optional\* |
+| `SENDGRID_API_KEY`       | Used by Sendgrid in order to use Rails Mailers    | Yes      | Optional\* |
+| `SENDGRID_DOMAIN`        | See above                                         | Yes      | Optional\* |
+| `SENDGRID_USERNAME`      | See above                                         | Yes      | Optional\* |
+| `SENDGRID_PASSWORD`      | See above                                         | Yes      | Optional\* |
+| `BUGSNAG_API_KEY`        | Used by Bugsnag for error tracking                | No       | No         |
+| `DATABASE_URL`           | PostgreSQL connection string                      | Yes\*\*  | Optional   |
 
 \* For local development, you can skip payment and email functionality  
-\** Required for production; for local development, database.yml is used
+\*\* Required for production; for local development, database.yml is used
 
 ### Setting Up Environment Variables Locally
 
 #### Using .env file (Recommended)
+
 ```bash
 # Copy the example file
 cp .env.example .env
@@ -244,6 +234,7 @@ SECRET_KEY_BASE=$(bundle exec rails secret)
 The .env file will be automatically loaded when you start the Rails application.
 
 #### Option 2: Export in your shell
+
 Add to your `~/.zshrc` or `~/.bash_profile`:
 
 ```bash
@@ -255,6 +246,7 @@ source ~/.zshrc
 ```
 
 #### Option 3: Set variables when running commands
+
 ```bash
 SECRET_KEY_BASE=your_key_here bundle exec rails server
 
@@ -268,6 +260,7 @@ chmod +x start_server.sh
 ```
 
 ### Generating a Secret Key
+
 ```bash
 # Generate a new secret key
 bundle exec rails secret
@@ -276,10 +269,11 @@ bundle exec rails secret
 ## Setting up Scheduler
 
 ### For Production
+
 Add all the jobs in `/lib/tasks/odontome.rake` to your scheduler:
 
 - `odontome:send_appointment_reminder_notifications` - Every hour
-- `odontome:send_appointment_scheduled_notifications` - Every 5 minutes  
+- `odontome:send_appointment_scheduled_notifications` - Every 5 minutes
 - `odontome:delete_practices_cancelled_a_while_ago` - Daily
 - `odontome:send_todays_appointments_to_doctors` - Daily at 7 AM
 - `odontome:send_birthday_wishes_to_patients` - Daily at 3 PM
@@ -287,6 +281,7 @@ Add all the jobs in `/lib/tasks/odontome.rake` to your scheduler:
 - `odontome:send_six_month_checkup_reminders` - Every hour (targets 10 AM local time per practice)
 
 ### For Local Development
+
 You can run these tasks manually for testing:
 
 ```bash
@@ -322,6 +317,7 @@ stripe listen --forward-to localhost:3000/api/webhooks/stripe
 ### Common Issues and Solutions
 
 #### PostgreSQL Connection Issues
+
 ```bash
 # If PostgreSQL isn't running
 brew services start postgresql@14
@@ -334,6 +330,7 @@ bundle exec rails db:create
 ```
 
 #### Gem Installation Issues
+
 ```bash
 # If you get permission errors
 gem install bundler --user-install
@@ -345,6 +342,7 @@ gem install pg -- --with-pg-config=/usr/local/bin/pg_config
 ```
 
 #### Node.js/Yarn Issues
+
 ```bash
 # If yarn install fails
 yarn install --network-timeout 100000
@@ -355,6 +353,7 @@ yarn install
 ```
 
 #### M1/M2 Mac Specific Issues
+
 ```bash
 # If you encounter native gem compilation issues
 bundle config build.pg --with-pg-config=/opt/homebrew/bin/pg_config
@@ -365,6 +364,7 @@ arch -arm64 bundle install
 ```
 
 #### Rails Server Issues
+
 ```bash
 # If port 3000 is already in use
 bundle exec rails server -p 3001
@@ -375,6 +375,7 @@ bundle exec rails server
 ```
 
 #### Asset Compilation Issues
+
 ```bash
 # Clear precompiled assets
 bundle exec rails assets:clobber
