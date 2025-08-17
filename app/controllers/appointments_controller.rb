@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class AppointmentsController < ApplicationController
-  # layout
+  before_action :require_user
+
   layout false, except: :show
 
   def index
