@@ -113,7 +113,15 @@ module ApplicationHelper
   def audit_item_link(item, version)
     return deleted_item_display_name(version) unless item
 
-    link_to audit_item_display_name(item, version), item
+    # Use the correct path helper depending on nesting
+    destination = case version.item_type
+                  when 'Appointment'
+                    [item.datebook, item]
+                  else
+                    item
+                  end
+
+    link_to audit_item_display_name(item, version), destination
   end
 
   private

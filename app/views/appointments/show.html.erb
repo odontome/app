@@ -1,0 +1,37 @@
+<div class="page-header mb-4">
+  <div class="row align-items-center">
+    <div class="col">
+      <h2 class="page-title">
+        <%= t :appointment %>
+      </h2>
+    </div>
+    <div class="col-auto">
+    </div>
+  </div>
+</div>
+
+<div class="row row-cards">
+    <div class="col-md-12">
+        <div class="card card-md">
+            <div class="card-body">
+                <div class="row">
+                <div class="col-md-6 mb-2">
+                    <%= value_tag t(:patient), link_to(@appointment.patient.fullname, patient_path(@appointment.patient)) %>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <%= value_tag t(:doctor), link_to(@appointment.doctor.fullname, doctor_path(@appointment.doctor)) %>
+                </div>
+                </div>
+            
+                <div class="row">
+                <div class="col-md-6 mb-2">
+                    <%= value_tag t(:starts_at), l(@appointment.starts_at) %>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <%= value_tag t(:ends_at), l(@appointment.ends_at) %>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
