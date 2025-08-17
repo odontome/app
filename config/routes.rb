@@ -51,7 +51,7 @@ Rails.application.routes.draw do
   delete '/admin/impersonate' => 'admin#stop_impersonating', as: :admin_stop_impersonating
 
   # audit trail (for practice admins)
-  resources :audits, only: [:index, :show]
+  resources :audits, only: %i[index show]
 
   # unsubscribe links
   get '/patients/:id/unsubscribe' => 'patients#unsubscribe', :as => :patients_unsubscribe
@@ -61,7 +61,7 @@ Rails.application.routes.draw do
   resource :subscriptions
   namespace :api do
     namespace :webhooks do
-      post "/stripe", to: "stripe#event"
+      post '/stripe', to: 'stripe#event'
     end
   end
 
