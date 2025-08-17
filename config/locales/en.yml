@@ -29,13 +29,11 @@ en:
   created_at: Created at
   sent_at: Sent at
   my_practice: My practice
-  chart_number: Chart number
+
   number_of_recipients: Recipients
   number_of_opens: Opens
   subject: Subject
-  subscribe_again: Subscribe again
-  you_are_subscribed_again: You are subscribed again
-  you_are_unsubscribed: You are unsubscribed
+
   emergency_telephone: Emergency telephone
   actions: Actions
   activerecord:
