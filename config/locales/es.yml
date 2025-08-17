@@ -1,20 +1,14 @@
+---
 es:
-  tell_us_about_your_experience_at_practice: Cuentamos un poco sobre tu experiencia en %{practice_name}
-  account_cancelled: Tu cuenta ha sido marcada para cancelación. Si crees que esto es un error, por favor contacta con nosotros lo más rápido posible.
+  account_cancelled: Tu cuenta ha sido marcada para cancelación. Si crees que esto
+    es un error, por favor contacta con nosotros lo más rápido posible.
   activate: Activar
-  appointment: Cita
   appointment_visit:
-    past_tense: <strong>%{patient_name}</strong> vió al %{doctor_fullname}
-    future_tense: <strong>%{patient_name}</strong> verá al %{doctor_fullname}
-  all_appointments: Todas las citas
-  review: Calificación
-  no_comment: No hay comentarios
+    past_tense: "<strong>%{patient_name}</strong> vió al %{doctor_fullname}"
+    future_tense: "<strong>%{patient_name}</strong> verá al %{doctor_fullname}"
   showing_all_reviews: Mostrando todas las calificaciones
-  thank_you: ¡Gracias!
-  range: Rango
   active: Activa
   amount: Monto
-  create: Crear
   filters:
     title: Filtrar
     reviews:
@@ -25,18 +19,11 @@ es:
       two_stars: 2 estrellas
       one_star: 1 estrella
   balance_discount_hint: Cualquier valor negativo será ingresado como egresos
-  expense: Egreso
-  income: Ingreso
-  today_balance: Balance de hoy
   download_as_csv_file: Descargar como CSV
-  calendar_feed: Suscripción a las citas
-  calendar_feed_message: Puedes suscribirte a las citas de %{doctor_name} utilizando la siguiente dirección en tu app de calendario favorita.
   created_at: Creado el
   developers: Desarrolladores
   update_password: Actualizar contraseña
   my_practice: Mi clínica
-  chart_number: Número de historia
-  subscribe_again: Suscríbete de nuevo
   actions: Acciones
   emergency_telephone: Teléfono de emergencia
   activerecord:
@@ -63,9 +50,9 @@ es:
       patient:
         address: Dirección
         allergies: Alergias
-        cigarettes_per_day: ¿Cuántos cigarrillos al día?
+        cigarettes_per_day: "¿Cuántos cigarrillos al día?"
         date_of_birth: Fecha de nacimiento
-        drinks_per_day: ¿Cuántos tragos al día?
+        drinks_per_day: "¿Cuántos tragos al día?"
         drugs_use: Historial de uso de drogas
         email: Email
         emergency_telephone: Teléfono de emergencias
@@ -108,24 +95,17 @@ es:
   address: Dirección
   admin_credentials_required: Necesitas ser administrador para poder hacer esto.
   administrator: Administrador
-  age: Edad
   years_old: Años de edad
-  age_with_suffix: ! "%{age} años de edad"
-  ago_in_words: ! "hace %{date}"
-  distance_in_words: ! "en %{date}"
   allergic_to: Alérgico a
-  already_have_an_account: ¿Ya tienes una cuenta?
   annotate: Anotar
   appointment_created_error_message: Ocurrió un problema al intentar crear la cita.
-  appointment_date: Fecha
   appointment_deleted_error_message: Ocurrió un problema al intentar borrar la cita.
   appointment_updated_success_message: La cita ha sido actualizada con éxito.
-  appointment_updated_error_message: Ocurrió un problema al intentar actualizar la cita.
+  appointment_updated_error_message: Ocurrió un problema al intentar actualizar la
+    cita.
   appointments: Citas
-  appointments_in_datebook: ! "%{count} citas"
-  are_you_sure: ¿Estás seguro?
-  are_you_sure_no_undo: ¿Estás seguro? Toda la información relacionada será borrada.
-  balance: Estado de cuenta
+  are_you_sure: "¿Estás seguro?"
+  are_you_sure_no_undo: "¿Estás seguro? Toda la información relacionada será borrada."
   balance_created_error_message: Ocurrió un problema al intentar crear esta entrada.
   cancel: Cancelar
   cigarettes_per_day: Cigarrillos por día
@@ -143,20 +123,17 @@ es:
   current_medications: Medicamentos actuales
   date:
     formats:
-      day_and_date: ! "%A (%e %b)"
-      short: ! "%e %b"
-      long: ! "%B %d, %Y"
+      day_and_date: "%A (%e %b)"
+      short: "%e %b"
+      long: "%B %d, %Y"
   datebooks: Agendas
-  day: Día
   delete: Borrar
   cancel_appointment: Cancelar esta cita
   confirm_appointment: Confirmar esta cita
-  confirm_reschedule: ¿Estás seguro de que quieres reprogramar esta cita?
-  confirm_resize: ¿Estás seguro de que quieres cambiar la duración de esta cita?
+  confirm_reschedule: "¿Estás seguro de que quieres reprogramar esta cita?"
+  confirm_resize: "¿Estás seguro de que quieres cambiar la duración de esta cita?"
   delete_appointment: Borrar esta cita
-  delete_patient: Borrar este paciente
   doctor_created_success_message: El doctor ha sido creado con éxito.
-  doctor_has_no_future_appointments: La agenda está libre. ¿Qué tal si %{datebooks_url} algo?
   doctor_updated_success_message: El doctor ha sido actualizado con éxito.
   doctor_deleted_success_message: El doctor ha sido borrado con éxito.
   doctors: Doctores
@@ -172,64 +149,33 @@ es:
   enter_patient_name_or_uid: Paciente o número de historia…
   errors:
     titles:
-      unauthorised: No puedes hacer eso
       not_found: Mmm, no lo encontré
-      server_error: Ay...
-      form_update: Oh oh, ourrió un problema
-    cta:
-      try_again: ¡Inténtalo de nuevo!
-      go_home: Ir a la página principal
     messages:
       invalid_date_range: Las fechas son invalidas.
       invalid_email_format: Formato invalido.
       unauthorised: No posees los permisos necesarios para hacer esto.
       not_found: Puede ser que haya sido borrado o nunca existió
       server_error: Ha ocurrido un error, por favor intentalo más tarde
-      reset_your_password_request: Debe restablecer la contraseña de su cuenta. Lo sentimos por cualquier inconveniente que esto haya causado.
-      reset_your_password_token_expired: Ha pasado mucho tiempo desde la solicitud de cambio de contraseña.
-      consecutive_failed_logins_limit_exceeded: Muchos intentos consecutivos para iniciar una sesión, la cuenta ha sido bloqueada temporalmente.
-  everyone: Todos
+      reset_your_password_request: Debe restablecer la contraseña de su cuenta. Lo
+        sentimos por cualquier inconveniente que esto haya causado.
+      reset_your_password_token_expired: Ha pasado mucho tiempo desde la solicitud
+        de cambio de contraseña.
+      consecutive_failed_logins_limit_exceeded: Muchos intentos consecutivos para
+        iniciar una sesión, la cuenta ha sido bloqueada temporalmente.
   family_diseases_hint: Por favor sé lo más descriptivo posible.
   family_history: Historial familiar
   female: Mujer
   female_doctor_prefix: Dra.
-  for_your_information: Información adicional
   forgot_password: Olvidaste tu contraseña?
-  future_appointments: Próximas citas
-  past_appointments: Citas anteriores
   gender: Sexo
-  hide_past_appointments: Esconder citas pasadas
   valid: Valido
   invalid: Invalido
   home: Inicio
-  help:
-    patients:
-      status: Los pacientes sin toda la información necesaria para crear sus perfiles son marcados como "incompletos".
-    datebooks:
-      status: Agendas inactivas son aquellas que no tienen ninguna cita. Solo agendas inactivas pueden ser borradas.
-    doctors:
-      feed: Para iPhones, sigue las instrucciones en <a href="https://support.apple.com/en-ca/guide/iphone/iph3d1110d4/ios">este artículo</a> para agregar el calendario a tu teléfono.
-      suspended: Doctores suspendidos no aparecen como opciones para nuevas citas. Las citas anteriores no se ven afectadas.
-    treatments:
-      status: Tratamientos invalidos no poseen precios. Debes corregir el precio antes de poder utilizarlo
   inactive: Inactiva
   incomplete: Incompleto
   instructions:
-    datebooks: <p>Agendas son el centro de cada clínica.</p> <p>Debido a que ya puedes filtrar por doctores, un uso común de las agendas es crear una por cada clínica que poseas.</p>
-    doctors:
-      <p>Para mejor organizar a tu personal, utiliza diferentes colores para cada doctor.</p>
-      <p>Recuerda que puedes suspender doctores que ya no trabajes para ti. De esta manera no aparecerán en tu Odonto.me pero igual mantendrás todo el historial de sus actividades.</p>
-    patients: Lo más importante de tu clínica. Con solo unos cuantos clics puedes crear un paciente, aunque es recomendado que llenes la mayor cantidad de información posible.
-    practice: <p>Configura tu clínica como prefieras.</p> <p>Si por algún motivo decides dejarnos. Puedes %{close_url} en cualquier momento.</p>
-    cancel: <p>Al cerrar tu cuenta, tu información será guardara por 14 días y después será borrada de nuestros servidores.</p>
-    treatments: Todo lo que le haces a tus pacientes. Esta sección está directamente relacionada con el estado de cuenta de tu clínica.
-    users:
-      <p>Las personas que pueden accesar a tu Odonto.me.</p> <p>Ya que solo tú puedes ver esta información, Es recomendado que crees tantos usuarios quieras para manejar Odonto.me pero dejes a este usuario <strong>administrador</strong>
-      para la adminstración y configuración.</p>
-  last_login_at_with_date: Última sesión hace %{date}
-  last_login_at: Última sesión
-  roles: Roles
-  logout: ¿Cerrar sesión?
+    practice: "<p>Configura tu clínica como prefieras.</p> <p>Si por algún motivo
+      decides dejarnos. Puedes %{close_url} en cualquier momento.</p>"
   mailers:
     doctor:
       today_agenda:
@@ -246,235 +192,183 @@ es:
           summary: Cita odontologica
           description: "%{doctor_name} te ha invitado a una cita odontologica."
       birthday:
-        subject: ¡Feliz cumpleaños!
+        subject: "¡Feliz cumpleaños!"
       review:
-        subject: ¿Cómo estuvo tu cita en %{practice_name}?
+        subject: "¿Cómo estuvo tu cita en %{practice_name}?"
       six_month_checkup_reminder:
         subject: Es hora de tu revisión en %{practice_name}
     practice:
       welcome:
         subject: Bienvenido a Odonto.me
-      daily_recap:
-        subject: Resumen diario de %{date}
       new_review_notification:
         subject: Tienes una nueva calificación
   male: Hombre
   male_doctor_prefix: Dr.
   manage: Gestionar
-  medical_history: Historial medico
   mobile: Movil
-  month: Mes
   name: Nombre
-  never: Nunca
-  never_logged_in: Nunca
-  new: Nuevo
-  new_user: Nuevo usuario
-  no_account: ¿No tienes una cuenta?
   no_doctors: Por favor crea algunos doctores antes.
-  no_patient_found_new_one_will_be_created: No se ha encontrado ningún paciente, se creara uno.
-  no_patients: Aún no has creado ningún paciente que empiece con esta letra.
   no_treatments_message: Aún no has creado ningún tratamiento.
-  no_user_with_that_email: Parece haber un problema. Si esto continua, por favor contacta con nosotros.
-  none: Ninguna
-  not_logged_in: No tienes ninguna sesión abierta
+  no_user_with_that_email: Parece haber un problema. Si esto continua, por favor contacta
+    con nosotros.
   note_created_error_message: Ocurrió un problema al crear este comentario
   notes: Comentarios
   notes_about_this: Comentarios adicionales para este %{class_name}
-  number_of_signins: Número de ingresos
   only_if_clinic_uses_uid: Solo si tu clínica utiliza un sistema único de identificación
-  or: o
   password: Contraseña
   password_confirmation: Confirmación de contraseña
-  password_reset_instructions: Te enviaremos instrucciones de como cambiar tu contraseña cuando nos digas tu email.
-  password_reset_instructions_sent_to_email: Las instrucciones han sido enviadas a tu email.
+  password_reset_instructions_sent_to_email: Las instrucciones han sido enviadas a
+    tu email.
   password_reset_success_message: Tu contraseña fue actualizada.
-  password_update_instructions: Ingresa tu nueva contraseña abajo para continuar
   past_illnesses: Enfermedades pasadas
   past_surgeries: Cirugias pasadas
   patient: Paciente
   patient_created_success_message: El paciente fue creado con éxito
-  empty:
-    treatments:
-      title: Aún no has creado ningún tratamiento.
-      description: Crea un tratamiento para empezara a utilizarlos en los perfiles de pacientes.
-      cta: Usar tratamientos sugeridos
+  empty: "(vacío)"
   no_appointments:
     title: Sin citas
     description: No tienen ninguna cita programada.
   no_reviews:
     title: Sin calificaciones
-    description: Ningún paciente ha calificado su experiencia aún.<br /> Cada vez que un paciente haya visitado tu clínica, un email será enviado para solicitar una calificación.
-  patient_has_no_appointments: Sin citas. ¿Quiéres %{datebooks_url}
-    una?
-  patient_search_results_few: ! "%{patients_count} pacientes encontrados."
-  patient_search_results_many: Mostrado %{patients_count} de muchos pacientes. Intenta refinar tu búsqueda.
-  patient_search_results_one: Lo encontré
-  patient_search_results_zero: Ningún paciente encontrado.
-  patient_treatment_created_error_message: El item fue creado con éxito
-  patient_treatment_updated_error_message: Ocurrió un problema para crear este item
+    description: Ningún paciente ha calificado su experiencia aún.<br /> Cada vez
+      que un paciente haya visitado tu clínica, un email será enviado para solicitar
+      una calificación.
   patient_updated_success_message: El paciente fue actualizado con éxito
   patients: Pacientes
-  personal_information: Información personal
   please_wait: Por favor espera...
-  practice_cancellation: Cancelación de cuenta
-  practice_cancellation_message: Lamentamos que quieras dejarnos, si hay algo que podamos hacer para ayudarte, por favor ponte en contacto con nosotros. Para continuar con la cancelación presiona el siguiente botón.
-  practice_close_active_message: ""
-  practice_close_error_message: Ha ocurrido un error al intentar cerrar tu cuenta. Por favor contact con nosotros para solucionarlo.
-  practice_close_success_message: Que lastima que has decidido dejarnos. Tu información ha sido marcada para ser borrada.
-  practice_information: Información de la clínica
+  practice_close_error_message: Ha ocurrido un error al intentar cerrar tu cuenta.
+    Por favor contact con nosotros para solucionarlo.
+  practice_close_success_message: Que lastima que has decidido dejarnos. Tu información
+    ha sido marcada para ser borrada.
   practice_name: Nombre de la clínica
   practice_name_hint: Algo como "Mi excelente clínica"
   practice_email: Email de la clínica
   practice_settings: Preferencias de la clínica
   practice_updated_success_message: La clínica ha sido actualizada con éxito
-  practices: Clínicas
-  predefined_treatments_created_success_message: Se han utilizado los tratamientos por defecto. Modifica los nombres y precios a tu mejor parecer.
+  predefined_treatments_created_success_message: Se han utilizado los tratamientos
+    por defecto. Modifica los nombres y precios a tu mejor parecer.
   price: Precio
   privacy_policy: Política de privacidad
   profile: Perfil
-  view_profile: Ver perfil
   view_patient_profile: Ver perfil de paciente
-  remember_me: Recordarme
   reset_password: Cambiar contraseña
   reviews: Calificaciones
-  review_created_success_message: Esta información será utilizada para mejorar la experiencia de todos.
   save: Guardar
   load_more_reviews: Cargar más calificaciones
   schedule: Agendar
-  search: Buscar…
   select_doctor: Selecciona un doctor
-  show_past_appointments: Mostrar citas pasadas
   signin: Iniciar sesión
   signout: Cerrar sesión
   signup: Registrate
   spanish: Español
   speciality: Especialidad
   starts_at: Comienza el
-  status: Estatus
   subscriptions:
     title: Subscripción
-    status:
-      trialing: "en prueba"
-      active: "activa"
-      past_due: "vencida"
-      canceled: "cancelada"
     cta:
       active: gestionar tu subscripción
       expired: subscríbete
       trialing: subscríbete
     message_to_admin:
       active: Tu subscripción esta activa, puedes %{stripe_url} en cualquier momento.
-      expired: Tu subscripción ha expirado, por favor %{stripe_url} para reactivar tu cuenta.
-      trialing: Estás usando una subscripción de prueba, por favor %{stripe_url} para activarla.
+      expired: Tu subscripción ha expirado, por favor %{stripe_url} para reactivar
+        tu cuenta.
+      trialing: Estás usando una subscripción de prueba, por favor %{stripe_url} para
+        activarla.
     errors:
-      expiring: Tu subscripción va a expirar pronto. Por favor <a href="%{practice_settings_url}">subscríbete</a> para no perder acceso a tu cuenta.
-      expired: Tu subscripción ha expirado, por favor renueva la subscripción para obtener acceso a tu cuenta.
-      expired_non_admin: Tu subscripción ha expirado, por favor consulta con el administrador de tu cuenta. Solo ellos pueden renovar subscripciones.
-      past_due: Tu pago está vencido. Por favor <a href="%{practice_settings_url}">actualiza tu forma de pago</a> para evitar interrupciones en el servicio.
+      expiring: Tu subscripción va a expirar pronto. Por favor <a href="%{practice_settings_url}">subscríbete</a>
+        para no perder acceso a tu cuenta.
+      expired: Tu subscripción ha expirado, por favor renueva la subscripción para
+        obtener acceso a tu cuenta.
+      expired_non_admin: Tu subscripción ha expirado, por favor consulta con el administrador
+        de tu cuenta. Solo ellos pueden renovar subscripciones.
+      past_due: Tu pago está vencido. Por favor <a href="%{practice_settings_url}">actualiza
+        tu forma de pago</a> para evitar interrupciones en el servicio.
   suspend: Suspender
   suspended: Suspendido
   telephone: Teléfono
-  more_information: Más información
   terms_of_service: Términos del servicio
   time:
     am: am
     formats:
-      default: ! "%a, %d %b %Y %H:%M:%S %z"
-      just_the_time: ! "%H:%M (UTC %:z)"
-      just_the_date: ! "%d %b"
-      long: ! "%B %d, %Y %H:%M"
-      short: ! "%d %b %H:%M"
-      w3c: ! "%Y-%m-%dT%H:%M:%S%:z"
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      just_the_time: "%H:%M (UTC %:z)"
+      just_the_date: "%d %b"
+      long: "%B %d, %Y %H:%M"
+      short: "%d %b %H:%M"
+      w3c: "%Y-%m-%dT%H:%M:%S%:z"
     pm: pm
-  today: Hoy
-  treatment_without_price: Agrega un precio a este tratamiento, o simplemente borralo
   treatments: Tratamientos
   treatments_created_success_message: El tratamiento ha sido creado con éxito.
   treatments_updated_success_message: El tratamiento ha sido actualizado con éxito.
   uid: Identificador único
-  updated_at: Actualizado el
-  use_preloaded_treatments: ¿Usar los tratamientos por defecto?
   user: Usuario
   user_created_success_message: El usuario ha sido creado con éxito.
   user_updated_success_message: El usuario ha sido actualizado con éxito.
   users: Usuarios
-  week: Semana
   tutorial:
-    message: Podemos ver que apenas estás empezando y nos gustaría ayudarte a configurar tu clínica.
-    datebooks: Empiezas con una sola agenda que hemos creado por ti. Puedes editar el nombre de la misma o crear todas las que necesites en %{datebooks_url}.
-    doctors: Necesitas por lo menos un doctor para empezar a agendar pacientes. De nuevo, puedes crear todos los que quieras en %{doctors_url}.
-    practice: No olvides configurar tu huso horario, idioma y moneda en %{practice_settings_url}. Algunos de estos valores fueron creados por ti, pero vale la pena revisar que todo este en orden.
+    message: Podemos ver que apenas estás empezando y nos gustaría ayudarte a configurar
+      tu clínica.
+    datebooks: Empiezas con una sola agenda que hemos creado por ti. Puedes editar
+      el nombre de la misma o crear todas las que necesites en %{datebooks_url}.
+    doctors: Necesitas por lo menos un doctor para empezar a agendar pacientes. De
+      nuevo, puedes crear todos los que quieras en %{doctors_url}.
+    practice: No olvides configurar tu huso horario, idioma y moneda en %{practice_settings_url}.
+      Algunos de estos valores fueron creados por ti, pero vale la pena revisar que
+      todo este en orden.
   welcome: Bienvenido a Odonto.me
-  you_agree_to_our_terms_and_privacy_policy: Aceptas nuestras %{terms_url} y nuestra %{privacy_url} cuando continuas.
   your_first_datebook: Tu agenda
-  email_notifications:
-    title: Notificaciones por correo
-    subscribe_message: "Ya no estás suscrito para recibir notificaciones de la <strong>%{name}</strong>. Suscríbete de nuevo <a href='%{url}?undo'>haciendo clic aquí</a>"
-    unsubscribe_message: "Estás suscrito para recibir notificaciones sobre la  <strong>%{name}</strong>. Date de baja <a href='%{url}'>haciendo clic aquí</a>"
-    daily_digest: "actividad de tu clínica"
   analytics:
-    title: "Analíticas"
-    vs_last_week: "vs semana pasada"
+    title: Analíticas
+    vs_last_week: vs semana pasada
     kpis:
-      appointments: "Citas"
-      revenue: "Ingresos"
-      new_patients: "Pacientes nuevos"
-      reviews: "Calificaciones"
+      appointments: Citas
+      revenue: Ingresos
+      new_patients: Pacientes nuevos
+      reviews: Calificaciones
     charts:
-      appointments_this_week: "Citas de esta semana"
-      revenue_this_week: "Ingresos de esta semana"
-      top_doctors_by_unique_patients: "Doctores con más pacientes únicos"
-      hours_worked_by_doctors: "Horas trabajadas por doctor"
-      most_recurring_patients: "Pacientes que más repiten"
-      avg_time_gap_between_appointments_minutes: "Promedio de tiempo entre citas (minutos)"
+      appointments_this_week: Citas de esta semana
+      revenue_this_week: Ingresos de esta semana
+      top_doctors_by_unique_patients: Doctores con más pacientes únicos
+      hours_worked_by_doctors: Horas trabajadas por doctor
+      most_recurring_patients: Pacientes que más repiten
+      avg_time_gap_between_appointments_minutes: Promedio de tiempo entre citas (minutos)
     series:
-      patients: "Pacientes"
-      hours: "Horas"
-      appointments: "Citas"
-      avg_gap_min: "Promedio (min)"
+      patients: Pacientes
+      hours: Horas
+      appointments: Citas
+      avg_gap_min: Promedio (min)
     labels:
-      new: "Nuevos"
-      returning: "Recurrentes"
-
-  # Appointments list footer counts (similar to patient search results)
-  appointments_results_zero: No se encontraron citas.
-  appointments_results_one: ¡Ahí estaba esa cita!
-  appointments_results_few: "%{appointments_count} citas."
-  appointments_results_many: "Mostrando %{appointments_count} citas. Intenta refinar el rango."
-
-  # Audit Trail
-  audit_trail: "Registro de Auditoría"
-  audit_trail_description: "Ver todos los cambios realizados en los datos de tu clínica en los últimos 30 días."
-  audit_details: "Detalles de Auditoría"
-  back_to_audit_log: "Volver al Registro de Auditoría"
-  basic_information: "Información Básica"
-  changes_made: "Cambios Realizados"
-  created_data: "Datos Creados"
-  deleted_data: "Datos Eliminados"
-  date_time: "Fecha y Hora"
-  item_type: "Tipo"
-  item_id: "ID del Elemento"
-  item_name: "Nombre del Elemento"
-  field: "Campo"
-  old_value: "Valor Anterior"
-  new_value: "Valor Nuevo"
-  value: "Valor"
-  empty: "(vacío)"
-  error_parsing_data: "Error al procesar los datos del objeto"
-  error_parsing_changes: "Error al procesar los datos de cambios"
-  no_changes_recorded: "No se registraron cambios"
-  no_object_data: "No hay datos del objeto disponibles"
-  no_audit_records: "No se encontraron registros de auditoría"
-  view_details: "Ver Detalles"
-  load_more: "Cargar Más"
-  system: "Sistema"
-  pagination_info: "Mostrando %{start} a %{end} de %{total} registros"
-
+      new: Nuevos
+      returning: Recurrentes
+  audit_trail: Registro de Auditoría
+  audit_trail_description: Ver todos los cambios realizados en los datos de tu clínica
+    en los últimos 30 días.
+  audit_details: Detalles de Auditoría
+  basic_information: Información Básica
+  changes_made: Cambios Realizados
+  created_data: Datos Creados
+  deleted_data: Datos Eliminados
+  date_time: Fecha y Hora
+  item_type: Tipo
+  item_id: ID del Elemento
+  item_name: Nombre del Elemento
+  field: Campo
+  old_value: Valor Anterior
+  new_value: Valor Nuevo
+  value: Valor
+  error_parsing_data: Error al procesar los datos del objeto
+  error_parsing_changes: Error al procesar los datos de cambios
+  no_changes_recorded: No se registraron cambios
+  no_object_data: No hay datos del objeto disponibles
+  no_audit_records: No se encontraron registros de auditoría
+  view_details: Ver Detalles
+  system: Sistema
+  pagination_info: Mostrando %{start} a %{end} de %{total} registros
   audit:
-    create: "Creado"
-    update: "Actualizado"
-    destroy: "Eliminado"
-
+    create: Creado
+    update: Actualizado
+    destroy: Eliminado
   audits:
     deleted_item_with_id: "␡ ID: %{id}"
     deleted_person: "␡ %{name}"
