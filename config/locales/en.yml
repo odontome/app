@@ -1,21 +1,41 @@
----
 en:
   tell_us_about_your_experience_at_practice: Tell us about your experience at %{practice_name}
-  account_cancelled: Your account is marked for cancellation. If you believe this
+  account_cancelled:
+    Your account is marked for cancellation. If you believe this
     is a mistake, please contact us as soon as possible.
   activate: Activate
+  all_appointments: All appointments
+  appointment: Appointment
   appointment_visit:
-    past_tense: "<strong>%{patient_name}</strong> visited %{doctor_fullname}"
-    future_tense: "<strong>%{patient_name}</strong> will visit %{doctor_fullname}"
+    past_tense: <strong>%{patient_name}</strong> visited %{doctor_fullname}
+    future_tense: <strong>%{patient_name}</strong> will visit %{doctor_fullname}
+  review: Review
+  no_comment: No comment was provided
   showing_all_reviews: Showing all reviews
+  thank_you: Thank you!
+  range: Range
   active: Active
   amount: Amount
+  create: Create
   balance_discount_hint: Any negative value will be entered as an expense
+  expense: Expense
+  income: Income
+  today_balance: Today's balance
   download_as_csv_file: Download as CSV
   developers: Developers
+  calendar_feed: Subscribe to appointments
+  calendar_feed_message: You can subscribe to the appointments of %{doctor_name} by entering this address in your favorite calendar app.
   update_password: Update password
   created_at: Created at
+  sent_at: Sent at
   my_practice: My practice
+  chart_number: Chart number
+  number_of_recipients: Recipients
+  number_of_opens: Opens
+  subject: Subject
+  subscribe_again: Subscribe again
+  you_are_subscribed_again: You are subscribed again
+  you_are_unsubscribed: You are unsubscribed
   emergency_telephone: Emergency telephone
   actions: Actions
   activerecord:
@@ -85,20 +105,30 @@ en:
       review: Review
   additional_notes: Additional notes
   address: Address
-  admin_credentials_required: You need to be the administrator of the practice to
+  admin_credentials_required:
+    You need to be the administrator of the practice to
     do this
   administrator: Administrator
+  age: Age
   years_old: Years old
+  age_with_suffix: ! "%{age} years old"
+  ago_in_words: ! "%{date} ago"
+  distance_in_words: ! "%{date} away"
   allergic_to: Allergic to
+  already_have_an_account: Already have an account?
   annotate: Annotate
   appointment_created_error_message: The appointment was created successfully
+  appointment_date: Date
   appointment_deleted_error_message: There was a problem deleting the appointment
   appointment_updated_success_message: The appointment was updated successfully
   appointment_updated_error_message: There was a problem updating the appointment
   appointments: Appointments
+  appointments_in_datebook: ! "%{count} appointments"
   are_you_sure: Are you sure?
-  are_you_sure_no_undo: Are you sure? All related data will be deleted, there is no
+  are_you_sure_no_undo:
+    Are you sure? All related data will be deleted, there is no
     going back
+  balance: Balance
   balance_created_error_message: There was a problem creating this item
   cancel: Cancel
   cigarettes_per_day: Cigarettes per day
@@ -116,17 +146,22 @@ en:
   current_medications: Current medications
   date:
     formats:
-      day_and_date: "%A (%e %b)"
-      short: "%e %b"
-      long: "%B %d, %Y"
+      day_and_date: ! "%A (%e %b)"
+      short: ! "%e %b"
+      long: ! "%B %d, %Y"
   datebooks: Datebooks
+  day: Day
   delete: Delete
   cancel_appointment: Cancel this appointment
   confirm_appointment: Confirm this appointment
   confirm_reschedule: Are you sure you want to reschedule this appointment?
   confirm_resize: Are you sure you want to change the duration of this appointment?
   delete_appointment: Delete this appointment
+  delete_patient: Delete this patient
   doctor_created_success_message: The doctor was created successfully
+  doctor_has_no_future_appointments:
+    The schedule is free. How about if we schedule
+    some %{datebooks_url}?
   doctor_updated_success_message: The doctor was updated successfully
   doctor_deleted_success_message: The doctor was deleted successfully
   doctors: Doctors
@@ -142,32 +177,77 @@ en:
   invalid: Invalid
   errors:
     titles:
+      unauthorised: You can't do that
       not_found: Hmmm, I can't find that
+      server_error: Oh oh...
+      form_update: Uh oh, something went wrong
+    cta:
+      try_again: Try again
+      go_home: Go home
     messages:
       invalid_date_range: The chosen dates are invalid
       invalid_email_format: Invalid format
       unauthorised: You don't have permission to do this
       not_found: It may have been deleted or never existed
       server_error: Something went wrong, please try again later.
-      reset_your_password_request: Your account password needs to be reset. Sorry
-        for the inconvenience.
-      reset_your_password_token_expired: Too much time has passed since you requested
-        to reset your password.
-      consecutive_failed_logins_limit_exceeded: Consecutive failed logins limit exceeded,
-        account has been temporarily disabled.
+      reset_your_password_request: Your account password needs to be reset. Sorry for the inconvenience.
+      reset_your_password_token_expired: Too much time has passed since you requested to reset your password.
+      consecutive_failed_logins_limit_exceeded: Consecutive failed logins limit exceeded, account has been temporarily disabled.
+  everyone: Everyone
   family_diseases_hint: Please be as descriptive as possible.
   family_history: Family history
   female: Female
   female_doctor_prefix: D.D.S.
+  for_your_information: For your information
   forgot_password: Forgot your password?
+  future_appointments: Future appointments
+  past_appointments: Past appointments
   gender: Gender
+  hide_past_appointments: Hide past appointments
   home: Home
+  help:
+    patients:
+      status: Patients without the required profile information are marked as "incomplete".
+    datebooks:
+      status: Inactive datebooks don't have any scheduled appointments. Only inactive datebooks can be deleted.
+    doctors:
+      feed: For iPhones, follow the instruction in <a href="https://support.apple.com/en-ca/guide/iphone/iph3d1110d4/ios">this article</a> to add the calendar to your phone.
+      suspended: Suspended doctors won't appear as options for your new appointments. Previous appointments aren't affected.
+    treatments:
+      status: Invalid treatments don't have a price specified, setting one is mandatory for the treatment to show up in the patient profile.
   inactive: Inactive
   incomplete: Incomplete
   instructions:
-    practice: "<p>From here, you can update everything about your practice. Please
+    datebooks:
+      <p>Datebooks are the backbone of every practice.</p> <p>Because you
+      can already filter your datebooks by doctor, one common usage is to create one
+      datebook per each of your practices.</p>
+    doctors:
+      <p>To better organize your staff, use different colors for each doctor.</p>
+      <p>Please note that you can suspend doctors that are no longer in your staff
+      to prevent them from appearing in Odonto.me, while still keeping all their data
+      in your records.</p>
+    patients:
+      Easily the most important part of your practice. You can setup a patient
+      fast by just filling out the few required fields, but it's strongly recommended
+      you take the time to add as much info as possible.
+    practice:
+      <p>From here, you can update everything about your practice. Please
       take a moment to review all your options here.</p> <p>If from any reason you
-      decide to leave us. You can %{close_url} at anytime.</p>"
+      decide to leave us. You can %{close_url} at anytime.</p>
+    cancel: <p>If you cancel your account, your data will be preserved for 14 days. After that, it will be removed from our servers.</p>
+    treatments:
+      Everything you do to your patients. These items are directly connected
+      to the balance of your practice.
+    users:
+      <p>These are the people who have access to your Odonto.me.</p> <p>Since
+      only you have access to these sections, it is recommended that you create users
+      with less privilages to handle the day to day usage and leave your <strong>administrator</strong>
+      account for management.</p>
+  last_login_at_with_date: Last login %{date} ago
+  last_login_at: Last login
+  roles: Roles
+  logout: Logout?
   mailers:
     doctor:
       today_agenda:
@@ -192,59 +272,107 @@ en:
     practice:
       welcome:
         subject: Welcome to Odonto.me
+      daily_recap:
+        subject: Daily recap for %{date}
       new_review_notification:
         subject: You have a new review
   male: Male
   male_doctor_prefix: D.D.S.
   manage: Manage
+  medical_history: Medical history
   mobile: Mobile
+  month: Month
   name: Name
+  never: Never
+  never_logged_in: Never
+  new: New
+  new_user: New user
+  no_account: Don't have an account?
   no_doctors: Please create doctors before using this section
+  no_patient_found_new_one_will_be_created:
+    No patient was found, a new one will be
+    created
+  no_patients: You haven't created any patients that start with this letter.
   no_treatments_message: You haven't created any treatments so far.
-  no_user_with_that_email: There seems to be a problem. If you are still having problems,
+  no_user_with_that_email:
+    There seems to be a problem. If you are still having problems,
     please contact us.
+  none: none
+  not_logged_in: Not logged in
   note_created_error_message: There was a problem creating this note
   notes: Notes
   notes_about_this: Optional notes for this %{class_name}
+  number_of_signins: Number of signins
   only_if_clinic_uses_uid: Only if your practice uses an unique identification system
+  or: or
   password: Password
   password_confirmation: Password confirmation
-  password_reset_instructions_sent_to_email: Instructions on how to reset your password
-    have been sent to your email
+  password_reset_instructions:
+    We will send you instructions on how to change your
+    password after you enter your email below and press Reset password
+  password_reset_instructions_sent_to_email: Instructions on how to reset your password have been sent to your email
   password_reset_success_message: Your password was reset.
+  password_update_instructions: Enter your new password below and press Update password
   past_illnesses: Past illnesses
   past_surgeries: Past surgeries
   patient: Patient
   patient_created_success_message: The patient was created successfully
-  empty: "(empty)"
+  empty:
+    treatments:
+      title: You haven't created any treatments yet.
+      description: Create a treatment to start using them in your patient profiles.
+      cta: Use suggested list
   no_appointments:
     title: No appointments
     description: They don't have any appointments scheduled.
   no_reviews:
     title: No reviews
-    description: No patients have reviewed their experience yet.<br /> Everytime a
-      patient visits your practice, an email will be sent to ask them to review their
-      experience.
+    description: No patients have reviewed their experience yet.<br /> Everytime a patient visits your practice, an email will be sent to ask them to review their experience.
+  patient_has_no_appointments:
+    No appointments. Would you like to %{datebooks_url}
+    one?
+  patient_search_results_few: ! "%{patients_count} patients found."
+  patient_search_results_many:
+    Showing %{patients_count} of many patients. Try a more
+    accurate search.
+  more_information: More information
+  patient_search_results_one: There was that patient!
+  patient_search_results_zero: No patients were found.
+  patient_treatment_created_error_message: The item was created successfully
+  patient_treatment_updated_error_message: There was a problem creating this item
   patient_updated_success_message: The patient was updated successfully
   patients: Patients
+  personal_information: Personal information
   please_wait: Pleast wait...
-  practice_close_error_message: Oops, there was a problem trying to close your account.
-    Please contact us.
-  practice_close_success_message: We are sorry to see you go. Your data is schedule
-    for deletion.
+  practice_cancellation: Practice cancellation
+  practice_cancellation_message:
+    We are sorry that you wish to leave us, if there
+    is anything we can improve or help you, please get in touch with us. To finialize
+    the cancellation of your account please click on the top button.
+  practice_close_active_message: ""
+  practice_close_error_message: Oops, there was a problem trying to close your account. Please contact us.
+  practice_close_success_message: We are sorry to see you go. Your data is schedule for deletion.
+  practice_information: Practice information
   datebook_updated_success_message: Datebook updated successfully
   datebook_created_success_message: Datebook updated successfully
   practice_name: Practice name
   practice_name_hint: Something like "My awesome dental practice"
   practice_email: Practice email
+  practice_not_completely_setup:
+    Please finish completing the information about your
+    practice (doctors, treatments, etc) before using this section.
   practice_settings: Practice settings
   practice_updated_success_message: Your practice has been updated
-  predefined_treatments_created_success_message: Predefined treatments have been created
+  practices: Practices
+  predefined_treatments_created_success_message:
+    Predefined treatments have been created
     for you. Feel free to update their name and prices to whatever fits you.
   price: Price
   privacy_policy: Privacy policy
   profile: Profile
+  view_profile: View profile
   view_patient_profile: View patient profile
+  remember_me: Remember me
   reset_password: Reset password
   filters:
     title: Filters
@@ -256,37 +384,42 @@ en:
       two_stars: 2 stars
       one_star: 1 star
   reviews: Reviews
+  review_created_success_message: This information will be used to improve the experience of everyone.
   save: Save
+  send: Send
   load_more_reviews: Load more reviews
+  continue: Continue
   schedule: Schedule
+  search: Search…
   select_doctor: Select a doctor
+  show_past_appointments: Show past appointments
   signin: Sign in
   signout: Sign out
   signup: Sign up
   spanish: Spanish
   speciality: Speciality
   starts_at: Starts at
+  status: Status
   subscriptions:
     title: Subscription
+    status:
+      trialing: "trialing"
+      active: "active"
+      past_due: "past due"
+      canceled: "canceled"
     cta:
       active: manage your subscription
       expired: subscribe
       trialing: subscribe
     message_to_admin:
       active: Your subscription is %{status}, you can %{stripe_url} at any time.
-      expired: Your subscription is no longer active, please %{stripe_url} to activate
-        your account.
-      trialing: This is a trial subcription, please %{stripe_url} before your trial
-        period ends.
+      expired: Your subscription is no longer active, please %{stripe_url} to activate your account.
+      trialing: This is a trial subcription, please %{stripe_url} before your trial period ends.
     errors:
-      expiring: Your subscription will expire soon. Please <a href="%{practice_settings_url}">subscribe</a>
-        in order to keep access to your account.
-      expired: Your subscription has expired, please renew it to regain access to
-        your account.
-      expired_non_admin: Your subscription has expired, please consult with the owner
-        of your account to renew it. Only administrator accounts can renew subscriptions.
-      past_due: Your payment is past due. Please <a href="%{practice_settings_url}">update
-        your billing</a> to avoid interruption of service.
+      expiring: Your subscription will expire soon. Please <a href="%{practice_settings_url}">subscribe</a> in order to keep access to your account.
+      expired: Your subscription has expired, please renew it to regain access to your account.
+      expired_non_admin: Your subscription has expired, please consult with the owner of your account to renew it. Only administrator accounts can renew subscriptions.
+      past_due: Your payment is past due. Please <a href="%{practice_settings_url}">update your billing</a> to avoid interruption of service.
   suspend: Suspend
   suspended: Suspended
   telephone: Telephone
@@ -294,85 +427,104 @@ en:
   time:
     am: am
     formats:
-      default: "%a, %d %b %Y %H:%M:%S %z"
-      just_the_time: "%H:%M (UTC %:z)"
-      just_the_date: "%d %b"
-      long: "%B %d, %Y %H:%M"
-      short: "%d %b %H:%M"
-      w3c: "%Y-%m-%dT%H:%M:%S%:z"
+      default: ! "%a, %d %b %Y %H:%M:%S %z"
+      just_the_time: ! "%H:%M (UTC %:z)"
+      just_the_date: ! "%d %b"
+      long: ! "%B %d, %Y %H:%M"
+      short: ! "%d %b %H:%M"
+      w3c: ! "%Y-%m-%dT%H:%M:%S%:z"
     pm: pm
+  today: Today
+  treatment_without_price: Add a price to this treatment, or simply delete it
   treatments: Treatments
   treatments_created_success_message: Treatment created successfully
   treatments_updated_success_message: Treatment updated successfully
   uid: Unique identifier
+  updated_at: Updated at
+  use_preloaded_treatments: Would you like to use our list of predefined treatments?
   user: User
   user_created_success_message: The user was created successfully
   user_updated_success_message: The user was updated successfully
   users: Users
   tutorial:
-    message: We can see you that you are just getting started and we will like to
-      give you a quick guide.
-    datebooks: You start with a single datebook created by us, you can of course edit
-      this in %{datebooks_url} or create as many as you like.
-    doctors: You need at least one doctor to start scheduling appointments, you also
-      can add as many as you need in %{doctors_url}.
-    practice: Don't forget to setup your language, timezone and currency in %{practice_settings_url}.
-      Some of these may have already been setup for you, but it doesn't hurt to double
-      check their current values.
+    message: We can see you that you are just getting started and we will like to give you a quick guide.
+    datebooks: You start with a single datebook created by us, you can of course edit this in %{datebooks_url} or create as many as you like.
+    doctors: You need at least one doctor to start scheduling appointments, you also can add as many as you need in %{doctors_url}.
+    practice: Don't forget to setup your language, timezone and currency in %{practice_settings_url}. Some of these may have already been setup for you, but it doesn't hurt to double check their current values.
+  week: Week
   welcome: Welcome to Odonto.me
+  you_agree_to_our_terms_and_privacy_policy:
+    You agree to our %{terms_url} and to
+    our %{privacy_url} when you register.
   your_first_datebook: Your first datebook
+  email_notifications:
+    title: Email notifications
+    subscribe_message: "You are no longer subscribed to recieve emails about <strong>%{name}</strong>. Enable it again, <a href='%{url}?undo'>clicking here</a>"
+    unsubscribe_message: "You are subscribed to recieve emails about <strong>%{name}</strong>. To stop, <a href='%{url}'>click here</a>"
+    daily_digest: "your daily practice's activity"
   analytics:
     title: Analytics
-    vs_last_week: vs last week
+    vs_last_week: "vs last week"
     kpis:
-      appointments: Appointments
-      revenue: Revenue
-      new_patients: New patients
-      reviews: Reviews
+      appointments: "Appointments"
+      revenue: "Revenue"
+      new_patients: "New patients"
+      reviews: "Reviews"
     charts:
-      appointments_this_week: Appointments this week
-      revenue_this_week: Revenue this week
-      top_doctors_by_unique_patients: Top doctors by unique patients
-      hours_worked_by_doctors: Hours worked by doctors
-      most_recurring_patients: Most recurring patients
-      avg_time_gap_between_appointments_minutes: Avg time gap between appointments
-        (minutes)
+      appointments_this_week: "Appointments this week"
+      revenue_this_week: "Revenue this week"
+      top_doctors_by_unique_patients: "Top doctors by unique patients"
+      hours_worked_by_doctors: "Hours worked by doctors"
+      most_recurring_patients: "Most recurring patients"
+      avg_time_gap_between_appointments_minutes: "Avg time gap between appointments (minutes)"
     series:
-      patients: Patients
-      hours: Hours
-      appointments: Appointments
-      avg_gap_min: Avg gap (min)
+      patients: "Patients"
+      hours: "Hours"
+      appointments: "Appointments"
+      avg_gap_min: "Avg gap (min)"
     labels:
-      new: New
-      returning: Returning
-  audit_trail: Audit Trail
-  audit_trail_description: View all changes made to your practice data in the last
-    30 days.
-  audit_details: Audit Details
-  basic_information: Basic Information
-  changes_made: Changes Made
-  created_data: Created Data
-  deleted_data: Deleted Data
-  date_time: Date & Time
-  item_type: Type
-  item_id: Item ID
-  item_name: Item Name
-  field: Field
-  old_value: Old Value
-  new_value: New Value
-  value: Value
-  error_parsing_data: Error parsing object data
-  error_parsing_changes: Error parsing changes data
-  no_changes_recorded: No changes recorded
-  no_object_data: No object data available
-  no_audit_records: No audit records found
-  view_details: View Details
-  system: System
-  pagination_info: Showing %{start} to %{end} of %{total} records
+      new: "New"
+      returning: "Returning"
+
+  # Appointments list footer counts (similar to patient search results)
+  appointments_results_zero: No appointments were found.
+  appointments_results_one: There was that appointment!
+  appointments_results_few: "%{appointments_count} appointments."
+  appointments_results_many: "Showing %{appointments_count} appointments. Try refining your range."
+
+  # Audit Trail
+  audit_trail: "Audit Trail"
+  audit_trail_description: "View all changes made to your practice data in the last 30 days."
+  audit_details: "Audit Details"
+  back_to_audit_log: "Back to Audit Log"
+  basic_information: "Basic Information"
+  changes_made: "Changes Made"
+  created_data: "Created Data"
+  deleted_data: "Deleted Data"
+  date_time: "Date & Time"
+  item_type: "Type"
+  item_id: "Item ID"
+  item_name: "Item Name"
+  field: "Field"
+  old_value: "Old Value"
+  new_value: "New Value"
+  value: "Value"
+  empty: "(empty)"
+  error_parsing_data: "Error parsing object data"
+  error_parsing_changes: "Error parsing changes data"
+  no_changes_recorded: "No changes recorded"
+  no_object_data: "No object data available"
+  no_audit_records: "No audit records found"
+  view_details: "View Details"
+  load_more: "Load More"
+  system: "System"
+  pagination_info: "Showing %{start} to %{end} of %{total} records"
+
   audit:
-    create: Created
-    update: Updated
-    destroy: Deleted
+    create: "Created"
+    update: "Updated"
+    destroy: "Deleted"
+
   audits:
     deleted_item_with_id: "␡ ID: %{id}"
     deleted_person: "␡ %{name}"
