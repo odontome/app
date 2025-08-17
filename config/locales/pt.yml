@@ -105,8 +105,7 @@ pt:
       review: Avaliação
   additional_notes: Notas adicionais
   address: Endereço
-  admin_credentials_required:
-    Você precisa ser o administrador da clínica para
+  admin_credentials_required: Você precisa ser o administrador da clínica para
     fazer isso
   administrator: Administrador
   age: Idade
@@ -159,8 +158,7 @@ pt:
   delete_appointment: Deletar este agendamento
   delete_patient: Deletar este paciente
   doctor_created_success_message: O médico foi criado com sucesso
-  doctor_has_no_future_appointments:
-    A agenda está livre. Que tal se agendarmos
+  doctor_has_no_future_appointments: A agenda está livre. Que tal se agendarmos
     alguns %{datebooks_url}?
   doctor_updated_success_message: O médico foi atualizado com sucesso
   doctor_deleted_success_message: O médico foi deletado com sucesso
@@ -218,8 +216,7 @@ pt:
   inactive: Inativo
   incomplete: Incompleto
   instructions:
-    datebooks:
-      <p>Agendas são a base de toda clínica.</p> <p>Como você
+    datebooks: <p>Agendas são a base de toda clínica.</p> <p>Como você
       já pode filtrar suas agendas por médico, um uso comum é criar uma
       agenda para cada uma de suas clínicas.</p>
     doctors:
@@ -231,16 +228,14 @@ pt:
       Facilmente a parte mais importante da sua clínica. Você pode configurar um paciente
       rapidamente preenchendo apenas os poucos campos obrigatórios, mas é altamente recomendado
       que você dedique tempo para adicionar o máximo de informações possível.
-    practice:
-      <p>Aqui, você pode atualizar tudo sobre sua clínica. Por favor,
+    practice: <p>Aqui, você pode atualizar tudo sobre sua clínica. Por favor,
       dedique um momento para revisar todas as suas opções aqui.</p> <p>Se por algum motivo você
       decidir nos deixar, você pode %{close_url} a qualquer momento.</p>
     cancel: <p>Se você cancelar sua conta, seus dados serão preservados por 14 dias. Depois disso, serão removidos de nossos servidores.</p>
     treatments:
       Tudo que você faz com seus pacientes. Estes itens estão diretamente conectados
       ao saldo da sua clínica.
-    users:
-      <p>Estas são as pessoas que têm acesso ao seu Odonto.me.</p> <p>Como
+    users: <p>Estas são as pessoas que têm acesso ao seu Odonto.me.</p> <p>Como
       apenas você tem acesso a estas seções, é recomendado que você crie usuários
       com menos privilégios para lidar com o uso diário e deixe sua conta de <strong>administrador</strong>
       para gerenciamento.</p>
@@ -307,8 +302,7 @@ pt:
   or: ou
   password: Senha
   password_confirmation: Confirmação da senha
-  password_reset_instructions:
-    Enviaremos instruções sobre como alterar sua
+  password_reset_instructions: Enviaremos instruções sobre como alterar sua
     senha após você inserir seu email abaixo e pressionar Redefinir senha
   password_reset_instructions_sent_to_email: Instruções sobre como redefinir sua senha foram enviadas para seu email
   password_reset_success_message: Sua senha foi redefinida.
@@ -328,8 +322,7 @@ pt:
   no_reviews:
     title: Nenhuma avaliação
     description: Nenhum paciente avaliou sua experiência ainda.<br /> Toda vez que um paciente visita sua clínica, um email será enviado pedindo para avaliar a experiência.
-  patient_has_no_appointments:
-    Nenhum agendamento. Gostaria de %{datebooks_url}
+  patient_has_no_appointments: Nenhum agendamento. Gostaria de %{datebooks_url}
     um?
   patient_search_results_few: ! "%{patients_count} pacientes encontrados."
   patient_search_results_many:
@@ -345,8 +338,7 @@ pt:
   personal_information: Informações pessoais
   please_wait: Por favor, aguarde...
   practice_cancellation: Cancelamento da clínica
-  practice_cancellation_message:
-    Lamentamos que você deseje nos deixar, se há
+  practice_cancellation_message: Lamentamos que você deseje nos deixar, se há
     algo que possamos melhorar ou ajudá-lo, entre em contato conosco. Para finalizar
     o cancelamento de sua conta, clique no botão superior.
   practice_close_active_message: ""
@@ -358,8 +350,7 @@ pt:
   practice_name: Nome da clínica
   practice_name_hint: Algo como "Minha clínica odontológica incrível"
   practice_email: Email da clínica
-  practice_not_completely_setup:
-    Termine de completar as informações sobre sua
+  practice_not_completely_setup: Termine de completar as informações sobre sua
     clínica (médicos, tratamentos, etc) antes de usar esta seção.
   practice_settings: Configurações da clínica
   practice_updated_success_message: Sua clínica foi atualizada
@@ -509,7 +500,6 @@ pt:
   old_value: "Valor Antigo"
   new_value: "Valor Novo"
   value: "Valor"
-  empty: "(vazio)"
   error_parsing_data: "Erro ao analisar dados do objeto"
   error_parsing_changes: "Erro ao analisar dados de alterações"
   no_changes_recorded: "Nenhuma alteração registrada"
@@ -533,3 +523,4 @@ pt:
     deleted_datebook: "␡ %{name}"
     deleted_appointment_with_notes: "␡ %{notes}"
     deleted_appointment_with_id: "␡ Agendamento #%{id}"
+    empty: "(Vazio)"

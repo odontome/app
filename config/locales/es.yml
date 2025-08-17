@@ -459,7 +459,6 @@ es:
   old_value: "Valor Anterior"
   new_value: "Valor Nuevo"
   value: "Valor"
-  empty: "(vacío)"
   error_parsing_data: "Error al procesar los datos del objeto"
   error_parsing_changes: "Error al procesar los datos de cambios"
   no_changes_recorded: "No se registraron cambios"
@@ -483,3 +482,4 @@ es:
     deleted_datebook: "␡ %{name}"
     deleted_appointment_with_notes: "␡ %{notes}"
     deleted_appointment_with_id: "␡ Cita #%{id}"
+    empty: "(Vacío)"

@@ -509,7 +509,6 @@ en:
   old_value: "Old Value"
   new_value: "New Value"
   value: "Value"
-  empty: "(empty)"
   error_parsing_data: "Error parsing object data"
   error_parsing_changes: "Error parsing changes data"
   no_changes_recorded: "No changes recorded"
@@ -533,3 +532,4 @@ en:
     deleted_datebook: "␡ %{name}"
     deleted_appointment_with_notes: "␡ %{notes}"
     deleted_appointment_with_id: "␡ Appointment #%{id}"
+    empty: "(Empty)"
