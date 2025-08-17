@@ -519,12 +519,10 @@ en:
   system: "System"
   pagination_info: "Showing %{start} to %{end} of %{total} records"
 
-  audit:
+  audits:
     create: "Created"
     update: "Updated"
     destroy: "Deleted"
-
-  audits:
     deleted_item_with_id: "␡ ID: %{id}"
     deleted_person: "␡ %{name}"
     deleted_practice: "␡ %{name}"

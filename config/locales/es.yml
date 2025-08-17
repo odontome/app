@@ -469,12 +469,11 @@ es:
   system: "Sistema"
   pagination_info: "Mostrando %{start} a %{end} de %{total} registros"
 
-  audit:
+  audits:
     create: "Creado"
     update: "Actualizado"
     destroy: "Eliminado"
-
-  audits:
+    empty: "(Vacío)"
     deleted_item_with_id: "␡ ID: %{id}"
     deleted_person: "␡ %{name}"
     deleted_practice: "␡ %{name}"
@@ -482,4 +481,3 @@ es:
     deleted_datebook: "␡ %{name}"
     deleted_appointment_with_notes: "␡ %{notes}"
     deleted_appointment_with_id: "␡ Cita #%{id}"
-    empty: "(Vacío)"

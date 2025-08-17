@@ -63,11 +63,11 @@
               <td>
                 <% case version.event %>
                 <% when 'create' %>
-                  <%= label_tag t("audit.create"), :green %> 
+                  <%= label_tag t("audits.create"), :green %> 
                 <% when 'update' %>
-                  <%= label_tag t("audit.update"), :azure %>
+                  <%= label_tag t("audits.update"), :azure %>
                 <% when 'destroy' %>
-                  <%= label_tag t("audit.destroy"), :red %>
+                  <%= label_tag t("audits.destroy"), :red %>
                 <% end %>
               </td>
               <td>
