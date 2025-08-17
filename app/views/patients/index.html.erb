@@ -23,7 +23,8 @@
         <%= t :no_patients %>
       </div>
     <% else %>
-      <table class="table table-vcenter table-mobile-md card-table">
+      <div class="table-responsive">
+        <table class="table table-vcenter table-mobile-md card-table">
         <thead>
           <tr>
             <th><%= t :name %></th>
@@ -76,6 +77,7 @@
           <% end %>
         </tbody>
       </table>
+      </div>
     <% end %>
   </div>
 </div>

@@ -28,7 +28,8 @@
 
 <div class="page-body">
   <div class="card mb-3">
-    <table class="table table-vcenter table-mobile-md card-table">
+    <div class="table-responsive">
+      <table class="table table-vcenter table-mobile-md card-table">
       <thead>
         <tr>
           <th><%= t(:user) %></th>
@@ -43,7 +44,7 @@
         <% if @versions.any? %>
           <% @versions.each do |version| %>
             <tr>
-              <td>
+              <td data-label="<%= t(:user) %>">
                 <% if version.whodunnit.present? %>
                   <% user = @users_hash[version.whodunnit.to_i] %>
                   <% if user %>
@@ -60,7 +61,7 @@
                   <span class="text-muted">System</span>
                 <% end %>
               </td>
-              <td>
+              <td data-label="<%= t(:action) %>">
                 <% case version.event %>
                 <% when 'create' %>
                   <%= label_tag t("audits.create"), :green %> 
@@ -70,10 +71,10 @@
                   <%= label_tag t("audits.destroy"), :red %>
                 <% end %>
               </td>
-              <td>
+              <td data-label="<%= t(:item_type) %>">
                 <%= version.item_type %>
               </td>
-              <td>
+              <td data-label="<%= t(:item) %>">
                 <div class="text-truncate" style="max-width: 200px;">
                   <% if version.item %>
                     <% case version.item_type %>
@@ -99,12 +100,12 @@
                   <% end %>
                 </div>
               </td>
-              <td>
+              <td data-label="<%= t(:date_time) %>">
                 <div class="text-truncate">
                   <%= t :ago_in_words, date: time_ago_in_words(version.created_at) %>
                 </div>
               </td>
-              <td>
+              <td data-label="<%= t(:actions) %>">
                 <div class="btn-list flex-nowrap">
                   <%= component :dropdown do %>
                     <%= link_to t(:view_details), audit_path(version), class: "dropdown-item" %>
@@ -122,6 +123,7 @@
         <% end %>
       </tbody>
     </table>
+    </div>
 
     <% if @total_pages > 1 %>
       <div class="card-footer">
