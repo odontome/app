@@ -1,5 +1,6 @@
 ---
 es:
+  tell_us_about_your_experience_at_practice: Cuentanos un poco sobre tu experiencia en %{practice_name}
   account_cancelled: Tu cuenta ha sido marcada para cancelación. Si crees que esto
     es un error, por favor contacta con nosotros lo más rápido posible.
   activate: Activar
