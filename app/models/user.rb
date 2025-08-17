@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  # PaperTrail for audit logging
-  has_paper_trail meta: { practice_id: ->(user) { user.practice_id } }, skip: [:password_digest, :perishable_token]
+  # audit logging
+  has_paper_trail meta: { practice_id: lambda(&:practice_id) },
+                  skip: %i[password_digest perishable_token remember_token remember_token_expires_at]
 
   # concerns
   include Initials
@@ -74,10 +75,10 @@ class User < ApplicationRecord
   end
 
   def check_if_admin
-    if is_admin?
-      errors[:base] << I18n.t('errors.messages.unauthorised')
-      false
-    end
+    return unless is_admin?
+
+    errors[:base] << I18n.t('errors.messages.unauthorised')
+    false
   end
 
   def set_admin_role_for_first_user
@@ -93,11 +94,11 @@ class User < ApplicationRecord
   end
 
   def clear_remember_tokens_on_password_change
-    if saved_change_to_password_digest?
-      self.remember_token = nil
-      self.remember_token_expires_at = nil
-      update_columns(remember_token: nil, remember_token_expires_at: nil)
-    end
+    return unless saved_change_to_password_digest?
+
+    self.remember_token = nil
+    self.remember_token_expires_at = nil
+    update_columns(remember_token: nil, remember_token_expires_at: nil)
   end
 
   def prevent_superadmin_elevation
