@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 class AppointmentsController < ApplicationController
-  # filters
-  before_action :require_user, except: :show
+  before_action :require_user
 
-  # layout
-  layout false
+  layout false, except: :show
 
   def index
     datebook = Datebook.with_practice(current_user.practice_id).find(params[:datebook_id])
@@ -18,7 +16,7 @@ class AppointmentsController < ApplicationController
                     end
 
     respond_to do |format|
-      format.html # index.html
+      format.html
       format.json { render json: @appointments, methods: %w[doctor patient] }
     end
   end
@@ -45,7 +43,7 @@ class AppointmentsController < ApplicationController
 
     respond_to do |format|
       if datebook_belongs_to_user && @appointment.save
-        format.js {} # create.js.erb
+        format.js {}
       else
         format.js do
           render_ujs_error(@appointment, I18n.t(:appointment_created_error_message))
@@ -55,10 +53,8 @@ class AppointmentsController < ApplicationController
   end
 
   def show
-    appointment_id_deciphered = Cipher.decode(params[:id])
-
-    datebook = Datebook.includes(:practice).find(params[:datebook_id])
-    appointment = Appointment.where(id: appointment_id_deciphered, datebook_id: datebook.id).first
+    datebook = Datebook.with_practice(current_user.practice_id).find(params[:datebook_id])
+    @appointment = Appointment.includes(%i[doctor patient]).where(id: params[:id], datebook_id: datebook.id).first
   end
 
   def edit
@@ -81,7 +77,7 @@ class AppointmentsController < ApplicationController
 
     respond_to do |format|
       if @appointment.update(appointment_params)
-        format.js {} # update.js.erb
+        format.js {}
         format.html do
           redirect_back fallback_location: practice_appointments_url,
                         notice: I18n.t(:appointment_updated_success_message)

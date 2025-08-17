@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     @user = User.with_practice(current_user.practice_id).find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
     end
   end
 

@@ -11,6 +11,14 @@ class TreatmentsController < ApplicationController
     @treatment = Treatment.new
   end
 
+  def show
+    @treatment = Treatment.with_practice(current_user.practice_id).find(params[:id])
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
   def edit
     @treatment = Treatment.with_practice(current_user.practice_id).find(params[:id])
   end
