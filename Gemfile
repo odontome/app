@@ -31,6 +31,7 @@ gem 'paper_trail', '~> 15.0'
 group :development do
   gem 'rubocop'
   gem 'faker', '~> 3.2'
+  gem 'ruby-lsp'
 end
 
 group :test do
