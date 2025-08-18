@@ -6,6 +6,14 @@ first_visit:
   starts_at: 2014-01-04 14:00:00 +0000
   ends_at: 2014-01-04 15:00:00 +0000
 
+other_visit:
+  id: 3
+  datebook_id: 1
+  doctor_id: 1
+  patient_id: 2
+  starts_at: 2014-01-05 14:00:00 +0000
+  ends_at: 2014-01-05 15:00:00 +0000
+
 unreviewed:
   id: 2
   datebook_id: 1
