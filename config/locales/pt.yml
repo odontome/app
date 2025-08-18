@@ -22,7 +22,6 @@ pt:
   income: Receita
   today_balance: Saldo de hoje
   download_as_csv_file: Baixar como CSV
-  developers: Desenvolvedores
   calendar_feed: Inscrever-se nos agendamentos
   calendar_feed_message: Você pode se inscrever nos agendamentos de %{doctor_name} inserindo este endereço no seu aplicativo de calendário favorito.
   update_password: Atualizar senha
@@ -134,7 +133,8 @@ pt:
   color: Cor
   comments: Comentários
   contact_information: Informações de contato
-  contact_us: Entre em contato
+  contact_us: E-mail
+  contact_us_whatsapp: WhatsApp
   create_new_datebook: Criar nova agenda
   create_new_doctor: Criar novo médico
   create_new_patient: Criar novo paciente

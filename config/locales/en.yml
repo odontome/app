@@ -22,7 +22,6 @@ en:
   income: Income
   today_balance: Today's balance
   download_as_csv_file: Download as CSV
-  developers: Developers
   calendar_feed: Subscribe to appointments
   calendar_feed_message: You can subscribe to the appointments of %{doctor_name} by entering this address in your favorite calendar app.
   update_password: Update password
@@ -135,7 +134,8 @@ en:
   color: Color
   comments: Comments
   contact_information: Contact information
-  contact_us: Contact us
+  contact_us: E-mail us
+  contact_us_whatsapp: WhatsApp us
   create_new_datebook: Create new datebook
   create_new_doctor: Create new doctor
   create_new_patient: Create new patient

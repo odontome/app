@@ -32,10 +32,8 @@ es:
   calendar_feed: Suscripción a las citas
   calendar_feed_message: Puedes suscribirte a las citas de %{doctor_name} utilizando la siguiente dirección en tu app de calendario favorita.
   created_at: Creado el
-  developers: Desarrolladores
   update_password: Actualizar contraseña
   my_practice: Mi clínica
-
 
   actions: Acciones
   emergency_telephone: Teléfono de emergencia
@@ -134,7 +132,8 @@ es:
   color: Color
   comments: Comentarios
   contact_information: Información de contácto
-  contact_us: Contacta con nosotros
+  contact_us: E-mail
+  contact_us_whatsapp: WhatsApp
   create_new_datebook: Nueva agenda
   create_new_doctor: Nuevo doctor
   create_new_patient: Nuevo paciente
