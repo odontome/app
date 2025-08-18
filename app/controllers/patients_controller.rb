@@ -101,7 +101,7 @@ class PatientsController < ApplicationController
                             else
                               Time.current
                             end
-      @patient.save
+      @patient.save(validate: false)
       back_to = request.referer || patients_path
       message = I18n.t(:patient_updated_success_message)
     end
