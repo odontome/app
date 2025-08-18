@@ -19,7 +19,7 @@ class AdminControllerTest < ActionController::TestCase
     assert_response :success
     # Should include practices with active subscription status
     active_practices = assigns(:practices)
-    assert active_practices.any? { |p| p.subscription.status == 'active' }
+    assert(active_practices.any? { |p| p.subscription.status == 'active' })
     assert_equal 'active', assigns(:filter)
   end
 
@@ -28,7 +28,7 @@ class AdminControllerTest < ActionController::TestCase
     assert_response :success
     # Should include practices with trialing subscription status
     trialing_practices = assigns(:practices)
-    assert trialing_practices.any? { |p| p.subscription.status == 'trialing' }
+    assert(trialing_practices.any? { |p| p.subscription.status == 'trialing' })
     assert_equal 'trialing', assigns(:filter)
   end
 
@@ -37,7 +37,7 @@ class AdminControllerTest < ActionController::TestCase
     assert_response :success
     # Should include practices with past_due subscription status
     past_due_practices = assigns(:practices)
-    assert past_due_practices.any? { |p| p.subscription.status == 'past_due' }
+    assert(past_due_practices.any? { |p| p.subscription.status == 'past_due' })
     assert_equal 'past_due', assigns(:filter)
   end
 
@@ -46,10 +46,9 @@ class AdminControllerTest < ActionController::TestCase
     assert_response :success
     # Should include practices with canceled subscription status
     canceled_practices = assigns(:practices)
-    assert canceled_practices.any? { |p| p.subscription.status == 'canceled' }
+    assert(canceled_practices.any? { |p| p.subscription.status == 'canceled' })
     assert_equal 'canceled', assigns(:filter)
   end
-
 
   test 'should require superadmin access' do
     @controller.session['user'] = users(:founder) # Regular admin, not superadmin

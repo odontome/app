@@ -53,8 +53,7 @@ namespace :odontome do
     Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
 
     practices = Practice.where('cancelled_at < ?', 15.days.ago)
-
-    practices.each(&:destroy)
+    practices.destroy_all
   end
 
   desc "Send today's appointments everyday in their timezone"
@@ -69,8 +68,6 @@ namespace :odontome do
     if practice_ids.size.positive?
       today = Time.now.in_time_zone(timezones_where_hour_is.first).beginning_of_day
       end_of_today = today.end_of_day
-
-      admins_of_these_practices = admin_of_practice(practice_ids)
 
       appointments_scheduled_for_today = Datebook.select('practices.name as practice, datebooks.practice_id, datebooks.name as datebook, appointments.starts_at, appointments.ends_at, appointments.notes, doctors.id as doctor_id, doctors.firstname as doctor_firstname, doctors.lastname as doctor_lastname, doctors.email as doctor_email, patients.firstname as patient_firstname, patients.lastname as patient_lastname')
                                                  .where("doctors.email <> ''")
@@ -87,7 +84,7 @@ namespace :odontome do
       # group the arrays by practice_id
       appointments = appointments.group_by { |appointment| appointment['doctor_id'].to_s }
 
-      appointments.each do |_key, value|
+      appointments.each_value do |value|
         DoctorMailer.today_agenda(value).deliver_now
       end
     end
@@ -188,23 +185,25 @@ namespace :odontome do
                                    .where('appointments.ends_at < ?', six_months_ago)
                                    .where('appointments.ends_at > ?', seven_months_ago)
                                    .where("patients.email <> ''")
-                                   .where(patients: { practice_id: practice_ids, notified_of_six_month_reminder: [false, nil] })
+                                   .where(patients: { practice_id: practice_ids,
+                                                      notified_of_six_month_reminder: [false, nil] })
                                    .group('patients.id, patients.email, patients.firstname, patients.lastname, practices.id, practices.name, practices.locale, practices.timezone, practices.email')
 
     # Patients with a future confirmed appointment should not receive this reminder
     future_confirmed_patient_ids = Appointment.joins(:patient)
-                        .where('appointments.starts_at > ?', Time.now)
-                        .where('appointments.status = ?', Appointment.status[:confirmed])
-                        .where(patients: { practice_id: practice_ids })
-                        .distinct
-                        .pluck(:patient_id)
+                                              .where('appointments.starts_at > ?', Time.now)
+                                              .where('appointments.status = ?', Appointment.status[:confirmed])
+                                              .where(patients: { practice_id: practice_ids })
+                                              .distinct
+                                              .pluck(:patient_id)
 
     last_appointments.each do |row|
-    # Skip if they already have a future confirmed appointment
-    pid = (row['patient_id'] || row.patient_id)
-    next if future_confirmed_patient_ids.include?(pid)
+      # Skip if they already have a future confirmed appointment
+      pid = row['patient_id'] || row.patient_id
+      next if future_confirmed_patient_ids.include?(pid)
 
-      full_name = [row['patient_firstname'] || row.patient_firstname, row['patient_lastname'] || row.patient_lastname].compact.join(' ')
+      full_name = [row['patient_firstname'] || row.patient_firstname,
+                   row['patient_lastname'] || row.patient_lastname].compact.join(' ')
       PatientMailer.six_month_checkup_reminder(row['patient_email'] || row.patient_email,
                                                full_name,
                                                row['practice_name'] || row.practice_name,
@@ -222,10 +221,22 @@ namespace :odontome do
 
     # Delete audit versions older than 30 days
     cutoff_date = 30.days.ago
-    sql = ActiveRecord::Base.sanitize_sql_array(["DELETE FROM versions WHERE created_at < ?", cutoff_date])
+    sql = ActiveRecord::Base.sanitize_sql_array(['DELETE FROM versions WHERE created_at < ?', cutoff_date])
     deleted_count = ActiveRecord::Base.connection.exec_delete(sql)
 
     Rails.logger.info "Cleaned up #{deleted_count} audit log entries older than #{cutoff_date.strftime('%Y-%m-%d')}"
+  end
+
+  desc 'Cleanup practices older than 7 days with 0 patients'
+  task cleanup_old_practices: :environment do
+    Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
+
+    cutoff_date = 7.days.ago
+    practices = Practice.where('created_at < ?', cutoff_date)
+                        .where('patients_count = ?', 0)
+    deleted_count = practices.destroy_all
+
+    Rails.logger.info "Cleaned up #{deleted_count} practices older than #{cutoff_date.strftime('%Y-%m-%d')} with 0 patients"
   end
 
   # find all the timezones where the hour is @hour
