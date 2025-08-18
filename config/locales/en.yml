@@ -339,6 +339,7 @@ en:
   patient_treatment_created_error_message: The item was created successfully
   patient_treatment_updated_error_message: There was a problem creating this item
   patient_updated_success_message: The patient was updated successfully
+  patient_deleted_success_message: The patient was deleted successfully
   patients: Patients
   personal_information: Personal information
   please_wait: Pleast wait...

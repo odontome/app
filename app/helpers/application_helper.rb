@@ -46,6 +46,25 @@ module ApplicationHelper
     render("components/#{name}", *options, &block)
   end
 
+  def status_tag(model)
+    if model.is_active
+      label_tag t(:active), :green
+    else
+      label_tag t(:suspended), :red
+    end
+  end
+
+  def link_to_suspend_or_delete(model, options)
+    options[:class].concat(' text-red') if (model.is_deleteable || model.is_active) && options[:class]&.exclude?('btn')
+
+    if model.is_deleteable
+      link_to t(:delete), model, method: :delete, **options, data: { confirm: t(:are_you_sure) }
+    else
+      link_to model.is_active ? t(:suspend) : t(:activate), model, **options, method: :delete,
+                                                                              data: { confirm: t(:are_you_sure) }
+    end
+  end
+
   def parse_version_object_data(version)
     return nil unless version.object.present?
 
