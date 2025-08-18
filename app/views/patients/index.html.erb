@@ -67,7 +67,9 @@
                     <%= link_to t(:profile), patient, class: "dropdown-item" %>
                     <%= link_to t(:edit), edit_patient_path(patient), class: "dropdown-item" %>
                     <% if user_is_admin?(current_user) %>
-                      <%= link_to_suspend_or_delete patient, class: "dropdown-item" %>
+                      <% if not patient.missing_info? %>
+                        <%= link_to_suspend_or_delete patient, class: "dropdown-item" %>
+                      <% end %>
                     <% end %>
                   <% end %>
                 </div>
