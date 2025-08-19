@@ -40,6 +40,18 @@ class AuditsController < ApplicationController
   def show
     @version = PaperTrail::Version.where(practice_id: current_user.practice_id).find(params[:id])
     @item = @version.item
+
+    # When deleting an appointment, override the patient and doctor information
+    if @version.item_type == 'Appointment' && @version.event == 'destroy'
+      begin
+        object = JSON.parse(@version.object)
+        object['doctor_id'] = Doctor.find_by(id: object['doctor_id']).fullname
+        object['patient_id'] = Patient.find_by(id: object['patient_id']).fullname
+
+        @version.object = object.to_json
+      end
+    end
+
     @whodunnit_user = @version.whodunnit.present? ? User.find_by(id: @version.whodunnit) : nil
   end
 end
