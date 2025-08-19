@@ -292,6 +292,7 @@ es:
   past_surgeries: Cirugias pasadas
   patient: Paciente
   patient_created_success_message: El paciente fue creado con éxito
+  patient_deleted_success_message: El paciente fue eliminado con éxito
   empty:
     treatments:
       title: Aún no has creado ningún tratamiento.

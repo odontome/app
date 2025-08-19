@@ -315,6 +315,7 @@ en:
   past_surgeries: Past surgeries
   patient: Patient
   patient_created_success_message: The patient was created successfully
+  patient_deleted_success_message: The patient was deleted successfully
   empty:
     treatments:
       title: You haven't created any treatments yet.

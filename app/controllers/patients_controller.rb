@@ -13,8 +13,8 @@ class PatientsController < ApplicationController
       week_start = tz.now.beginning_of_week
       week_end = tz.now.end_of_week
       @patients = Patient
-                    .with_practice(current_user.practice_id)
-                    .where('created_at >= ? AND created_at <= ?', week_start, week_end)
+                  .with_practice(current_user.practice_id)
+                  .where('created_at >= ? AND created_at <= ?', week_start, week_end)
     else
       # Always fetch the first letter of the first record, if not present
       # just send "A"
@@ -24,18 +24,18 @@ class PatientsController < ApplicationController
       end
 
       # iI the provided is not in the alphabet, send back anything else
-      if [*'a'..'z'].include?(params[:letter].downcase)
-        @patients = Patient.anything_with_letter(params[:letter]).with_practice(current_user.practice_id)
-      else
-        @patients = Patient.anything_not_in_alphabet.with_practice(current_user.practice_id)
-      end
+      @patients = if [*'a'..'z'].include?(params[:letter].downcase)
+                    Patient.anything_with_letter(params[:letter]).with_practice(current_user.practice_id)
+                  else
+                    Patient.anything_not_in_alphabet.with_practice(current_user.practice_id)
+                  end
     end
 
     respond_to do |format|
       format.html # index.html
-      format.json { 
+      format.json do
         render json: @patients, methods: :fullname
-      }
+      end
     end
   end
 
@@ -88,12 +88,10 @@ class PatientsController < ApplicationController
   end
 
   def destroy
-    back_to = request.referer || patients_path
-
     @patient = Patient.with_practice(current_user.practice_id).find(params[:id])
     @patient.destroy
     respond_to do |format|
-      format.html { redirect_to(back_to) }
+      format.html { redirect_to(patients_path, notice: I18n.t(:patient_deleted_success_message)) }
     end
   end
 
