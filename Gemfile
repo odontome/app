@@ -5,7 +5,7 @@ ruby '3.2.3'
 
 gem 'bcrypt', '~> 3.1.17'
 gem 'bugsnag', '~> 6.24'
-gem 'jquery-rails', '~> 4.5.0'
+gem 'jquery-rails', '~> 4.6.0'
 gem 'puma', '~> 5.6.4'
 gem 'rails', '~> 7.2.2.1'
 gem 'sprockets-rails', '~> 3.5.2'
