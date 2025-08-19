@@ -120,14 +120,14 @@
                             <% if old_value.present? %>
                               <%= truncate(old_value.to_s, length: 100) %>
                             <% else %>
-                              <span class="text-muted"><%= t(:empty) %></span>
+                              <span class="text-muted"><%= t("audits.empty") %></span>
                             <% end %>
                           </td>
                           <td>
                             <% if new_value.present? %>
                               <%= truncate(new_value.to_s, length: 100) %>
                             <% else %>
-                              <span class="text-muted"><%= t(:empty) %></span>
+                              <span class="text-muted"><%= t("audits.empty") %></span>
                             <% end %>
                           </td>
                         </tr>
@@ -190,7 +190,7 @@
                             <% if value.present? %>
                               <%= truncate(value.to_s, length: 100) %>
                             <% else %>
-                              <span class="text-muted"><%= t(:empty) %></span>
+                              <span class="text-muted"><%= t("audits.empty") %></span>
                             <% end %>
                           </td>
                         </tr>
