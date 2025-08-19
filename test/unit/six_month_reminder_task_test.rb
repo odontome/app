@@ -10,14 +10,19 @@ class SixMonthReminderTaskTest < ActiveSupport::TestCase
     @app.load_tasks if Rake::Task.tasks.empty?
     @task = Rake::Task['odontome:send_six_month_checkup_reminders']
 
+    # Mock time to 10 AM UTC to ensure timezone filtering works
+    @mocked_time = Time.parse('2025-08-19 10:00:00 UTC')
+    travel_to @mocked_time
+
     # Choose a timezone where local time is 10 to satisfy the task filter
     @zone_for_10 = ActiveSupport::TimeZone.all.find { |z| Time.now.in_time_zone(z).hour == 10 }&.name
-    # Fallback to app time zone if none found (shouldn't happen, but keeps test robust)
-    @zone_for_10 ||= Time.zone.name
+    # Fallback to UTC if none found
+    @zone_for_10 ||= 'UTC'
   end
 
   def teardown
-    @task.reenable if @task
+    @task&.reenable
+    travel_back
   end
 
   test 'sends reminder for trialing/active practice and marks patient as notified' do
@@ -34,12 +39,14 @@ class SixMonthReminderTaskTest < ActiveSupport::TestCase
     assert_equal practice.id, doctor.practice_id
 
     # Create a confirmed appointment older than 6 months but not older than 7 months
+    # Use the current (mocked) time for consistent calculation
+    six_months_ago_from_now = 6.months.ago
     Appointment.create!(
       datebook_id: datebook.id,
       doctor_id: doctor.id,
       patient_id: patient.id,
-      starts_at: (6.months.ago - 1.day),
-      ends_at: (6.months.ago - 1.day) + 1.hour,
+      starts_at: (six_months_ago_from_now - 1.day),
+      ends_at: (six_months_ago_from_now - 1.day) + 1.hour,
       status: Appointment.status[:confirmed]
     )
 
@@ -100,7 +107,7 @@ class SixMonthReminderTaskTest < ActiveSupport::TestCase
       ends_at: (6.months.ago - 1.day) + 1.hour,
       status: Appointment.status[:confirmed]
     )
-  
+
     # Invoke task and ensure no emails are sent for these practices
     @task.reenable
     @task.invoke
