@@ -83,6 +83,25 @@ class RackAttackTest < ActionDispatch::IntegrationTest
     assert_response 403, 'Suspicious practice sign up should be blocked with 403 status'
   end
 
+  test 'should block russian ip practice sign up requests' do
+    # Test with various Russian IP ranges
+    russian_ips = [
+      '5.8.1.1',        # Russia Telecom range
+      '77.88.55.55',    # Yandex IP
+      '87.240.1.1',     # Russia Telecom range
+      '188.1.1.1',      # Russia Telecom range
+      '176.16.1.1',     # Russia Telecom range
+      '93.100.1.1'      # Russia Telecom range
+    ]
+
+    russian_ips.each do |ip|
+      post '/practice', params: { practice: { name: 'Test Practice' } },
+                        headers: { 'REMOTE_ADDR' => ip }
+
+      assert_response 403, "Russian IP #{ip} should be blocked from signing up"
+    end
+  end
+
   test 'should allow legitimate practice sign up requests' do
     # Practice name with multiple words should be allowed
     legitimate_name = 'Dr Smith Dental Practice'
@@ -92,6 +111,25 @@ class RackAttackTest < ActionDispatch::IntegrationTest
 
     # Should not be blocked by Rack::Attack (actual response depends on your controller logic)
     assert_not_equal 403, response.status, 'Legitimate practice sign up should not be blocked'
+  end
+
+  test 'should allow legitimate non-russian ip practice sign up requests' do
+    # Test with legitimate non-Russian IPs
+    legitimate_ips = [
+      '8.8.8.8',        # Google DNS (US)
+      '1.1.1.1',        # Cloudflare DNS (US)
+      '192.168.1.1',    # Private IP
+      '10.0.0.1',       # Private IP
+      '134.195.196.26', # US IP
+      '82.165.190.32'   # EU IP
+    ]
+
+    legitimate_ips.each do |ip|
+      post '/practice', params: { practice: { name: 'Dr Smith Dental Practice' } },
+                        headers: { 'REMOTE_ADDR' => ip }
+
+      assert_not_equal 403, response.status, "Legitimate IP #{ip} should not be blocked"
+    end
   end
 
   test 'should not throttle asset requests' do
