@@ -101,7 +101,7 @@ Rack::Attack.blocklist('block russian spam signups') do |req|
   if req.path == '/practice' && req.post?
     begin
       ip = IPAddr.new(req.ip)
-      RUSSIAN_IP_RANGES.any? { |range| IPAddr.new(range).include?(ip) }
+      Rack::Attack::RUSSIAN_IP_RANGES.any? { |range| IPAddr.new(range).include?(ip) }
     rescue IPAddr::InvalidAddressError
       false
     end

@@ -59,13 +59,13 @@ class RackAttackTest < ActionDispatch::IntegrationTest
     4.times do |i|
       post '/user_session', params: { signin: { email: email, password: 'wrong' } },
                             headers: { 'REMOTE_ADDR' => "192.168.1.#{100 + i}" } # Different IPs
-      puts "Email login attempt #{i + 1}: #{response.status}"
+      assert_response :success, "Email login attempt #{i + 1}: #{response.status}"
     end
 
     # 5th login attempt should still be allowed
     post '/user_session', params: { signin: { email: email, password: 'wrong' } },
                           headers: { 'REMOTE_ADDR' => '192.168.1.200' }
-    puts "5th email login attempt: #{response.status}"
+    assert_response :success, "5th email login attempt: #{response.status}"
 
     # 6th login attempt should be throttled
     post '/user_session', params: { signin: { email: email, password: 'wrong' } },
