@@ -12,9 +12,7 @@ class Rack::Attack
   #
   # Key: "rack::attack:#{Time.now.to_i/:period}:logins/ip:#{req.ip}"
   throttle('logins/ip', limit: 5, period: 20.seconds) do |req|
-    if req.path == '/user_session' && req.post?
-      req.ip
-    end
+    req.ip if req.path == '/user_session' && req.post?
   end
 
   # Throttle POST requests to /user_session by email param
@@ -29,7 +27,7 @@ class Rack::Attack
     if req.path == '/user_session' && req.post?
       # Normalize the email, using the same logic as your authentication process, to
       # protect against rate limit bypasses. Return the normalized email if present, nil otherwise.
-      req.params['signin']['email'].to_s.downcase.gsub(/\s+/, "").presence
+      req.params['signin']['email'].to_s.downcase.gsub(/\s+/, '').presence
     end
   end
 end
@@ -39,7 +37,7 @@ Rack::Attack.blocklist('block suspicious sign up requests') do |req|
   if req.path == '/practice' && req.post?
     practice_name = req.params['practice']['name']
     # There have been multiple instances of spam practices with only a single word in their names and
-    # a vast number of uppercase and lowercase characters. 
+    # a vast number of uppercase and lowercase characters.
     practice_name.split.count == 1 && practice_name.scan(/[A-Z]/).count > 2
   end
 end
