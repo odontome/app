@@ -132,6 +132,44 @@ class RackAttackTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'should handle invalid ip addresses gracefully' do
+    # Test with malformed IP addresses - should not block but also not crash
+    invalid_ips = [
+      'invalid.ip',
+      '999.999.999.999',
+      '256.256.256.256',
+      '',
+      'localhost'
+    ]
+
+    invalid_ips.each do |ip|
+      post '/practice', params: { practice: { name: 'Dr Smith Dental Practice' } },
+                        headers: { 'REMOTE_ADDR' => ip }
+
+      # Should not block invalid IPs (graceful degradation)
+      assert_not_equal 403, response.status, "Invalid IP #{ip} should not cause blocking to fail"
+    end
+  end
+
+  test 'should only block russian ips for practice signup, not other routes' do
+    # Russian IP should only be blocked for practice signups, not other routes
+    russian_ip = '77.88.55.55'  # Yandex IP
+
+    # Test login route - should not be blocked
+    post '/user_session', params: { signin: { email: 'test@example.com', password: 'wrong' } },
+                          headers: { 'REMOTE_ADDR' => russian_ip }
+    assert_not_equal 403, response.status, 'Russian IP should not be blocked for login attempts'
+
+    # Test other routes - should not be blocked
+    get '/signin', headers: { 'REMOTE_ADDR' => russian_ip }
+    assert_not_equal 403, response.status, 'Russian IP should not be blocked for other routes'
+
+    # Test practice signup - should be blocked
+    post '/practice', params: { practice: { name: 'Test Practice' } },
+                      headers: { 'REMOTE_ADDR' => russian_ip }
+    assert_response 403, 'Russian IP should be blocked for practice signup'
+  end
+
   test 'should not throttle asset requests' do
     # Asset requests should be excluded from throttling
     301.times do
