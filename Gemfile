@@ -25,7 +25,7 @@ gem 'premailer-rails', '~> 1.11.1'
 
 gem 'paper_trail', '~> 15.0'
 gem 'pg', '~> 1.3.5'
-gem 'rack-attack', '~> 6.6.1'
+gem 'rack-attack', '~> 6.7.0'
 gem 'stripe', '~> 5.53.0'
 
 group :development do
