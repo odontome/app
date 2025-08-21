@@ -153,7 +153,7 @@ class RackAttackTest < ActionDispatch::IntegrationTest
 
   test 'should only block russian ips for practice signup, not other routes' do
     # Russian IP should only be blocked for practice signups, not other routes
-    russian_ip = '77.88.55.55'  # Yandex IP
+    russian_ip = '77.88.55.55' # Yandex IP
 
     # Test login route - should not be blocked
     post '/user_session', params: { signin: { email: 'test@example.com', password: 'wrong' } },
@@ -196,5 +196,25 @@ class RackAttackTest < ActionDispatch::IntegrationTest
     # IP2 should still be allowed
     get '/signin', headers: { 'REMOTE_ADDR' => ip2 }
     assert_response :success, 'IP2 should not be throttled'
+  end
+
+  test 'blocks signups from Russian timezones' do
+    [
+      'Europe/Moscow',
+      'Europe/Samara',
+      'Europe/Astrakhan',
+      'Europe/Volgograd',
+      'Europe/Saratov',
+      'Europe/Ulyanovsk',
+      'Europe/Kaliningrad'
+    ].each do |tz|
+      post '/practice', params: { practice: { name: 'Test Clinic', timezone: tz } }
+      assert_response :forbidden, "Expected timezone #{tz} to be blocked"
+    end
+  end
+
+  test 'allows signup from non-Russian timezone' do
+    post '/practice', params: { practice: { name: 'Test Clinic', timezone: 'America/New_York' } }
+    refute_equal 403, response.status, 'Non-Russian timezone should not be blocked'
   end
 end

@@ -108,4 +108,20 @@ Rack::Attack.blocklist('block russian spam signups') do |req|
   end
 end
 
+# Block signups from Russian timezones
+Rack::Attack.blocklist('block russian timezone signups') do |req|
+  if req.path == '/practice' && req.post?
+    tz = req.params.dig('practice', 'timezone').to_s
+    tz.in?([
+             'Europe/Moscow',
+             'Europe/Samara',
+             'Europe/Astrakhan',
+             'Europe/Volgograd',
+             'Europe/Saratov',
+             'Europe/Ulyanovsk',
+             'Europe/Kaliningrad'
+           ])
+  end
+end
+
 Rack::Attack.cache.store = ActiveSupport::Cache::MemoryStore.new # defaults to Rails.cache
