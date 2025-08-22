@@ -5,6 +5,24 @@ module ApplicationHelper
     number_to_currency(number, unit: @current_user.practice.currency_unit, precision: precision)
   end
 
+  def number_to_currency_with_code(number, code = 'USD')
+    puts '***************************'
+    puts "Converting #{number} to currency with code #{code}"
+
+    case code
+    when 'usd'
+      number_to_currency(number, unit: 'US$', precision: 2)
+    when 'cad'
+      number_to_currency(number, unit: 'CA$', precision: 2)
+    when 'eur'
+      number_to_currency(number, unit: '€', precision: 2)
+    when 'mxn'
+      number_to_currency(number, unit: 'MX$', precision: 2)
+    else
+      number_to_currency(number, precision: 2)
+    end
+  end
+
   def label_tag(message, color = :azure)
     allowed_colors = %i[green red azure]
     raise "#{color} is invalid. Allowed values: #{allowed_colors.join(', ')}." unless color.in?(allowed_colors)
