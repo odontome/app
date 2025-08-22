@@ -542,6 +542,11 @@ en:
     create_new_payment: "Create new payment"
     view_payment: "View payment"
     copy_payment_link: "Copy payment link"
+    attributes:
+      payment_notes: "Payment notes"
+      status: "Status"
+      payout_status: "Payout status"
+      created_at: "Created at"
     status:
       requires_payment_method: "Requires Payment Method"
       requires_confirmation: "Requires Confirmation"

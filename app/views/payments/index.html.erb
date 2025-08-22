@@ -24,13 +24,13 @@
       <div class="card-body p-0">
         <div class="table-responsive">
             <table class="table table-vcenter table-mobile-md card-table">
-            <thead class="table-dark">
+            <thead>
               <tr>
-                <th>Patient</th>
-                <th>Status</th>
-                <th>Payout Status</th>
-                <th>Created at</th>
-                <th class="w-1">Actions</th>
+                <th><%= t("payments.attributes.payments_notes") %></th>
+                <th><%= t("payments.attributes.status") %></th>
+                <th><%= t("payments.attributes.payout_status") %></th>
+                <th><%= t("payments.attributes.created_at") %></th>
+                <th class="w-1"><%= t(:actions) %></th>
               </tr>
             </thead>
             <tbody>
