@@ -4,7 +4,9 @@
   <div class="card-header">
     <h3 class="card-title">Payment to <%= @practice.name %></h3>
     <div class="card-subtitle">
-      Patient: <strong><%= @payment_intent.metadata.patient_name %></strong> • 
+      <% if @payment_intent.metadata['patient_name'].present? %>
+        Notes: <strong><%= @payment_intent.metadata['patient_name'] %></strong> •
+      <% end %>
       Amount: <strong><%= @payment_intent.currency.upcase %> $<%= sprintf("%.2f", @payment_intent.amount / 100.0) %></strong>
     </div>
   </div>
@@ -100,11 +102,6 @@ async function handleSubmit(event) {
       elements,
       confirmParams: {
         return_url: window.location.origin + '<%= success_payments_path %>',
-        payment_method_data: {
-          billing_details: {
-            name: '<%= @payment_intent.metadata.patient_name %>'
-          }
-        }
       },
       redirect: 'if_required'
     });

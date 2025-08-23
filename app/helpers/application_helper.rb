@@ -6,9 +6,6 @@ module ApplicationHelper
   end
 
   def number_to_currency_with_code(number, code = 'USD')
-    puts '***************************'
-    puts "Converting #{number} to currency with code #{code}"
-
     case code
     when 'usd'
       number_to_currency(number, unit: 'US$', precision: 2)

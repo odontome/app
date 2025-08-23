@@ -35,8 +35,12 @@
   <td>
     <div class="btn-list flex-nowrap">
       <%= component :dropdown do %>
-        <%= link_to t("payments.view_payment"), success_payments_path(payment_intent: payment.id), class: "dropdown-item", target: "_blank" %>
-        <%= link_to t("payments.copy_payment_link"), "#", class: "dropdown-item", data: { clipboard: latest_charge&.receipt_url } %>
+        <% if payment.status == 'succeeded' %>
+          <%= link_to t("payments.view_payment"), success_payments_path(payment_intent: payment.id), class: "dropdown-item", target: "_blank" %>
+        <% end %>
+        <% if latest_charge.nil? %>
+          <%= link_to t("payments.copy_payment_link"), "#", class: "dropdown-item", data: { clipboard: pay_payment_url(payment.client_secret) } %>
+        <% end %>
       <% end %>
     </div>
   </td>
