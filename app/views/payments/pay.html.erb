@@ -3,17 +3,23 @@
 <div class="card">
   <div class="card-header">
     <h3 class="card-title">Payment to <%= @practice.name %></h3>
-    <div class="card-subtitle">
-      <% if @payment_intent.metadata['patient_name'].present? %>
-        Notes: <strong><%= @payment_intent.metadata['patient_name'] %></strong> •
-      <% end %>
-      Amount: <strong><%= @payment_intent.currency.upcase %> $<%= sprintf("%.2f", @payment_intent.amount / 100.0) %></strong>
-    </div>
   </div>
   <div class="card-body">
+    <fieldset class="form-fieldset">
+      <div class="mb-3 text-center">                                
+        <h1 class="display-6"><%= number_to_currency_with_code(@payment_intent.amount / 100.0, @payment_intent.currency) %></h1>
+        <p class="text-muted">
+          <% if @payment_intent.metadata['patient_name'].present? %>
+            <%= @payment_intent.metadata['patient_name'] %>
+          <% else %>
+            No note available.
+          <% end %>
+        </p>
+      </div>
+    </fieldset>
     <div id="payment-form">
       <div class="mb-3">
-        <label class="form-label">Payment Information</label>
+        <label class="form-label">Payment information</label>
         <div id="payment-element" class="form-control" style="min-height: 40px; padding: 10px;">
           <!-- Stripe Payment Element will be inserted here -->
         </div>
@@ -21,7 +27,7 @@
       </div>
       
       <button id="submit-button" class="btn btn-primary w-100">
-        <span id="button-text">Complete Payment</span>
+        <span id="button-text">Complete payment</span>
         <span id="spinner" class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true" style="display: none;"></span>
       </button>
       
