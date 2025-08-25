@@ -213,6 +213,9 @@ en:
       suspended: Suspended doctors won't appear as options for your new appointments. Previous appointments aren't affected.
     treatments:
       status: Invalid treatments don't have a price specified, setting one is mandatory for the treatment to show up in the patient profile.
+    payments:
+      status: Payments with "Requires Payment Method" status are incomplete and cannot be processed until a valid payment method is attached to them.
+      charge_status: The charge status indicates the current state of the payment process. Payments that are not "Succeeded" may require further action to complete.
   inactive: Inactive
   incomplete: Incomplete
   instructions:
@@ -541,11 +544,12 @@ en:
     title: "Payments"
     create_new_payment: "Create new payment"
     view_payment: "View payment"
+    view_receipt: "View receipt"
     copy_payment_link: "Copy payment link"
     attributes:
       payment_notes: "Payment notes"
       status: "Status"
-      payout_status: "Payout status"
+      charge_status: "Charge status"
       created_at: "Created at"
     status:
       requires_payment_method: "Requires Payment Method"
@@ -554,6 +558,12 @@ en:
       processing: "Processing"
       succeeded: "Succeeded"
       unknown: "Unknown"
+    success:
+      title: "Payment successful"
+      message: "Thank you for your payment of <strong>%{amount_formatted}</strong>. Your transaction has been processed successfully."
+    error:
+      title: "Payment failed"
+      message: "There was an error processing your payment. Please contact the practice."
 
   stripe_account:
     account:
@@ -577,3 +587,6 @@ en:
 
   stripe_payment_processing:
     title: "Payment Processing"
+    account_not_onboarded: "Practice not ready to accept payments"
+    link_created_success_message: "Payment request created successfully."
+    link_created_error_message: "Error creating payment request."

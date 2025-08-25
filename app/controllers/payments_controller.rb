@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PaymentsController < ApplicationController
-  before_action :require_user, except: %i[pay success]
+  before_action :require_user, except: %i[pay success failed]
   before_action :find_practice, only: %i[new create]
 
   def index
@@ -21,7 +21,7 @@ class PaymentsController < ApplicationController
 
   def create
     unless @practice.connect_account_complete?
-      flash[:error] = 'Practice not ready to accept payments'
+      flash[:error] = t('stripe_payment_processing.account_not_onboarded')
       render :new
       return
     end
@@ -49,10 +49,11 @@ class PaymentsController < ApplicationController
 
       # Generate shareable payment URL with client_secret
       @payment_url = pay_payment_url(intent.client_secret)
-      flash[:success] = 'Payment link created! Share this with the patient.'
+      flash[:success] = t('stripe_payment_processing.link_created_success_message')
       render :qr
     rescue Stripe::StripeError => e
-      flash[:error] = "Error creating payment: #{e.message}"
+      flash[:error] = t('stripe_payment_processing.link_created_error_message')
+      Rails.logger.error "Stripe error while creating payment intent: #{e.message}"
       render :new, status: :unprocessable_entity
     end
   end
@@ -76,20 +77,20 @@ class PaymentsController < ApplicationController
   def success
     @payment_intent_id = params[:payment_intent]
 
-    if @payment_intent_id
-      begin
-        @payment_intent = Stripe::PaymentIntent.retrieve(@payment_intent_id)
-        @practice_id = @payment_intent.metadata&.practice_id
-        @practice = Practice.find(@practice_id) if @practice_id
+    return unless @payment_intent_id
 
-        # Extract the latest charge information for receipt
-        @latest_charge = @payment_intent.charges.data.first if @payment_intent.charges&.data&.any?
-      rescue Stripe::StripeError => e
-        flash[:error] = "Payment verification failed: #{e.message}"
-      end
+    begin
+      @payment_intent = Stripe::PaymentIntent.retrieve(@payment_intent_id)
+      @practice_id = @payment_intent.metadata&.practice_id
+      @practice = Practice.find(@practice_id) if @practice_id
+
+      # Extract the latest charge information for receipt
+      @latest_charge = @payment_intent.charges.data.first if @payment_intent.charges&.data&.any?
+      render layout: 'simple'
+    rescue StandardError
+      Rails.logger.error 'Error retrieving payment intent'
+      render action: :failed, layout: 'simple'
     end
-
-    render layout: 'simple'
   end
 
   private

@@ -27,8 +27,12 @@
             <thead>
               <tr>
                 <th><%= t("payments.attributes.payments_notes") %></th>
-                <th><%= t("payments.attributes.status") %></th>
-                <th><%= t("payments.attributes.payout_status") %></th>
+                <th><%= t("payments.attributes.status") %>
+                  <%= help_tag t 'help.payments.status' %>
+                </th>
+                <th><%= t("payments.attributes.charge_status") %>
+                  <%= help_tag t 'help.payments.charge_status' %>
+                </th>
                 <th><%= t("payments.attributes.created_at") %></th>
                 <th class="w-1"><%= t(:actions) %></th>
               </tr>
