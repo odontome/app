@@ -31,6 +31,7 @@ class PaymentsController < ApplicationController
     application_fee_cents = (amount_cents * 0.01).to_i # 1% platform fee
 
     begin
+      flash.clear
       intent = Stripe::PaymentIntent.create({
                                               amount: amount_cents,
                                               currency: params[:currency] || 'usd',
@@ -47,13 +48,12 @@ class PaymentsController < ApplicationController
                                             })
 
       # Generate shareable payment URL with client_secret
-      payment_url = pay_payment_url(intent.client_secret)
-
-      flash[:success] = "Payment link created! Share this with #{params[:patient_name]}: #{payment_url}"
-      redirect_to payments_path
+      @payment_url = pay_payment_url(intent.client_secret)
+      flash[:success] = 'Payment link created! Share this with the patient.'
+      render :qr
     rescue Stripe::StripeError => e
       flash[:error] = "Error creating payment: #{e.message}"
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 

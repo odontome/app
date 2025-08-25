@@ -43,7 +43,7 @@
 
           <div class="mb-3">
             <label class="form-label"><%= t(:notes) %></label>
-            <%= form.text_area :patient_name, placeholder: t(:additional_notes), rows: 2, maxlength: 255, class: "form-control" %>
+            <%= form.text_area :patient_name, placeholder: t(:additional_notes), rows: 2, maxlength: 100, class: "form-control" %>
              <small class="form-hint">This will be displayed on the payment form and receipt</small>
           </div>
         </div>
@@ -54,22 +54,12 @@
           </div>
         </div>
       <% end %>
-      
-      <div class="card mt-3">
-        <div class="card-body">
-          <div class="d-flex align-items-center">
-            <span class="bg-blue text-white avatar me-3">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
-                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
-              </svg>
-            </span>
-            <div>
-              <div class="font-weight-medium">Secure Payment Link</div>
-              <div class="text-muted">A unique, secure link will be generated using Stripe's built-in security. The link expires automatically in 24 hours.</div>
-            </div>
-          </div>
-        </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="px-4">
+        <h3 class="card-title">For your information</h3>
+        <p>A unique, secure link will be generated using Stripe's built-in security. The link expires automatically in 24 hours.</p>
       </div>
     </div>
   </div>
