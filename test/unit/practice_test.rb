@@ -28,6 +28,33 @@ class PracticeTest < ActiveSupport::TestCase
     assert_equal practice.status, 'cancelled'
   end
 
+  test 'practice has_connect_account? returns false when no account' do
+    practice = Practice.new
+    assert_not practice.has_connect_account?
+  end
+
+  test 'practice has_connect_account? returns true when account exists' do
+    practice = Practice.new
+    practice.stripe_account_id = 'acct_test123'
+    assert practice.has_connect_account?
+  end
+
+  test 'practice connect_account_complete? returns false when not enabled' do
+    practice = Practice.new
+    practice.stripe_account_id = 'acct_test123'
+    practice.connect_charges_enabled = false
+    practice.connect_payouts_enabled = false
+    assert_not practice.connect_account_complete?
+  end
+
+  test 'practice connect_account_complete? returns true when fully enabled' do
+    practice = Practice.new
+    practice.stripe_account_id = 'acct_test123'
+    practice.connect_charges_enabled = true
+    practice.connect_payouts_enabled = true
+    assert practice.connect_account_complete?
+  end
+
   test 'practice sets the first user name' do
     practice = Practice.new
     practice.users << User.new

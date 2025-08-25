@@ -201,19 +201,20 @@ Deploys automatically every commit on the `master` branch to the staging environ
 
 Include the following environment variables in your production instance:
 
-| Key                      | Description                                       | Required | Local Dev  |
-| ------------------------ | ------------------------------------------------- | -------- | ---------- |
-| `SECRET_KEY_BASE`        | Rails secret key, used to secure your application | Yes      | Yes        |
-| `STRIPE_PUBLISHABLE_KEY` | Used by Stripe for subscription management        | Yes      | Optional\* |
-| `STRIPE_SECRET_KEY`      | See above                                         | Yes      | Optional\* |
-| `STRIPE_WEBHOOK_SECRET`  | Used by Stripe to authenticate your requests      | Yes      | Optional\* |
-| `STRIPE_PRICE_ID`        | Used by Stripe for the subscription price         | Yes      | Optional\* |
-| `SENDGRID_API_KEY`       | Used by Sendgrid in order to use Rails Mailers    | Yes      | Optional\* |
-| `SENDGRID_DOMAIN`        | See above                                         | Yes      | Optional\* |
-| `SENDGRID_USERNAME`      | See above                                         | Yes      | Optional\* |
-| `SENDGRID_PASSWORD`      | See above                                         | Yes      | Optional\* |
-| `BUGSNAG_API_KEY`        | Used by Bugsnag for error tracking                | No       | No         |
-| `DATABASE_URL`           | PostgreSQL connection string                      | Yes\*\*  | Optional   |
+| Key                             | Description                                       | Required | Local Dev  |
+| ------------------------------- | ------------------------------------------------- | -------- | ---------- |
+| `SECRET_KEY_BASE`               | Rails secret key, used to secure your application | Yes      | Yes        |
+| `STRIPE_PUBLISHABLE_KEY`        | Used by Stripe for subscription management        | Yes      | Optional\* |
+| `STRIPE_SECRET_KEY`             | See above                                         | Yes      | Optional\* |
+| `STRIPE_WEBHOOK_SECRET`         | Used by Stripe to authenticate your requests      | Yes      | Optional\* |
+| `STRIPE_PRICE_ID`               | Used by Stripe for the subscription price         | Yes      | Optional\* |
+| `STRIPE_CONNECT_WEBHOOK_SECRET` | Used by Stripe Connect for webhook authentication | No       | Optional\* |
+| `SENDGRID_API_KEY`              | Used by Sendgrid in order to use Rails Mailers    | Yes      | Optional\* |
+| `SENDGRID_DOMAIN`               | See above                                         | Yes      | Optional\* |
+| `SENDGRID_USERNAME`             | See above                                         | Yes      | Optional\* |
+| `SENDGRID_PASSWORD`             | See above                                         | Yes      | Optional\* |
+| `BUGSNAG_API_KEY`               | Used by Bugsnag for error tracking                | No       | No         |
+| `DATABASE_URL`                  | PostgreSQL connection string                      | Yes\*\*  | Optional   |
 
 \* For local development, you can skip payment and email functionality  
 \*\* Required for production; for local development, database.yml is used
@@ -311,6 +312,29 @@ stripe login
 # Forward webhooks to your local server
 stripe listen --forward-to localhost:3000/api/webhooks/stripe
 ```
+
+### Stripe Connect Setup
+
+The application also supports Stripe Connect for enabling practices to accept payments directly from patients:
+
+1. **Platform Account**: Set up your main Stripe account for the platform
+2. **Connect Application**: Create a Connect application in your Stripe dashboard
+3. **Webhooks**: Set up Connect webhook endpoints:
+   - Standard webhooks: `localhost:3000/api/webhooks/stripe`
+   - Connect webhooks: `localhost:3000/api/webhooks/stripe_connect`
+
+```bash
+# Forward Connect webhooks for local development
+stripe listen --forward-to localhost:3000/api/webhooks/stripe_connect --events account.updated,account.application.deauthorized,payment_intent.succeeded,transfer.created
+```
+
+**Connect Features:**
+
+- Express accounts for quick practice onboarding
+- Application fees (configurable platform commission)
+- Automatic transfers to practice bank accounts
+- Real-time payment processing
+- Webhook-based account status monitoring
 
 ## Troubleshooting (macOS)
 

@@ -1,0 +1,66 @@
+<div class="page-header mb-4">
+  <div class="row align-items-center">
+    <div class="col">
+      <div class="page-pretitle">
+        Secure payments for your patient
+      </div>
+      <h2 class="page-title">Create Payment Link</h2>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="row row-cards">
+    <div class="col-md-8">
+      <%= form_with url: payments_path, local: true, class: "card" do |form| %>
+        <div class="card-header">
+          <h3 class="card-title">
+            Payment Information
+          </h3>
+        </div>
+        
+        <div class="card-body">          
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <%= form.label :currency, class: "form-label" %>
+              <%= form.select :currency, options_for_select([
+                    ['USD - US Dollar', 'usd'],
+                    ['CAD - Canadian Dollar', 'cad'],
+                    ['EUR - Euro', 'eur'],
+                    ['MXN - Mexican Peso', 'mxn']
+                  ], 'usd'), {}, { class: "form-select" } %>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <%= form.label :amount, "Amount", class: "form-label required" %>
+              <div class="input-group">
+                <span class="input-group-text">$</span>
+                <%= form.number_field :amount, class: "form-control", step: 0.01, min: 1, value: 100.00, required: true %>
+              </div>
+              <small class="form-hint">Platform fee (1%) will be deducted automatically</small>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label"><%= t(:notes) %></label>
+            <%= form.text_area :patient_name, placeholder: t(:additional_notes), rows: 2, maxlength: 100, class: "form-control" %>
+             <small class="form-hint">This will be displayed on the payment form and receipt</small>
+          </div>
+        </div>
+
+        <div class="card-footer text-end">
+          <div class="d-flex">
+            <%= form.submit "Create payment link", class: "btn btn-primary", data: { disable_with: t(:please_wait) } %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="col-md-4">
+      <div class="px-4">
+        <h3 class="card-title">For your information</h3>
+        <p>A unique, secure link will be generated using Stripe's built-in security. The link expires automatically in 24 hours.</p>
+      </div>
+    </div>
+  </div>
+</div>

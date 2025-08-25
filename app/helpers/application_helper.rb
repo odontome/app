@@ -5,6 +5,21 @@ module ApplicationHelper
     number_to_currency(number, unit: @current_user.practice.currency_unit, precision: precision)
   end
 
+  def number_to_currency_with_code(number, code = 'USD')
+    case code
+    when 'usd'
+      number_to_currency(number, unit: 'US$', precision: 2)
+    when 'cad'
+      number_to_currency(number, unit: 'CA$', precision: 2)
+    when 'eur'
+      number_to_currency(number, unit: '€', precision: 2)
+    when 'mxn'
+      number_to_currency(number, unit: 'MX$', precision: 2)
+    else
+      number_to_currency(number, precision: 2)
+    end
+  end
+
   def label_tag(message, color = :azure)
     allowed_colors = %i[green red azure]
     raise "#{color} is invalid. Allowed values: #{allowed_colors.join(', ')}." unless color.in?(allowed_colors)
@@ -35,11 +50,15 @@ module ApplicationHelper
     params[:controller] == 'datebooks' && params[:id] == id.to_s
   end
 
-  def is_active_tab?(tab)
-    allowed_values = %i[datebooks patients doctors practices users treatments reviews audits]
-    raise "#{tab} is invalid. Allowed values: #{allowed_values.join(', ')}." unless tab.in?(allowed_values)
+  def is_active_tab?(tabs)
+    allowed_values = %i[datebooks patients doctors practices users treatments reviews audits payments]
 
-    controller.controller_name == tab.to_s ? 'active' : ''
+    tabs = Array(tabs).map { |t| t.to_s }
+
+    invalid = tabs.reject { |t| allowed_values.map(&:to_s).include?(t) }
+    raise "#{invalid.join(', ')} are invalid. Allowed values: #{allowed_values.join(', ')}." if invalid.any?
+
+    tabs.include?(controller.controller_name) ? 'active' : ''
   end
 
   def component(name, *options, &block)
@@ -138,6 +157,40 @@ module ApplicationHelper
       item.notes.present? ? item.notes : "Appointment ##{item.id}"
     else
       "ID: #{version.item_id}"
+    end
+  end
+
+  def connect_account_status_i18n(status)
+    case status
+    when 'complete'
+      I18n.t 'stripe_account.account.status.complete'
+    when 'pending_review'
+      I18n.t 'stripe_account.account.status.pending_review'
+    when 'pending'
+      I18n.t 'stripe_account.account.status.pending'
+    when 'not_started'
+      I18n.t 'stripe_account.account.status.not_started'
+    when 'disabled'
+      I18n.t 'stripe_account.account.status.disabled'
+    else
+      I18n.t 'stripe_account.account.status.unknown'
+    end
+  end
+
+  def connect_account_status_badge_class(status)
+    case status
+    when 'complete'
+      'success'
+    when 'pending_review'
+      'warning'
+    when 'pending'
+      'info'
+    when 'not_started'
+      'secondary'
+    when 'disabled'
+      'danger'
+    else
+      'secondary'
     end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_14_004154) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_20_004154) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -121,6 +121,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_14_004154) do
     t.text "drugs_use"
     t.text "family_diseases"
     t.boolean "notified_of_six_month_reminder", default: false, null: false
+    t.datetime "deleted_at", precision: nil
+    t.index ["deleted_at"], name: "index_patients_on_deleted_at"
   end
 
   create_table "practices", id: :serial, force: :cascade do |t|
@@ -137,6 +139,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_14_004154) do
     t.integer "datebooks_count"
     t.string "email"
     t.text "stripe_customer_id"
+    t.text "stripe_account_id"
+    t.string "connect_onboarding_status", default: "not_started"
+    t.boolean "connect_charges_enabled", default: false
+    t.boolean "connect_payouts_enabled", default: false
+    t.boolean "connect_details_submitted", default: false
+    t.index ["connect_onboarding_status"], name: "index_practices_on_connect_onboarding_status"
+    t.index ["stripe_account_id"], name: "index_practices_on_stripe_account_id"
   end
 
   create_table "reviews", id: :serial, force: :cascade do |t|
