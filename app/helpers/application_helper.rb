@@ -35,11 +35,15 @@ module ApplicationHelper
     params[:controller] == 'datebooks' && params[:id] == id.to_s
   end
 
-  def is_active_tab?(tab)
-    allowed_values = %i[datebooks patients doctors practices users treatments reviews audits]
-    raise "#{tab} is invalid. Allowed values: #{allowed_values.join(', ')}." unless tab.in?(allowed_values)
+  def is_active_tab?(tabs)
+    allowed_values = %i[datebooks patients doctors practices users treatments reviews audits payments]
 
-    controller.controller_name == tab.to_s ? 'active' : ''
+    tabs = Array(tabs).map { |t| t.to_s }
+
+    invalid = tabs.reject { |t| allowed_values.map(&:to_s).include?(t) }
+    raise "#{invalid.join(', ')} are invalid. Allowed values: #{allowed_values.join(', ')}." if invalid.any?
+
+    tabs.include?(controller.controller_name) ? 'active' : ''
   end
 
   def component(name, *options, &block)
