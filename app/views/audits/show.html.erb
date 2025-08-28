@@ -80,7 +80,7 @@
       </div>
 
       <!-- Changes (for update events) -->
-      <% if @version.event == 'update' && @version.object_changes.present? %>
+      <% if @version.event == 'create' || @version.event == 'update' && @version.object_changes.present? %>
         <div class="col-12">
           <div class="card mb-3">
             <div class="card-table">

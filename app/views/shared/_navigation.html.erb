@@ -33,7 +33,7 @@
           </div>
         </a>
         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-          <%= link_to t(:profile), current_user, class: "dropdown-item" %>
+          <%= link_to t(:view_profile), current_user, class: "dropdown-item" %>
           <% if session[:impersonator_id].present? %>
             <%= button_to 'Stop impersonating', admin_stop_impersonating_path, method: :delete, class: 'dropdown-item text-danger', form: { data: { turbo: false } } %>
           <% end %>

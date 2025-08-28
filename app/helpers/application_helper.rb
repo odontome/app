@@ -132,6 +132,8 @@ module ApplicationHelper
     destination = case version.item_type
                   when 'Appointment'
                     [item.datebook, item]
+                  when 'Balance'
+                    patient_balances_path(item.patient)
                   else
                     item
                   end
