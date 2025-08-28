@@ -191,4 +191,10 @@ module ApplicationHelper
       'secondary'
     end
   end
+
+  def active_announcements
+    current_announcements = Announcements.current_announcements
+    dismissed_announcements = session[:dismissed_announcements] || []
+    current_announcements.reject { |a| dismissed_announcements.include?(a['version']) }
+  end
 end
