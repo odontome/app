@@ -33,7 +33,7 @@
                         <label class="form-label" for="payment_code"><%= t("payments.qr.cant_scan") %></label>
                         <p class="text-muted"><%= t("payments.qr.copy_paste_instruction") %></p>
                         <div class="input-icon">
-                            <input type="text" value="<%= @payment_url %>" class="form-control" readonly="" id="payment_code">
+                            <input type="text" value="<%= @payment_url %>" class="form-control user-select-all" readonly="" id="payment_code">
                             <span class="input-icon-addon">
                                 <!-- Download SVG icon from http://tabler.io/icons/icon/files -->
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
