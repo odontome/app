@@ -38,7 +38,7 @@
 								<%= treatment.name %>
 							</td>
 							<td class="text-muted" data-label="<%= t :price %>">
-								<%= number_to_currency_with_symbol treatment.price %>
+								<%= number_to_currency_with_code treatment.price %>
 							</td>
 							<td class="text-muted" data-label="<%= t :status %>">
 								<% if !treatment.missing_info? %>	 

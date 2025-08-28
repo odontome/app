@@ -25,8 +25,8 @@
       </div>
 
       <div class="mb-3">
-        <%= f.label :currency_unit, class: "form-label"  %>
-        <%= f.select(:currency_unit, %w[$ € £ Bs. S/.], {}, { :class => "form-select"}) %>
+        <%= f.label :currency, class: "form-label"  %>
+        <%= f.select(:currency, options_for_select([[t("currencies.mxn"), 'mxn'], [t("currencies.cad"), 'cad'], [t("currencies.usd"), 'usd'], [t("currencies.eur"), 'eur']], @practice.currency), {}, { :class => "form-select"}) %>
       </div>
     </div>
 

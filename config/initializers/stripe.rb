@@ -10,7 +10,7 @@ stripe_config = begin
     webhook_secret: secrets['stripe_webhook_secret'],
     price_id: secrets['stripe_price_id']
   }
-rescue
+rescue StandardError
   # Fallback to environment variables
   {
     publishable_key: ENV['STRIPE_PUBLISHABLE_KEY'],
@@ -21,10 +21,10 @@ rescue
 end
 
 Rails.configuration.stripe = {
-  :publishable_key => stripe_config[:publishable_key],
-  :secret_key => stripe_config[:secret_key],
-  :webhook_secret => stripe_config[:webhook_secret],
-  :price_id => stripe_config[:price_id]
+  publishable_key: stripe_config[:publishable_key],
+  secret_key: stripe_config[:secret_key],
+  webhook_secret: stripe_config[:webhook_secret],
+  price_id: stripe_config[:price_id]
 }
 
 Stripe.api_key = Rails.configuration.stripe[:secret_key]

@@ -8,7 +8,7 @@ class DoctorMailerTest < ActionMailer::TestCase
       'locale' => 'en',
       'timezone' => 'London',
       'email' => 'contact@bokanova.mx',
-      'currency_unit' => '€'
+      'currency' => 'EUR'
     }]
 
     appointments = [

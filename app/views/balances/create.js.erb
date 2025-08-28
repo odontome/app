@@ -4,5 +4,5 @@ $("#patient_balance > tbody").append("<%=escape_javascript(render :partial => 's
 $('[type=number],textarea').val("");
 
 // Highlight the new total
-$("#total-price").html("<%= escape_javascript(link_to number_to_currency_with_symbol(@total), patient_balances_path(:format => :csv), :title => t(:download_as_csv_file)) %>");
+$("#total-price").html("<%= escape_javascript(link_to number_to_currency_with_code(@total), patient_balances_path(:format => :csv), :title => t(:download_as_csv_file)) %>");
 $("#total-price").effect("highlight", {}, 1500);

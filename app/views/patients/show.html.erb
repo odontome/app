@@ -96,7 +96,7 @@
   <div class="col-sm-6 col-lg-4">
     <div class="card">
       <div class="card-body mt-2 text-center">
-        <div class="h1 text-primary"><%= link_to number_to_currency_with_symbol(@total_balance, 0), patient_balances_path(@patient) %></div>
+        <div class="h1 text-primary"><%= link_to number_to_currency_with_code(@total_balance), patient_balances_path(@patient) %></div>
         <div class="text-muted mb-3"><%= t :balance %></div>
       </div>
     </div>

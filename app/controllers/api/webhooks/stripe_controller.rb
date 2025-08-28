@@ -16,9 +16,9 @@ module Api::Webhooks
         sig_header = request.env['HTTP_STRIPE_SIGNATURE']
         payload = request.body.read
         event = Stripe::Webhook.construct_event(payload, sig_header, endpoint_secret)
-      rescue JSON::ParserError => e
+      rescue JSON::ParserError
         return head :bad_request
-      rescue Stripe::SignatureVerificationError => e
+      rescue Stripe::SignatureVerificationError
         return head :bad_request
       end
 
@@ -26,6 +26,8 @@ module Api::Webhooks
       # Handle various events.  There are many more, but these are the essential ones.
       #
       case event.type
+
+      # Subscription events
       when 'invoice.payment_succeeded'
         invoice = event.data.object
         subscription = Stripe::Subscription.retrieve(invoice.subscription)
@@ -40,6 +42,14 @@ module Api::Webhooks
       when 'checkout.session.completed'
         subscription = event.data.object
         update_customer_reference(subscription)
+
+      # Connect events
+      when 'account.updated'
+        handle_account_updated(event)
+      when 'payment_intent.succeeded'
+        handle_payment_succeeded(event)
+
+      # Everything else
       else
         puts "Stripe webhooks - unhandled event: #{event.type}"
       end
@@ -49,10 +59,8 @@ module Api::Webhooks
 
     private
 
-    #
-    # Use the same method that we wrote for create new subscriptions to update the
-    # subscription data, so that it's always formatted consistently.
-    #
+    # Stripe Subscription
+
     def update_database_subscription(stripe_sub)
       practice = Practice.find_by!(stripe_customer_id: stripe_sub.customer)
       subscription = practice.subscription
@@ -64,6 +72,35 @@ module Api::Webhooks
       practice = Practice.find_by!(id: stripe_sub.client_reference_id)
       practice.stripe_customer_id = stripe_sub.customer
       practice.save!
+    end
+
+    # Stripe Connect
+
+    def handle_account_updated(event)
+      account = event.data.object
+      practice = Practice.find_by!(stripe_account_id: account.id)
+      practice.update!(
+        connect_charges_enabled: account.charges_enabled,
+        connect_payouts_enabled: account.payouts_enabled,
+        connect_details_submitted: account.details_submitted,
+        connect_onboarding_status: practice.determine_onboarding_status_from_stripe_account(account)
+      )
+    end
+
+    def handle_payment_succeeded(event)
+      payment_intent = event.data.object
+      notes = payment_intent.metadata&.patient_name
+      # practice_id = payment_intent.metadata&.practice_id
+      patient_id = payment_intent.metadata&.patient_id
+
+      return unless patient_id
+
+      Balance.create!(
+        amount: payment_intent.amount_received / 100.0,
+        currency: payment_intent.currency,
+        notes: notes,
+        patient_id: patient_id
+      )
     end
   end
 end

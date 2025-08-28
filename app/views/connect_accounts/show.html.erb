@@ -1,0 +1,81 @@
+<div class="page-header mb-4">
+  <div class="row align-items-center">
+    <div class="col">
+      <div class="page-pretitle">
+        <%= t "stripe_payment_processing.setup.subtitle" %>
+      </div>
+      <h2 class="page-title"><%= t "stripe_payment_processing.title" %></h2>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="row row-cards">
+    <div class="col-md-8">
+      <% if @practice.has_connect_account? %>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"><%= t("stripe_payment_processing.setup.title") %></h3>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md">
+                  <div class="form-label"><%= t("stripe_account.account.attributes.id") %></div>
+                  <p><%= @practice.stripe_account_id %></p>
+
+                  <div class="form-label"><%= t("stripe_account.account.attributes.status") %></div>
+                  <p><%= connect_account_status_i18n(@practice.connect_onboarding_status)[:title] %></p>
+              </div>
+
+              <div class="col-md">
+                  <div class="form-label"><%= t("stripe_account.account.attributes.charges_enabled") %></div>
+                  <p><%= @practice.connect_charges_enabled? ? t(:yes) : t(:no) %></p>
+
+                  <div class="form-label"><%= t("stripe_account.account.attributes.payouts_enabled") %></div>
+                  <p><%= @practice.connect_payouts_enabled? ? t(:yes) : t(:no) %></p>
+
+                  <div class="form-label"><%= t("stripe_account.account.attributes.details_submitted") %></div>
+                  <p><%= @practice.connect_details_submitted? ? t(:yes) : t(:no) %></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="btn-list justify-content-end">
+              <%= form_with url: refresh_status_connect_account_path, method: :post, local: true, class: "d-inline" do %>
+                <%= submit_tag t("stripe_payment_processing.setup.refresh_cta"), class: "btn btn-outline-secondary" %>
+              <% end %>
+              <% unless @practice.connect_account_complete? %>
+                <%= link_to t("stripe_payment_processing.setup.continue_cta"), onboarding_connect_account_path, class: "btn btn-primary" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Connect account status</h3>
+          </div>
+          <div class="card-body">
+            <p><%= t("stripe_payment_processing.setup.description") %></p>
+            <%= form_with url: connect_account_path, method: :post, local: true do %>
+              <%= submit_tag t("stripe_payment_processing.setup.cta"), class: "btn btn-primary" %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="col-md-4">
+      <div class="px-4">
+        <h3 class="card-title"><%= t :for_your_information %></h3>
+        <p><%= t("stripe_payment_processing.setup.for_your_information.description") %></p>
+        <ol>
+          <% t("stripe_payment_processing.setup.for_your_information.steps").each do |step| %>
+            <li><%= step %></li>
+          <% end %>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>

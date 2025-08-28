@@ -1,6 +1,15 @@
 <%= form_tag(patient_balances_path, :method => "post", :remote => true, :id => "entry-form") do %>
 	<div class="mb-3">
-			<label for="balance_amount" class="form-label required"> <%= t :amount %></label>
+		<label for="balance_currency" class="form-label required"> <%= t "payments.attributes.currency" %></label>
+		<%= select_tag("balance[currency]", options_for_select([
+		[t("currencies.mxn"), 'mxn'], 
+		[t("currencies.cad"), 'cad'], 
+		[t("currencies.usd"), 'usd'], 
+		[t("currencies.eur"), 'eur']], @practice.currency), { :class => "form-select"}) %>
+	</div>
+
+	<div class="mb-3">
+		<label for="balance_amount" class="form-label required"> <%= t :amount %></label>
 	    <%= number_field_tag "balance[amount]", nil, { :class => "form-control" } %>
       <%= content_tag "small", t(:balance_discount_hint), class: "text-muted" %>
 	</div>

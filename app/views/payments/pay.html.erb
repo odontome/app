@@ -1,0 +1,165 @@
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title"><%= t("payments.pay.title", practice_name: @practice.name) %></h3>
+  </div>
+  <div class="card-body">
+    <fieldset class="form-fieldset">
+      <div class="mb-3 text-center">                                
+        <h1 class="display-6"><%= number_to_currency_with_code(@payment_intent.amount / 100.0, @payment_intent.currency) %></h1>
+        <p class="text-muted">
+          <% if @payment_intent.metadata['patient_name'].present? %>
+            <%= @payment_intent.metadata['patient_name'] %>
+          <% else %>
+            <%= t('payments.pay.no_note') %>
+          <% end %>
+        </p>
+      </div>
+    </fieldset>
+    <div id="payment-form">
+      <div class="mb-3">
+        <div id="payment-element" class="form-control" style="min-height: 40px; padding: 10px;">
+          <!-- Stripe Payment Element will be inserted here -->
+        </div>
+        <div id="payment-errors" role="alert" class="invalid-feedback d-block" style="display: none;"></div>
+      </div>
+      
+      <button id="submit-button" class="btn btn-primary w-100">
+        <span id="button-text"><%= t("payments.pay.cta") %></span>
+        <span id="spinner" class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true" style="display: none;"></span>
+      </button>
+      
+      <div id="payment-result" class="mt-3" style="display: none;"></div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-3 px-3">
+    <div class="d-flex align-items-center">
+      <div>
+        <div class="font-weight-medium"><%= t("payments.pay.secure_payment") %></div>
+        <div class="text-muted"><%= t("payments.pay.secure_payment_description") %></div>
+      </div>
+    </div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+// Initialize Stripe with the client secret from the URL
+const stripe = Stripe('<%= Rails.configuration.stripe[:publishable_key] %>');
+const clientSecret = '<%= @client_secret %>';
+
+let elements;
+let paymentElement;
+
+// Initialize Stripe Elements with the client secret
+function initializeStripe() {
+  try {
+    elements = stripe.elements({
+      clientSecret: clientSecret,
+      appearance: {
+        theme: 'stripe',
+        variables: {
+          colorPrimary: '#206bc4',
+          colorBackground: '#ffffff',
+          colorText: '#30313d',
+          colorDanger: '#df1b41',
+          fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+          spacingUnit: '4px',
+          borderRadius: '4px'
+        }
+      }
+    });
+
+    paymentElement = elements.create('payment');
+    paymentElement.mount('#payment-element');
+    
+    // Clear any previous errors
+    document.getElementById('payment-errors').style.display = 'none';
+    
+  } catch (error) {
+    showError('Failed to initialize payment: ' + error.message);
+  }
+}
+
+// Handle form submission
+async function handleSubmit(event) {
+  event.preventDefault();
+  
+  if (!elements) {
+    showError('Payment form not properly initialized. Please refresh the page.');
+    return;
+  }
+  
+  setLoading(true);
+
+  try {
+    const { error, paymentIntent } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: window.location.origin + '<%= success_payments_path %>',
+      },
+      redirect: 'if_required'
+    });
+
+    if (error) {
+      showError(error.message);
+      setLoading(false);
+    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+      showSuccess(paymentIntent);
+    }
+  } catch (error) {
+    setLoading(false);
+    showError('An unexpected error occurred: ' + error.message);
+  }
+}
+
+function setLoading(loading) {
+  const submitButton = document.getElementById('submit-button');
+  const buttonText = document.getElementById('button-text');
+  const spinner = document.getElementById('spinner');
+  
+  if (loading) {
+    submitButton.disabled = true;
+    buttonText.textContent = 'Processing...';
+    spinner.style.display = 'inline-block';
+  } else {
+    submitButton.disabled = false;
+    buttonText.textContent = 'Complete Payment';
+    spinner.style.display = 'none';
+  }
+}
+
+function showError(errorMessage) {
+  const errorElement = document.getElementById('payment-errors');
+  errorElement.textContent = errorMessage;
+  errorElement.style.display = 'block';
+}
+
+function showSuccess(paymentIntent) {
+  const resultElement = document.getElementById('payment-result');
+  resultElement.innerHTML = `
+    <div class="alert alert-success">
+      <h4 class="alert-title">Payment Successful!</h4>
+      <div class="text-muted">Payment ID: ${paymentIntent.id}</div>
+    </div>
+  `;
+  resultElement.style.display = 'block';
+  
+  // Redirect to success page
+  setTimeout(() => {
+    window.location.href = '<%= success_payments_path %>?payment_intent=' + paymentIntent.id;
+  }, 2000);
+}
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', () => {
+  // Show loading state
+  const paymentElementContainer = document.getElementById('payment-element');
+  paymentElementContainer.innerHTML = '<div class="text-center"><div class="spinner-border spinner-border-sm me-2"></div>Loading payment form...</div>';
+  
+  initializeStripe();
+  
+  // Add event listener to submit button
+  document.getElementById('submit-button').addEventListener('click', handleSubmit);
+});
+</script>

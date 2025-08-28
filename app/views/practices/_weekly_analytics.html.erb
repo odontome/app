@@ -19,7 +19,7 @@
       <%= link_to practice_balance_url, class: "card-body p-3 d-flex align-items-center justify-content-between card-link" do %>
         <div>
           <div class="text-muted"><%= t('analytics.kpis.revenue') %></div>
-          <div class="h2 m-0"><%= number_to_currency_with_symbol(@kpi_revenue_this_week, 0) %></div>
+          <div class="h2 m-0"><%= number_to_currency_with_code(@kpi_revenue_this_week) %></div>
           <div class="text-muted"><%= t('analytics.vs_last_week') %> <span class="text-<%= @kpi_revenue_delta >= 0 ? 'green' : 'red' %>"><%= @kpi_revenue_delta %>%</span></div>
         </div>
         <div class="chart-sparkline">
