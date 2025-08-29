@@ -17,6 +17,19 @@
         </div>
 
         <div class="card-body">
+          <% if @patient.present? %>
+            <div class="mb-3">
+              <label class="form-label"><%= t(:patient) %></label>
+              <div class="d-flex py-1 align-items-center">
+                  <span class="avatar me-2 rounded-circle"><%= @patient.initials %></span>
+                  <div class="flex-fill">
+                    <div class="font-weight-medium"><%= @patient.fullname %></div>
+                    <div class="text-muted"><%= @patient.email %></div>
+                  </div>
+                </div>
+            </div>
+          <% end %>
+
           <div class="row">
             <div class="col-md-6 mb-3">
               <%= form.label :currency, t("payments.attributes.currency"), class: "form-label required" %>

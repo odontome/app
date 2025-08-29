@@ -16,12 +16,11 @@ class PaymentsController < ApplicationController
 
   # PHASE 1: Clinic creates payment request
   def new
-    @patient_id = Patient.select(:id).with_practice(current_user.practice_id).find(params[:patient_id]).id
+    @patient = Patient.with_practice(current_user.practice_id).find(params[:patient_id])
+    @patient_id = @patient.id
   rescue ActiveRecord::RecordNotFound
     # Intentionally suppressing not found error, payments can be created without patients
     @patient_id = nil
-
-    # Simple form for clinic to fill out patient info and amount
   end
 
   def create
