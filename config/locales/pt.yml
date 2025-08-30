@@ -12,6 +12,7 @@ pt:
   review: Avaliação
   no_comment: Nenhum comentário foi fornecido
   showing_all_reviews: Mostrando todas as avaliações
+  total_reviews: "%{cound} avaliações"
   thank_you: Obrigado!
   range: Intervalo
   active: Ativo

@@ -8,10 +8,11 @@ class ReviewsController < ApplicationController
     reviews_per_page = 20
     @current_page = 0
     @reviews = Review.with_practice(current_user.practice_id).limit(reviews_per_page)
+    @total_reviews = Review.with_practice(current_user.practice_id).count
+    @average_score = Review.with_practice(current_user.practice_id).average(:score)
 
-    if params[:score].present?
-      @reviews = @reviews.where(score: params[:score].to_i)
-    end
+    # If we are filtering by score, apply the filter
+    @reviews = @reviews.where(score: params[:score].to_i) if params[:score].present?
 
     if params[:page].nil?
       @reviews = @reviews.offset(0)

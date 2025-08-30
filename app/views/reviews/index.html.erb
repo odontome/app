@@ -5,6 +5,9 @@
         <h2 class="page-title">
           <%= t :reviews %>
         </h2>
+        <div class="text-small mt-1">
+          <%= component :rating, value: @average_score %> <%= t(:total_reviews, count: @total_reviews) %>
+        </div>
       </div>
       <div class="col-auto ms-auto">
         <div class="btn-list">

@@ -12,6 +12,7 @@ en:
   review: Review
   no_comment: No comment was provided
   showing_all_reviews: Showing all reviews
+  total_reviews: "%{count} reviews"
   thank_you: Thank you!
   range: Range
   active: Active

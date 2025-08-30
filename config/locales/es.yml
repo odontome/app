@@ -10,6 +10,7 @@ es:
   review: Calificación
   no_comment: No hay comentarios
   showing_all_reviews: Mostrando todas las calificaciones
+  total_reviews: "%{count} calificaciones"
   thank_you: ¡Gracias!
   range: Rango
   active: Activa
