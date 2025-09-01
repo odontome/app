@@ -7,10 +7,12 @@ class AnnouncementsController < ApplicationController
   def dismiss
     version = params[:version]
 
-    if version.present?
-      dismissed_announcements = session[:dismissed_announcements] || []
-      dismissed_announcements << version.to_i unless dismissed_announcements.include?(version.to_i)
-      session[:dismissed_announcements] = dismissed_announcements
+    if version.present? && current_user
+      # Create dismissed announcement record if it doesn't exist
+      DismissedAnnouncement.find_or_create_by(
+        user: current_user,
+        announcement_version: version.to_i
+      )
 
       head :ok
     else

@@ -11,6 +11,7 @@ class User < ApplicationRecord
   # associations
   belongs_to :practice, counter_cache: true
   has_many :notes, dependent: :delete_all
+  has_many :dismissed_announcements, dependent: :delete_all
 
   has_secure_password
 

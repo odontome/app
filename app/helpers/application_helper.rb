@@ -194,7 +194,12 @@ module ApplicationHelper
 
   def active_announcements
     current_announcements = Announcements.current_announcements
-    dismissed_announcements = session[:dismissed_announcements] || []
-    current_announcements.reject { |a| dismissed_announcements.include?(a['version']) }
+    
+    if current_user
+      dismissed_versions = current_user.dismissed_announcements.pluck(:announcement_version)
+      current_announcements.reject { |a| dismissed_versions.include?(a['version']) }
+    else
+      current_announcements
+    end
   end
 end

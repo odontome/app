@@ -8,24 +8,51 @@ class AnnouncementsControllerTest < ActionController::TestCase
     session[:user] = @user
   end
 
-  test 'should dismiss announcement and store in session' do
-    post :dismiss, params: { version: 1 }
+  test 'should dismiss announcement and store in database' do
+    assert_difference 'DismissedAnnouncement.count', 1 do
+      post :dismiss, params: { version: 1 }
+    end
 
     assert_response :success
-    assert_includes session[:dismissed_announcements], 1
+    
+    dismissed = DismissedAnnouncement.find_by(user: @user, announcement_version: 1)
+    assert_not_nil dismissed
+    assert_equal 1, dismissed.announcement_version
   end
 
   test 'should return bad request for missing version' do
-    post :dismiss, params: {}
+    assert_no_difference 'DismissedAnnouncement.count' do
+      post :dismiss, params: {}
+    end
+
+    assert_response :bad_request
+  end
+
+  test 'should return bad request when no user is logged in' do
+    session[:user] = nil
+
+    assert_no_difference 'DismissedAnnouncement.count' do
+      post :dismiss, params: { version: 1 }
+    end
 
     assert_response :bad_request
   end
 
   test 'should not dismiss same announcement twice' do
-    post :dismiss, params: { version: 1 }
-    post :dismiss, params: { version: 1 }
-
+    # First dismissal should create a record
+    assert_difference 'DismissedAnnouncement.count', 1 do
+      post :dismiss, params: { version: 1 }
+    end
     assert_response :success
-    assert_equal 1, session[:dismissed_announcements].count(1)
+
+    # Second dismissal should not create another record (find_or_create_by)
+    assert_no_difference 'DismissedAnnouncement.count' do
+      post :dismiss, params: { version: 1 }
+    end
+    assert_response :success
+
+    # Should still only have one record for this user/version combination
+    dismissed_count = DismissedAnnouncement.where(user: @user, announcement_version: 1).count
+    assert_equal 1, dismissed_count
   end
 end
