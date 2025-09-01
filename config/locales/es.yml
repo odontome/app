@@ -7,6 +7,15 @@ es:
     past_tense: <strong>%{patient_name}</strong> vió al %{doctor_fullname}
     future_tense: <strong>%{patient_name}</strong> verá al %{doctor_fullname}
   all_appointments: Todas las citas
+  announcements:
+    v1:
+      message: |
+        <p>🎉 Ha sido un par de semanas emocionantes en Odonto.me! Estamos encantados de anunciar el lanzamiento de varias nuevas funciones diseñadas para mejorar tu experiencia de gestión de prácticas:</p>
+        <ul>
+          <li>📈 <a href="/practice">Analítica</a> — Gráficas de la clínica e informes para rastrear citas, ingresos y actividad de pacientes.</li>
+          <li>📝 <a href="/audits">Registros de auditoría</a> — Listado de acciones críticas para cumplimiento y solución de problemas.</li>
+          <li>💳 <a href="/payments">Pagos en línea</a> — Pagos con tarjeta seguros de los pacientes con conciliación y seguimiento del estado del pago.</li>
+        </ul>
   review: Calificación
   no_comment: No hay comentarios
   showing_all_reviews: Mostrando todas las calificaciones

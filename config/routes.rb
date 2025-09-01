@@ -85,6 +85,9 @@ Rails.application.routes.draw do
     end
   end
 
+  # announcements
+  post '/announcements/dismiss', to: 'announcements#dismiss', as: :dismiss_announcement
+
   # error handling
   get '/404', to: 'errors#not_found'
   get '/401', to: 'errors#unauthorised'
