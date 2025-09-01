@@ -1,34 +1,49 @@
-<%# Simple announcement rendering: message may contain safe HTML from translations or YAML %>
 <% active_announcements.each do |announcement| %>
   <% alert_type = announcement['type'] || 'info' %>
   <% version = announcement['version'] %>
-  <% message = t("current_announcement") %>
+  <% if announcement['i18n_key'].present? %>
+    <% raw_message = t(announcement['i18n_key']) %>
+  <% else %>
+    <% raw_message = announcement['message'] || '' %>
+  <% end %>
 
   <div class="mt-3">
     <div class="alert alert-<%= alert_type %> alert-dismissible announcement-alert" role="alert" data-announcement-version="<%= version %>">
-      <div class="text-muted">
-        <%= message.respond_to?(:html_safe) ? message.html_safe : message %>
+      <div class="text-muted announcement-body">
+        <%= sanitize(raw_message, tags: %w(p ul li a strong em br), attributes: %w(href title target rel)) %>
       </div>
-      <button type="button" class="btn-close" aria-label="Close" onclick="dismissAnnouncement(<%= version %>)"></button>
+      <button type="button" class="btn-close" aria-label="Close" data-announcement-dismiss data-announcement-version="<%= version %>"></button>
     </div>
   </div>
 <% end %>
 
 <script>
-function dismissAnnouncement(version) {
-  $.ajax({
-    url: '/announcements/dismiss',
-    type: 'POST',
-    data: { version: version },
-    headers: {
-      'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-    },
-    success: function() {
-      // Remove the announcement element from the DOM
-      $('[data-announcement-version="' + version + '"]').fadeOut(300, function() {
-        $(this).remove();
-      });
-    }
+document.addEventListener('DOMContentLoaded', function () {
+  document.body.addEventListener('click', function (ev) {
+    var btn = ev.target.closest('[data-announcement-dismiss]');
+    if (!btn) return;
+
+    var version = btn.getAttribute('data-announcement-version');
+    if (!version) return;
+
+    var token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+    fetch('<%= Rails.application.routes.url_helpers.dismiss_announcement_path %>', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': token
+      },
+      body: JSON.stringify({ version: version })
+    }).then(function (resp) {
+      if (resp.ok) {
+        var el = document.querySelector('[data-announcement-version="' + version + '"]');
+        if (el) {
+          el.classList.add('fade');
+          setTimeout(function () { el.remove(); }, 300);
+        }
+      }
+    });
   });
-}
+});
 </script>

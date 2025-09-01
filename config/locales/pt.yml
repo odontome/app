@@ -5,13 +5,15 @@ pt:
     isso é um erro, entre em contato conosco o mais rápido possível.
   activate: Ativar
   all_appointments: Todos os agendamentos
-  current_announcement: |
-    <p>🎉 Tem sido um par de semanas emocionantes no Odonto.me! Estamos encantados em anunciar o lançamento de várias novas funcionalidades projetadas para melhorar sua experiência de gestão de práticas:</p>
-    <ul>
-      <li>📈<a href="/practice">Analítica</a> — Gráficas da clínica e relatórios para rastrear agendamentos, receitas e atividades de pacientes.</li>
-      <li>📝<a href="/audits">Registros de auditoria</a> — Listagem de ações críticas para conformidade e solução de problemas.</li>
-      <li>💳<a href="/payments">Pagamentos online</a> — Pagamentos com cartão seguros dos pacientes com conciliação e acompanhamento do status do pagamento.</li>
-    </ul>
+  announcements:
+    v1:
+      message: |
+        <p>🎉 Tem sido um par de semanas emocionantes no Odonto.me! Estamos encantados em anunciar o lançamento de várias novas funcionalidades projetadas para melhorar sua experiência de gestão de práticas:</p>
+        <ul>
+          <li>📈 <a href="/practice">Analítica</a> — Gráficas da clínica e relatórios para rastrear agendamentos, receitas e atividades de pacientes.</li>
+          <li>📝 <a href="/audits">Registros de auditoria</a> — Listagem de ações críticas para conformidade e solução de problemas.</li>
+          <li>💳 <a href="/payments">Pagamentos online</a> — Pagamentos com cartão seguros dos pacientes com conciliação e acompanhamento do status do pagamento.</li>
+        </ul>
   appointment: Agendamento
   appointment_visit:
     past_tense: <strong>%{patient_name}</strong> visitou %{doctor_fullname}

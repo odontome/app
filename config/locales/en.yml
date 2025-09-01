@@ -5,13 +5,15 @@ en:
     is a mistake, please contact us as soon as possible.
   activate: Activate
   all_appointments: All appointments
-  current_announcement: |
-    <p>🎉 It has been an exciting couple of weeks at Odonto.me! We are thrilled to announce the launch of several new features designed to enhance your practice management experience:</p>
-    <ul>
-      <li>📈<a href="/practice">Analytics</a> — Practice dashboards and reports to track appointments, revenue, and patient activity.</li>
-      <li>📝<a href="/audits">Audit logs</a> — Secure, tamper-evident trails of critical actions for compliance and troubleshooting.</li>
-      <li>💳<a href="/payments">Online payments</a> — Secure card payments from patients with reconciliation and payment status tracking.</li>
-    </ul>
+  announcements:
+    v1:
+      message: |
+        <p>🎉 It has been an exciting couple of weeks at Odonto.me! We are thrilled to announce the launch of several new features designed to enhance your practice management experience:</p>
+        <ul>
+          <li>📈 <a href="/practice">Analytics</a> — Practice dashboards and reports to track appointments, revenue, and patient activity.</li>
+          <li>📝 <a href="/audits">Audit logs</a> — Secure, tamper-evident trails of critical actions for compliance and troubleshooting.</li>
+          <li>💳 <a href="/payments">Online payments</a> — Secure card payments from patients with reconciliation and payment status tracking.</li>
+        </ul>
   appointment: Appointment
   appointment_visit:
     past_tense: <strong>%{patient_name}</strong> visited %{doctor_fullname}
