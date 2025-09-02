@@ -1,8 +1,0 @@
-# - version: unique identifier/version number (increment for each new announcement)
-# - type: alert type (info, success, warning, danger) - defaults to 'info'
-# - i18n_key: translation key for the announcement text (allows per-locale copy)
-
-announcements:
-  - version: 1
-    i18n_key: "announcements.v1.message"
-    type: "info"

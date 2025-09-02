@@ -8,13 +8,19 @@ class AnnouncementsController < ApplicationController
     version = params[:version]
 
     if version.present? && current_user
-      # Create dismissed announcement record if it doesn't exist
-      DismissedAnnouncement.find_or_create_by(
-        user: current_user,
-        announcement_version: version.to_i
-      )
-
-      head :ok
+      # Find the announcement by version
+      announcement = Announcement.find_by(version: version.to_i)
+      
+      if announcement
+        # Create dismissed announcement record if it doesn't exist
+        AnnouncementDismissal.find_or_create_by(
+          user: current_user,
+          announcement: announcement
+        )
+        head :ok
+      else
+        head :not_found
+      end
     else
       head :bad_request
     end

@@ -32,18 +32,34 @@ class ApplicationHelperTest < ActionView::TestCase
   # Tests for active_announcements method
   def setup_announcements
     @user = users(:founder)
-    # Set up some mock announcements
-    mock_announcements = [
-      { 'version' => 1, 'message' => 'First announcement' },
-      { 'version' => 2, 'message' => 'Second announcement' },
-      { 'version' => 3, 'message' => 'Third announcement' }
-    ]
-    Announcements.instance_variable_set(:@announcements, mock_announcements)
+    # Create test announcements
+    @announcement1 = Announcement.create!(
+      version: 1,
+      announcement_type: 'info',
+      i18n_key: 'announcements.v1.message',
+      active: true,
+      published_at: Time.current
+    )
+    @announcement2 = Announcement.create!(
+      version: 2,
+      announcement_type: 'warning',
+      i18n_key: 'announcements.v2.message',
+      active: true,
+      published_at: Time.current
+    )
+    @announcement3 = Announcement.create!(
+      version: 3,
+      announcement_type: 'success',
+      i18n_key: 'announcements.v3.message',
+      active: true,
+      published_at: Time.current
+    )
   end
 
   def teardown_announcements
-    # Clear memoized announcements so tests remain isolated
-    Announcements.instance_variable_set(:@announcements, nil)
+    # Clean up test announcements
+    Announcement.destroy_all
+    AnnouncementDismissal.destroy_all
   end
 
   test 'active_announcements returns all announcements when no user' do
@@ -53,7 +69,7 @@ class ApplicationHelperTest < ActionView::TestCase
     # since it will be nil by default in the test environment
     active = active_announcements
     assert_equal 3, active.length
-    assert_equal [1, 2, 3], active.map { |a| a['version'] }
+    assert_equal [1, 2, 3], active.map(&:version).sort
     
     teardown_announcements
   end
@@ -62,14 +78,14 @@ class ApplicationHelperTest < ActionView::TestCase
     setup_announcements
     
     # Dismiss announcement version 2
-    DismissedAnnouncement.create!(user: @user, announcement_version: 2)
+    AnnouncementDismissal.create!(user: @user, announcement: @announcement2)
 
     # Set up the session like the controller tests do
     session[:user] = @user
 
     active = active_announcements
     assert_equal 2, active.length
-    assert_equal [1, 3], active.map { |a| a['version'] }
+    assert_equal [1, 3], active.map(&:version).sort
     
     teardown_announcements
   end
@@ -82,7 +98,7 @@ class ApplicationHelperTest < ActionView::TestCase
 
     active = active_announcements
     assert_equal 3, active.length
-    assert_equal [1, 2, 3], active.map { |a| a['version'] }
+    assert_equal [1, 2, 3], active.map(&:version).sort
     
     teardown_announcements
   end

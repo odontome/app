@@ -193,13 +193,6 @@ module ApplicationHelper
   end
 
   def active_announcements
-    current_announcements = Announcements.current_announcements
-    
-    if current_user
-      dismissed_versions = current_user.dismissed_announcements.pluck(:announcement_version)
-      current_announcements.reject { |a| dismissed_versions.include?(a['version']) }
-    else
-      current_announcements
-    end
+    Announcement.active_for_user(current_user)
   end
 end
