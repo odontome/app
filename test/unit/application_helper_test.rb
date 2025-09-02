@@ -49,11 +49,8 @@ class ApplicationHelperTest < ActionView::TestCase
   test 'active_announcements returns all announcements when no user' do
     setup_announcements
     
-    # Simulate no current user
-    def current_user
-      nil
-    end
-
+    # Test helper can directly call the method without mocking current_user
+    # since it will be nil by default in the test environment
     active = active_announcements
     assert_equal 3, active.length
     assert_equal [1, 2, 3], active.map { |a| a['version'] }
@@ -67,10 +64,8 @@ class ApplicationHelperTest < ActionView::TestCase
     # Dismiss announcement version 2
     DismissedAnnouncement.create!(user: @user, announcement_version: 2)
 
-    # Simulate current user
-    def current_user
-      @user
-    end
+    # Set up the session like the controller tests do
+    session[:user] = @user
 
     active = active_announcements
     assert_equal 2, active.length
@@ -82,10 +77,8 @@ class ApplicationHelperTest < ActionView::TestCase
   test 'active_announcements returns all when user has no dismissed announcements' do
     setup_announcements
     
-    # Simulate current user with no dismissed announcements
-    def current_user
-      @user
-    end
+    # Set up the session like the controller tests do
+    session[:user] = @user
 
     active = active_announcements
     assert_equal 3, active.length
