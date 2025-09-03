@@ -84,10 +84,9 @@ Rails.application.routes.draw do
       post '/stripe', to: 'stripe#event'
     end
     
-    namespace :mcp do
-      resources :appointments, except: [:new, :edit]
-      resources :datebooks, except: [:new, :edit]
-    end
+    # Model Context Protocol (MCP) Server endpoints
+    get '/mcp/capabilities', to: 'mcp#capabilities'
+    post '/mcp', to: 'mcp#handle_request'
   end
 
   # announcements
