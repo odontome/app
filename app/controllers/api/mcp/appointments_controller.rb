@@ -18,7 +18,26 @@ module Api::Mcp
     end
     
     def create
-      @appointment = practice_appointments.build(appointment_params)
+      # Validate that datebook belongs to current practice
+      datebook = Datebook.with_practice(current_user.practice_id).find_by(id: appointment_params[:datebook_id])
+      unless datebook
+        render json: { error: 'Datebook not found or not accessible' }, status: :not_found
+        return
+      end
+      
+      # Validate that doctor belongs to current practice
+      if appointment_params[:doctor_id] && !Doctor.with_practice(current_user.practice_id).exists?(id: appointment_params[:doctor_id])
+        render json: { error: 'Doctor not found or not accessible' }, status: :not_found
+        return
+      end
+      
+      # Validate that patient belongs to current practice
+      if appointment_params[:patient_id] && !Patient.with_practice(current_user.practice_id).exists?(id: appointment_params[:patient_id])
+        render json: { error: 'Patient not found or not accessible' }, status: :not_found
+        return
+      end
+      
+      @appointment = Appointment.new(appointment_params)
       
       if @appointment.save
         render_success(@appointment.as_json(include: [:doctor, :patient]), status: :created)
