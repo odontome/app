@@ -1,6 +1,6 @@
-# MCP (Model Control Panel) API Documentation
+# MCP (Model Context Protocol) API Documentation
 
-The MCP API provides CRUD operations for managing appointments and datebooks via JSON endpoints.
+The MCP API provides CRUD operations for managing appointments and datebooks via JSON endpoints, designed for AI models and tools to access dental practice data.
 
 ## Authentication
 
@@ -8,7 +8,7 @@ All endpoints require user authentication. The API uses session-based authentica
 
 ## Base URL
 
-All MCP endpoints are prefixed with `/api/mcp/`
+All MCP endpoints are prefixed with `/api/mcp/` and are designed for AI model integration.
 
 ## Endpoints
 

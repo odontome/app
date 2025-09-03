@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 module Api::Mcp
-  # Base controller for all MCP API endpoints
+  # Base controller for all MCP (Model Context Protocol) API endpoints
   # 
+  # The MCP API enables AI models and tools to access dental practice data
+  # through secure, authenticated JSON endpoints.
+  #
   # To add new models to the MCP:
   # 1. Create a new controller inheriting from BaseController
   # 2. Add routes in config/routes.rb under the :mcp namespace
@@ -21,7 +24,7 @@ module Api::Mcp
     # Skip CSRF protection for API endpoints
     skip_forgery_protection
     
-    # Require user authentication for all MCP endpoints
+    # Require user authentication for all MCP (Model Context Protocol) endpoints
     before_action :require_user
     
     # JSON responses only
