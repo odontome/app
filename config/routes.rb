@@ -83,6 +83,11 @@ Rails.application.routes.draw do
     namespace :webhooks do
       post '/stripe', to: 'stripe#event'
     end
+    
+    namespace :mcp do
+      resources :appointments, except: [:new, :edit]
+      resources :datebooks, except: [:new, :edit]
+    end
   end
 
   # announcements
