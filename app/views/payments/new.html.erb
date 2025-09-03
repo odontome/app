@@ -43,7 +43,7 @@
             <div class="col-md-6 mb-3">
               <%= form.label :amount, t("payments.attributes.amount"), class: "form-label required" %>
               <div class="input-group">
-                <span class="input-group-text">$</span>
+                <span id="currency-symbol" class="input-group-text">$</span>
                 <%= form.number_field :amount, class: "form-control", step: 0.1, min: 5, required: true %>
               </div>
               <small class="form-hint"><%= t("payments.form.fee_hint") %></small>
@@ -74,3 +74,19 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var select = document.getElementById('currency');
+    var symbolEl = document.getElementById('currency-symbol');
+    if (!select || !symbolEl) return;
+
+    function updateSymbol() {
+      var val = select.value;
+      symbolEl.textContent = val.toUpperCase();
+    }
+
+    updateSymbol();
+    select.addEventListener('change', updateSymbol);
+  });
+</script>
