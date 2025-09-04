@@ -39,6 +39,8 @@ class PaymentsController < ApplicationController
       intent = Stripe::PaymentIntent.create({
                                               amount: amount_cents,
                                               currency: params[:currency] || 'usd',
+                                              automatic_payment_methods: { enabled: true },
+                                              on_behalf_of: @practice.stripe_account_id,
                                               application_fee_amount: application_fee_cents,
                                               transfer_data: {
                                                 destination: @practice.stripe_account_id
@@ -79,8 +81,17 @@ class PaymentsController < ApplicationController
 
   def success
     @payment_intent_id = params[:payment_intent]
+    redirect_status = params[:redirect_status]
 
-    return unless @payment_intent_id
+    if redirect_status.present? && %w[failed canceled requires_payment_method].include?(redirect_status)
+      render action: :failed, layout: 'simple'
+      return
+    end
+
+    unless @payment_intent_id
+      render action: :failed, layout: 'simple'
+      return
+    end
 
     begin
       @payment_intent = Stripe::PaymentIntent.retrieve(@payment_intent_id)
@@ -89,9 +100,17 @@ class PaymentsController < ApplicationController
 
       # Extract the latest charge information for receipt
       @latest_charge = @payment_intent.charges.data.first if @payment_intent.charges&.data&.any?
-      render layout: 'simple'
-    rescue StandardError
-      Rails.logger.error 'Error retrieving payment intent'
+
+      # Route based on PaymentIntent status
+      case @payment_intent.status
+      when 'succeeded'
+        render layout: 'simple'
+      when 'processing', 'requires_action', 'requires_payment_method', 'requires_confirmation', 'canceled'
+        render action: :failed, layout: 'simple'
+      else
+        render action: :failed, layout: 'simple'
+      end
+    rescue StandardError => e
       render action: :failed, layout: 'simple'
     end
   end
@@ -138,7 +157,6 @@ class PaymentsController < ApplicationController
 
     payments_with_transfers
   rescue Stripe::StripeError => e
-    Rails.logger.warn "Unable to retrieve payments: #{e.message}"
     flash.now[:error] = "Unable to retrieve payments: #{e.message}"
     []
   end

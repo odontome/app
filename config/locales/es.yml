@@ -537,6 +537,7 @@ es:
       refunded: "Reembolsado"
       partially_refunded: "Reembolso Parcial"
       charged: "Cobrado"
+      failed: "Fallido"
     success:
       title: "Pago exitoso"
       message: "Gracias por tu pago de <strong>%{amount_formatted}</strong>. Tu transacción ha sido procesada exitosamente."

@@ -7,7 +7,9 @@
     <%= payment_status(payment.status) %>
   </td>
   <td>
-    <% if latest_charge %>
+    <% if (payment.respond_to?(:last_payment_error) && payment.last_payment_error.present?) || payment.status == 'canceled' %>
+      <span class="badge bg-danger me-1"></span> <%= t("payments.charge_status.failed") %>
+    <% elsif latest_charge %>
       <% if latest_charge.refunded %>
         <span class="badge bg-danger me-1"></span> <%= t("payments.charge_status.refunded") %>
         <small class="text-muted">
@@ -20,12 +22,18 @@
           <br />
           <%= number_to_currency_with_code(latest_charge.amount_refunded / 100.0, latest_charge.currency) %>
         </small>
-      <% else %>
+      <% elsif latest_charge.status == 'succeeded' %>
         <span class="badge bg-success me-1"></span> <%= t("payments.charge_status.charged") %>
         <small class="text-muted">
           <br />
           <%= number_to_currency_with_code(latest_charge.amount / 100.0, latest_charge.currency) %>
         </small>
+      <% elsif latest_charge.status == 'pending' %>
+        <span class="badge bg-warning"></span><%= t("payments.charge_status.processing") %>
+      <% elsif latest_charge.status == 'failed' %>
+        <span class="badge bg-danger me-1"></span> <%= t("payments.charge_status.failed") %>
+      <% else %>
+        <span class="text-muted">–</span>
       <% end %>
     <% elsif payment.status == 'succeeded' %>
       <span class="badge bg-warning"></span><%= t("payments.charge_status.processing") %>
@@ -38,14 +46,14 @@
   </td>
   <td>
     <div class="btn-list flex-nowrap">
-      <%= component :dropdown do %>
-        <% if payment.status == 'succeeded' %>
-          <%= link_to t("payments.view_payment"), success_payments_path(payment_intent: payment.id), class: "dropdown-item", target: "_blank" %>
+        <%= component :dropdown do %>
+          <% if payment.status == 'succeeded' %>
+            <%= link_to t("payments.view_payment"), success_payments_path(payment_intent: payment.id), class: "dropdown-item", target: "_blank" %>
+          <% end %>
+          <% if latest_charge.nil? || latest_charge.status == 'failed' %>
+            <%= link_to t("payments.copy_payment_link"), "#", class: "dropdown-item", data: { clipboard: pay_payment_url(payment.client_secret) } %>
+          <% end %>
         <% end %>
-        <% if latest_charge.nil? %>
-          <%= link_to t("payments.copy_payment_link"), "#", class: "dropdown-item", data: { clipboard: pay_payment_url(payment.client_secret) } %>
-        <% end %>
-      <% end %>
     </div>
   </td>
 </tr>

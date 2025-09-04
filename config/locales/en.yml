@@ -599,6 +599,7 @@ en:
       refunded: "Refunded"
       partially_refunded: "Partially Refunded"
       charged: "Charged"
+      failed: "Failed"
     success:
       title: "Payment successful"
       message: "Thank you for your payment of <strong>%{amount_formatted}</strong>. Your transaction has been processed successfully."

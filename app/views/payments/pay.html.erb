@@ -45,7 +45,7 @@
 <script src="https://js.stripe.com/v3/"></script>
 <script>
 // Initialize Stripe with the client secret from the URL
-const stripe = Stripe('<%= Rails.configuration.stripe[:publishable_key] %>');
+const stripe = Stripe('<%= Rails.configuration.stripe[:publishable_key] %>', { locale: 'auto' });
 const clientSecret = '<%= @client_secret %>';
 
 let elements;
@@ -70,7 +70,10 @@ function initializeStripe() {
       }
     });
 
-    paymentElement = elements.create('payment');
+    paymentElement = elements.create('payment', {
+      layout: 'tabs',
+      business: { name: '<%= @practice.name %>' },
+    });
     paymentElement.mount('#payment-element');
     
     // Clear any previous errors
@@ -97,8 +100,7 @@ async function handleSubmit(event) {
       elements,
       confirmParams: {
         return_url: window.location.origin + '<%= success_payments_path %>',
-      },
-      redirect: 'if_required'
+      }
     });
 
     if (error) {
