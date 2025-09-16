@@ -275,7 +275,7 @@ GEM
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
     stringio (3.1.7)
-    stripe (5.53.0)
+    stripe (15.5.0)
     taps (0.3.24)
       rack (>= 1.0.1)
       rest-client (>= 1.4.0, < 1.7.0)
@@ -327,7 +327,7 @@ DEPENDENCIES
   rubocop
   ruby-lsp
   sprockets-rails (~> 3.5.2)
-  stripe (~> 5.53.0)
+  stripe (~> 15.5.0)
   taps (~> 0.3.24)
   uglifier (~> 4.2.0)
 
