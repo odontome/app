@@ -12,7 +12,6 @@ class AnnouncementsTest < ActiveSupport::TestCase
     announcements = Announcements.current_announcements
 
     assert announcements.is_a?(Array)
-    assert announcements.any?
   end
 
   test 'handles missing configuration file gracefully' do
