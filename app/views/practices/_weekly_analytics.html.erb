@@ -164,13 +164,13 @@
     colors: [color(palette.primary)]
   }));
 
-  // New vs Returning
-  charts.push(new ApexCharts(document.querySelector('#chart-new-vs-returning'), {
+  // New vs Returning (guard: only if container exists)
+  (function(el){ if (!el) return; charts.push(new ApexCharts(el, {
     chart: { type: 'donut', height: 300, toolbar: { show: false } },
   series: <%= raw(@weekly_new_vs_returning.to_json) %>,
   labels: ['<%= j t('analytics.labels.new') %>', '<%= j t('analytics.labels.returning') %>'],
     colors: [color(palette.primary), color(palette.green)]
-  }));
+  })); })(document.querySelector('#chart-new-vs-returning'));
 
   // Revenue per day area
   charts.push(new ApexCharts(document.querySelector('#chart-revenue-per-day'), {
