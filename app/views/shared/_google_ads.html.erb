@@ -1,0 +1,11 @@
+<%# Shared Google Ads base tag - uses ENV['GOOGLE_ADS_ID'] %>
+<% if ENV['GOOGLE_ADS_ID'].present? %>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<%= ENV['GOOGLE_ADS_ID'] %>"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);} 
+    gtag('js', new Date());
+    gtag('config', '<%= ENV['GOOGLE_ADS_ID'] %>');
+  </script>
+<% end %>

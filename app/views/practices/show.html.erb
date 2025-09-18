@@ -32,3 +32,11 @@
     <%= render partial: 'practices/weekly_analytics' %>
   </div>
 </div>
+
+<% if params[:ref] == 'signup' && ENV['GOOGLE_ADS_SIGNUP_CONVERSION'].present? %>
+  <script>
+    if (typeof gtag === 'function') {
+      gtag('event', 'conversion', { 'send_to': '<%= ENV['GOOGLE_ADS_SIGNUP_CONVERSION'] %>' });
+    }
+  </script>
+<% end %>

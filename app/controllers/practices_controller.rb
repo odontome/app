@@ -92,7 +92,7 @@ class PracticesController < ApplicationController
         authenticate_and_set_session(new_user, user_password)
 
         PracticeMailer.welcome_email(@practice).deliver_now
-        format.html { redirect_to(practice_path) }
+        format.html { redirect_to(practice_path(ref: 'signup')) }
       else
         format.html { render action: 'new', as: :signup, layout: 'user_sessions' }
       end
