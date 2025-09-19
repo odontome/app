@@ -38,7 +38,7 @@ class PracticesControllerTest < ActionController::TestCase
     assert_match(/Welcome to Odonto.me/, welcome_email.encoded)
 
     assert_equal @controller.session['user'].email, practice[:users_attributes]['0']['email']
-    assert_redirected_to practice_path
+    assert_redirected_to practice_path(ref: 'signup')
   end
 
   test 'should create practice with invalid timezone' do
