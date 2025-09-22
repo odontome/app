@@ -1,4 +1,4 @@
 <%= @review.score %> out of 5
 <%= @review.comment %>
 
-View more at https://my.odonto.me/reviews
+View more at <%= @practice.review_url_or_default(reviews_url) %>

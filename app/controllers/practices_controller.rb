@@ -204,7 +204,7 @@ class PracticesController < ApplicationController
   private
 
   def practice_params
-    params.require(:practice).permit(:name, :locale, :timezone, :currency, :email,
+    params.require(:practice).permit(:name, :locale, :timezone, :currency, :email, :custom_review_url,
                                      users_attributes: %i[firstname lastname email password password_confirmation])
   end
 end
