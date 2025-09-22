@@ -151,8 +151,8 @@ en:
     mxn: Mexican Peso (MXN)
     cad: Canadian Dollar (CAD)
     eur: Euro (EUR)
-  custom_review_url: Custom Review URL
-  custom_review_url_hint: If provided, new review notification emails will link to this URL instead of the built-in reviews page
+  custom_review_url: Custom review URL
+  custom_review_url_hint: If provided, patient emails will take patients to this URL instead of the default one.
   date:
     formats:
       day_and_date: ! "%A (%e %b)"

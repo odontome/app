@@ -150,8 +150,8 @@ pt:
     mxn: Peso mexicano (MXN)
     cad: Dólar canadense (CAD)
     eur: Euro (EUR)
-  custom_review_url: URL de Avaliações Personalizada
-  custom_review_url_hint: Se fornecida, os e-mails de notificação de novas avaliações irão direcionar para esta URL em vez da página de avaliações integrada
+  custom_review_url: URL de avaliações personalizada
+  custom_review_url_hint: Se fornecida, os e-mails dos pacientes irão direcioná-los para esta URL em vez da padrão.
   date:
     formats:
       day_and_date: ! "%A (%e %b)"

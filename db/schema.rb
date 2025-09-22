@@ -145,6 +145,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_27_171915) do
     t.boolean "connect_payouts_enabled", default: false
     t.boolean "connect_details_submitted", default: false
     t.string "currency", default: "mxn", null: false
+    t.string "custom_review_url"
     t.index ["connect_onboarding_status"], name: "index_practices_on_connect_onboarding_status"
     t.index ["stripe_account_id"], name: "index_practices_on_stripe_account_id"
   end
