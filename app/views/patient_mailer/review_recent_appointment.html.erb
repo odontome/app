@@ -6,8 +6,14 @@
 
 <tr>
   <td class="aligncenter content-block">
-    <% (1..5).each do |i| %>
-      <a href="<%= @ciphered_review_url %>&score=<%=i%>" target="_blank"><%= image_tag "rating-star@2x.png", :width => 35 %></a>
+    <% if @use_custom_review_url %>
+      <a href="<%= @review_url %>" target="_blank" style="display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">
+        Leave a Review
+      </a>
+    <% else %>
+      <% (1..5).each do |i| %>
+        <a href="<%= @review_url %>&score=<%=i%>" target="_blank"><%= image_tag "rating-star@2x.png", :width => 35 %></a>
+      <% end %>
     <% end %>
   </td>
 </tr>

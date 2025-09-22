@@ -105,4 +105,47 @@ class PatientMailerTest < ActionMailer::TestCase
     assert_equal [appointment.practice.email], mail.reply_to
     assert_match 'how was your experience with us at', mail.body.encoded
   end
+
+  test 'review_recent_appointment with custom_review_url' do
+    practice = practices(:complete)
+    practice.update!(custom_review_url: 'https://custom.example.com/reviews')
+    
+    appointment = OpenStruct.new({
+                                   'appointment_id' => 1,
+                                   'patient_email' => 'raulriera@hotmail.com',
+                                   'practice' => practice,
+                                   'patient_name' => 'Raul'
+                                 })
+
+    mail = PatientMailer.review_recent_appointment(appointment)
+    assert_equal I18n.t('mailers.patient.review.subject', practice_name: appointment['practice'].name), mail.subject
+    assert_equal appointment['patient_email'], mail.to.first
+    assert_equal ['hello@odonto.me'], mail.from
+    assert_equal [appointment.practice.email], mail.reply_to
+    assert_match 'how was your experience with us at', mail.body.encoded
+    assert_match 'https://custom.example.com/reviews', mail.body.encoded
+    assert_match 'Leave a Review', mail.body.encoded
+  end
+
+  test 'review_recent_appointment without custom_review_url uses internal system' do
+    practice = practices(:complete)
+    practice.update!(custom_review_url: nil)
+    
+    appointment = OpenStruct.new({
+                                   'appointment_id' => 1,
+                                   'patient_email' => 'raulriera@hotmail.com',
+                                   'practice' => practice,
+                                   'patient_name' => 'Raul'
+                                 })
+
+    mail = PatientMailer.review_recent_appointment(appointment)
+    assert_equal I18n.t('mailers.patient.review.subject', practice_name: appointment['practice'].name), mail.subject
+    assert_equal appointment['patient_email'], mail.to.first
+    assert_equal ['hello@odonto.me'], mail.from
+    assert_equal [appointment.practice.email], mail.reply_to
+    assert_match 'how was your experience with us at', mail.body.encoded
+    assert_match 'my.odonto.me/reviews/new', mail.body.encoded
+    # Should contain star rating interface
+    assert_match 'rating-star@2x.png', mail.body.encoded
+  end
 end

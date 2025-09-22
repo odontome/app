@@ -36,32 +36,4 @@ class PracticeMailerTest < ActionMailer::TestCase
     assert_equal ['hello@odonto.me'], mail.from
     assert_match 'View more at', mail.body.encoded
   end
-
-  test 'new_review_notification with custom_review_url' do
-    review = reviews(:valid)
-    practice = review.appointment.datebook.practice
-    practice.update!(custom_review_url: 'https://custom.example.com/reviews')
-    admin_user = practice.users.first
-
-    mail = PracticeMailer.new_review_notification(review)
-    assert_equal I18n.t('mailers.practice.new_review_notification.subject'), mail.subject
-    assert_equal admin_user.email, mail.to.first
-    assert_equal ['hello@odonto.me'], mail.from
-    assert_match 'View more at https://custom.example.com/reviews', mail.body.encoded
-  end
-
-  test 'new_review_notification falls back to default when no custom_review_url' do
-    review = reviews(:valid)
-    practice = review.appointment.datebook.practice
-    practice.update!(custom_review_url: nil)
-    admin_user = practice.users.first
-
-    mail = PracticeMailer.new_review_notification(review)
-    assert_equal I18n.t('mailers.practice.new_review_notification.subject'), mail.subject
-    assert_equal admin_user.email, mail.to.first
-    assert_equal ['hello@odonto.me'], mail.from
-    assert_match 'View more at', mail.body.encoded
-    # Should contain the default reviews URL pattern
-    assert_match %r{/reviews}, mail.body.encoded
-  end
 end

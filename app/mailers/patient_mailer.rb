@@ -89,7 +89,16 @@ class PatientMailer < ApplicationMailer
 
   def review_recent_appointment(appointment)
     @appointment = appointment
-    @ciphered_review_url = Appointment.ciphered_review_url_for_id(@appointment['appointment_id'])
+    @practice = @appointment.practice
+    
+    # Use custom review URL if available, otherwise use internal system
+    if @practice.custom_review_url.present?
+      @review_url = @practice.custom_review_url
+      @use_custom_review_url = true
+    else
+      @review_url = Appointment.ciphered_review_url_for_id(@appointment['appointment_id'])
+      @use_custom_review_url = false
+    end
 
     # temporarily set the locale and then change it back
     # when the block finishes
