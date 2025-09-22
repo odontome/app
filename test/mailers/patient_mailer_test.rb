@@ -123,11 +123,14 @@ class PatientMailerTest < ActionMailer::TestCase
     assert_equal ['hello@odonto.me'], mail.from
     assert_equal [appointment.practice.email], mail.reply_to
     assert_match 'how was your experience with us at', mail.body.encoded
+    # Should contain both custom URL and internal URLs
     assert_match 'https://custom.example.com/reviews', mail.body.encoded
-    # Should still show star rating interface but without score parameter
     assert_match 'rating-star@2x.png', mail.body.encoded
-    # Should NOT contain score parameter for custom URLs
-    assert_not_match '&score=', mail.body.encoded
+    # Should contain score parameters for stars 1-3 (internal system)
+    assert_match '&score=1', mail.body.encoded
+    assert_match '&score=2', mail.body.encoded 
+    assert_match '&score=3', mail.body.encoded
+    # Stars 4-5 go to custom URL without score parameters
   end
 
   test 'review_recent_appointment without custom_review_url uses internal system' do

@@ -91,12 +91,15 @@ class PatientMailer < ApplicationMailer
     @appointment = appointment
     @practice = @appointment.practice
     
+    # Always have the internal review URL available
+    @internal_review_url = Appointment.ciphered_review_url_for_id(@appointment['appointment_id'])
+    
     # Use custom review URL if available, otherwise use internal system
     if @practice.custom_review_url.present?
       @review_url = @practice.custom_review_url
       @use_custom_review_url = true
     else
-      @review_url = Appointment.ciphered_review_url_for_id(@appointment['appointment_id'])
+      @review_url = @internal_review_url
       @use_custom_review_url = false
     end
 
