@@ -141,10 +141,6 @@ class Practice < ApplicationRecord
     end
   end
 
-  def review_url_or_default(default_url)
-    custom_review_url.present? ? custom_review_url : default_url
-  end
-
   private
 
   def set_email_practice

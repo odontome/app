@@ -111,31 +111,4 @@ class PracticeTest < ActiveSupport::TestCase
     assert practice.invalid?
     assert practice.errors[:custom_review_url].any?
   end
-
-  test 'practice review_url_or_default returns custom URL when set' do
-    practice = practices(:complete)
-    custom_url = 'https://custom.example.com/reviews'
-    practice.custom_review_url = custom_url
-    
-    result = practice.review_url_or_default('http://default.com')
-    assert_equal custom_url, result
-  end
-
-  test 'practice review_url_or_default returns default URL when custom URL is blank' do
-    practice = practices(:complete)
-    practice.custom_review_url = ''
-    default_url = 'http://default.com'
-    
-    result = practice.review_url_or_default(default_url)
-    assert_equal default_url, result
-  end
-
-  test 'practice review_url_or_default returns default URL when custom URL is nil' do
-    practice = practices(:complete)
-    practice.custom_review_url = nil
-    default_url = 'http://default.com'
-    
-    result = practice.review_url_or_default(default_url)
-    assert_equal default_url, result
-  end
 end
