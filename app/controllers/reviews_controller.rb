@@ -10,6 +10,7 @@ class ReviewsController < ApplicationController
     @reviews = Review.with_practice(current_user.practice_id).limit(reviews_per_page)
     @total_reviews = Review.with_practice(current_user.practice_id).count
     @average_score = Review.with_practice(current_user.practice_id).average(:score)
+    @custom_review_url = current_user.practice.custom_review_url
 
     # If we are filtering by score, apply the filter
     @reviews = @reviews.where(score: params[:score].to_i) if params[:score].present?

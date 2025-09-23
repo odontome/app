@@ -29,6 +29,12 @@
   <% if @reviews.empty? %>
     <%= component :empty, title: t("no_reviews.title"), description: t("no_reviews.description").html_safe, image_name: 'reviews.svg' %>
   <% else %>
+    <% if @custom_review_url.present? %>
+      <div class="alert alert-info">
+        <%= t(:custom_review_url_usage_message, url: @custom_review_url).html_safe %>
+      </div>
+    <% end %>
+
     <div class="card">
       <div class="card-body">
         <div class="list-group list-group-flush">
