@@ -49,6 +49,10 @@ class Appointment < ApplicationRecord
   # Overwrite de JSON response to comply with what the event calendar wants
   # this needs to be overwritten in the "web" version and not the whole app
   def as_json(_options = {})
+    bg_color = is_confirmed ? doctor.color : '#cdcdcd'
+    border_color = doctor.color
+    text_color = is_confirmed ? '#ffffff' : '#333333'
+
     {
       id: id,
       start: starts_at.to_formatted_s(:rfc822),
@@ -57,7 +61,11 @@ class Appointment < ApplicationRecord
       doctor_id: doctor_id,
       datebook_id: datebook_id,
       patient_id: patient_id,
-      color: is_confirmed ? doctor.color : '#cdcdcd',
+      # FullCalendar v1.6+ supports backgroundColor/borderColor; keep color for backward compatibility
+      color: bg_color,
+      backgroundColor: bg_color,
+      borderColor: border_color,
+      textColor: text_color,
       doctor_name: doctor.fullname,
       firstname: patient.firstname,
       lastname: patient.lastname
@@ -67,9 +75,9 @@ class Appointment < ApplicationRecord
   # find all the appointments of a give patient and arrange them
   # in past and future hashes
   def self.find_all_past_and_future_for_patient(patient_id)
-    appointments = Appointment.where('patient_id = ?', patient_id)
-      .includes(:doctor)
-      .order('starts_at desc')
+    Appointment.where('patient_id = ?', patient_id)
+               .includes(:doctor)
+               .order('starts_at desc')
   end
 
   def ciphered_url
@@ -96,9 +104,9 @@ class Appointment < ApplicationRecord
   private
 
   def ends_at_should_be_later_than_starts_at
-    if !starts_at.nil? && !ends_at.nil? && (starts_at >= ends_at)
-      errors.add(:base, I18n.t('errors.messages.invalid_date_range'))
-    end
+    return unless !starts_at.nil? && !ends_at.nil? && (starts_at >= ends_at)
+
+    errors.add(:base, I18n.t('errors.messages.invalid_date_range'))
   end
 
   def set_ends_at
