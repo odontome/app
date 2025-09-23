@@ -87,26 +87,26 @@ class PracticeTest < ActiveSupport::TestCase
     practice = practices(:complete)
     practice.custom_review_url = ''
     assert practice.valid?
-    
+
     practice.custom_review_url = nil
     assert practice.valid?
   end
 
   test 'practice validates custom_review_url format' do
     practice = practices(:complete)
-    
+
     # Valid URLs
     practice.custom_review_url = 'https://example.com/reviews'
     assert practice.valid?
-    
+
     practice.custom_review_url = 'http://example.com/reviews'
     assert practice.valid?
-    
+
     # Invalid URLs
     practice.custom_review_url = 'not-a-url'
     assert practice.invalid?
     assert practice.errors[:custom_review_url].any?
-    
+
     practice.custom_review_url = 'ftp://example.com'
     assert practice.invalid?
     assert practice.errors[:custom_review_url].any?
