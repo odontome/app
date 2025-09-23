@@ -54,4 +54,48 @@ class PracticesControllerTest < ActionController::TestCase
     end
     assert_equal Practice.last.email, 'demo@odonto.me'
   end
+
+  test 'should update practice with custom review URL' do
+    practice = practices(:complete)
+    @controller.session['user'] = practice.users.first
+    custom_url = 'https://custom.example.com/reviews'
+
+    # Only send the field we intend to update; controller should not trigger unrelated validations
+
+    put :update, params: { id: practice.id, practice: { custom_review_url: custom_url } }
+
+    assert_response :redirect
+    assert_redirected_to practice_settings_url
+
+    practice.reload
+    assert_equal custom_url, practice.custom_review_url
+  end
+
+  test 'should update practice with blank custom review URL' do
+    practice = practices(:complete)
+    # Set initial value
+    practice.update!(custom_review_url: 'https://old.example.com')
+    @controller.session['user'] = practice.users.first
+
+    # Only send the field we intend to update; controller should not trigger unrelated validations
+    put :update, params: { id: practice.id, practice: { custom_review_url: '' } }
+
+    assert_response :redirect
+    assert_redirected_to practice_settings_url
+
+    practice.reload
+    assert_equal '', practice.custom_review_url
+  end
+
+  test 'should not update practice with invalid custom review URL' do
+    practice = practices(:complete)
+    @controller.session['user'] = practice.users.first
+
+    # Only send the field we intend to update; controller should not trigger unrelated validations
+    put :update, params: { id: practice.id, practice: { custom_review_url: 'not-a-url' } }
+
+    assert_response :success # Should render settings template with errors
+    practice.reload
+    assert_nil practice.custom_review_url
+  end
 end

@@ -17,7 +17,7 @@ complete_another_language:
   locale: es
   timezone: America/Mexico_City
   currency: mxn
-  email: raulriera@hotmail.com
+  email: in-spanish@hotmail.com
 
 trialing_practice:
   id: 3

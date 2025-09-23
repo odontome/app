@@ -19,6 +19,7 @@ class Practice < ApplicationRecord
   validates_presence_of :email, on: :update
   validates_uniqueness_of :email
   validates_inclusion_of :currency, in: %w[mxn cad usd eur]
+  validates :custom_review_url, format: { with: URI::DEFAULT_PARSER.make_regexp(%w[http https]) }, allow_blank: true
 
   # callbacks
   before_validation :set_timezone_and_locale, on: :create

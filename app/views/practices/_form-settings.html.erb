@@ -28,6 +28,12 @@
         <%= f.label :currency, class: "form-label"  %>
         <%= f.select(:currency, options_for_select([[t("currencies.mxn"), 'mxn'], [t("currencies.cad"), 'cad'], [t("currencies.usd"), 'usd'], [t("currencies.eur"), 'eur']], @practice.currency), {}, { :class => "form-select"}) %>
       </div>
+
+      <div class="mb-3">
+        <%= f.label :custom_review_url, t(:custom_review_url), class: "form-label" %>
+        <%= f.url_field :custom_review_url, :class => "form-control", placeholder: "https://example.com/reviews" %>
+        <%= content_tag "small", t(:custom_review_url_hint), class: "text-muted" %>
+      </div>
     </div>
 
     <div class="card-footer text-end">
