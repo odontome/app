@@ -1,8 +1,10 @@
 # frozen_string_literal: true
+
 require 'icalendar'
 
 class PatientMailer < ApplicationMailer
-  def six_month_checkup_reminder(patient_email, patient_name, practice_name, practice_locale, practice_timezone, practice_email)
+  def six_month_checkup_reminder(patient_email, patient_name, practice_name, practice_locale, practice_timezone,
+                                 practice_email)
     I18n.with_locale(practice_locale) do
       @patient_name = patient_name
       @practice_name = practice_name
@@ -15,7 +17,9 @@ class PatientMailer < ApplicationMailer
            reply_to: practice_email)
     end
   end
-  def appointment_soon_email(patient_email, patient_name, start_time, end_time, practice_name, practice_locale, practice_timezone, doctor, practice_email)
+
+  def appointment_soon_email(patient_email, patient_name, start_time, end_time, practice_name, practice_locale,
+                             practice_timezone, doctor, practice_email)
     # temporarily set the locale and then change it back
     # when the block finishes
     I18n.with_locale(practice_locale) do
@@ -34,7 +38,8 @@ class PatientMailer < ApplicationMailer
     end
   end
 
-  def appointment_scheduled_email(patient_email, patient_name, start_time, end_time, practice_name, practice_locale, practice_timezone, doctor, practice_email)    
+  def appointment_scheduled_email(patient_email, patient_name, start_time, end_time, practice_name, practice_locale,
+                                  practice_timezone, doctor, practice_email)
     # temporarily set the locale and then change it back
     # when the block finishes
     I18n.with_locale(practice_locale) do
@@ -52,19 +57,20 @@ class PatientMailer < ApplicationMailer
         e.dtstart     = Icalendar::Values::DateTime.new(start_time.in_time_zone(@practice_timezone))
         e.dtend       = Icalendar::Values::DateTime.new(end_time.in_time_zone(@practice_timezone))
         e.summary     = I18n.t 'mailers.patient.appointment_scheduled_email.invite.summary'
-        e.description = I18n.t 'mailers.patient.appointment_scheduled_email.invite.description', doctor_name: doctor.fullname
+        e.description = I18n.t 'mailers.patient.appointment_scheduled_email.invite.description',
+                               doctor_name: doctor.fullname
 
         e.alarm do |a|
-          a.action  = "AUDIO"
-          a.trigger = "-PT15M"
+          a.action  = 'AUDIO'
+          a.trigger = '-PT15M'
         end
       end
 
       cal.publish
 
-      attachments['invite.ics'] = { 
+      attachments['invite.ics'] = {
         mime_type: 'text/calendar',
-        content: cal.to_ical 
+        content: cal.to_ical
       }
       mail(from: "#{practice_name} <hello@odonto.me>",
            to: patient_email,
@@ -88,15 +94,22 @@ class PatientMailer < ApplicationMailer
   end
 
   def review_recent_appointment(appointment)
+    # Never trigger extra queries per email. Only use the fields already selected
+    # and fall back to preloaded objects when available (tests/previews pass a Practice instance).
     @appointment = appointment
-    @practice = @appointment.practice
-    
+
+    practice_source = @appointment['practice']
+    @practice_name = practice_source.respond_to?(:name) ? practice_source.name : practice_source
+    practice_email = @appointment['practice_email'] || (practice_source.respond_to?(:email) ? practice_source.email : nil)
+    practice_locale = @appointment['practice_locale']
+    practice_custom_review_url = @appointment['practice_custom_review_url'] || (practice_source.respond_to?(:custom_review_url) ? practice_source.custom_review_url : nil)
+
     # Always have the internal review URL available
     @internal_review_url = Appointment.ciphered_review_url_for_id(@appointment['appointment_id'])
-    
-    # Use custom review URL if available, otherwise use internal system
-    if @practice.custom_review_url.present?
-      @review_url = @practice.custom_review_url
+
+    # Decide which URL to use without hitting the DB
+    if practice_custom_review_url.present?
+      @review_url = practice_custom_review_url
       @use_custom_review_url = true
     else
       @review_url = @internal_review_url
@@ -105,12 +118,11 @@ class PatientMailer < ApplicationMailer
 
     # temporarily set the locale and then change it back
     # when the block finishes
-    I18n.with_locale(@appointment['practice_locale']) do
-      mail(from: "#{@appointment.practice.name} <hello@odonto.me>",
+    I18n.with_locale(practice_locale) do
+      mail(from: "#{@practice_name} <hello@odonto.me>",
            to: @appointment['patient_email'],
-           subject: I18n.t('mailers.patient.review.subject',
-                           practice_name: @appointment.practice.name),
-           reply_to: @appointment.practice.email)
+           subject: I18n.t('mailers.patient.review.subject', practice_name: @practice_name),
+           reply_to: practice_email)
     end
   end
 end

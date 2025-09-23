@@ -140,9 +140,10 @@ namespace :odontome do
     Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
 
     appointments_pending_review = Datebook.select("practices.name as practice,
-    practices.id as practice_id, practices.locale as practice_locale, datebooks.name as datebook,
-    patients.email as patient_email, patients.firstname as patient_name,
-    appointments.id as appointment_id, appointments.starts_at, appointments.ends_at")
+      practices.id as practice_id, practices.locale as practice_locale, practices.email as practice_email,
+      practices.custom_review_url as practice_custom_review_url, datebooks.name as datebook,
+      patients.email as patient_email, patients.firstname as patient_name,
+      appointments.id as appointment_id, appointments.starts_at, appointments.ends_at")
                                           .where("patients.email <> ''")
                                           .where('appointments.ends_at < ?', 45.minutes.ago)
                                           .where('appointments.ends_at > ?', 3.days.ago)

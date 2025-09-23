@@ -41,6 +41,10 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  # Ensure URL helpers (e.g., reviews_url) work in mailer previews
+  config.action_mailer.asset_host = 'http://127.0.0.1:3000'
+  config.action_mailer.default_url_options = { host: '127.0.0.1:3000' }
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
