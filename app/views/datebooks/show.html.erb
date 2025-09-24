@@ -161,6 +161,55 @@
           calendarView.setHeight(9999);
       }
 		}
+
+		// Calendar auto-refresh functionality
+		var refreshInterval = 30000; // 30 seconds
+		var refreshTimer;
+		var progressTimer;
+		var progressBar = document.getElementById('calendar-refresh-progress-bar');
+		
+		function startRefreshTimer() {
+			var startTime = Date.now();
+			
+			// Reset progress bar
+			progressBar.style.width = '0%';
+			
+			// Update progress bar every 100ms
+			progressTimer = setInterval(function() {
+				var elapsed = Date.now() - startTime;
+				var progress = (elapsed / refreshInterval) * 100;
+				
+				if (progress >= 100) {
+					clearInterval(progressTimer);
+					progressBar.style.width = '100%';
+				} else {
+					progressBar.style.width = progress + '%';
+				}
+			}, 100);
+			
+			// Set main refresh timer
+			refreshTimer = setTimeout(function() {
+				// Refresh calendar events using FullCalendar's built-in method
+				$("#calendar").fullCalendar("refetchEvents");
+				
+				// Reset progress bar and restart timer
+				setTimeout(function() {
+					startRefreshTimer();
+				}, 500); // Small delay to show completion
+				
+			}, refreshInterval);
+		}
+		
+		// Start the refresh timer after calendar is fully loaded
+		setTimeout(function() {
+			startRefreshTimer();
+		}, 1000);
+		
+		// Clean up timers when page is unloaded
+		$(window).on('beforeunload', function() {
+			if (refreshTimer) clearTimeout(refreshTimer);
+			if (progressTimer) clearInterval(progressTimer);
+		});
 	});
 </script>
 
@@ -168,6 +217,11 @@
 <div class="page-header d-print-none">
 <div class="row">
 	<div class="col">
+	
+	<!-- Calendar auto-refresh progress indicator -->
+	<div class="calendar-refresh-progress">
+		<div class="calendar-refresh-progress-bar" id="calendar-refresh-progress-bar"></div>
+	</div>
 	
 	<div id="calendar"></div>
 
