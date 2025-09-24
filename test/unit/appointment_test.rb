@@ -136,4 +136,16 @@ class AppointmentTest < ActiveSupport::TestCase
     assert appt.persisted?
     assert_equal true, patient.reload.notified_of_six_month_reminder
   end
+
+  test 'as_json includes patient name and uid for calendar display' do
+    appointment = appointments(:first_visit)
+    json_data = appointment.as_json
+
+    assert json_data.key?(:firstname)
+    assert json_data.key?(:lastname)
+    assert json_data.key?(:patient_uid)
+    assert_equal appointment.patient.firstname, json_data[:firstname]
+    assert_equal appointment.patient.lastname, json_data[:lastname]
+    assert_equal appointment.patient.uid, json_data[:patient_uid]
+  end
 end
