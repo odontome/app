@@ -1,7 +1,23 @@
 .fc-agenda-slots td div {
-		height: 30px !important;
+  height: 30px !important;
 }
 
 .fc-content {
   background-color: white;
+}
+
+/* Badge indicator for appointments with patient in the waiting room (only the dot on the right) */
+.fc-event.appointment-waiting .fc-event-inner {
+  position: relative;
+}
+.fc-event.appointment-waiting .fc-event-inner::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00ff00;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
 }

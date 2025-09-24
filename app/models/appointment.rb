@@ -36,13 +36,14 @@ class Appointment < ApplicationRecord
   end
 
   def is_confirmed
-    status == self.class.status[:confirmed]
+    status == self.class.status[:confirmed] || status == self.class.status[:waiting_room]
   end
 
   def self.status
     {
       confirmed: 'confirmed',
-      cancelled: 'cancelled'
+      cancelled: 'cancelled',
+      waiting_room: 'confirmed_and_waiting'
     }
   end
 
@@ -52,6 +53,7 @@ class Appointment < ApplicationRecord
     bg_color = is_confirmed ? doctor.color : '#cdcdcd'
     border_color = doctor.color
     text_color = is_confirmed ? '#ffffff' : '#333333'
+    is_waiting_today = (status == self.class.status[:waiting_room]) && (starts_at.in_time_zone.to_date == Time.zone.today)
 
     {
       id: id,
@@ -61,11 +63,11 @@ class Appointment < ApplicationRecord
       doctor_id: doctor_id,
       datebook_id: datebook_id,
       patient_id: patient_id,
-      # FullCalendar v1.6+ supports backgroundColor/borderColor; keep color for backward compatibility
       color: bg_color,
       backgroundColor: bg_color,
       borderColor: border_color,
       textColor: text_color,
+      className: (is_waiting_today ? 'appointment-waiting' : nil),
       doctor_name: doctor.fullname,
       firstname: patient.firstname,
       lastname: patient.lastname

@@ -163,6 +163,7 @@ pt:
   delete: Deletar
   cancel_appointment: Cancelar este agendamento
   confirm_appointment: Confirmar este agendamento
+  confirm_and_mark_waiting: Confirmar e marcar paciente na sala de espera
   confirm_reschedule: Tem certeza de que deseja reagendar este agendamento?
   confirm_resize: Tem certeza de que deseja alterar a duração deste agendamento?
   delete_appointment: Deletar este agendamento

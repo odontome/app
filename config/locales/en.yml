@@ -164,6 +164,7 @@ en:
   delete: Delete
   cancel_appointment: Cancel this appointment
   confirm_appointment: Confirm this appointment
+  confirm_and_mark_waiting: Confirm and mark patient in waiting room
   confirm_reschedule: Are you sure you want to reschedule this appointment?
   confirm_resize: Are you sure you want to change the duration of this appointment?
   delete_appointment: Delete this appointment
