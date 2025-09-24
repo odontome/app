@@ -39,6 +39,14 @@ class Appointment < ApplicationRecord
     status == self.class.status[:confirmed] || status == self.class.status[:waiting_room]
   end
 
+  def is_waiting_room
+    status == self.class.status[:waiting_room]
+  end
+
+  def is_today
+    starts_at.in_time_zone.to_date == Time.zone.today
+  end
+
   def self.status
     {
       confirmed: 'confirmed',
