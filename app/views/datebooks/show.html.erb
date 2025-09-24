@@ -121,7 +121,11 @@
 				}
 			},
 			eventAfterRender: function(event, element, view) {
-				element.find('.fc-event-time').append(" " + event.firstname + " " + event.lastname);
+				var patientDisplay = event.firstname + " " + event.lastname;
+				if (event.patient_uid) {
+					patientDisplay += " (" + event.patient_uid + ")";
+				}
+				element.find('.fc-event-time').append(" " + patientDisplay);
 				// Add touch dragging to event element
 				element.addTouch();
      	}

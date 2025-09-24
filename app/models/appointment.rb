@@ -78,7 +78,8 @@ class Appointment < ApplicationRecord
       className: (is_waiting_today ? 'appointment-waiting' : nil),
       doctor_name: doctor.fullname,
       firstname: patient.firstname,
-      lastname: patient.lastname
+      lastname: patient.lastname,
+      patient_uid: patient.uid
     }
   end
 
