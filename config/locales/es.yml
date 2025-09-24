@@ -162,6 +162,7 @@ es:
   delete: Borrar
   cancel_appointment: Cancelar esta cita
   confirm_appointment: Confirmar esta cita
+  confirm_and_mark_waiting: Confirmar y marcar paciente en sala de espera
   confirm_reschedule: ¿Estás seguro de que quieres reprogramar esta cita?
   confirm_resize: ¿Estás seguro de que quieres cambiar la duración de esta cita?
   delete_appointment: Borrar esta cita
