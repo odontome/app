@@ -21,3 +21,30 @@
   background: #00ff00;
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
 }
+
+/* Calendar refresh progress indicator */
+.calendar-refresh-progress {
+  position: relative;
+  height: 3px;
+  background-color: #f8f9fa;
+  margin-bottom: 1px;
+  overflow: hidden;
+  border-radius: 1px;
+}
+
+.calendar-refresh-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #206bc4 0%, #4299e1 100%);
+  border-radius: 1px;
+  transition: width linear;
+}
+
+/* Dark theme support */
+body.theme-dark .calendar-refresh-progress {
+  background-color: #2c3c56;
+}
+
+body.theme-dark .calendar-refresh-progress-bar {
+  background: linear-gradient(90deg, #4299e1 0%, #63b3ed 100%);
+}

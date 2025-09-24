@@ -161,6 +161,62 @@
           calendarView.setHeight(9999);
       }
 		}
+
+		// Calendar auto-refresh functionality with progress indicator
+		var refreshInterval = 30000; // 30 seconds
+		var progressUpdateInterval = 100; // Update progress every 100ms for smooth animation
+		var refreshTimer;
+		var progressTimer;
+		var progressBar = document.getElementById('calendar-progress-bar');
+
+		function startRefreshCycle() {
+			var startTime = Date.now();
+			
+			// Reset progress bar
+			progressBar.style.width = '0%';
+			progressBar.style.transitionDuration = '0s';
+			
+			// Start progress animation
+			progressTimer = setInterval(function() {
+				var elapsed = Date.now() - startTime;
+				var progress = (elapsed / refreshInterval) * 100;
+				
+				if (progress <= 100) {
+					progressBar.style.width = progress + '%';
+				}
+			}, progressUpdateInterval);
+			
+			// Set refresh timer
+			refreshTimer = setTimeout(function() {
+				// Clear progress timer
+				clearInterval(progressTimer);
+				
+				// Refresh calendar events using FullCalendar's built-in method
+				$("#calendar").fullCalendar("refetchEvents");
+				
+				// Reset and start next cycle
+				startRefreshCycle();
+			}, refreshInterval);
+		}
+
+		// Start the auto-refresh cycle
+		startRefreshCycle();
+
+		// Pause auto-refresh when user is interacting with the calendar
+		var userActivityTimeout;
+		function pauseRefreshOnActivity() {
+			clearTimeout(refreshTimer);
+			clearInterval(progressTimer);
+			clearTimeout(userActivityTimeout);
+			
+			// Resume after 5 seconds of inactivity
+			userActivityTimeout = setTimeout(function() {
+				startRefreshCycle();
+			}, 5000);
+		}
+
+		// Attach activity listeners to calendar events
+		$("#calendar").on('mousedown touchstart', pauseRefreshOnActivity);
 	});
 </script>
 
@@ -168,6 +224,11 @@
 <div class="page-header d-print-none">
 <div class="row">
 	<div class="col">
+	
+	<!-- Calendar refresh progress indicator -->
+	<div class="calendar-refresh-progress">
+		<div class="calendar-refresh-progress-bar" id="calendar-progress-bar"></div>
+	</div>
 	
 	<div id="calendar"></div>
 
