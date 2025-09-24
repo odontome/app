@@ -19,6 +19,19 @@
 		var datebookId = '<%= @datebook.id %>';
 		var endpointURL = "/datebooks/" + datebookId + "/appointments";
 
+		// Helper to inject the progress bar inside the calendar just above .fc-content
+		function injectProgressBar() {
+			var $calendar = $('#calendar');
+			if ($calendar.length && $calendar.find('#calendar-progress-bar').length === 0) {
+				var $content = $calendar.find('.fc-content').first();
+				if ($content.length) {
+					$('<div class="calendar-refresh-progress"><div class="calendar-refresh-progress-bar" id="calendar-progress-bar"></div></div>').insertBefore($content);
+					// Rebind the progressBar reference in case of re-render
+					progressBar = document.getElementById('calendar-progress-bar');
+				}
+			}
+		}
+
 		$("#calendar").fullCalendar({
 			defaultView: <% if @is_mobile.nil? %>"agendaWeek"<%else%>"agendaDay"<% end %>,
 			minTime: <%= @datebook.starts_at %>,
@@ -52,7 +65,10 @@
 			    day:      '<%= t :day %>'
 			},
 			editable: true,
-			viewDisplay: resizeCalendar,
+			viewDisplay: function(view) {
+				resizeCalendar(view);
+				injectProgressBar();
+			},
 			eventSources: [{
 			  url: endpointURL + withDoctorIdString,
 			  ignoreTimezone: true
@@ -156,15 +172,18 @@
     });
 
 		function resizeCalendar(calendarView) {
-      if(calendarView.name === 'agendaWeek' || calendarView.name === 'agendaDay') {
-          // if height is too big for these views, then scrollbars will be hidden
-          calendarView.setHeight(9999);
-      }
+			if(calendarView.name === 'agendaWeek' || calendarView.name === 'agendaDay') {
+				// if height is too big for these views, then scrollbars will be hidden
+				calendarView.setHeight(9999);
+			}
 		}
 
+		// Inject the progress bar inside the calendar (initial load)
+		injectProgressBar();
+
 		// Calendar auto-refresh functionality with progress indicator
-		var refreshInterval = 30000; // 30 seconds
-		var progressUpdateInterval = 100; // Update progress every 100ms for smooth animation
+		var refreshInterval = 30_000; 
+		var progressUpdateInterval = 100; 
 		var refreshTimer;
 		var progressTimer;
 		var progressBar = document.getElementById('calendar-progress-bar');
@@ -224,11 +243,6 @@
 <div class="page-header d-print-none">
 <div class="row">
 	<div class="col">
-	
-	<!-- Calendar refresh progress indicator -->
-	<div class="calendar-refresh-progress">
-		<div class="calendar-refresh-progress-bar" id="calendar-progress-bar"></div>
-	</div>
 	
 	<div id="calendar"></div>
 
