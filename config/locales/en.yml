@@ -153,7 +153,7 @@ en:
     eur: Euro (EUR)
   custom_review_url: Custom review URL
   custom_review_url_hint: If provided, patient emails will take patients to this URL instead of the default one.
-  custom_review_url_usage_message: Your practice is using a custom review URL. All review requests will be sent to this %{url} url.
+  custom_review_url_usage_message: Your practice is using a custom review URL. All review requests will be sent to %{url}
   date:
     formats:
       day_and_date: ! "%A (%e %b)"

@@ -152,7 +152,7 @@ pt:
     eur: Euro (EUR)
   custom_review_url: URL de avaliações personalizada
   custom_review_url_hint: Se fornecida, os e-mails dos pacientes irão direcioná-los para esta URL em vez da padrão.
-  custom_review_url_usage_message: Sua clínica está usando uma URL de avaliação personalizada. Todas as solicitações de avaliação serão enviadas para esta %{url} URL.
+  custom_review_url_usage_message: Sua clínica está usando uma URL de avaliação personalizada. Todas as solicitações de avaliação serão enviadas para %{url}.
   date:
     formats:
       day_and_date: ! "%A (%e %b)"
