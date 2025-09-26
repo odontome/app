@@ -9,7 +9,7 @@ class ReviewsController < ApplicationController
     @current_page = 0
     @reviews = Review.with_practice(current_user.practice_id).limit(reviews_per_page)
     @total_reviews = Review.with_practice(current_user.practice_id).count
-    @average_score = Review.with_practice(current_user.practice_id).average(:score).floor
+    @average_score = Review.with_practice(current_user.practice_id).average(:score)&.floor || 0
     @custom_review_url = current_user.practice.custom_review_url
 
     # If we are filtering by score, apply the filter

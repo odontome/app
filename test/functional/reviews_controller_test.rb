@@ -13,6 +13,27 @@ class ReviewsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:reviews)
   end
 
+  test 'index handles no reviews gracefully and sets average_score to 0' do
+    # Switch session to a user in a practice with no reviews
+    @controller.session['user'] = users(:user_in_yet_another_practice)
+
+    # Sanity check: this practice should have zero reviews
+    assert_equal 0, Review.with_practice(users(:user_in_yet_another_practice).practice_id).count
+
+    get :index
+    assert_response :success
+    assert_equal 0, assigns(:average_score)
+  end
+
+  test 'index floors average_score when reviews exist' do
+    # There is already one review in fixtures create another review to make the average 4.5
+    Review.create!(appointment_id: appointments(:unreviewed).id, score: 5, comment: 'Great!')
+
+    get :index
+    assert_response :success
+    assert_equal 4, assigns(:average_score)
+  end
+
   test 'should get new when passing a valid appointment id' do
     ciphered_appointment_id = appointments(:unreviewed).ciphered_id
 
