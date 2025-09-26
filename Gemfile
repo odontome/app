@@ -23,7 +23,7 @@ gem 'jquery-minicolors-rails', '~>2.2.6.2'
 
 gem 'premailer-rails', '~> 1.11.1'
 
-gem 'paper_trail', '~> 15.0'
+gem 'paper_trail', '~> 16.0'
 gem 'pg', '~> 1.3.5'
 gem 'rack-attack', '~> 6.6.1'
 gem 'stripe', '~> 5.53.0'
