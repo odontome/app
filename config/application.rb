@@ -30,7 +30,8 @@ module Odontome
     config.enable_dependency_loading = true
     config.autoload_paths << "#{Rails.root}/lib"
     config.load_defaults 7.0
-    
+    config.active_record.use_schema_cache_dump = true
+
     ### Odonto.me stuff
 
     config.i18n.available_locales = %w[es en pt]
