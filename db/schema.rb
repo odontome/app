@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_27_171915) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_29_121000) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -55,6 +56,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_27_171915) do
     t.integer "datebook_id"
     t.boolean "notified_of_schedule", default: false
     t.boolean "notified_of_review", default: false
+    t.index ["datebook_id", "starts_at", "ends_at"], name: "index_appointments_on_datebook_id_and_times"
+    t.index ["doctor_id"], name: "index_appointments_on_doctor_id"
     t.index ["starts_at", "ends_at"], name: "index_appointments_on_starts_at_and_ends_at"
   end
 
@@ -123,7 +126,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_27_171915) do
     t.text "family_diseases"
     t.boolean "notified_of_six_month_reminder", default: false, null: false
     t.datetime "deleted_at", precision: nil
+    t.index "lower((((firstname)::text || ' '::text) || (lastname)::text)) gin_trgm_ops", name: "index_patients_on_fullname_trgm", using: :gin
+    t.index "lower((uid)::text) gin_trgm_ops", name: "index_patients_on_lower_uid_trgm", using: :gin
     t.index ["deleted_at"], name: "index_patients_on_deleted_at"
+    t.index ["practice_id"], name: "index_patients_on_practice_id"
   end
 
   create_table "practices", id: :serial, force: :cascade do |t|

@@ -23,7 +23,7 @@ class PatientsController < ApplicationController
         params[:letter] = first_patient&.firstname&.first || 'A'
       end
 
-      # iI the provided is not in the alphabet, send back anything else
+      # if the provided letter is not in the alphabet, send back anything else
       @patients = if [*'a'..'z'].include?(params[:letter].downcase)
                     Patient.anything_with_letter(params[:letter]).with_practice(current_user.practice_id)
                   else
