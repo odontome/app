@@ -34,6 +34,7 @@ man/*
 /lib/bundler/generated/
 /public/packs
 /public/packs-test
+/public/assets
 /node_modules
 /yarn-error.log
 yarn-debug.log*
