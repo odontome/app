@@ -26,16 +26,15 @@
 .fc-event .fc-event-inner {
   position: relative;
   z-index: 0;
-  color: #ffffff;
   font-weight: 600;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  filter: brightness(2);
 }
 
 .fc-event .fc-event-inner::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.05));
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4));
   border-radius: inherit;
   pointer-events: none;
   z-index: -1;
