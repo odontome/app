@@ -24,17 +24,17 @@ class OptimizePatientAndAppointmentQueries < ActiveRecord::Migration[7.2]
     end
 
     add_index :appointments, :doctor_id, algorithm: :concurrently unless index_exists?(:appointments, :doctor_id)
-    unless index_name_exists?(:appointments, 'index_appointments_on_datebook_id_and_times')
-      add_index :appointments,
-                %i[datebook_id starts_at ends_at],
-                algorithm: :concurrently,
-                name: 'index_appointments_on_datebook_id_and_times'
-    end
+    return if index_name_exists?(:appointments, 'index_appointments_on_datebook_id_and_times')
+
+    add_index :appointments,
+              %i[datebook_id starts_at ends_at],
+              algorithm: :concurrently,
+              name: 'index_appointments_on_datebook_id_and_times'
   end
 
   def down
     remove_index :appointments, name: 'index_appointments_on_datebook_id_and_times' if index_name_exists?(:appointments,
-                                                                                                           'index_appointments_on_datebook_id_and_times')
+                                                                                                          'index_appointments_on_datebook_id_and_times')
     remove_index :appointments, column: :doctor_id if index_exists?(:appointments, :doctor_id)
 
     remove_index :patients, name: 'index_patients_on_fullname_trgm' if index_name_exists?(:patients,
