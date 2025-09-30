@@ -20,4 +20,30 @@
   border-radius: 50%;
   background: #00ff00;
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
+  z-index: 2;
+}
+
+.fc-event .fc-event-inner {
+  position: relative;
+  z-index: 0;
+  color: #ffffff;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+}
+
+.fc-event .fc-event-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.05));
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.fc-event .fc-event-time,
+.fc-event .fc-event-title,
+.fc-event .fc-event-inner > div {
+  position: relative;
+  z-index: 1;
 }
