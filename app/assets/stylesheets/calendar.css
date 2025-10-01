@@ -27,7 +27,7 @@
   position: relative;
   z-index: 0;
   font-weight: 600;
-  filter: brightness(2);
+  filter: brightness(3);
 }
 
 .fc-event .fc-event-inner::before {
