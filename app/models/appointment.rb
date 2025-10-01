@@ -60,6 +60,7 @@ class Appointment < ApplicationRecord
   def as_json(_options = {})
     bg_color = is_confirmed ? doctor.color : '#cdcdcd'
     border_color = doctor.color
+    text_color = is_confirmed ? '#ffffff' : '#333333'
     is_waiting_today = (status == self.class.status[:waiting_room]) && (starts_at.in_time_zone.to_date == Time.zone.today)
 
     {
@@ -73,7 +74,7 @@ class Appointment < ApplicationRecord
       color: bg_color,
       backgroundColor: bg_color,
       borderColor: border_color,
-      textColor: bg_color,
+      textColor: text_color,
       className: (is_waiting_today ? 'appointment-waiting' : nil),
       doctor_name: doctor.fullname,
       firstname: patient.firstname,
