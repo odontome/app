@@ -38,6 +38,34 @@ class DatebooksControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'should detect iPad as mobile device' do
+    @request.user_agent = 'Mozilla/5.0 (iPad; CPU OS 14_0 like Mac OS X) AppleWebKit/605.1.15'
+    get :show, params: { id: datebooks(:playa_del_carmen).to_param }
+    assert_response :success
+    assert_not_nil assigns(:is_mobile), 'iPad should be detected as mobile device'
+  end
+
+  test 'should detect iPhone as mobile device' do
+    @request.user_agent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15'
+    get :show, params: { id: datebooks(:playa_del_carmen).to_param }
+    assert_response :success
+    assert_not_nil assigns(:is_mobile), 'iPhone should be detected as mobile device'
+  end
+
+  test 'should detect Android as mobile device' do
+    @request.user_agent = 'Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36'
+    get :show, params: { id: datebooks(:playa_del_carmen).to_param }
+    assert_response :success
+    assert_not_nil assigns(:is_mobile), 'Android should be detected as mobile device'
+  end
+
+  test 'should not detect desktop as mobile device' do
+    @request.user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+    get :show, params: { id: datebooks(:playa_del_carmen).to_param }
+    assert_response :success
+    assert_nil assigns(:is_mobile), 'Desktop should not be detected as mobile device'
+  end
+
   test 'should get edit' do
     get :edit, params: { id: datebooks(:playa_del_carmen).to_param }
     assert_response :success
