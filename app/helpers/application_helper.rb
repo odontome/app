@@ -16,6 +16,33 @@ module ApplicationHelper
     end
   end
 
+  def simple_file_upload_public_key
+    config = Rails.configuration.respond_to?(:simple_file_upload) ? Rails.configuration.simple_file_upload : nil
+    config&.dig(:public_key).presence || ENV['SIMPLE_FILE_UPLOAD_PUBLIC_KEY'].presence
+  end
+
+  def avatar_for(record, size: 96, classes: nil, fallback_name: nil)
+    css_classes = classes.presence || 'avatar rounded-circle'
+
+    display_name = (record.fullname.to_s.strip.presence if record.respond_to?(:fullname))
+    display_name ||= fallback_name.presence || t(:profile)
+
+    if record.respond_to?(:profile_picture_url) && record.profile_picture_url.present?
+      picture_url = if record.respond_to?(:profile_picture_resized)
+                      record.profile_picture_resized(width: size, height: size)
+                    end
+      picture_url = picture_url.presence || record.profile_picture_url
+
+      image_tag(picture_url, class: css_classes, alt: t(:profile_picture_alt, name: display_name))
+    else
+      initials = (record.initials.to_s.presence if record.respond_to?(:initials))
+      initials ||= display_name.to_s.split(/\s+/).map { |part| part[0] }.compact.take(2).join.upcase
+      initials = initials.presence || display_name.to_s.first(2).to_s.upcase
+
+      content_tag(:span, initials, class: css_classes)
+    end
+  end
+
   def label_tag(message, color = :azure)
     allowed_colors = %i[green red azure]
     raise "#{color} is invalid. Allowed values: #{allowed_colors.join(', ')}." unless color.in?(allowed_colors)

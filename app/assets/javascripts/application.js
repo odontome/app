@@ -81,3 +81,62 @@ $(function () {
     }
   }
 });
+
+function setupSimpleFileUploadComponents() {
+  const uploaders = document.querySelectorAll(
+    "simple-file-upload[data-hidden-input]"
+  );
+
+  if (!uploaders.length) {
+    return;
+  }
+
+  uploaders.forEach(function (uploader) {
+    if (uploader.dataset.simpleFileUploadBound === "true") {
+      return;
+    }
+
+    const hiddenInputId = uploader.dataset.hiddenInput;
+    const hiddenInput = document.getElementById(hiddenInputId);
+
+    if (!hiddenInput) {
+      return;
+    }
+
+    uploader.addEventListener("change", function (event) {
+      const files = event.detail ? event.detail.allFiles || [] : [];
+      const firstFile = files[0];
+      hiddenInput.value = firstFile ? firstFile.cdnUrl : "";
+    });
+
+    uploader.dataset.simpleFileUploadBound = "true";
+  });
+
+  document
+    .querySelectorAll('[data-behavior="clear-profile-picture"]')
+    .forEach(function (button) {
+      if (button.dataset.simpleFileUploadBound === "true") {
+        return;
+      }
+
+      button.addEventListener("click", function () {
+        const targetId = button.dataset.target;
+        const hiddenInput = document.getElementById(targetId);
+        if (hiddenInput) {
+          hiddenInput.value = "";
+        }
+
+        const previewContainer = button.closest(
+          "[data-profile-picture-preview]"
+        );
+        if (previewContainer) {
+          previewContainer.remove();
+        }
+      });
+
+      button.dataset.simpleFileUploadBound = "true";
+    });
+}
+
+document.addEventListener("DOMContentLoaded", setupSimpleFileUploadComponents);
+document.addEventListener("turbolinks:load", setupSimpleFileUploadComponents);

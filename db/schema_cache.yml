@@ -1,1490 +1,1463 @@
----
-!ruby/object:ActiveRecord::ConnectionAdapters::SchemaCache
+--- !ruby/object:ActiveRecord::ConnectionAdapters::SchemaCache
 columns:
   active_storage_attachments:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial: true
-      identity:
-      generated: ""
-      name: id
-      sql_type_metadata:
-        !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata &2
-        delegate_dc_obj:
-          !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
-          sql_type: bigint
-          type: :integer
-          limit: 8
-          precision:
-          scale:
-        oid: 20
-        fmod: -1
-      "null": false
-      default:
-      default_function: nextval('active_storage_attachments_id_seq'::regclass)
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: name
-      sql_type_metadata:
-        !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata &1
-        delegate_dc_obj:
-          !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
-          sql_type: character varying
-          type: :string
-          limit:
-          precision:
-          scale:
-        oid: 1043
-        fmod: -1
-      "null": false
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: record_type
-      sql_type_metadata: *1
-      "null": false
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: record_id
-      sql_type_metadata: *2
-      "null": false
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column &4
-      serial:
-      identity:
-      generated: ""
-      name: blob_id
-      sql_type_metadata: *2
-      "null": false
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column &3
-      serial:
-      identity:
-      generated: ""
-      name: created_at
-      sql_type_metadata:
-        !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata &6
-        delegate_dc_obj:
-          !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
-          sql_type: timestamp without time zone
-          type: :datetime
-          limit:
-          precision:
-          scale:
-        oid: 1114
-        fmod: -1
-      "null": false
-      default:
-      default_function:
-      collation:
-      comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial: true
+    identity:
+    generated: ''
+    name: id
+    sql_type_metadata: &2 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
+      delegate_dc_obj: !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
+        sql_type: bigint
+        type: :integer
+        limit: 8
+        precision:
+        scale:
+      oid: 20
+      fmod: -1
+    'null': false
+    default:
+    default_function: nextval('active_storage_attachments_id_seq'::regclass)
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: name
+    sql_type_metadata: &1 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
+      delegate_dc_obj: !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
+        sql_type: character varying
+        type: :string
+        limit:
+        precision:
+        scale:
+      oid: 1043
+      fmod: -1
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: record_type
+    sql_type_metadata: *1
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: record_id
+    sql_type_metadata: *2
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - &4 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: blob_id
+    sql_type_metadata: *2
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - &3 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: created_at
+    sql_type_metadata: &6 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
+      delegate_dc_obj: !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
+        sql_type: timestamp without time zone
+        type: :datetime
+        limit:
+        precision:
+        scale:
+      oid: 1114
+      fmod: -1
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
   active_storage_blobs:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial: true
-      identity:
-      generated: ""
-      name: id
-      sql_type_metadata: *2
-      "null": false
-      default:
-      default_function: nextval('active_storage_blobs_id_seq'::regclass)
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column &8
-      serial:
-      identity:
-      generated: ""
-      name: key
-      sql_type_metadata: *1
-      "null": false
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: filename
-      sql_type_metadata: *1
-      "null": false
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: content_type
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: metadata
-      sql_type_metadata:
-        !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata &16
-        delegate_dc_obj:
-          !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
-          sql_type: text
-          type: :text
-          limit:
-          precision:
-          scale:
-        oid: 25
-        fmod: -1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: service_name
-      sql_type_metadata: *1
-      "null": false
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: byte_size
-      sql_type_metadata: *2
-      "null": false
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: checksum
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - *3
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial: true
+    identity:
+    generated: ''
+    name: id
+    sql_type_metadata: *2
+    'null': false
+    default:
+    default_function: nextval('active_storage_blobs_id_seq'::regclass)
+    collation:
+    comment:
+  - &8 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: key
+    sql_type_metadata: *1
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: filename
+    sql_type_metadata: *1
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: content_type
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: metadata
+    sql_type_metadata: &16 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
+      delegate_dc_obj: !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
+        sql_type: text
+        type: :text
+        limit:
+        precision:
+        scale:
+      oid: 25
+      fmod: -1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: service_name
+    sql_type_metadata: *1
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: byte_size
+    sql_type_metadata: *2
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: checksum
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - *3
   active_storage_variant_records:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial: true
-      identity:
-      generated: ""
-      name: id
-      sql_type_metadata: *2
-      "null": false
-      default:
-      default_function: nextval('active_storage_variant_records_id_seq'::regclass)
-      collation:
-      comment:
-    - *4
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: variation_digest
-      sql_type_metadata: *1
-      "null": false
-      default:
-      default_function:
-      collation:
-      comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial: true
+    identity:
+    generated: ''
+    name: id
+    sql_type_metadata: *2
+    'null': false
+    default:
+    default_function: nextval('active_storage_variant_records_id_seq'::regclass)
+    collation:
+    comment:
+  - *4
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: variation_digest
+    sql_type_metadata: *1
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
   appointments:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial: true
-      identity:
-      generated: ""
-      name: id
-      sql_type_metadata:
-        !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata &5
-        delegate_dc_obj:
-          !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
-          sql_type: integer
-          type: :integer
-          limit: 4
-          precision:
-          scale:
-        oid: 23
-        fmod: -1
-      "null": false
-      default:
-      default_function: nextval('appointments_id_seq'::regclass)
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: doctor_id
-      sql_type_metadata: *5
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column &10
-      serial:
-      identity:
-      generated: ""
-      name: patient_id
-      sql_type_metadata: *5
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: notes
-      sql_type_metadata:
-        !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
-        delegate_dc_obj:
-          !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
-          sql_type: character varying(255)
-          type: :string
-          limit: 255
-          precision:
-          scale:
-        oid: 1043
-        fmod: 259
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: status
-      sql_type_metadata: *1
-      "null": true
-      default: confirmed
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: starts_at
-      sql_type_metadata: *6
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: ends_at
-      sql_type_metadata: *6
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - *3
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column &11
-      serial:
-      identity:
-      generated: ""
-      name: updated_at
-      sql_type_metadata: *6
-      "null": false
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: notified_of_reminder
-      sql_type_metadata:
-        !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata &7
-        delegate_dc_obj:
-          !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
-          sql_type: boolean
-          type: :boolean
-          limit:
-          precision:
-          scale:
-        oid: 16
-        fmod: -1
-      "null": true
-      default: "false"
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: datebook_id
-      sql_type_metadata: *5
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: notified_of_schedule
-      sql_type_metadata: *7
-      "null": true
-      default: "false"
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: notified_of_review
-      sql_type_metadata: *7
-      "null": true
-      default: "false"
-      default_function:
-      collation:
-      comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial: true
+    identity:
+    generated: ''
+    name: id
+    sql_type_metadata: &5 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
+      delegate_dc_obj: !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
+        sql_type: integer
+        type: :integer
+        limit: 4
+        precision:
+        scale:
+      oid: 23
+      fmod: -1
+    'null': false
+    default:
+    default_function: nextval('appointments_id_seq'::regclass)
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: doctor_id
+    sql_type_metadata: *5
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - &10 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: patient_id
+    sql_type_metadata: *5
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: notes
+    sql_type_metadata: !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
+      delegate_dc_obj: !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
+        sql_type: character varying(255)
+        type: :string
+        limit: 255
+        precision:
+        scale:
+      oid: 1043
+      fmod: 259
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: status
+    sql_type_metadata: *1
+    'null': true
+    default: confirmed
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: starts_at
+    sql_type_metadata: *6
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: ends_at
+    sql_type_metadata: *6
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - *3
+  - &11 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: updated_at
+    sql_type_metadata: *6
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: notified_of_reminder
+    sql_type_metadata: &7 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
+      delegate_dc_obj: !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
+        sql_type: boolean
+        type: :boolean
+        limit:
+        precision:
+        scale:
+      oid: 16
+      fmod: -1
+    'null': true
+    default: 'false'
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: datebook_id
+    sql_type_metadata: *5
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: notified_of_schedule
+    sql_type_metadata: *7
+    'null': true
+    default: 'false'
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: notified_of_review
+    sql_type_metadata: *7
+    'null': true
+    default: 'false'
+    default_function:
+    collation:
+    comment:
   ar_internal_metadata:
-    - *8
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: value
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: created_at
-      sql_type_metadata:
-        !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata &9
-        delegate_dc_obj:
-          !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
-          sql_type: timestamp(6) without time zone
-          type: :datetime
-          limit:
-          precision: 6
-          scale:
-        oid: 1114
-        fmod: 6
-      "null": false
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: updated_at
-      sql_type_metadata: *9
-      "null": false
-      default:
-      default_function:
-      collation:
-      comment:
+  - *8
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: value
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: created_at
+    sql_type_metadata: &9 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
+      delegate_dc_obj: !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
+        sql_type: timestamp(6) without time zone
+        type: :datetime
+        limit:
+        precision: 6
+        scale:
+      oid: 1114
+      fmod: 6
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: updated_at
+    sql_type_metadata: *9
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
   balances:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial: true
-      identity:
-      generated: ""
-      name: id
-      sql_type_metadata: *5
-      "null": false
-      default:
-      default_function: nextval('balances_id_seq'::regclass)
-      collation:
-      comment:
-    - *10
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: amount
-      sql_type_metadata:
-        !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata &19
-        delegate_dc_obj:
-          !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
-          sql_type: double precision
-          type: :float
-          limit:
-          precision:
-          scale:
-        oid: 701
-        fmod: -1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: notes
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - *3
-    - *11
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: currency
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial: true
+    identity:
+    generated: ''
+    name: id
+    sql_type_metadata: *5
+    'null': false
+    default:
+    default_function: nextval('balances_id_seq'::regclass)
+    collation:
+    comment:
+  - *10
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: amount
+    sql_type_metadata: &19 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
+      delegate_dc_obj: !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
+        sql_type: double precision
+        type: :float
+        limit:
+        precision:
+        scale:
+      oid: 701
+      fmod: -1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: notes
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - *3
+  - *11
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: currency
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
   datebooks:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial: true
-      identity:
-      generated: ""
-      name: id
-      sql_type_metadata: *5
-      "null": false
-      default:
-      default_function: nextval('datebooks_id_seq'::regclass)
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column &12
-      serial:
-      identity:
-      generated: ""
-      name: practice_id
-      sql_type_metadata: *5
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column &18
-      serial:
-      identity:
-      generated: ""
-      name: name
-      sql_type_metadata:
-        !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
-        delegate_dc_obj:
-          !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
-          sql_type: character varying(100)
-          type: :string
-          limit: 100
-          precision:
-          scale:
-        oid: 1043
-        fmod: 104
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - *3
-    - *11
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: starts_at
-      sql_type_metadata: *5
-      "null": true
-      default: "8"
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: ends_at
-      sql_type_metadata: *5
-      "null": true
-      default: "20"
-      default_function:
-      collation:
-      comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial: true
+    identity:
+    generated: ''
+    name: id
+    sql_type_metadata: *5
+    'null': false
+    default:
+    default_function: nextval('datebooks_id_seq'::regclass)
+    collation:
+    comment:
+  - &12 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: practice_id
+    sql_type_metadata: *5
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - &18 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: name
+    sql_type_metadata: !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
+      delegate_dc_obj: !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
+        sql_type: character varying(100)
+        type: :string
+        limit: 100
+        precision:
+        scale:
+      oid: 1043
+      fmod: 104
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - *3
+  - *11
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: starts_at
+    sql_type_metadata: *5
+    'null': true
+    default: '8'
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: ends_at
+    sql_type_metadata: *5
+    'null': true
+    default: '20'
+    default_function:
+    collation:
+    comment:
   doctors:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial: true
-      identity:
-      generated: ""
-      name: id
-      sql_type_metadata: *5
-      "null": false
-      default:
-      default_function: nextval('doctors_id_seq'::regclass)
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column &13
-      serial:
-      identity:
-      generated: ""
-      name: uid
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - *12
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column &14
-      serial:
-      identity:
-      generated: ""
-      name: firstname
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column &15
-      serial:
-      identity:
-      generated: ""
-      name: lastname
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: gender
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: is_active
-      sql_type_metadata: *7
-      "null": true
-      default: "true"
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: speciality
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - *3
-    - *11
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column &17
-      serial:
-      identity:
-      generated: ""
-      name: email
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: color
-      sql_type_metadata:
-        !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
-        delegate_dc_obj:
-          !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
-          sql_type: character varying(7)
-          type: :string
-          limit: 7
-          precision:
-          scale:
-        oid: 1043
-        fmod: 11
-      "null": true
-      default: "#3366CC"
-      default_function:
-      collation:
-      comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial: true
+    identity:
+    generated: ''
+    name: id
+    sql_type_metadata: *5
+    'null': false
+    default:
+    default_function: nextval('doctors_id_seq'::regclass)
+    collation:
+    comment:
+  - &13 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: uid
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - *12
+  - &14 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: firstname
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - &15 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: lastname
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: gender
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: is_active
+    sql_type_metadata: *7
+    'null': true
+    default: 'true'
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: speciality
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - *3
+  - *11
+  - &17 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: email
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: color
+    sql_type_metadata: !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
+      delegate_dc_obj: !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
+        sql_type: character varying(7)
+        type: :string
+        limit: 7
+        precision:
+        scale:
+      oid: 1043
+      fmod: 11
+    'null': true
+    default: "#3366CC"
+    default_function:
+    collation:
+    comment:
   notes:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial: true
-      identity:
-      generated: ""
-      name: id
-      sql_type_metadata: *5
-      "null": false
-      default:
-      default_function: nextval('notes_id_seq'::regclass)
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: notes
-      sql_type_metadata:
-        !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
-        delegate_dc_obj:
-          !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
-          sql_type: character varying(500)
-          type: :string
-          limit: 500
-          precision:
-          scale:
-        oid: 1043
-        fmod: 504
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - *3
-    - *11
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: noteable_type
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: noteable_id
-      sql_type_metadata: *5
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: user_id
-      sql_type_metadata: *5
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial: true
+    identity:
+    generated: ''
+    name: id
+    sql_type_metadata: *5
+    'null': false
+    default:
+    default_function: nextval('notes_id_seq'::regclass)
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: notes
+    sql_type_metadata: !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
+      delegate_dc_obj: !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
+        sql_type: character varying(500)
+        type: :string
+        limit: 500
+        precision:
+        scale:
+      oid: 1043
+      fmod: 504
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - *3
+  - *11
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: noteable_type
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: noteable_id
+    sql_type_metadata: *5
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: user_id
+    sql_type_metadata: *5
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
   patients:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial: true
-      identity:
-      generated: ""
-      name: id
-      sql_type_metadata: *5
-      "null": false
-      default:
-      default_function: nextval('patients_id_seq'::regclass)
-      collation:
-      comment:
-    - *13
-    - *12
-    - *14
-    - *15
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: address
-      sql_type_metadata: *16
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - *17
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: telephone
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: mobile
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: emergency_telephone
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: date_of_birth
-      sql_type_metadata:
-        !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
-        delegate_dc_obj:
-          !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
-          sql_type: date
-          type: :date
-          limit:
-          precision:
-          scale:
-        oid: 1082
-        fmod: -1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - *3
-    - *11
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: allergies
-      sql_type_metadata: *16
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: past_illnesses
-      sql_type_metadata: *16
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: surgeries
-      sql_type_metadata: *16
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: medications
-      sql_type_metadata: *16
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: cigarettes_per_day
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: drinks_per_day
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: drugs_use
-      sql_type_metadata: *16
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: family_diseases
-      sql_type_metadata: *16
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: notified_of_six_month_reminder
-      sql_type_metadata: *7
-      "null": false
-      default: "false"
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: deleted_at
-      sql_type_metadata: *6
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial: true
+    identity:
+    generated: ''
+    name: id
+    sql_type_metadata: *5
+    'null': false
+    default:
+    default_function: nextval('patients_id_seq'::regclass)
+    collation:
+    comment:
+  - *13
+  - *12
+  - *14
+  - *15
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: address
+    sql_type_metadata: *16
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - *17
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: telephone
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: mobile
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: emergency_telephone
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: date_of_birth
+    sql_type_metadata: !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
+      delegate_dc_obj: !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
+        sql_type: date
+        type: :date
+        limit:
+        precision:
+        scale:
+      oid: 1082
+      fmod: -1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - *3
+  - *11
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: allergies
+    sql_type_metadata: *16
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: past_illnesses
+    sql_type_metadata: *16
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: surgeries
+    sql_type_metadata: *16
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: medications
+    sql_type_metadata: *16
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: cigarettes_per_day
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: drinks_per_day
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: drugs_use
+    sql_type_metadata: *16
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: family_diseases
+    sql_type_metadata: *16
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: notified_of_six_month_reminder
+    sql_type_metadata: *7
+    'null': false
+    default: 'false'
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: deleted_at
+    sql_type_metadata: *6
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
   practices:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial: true
-      identity:
-      generated: ""
-      name: id
-      sql_type_metadata: *5
-      "null": false
-      default:
-      default_function: nextval('practices_id_seq'::regclass)
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: name
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: locale
-      sql_type_metadata: *1
-      "null": true
-      default: en_US
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: timezone
-      sql_type_metadata: *1
-      "null": true
-      default: UTC
-      default_function:
-      collation:
-      comment:
-    - *3
-    - *11
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: cancelled_at
-      sql_type_metadata: *6
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: patients_count
-      sql_type_metadata: *5
-      "null": true
-      default: "0"
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: doctors_count
-      sql_type_metadata: *5
-      "null": true
-      default: "0"
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: users_count
-      sql_type_metadata: *5
-      "null": true
-      default: "0"
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: datebooks_count
-      sql_type_metadata: *5
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - *17
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: stripe_customer_id
-      sql_type_metadata: *16
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: stripe_account_id
-      sql_type_metadata: *16
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: connect_onboarding_status
-      sql_type_metadata: *1
-      "null": true
-      default: not_started
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: connect_charges_enabled
-      sql_type_metadata: *7
-      "null": true
-      default: "false"
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: connect_payouts_enabled
-      sql_type_metadata: *7
-      "null": true
-      default: "false"
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: connect_details_submitted
-      sql_type_metadata: *7
-      "null": true
-      default: "false"
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: currency
-      sql_type_metadata: *1
-      "null": false
-      default: mxn
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: custom_review_url
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial: true
+    identity:
+    generated: ''
+    name: id
+    sql_type_metadata: *5
+    'null': false
+    default:
+    default_function: nextval('practices_id_seq'::regclass)
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: name
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: locale
+    sql_type_metadata: *1
+    'null': true
+    default: en_US
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: timezone
+    sql_type_metadata: *1
+    'null': true
+    default: UTC
+    default_function:
+    collation:
+    comment:
+  - *3
+  - *11
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: cancelled_at
+    sql_type_metadata: *6
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: patients_count
+    sql_type_metadata: *5
+    'null': true
+    default: '0'
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: doctors_count
+    sql_type_metadata: *5
+    'null': true
+    default: '0'
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: users_count
+    sql_type_metadata: *5
+    'null': true
+    default: '0'
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: datebooks_count
+    sql_type_metadata: *5
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - *17
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: stripe_customer_id
+    sql_type_metadata: *16
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: stripe_account_id
+    sql_type_metadata: *16
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: connect_onboarding_status
+    sql_type_metadata: *1
+    'null': true
+    default: not_started
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: connect_charges_enabled
+    sql_type_metadata: *7
+    'null': true
+    default: 'false'
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: connect_payouts_enabled
+    sql_type_metadata: *7
+    'null': true
+    default: 'false'
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: connect_details_submitted
+    sql_type_metadata: *7
+    'null': true
+    default: 'false'
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: currency
+    sql_type_metadata: *1
+    'null': false
+    default: mxn
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: custom_review_url
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
   reviews:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial: true
-      identity:
-      generated: ""
-      name: id
-      sql_type_metadata: *5
-      "null": false
-      default:
-      default_function: nextval('reviews_id_seq'::regclass)
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: appointment_id
-      sql_type_metadata: *5
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: score
-      sql_type_metadata: *5
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: comment
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - *3
-    - *11
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial: true
+    identity:
+    generated: ''
+    name: id
+    sql_type_metadata: *5
+    'null': false
+    default:
+    default_function: nextval('reviews_id_seq'::regclass)
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: appointment_id
+    sql_type_metadata: *5
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: score
+    sql_type_metadata: *5
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: comment
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - *3
+  - *11
   schema_migrations:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: version
-      sql_type_metadata: *1
-      "null": false
-      default:
-      default_function:
-      collation:
-      comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: version
+    sql_type_metadata: *1
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
   subscriptions:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial: true
-      identity:
-      generated: ""
-      name: id
-      sql_type_metadata: *2
-      "null": false
-      default:
-      default_function: nextval('subscriptions_id_seq'::regclass)
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: practice_id
-      sql_type_metadata: *2
-      "null": false
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: status
-      sql_type_metadata: *16
-      "null": false
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: cancel_at_period_end
-      sql_type_metadata: *7
-      "null": false
-      default: "false"
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: current_period_start
-      sql_type_metadata: *6
-      "null": false
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: current_period_end
-      sql_type_metadata: *6
-      "null": false
-      default:
-      default_function:
-      collation:
-      comment:
-    - *3
-    - *11
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial: true
+    identity:
+    generated: ''
+    name: id
+    sql_type_metadata: *2
+    'null': false
+    default:
+    default_function: nextval('subscriptions_id_seq'::regclass)
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: practice_id
+    sql_type_metadata: *2
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: status
+    sql_type_metadata: *16
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: cancel_at_period_end
+    sql_type_metadata: *7
+    'null': false
+    default: 'false'
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: current_period_start
+    sql_type_metadata: *6
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: current_period_end
+    sql_type_metadata: *6
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - *3
+  - *11
   treatments:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial: true
-      identity:
-      generated: ""
-      name: id
-      sql_type_metadata: *5
-      "null": false
-      default:
-      default_function: nextval('treatments_id_seq'::regclass)
-      collation:
-      comment:
-    - *12
-    - *18
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: price
-      sql_type_metadata: *19
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - *3
-    - *11
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial: true
+    identity:
+    generated: ''
+    name: id
+    sql_type_metadata: *5
+    'null': false
+    default:
+    default_function: nextval('treatments_id_seq'::regclass)
+    collation:
+    comment:
+  - *12
+  - *18
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: price
+    sql_type_metadata: *19
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - *3
+  - *11
   users:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial: true
-      identity:
-      generated: ""
-      name: id
-      sql_type_metadata: *5
-      "null": false
-      default:
-      default_function: nextval('users_id_seq'::regclass)
-      collation:
-      comment:
-    - *14
-    - *15
-    - *17
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: roles
-      sql_type_metadata: *1
-      "null": true
-      default: user
-      default_function:
-      collation:
-      comment:
-    - *12
-    - *3
-    - *11
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: current_login_at
-      sql_type_metadata: *6
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: last_login_at
-      sql_type_metadata: *6
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: perishable_token
-      sql_type_metadata: *1
-      "null": false
-      default: ""
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: failed_login_count
-      sql_type_metadata: *5
-      "null": true
-      default: "0"
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: subscribed_to_digest
-      sql_type_metadata: *7
-      "null": true
-      default: "true"
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: password_digest
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: remember_token
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: remember_token_expires_at
-      sql_type_metadata: *9
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial: true
+    identity:
+    generated: ''
+    name: id
+    sql_type_metadata: *5
+    'null': false
+    default:
+    default_function: nextval('users_id_seq'::regclass)
+    collation:
+    comment:
+  - *14
+  - *15
+  - *17
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: roles
+    sql_type_metadata: *1
+    'null': true
+    default: user
+    default_function:
+    collation:
+    comment:
+  - *12
+  - *3
+  - *11
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: current_login_at
+    sql_type_metadata: *6
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: last_login_at
+    sql_type_metadata: *6
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: perishable_token
+    sql_type_metadata: *1
+    'null': false
+    default: ''
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: failed_login_count
+    sql_type_metadata: *5
+    'null': true
+    default: '0'
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: subscribed_to_digest
+    sql_type_metadata: *7
+    'null': true
+    default: 'true'
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: password_digest
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: remember_token
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: remember_token_expires_at
+    sql_type_metadata: *9
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
   versions:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial: true
-      identity:
-      generated: ""
-      name: id
-      sql_type_metadata: *2
-      "null": false
-      default:
-      default_function: nextval('versions_id_seq'::regclass)
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: whodunnit
-      sql_type_metadata: *1
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: created_at
-      sql_type_metadata: *9
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: item_id
-      sql_type_metadata: *2
-      "null": false
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: item_type
-      sql_type_metadata: *1
-      "null": false
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: event
-      sql_type_metadata: *1
-      "null": false
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: object
-      sql_type_metadata: *16
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-      serial:
-      identity:
-      generated: ""
-      name: object_changes
-      sql_type_metadata: *16
-      "null": true
-      default:
-      default_function:
-      collation:
-      comment:
-    - *12
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial: true
+    identity:
+    generated: ''
+    name: id
+    sql_type_metadata: *2
+    'null': false
+    default:
+    default_function: nextval('versions_id_seq'::regclass)
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: whodunnit
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: created_at
+    sql_type_metadata: *9
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: item_id
+    sql_type_metadata: *2
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: item_type
+    sql_type_metadata: *1
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: event
+    sql_type_metadata: *1
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: object
+    sql_type_metadata: *16
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: object_changes
+    sql_type_metadata: *16
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - *12
 primary_keys:
   active_storage_attachments: id
   active_storage_blobs: id
@@ -1523,348 +1496,348 @@ data_sources:
   versions: true
 indexes:
   active_storage_attachments:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-      table: active_storage_attachments
-      name: index_active_storage_attachments_on_blob_id
-      unique: false
-      columns:
-        - blob_id
-      lengths: {}
-      orders: {}
-      opclasses: {}
-      where:
-      type:
-      using: :btree
-      include:
-      nulls_not_distinct: false
-      comment:
-      valid: true
-    - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-      table: active_storage_attachments
-      name: index_active_storage_attachments_uniqueness
-      unique: true
-      columns:
-        - record_type
-        - record_id
-        - name
-        - blob_id
-      lengths: {}
-      orders: {}
-      opclasses: {}
-      where:
-      type:
-      using: :btree
-      include:
-      nulls_not_distinct: false
-      comment:
-      valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: active_storage_attachments
+    name: index_active_storage_attachments_on_blob_id
+    unique: false
+    columns:
+    - blob_id
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: active_storage_attachments
+    name: index_active_storage_attachments_uniqueness
+    unique: true
+    columns:
+    - record_type
+    - record_id
+    - name
+    - blob_id
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
   active_storage_blobs:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-      table: active_storage_blobs
-      name: index_active_storage_blobs_on_key
-      unique: true
-      columns:
-        - key
-      lengths: {}
-      orders: {}
-      opclasses: {}
-      where:
-      type:
-      using: :btree
-      include:
-      nulls_not_distinct: false
-      comment:
-      valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: active_storage_blobs
+    name: index_active_storage_blobs_on_key
+    unique: true
+    columns:
+    - key
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
   active_storage_variant_records:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-      table: active_storage_variant_records
-      name: index_active_storage_variant_records_uniqueness
-      unique: true
-      columns:
-        - blob_id
-        - variation_digest
-      lengths: {}
-      orders: {}
-      opclasses: {}
-      where:
-      type:
-      using: :btree
-      include:
-      nulls_not_distinct: false
-      comment:
-      valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: active_storage_variant_records
+    name: index_active_storage_variant_records_uniqueness
+    unique: true
+    columns:
+    - blob_id
+    - variation_digest
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
   appointments:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-      table: appointments
-      name: index_appointments_on_datebook_id_and_times
-      unique: false
-      columns:
-        - datebook_id
-        - starts_at
-        - ends_at
-      lengths: {}
-      orders: {}
-      opclasses: {}
-      where:
-      type:
-      using: :btree
-      include:
-      nulls_not_distinct: false
-      comment:
-      valid: true
-    - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-      table: appointments
-      name: index_appointments_on_doctor_id
-      unique: false
-      columns:
-        - doctor_id
-      lengths: {}
-      orders: {}
-      opclasses: {}
-      where:
-      type:
-      using: :btree
-      include:
-      nulls_not_distinct: false
-      comment:
-      valid: true
-    - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-      table: appointments
-      name: index_appointments_on_starts_at_and_ends_at
-      unique: false
-      columns:
-        - starts_at
-        - ends_at
-      lengths: {}
-      orders: {}
-      opclasses: {}
-      where:
-      type:
-      using: :btree
-      include:
-      nulls_not_distinct: false
-      comment:
-      valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: appointments
+    name: index_appointments_on_datebook_id_and_times
+    unique: false
+    columns:
+    - datebook_id
+    - starts_at
+    - ends_at
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: appointments
+    name: index_appointments_on_doctor_id
+    unique: false
+    columns:
+    - doctor_id
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: appointments
+    name: index_appointments_on_starts_at_and_ends_at
+    unique: false
+    columns:
+    - starts_at
+    - ends_at
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
   ar_internal_metadata: []
   balances: []
   datebooks: []
   doctors: []
   notes:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-      table: notes
-      name: index_notes_on_noteable_type_and_noteable_id
-      unique: false
-      columns:
-        - noteable_type
-        - noteable_id
-      lengths: {}
-      orders: {}
-      opclasses: {}
-      where:
-      type:
-      using: :btree
-      include:
-      nulls_not_distinct: false
-      comment:
-      valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: notes
+    name: index_notes_on_noteable_type_and_noteable_id
+    unique: false
+    columns:
+    - noteable_type
+    - noteable_id
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
   patients:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-      table: patients
-      name: index_patients_on_deleted_at
-      unique: false
-      columns:
-        - deleted_at
-      lengths: {}
-      orders: {}
-      opclasses: {}
-      where:
-      type:
-      using: :btree
-      include:
-      nulls_not_distinct: false
-      comment:
-      valid: true
-    - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-      table: patients
-      name: index_patients_on_fullname_trgm
-      unique: false
-      columns: lower((((firstname)::text || ' '::text) || (lastname)::text)) gin_trgm_ops
-      lengths: {}
-      orders: {}
-      opclasses: {}
-      where:
-      type:
-      using: :gin
-      include:
-      nulls_not_distinct: false
-      comment:
-      valid: true
-    - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-      table: patients
-      name: index_patients_on_lower_uid_trgm
-      unique: false
-      columns: lower((uid)::text) gin_trgm_ops
-      lengths: {}
-      orders: {}
-      opclasses: {}
-      where:
-      type:
-      using: :gin
-      include:
-      nulls_not_distinct: false
-      comment:
-      valid: true
-    - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-      table: patients
-      name: index_patients_on_practice_id
-      unique: false
-      columns:
-        - practice_id
-      lengths: {}
-      orders: {}
-      opclasses: {}
-      where:
-      type:
-      using: :btree
-      include:
-      nulls_not_distinct: false
-      comment:
-      valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: patients
+    name: index_patients_on_deleted_at
+    unique: false
+    columns:
+    - deleted_at
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: patients
+    name: index_patients_on_fullname_trgm
+    unique: false
+    columns: lower((((firstname)::text || ' '::text) || (lastname)::text)) gin_trgm_ops
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :gin
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: patients
+    name: index_patients_on_lower_uid_trgm
+    unique: false
+    columns: lower((uid)::text) gin_trgm_ops
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :gin
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: patients
+    name: index_patients_on_practice_id
+    unique: false
+    columns:
+    - practice_id
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
   practices:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-      table: practices
-      name: index_practices_on_connect_onboarding_status
-      unique: false
-      columns:
-        - connect_onboarding_status
-      lengths: {}
-      orders: {}
-      opclasses: {}
-      where:
-      type:
-      using: :btree
-      include:
-      nulls_not_distinct: false
-      comment:
-      valid: true
-    - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-      table: practices
-      name: index_practices_on_stripe_account_id
-      unique: false
-      columns:
-        - stripe_account_id
-      lengths: {}
-      orders: {}
-      opclasses: {}
-      where:
-      type:
-      using: :btree
-      include:
-      nulls_not_distinct: false
-      comment:
-      valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: practices
+    name: index_practices_on_connect_onboarding_status
+    unique: false
+    columns:
+    - connect_onboarding_status
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: practices
+    name: index_practices_on_stripe_account_id
+    unique: false
+    columns:
+    - stripe_account_id
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
   reviews: []
   schema_migrations: []
   subscriptions:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-      table: subscriptions
-      name: index_subscriptions_on_practice_id
-      unique: false
-      columns:
-        - practice_id
-      lengths: {}
-      orders: {}
-      opclasses: {}
-      where:
-      type:
-      using: :btree
-      include:
-      nulls_not_distinct: false
-      comment:
-      valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: subscriptions
+    name: index_subscriptions_on_practice_id
+    unique: false
+    columns:
+    - practice_id
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
   treatments: []
   users:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-      table: users
-      name: index_users_on_perishable_token
-      unique: false
-      columns:
-        - perishable_token
-      lengths: {}
-      orders: {}
-      opclasses: {}
-      where:
-      type:
-      using: :btree
-      include:
-      nulls_not_distinct: false
-      comment:
-      valid: true
-    - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-      table: users
-      name: index_users_on_remember_token
-      unique: false
-      columns:
-        - remember_token
-      lengths: {}
-      orders: {}
-      opclasses: {}
-      where:
-      type:
-      using: :btree
-      include:
-      nulls_not_distinct: false
-      comment:
-      valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: users
+    name: index_users_on_perishable_token
+    unique: false
+    columns:
+    - perishable_token
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: users
+    name: index_users_on_remember_token
+    unique: false
+    columns:
+    - remember_token
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
   versions:
-    - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-      table: versions
-      name: index_versions_on_item_type_and_item_id
-      unique: false
-      columns:
-        - item_type
-        - item_id
-      lengths: {}
-      orders: {}
-      opclasses: {}
-      where:
-      type:
-      using: :btree
-      include:
-      nulls_not_distinct: false
-      comment:
-      valid: true
-    - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-      table: versions
-      name: index_versions_on_practice_id
-      unique: false
-      columns:
-        - practice_id
-      lengths: {}
-      orders: {}
-      opclasses: {}
-      where:
-      type:
-      using: :btree
-      include:
-      nulls_not_distinct: false
-      comment:
-      valid: true
-    - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
-      table: versions
-      name: index_versions_on_practice_id_and_created_at
-      unique: false
-      columns:
-        - practice_id
-        - created_at
-      lengths: {}
-      orders: {}
-      opclasses: {}
-      where:
-      type:
-      using: :btree
-      include:
-      nulls_not_distinct: false
-      comment:
-      valid: true
-version: 20250930100000
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: versions
+    name: index_versions_on_item_type_and_item_id
+    unique: false
+    columns:
+    - item_type
+    - item_id
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: versions
+    name: index_versions_on_practice_id
+    unique: false
+    columns:
+    - practice_id
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: versions
+    name: index_versions_on_practice_id_and_created_at
+    unique: false
+    columns:
+    - practice_id
+    - created_at
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
+version: 20251006000000

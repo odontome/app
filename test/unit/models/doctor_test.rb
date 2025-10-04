@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+require 'minitest/mock'
 
 class DoctorTest < ActiveSupport::TestCase
   test 'doctor attributes must not be empty' do
@@ -71,5 +72,27 @@ class DoctorTest < ActiveSupport::TestCase
     doctor = Doctor.new(firstname: 'Ruth', lastname: 'Roberts')
 
     assert_equal doctor.initials, 'RR'
+  end
+
+  test 'destroying doctor deletes profile picture asset' do
+    doctor = Doctor.create!(
+      practice: practices(:complete),
+      firstname: 'Delete',
+      lastname: 'Asset',
+      email: 'delete.asset@example.com',
+      profile_picture_url: 'https://simple-file-upload.com/file/12345'
+    )
+
+    mock = Minitest::Mock.new
+    mock.expect(:call, true)
+
+    SimpleFileUpload::DeleteFile.stub(:new, lambda do |file_url:, **_kwargs|
+      assert_equal 'https://simple-file-upload.com/file/12345', file_url
+      mock
+    end) do
+      doctor.destroy
+    end
+
+    assert_mock mock
   end
 end

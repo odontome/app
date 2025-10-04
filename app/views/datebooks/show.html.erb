@@ -226,17 +226,14 @@
 						<div class="card-body">
 						<div class="row">
 							<div class="col-auto">
-							<span class="avatar rounded-circle">
-												<%= doctor.initials %>
-								<span class="badge" style="background-color: <%= doctor.color %>"></span>
-							</span>
+								<%= avatar_for(doctor, size: 44) %>
 							</div>
 						<div class="col">
 							<div class="font-weight-medium">
-							<%= doctor.fullname %>
+								<%= doctor.fullname %> <span class="badge" style="background-color: <%= doctor.color %>; margin-left: 4px"></span>
 							</div>
 							<div class="text-muted">
-							<%= doctor.speciality.blank? ? "—" : doctor.speciality %>
+								<%= doctor.speciality.blank? ? "—" : doctor.speciality %>
 							</div>
 						</div>
 						</div>
