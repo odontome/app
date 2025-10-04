@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     end
   end
 
+  delete '/simple_file_upload', to: 'simple_file_uploads#destroy'
+
   resources :users
   resources :doctors do
     get '/appointments' => 'doctors#appointments'

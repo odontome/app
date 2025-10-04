@@ -41,10 +41,28 @@ module SimpleFileUpload
         end
 
         assert_equal 'DELETE', fake_http.last_request.method
-        assert_equal '/api/v1/file?url=https://cdn.simplefileupload.com/test-file',
+        assert_equal '/api/v1/file?url=https%3A%2F%2Fcdn.simplefileupload.com%2Ftest-file',
                      fake_http.last_request.path
         expected_header = "Basic #{Base64.strict_encode64('pub-456:sec-789')}"
         assert_equal expected_header, fake_http.last_request['Authorization']
+      end
+    end
+
+    test 'encodes file url when building request path' do
+      with_simple_file_upload_config(api_public_key: 'pub', api_secret_key: 'secret') do
+        response = Net::HTTPSuccess.new('1.1', '200', 'OK')
+        response.instance_variable_set(:@read, true)
+        response.instance_variable_set(:@body, 'ok')
+
+        fake_http = FakeHTTP.new(response)
+
+        Net::HTTP.stub(:new, ->(*_) { fake_http }) do
+          file_url = 'https://cdn.simplefileupload.com/static/blobs/proxy/eyJfcmFpbHMiOiJqSDF+%3D'
+          DeleteFile.new(file_url: file_url).call
+        end
+
+        assert_equal '/api/v1/file?url=https%3A%2F%2Fcdn.simplefileupload.com%2Fstatic%2Fblobs%2Fproxy%2FeyJfcmFpbHMiOiJqSDF%2B%253D',
+                     fake_http.last_request.path
       end
     end
 

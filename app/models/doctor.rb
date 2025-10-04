@@ -32,7 +32,7 @@ class Doctor < ApplicationRecord
 
   # callbacks
   before_destroy :check_if_is_deleteable
-  after_commit :delete_profile_picture_asset, on: :destroy
+  after_destroy_commit :delete_profile_picture_asset
 
   def fullname
     [gender === 'female' || gender === 'mujer' ? I18n.t(:female_doctor_prefix) : I18n.t(:male_doctor_prefix), firstname,
