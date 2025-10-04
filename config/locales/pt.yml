@@ -328,6 +328,7 @@ pt:
   patient: Paciente
   patient_created_success_message: O paciente foi criado com sucesso
   patient_deleted_success_message: O paciente foi excluído com sucesso
+  patient_email_hint: Se você fornecer um email, o paciente poderá receber lembretes de agendamento e solicitações de avaliação.
   empty:
     treatments:
       title: Você ainda não criou nenhum tratamento.

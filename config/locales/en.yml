@@ -152,7 +152,7 @@ en:
     cad: Canadian Dollar (CAD)
     eur: Euro (EUR)
   custom_review_url: Custom review URL
-  custom_review_url_hint: If provided, patient emails will take patients to this URL instead of the default one.
+  custom_review_url_hint: If provided, patient review requests will take them to this URL instead.
   custom_review_url_usage_message: Your practice is using a custom review URL. All review requests will be sent to %{url}
   date:
     formats:
@@ -334,6 +334,7 @@ en:
   patient: Patient
   patient_created_success_message: The patient was created successfully
   patient_deleted_success_message: The patient was deleted successfully
+  patient_email_hint: If you provide an email, the patient will be able to receive appointment reminders and review requests.
   empty:
     treatments:
       title: You haven't created any treatments yet.

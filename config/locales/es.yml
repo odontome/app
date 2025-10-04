@@ -150,7 +150,7 @@ es:
     cad: Dólar canadiense (CAD)
     eur: Euro (EUR)
   custom_review_url: URL de calificaciones personalizada
-  custom_review_url_hint: Si se proporciona, los correos electrónicos de los pacientes los llevarán a esta URL en lugar de la predeterminada.
+  custom_review_url_hint: Si se proporciona, los correos de solicitud de calificaciones de los pacientes los llevarán a esta URL en lugar de la predeterminada.
   custom_review_url_usage_message: Tu clínica está utilizando una URL de calificación personalizada. Todas las solicitudes de calificación se enviarán a %{url}.
   date:
     formats:
@@ -311,6 +311,7 @@ es:
   patient: Paciente
   patient_created_success_message: El paciente fue creado con éxito
   patient_deleted_success_message: El paciente fue eliminado con éxito
+  patient_email_hint: Si proporcionas un email, el paciente podrá recibir recordatorios de citas y solicitudes de calificación.
   empty:
     treatments:
       title: Aún no has creado ningún tratamiento.

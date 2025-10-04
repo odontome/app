@@ -36,6 +36,7 @@
       <div class="mb-3">
         <%= f.label :email, class: "form-label" %>
         <%= f.email_field :email, class: "form-control" %>
+        <%= content_tag "small", t(:patient_email_hint), class: "text-muted" %>
       </div>
 
       <div class="mb-3">
