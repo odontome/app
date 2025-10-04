@@ -45,7 +45,7 @@ class ApplicationHelperTest < ActionView::TestCase
     html = avatar_for(record)
 
     assert_includes html, '<span'
-    assert_includes html, 'class="avatar rounded-circle"'
+    assert_includes html, 'class="avatar me-2 rounded-circle"'
     assert_includes html, '>JD<'
   end
 

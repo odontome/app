@@ -22,7 +22,7 @@ module ApplicationHelper
   end
 
   def avatar_for(record, size: 96, classes: nil, fallback_name: nil)
-    css_classes = classes.presence || 'avatar rounded-circle'
+    css_classes = classes.presence || 'avatar me-2 rounded-circle'
 
     display_name = (record.fullname.to_s.strip.presence if record.respond_to?(:fullname))
     display_name ||= fallback_name.presence || t(:profile)

@@ -384,7 +384,7 @@ pt:
   privacy_policy: Política de privacidade
   profile: Perfil
   profile_picture: Foto de perfil
-  profile_picture_hint: Envie uma imagem quadrada de até 1 MB. Ajustamos o tamanho automaticamente.
+  profile_picture_hint: Envie uma imagem de até 1 MB. Ajustamos o tamanho automaticamente.
   profile_picture_alt: Foto de perfil de %{name}
   remove_profile_picture: Remover foto
   view_profile: Ver perfil

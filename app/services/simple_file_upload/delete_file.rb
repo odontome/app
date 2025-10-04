@@ -3,6 +3,7 @@
 require 'net/http'
 require 'uri'
 require 'base64'
+require 'cgi'
 
 module SimpleFileUpload
   class DeleteFile
@@ -47,7 +48,8 @@ module SimpleFileUpload
 
     def perform_request
       uri = API_ENDPOINT
-      request_path = format('%<path>s?url=%<file_url>s', path: uri.path, file_url: file_url)
+      escaped_file_url = CGI.escape(file_url)
+      request_path = format('%<path>s?url=%<file_url>s', path: uri.path, file_url: escaped_file_url)
 
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true

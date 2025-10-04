@@ -82,6 +82,35 @@ $(function () {
   }
 });
 
+function deleteSimpleFileUploadAsset(fileUrl) {
+  if (!fileUrl) {
+    return;
+  }
+
+  const csrfTokenElement = document.querySelector('meta[name="csrf-token"]');
+  const csrfToken = csrfTokenElement
+    ? csrfTokenElement.getAttribute("content")
+    : null;
+
+  if (!csrfToken) {
+    return;
+  }
+
+  fetch("/simple_file_upload", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "X-CSRF-Token": csrfToken,
+    },
+    body: JSON.stringify({ file_url: fileUrl }),
+  }).catch(function (error) {
+    if (window.console && typeof window.console.warn === "function") {
+      window.console.warn("Failed to delete Simple File Upload asset", error);
+    }
+  });
+}
+
 function setupSimpleFileUploadComponents() {
   const uploaders = document.querySelectorAll(
     "simple-file-upload[data-hidden-input]"
@@ -104,9 +133,55 @@ function setupSimpleFileUploadComponents() {
     }
 
     uploader.addEventListener("change", function (event) {
-      const files = event.detail ? event.detail.allFiles || [] : [];
-      const firstFile = files[0];
-      hiddenInput.value = firstFile ? firstFile.cdnUrl : "";
+      const detail = event.detail || {};
+      const action = detail.action;
+      const removedFile = detail.removedFile || null;
+
+      const isUploadAction =
+        action === "fileUploaded" || action === "uploadDone";
+      const isRemovalAction =
+        action === "fileRemoved" ||
+        (!action && removedFile && removedFile.cdnUrl);
+      const isFailureAction = action === "fileUploadFailed";
+
+      if (!isUploadAction && !isRemovalAction && !isFailureAction) {
+        return;
+      }
+
+      const files = Array.isArray(detail.allFiles) ? detail.allFiles : [];
+      const previousUrl = hiddenInput.value;
+
+      const currentUrls = files
+        .map(function (file) {
+          return file && typeof file.cdnUrl === "string" ? file.cdnUrl : "";
+        })
+        .filter(function (url) {
+          return url.length > 0;
+        });
+
+      const newValue = currentUrls[0] || "";
+
+      if (isRemovalAction) {
+        const urlToDelete =
+          (removedFile && removedFile.cdnUrl) || previousUrl || null;
+
+        if (urlToDelete) {
+          deleteSimpleFileUploadAsset(urlToDelete);
+        }
+      }
+
+      if (
+        isUploadAction &&
+        previousUrl &&
+        previousUrl !== newValue &&
+        newValue.length > 0
+      ) {
+        deleteSimpleFileUploadAsset(previousUrl);
+      }
+
+      if (!isFailureAction) {
+        hiddenInput.value = newValue;
+      }
     });
 
     uploader.dataset.simpleFileUploadBound = "true";
@@ -123,6 +198,10 @@ function setupSimpleFileUploadComponents() {
         const targetId = button.dataset.target;
         const hiddenInput = document.getElementById(targetId);
         if (hiddenInput) {
+          const existingUrl = hiddenInput.value;
+          if (existingUrl) {
+            deleteSimpleFileUploadAsset(existingUrl);
+          }
           hiddenInput.value = "";
         }
 

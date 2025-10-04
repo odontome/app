@@ -356,7 +356,7 @@ es:
   privacy_policy: Política de privacidad
   profile: Perfil
   profile_picture: Foto de perfil
-  profile_picture_hint: Sube una imagen cuadrada de hasta 1 MB. La redimensionamos automáticamente.
+  profile_picture_hint: Sube una imagen de hasta 1 MB. La redimensionamos automáticamente.
   profile_picture_alt: Foto de perfil de %{name}
   remove_profile_picture: Quitar foto
   view_profile: Ver perfil
