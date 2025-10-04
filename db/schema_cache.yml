@@ -647,6 +647,17 @@ columns:
     default_function:
     collation:
     comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: profile_picture_url
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
   notes:
   - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial: true
@@ -1840,4 +1851,4 @@ indexes:
     nulls_not_distinct: false
     comment:
     valid: true
-version: 20250929121000
+version: 20251003090000

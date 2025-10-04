@@ -32,14 +32,21 @@ class Doctor < ApplicationRecord
 
   # callbacks
   before_destroy :check_if_is_deleteable
+  after_commit :delete_profile_picture_asset, on: :destroy
 
   def fullname
     [gender === 'female' || gender === 'mujer' ? I18n.t(:female_doctor_prefix) : I18n.t(:male_doctor_prefix), firstname,
      lastname].join(' ')
   end
 
+  def profile_picture_resized(width:, height:)
+    return if profile_picture_url.blank?
+
+    "#{profile_picture_url}?w=#{width}&h=#{height}&fit=fill"
+  end
+
   def is_deleteable
-    return true if appointments.count.zero?
+    true if appointments.count.zero?
   end
 
   def ciphered_feed_url
@@ -50,9 +57,15 @@ class Doctor < ApplicationRecord
   private
 
   def check_if_is_deleteable
-    unless is_deleteable
-      errors[:base] << I18n.t('errors.messages.has_appointments_or_treatments')
-      false
-    end
+    return if is_deleteable
+
+    errors[:base] << I18n.t('errors.messages.has_appointments_or_treatments')
+    false
+  end
+
+  def delete_profile_picture_asset
+    return if profile_picture_url.blank?
+
+    SimpleFileUpload::DeleteFile.new(file_url: profile_picture_url).call
   end
 end

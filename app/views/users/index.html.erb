@@ -32,7 +32,7 @@
           <tr>
             <td data-label="<%= t :name %>">
               <div class="d-flex py-1 align-items-center">
-                <span class="avatar me-2 rounded-circle"><%= user.initials %></span>
+                <%= avatar_for(user) %>
                 <div class="flex-fill">
                   <div class="font-weight-medium"><%= user.fullname %></div>
                   <div class="text-muted"><%= user.email %></div>

@@ -57,6 +57,7 @@ en:
         firstname: First name
         gender: Gender
         lastname: Last name
+        profile_picture_url: Profile picture
         speciality: Speciality
         uid: Unique identifier
       patient:
@@ -391,6 +392,10 @@ en:
   price: Price
   privacy_policy: Privacy policy
   profile: Profile
+  profile_picture: Profile picture
+  profile_picture_hint: Upload a square image up to 1 MB. We'll resize it automatically.
+  profile_picture_alt: Profile picture for %{name}
+  remove_profile_picture: Remove picture
   view_profile: View profile
   view_patient_profile: View patient profile
   remember_me: Remember me
