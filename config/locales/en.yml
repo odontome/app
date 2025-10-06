@@ -206,6 +206,7 @@ en:
       reset_your_password_token_expired: Too much time has passed since you requested to reset your password.
       consecutive_failed_logins_limit_exceeded: Consecutive failed logins limit exceeded, account has been temporarily disabled.
       profile_image_limit_reached: You've reached the limit of %{limit} profile images for this practice.
+      profile_image_subscription_required: You've reached the free limit of %{limit} profile images. Subscribe to upload more files.
   everyone: Everyone
   family_diseases_hint: Please be as descriptive as possible.
   family_history: Family history

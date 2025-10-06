@@ -28,33 +28,78 @@ class ProfileImageTest < ActiveSupport::TestCase
   end
 
   test 'enforces per practice upload limit' do
-    practice = practices(:trialing_practice)
-    practice.update!(profile_images_count: ProfileImage::MAX_PER_PRACTICE)
+    unsubscribed_practice = practices(:canceled_practice)
+    unsubscribed_practice.update!(profile_images_count: ProfileImage::MAX_WITHOUT_SUBSCRIPTION)
 
-    doctor = Doctor.create!(
-      practice: practice,
+    unsubscribed_doctor = Doctor.create!(
+      practice: unsubscribed_practice,
       firstname: 'Limited',
       lastname: 'Doctor',
-      email: 'limited.doctor@example.com'
+      email: "limited.doctor+#{SecureRandom.hex(4)}@example.com"
     )
 
-    image = ProfileImage.new(practice: practice, imageable: doctor, file_url: 'https://cdn.example.com/limited.jpg')
+    unsubscribed_url = 'https://cdn.example.com/pending-delete.jpg'
 
-    assert_not image.valid?
-    assert_includes image.errors[:base], I18n.t('errors.messages.profile_image_limit_reached', limit: ProfileImage::MAX_PER_PRACTICE)
+    with_delete_file_stub do |calls|
+      image = ProfileImage.new(
+        practice: unsubscribed_practice,
+        imageable: unsubscribed_doctor,
+        file_url: unsubscribed_url
+      )
 
-    practice.update!(profile_images_count: ProfileImage::MAX_PER_PRACTICE - 1)
+      assert_not image.valid?
+      assert_includes image.errors[:base], I18n.t('errors.messages.profile_image_subscription_required', limit: ProfileImage::MAX_WITHOUT_SUBSCRIPTION)
+      assert_remote_delete_invoked(calls, unsubscribed_url)
+      assert_nil image.file_url
+    end
 
-    assert_difference -> { practice.reload.profile_images_count } do
-      doctor.update!(profile_picture_url: 'https://cdn.example.com/allowed.jpg')
+    unsubscribed_practice.update!(profile_images_count: ProfileImage::MAX_WITHOUT_SUBSCRIPTION - 1)
+
+    assert_difference -> { unsubscribed_practice.reload.profile_images_count } do
+      unsubscribed_doctor.update!(profile_picture_url: 'https://cdn.example.com/free-tier.jpg')
+    end
+
+    active_practice = practices(:complete_another_language)
+    active_practice.update!(profile_images_count: ProfileImage::MAX_PER_PRACTICE)
+
+    active_doctor = Doctor.create!(
+      practice: active_practice,
+      firstname: 'Limited',
+      lastname: 'Doctor',
+      email: "limited.doctor.active+#{SecureRandom.hex(4)}@example.com"
+    )
+
+    limited_url = 'https://cdn.example.com/limited.jpg'
+
+    with_delete_file_stub do |calls|
+      image = ProfileImage.new(
+        practice: active_practice,
+        imageable: active_doctor,
+        file_url: limited_url
+      )
+
+      assert_not image.valid?
+      assert_includes image.errors[:base], I18n.t('errors.messages.profile_image_limit_reached', limit: ProfileImage::MAX_PER_PRACTICE)
+      assert_remote_delete_invoked(calls, limited_url)
+      assert_nil image.file_url
+    end
+
+    active_practice.update!(profile_images_count: ProfileImage::MAX_PER_PRACTICE - 1)
+
+    assert_difference -> { active_practice.reload.profile_images_count } do
+      active_doctor.update!(profile_picture_url: 'https://cdn.example.com/allowed.jpg')
     end
   ensure
-    if doctor&.persisted?
+    [unsubscribed_doctor, active_doctor].compact.each do |doctor|
+      next unless doctor&.persisted?
+
       with_delete_file_stub do |_|
         doctor.destroy
       end
     end
-    practice.update!(profile_images_count: 0)
+
+    unsubscribed_practice.update!(profile_images_count: 0) if unsubscribed_practice
+    active_practice.update!(profile_images_count: 0) if active_practice
   end
 
   test 'destroying a patient removes profile image and remote asset' do

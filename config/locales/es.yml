@@ -202,6 +202,7 @@ es:
       reset_your_password_token_expired: Ha pasado mucho tiempo desde la solicitud de cambio de contraseña.
       consecutive_failed_logins_limit_exceeded: Muchos intentos consecutivos para iniciar una sesión, la cuenta ha sido bloqueada temporalmente.
       profile_image_limit_reached: Has alcanzado el límite de %{limit} imágenes de perfil para esta clínica.
+      profile_image_subscription_required: Has alcanzado el límite gratuito de %{limit} imágenes de perfil. Suscríbete para subir más archivos.
   everyone: Todos
   family_diseases_hint: Por favor sé lo más descriptivo posible.
   family_history: Historial familiar
