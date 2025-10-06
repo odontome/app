@@ -240,6 +240,37 @@ namespace :odontome do
     Rails.logger.info "Cleaned up #{deleted_count} practices older than #{cutoff_date.strftime('%Y-%m-%d')} with 0 patients"
   end
 
+  desc 'Mark practices for cancellation where no user has logged in for more than 60 days'
+  task mark_inactive_practices_for_cancellation: :environment do
+    Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
+
+    cutoff_date = 60.days.ago
+
+    # Find practices where at least one user has logged in recently
+    # These practices should NOT be cancelled
+    practice_ids_with_recent_login = User.where('current_login_at > ?', cutoff_date)
+                                         .distinct
+                                         .pluck(:practice_id)
+
+    # Find all practices that:
+    # - Are not already cancelled
+    # - Don't have active subscriptions
+    # - Have NO users with recent logins (all users inactive)
+    practices_to_cancel = Practice.joins(:subscription)
+                                  .where(cancelled_at: nil)
+                                  .where.not(subscriptions: { status: 'active' })
+                                  .where.not(id: practice_ids_with_recent_login)
+
+    marked_count = 0
+    practices_to_cancel.find_each do |practice|
+      practice.set_as_cancelled
+      practice.save!
+      marked_count += 1
+    end
+
+    Rails.logger.info "Marked #{marked_count} inactive practices for cancellation (no login in 60+ days)"
+  end
+
   # find all the timezones where the hour is @hour
   def timezones_where_hour_are(hour)
     time = Time.now
