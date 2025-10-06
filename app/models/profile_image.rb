@@ -2,6 +2,7 @@
 
 class ProfileImage < ApplicationRecord
   MAX_PER_PRACTICE = 500
+  MAX_WITHOUT_SUBSCRIPTION = 5
 
   attr_reader :file_url_for_deletion
 
@@ -23,10 +24,13 @@ class ProfileImage < ApplicationRecord
   def enforce_practice_upload_limit
     return if practice.blank?
 
+    limit = upload_limit_for_practice
     current_count = practice.profile_images_count.to_i
-    return unless current_count >= MAX_PER_PRACTICE
+    return unless current_count >= limit
 
-    errors.add(:base, I18n.t('errors.messages.profile_image_limit_reached', limit: MAX_PER_PRACTICE))
+    delete_pending_upload
+    error_key = limit == MAX_PER_PRACTICE ? 'errors.messages.profile_image_limit_reached' : 'errors.messages.profile_image_subscription_required'
+    errors.add(:base, I18n.t(error_key, limit: limit))
   end
 
   def cache_file_url_for_deletion
@@ -38,5 +42,24 @@ class ProfileImage < ApplicationRecord
     return if url.blank?
 
     SimpleFileUpload::DeleteFile.new(file_url: url).call
+  end
+
+  def upload_limit_for_practice
+    subscription = practice.subscription
+    return MAX_PER_PRACTICE if subscription&.status == 'active'
+
+    MAX_WITHOUT_SUBSCRIPTION
+  end
+
+  def delete_pending_upload
+    return if @pending_upload_deleted
+    return if file_url.blank?
+
+    SimpleFileUpload::DeleteFile.new(file_url: file_url).call
+  rescue StandardError => e
+    Rails.logger.error("Failed to delete pending profile image upload: #{e.message}")
+  ensure
+    self.file_url = nil
+    @pending_upload_deleted = true
   end
 end
