@@ -273,6 +273,7 @@ bundle exec rails secret
 Add all the jobs in `/lib/tasks/odontome.rake` to your scheduler:
 
 #### Notification Tasks
+
 - `odontome:send_appointment_reminder_notifications` - Every hour
   - Sends reminders to patients 48 hours before their appointments
 - `odontome:send_appointment_scheduled_notifications` - Every 5 minutes
@@ -287,6 +288,7 @@ Add all the jobs in `/lib/tasks/odontome.rake` to your scheduler:
   - Reminds patients about their 6-month dental checkups
 
 #### Maintenance Tasks
+
 - `odontome:cleanup_audit_logs` - Daily
   - Removes audit logs older than 30 days to prevent database bloat
 - `odontome:cleanup_old_practices` - Daily

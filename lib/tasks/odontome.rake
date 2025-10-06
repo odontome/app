@@ -257,9 +257,9 @@ namespace :odontome do
     # - Don't have active subscriptions
     # - Have NO users with recent logins (all users inactive)
     practices_to_cancel = Practice.joins(:subscription)
-                                   .where(cancelled_at: nil)
-                                   .where.not(subscriptions: { status: 'active' })
-                                   .where.not(id: practice_ids_with_recent_login)
+                                  .where(cancelled_at: nil)
+                                  .where.not(subscriptions: { status: 'active' })
+                                  .where.not(id: practice_ids_with_recent_login)
 
     marked_count = 0
     practices_to_cancel.find_each do |practice|
