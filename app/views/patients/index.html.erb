@@ -41,7 +41,9 @@
             <tr>
               <td data-label="<%= t :name %>">
                 <div class="d-flex py-1 align-items-center">
-                  <span class="avatar me-2 rounded-circle"><%= patient.initials %></span>
+                  <%= link_to patient, class: 'p-0 border-0 bg-transparent', style: 'line-height: 0;' do %>
+                    <%= avatar_for(patient) %>
+                  <% end %>
                   <div class="flex-fill">
                     <div class="font-weight-medium"><%= patient.fullname %></div>
                     <div class="text-muted"><%= patient.email %></div>

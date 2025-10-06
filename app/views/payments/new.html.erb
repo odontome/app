@@ -21,7 +21,7 @@
             <div class="mb-3">
               <label class="form-label"><%= t(:patient) %></label>
               <div class="d-flex py-1 align-items-center">
-                  <span class="avatar me-2 rounded-circle"><%= @patient.initials %></span>
+                  <%= avatar_for(@patient) %>
                   <div class="flex-fill">
                     <div class="font-weight-medium"><%= @patient.fullname %></div>
                     <div class="text-muted"><%= @patient.email %></div>

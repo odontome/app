@@ -40,7 +40,9 @@
             <tr>
               <td data-label="<%= t :name %>">
                 <div class="d-flex py-1 align-items-center">
-                  <span class="avatar me-2 rounded-circle"><%= doctor.initials %></span>
+                  <%= link_to doctor, class: 'p-0 border-0 bg-transparent', style: 'line-height: 0;' do %>
+                    <%= avatar_for(doctor) %>
+                  <% end %>
                   <div class="flex-fill">
                     <div class="font-weight-medium"><%= doctor.fullname %></div>
                     <div class="text-muted"><%= doctor.speciality %></div>

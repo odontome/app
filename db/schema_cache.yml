@@ -384,7 +384,7 @@ columns:
     default_function:
     collation:
     comment:
-  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+  - &18 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial:
     identity:
     generated: ''
@@ -403,7 +403,7 @@ columns:
     default_function:
     collation:
     comment:
-  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+  - &19 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial:
     identity:
     generated: ''
@@ -432,7 +432,7 @@ columns:
     identity:
     generated: ''
     name: amount
-    sql_type_metadata: &19 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
+    sql_type_metadata: &22 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
       delegate_dc_obj: !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
         sql_type: double precision
         type: :float
@@ -493,7 +493,7 @@ columns:
     default_function:
     collation:
     comment:
-  - &18 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+  - &21 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial:
     identity:
     generated: ''
@@ -1096,6 +1096,75 @@ columns:
     default_function:
     collation:
     comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: profile_images_count
+    sql_type_metadata: *5
+    'null': false
+    default: '0'
+    default_function:
+    collation:
+    comment:
+  profile_images:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial: true
+    identity:
+    generated: ''
+    name: id
+    sql_type_metadata: *2
+    'null': false
+    default:
+    default_function: nextval('profile_images_id_seq'::regclass)
+    collation:
+    comment:
+  - &20 !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: practice_id
+    sql_type_metadata: *2
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: imageable_type
+    sql_type_metadata: *1
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: imageable_id
+    sql_type_metadata: *2
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: file_url
+    sql_type_metadata: *1
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - *18
+  - *19
   reviews:
   - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial: true
@@ -1167,17 +1236,7 @@ columns:
     default_function: nextval('subscriptions_id_seq'::regclass)
     collation:
     comment:
-  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
-    serial:
-    identity:
-    generated: ''
-    name: practice_id
-    sql_type_metadata: *2
-    'null': false
-    default:
-    default_function:
-    collation:
-    comment:
+  - *20
   - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial:
     identity:
@@ -1237,13 +1296,13 @@ columns:
     collation:
     comment:
   - *12
-  - *18
+  - *21
   - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial:
     identity:
     generated: ''
     name: price
-    sql_type_metadata: *19
+    sql_type_metadata: *22
     'null': true
     default:
     default_function:
@@ -1470,6 +1529,7 @@ primary_keys:
   notes: id
   patients: id
   practices: id
+  profile_images: id
   reviews: id
   schema_migrations: version
   subscriptions: id
@@ -1488,6 +1548,7 @@ data_sources:
   notes: true
   patients: true
   practices: true
+  profile_images: true
   reviews: true
   schema_migrations: true
   subscriptions: true
@@ -1736,6 +1797,57 @@ indexes:
     nulls_not_distinct: false
     comment:
     valid: true
+  profile_images:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: profile_images
+    name: index_profile_images_on_imageable_type_and_imageable_id
+    unique: true
+    columns:
+    - imageable_type
+    - imageable_id
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: profile_images
+    name: index_profile_images_on_practice_id
+    unique: false
+    columns:
+    - practice_id
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: profile_images
+    name: index_profile_images_on_practice_id_and_file_url
+    unique: false
+    columns:
+    - practice_id
+    - file_url
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
   reviews: []
   schema_migrations: []
   subscriptions:
@@ -1840,4 +1952,4 @@ indexes:
     nulls_not_distinct: false
     comment:
     valid: true
-version: 20250929121000
+version: 20251005120500
