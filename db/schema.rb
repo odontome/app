@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_03_090000) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_05_120500) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -91,7 +91,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_03_090000) do
     t.datetime "updated_at", precision: nil, null: false
     t.string "email"
     t.string "color", limit: 7, default: "#3366CC"
-    t.string "profile_picture_url"
   end
 
   create_table "notes", id: :serial, force: :cascade do |t|
@@ -153,8 +152,21 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_03_090000) do
     t.boolean "connect_details_submitted", default: false
     t.string "currency", default: "mxn", null: false
     t.string "custom_review_url"
+    t.integer "profile_images_count", default: 0, null: false
     t.index ["connect_onboarding_status"], name: "index_practices_on_connect_onboarding_status"
     t.index ["stripe_account_id"], name: "index_practices_on_stripe_account_id"
+  end
+
+  create_table "profile_images", force: :cascade do |t|
+    t.bigint "practice_id", null: false
+    t.string "imageable_type", null: false
+    t.bigint "imageable_id", null: false
+    t.string "file_url", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["imageable_type", "imageable_id"], name: "index_profile_images_on_imageable_type_and_imageable_id", unique: true
+    t.index ["practice_id", "file_url"], name: "index_profile_images_on_practice_id_and_file_url"
+    t.index ["practice_id"], name: "index_profile_images_on_practice_id"
   end
 
   create_table "reviews", id: :serial, force: :cascade do |t|
@@ -220,5 +232,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_03_090000) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "profile_images", "practices"
   add_foreign_key "subscriptions", "practices"
 end

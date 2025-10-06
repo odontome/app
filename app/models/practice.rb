@@ -10,6 +10,7 @@ class Practice < ApplicationRecord
   has_many :doctors, dependent: :destroy
   has_many :patients, dependent: :destroy # uses :destroy so User.rb deletes_all its children
   has_many :treatments, dependent: :delete_all
+  has_many :profile_images, dependent: :delete_all
   has_one :subscription, dependent: :destroy
 
   accepts_nested_attributes_for :users, limit: 1
