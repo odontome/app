@@ -6,6 +6,7 @@ class Patient < ApplicationRecord
 
   # concerns
   include Initials
+  include ProfileImageable
 
   # associations
   has_many :appointments, dependent: :delete_all
@@ -105,11 +106,7 @@ class Patient < ApplicationRecord
     end
 
     # validate that this patient really exists
-    begin
-      patient_double_check = Patient.find patient_id_or_name
-    rescue ActiveRecord::RecordNotFound
-      patient_id_or_name = nil
-    end
+    patient_id_or_name = nil unless Patient.exists?(patient_id_or_name)
 
     patient_id_or_name
   end

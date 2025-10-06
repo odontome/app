@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+require 'ostruct'
 
 class SimpleFileUploadsControllerTest < ActionController::TestCase
   setup do
@@ -23,8 +24,14 @@ class SimpleFileUploadsControllerTest < ActionController::TestCase
 
   test 'clears doctor profile picture when file url matches current practice doctor' do
     uploaded_file_url = 'https://cdn.simplefileupload.com/existing-image.jpg'
-    doctor = doctors(:rebecca)
-    doctor.update!(profile_picture_url: uploaded_file_url)
+    doctor = Doctor.create!(
+      practice: practices(:complete),
+      firstname: 'Matching',
+      lastname: 'Doctor',
+      email: 'matching.doctor@example.com',
+      profile_picture_url: uploaded_file_url
+    )
+    profile_image_id = doctor.profile_image.id
 
     @controller.define_singleton_method(:delete_remote_asset) do |_file_url|
       # noop for test isolation
@@ -34,6 +41,13 @@ class SimpleFileUploadsControllerTest < ActionController::TestCase
 
     assert_response :no_content
     assert_nil doctor.reload.profile_picture_url
+    assert_nil ProfileImage.find_by(id: profile_image_id)
+  ensure
+    if doctor&.persisted?
+      SimpleFileUpload::DeleteFile.stub(:new, ->(**_kwargs) { OpenStruct.new(call: true) }) do
+        doctor.destroy
+      end
+    end
   end
 
   test 'does not clear profile picture for doctors in other practices' do
@@ -45,6 +59,7 @@ class SimpleFileUploadsControllerTest < ActionController::TestCase
       email: 'other.practice@example.com',
       profile_picture_url: uploaded_file_url
     )
+    other_profile_image_id = other_doctor.profile_image.id
 
     @controller.define_singleton_method(:delete_remote_asset) do |_file_url|
       # noop for test isolation
@@ -54,8 +69,13 @@ class SimpleFileUploadsControllerTest < ActionController::TestCase
 
     assert_response :no_content
     assert_equal uploaded_file_url, other_doctor.reload.profile_picture_url
+    assert ProfileImage.find_by(id: other_profile_image_id)
   ensure
-    other_doctor.destroy if other_doctor.persisted?
+    if other_doctor&.persisted?
+      SimpleFileUpload::DeleteFile.stub(:new, ->(**_kwargs) { OpenStruct.new(call: true) }) do
+        other_doctor.destroy
+      end
+    end
   end
 
   test 'returns bad_request when file url is missing' do

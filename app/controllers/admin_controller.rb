@@ -47,7 +47,8 @@ class AdminController < ApplicationController
     session[:user] = target_user
 
     flash.discard
-    redirect_to practice_path, notice: I18n.t(:impersonation_started, default: 'You are now impersonating this practice.')
+    redirect_to practice_path,
+                notice: I18n.t(:impersonation_started, default: 'You are now impersonating this practice.')
   end
 
   def stop_impersonating

@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
   # concerns
   include Initials
+  include ProfileImageable
 
   # associations
   belongs_to :practice, counter_cache: true

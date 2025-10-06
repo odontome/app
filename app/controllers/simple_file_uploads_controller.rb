@@ -23,16 +23,10 @@ class SimpleFileUploadsController < ApplicationController
   end
 
   def clear_database_associations(file_url)
-    clear_doctor_profile_picture(file_url)
-  end
-
-  def clear_doctor_profile_picture(file_url)
     practice_id = current_user&.practice_id
     return unless practice_id
 
-    doctor = Doctor.find_by(practice_id: practice_id, profile_picture_url: file_url)
-    return unless doctor
-
-    doctor.update_columns(profile_picture_url: nil, updated_at: Time.current)
+    profile_image = ProfileImage.find_by(practice_id: practice_id, file_url: file_url)
+    profile_image&.destroy
   end
 end
