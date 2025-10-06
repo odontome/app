@@ -246,22 +246,26 @@ namespace :odontome do
 
     cutoff_date = 60.days.ago
 
-    # Find practices where no user has logged in for more than 60 days
-    # and they don't have an active subscription and are not already cancelled
-    practice_ids_with_recent_login = User.where('current_login_at > ?', cutoff_date)
-                                         .distinct
-                                         .pluck(:practice_id)
-
-    practices_to_cancel = Practice.joins(:subscription)
-                                   .where.not(id: practice_ids_with_recent_login)
+    # Find all practices that are not already cancelled and don't have active subscriptions
+    candidate_practices = Practice.joins(:subscription)
                                    .where(cancelled_at: nil)
                                    .where.not(subscriptions: { status: 'active' })
 
     marked_count = 0
-    practices_to_cancel.find_each do |practice|
-      practice.set_as_cancelled
-      practice.save!
-      marked_count += 1
+    candidate_practices.find_each do |practice|
+      # Check if ALL users in this practice have not logged in for more than 60 days
+      users = User.where(practice_id: practice.id)
+      next if users.empty?
+      
+      all_users_inactive = users.all? do |user|
+        user.current_login_at.nil? || user.current_login_at <= cutoff_date
+      end
+
+      if all_users_inactive
+        practice.set_as_cancelled
+        practice.save!
+        marked_count += 1
+      end
     end
 
     Rails.logger.info "Marked #{marked_count} inactive practices for cancellation (no login in 60+ days)"
