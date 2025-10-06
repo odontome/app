@@ -1,7 +1,7 @@
 <div class="page-header mb-4">
   <div class="row g-2 align-items-center">
     <div class="col-auto me-2">
-      <span class="avatar rounded-circle avatar-lg"><%= @patient.initials %></span>
+      <%= avatar_for(@patient, size: 256, classes: "avatar rounded-circle avatar-lg") %>
     </div>
     <div class="col">
       <h4 class="m-0">
