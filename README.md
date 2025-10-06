@@ -272,24 +272,43 @@ bundle exec rails secret
 
 Add all the jobs in `/lib/tasks/odontome.rake` to your scheduler:
 
+#### Notification Tasks
 - `odontome:send_appointment_reminder_notifications` - Every hour
+  - Sends reminders to patients 48 hours before their appointments
 - `odontome:send_appointment_scheduled_notifications` - Every 5 minutes
-- `odontome:delete_practices_cancelled_a_while_ago` - Daily
+  - Notifies patients when new appointments are scheduled
 - `odontome:send_todays_appointments_to_doctors` - Daily at 7 AM
+  - Sends doctors their daily appointment schedule
 - `odontome:send_birthday_wishes_to_patients` - Daily at 3 PM
+  - Sends birthday wishes to patients in their timezone
 - `odontome:send_appointment_review_to_patients` - Every hour
+  - Requests reviews from patients after appointments
 - `odontome:send_six_month_checkup_reminders` - Every hour (targets 10 AM local time per practice)
+  - Reminds patients about their 6-month dental checkups
+
+#### Maintenance Tasks
+- `odontome:cleanup_audit_logs` - Daily
+  - Removes audit logs older than 30 days to prevent database bloat
+- `odontome:cleanup_old_practices` - Daily
+  - Deletes practices older than 7 days with 0 patients
+- `odontome:mark_inactive_practices_for_cancellation` - Daily
+  - Marks practices for cancellation where no user has logged in for 60+ days (excludes active subscriptions)
+- `odontome:delete_practices_cancelled_a_while_ago` - Daily
+  - Permanently deletes practices cancelled more than 15 days ago
 
 ### For Local Development
 
 You can run these tasks manually for testing:
 
 ```bash
-# Test a specific task
+# Test notification tasks
 bundle exec rake odontome:send_appointment_reminder_notifications
-
-# Test six-month checkup reminders
 bundle exec rake odontome:send_six_month_checkup_reminders
+
+# Test maintenance tasks
+bundle exec rake odontome:cleanup_audit_logs
+bundle exec rake odontome:cleanup_old_practices
+bundle exec rake odontome:mark_inactive_practices_for_cancellation
 
 # See all available tasks
 bundle exec rake -T odontome
