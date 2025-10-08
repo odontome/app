@@ -14,21 +14,15 @@ class MarkInactivePracticesTaskTest < ActiveSupport::TestCase
     @task&.reenable
   end
 
-  test 'marks practice for cancellation when no user has logged in for more than 60 days' do
+  test 'marks practice for cancellation when trialing for more than 60 days' do
     practice = practices(:trialing_practice)
     practice.update_columns(cancelled_at: nil)
 
-    # Create a user for this practice with old login date
-    user = User.create!(
-      practice_id: practice.id,
-      firstname: 'Inactive',
-      lastname: 'User',
-      email: 'inactive@test.com',
-      password: 'password123',
-      password_confirmation: 'password123',
-      roles: 'admin',
-      current_login_at: 61.days.ago,
-      last_login_at: 62.days.ago
+    # Set subscription to trialing with start date > 60 days ago
+    practice.subscription.update_columns(
+      status: 'trialing',
+      current_period_start: 61.days.ago,
+      current_period_end: 31.days.ago
     )
 
     @task.invoke
@@ -37,21 +31,15 @@ class MarkInactivePracticesTaskTest < ActiveSupport::TestCase
     assert_not_nil practice.cancelled_at
   end
 
-  test 'does not mark practice when a user has logged in recently' do
+  test 'does not mark practice when trialing for less than 60 days' do
     practice = practices(:trialing_practice)
     practice.update_columns(cancelled_at: nil)
 
-    # Create a user with recent login
-    user = User.create!(
-      practice_id: practice.id,
-      firstname: 'Active',
-      lastname: 'User',
-      email: 'active@test.com',
-      password: 'password123',
-      password_confirmation: 'password123',
-      roles: 'admin',
-      current_login_at: 30.days.ago,
-      last_login_at: 31.days.ago
+    # Set subscription to trialing with start date < 60 days ago (recent trial)
+    practice.subscription.update_columns(
+      status: 'trialing',
+      current_period_start: 30.days.ago,
+      current_period_end: Time.now
     )
 
     @task.invoke
@@ -65,20 +53,10 @@ class MarkInactivePracticesTaskTest < ActiveSupport::TestCase
     practice.update_columns(cancelled_at: nil)
 
     # Update subscription to active status
-    practice.subscription.update_columns(status: 'active')
-
-    # Create a user with old login
-    User.where(practice_id: practice.id).destroy_all
-    user = User.create!(
-      practice_id: practice.id,
-      firstname: 'Old',
-      lastname: 'User',
-      email: 'old@test.com',
-      password: 'password123',
-      password_confirmation: 'password123',
-      roles: 'admin',
-      current_login_at: 61.days.ago,
-      last_login_at: 62.days.ago
+    practice.subscription.update_columns(
+      status: 'active',
+      current_period_start: 61.days.ago,
+      current_period_end: 31.days.ago
     )
 
     @task.invoke
@@ -93,18 +71,11 @@ class MarkInactivePracticesTaskTest < ActiveSupport::TestCase
     # Ensure practice is already cancelled
     practice.update_columns(cancelled_at: 30.days.ago) if practice.cancelled_at.nil?
 
-    # Create a user with old login
-    User.where(practice_id: practice.id).destroy_all
-    user = User.create!(
-      practice_id: practice.id,
-      firstname: 'Old',
-      lastname: 'User',
-      email: 'oldcancelled@test.com',
-      password: 'password123',
-      password_confirmation: 'password123',
-      roles: 'admin',
-      current_login_at: 61.days.ago,
-      last_login_at: 62.days.ago
+    # Set subscription to trialing with old start date
+    practice.subscription.update_columns(
+      status: 'trialing',
+      current_period_start: 61.days.ago,
+      current_period_end: 31.days.ago
     )
 
     original_cancelled_at = practice.cancelled_at
@@ -115,39 +86,25 @@ class MarkInactivePracticesTaskTest < ActiveSupport::TestCase
     assert_equal original_cancelled_at.to_i, practice.cancelled_at.to_i
   end
 
-  test 'marks multiple practices with inactive users' do
-    # Setup first inactive practice
+  test 'marks multiple practices with expired trials' do
+    # Setup first practice with expired trial
     practice1 = practices(:trialing_practice)
     practice1.update_columns(cancelled_at: nil)
 
-    User.where(practice_id: practice1.id).destroy_all
-    User.create!(
-      practice_id: practice1.id,
-      firstname: 'Inactive1',
-      lastname: 'User',
-      email: 'inactive1@test.com',
-      password: 'password123',
-      password_confirmation: 'password123',
-      roles: 'admin',
-      current_login_at: 61.days.ago,
-      last_login_at: 62.days.ago
+    practice1.subscription.update_columns(
+      status: 'trialing',
+      current_period_start: 61.days.ago,
+      current_period_end: 31.days.ago
     )
 
-    # Setup second inactive practice
+    # Setup second practice with expired trial
     practice2 = practices(:past_due_practice)
     practice2.update_columns(cancelled_at: nil)
 
-    User.where(practice_id: practice2.id).destroy_all
-    User.create!(
-      practice_id: practice2.id,
-      firstname: 'Inactive2',
-      lastname: 'User',
-      email: 'inactive2@test.com',
-      password: 'password123',
-      password_confirmation: 'password123',
-      roles: 'admin',
-      current_login_at: 70.days.ago,
-      last_login_at: 71.days.ago
+    practice2.subscription.update_columns(
+      status: 'trialing',
+      current_period_start: 70.days.ago,
+      current_period_end: 40.days.ago
     )
 
     @task.invoke
