@@ -57,7 +57,7 @@ en:
         firstname: First name
         gender: Gender
         lastname: Last name
-        profile_picture_url: Profile picture
+        profile_picture: Profile picture
         speciality: Speciality
         uid: Unique identifier
       patient:
@@ -78,6 +78,7 @@ en:
         surgeries: Past surgeries
         telephone: Telephone number
         uid: Chart number
+        profile_picture: Profile picture
       practice:
         currency: Preferred currency
         locale: Preferred language
@@ -92,6 +93,7 @@ en:
         lastname: Last name
         password: Password
         password_confirmation: Password confirmation
+        profile_picture: Profile picture
       review:
         score: Score
         comment: Comments about your experience
@@ -207,6 +209,8 @@ en:
       consecutive_failed_logins_limit_exceeded: Consecutive failed logins limit exceeded, account has been temporarily disabled.
       profile_image_limit_reached: You've reached the limit of %{limit} profile images for this practice.
       profile_image_subscription_required: You've reached the free limit of %{limit} profile images. Subscribe to upload more files.
+  profile_picture_invalid_type: Only PNG or JPEG images are allowed.
+  profile_picture_too_large: Image must be smaller than %{limit}.
   everyone: Everyone
   family_diseases_hint: Please be as descriptive as possible.
   family_history: Family history

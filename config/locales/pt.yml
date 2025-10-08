@@ -57,7 +57,7 @@ pt:
         firstname: Nome
         gender: Gênero
         lastname: Sobrenome
-        profile_picture_url: Foto de perfil
+        profile_picture: Foto de perfil
         speciality: Especialidade
         uid: Identificador único
       patient:
@@ -78,6 +78,7 @@ pt:
         surgeries: Cirurgias anteriores
         telephone: Telefone
         uid: Número do prontuário
+        profile_picture: Foto de perfil
       practice:
         currency: Moeda preferida
         locale: Idioma preferido
@@ -92,6 +93,7 @@ pt:
         lastname: Sobrenome
         password: Senha
         password_confirmation: Confirmação da senha
+        profile_picture: Foto de perfil
       review:
         score: Pontuação
         comment: Comentários sobre sua experiência
@@ -205,6 +207,8 @@ pt:
       consecutive_failed_logins_limit_exceeded: Limite de tentativas de login consecutivas malsucedidas excedido, a conta foi temporariamente desabilitada.
       profile_image_limit_reached: Você atingiu o limite de %{limit} imagens de perfil para esta clínica.
       profile_image_subscription_required: Você atingiu o limite gratuito de %{limit} imagens de perfil. Assine para enviar mais arquivos.
+  profile_picture_invalid_type: Apenas imagens PNG ou JPEG são permitidas.
+  profile_picture_too_large: A imagem deve ser menor que %{limit}.
   everyone: Todos
   family_diseases_hint: Por favor, seja o mais descritivo possível.
   family_history: Histórico familiar

@@ -10,7 +10,6 @@ complete:
   connect_charges_enabled: true
   connect_payouts_enabled: true
   connect_details_submitted: true
-  profile_images_count: 1
 
 complete_another_language:
   id: 2
@@ -19,7 +18,6 @@ complete_another_language:
   timezone: America/Mexico_City
   currency: mxn
   email: in-spanish@hotmail.com
-  profile_images_count: 0
 
 trialing_practice:
   id: 3
@@ -28,7 +26,6 @@ trialing_practice:
   timezone: Europe/London
   currency: usd
   email: trialing@odonto.me
-  profile_images_count: 0
 
 past_due_practice:
   id: 4
@@ -37,7 +34,6 @@ past_due_practice:
   timezone: Europe/London
   currency: usd
   email: pastdue@odonto.me
-  profile_images_count: 0
 
 canceled_practice:
   id: 5
@@ -46,4 +42,3 @@ canceled_practice:
   timezone: Europe/London
   currency: usd
   email: canceled@odonto.me
-  profile_images_count: 0

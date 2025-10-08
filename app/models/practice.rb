@@ -10,8 +10,9 @@ class Practice < ApplicationRecord
   has_many :doctors, dependent: :destroy
   has_many :patients, dependent: :destroy # uses :destroy so User.rb deletes_all its children
   has_many :treatments, dependent: :delete_all
-  has_many :profile_images, dependent: :destroy
   has_one :subscription, dependent: :destroy
+  PROFILE_PICTURE_MAX_PER_PRACTICE = 500
+  PROFILE_PICTURE_MAX_WITHOUT_SUBSCRIPTION = 5
 
   accepts_nested_attributes_for :users, limit: 1
 
@@ -56,6 +57,10 @@ class Practice < ApplicationRecord
     return true if subscription.present?
 
     false
+  end
+
+  def profile_picture_upload_limit
+    has_active_subscription? ? PROFILE_PICTURE_MAX_PER_PRACTICE : PROFILE_PICTURE_MAX_WITHOUT_SUBSCRIPTION
   end
 
   # Stripe Connect methods

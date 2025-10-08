@@ -61,7 +61,7 @@
 							<td><%= practice.datebooks_count %></td>
 							<td><%= practice.patients_count %></td>
 							<td><%= practice.doctors_count %></td>
-							<td><%= practice.profile_images_count %></td>
+							<td><%= @profile_picture_counts.fetch(practice.id, 0) %></td>
 							<td><%= practice.created_at.strftime('%F at %I:%M %P') %></td>
 							<td class="text-end">
 								<% if current_user_is_superadmin? %>

@@ -16,24 +16,20 @@ module ApplicationHelper
     end
   end
 
-  def simple_file_upload_public_key
-    config = Rails.configuration.respond_to?(:simple_file_upload) ? Rails.configuration.simple_file_upload : nil
-    config&.dig(:public_key).presence || ENV['SIMPLE_FILE_UPLOAD_PUBLIC_KEY'].presence
-  end
-
   def avatar_for(record, size: 96, classes: nil, fallback_name: nil)
     css_classes = classes.presence || 'avatar me-2 rounded-circle'
 
     display_name = (record.fullname.to_s.strip.presence if record.respond_to?(:fullname))
     display_name ||= fallback_name.presence || t(:profile)
 
-    if record.respond_to?(:profile_picture_url) && record.profile_picture_url.present?
-      picture_url = if record.respond_to?(:profile_picture_resized)
-                      record.profile_picture_resized(width: size, height: size)
-                    end
-      picture_url = picture_url.presence || record.profile_picture_url
+    if record.respond_to?(:profile_picture) && record.profile_picture.respond_to?(:attached?) && record.profile_picture.attached?
+      image = if record.profile_picture.variable?
+                record.profile_picture.variant(resize_to_fill: [size, size])
+              else
+                record.profile_picture
+              end
 
-      image_tag(picture_url, class: css_classes, alt: t(:profile_picture_alt, name: display_name))
+      image_tag(image, class: css_classes, alt: t(:profile_picture_alt, name: display_name))
     else
       initials = (record.initials.to_s.presence if record.respond_to?(:initials))
       initials ||= display_name.to_s.split(/\s+/).map { |part| part[0] }.compact.take(2).join.upcase

@@ -1,8 +1,0 @@
-doctor_image:
-  id: 1
-  practice_id: 1
-  imageable_type: Doctor
-  imageable_id: 1
-  file_url: https://cdn.simplefileupload.com/rebecca.jpg
-  created_at: <%= Time.zone.parse('2024-01-01 12:00:00') %>
-  updated_at: <%= Time.zone.parse('2024-01-01 12:00:00') %>

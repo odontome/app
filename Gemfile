@@ -11,22 +11,20 @@ gem 'rails', '~> 8.0.0'
 gem 'sprockets-rails', '~> 3.5.2'
 gem 'uglifier', '~> 4.2'
 
-### odonto.me specifc
+### odonto.me specific
 
-gem 'icalendar', '~> 2.12.0'
-gem 'rails-i18n', '~> 8.0'
-gem 'taps', '~> 0.3.24'
-
+gem 'aws-sdk-s3', '~> 1.145'
 gem 'font-awesome-rails', '~> 4.7.0.8'
 gem 'gibberish', '~> 2.1.0'
+gem 'icalendar', '~> 2.12.0'
 gem 'jquery-minicolors-rails', '~>2.2.6.2'
-
-gem 'premailer-rails', '~> 1.11.1'
-
 gem 'paper_trail', '~> 16.0'
 gem 'pg', '~> 1.6.2'
+gem 'premailer-rails', '~> 1.11.1'
 gem 'rack-attack', '~> 6.8'
+gem 'rails-i18n', '~> 8.0'
 gem 'stripe', '~> 5.53.0'
+gem 'taps', '~> 0.3.24'
 
 group :development do
   gem 'rubocop'

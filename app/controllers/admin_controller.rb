@@ -23,6 +23,8 @@ class AdminController < ApplicationController
     else
       @practices = Practice.includes(:subscription).order('created_at desc').limit(250)
     end
+
+    @profile_picture_counts = ProfilePictureCounter.counts_for_practices(@practices)
   end
 
   def impersonate

@@ -15,23 +15,21 @@ class ApplicationHelperTest < ActionView::TestCase
   end
 
   test 'avatar_for renders image when profile picture present' do
-    record_class = Struct.new(:fullname, :profile_picture_url) do
-      def profile_picture_resized(width:, height:)
-        "#{profile_picture_url}?w=#{width}&h=#{height}"
-      end
+    doctor = doctors(:rebecca)
+    doctor.profile_picture.attach(
+      io: StringIO.new('image-data'),
+      filename: 'avatar.png',
+      content_type: 'image/png'
+    )
 
-      def initials
-        'DW'
-      end
-    end
-    record = record_class.new('Dr. Who', 'https://example.com/pic.png')
-
-    html = avatar_for(record, size: 128, classes: 'avatar test-class')
+    html = avatar_for(doctor, size: 128, classes: 'avatar test-class')
 
     assert_includes html, '<img'
     assert_includes html, 'class="avatar test-class"'
-    assert_includes html, 'w=128'
-    assert_includes html, %(alt="#{I18n.t(:profile_picture_alt, name: 'Dr. Who')}")
+    assert_match %r{src="(?:https?://[^"/]+)?/rails/active_storage/representations/}, html
+    assert_includes html, %(alt="#{I18n.t(:profile_picture_alt, name: doctor.fullname)}")
+  ensure
+    doctor.profile_picture.purge if doctor.profile_picture.attached?
   end
 
   test 'avatar_for falls back to initials without profile picture' do

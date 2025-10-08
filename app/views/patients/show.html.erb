@@ -1,7 +1,7 @@
 <div class="page-header mb-4">
   <div class="row g-2 align-items-center">
     <div class="col-auto me-2">
-      <% if @patient.profile_picture_url.present? %>
+      <% if @patient.profile_picture.attached? %>
         <%= button_tag type: 'button', class: 'p-0 border-0 bg-transparent', data: { "bs-toggle": 'modal', "bs-target": '#patient-profile-picture-modal' }, aria: { label: t(:profile_picture_alt, name: @patient.fullname) }, style: 'line-height: 0;' do %>
           <%= avatar_for(@patient, size: 256, classes: "avatar rounded-circle avatar-lg") %>
         <% end %>
@@ -33,13 +33,13 @@
   </div>    
 </div>
 
-<% if @patient.profile_picture_url.present? %>
+<% if @patient.profile_picture.attached? %>
   <div class="modal fade" id="patient-profile-picture-modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content border-0 shadow-none">
         <div class="modal-body p-0 position-relative">
           <button type="button" class="btn btn-close position-absolute end-0 mt-3 me-3" data-bs-dismiss="modal"></button>
-          <img src="<%= @patient.profile_picture_url %>" class="img-fluid rounded" alt="<%= t(:profile_picture_alt, name: @patient.fullname) %>">
+          <%= image_tag @patient.profile_picture, class: "img-fluid rounded", alt: t(:profile_picture_alt, name: @patient.fullname) %>
         </div>
       </div>
     </div>

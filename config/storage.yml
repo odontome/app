@@ -6,6 +6,15 @@ local:
   service: Disk
   root: <%= Rails.root.join("storage") %>
 
+r2:
+  service: S3
+  access_key_id: <%= ENV.fetch('CLOUDFLARE_R2_ACCESS_KEY_ID', 'test-access-key') %>
+  secret_access_key: <%= ENV.fetch('CLOUDFLARE_R2_SECRET_ACCESS_KEY', 'test-secret-access-key') %>
+  region: <%= ENV.fetch('CLOUDFLARE_R2_REGION', 'auto') %>
+  bucket: <%= ENV.fetch('CLOUDFLARE_R2_BUCKET', 'test-bucket') %>
+  endpoint: <%= ENV.fetch('CLOUDFLARE_R2_ENDPOINT', 'https://example.invalid') %>
+  force_path_style: true
+  signature_version: "v4"
 # Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:
 #   service: S3
