@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+require 'icalendar'
 
 class DoctorsControllerTest < ActionController::TestCase
   setup do
@@ -45,6 +46,19 @@ class DoctorsControllerTest < ActionController::TestCase
 
     get :appointments, params: { doctor_id: ciphered_url_encoded_id }, format: :ics
     assert_response :success
+  end
+
+  test 'appointments calendar responds with valid ics payload' do
+    doctor = doctors(:rebecca)
+    ciphered_url_encoded_id = Cipher.encode(doctor.id.to_s)
+
+    get :appointments, params: { doctor_id: ciphered_url_encoded_id }, format: :ics
+
+    assert_response :success
+    assert_equal 'text/calendar', @response.media_type
+
+    calendars = Icalendar::Calendar.parse(@response.body)
+    assert_not_empty calendars
   end
 
   test 'should update doctor' do
