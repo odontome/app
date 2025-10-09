@@ -13,7 +13,7 @@ gem 'uglifier', '~> 4.2.0'
 
 ### odonto.me specifc
 
-gem 'icalendar', '~> 2.7.1'
+gem 'icalendar', '~> 2.12.0'
 gem 'rails-i18n', '~> 7.0.3'
 gem 'taps', '~> 0.3.24'
 
