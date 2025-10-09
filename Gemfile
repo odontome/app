@@ -7,14 +7,14 @@ gem 'bcrypt', '~> 3.1.17'
 gem 'bugsnag', '~> 6.24'
 gem 'jquery-rails', '~> 4.5.0'
 gem 'puma', '~> 5.6.4'
-gem 'rails', '~> 7.2.2.1'
+gem 'rails', '~> 8.0.3'
 gem 'sprockets-rails', '~> 3.5.2'
 gem 'uglifier', '~> 4.2.0'
 
 ### odonto.me specifc
 
 gem 'icalendar', '~> 2.7.1'
-gem 'rails-i18n', '~> 7.0.3'
+gem 'rails-i18n', '~> 8.0.2'
 gem 'taps', '~> 0.3.24'
 
 gem 'font-awesome-rails', '~> 4.7.0.8'
