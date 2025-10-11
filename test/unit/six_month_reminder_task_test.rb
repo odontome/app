@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'rake'
 
-class SixMonthReminderTaskTest < ActiveSupport::TestCase
+class SixMonthReminderTaskTest < RakeTaskTestCase
+  rake_task 'odontome:send_six_month_checkup_reminders'
+
   def setup
+    super
     ActionMailer::Base.deliveries.clear
-    @app = Rails.application
-    @app.load_tasks if Rake::Task.tasks.empty?
-    @task = Rake::Task['odontome:send_six_month_checkup_reminders']
 
     # Mock time to 10 AM UTC to ensure timezone filtering works
     @mocked_time = Time.parse('2025-08-19 10:00:00 UTC')
@@ -21,7 +20,7 @@ class SixMonthReminderTaskTest < ActiveSupport::TestCase
   end
 
   def teardown
-    @task&.reenable
+    super
     travel_back
   end
 

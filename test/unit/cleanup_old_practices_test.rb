@@ -1,18 +1,9 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'rake'
 
-class CleanupOldPractices < ActiveSupport::TestCase
-  def setup
-    @app = Rails.application
-    @app.load_tasks if Rake::Task.tasks.empty?
-    @task = Rake::Task['odontome:cleanup_old_practices']
-  end
-
-  def teardown
-    @task&.reenable
-  end
+class CleanupOldPractices < RakeTaskTestCase
+  rake_task 'odontome:cleanup_old_practices'
 
   test 'removes practices older than 7 days with 0 patients' do
     practice = practices(:trialing_practice)

@@ -1,18 +1,9 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'rake'
 
-class MarkInactivePracticesTaskTest < ActiveSupport::TestCase
-  def setup
-    @app = Rails.application
-    @app.load_tasks if Rake::Task.tasks.empty?
-    @task = Rake::Task['odontome:mark_inactive_practices_for_cancellation']
-  end
-
-  def teardown
-    @task&.reenable
-  end
+class MarkInactivePracticesTaskTest < RakeTaskTestCase
+  rake_task 'odontome:mark_inactive_practices_for_cancellation'
 
   test 'marks practice for cancellation when trialing for more than 60 days' do
     practice = practices(:trialing_practice)
