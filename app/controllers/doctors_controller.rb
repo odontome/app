@@ -63,8 +63,20 @@ class DoctorsController < ApplicationController
   end
 
   def appointments
-    doctor_id_deciphered = Cipher.decode(params[:doctor_id])
+    begin
+      doctor_id_deciphered = Cipher.decode(params[:doctor_id])
+    rescue ArgumentError, RuntimeError => e
+      # Invalid base64 or decryption failed
+      head :not_found
+      return
+    end
+
     @doctor = Doctor.find_by id: doctor_id_deciphered, is_active: true
+
+    unless @doctor
+      head :not_found
+      return
+    end
 
     start_of_week = Date.today.at_beginning_of_week.to_time.to_i
     end_of_week = start_of_week + 2.weeks
