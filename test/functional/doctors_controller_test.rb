@@ -61,6 +61,44 @@ class DoctorsControllerTest < ActionController::TestCase
     assert_not_empty calendars
   end
 
+  test 'appointments with invalid base64 doctor_id returns 404' do
+    # Test with invalid base64 string (contains newline which makes it invalid strict base64)
+    invalid_doctor_id = "U2FsdGVkX19D+bQnj+nU+P5ZsnaTNFKsgVyj4SwsKVA=\n"
+
+    get :appointments, params: { doctor_id: invalid_doctor_id }, format: :ics
+
+    assert_response :not_found
+  end
+
+  test 'appointments with invalid encrypted doctor_id returns 404' do
+    # Test with valid base64 but invalid encrypted content
+    invalid_encrypted = Base64.strict_encode64('invalid encrypted content')
+
+    get :appointments, params: { doctor_id: invalid_encrypted }, format: :ics
+
+    assert_response :not_found
+  end
+
+  test 'appointments with nonexistent doctor returns 404' do
+    # Test with valid encryption but nonexistent doctor ID
+    nonexistent_id = Cipher.encode('999999')
+
+    get :appointments, params: { doctor_id: nonexistent_id }, format: :ics
+
+    assert_response :not_found
+  end
+
+  test 'appointments with inactive doctor returns 404' do
+    # Create an inactive doctor
+    doctor = doctors(:rebecca)
+    doctor.update(is_active: false)
+    ciphered_url_encoded_id = Cipher.encode(doctor.id.to_s)
+
+    get :appointments, params: { doctor_id: ciphered_url_encoded_id }, format: :ics
+
+    assert_response :not_found
+  end
+
   test 'should update doctor' do
     put :update, params: { id: doctors(:rebecca).to_param, doctor: @new_doctor }
     assert_redirected_to doctors_url
