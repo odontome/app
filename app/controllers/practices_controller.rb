@@ -165,10 +165,10 @@ class PracticesController < ApplicationController
     ends_at = starts_at + 24.hours
 
     @selected_date = starts_at.strftime('%A, %d %B %y')
-    @min_date = @current_user.practice.created_at.strftime('%Y-%m-%d')
+    @min_date = current_user.practice.created_at.strftime('%Y-%m-%d')
     @max_date = 1.day.from_now.strftime('%Y-%m-%d')
 
-    @balances = Balance.find_between starts_at, ends_at, @current_user.practice_id
+    @balances = Balance.find_between starts_at, ends_at, current_user.practice_id
     @total = @balances.sum(:amount)
 
     respond_to do |format|
@@ -184,7 +184,7 @@ class PracticesController < ApplicationController
     week_start = DateTime.now.beginning_of_week
     week_end = DateTime.now.end_of_week
     @range_label = t('analytics.charts.appointments_this_week')
-    @min_date = @current_user.practice.created_at.strftime('%Y-%m-%d')
+    @min_date = current_user.practice.created_at.strftime('%Y-%m-%d')
     @max_date = 1.day.from_now.strftime('%Y-%m-%d')
     date_range = week_start..week_end
 
@@ -192,7 +192,7 @@ class PracticesController < ApplicationController
     @appointments = Appointment
                     .joins(:patient, :doctor, :datebook)
                     .includes(:patient, :doctor, :datebook)
-                    .where(patients: { practice_id: @current_user.practice_id })
+                    .where(patients: { practice_id: current_user.practice_id })
                     .where('appointments.starts_at >= ? AND appointments.starts_at <= ?', date_range.begin, date_range.end)
                     .order('datebooks.name ASC, appointments.starts_at ASC')
 

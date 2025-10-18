@@ -98,4 +98,21 @@ class PracticesControllerTest < ActionController::TestCase
     practice.reload
     assert_nil practice.custom_review_url
   end
+
+  test 'should get balance page for logged in admin user' do
+    get :balance
+    assert_response :success
+    assert_not_nil assigns(:balances)
+    assert_not_nil assigns(:min_date)
+    assert_not_nil assigns(:max_date)
+  end
+
+  test 'should get appointments page for logged in admin user' do
+    get :appointments
+    assert_response :success
+    assert_not_nil assigns(:appointments)
+    assert_not_nil assigns(:min_date)
+    assert_not_nil assigns(:max_date)
+    assert_not_nil assigns(:range_label)
+  end
 end
