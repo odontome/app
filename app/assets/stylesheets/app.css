@@ -1,0 +1,67 @@
+.ui-autocomplete {
+  z-index: 1100;
+}
+
+/* Theme switcher styles */
+#theme-toggle {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+#theme-icon {
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+}
+
+.theme-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Smooth transition for theme changes */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar,
+.card,
+.dropdown-menu,
+.page-wrapper {
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* Impersonation banner styles */
+.impersonation-banner {
+  background-color: #fff3cd;
+  color: #856404;
+  font-size: 0.75rem;
+  padding: 4px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body.theme-dark .impersonation-banner {
+  background-color: #d4c584;
+  color: #111111;
+}
+
+.impersonation-banner .alert-action {
+  margin-left: 12px;
+}
+
+/* Announcement styles */
+.announcement-alert {
+  margin-bottom: 0.5rem;
+}
+
+.announcement-alert:last-child {
+  margin-bottom: 1rem;
+}
+
+.announcement-alert .btn-close {
+  padding: 0.375rem;
+}
