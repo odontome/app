@@ -461,10 +461,20 @@ pt:
   user_updated_success_message: O usuário foi atualizado com sucesso
   users: Usuários
   tutorial:
-    message: Vemos que você está apenas começando e gostaríamos de dar-lhe um guia rápido.
-    datebooks: Você começa com uma única agenda criada por nós, você pode, claro, editar isso em %{datebooks_url} ou criar quantas quiser.
-    doctors: Você precisa de pelo menos um médico para começar a agendar consultas, você também pode adicionar quantos precisar em %{doctors_url}.
-    practice: Não se esqueça de configurar seu idioma, fuso horário e moeda em %{practice_settings_url}. Alguns deles podem já ter sido configurados para você, mas não custa verificar novamente seus valores atuais.
+    message: Percebemos que você está começando agora e queremos ajudar a configurar sua clínica.
+    steps:
+      signup:
+        title: Cadastre-se
+        description: Crie a conta da sua clínica informando seu email e uma senha segura.
+      datebooks:
+        title: Configure suas agendas
+        description: Você pode criar uma agenda por unidade ou por médico, conforme a necessidade.
+      doctors:
+        title: Adicione seus médicos
+        description: Adicione todos os médicos da clínica para começar a marcar agendamentos.
+      patients:
+        title: Adicione seus pacientes
+        description: Cadastre os primeiros pacientes para começar a marcar agendamentos.
   week: Semana
   welcome: Bem-vindo ao Odonto.me
   you_agree_to_our_terms_and_privacy_policy:
@@ -548,7 +558,7 @@ pt:
       title: Pagamento para %{practice_name}
       no_note: Nenhuma nota foi fornecida.
       cta: Completar Pagamento
-      secure_payment: Pago Seguro
+      secure_payment: Pagamento Seguro
       secure_payment_description: Seu pagamento é processado de forma segura usando a tecnologia de criptografia líder do setor da Stripe.
     form:
       title: Informações de pagamento
@@ -558,7 +568,7 @@ pt:
     attributes:
       payment_notes: "Notas do pagamento"
       status: "Status"
-      charge_status: "Status do cargo"
+      charge_status: "Status da cobrança"
       created_at: "Criado em"
       currency: "Moeda"
       amount: "Valor"
