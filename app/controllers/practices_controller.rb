@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class PracticesController < ApplicationController
-  before_action :require_user, only: %i[index destroy edit settings show close]
+  before_action :require_user, except: %i[new create]
   before_action :require_no_user, only: %i[new create]
   before_action :require_superadmin, only: %i[index destroy edit]
-  before_action :require_practice_admin, only: %i[show settings balance appointments update close]
+  before_action :require_practice_admin, except: %i[new create index destroy edit]
   skip_before_action :check_subscription_status
 
   def index

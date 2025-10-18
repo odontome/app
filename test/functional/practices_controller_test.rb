@@ -115,4 +115,39 @@ class PracticesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:max_date)
     assert_not_nil assigns(:range_label)
   end
+
+  test 'should redirect balance when not logged in' do
+    @controller.session['user'] = nil
+    get :balance
+    assert_response :redirect
+    assert_redirected_to signin_path
+  end
+
+  test 'should redirect appointments when not logged in' do
+    @controller.session['user'] = nil
+    get :appointments
+    assert_response :redirect
+    assert_redirected_to signin_path
+  end
+
+  test 'should redirect cancel when not logged in' do
+    @controller.session['user'] = nil
+    get :cancel
+    assert_response :redirect
+    assert_redirected_to signin_path
+  end
+
+  test 'should redirect settings when not logged in' do
+    @controller.session['user'] = nil
+    get :settings
+    assert_response :redirect
+    assert_redirected_to signin_path
+  end
+
+  test 'should redirect show when not logged in' do
+    @controller.session['user'] = nil
+    get :show, params: { id: practices(:complete).to_param }
+    assert_response :redirect
+    assert_redirected_to signin_path
+  end
 end
