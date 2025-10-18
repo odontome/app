@@ -98,4 +98,56 @@ class PracticesControllerTest < ActionController::TestCase
     practice.reload
     assert_nil practice.custom_review_url
   end
+
+  test 'should get balance page for logged in admin user' do
+    get :balance
+    assert_response :success
+    assert_not_nil assigns(:balances)
+    assert_not_nil assigns(:min_date)
+    assert_not_nil assigns(:max_date)
+  end
+
+  test 'should get appointments page for logged in admin user' do
+    get :appointments
+    assert_response :success
+    assert_not_nil assigns(:appointments)
+    assert_not_nil assigns(:min_date)
+    assert_not_nil assigns(:max_date)
+    assert_not_nil assigns(:range_label)
+  end
+
+  test 'should redirect balance when not logged in' do
+    @controller.session['user'] = nil
+    get :balance
+    assert_response :redirect
+    assert_redirected_to signin_path
+  end
+
+  test 'should redirect appointments when not logged in' do
+    @controller.session['user'] = nil
+    get :appointments
+    assert_response :redirect
+    assert_redirected_to signin_path
+  end
+
+  test 'should redirect cancel when not logged in' do
+    @controller.session['user'] = nil
+    get :cancel
+    assert_response :redirect
+    assert_redirected_to signin_path
+  end
+
+  test 'should redirect settings when not logged in' do
+    @controller.session['user'] = nil
+    get :settings
+    assert_response :redirect
+    assert_redirected_to signin_path
+  end
+
+  test 'should redirect show when not logged in' do
+    @controller.session['user'] = nil
+    get :show, params: { id: practices(:complete).to_param }
+    assert_response :redirect
+    assert_redirected_to signin_path
+  end
 end
