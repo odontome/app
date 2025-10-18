@@ -4,7 +4,7 @@ class PracticesController < ApplicationController
   before_action :require_user, except: %i[new create]
   before_action :require_no_user, only: %i[new create]
   before_action :require_superadmin, only: %i[index destroy edit]
-  before_action :require_practice_admin, except: %i[new create index destroy edit]
+  before_action :require_practice_admin, only: %i[show settings balance appointments update close cancel]
   skip_before_action :check_subscription_status
 
   def index
