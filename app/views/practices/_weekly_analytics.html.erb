@@ -1,102 +1,101 @@
-<div class="row row-cards">
-  <!-- KPI cards -->
-  <div class="col-sm-3">
-    <div class="card card-link">
-      <%= link_to practice_appointments_url, class: "card-body p-3 d-flex align-items-center justify-content-between card-link" do %>
-        <div>
-          <div class="text-muted"><%= t('analytics.kpis.appointments') %></div>
-          <div class="h2 m-0"><%= number_with_delimiter(@kpi_appointments_this_week) %></div>
-          <div class="text-muted"><%= t('analytics.vs_last_week') %> <span class="text-<%= @kpi_appointments_delta >= 0 ? 'green' : 'red' %>"><%= @kpi_appointments_delta %>%</span></div>
-        </div>
-        <div class="chart-sparkline">
-          <div id="spark-appts"></div>
-        </div>
-      <% end %>
-    </div>
-  </div>
-  <div class="col-sm-3">
-    <div class="card card-link">
-      <%= link_to practice_balance_url, class: "card-body p-3 d-flex align-items-center justify-content-between card-link" do %>
-        <div>
-          <div class="text-muted"><%= t('analytics.kpis.revenue') %></div>
-          <div class="h2 m-0"><%= number_to_currency_with_code(@kpi_revenue_this_week) %></div>
-          <div class="text-muted"><%= t('analytics.vs_last_week') %> <span class="text-<%= @kpi_revenue_delta >= 0 ? 'green' : 'red' %>"><%= @kpi_revenue_delta %>%</span></div>
-        </div>
-        <div class="chart-sparkline">
-          <div id="spark-revenue"></div>
-        </div>
-      <% end %>
-    </div>
-  </div>
-  <div class="col-sm-3">
-    <div class="card card-link">
-      <%= link_to patients_url(segment: :new_this_week), class: "card-body p-3 d-flex align-items-center justify-content-between card-link" do %>
-        <div>
-          <div class="text-muted"><%= t('analytics.kpis.new_patients') %></div>
-          <div class="h2 m-0"><%= number_with_delimiter(@kpi_new_patients) %></div>
-          <div class="text-muted"><%= t('analytics.vs_last_week') %> <span class="text-<%= @kpi_new_patients_delta >= 0 ? 'green' : 'red' %>"><%= @kpi_new_patients_delta %>%</span></div>
-        </div>
-        <div class="chart-sparkline">
-          <div id="spark-new"></div>
-        </div>
-      <% end %>
-    </div>
-  </div>
-  <div class="col-sm-3">
-    <div class="card card-link">
-      <%= link_to reviews_url, class: "card-body p-3 d-flex align-items-center justify-content-between card-link" do %>
-        <div>
-          <div class="text-muted"><%= t('analytics.kpis.reviews') %></div>
-          <div class="h2 m-0"><%= number_with_delimiter(@kpi_reviews_this_week) %></div>
-          <div class="text-muted"><%= t('analytics.vs_last_week') %> <span class="text-<%= @kpi_reviews_delta >= 0 ? 'green' : 'red' %>"><%= @kpi_reviews_delta %>%</span></div>
-        </div>
-        <div class="chart-sparkline">
-          <div id="spark-reviews"></div>
-        </div>
-      <% end %>
-    </div>
-  </div>
 
-  <!-- Row 2 charts -->
-  <div class="col-md-6">
-    <div class="card">
-  <div class="card-header"><h3 class="card-title"><%= t('analytics.charts.appointments_this_week') %></h3></div>
-      <div class="card-body"><div id="chart-appts-per-day" class="chart chart-lg"></div></div>
-    </div>
+<!-- KPI cards -->
+<div class="col-sm-3">
+  <div class="card card-link">
+    <%= link_to practice_appointments_url, class: "card-body p-3 d-flex align-items-center justify-content-between card-link" do %>
+      <div>
+        <div class="text-muted"><%= t('analytics.kpis.appointments') %></div>
+        <div class="h2 m-0"><%= number_with_delimiter(@kpi_appointments_this_week) %></div>
+        <div class="text-muted"><%= t('analytics.vs_last_week') %> <span class="text-<%= @kpi_appointments_delta >= 0 ? 'green' : 'red' %>"><%= @kpi_appointments_delta %>%</span></div>
+      </div>
+      <div class="chart-sparkline">
+        <div id="spark-appts"></div>
+      </div>
+    <% end %>
   </div>
-  <div class="col-md-6">
-    <div class="card">
-  <div class="card-header"><h3 class="card-title"><%= t('analytics.charts.revenue_this_week') %></h3></div>
-      <div class="card-body"><div id="chart-revenue-per-day" class="chart chart-lg"></div></div>
-    </div>
+</div>
+<div class="col-sm-3">
+  <div class="card card-link">
+    <%= link_to practice_balance_url, class: "card-body p-3 d-flex align-items-center justify-content-between card-link" do %>
+      <div>
+        <div class="text-muted"><%= t('analytics.kpis.revenue') %></div>
+        <div class="h2 m-0"><%= number_to_currency_with_code(@kpi_revenue_this_week) %></div>
+        <div class="text-muted"><%= t('analytics.vs_last_week') %> <span class="text-<%= @kpi_revenue_delta >= 0 ? 'green' : 'red' %>"><%= @kpi_revenue_delta %>%</span></div>
+      </div>
+      <div class="chart-sparkline">
+        <div id="spark-revenue"></div>
+      </div>
+    <% end %>
   </div>
+</div>
+<div class="col-sm-3">
+  <div class="card card-link">
+    <%= link_to patients_url(segment: :new_this_week), class: "card-body p-3 d-flex align-items-center justify-content-between card-link" do %>
+      <div>
+        <div class="text-muted"><%= t('analytics.kpis.new_patients') %></div>
+        <div class="h2 m-0"><%= number_with_delimiter(@kpi_new_patients) %></div>
+        <div class="text-muted"><%= t('analytics.vs_last_week') %> <span class="text-<%= @kpi_new_patients_delta >= 0 ? 'green' : 'red' %>"><%= @kpi_new_patients_delta %>%</span></div>
+      </div>
+      <div class="chart-sparkline">
+        <div id="spark-new"></div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="col-sm-3">
+  <div class="card card-link">
+    <%= link_to reviews_url, class: "card-body p-3 d-flex align-items-center justify-content-between card-link" do %>
+      <div>
+        <div class="text-muted"><%= t('analytics.kpis.reviews') %></div>
+        <div class="h2 m-0"><%= number_with_delimiter(@kpi_reviews_this_week) %></div>
+        <div class="text-muted"><%= t('analytics.vs_last_week') %> <span class="text-<%= @kpi_reviews_delta >= 0 ? 'green' : 'red' %>"><%= @kpi_reviews_delta %>%</span></div>
+      </div>
+      <div class="chart-sparkline">
+        <div id="spark-reviews"></div>
+      </div>
+    <% end %>
+  </div>
+</div>
 
-  <!-- Row 3 charts -->
-  <div class="col-md-6">
-    <div class="card">
-  <div class="card-header"><h3 class="card-title"><%= t('analytics.charts.top_doctors_by_unique_patients') %></h3></div>
-      <div class="card-body"><div id="chart-top-doctors" class="chart chart-lg"></div></div>
-    </div>
+<!-- Row 2 charts -->
+<div class="col-md-6">
+  <div class="card">
+<div class="card-header"><h3 class="card-title"><%= t('analytics.charts.appointments_this_week') %></h3></div>
+    <div class="card-body"><div id="chart-appts-per-day" class="chart chart-lg"></div></div>
   </div>
-  <div class="col-md-6">
-    <div class="card">
-  <div class="card-header"><h3 class="card-title"><%= t('analytics.charts.hours_worked_by_doctors') %></h3></div>
-      <div class="card-body"><div id="chart-hours-doctors" class="chart chart-lg"></div></div>
-    </div>
+</div>
+<div class="col-md-6">
+  <div class="card">
+<div class="card-header"><h3 class="card-title"><%= t('analytics.charts.revenue_this_week') %></h3></div>
+    <div class="card-body"><div id="chart-revenue-per-day" class="chart chart-lg"></div></div>
   </div>
+</div>
 
-  <!-- Row 4 charts -->
-  <div class="col-md-6">
-    <div class="card">
-  <div class="card-header"><h3 class="card-title"><%= t('analytics.charts.most_recurring_patients') %></h3></div>
-      <div class="card-body"><div id="chart-recurring-patients" class="chart chart-lg"></div></div>
-    </div>
+<!-- Row 3 charts -->
+<div class="col-md-6">
+  <div class="card">
+<div class="card-header"><h3 class="card-title"><%= t('analytics.charts.top_doctors_by_unique_patients') %></h3></div>
+    <div class="card-body"><div id="chart-top-doctors" class="chart chart-lg"></div></div>
   </div>
-  <div class="col-md-6">
-    <div class="card">
-  <div class="card-header"><h3 class="card-title"><%= t('analytics.charts.avg_time_gap_between_appointments_minutes') %></h3></div>
-      <div class="card-body"><div id="chart-avg-gap" class="chart chart-lg"></div></div>
-    </div>
+</div>
+<div class="col-md-6">
+  <div class="card">
+<div class="card-header"><h3 class="card-title"><%= t('analytics.charts.hours_worked_by_doctors') %></h3></div>
+    <div class="card-body"><div id="chart-hours-doctors" class="chart chart-lg"></div></div>
+  </div>
+</div>
+
+<!-- Row 4 charts -->
+<div class="col-md-6">
+  <div class="card">
+<div class="card-header"><h3 class="card-title"><%= t('analytics.charts.most_recurring_patients') %></h3></div>
+    <div class="card-body"><div id="chart-recurring-patients" class="chart chart-lg"></div></div>
+  </div>
+</div>
+<div class="col-md-6">
+  <div class="card">
+<div class="card-header"><h3 class="card-title"><%= t('analytics.charts.avg_time_gap_between_appointments_minutes') %></h3></div>
+    <div class="card-body"><div id="chart-avg-gap" class="chart chart-lg"></div></div>
   </div>
 </div>
 

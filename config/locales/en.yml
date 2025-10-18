@@ -470,10 +470,20 @@ en:
   user_updated_success_message: The user was updated successfully
   users: Users
   tutorial:
-    message: We can see you that you are just getting started and we will like to give you a quick guide.
-    datebooks: You start with a single datebook created by us, you can of course edit this in %{datebooks_url} or create as many as you like.
-    doctors: You need at least one doctor to start scheduling appointments, you also can add as many as you need in %{doctors_url}.
-    practice: Don't forget to setup your language, timezone and currency in %{practice_settings_url}. Some of these may have already been setup for you, but it doesn't hurt to double check their current values.
+    message: Hey doc! 👋 Looks like it’s your first time here. Let’s walk through the basics so your digital practice runs as smoothly as your next cleaning.
+    steps:
+      signup:
+        title: Sign up
+        description: Create your practice account by providing your email and a secure password.
+      datebooks:
+        title: Configure your datebooks
+        description: You can create one datebook per location or doctor, whatever fits your needs.
+      doctors:
+        title: Add your doctors
+        description: Add all the doctors in your practice so you can start scheduling appointments.
+      patients:
+        title: Add your patients
+        description: Add your first patients so you can start scheduling appointments.
   week: Week
   welcome: Welcome to Odonto.me
   you_agree_to_our_terms_and_privacy_policy:

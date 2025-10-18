@@ -424,10 +424,20 @@ es:
   users: Usuarios
   week: Semana
   tutorial:
-    message: Podemos ver que apenas estás empezando y nos gustaría ayudarte a configurar tu clínica.
-    datebooks: Empiezas con una sola agenda que hemos creado por ti. Puedes editar el nombre de la misma o crear todas las que necesites en %{datebooks_url}.
-    doctors: Necesitas por lo menos un doctor para empezar a agendar pacientes. De nuevo, puedes crear todos los que quieras en %{doctors_url}.
-    practice: No olvides configurar tu huso horario, idioma y moneda en %{practice_settings_url}. Algunos de estos valores fueron creados por ti, pero vale la pena revisar que todo este en orden.
+    message: Podemos ver que recién estás empezando y nos gustaría ayudarte a configurar tu clínica.
+    steps:
+      signup:
+        title: Regístrate
+        description: Crea la cuenta de tu clínica proporcionando tu correo electrónico y una contraseña segura.
+      datebooks:
+        title: Configura tus agendas
+        description: Puedes crear una agenda por ubicación o por doctor, según lo que necesites.
+      doctors:
+        title: Agrega a tus doctores
+        description: Agrega a todos los doctores de tu clínica para empezar a programar citas.
+      patients:
+        title: Agrega a tus pacientes
+        description: Registra a tus primeros pacientes para empezar a programar citas.
   welcome: Bienvenido a Odonto.me
   you_agree_to_our_terms_and_privacy_policy: Aceptas nuestras %{terms_url} y nuestra %{privacy_url} cuando continuas.
   your_first_datebook: Tu agenda
