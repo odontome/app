@@ -126,15 +126,15 @@
                 },
                 {
                   key: :datebooks,
-                  checked: @practice.datebooks_count >= 1
+                  checked: @practice.datebooks_count.to_i >= 1
                 },
                 {
                   key: :doctors,
-                  checked: @practice.doctors_count >= 1
+                  checked: @practice.doctors_count.to_i >= 1
                 },
                 {
                   key: :patients,
-                  checked: @practice.patients_count >= 1
+                  checked: @practice.patients_count.to_i >= 1
                 }
               ] %>
 
