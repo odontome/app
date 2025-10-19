@@ -1,32 +1,83 @@
 # frozen_string_literal: true
 
+require 'stringio'
+
 module ProfileImageable
   extend ActiveSupport::Concern
 
   included do
     has_one_attached :profile_picture
 
-    attr_accessor :remove_profile_picture
+    attr_accessor :remove_profile_picture, :normalize_profile_picture_requested
 
     validate :validate_profile_picture_size
     validate :validate_profile_picture_content_type
     validate :enforce_practice_profile_picture_limit
 
     before_save :purge_profile_picture_if_requested
+    before_save :mark_profile_picture_for_normalization
+    after_commit :ensure_profile_picture_normalized, if: -> { normalize_profile_picture_requested }
   end
 
-  def profile_picture_variant(width:, height:)
+  PROFILE_PICTURE_VARIANT_DIMENSIONS = {
+    small: [128, 128],
+    medium: [256, 256],
+    large: [1024, 1024]
+  }.freeze
+
+  DEFAULT_PROFILE_PICTURE_VARIANT = :medium
+
+  def profile_picture_variant(width: nil, height: nil, size: nil)
     return unless profile_picture.attached?
 
     return profile_picture unless profile_picture.variable?
 
-    profile_picture.variant(resize_to_fill: [width, height])
+    variant_key = resolve_profile_picture_variant(size: size, width: width, height: height)
+    dimensions = PROFILE_PICTURE_VARIANT_DIMENSIONS.fetch(variant_key)
+
+    profile_picture.variant(resize_to_fill: dimensions)
+  end
+
+  def profile_picture_small
+    profile_picture_variant(size: :small)
+  end
+
+  def profile_picture_medium
+    profile_picture_variant(size: :medium)
+  end
+
+  def profile_picture_large
+    profile_picture_variant(size: :large)
   end
 
   private
 
-  MAX_FILE_SIZE = 1.megabyte
+  MAX_FILE_SIZE = 3.megabyte
   ALLOWED_CONTENT_TYPES = %w[image/png image/jpeg image/jpg].freeze
+
+  def resolve_profile_picture_variant(size:, width:, height:)
+    return normalize_profile_picture_variant(size) if size
+
+    if width && height
+      matched_key = PROFILE_PICTURE_VARIANT_DIMENSIONS.find { |_, dims| dims == [width, height] }&.first
+      return matched_key if matched_key
+
+      return closest_profile_picture_variant(width, height)
+    end
+
+    DEFAULT_PROFILE_PICTURE_VARIANT
+  end
+
+  def normalize_profile_picture_variant(size)
+    key = size.to_sym
+    PROFILE_PICTURE_VARIANT_DIMENSIONS.key?(key) ? key : DEFAULT_PROFILE_PICTURE_VARIANT
+  end
+
+  def closest_profile_picture_variant(width, height)
+    PROFILE_PICTURE_VARIANT_DIMENSIONS.min_by do |_, dims|
+      (dims[0] - width).abs + (dims[1] - height).abs
+    end.first
+  end
 
   def validate_profile_picture_size
     return unless profile_picture.attached?
@@ -93,5 +144,47 @@ module ProfileImageable
     return unless ActiveModel::Type::Boolean.new.cast(remove_profile_picture)
 
     profile_picture.purge_later if profile_picture.attached?
+  end
+
+  def mark_profile_picture_for_normalization
+    self.normalize_profile_picture_requested = profile_picture_requires_normalization?
+  end
+
+  def ensure_profile_picture_normalized
+    unless profile_picture_requires_normalization?
+      self.normalize_profile_picture_requested = false
+      return
+    end
+
+    original_blob = profile_picture.blob
+    large_dimensions = PROFILE_PICTURE_VARIANT_DIMENSIONS[:large]
+
+    processed_variant = profile_picture.variant(resize_to_fill: large_dimensions).processed
+    resized_data = processed_variant.image.download
+
+    new_metadata = original_blob.metadata.merge('profile_picture_resized' => true)
+
+    profile_picture.attach(
+      io: StringIO.new(resized_data),
+      filename: original_blob.filename,
+      content_type: original_blob.content_type,
+      metadata: new_metadata
+    )
+
+    original_blob.purge_later
+  rescue StandardError => e
+    Rails.logger.error("Failed to normalize profile picture for #{self.class.name}##{id}: #{e.message}")
+  ensure
+    self.normalize_profile_picture_requested = false
+  end
+
+  def profile_picture_requires_normalization?
+    return false unless profile_picture.attached?
+
+    blob = profile_picture.blob
+    return false unless blob
+    return false unless profile_picture.variable?
+
+    !blob.metadata['profile_picture_resized']
   end
 end

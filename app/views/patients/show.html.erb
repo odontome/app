@@ -3,10 +3,10 @@
     <div class="col-auto me-2">
       <% if @patient.profile_picture.attached? %>
         <%= button_tag type: 'button', class: 'p-0 border-0 bg-transparent', data: { "bs-toggle": 'modal', "bs-target": '#patient-profile-picture-modal' }, aria: { label: t(:profile_picture_alt, name: @patient.fullname) }, style: 'line-height: 0;' do %>
-          <%= avatar_for(@patient, size: 256, classes: "avatar rounded-circle avatar-lg") %>
+          <%= avatar_for(@patient, variant: :medium, classes: "avatar rounded-circle avatar-lg") %>
         <% end %>
       <% else %>
-        <%= avatar_for(@patient, size: 256, classes: "avatar rounded-circle avatar-lg") %>
+        <%= avatar_for(@patient, variant: :medium, classes: "avatar rounded-circle avatar-lg") %>
       <% end %>
     </div>
     <div class="col">

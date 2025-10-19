@@ -16,18 +16,23 @@ module ApplicationHelper
     end
   end
 
-  def avatar_for(record, size: 96, classes: nil, fallback_name: nil)
+  def avatar_for(record, variant: :small, classes: nil, fallback_name: nil)
     css_classes = classes.presence || 'avatar me-2 rounded-circle'
 
     display_name = (record.fullname.to_s.strip.presence if record.respond_to?(:fullname))
     display_name ||= fallback_name.presence || t(:profile)
 
     if record.respond_to?(:profile_picture) && record.profile_picture.respond_to?(:attached?) && record.profile_picture.attached?
-      image = if record.profile_picture.variable?
-                record.profile_picture.variant(resize_to_fill: [size, size])
-              else
-                record.profile_picture
+      variant_key = resolve_avatar_variant(variant)
+
+      image = if record.respond_to?(:profile_picture_variant)
+                record.profile_picture_variant(size: variant_key)
+              elsif record.profile_picture.variable?
+                dimensions = ProfileImageable::PROFILE_PICTURE_VARIANT_DIMENSIONS.fetch(variant_key)
+                record.profile_picture.variant(resize_to_fill: dimensions)
               end
+
+      image ||= record.profile_picture
 
       image_tag(image, class: css_classes, alt: t(:profile_picture_alt, name: display_name))
     else
@@ -197,6 +202,14 @@ module ApplicationHelper
   end
 
   private
+
+  def resolve_avatar_variant(variant)
+    key = variant.to_sym
+    allowed = ProfileImageable::PROFILE_PICTURE_VARIANT_DIMENSIONS.keys
+    return key if allowed.include?(key)
+
+    raise ArgumentError, "#{variant} is invalid. Allowed values: #{allowed.join(', ')}."
+  end
 
   def audit_item_display_name(item, version)
     case version.item_type
