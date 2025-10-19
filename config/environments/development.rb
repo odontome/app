@@ -34,7 +34,7 @@ Rails.application.configure do
   end
 
   # Store uploaded files using Cloudflare R2 in non-test environments for consistency with production.
-  config.active_storage.service = :r2
+  config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
