@@ -1,29 +1,28 @@
 # frozen_string_literal: true
 
-require 'stringio'
-
 module ProfileImageable
   extend ActiveSupport::Concern
 
   included do
     has_one_attached :profile_picture
 
-    attr_accessor :remove_profile_picture, :normalize_profile_picture_requested
-
     validate :validate_profile_picture_size
     validate :validate_profile_picture_content_type
     validate :enforce_practice_profile_picture_limit
 
     before_save :purge_profile_picture_if_requested
-    before_save :mark_profile_picture_for_normalization
-    after_commit :ensure_profile_picture_normalized, if: -> { normalize_profile_picture_requested }
+    after_commit :ensure_profile_picture_normalized, if: -> { profile_picture_requires_normalization? }
   end
+
+  attr_accessor :remove_profile_picture
 
   PROFILE_PICTURE_VARIANT_DIMENSIONS = {
     small: [128, 128],
     medium: [256, 256],
     large: [1024, 1024]
   }.freeze
+
+  PROFILE_PICTURE_RESIZED_METADATA_KEY = 'profile_picture_resized'
 
   DEFAULT_PROFILE_PICTURE_VARIANT = :medium
 
@@ -146,36 +145,10 @@ module ProfileImageable
     profile_picture.purge_later if profile_picture.attached?
   end
 
-  def mark_profile_picture_for_normalization
-    self.normalize_profile_picture_requested = profile_picture_requires_normalization?
-  end
-
   def ensure_profile_picture_normalized
-    unless profile_picture_requires_normalization?
-      self.normalize_profile_picture_requested = false
-      return
-    end
+    return unless profile_picture_requires_normalization?
 
-    original_blob = profile_picture.blob
-    large_dimensions = PROFILE_PICTURE_VARIANT_DIMENSIONS[:large]
-
-    processed_variant = profile_picture.variant(resize_to_fill: large_dimensions).processed
-    resized_data = processed_variant.image.download
-
-    new_metadata = original_blob.metadata.merge('profile_picture_resized' => true)
-
-    profile_picture.attach(
-      io: StringIO.new(resized_data),
-      filename: original_blob.filename,
-      content_type: original_blob.content_type,
-      metadata: new_metadata
-    )
-
-    original_blob.purge_later
-  rescue StandardError => e
-    Rails.logger.error("Failed to normalize profile picture for #{self.class.name}##{id}: #{e.message}")
-  ensure
-    self.normalize_profile_picture_requested = false
+    ProfilePictureNormalizer.new(self).call
   end
 
   def profile_picture_requires_normalization?
@@ -185,6 +158,6 @@ module ProfileImageable
     return false unless blob
     return false unless profile_picture.variable?
 
-    !blob.metadata['profile_picture_resized']
+    !blob.metadata[PROFILE_PICTURE_RESIZED_METADATA_KEY]
   end
 end

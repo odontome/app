@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+require 'base64'
 
 class ApplicationHelperTest < ActionView::TestCase
   include ApplicationHelper
+
+  SAMPLE_PNG_BASE64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+rXbQAAAAASUVORK5CYII='
 
   test "should return 'active' when controller name matches string tab" do
     def controller
@@ -17,12 +20,12 @@ class ApplicationHelperTest < ActionView::TestCase
   test 'avatar_for renders image when profile picture present' do
     doctor = doctors(:rebecca)
     doctor.profile_picture.attach(
-      io: StringIO.new('image-data'),
+      io: StringIO.new(Base64.decode64(SAMPLE_PNG_BASE64)),
       filename: 'avatar.png',
       content_type: 'image/png'
     )
 
-    html = avatar_for(doctor, size: 128, classes: 'avatar test-class')
+    html = avatar_for(doctor, variant: :medium, classes: 'avatar test-class')
 
     assert_includes html, '<img'
     assert_includes html, 'class="avatar test-class"'

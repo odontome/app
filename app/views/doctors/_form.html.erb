@@ -41,7 +41,17 @@
 
       <div class="mb-3">
         <%= f.label :profile_picture, t(:profile_picture), class: "form-label" %>
-        <%= f.file_field :profile_picture, accept: "image/jpeg,image/png", class: "form-control" %>
+        <%= f.file_field :profile_picture,
+          accept: "image/jpeg,image/png",
+          class: "form-control",
+          data: {
+            profile_picture_input: true,
+            max_file_size: ProfileImageable::MAX_FILE_SIZE,
+            max_file_size_message: t(
+              'errors.messages.profile_picture_too_large',
+              limit: number_to_human_size(ProfileImageable::MAX_FILE_SIZE)
+            )
+          } %>
         <small class="form-hint text-muted"><%= t(:profile_picture_hint) %></small>
         <% if f.object.respond_to?(:profile_picture) && f.object.profile_picture.attached? %>
           <div class="mt-3 d-flex align-items-center gap-3">

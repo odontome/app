@@ -80,4 +80,42 @@ $(function () {
       if (darkIcon) darkIcon.style.display = "inline";
     }
   }
+
+  // Enforce client-side profile picture size limits across the app.
+  function setupProfilePictureGuards(root) {
+    var inputs = (root || document).querySelectorAll(
+      "[data-profile-picture-input]"
+    );
+
+    inputs.forEach(function (input) {
+      if (input.dataset.profilePictureBound === "true") return;
+      input.dataset.profilePictureBound = "true";
+
+      input.addEventListener("change", function (event) {
+        var target = event.currentTarget;
+        var files = target.files;
+        var maxSize = parseInt(target.dataset.maxFileSize, 10);
+        target.setCustomValidity("");
+
+        if (!files || !files.length || !maxSize) return;
+
+        var oversizedFile = Array.prototype.find.call(files, function (file) {
+          return file.size > maxSize;
+        });
+
+        if (!oversizedFile) return;
+
+        var message =
+          target.dataset.maxFileSizeMessage || "Selected file is too large.";
+        target.value = "";
+        target.setCustomValidity(message);
+        target.reportValidity();
+        window.setTimeout(function () {
+          target.setCustomValidity("");
+        }, 4000);
+      });
+    });
+  }
+
+  setupProfilePictureGuards(document);
 });
