@@ -201,22 +201,28 @@ Deploys automatically every commit on the `master` branch to the staging environ
 
 Include the following environment variables in your production instance:
 
-| Key                      | Description                                       | Required | Local Dev  |
-| ------------------------ | ------------------------------------------------- | -------- | ---------- |
-| `SECRET_KEY_BASE`        | Rails secret key, used to secure your application | Yes      | Yes        |
-| `STRIPE_PUBLISHABLE_KEY` | Used by Stripe for subscription management        | Yes      | Optional\* |
-| `STRIPE_SECRET_KEY`      | See above                                         | Yes      | Optional\* |
-| `STRIPE_WEBHOOK_SECRET`  | Used by Stripe to authenticate your requests      | Yes      | Optional\* |
-| `STRIPE_PRICE_ID`        | Used by Stripe for the subscription price         | Yes      | Optional\* |
-| `SENDGRID_API_KEY`       | Used by Sendgrid in order to use Rails Mailers    | Yes      | Optional\* |
-| `SENDGRID_DOMAIN`        | See above                                         | Yes      | Optional\* |
-| `SENDGRID_USERNAME`      | See above                                         | Yes      | Optional\* |
-| `SENDGRID_PASSWORD`      | See above                                         | Yes      | Optional\* |
-| `BUGSNAG_API_KEY`        | Used by Bugsnag for error tracking                | No       | No         |
-| `DATABASE_URL`           | PostgreSQL connection string                      | Yes\*\*  | Optional   |
+| Key                               | Description                                       | Required | Local Dev  |
+| --------------------------------- | ------------------------------------------------- | -------- | ---------- |
+| `SECRET_KEY_BASE`                 | Rails secret key, used to secure your application | Yes      | Yes        |
+| `STRIPE_PUBLISHABLE_KEY`          | Used by Stripe for subscription management        | Yes      | Optional\* |
+| `STRIPE_SECRET_KEY`               | See above                                         | Yes      | Optional\* |
+| `STRIPE_WEBHOOK_SECRET`           | Used by Stripe to authenticate your requests      | Yes      | Optional\* |
+| `STRIPE_PRICE_ID`                 | Used by Stripe for the subscription price         | Yes      | Optional\* |
+| `SENDGRID_API_KEY`                | Used by Sendgrid in order to use Rails Mailers    | Yes      | Optional\* |
+| `SENDGRID_DOMAIN`                 | See above                                         | Yes      | Optional\* |
+| `SENDGRID_USERNAME`               | See above                                         | Yes      | Optional\* |
+| `SENDGRID_PASSWORD`               | See above                                         | Yes      | Optional\* |
+| `BUGSNAG_API_KEY`                 | Used by Bugsnag for error tracking                | No       | No         |
+| `DATABASE_URL`                    | PostgreSQL connection string                      | Yes\*\*  | Optional   |
+| `CLOUDFLARE_R2_ACCESS_KEY_ID`     | Access key ID for Cloudflare R2 file storage      | Yes      | No         |
+| `CLOUDFLARE_R2_SECRET_ACCESS_KEY` | Secret access key for Cloudflare R2 file storage  | Yes      | No         |
+| `CLOUDFLARE_R2_REGION`            | Cloudflare R2 region (use `auto` unless directed) | Yes      | No         |
+| `CLOUDFLARE_R2_BUCKET`            | Cloudflare R2 bucket used for uploads             | Yes      | No         |
+| `CLOUDFLARE_R2_ENDPOINT`          | Cloudflare R2 endpoint URL                        | Yes      | No         |
 
 \* For local development, you can skip payment and email functionality  
 \*\* Required for production; for local development, database.yml is used
+\*\*\* Only required locally if you switch Active Storage to use Cloudflare R2
 
 ### Setting Up Environment Variables Locally
 
