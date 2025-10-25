@@ -37,7 +37,7 @@
   <div class="modal fade" id="patient-profile-picture-modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content border-0 shadow-none">
-        <div class="modal-body p-0 position-relative">
+        <div class="modal-body p-0 position-relative patient-profile-picture-modal-body">
           <button type="button" class="btn btn-close position-absolute end-0 mt-3 me-3" data-bs-dismiss="modal"></button>
           <%= image_tag @patient.profile_picture, class: "img-fluid rounded", alt: t(:profile_picture_alt, name: @patient.fullname) %>
         </div>
