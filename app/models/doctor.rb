@@ -40,7 +40,7 @@ class Doctor < ApplicationRecord
   end
 
   def is_deleteable
-    true if appointments.count.zero?
+    appointments.count.zero?
   end
 
   def ciphered_feed_url

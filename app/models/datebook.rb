@@ -25,15 +25,15 @@ class Datebook < ApplicationRecord
   before_destroy :check_if_is_deleteable
 
   def is_deleteable
-    return true if appointments.count.zero?
+    appointments.count.zero?
   end
 
   private
 
   def check_if_is_deleteable
-    unless is_deleteable
-      errors[:base] << I18n.t('errors.messages.has_appointments')
-      false
-    end
+    return if is_deleteable
+
+    errors[:base] << I18n.t('errors.messages.has_appointments')
+    false
   end
 end

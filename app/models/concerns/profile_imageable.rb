@@ -23,8 +23,9 @@ module ProfileImageable
   }.freeze
 
   PROFILE_PICTURE_RESIZED_METADATA_KEY = 'profile_picture_resized'
-
   DEFAULT_PROFILE_PICTURE_VARIANT = :medium
+  MAX_FILE_SIZE = 3.megabyte
+  ALLOWED_CONTENT_TYPES = %w[image/png image/jpeg image/jpg].freeze
 
   def profile_picture_variant(width: nil, height: nil, size: nil)
     return unless profile_picture.attached?
@@ -50,9 +51,6 @@ module ProfileImageable
   end
 
   private
-
-  MAX_FILE_SIZE = 3.megabyte
-  ALLOWED_CONTENT_TYPES = %w[image/png image/jpeg image/jpg].freeze
 
   def resolve_profile_picture_variant(size:, width:, height:)
     return normalize_profile_picture_variant(size) if size
