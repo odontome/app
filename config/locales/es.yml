@@ -59,6 +59,7 @@ es:
         firstname: Nombre
         gender: Sexo
         lastname: Apellido
+        profile_picture: Foto de perfil
         speciality: Especialidad
         uid: Identificador único
       patient:
@@ -79,6 +80,7 @@ es:
         surgeries: Historial de cirugías
         telephone: Teléfono
         uid: Número de historia
+        profile_picture: Foto de perfil
       practice:
         currency: Moneda preferida
         locale: Idioma
@@ -93,6 +95,7 @@ es:
         lastname: Apellido
         password: Contraseña
         password_confirmation: Confirmación de contraseña
+        profile_picture: Foto de perfil
       review:
         score: Puntuación
         comment: Comentarios sobre tu experiencia
@@ -200,6 +203,10 @@ es:
       reset_your_password_request: Debe restablecer la contraseña de su cuenta. Lo sentimos por cualquier inconveniente que esto haya causado.
       reset_your_password_token_expired: Ha pasado mucho tiempo desde la solicitud de cambio de contraseña.
       consecutive_failed_logins_limit_exceeded: Muchos intentos consecutivos para iniciar una sesión, la cuenta ha sido bloqueada temporalmente.
+      profile_image_limit_reached: Has alcanzado el límite de %{limit} imágenes de perfil para esta clínica.
+      profile_image_subscription_required: Has alcanzado el límite gratuito de %{limit} imágenes de perfil. Suscríbete para subir más archivos.
+      profile_picture_invalid_type: Solo se permiten imágenes en formato PNG o JPEG.
+      profile_picture_too_large: La imagen debe ser menor a %{limit}.
   everyone: Todos
   family_diseases_hint: Por favor sé lo más descriptivo posible.
   family_history: Historial familiar
@@ -354,6 +361,10 @@ es:
   price: Precio
   privacy_policy: Política de privacidad
   profile: Perfil
+  profile_picture: Foto de perfil
+  profile_picture_hint: Sube una imagen de hasta 3 MB. La redimensionamos automáticamente.
+  profile_picture_alt: Foto de perfil de %{name}
+  remove_profile_picture: Quitar foto
   view_profile: Ver perfil
   view_patient_profile: Ver perfil de paciente
   remember_me: Recordarme

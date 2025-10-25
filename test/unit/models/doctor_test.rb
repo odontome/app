@@ -1,8 +1,15 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+require 'active_job/test_helper'
 
 class DoctorTest < ActiveSupport::TestCase
+  include ActiveJob::TestHelper
+
+  teardown do
+    clear_enqueued_jobs
+    clear_performed_jobs
+  end
   test 'doctor attributes must not be empty' do
     doctor = Doctor.new
     assert doctor.invalid?
@@ -71,5 +78,34 @@ class DoctorTest < ActiveSupport::TestCase
     doctor = Doctor.new(firstname: 'Ruth', lastname: 'Roberts')
 
     assert_equal doctor.initials, 'RR'
+  end
+
+  test 'destroying doctor purges profile picture attachment' do
+    doctor = Doctor.create!(
+      practice: practices(:complete),
+      firstname: 'Delete',
+      lastname: 'Asset',
+      email: 'delete.asset@example.com'
+    )
+
+    doctor.profile_picture.attach(
+      io: StringIO.new('image-data'),
+      filename: 'avatar.png',
+      content_type: 'image/png'
+    )
+
+    attachment = doctor.profile_picture.attachment
+    blob = attachment.blob
+
+    assert_difference -> { ActiveStorage::Attachment.count }, -1 do
+      assert_difference -> { ActiveStorage::Blob.count }, -1 do
+        perform_enqueued_jobs only: ActiveStorage::PurgeJob do
+          doctor.destroy
+        end
+      end
+    end
+
+    refute ActiveStorage::Attachment.exists?(attachment.id)
+    refute ActiveStorage::Blob.exists?(blob.id)
   end
 end

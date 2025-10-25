@@ -33,6 +33,19 @@ body {
     border-color 0.3s ease;
 }
 
+.patient-profile-picture-modal-body {
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+}
+
+.patient-profile-picture-modal-body img {
+  max-height: 80vh;
+  width: auto;
+}
+
 /* Impersonation banner styles */
 .impersonation-banner {
   background-color: #fff3cd;

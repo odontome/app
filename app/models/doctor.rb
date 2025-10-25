@@ -6,6 +6,7 @@ class Doctor < ApplicationRecord
 
   # concerns
   include Initials
+  include ProfileImageable
 
   # associations
   belongs_to :practice, counter_cache: true
@@ -39,7 +40,7 @@ class Doctor < ApplicationRecord
   end
 
   def is_deleteable
-    return true if appointments.count.zero?
+    appointments.count.zero?
   end
 
   def ciphered_feed_url
@@ -50,9 +51,9 @@ class Doctor < ApplicationRecord
   private
 
   def check_if_is_deleteable
-    unless is_deleteable
-      errors[:base] << I18n.t('errors.messages.has_appointments_or_treatments')
-      false
-    end
+    return if is_deleteable
+
+    errors[:base] << I18n.t('errors.messages.has_appointments_or_treatments')
+    false
   end
 end

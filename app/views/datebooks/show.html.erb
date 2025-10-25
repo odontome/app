@@ -207,15 +207,15 @@
 				<div class="col-md-6 col-xl-3">
 					<a href="/" class="card card-link">
 						<div class="card-body">
-						<div class="row">
-							<div class="col-auto">
-							<span class="avatar rounded-circle">∞</span>
+							<div class="row">
+								<div class="col-auto">
+									<span class="avatar rounded-circle">∞</span>
+								</div>
+								<div class="col">
+									<div class="font-weight-medium"><%= t :everyone %></div>
+									<div class="text-muted"><%= t :all_appointments %></div>
+								</div>
 							</div>
-							<div class="col">
-							<div class="font-weight-medium"><%= t :everyone %></div>
-							<div class="text-muted"><%= t :all_appointments %></div>
-							</div>
-						</div>
 						</div>
 					</a>
 				</div>
@@ -224,28 +224,24 @@
 					<div class="col-md-6 col-xl-3">
 						<a href="?doctor_id=<%=doctor.id%>" class="card card-link <%= @filtered_by.to_i == doctor.id ? 'bg-azure-lt' : ''%>">
 						<div class="card-body">
-						<div class="row">
-							<div class="col-auto">
-							<span class="avatar rounded-circle">
-												<%= doctor.initials %>
-								<span class="badge" style="background-color: <%= doctor.color %>"></span>
-							</span>
+							<div class="row">
+								<div class="col-auto">
+									<%= avatar_for(doctor, variant: :small) %>
+								</div>
+								<div class="col">
+									<div class="font-weight-medium">
+										<%= doctor.fullname %> <span class="badge" style="background-color: <%= doctor.color %>; margin-left: 4px"></span>
+									</div>
+									<div class="text-muted">
+										<%= doctor.speciality.blank? ? "—" : doctor.speciality %>
+									</div>
+								</div>
 							</div>
-						<div class="col">
-							<div class="font-weight-medium">
-							<%= doctor.fullname %>
-							</div>
-							<div class="text-muted">
-							<%= doctor.speciality.blank? ? "—" : doctor.speciality %>
-							</div>
-						</div>
-						</div>
 						</div>
 						</a>
 					</div>
 				<% end %>
 			</div>
-
 		</div>
 	</div>
 </div>
