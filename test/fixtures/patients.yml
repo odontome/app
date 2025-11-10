@@ -4,39 +4,42 @@ one:
   practice_id: 1
   firstname: Edwin
   lastname: Brito
+  firstname_initial: e
   address: su casa
   email: angeloamuratzi@hotmail.com
   telephone: 7773179398
   mobile: 62*15*3000
   emergency_telephone: 7773179398
-  date_of_birth: '1982-12-22'
-  past_illnesses: '-'
-  surgeries: '-'
-  medications: '-'
+  date_of_birth: "1982-12-22"
+  past_illnesses: "-"
+  surgeries: "-"
+  medications: "-"
   cigarettes_per_day: 0
   drinks_per_day: 0
-  drugs_use: '-'
-  family_diseases: '-'
+  drugs_use: "-"
+  family_diseases: "-"
   notified_of_six_month_reminder: false
-  
+
 two:
   id: 2
   uid: 0002
   practice_id: 1
   firstname: Miguel
   lastname: Camacho
+  firstname_initial: m
   email: nonosisi@gmail.com
-  date_of_birth: '1985-06-15'
+  date_of_birth: "1985-06-15"
   notified_of_six_month_reminder: false
-  
+
 three:
   id: 3
   uid: 0003
   practice_id: 3
   firstname: Daniella
   lastname: Sanguino
+  firstname_initial: d
   email: daniella.sanguino@gmail.com
-  date_of_birth: '1990-03-10'
+  date_of_birth: "1990-03-10"
   notified_of_six_month_reminder: false
 
 four:
@@ -45,6 +48,7 @@ four:
   practice_id: 1
   firstname: Raul
   lastname: Riera
+  firstname_initial: r
   email: raulriera@hotmail.com
-  date_of_birth: '1988-11-20'
+  date_of_birth: "1988-11-20"
   notified_of_six_month_reminder: false

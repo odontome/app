@@ -21,13 +21,16 @@ class Patient < ApplicationRecord
   }
 
   scope :anything_with_letter, lambda { |letter|
+    normalized_letter = letter.to_s[0]&.downcase
+
     select('firstname, lastname, uid, id, date_of_birth, allergies, email, updated_at')
-      .where('LOWER(SUBSTRING(firstname, 1, 1)) = ?', letter.downcase)
+      .where(firstname_initial: normalized_letter)
   }
 
   scope :anything_not_in_alphabet, lambda {
     select('firstname, lastname, uid, id, date_of_birth, allergies, email, updated_at')
-      .where('LOWER(SUBSTRING(firstname, 1, 1)) NOT IN (?)', [*'a'..'z'])
+      .where.not(firstname_initial: [*'a'..'z'])
+      .where.not(firstname_initial: nil)
   }
 
   scope :search, lambda { |q|
@@ -40,7 +43,8 @@ class Patient < ApplicationRecord
   }
 
   scope :only_initials, lambda {
-    select('DISTINCT SUBSTRING(firstname, 1, 1) as firstname')
+    select('DISTINCT firstname_initial AS firstname')
+      .where.not(firstname_initial: nil)
   }
 
   # validations
@@ -61,6 +65,7 @@ class Patient < ApplicationRecord
   validates_length_of :emergency_telephone, within: 5..20, allow_blank: true
 
   # callbacks
+  before_validation :assign_firstname_initial
   before_save :squish_whitespace
   after_create :destroy_nils
 
@@ -116,6 +121,10 @@ class Patient < ApplicationRecord
   def squish_whitespace
     firstname&.squish!
     lastname&.squish!
+  end
+
+  def assign_firstname_initial
+    self.firstname_initial = firstname.to_s.strip[0]&.downcase
   end
 
   # this function is a small compromise to bypass that weird situation where a patient is created with everything set to nil
