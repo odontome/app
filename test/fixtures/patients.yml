@@ -4,6 +4,7 @@ one:
   practice_id: 1
   firstname: Edwin
   lastname: Brito
+  fullname_search: edwin brito
   firstname_initial: e
   address: su casa
   email: angeloamuratzi@hotmail.com
@@ -26,8 +27,9 @@ two:
   practice_id: 1
   firstname: Miguel
   lastname: Camacho
+  fullname_search: miguel camacho
   firstname_initial: m
-  email: nonosisi@gmail.com
+  email: miguel@gmail.com
   date_of_birth: "1985-06-15"
   notified_of_six_month_reminder: false
 
@@ -37,8 +39,9 @@ three:
   practice_id: 3
   firstname: Daniella
   lastname: Sanguino
+  fullname_search: daniella sanguino
   firstname_initial: d
-  email: daniella.sanguino@gmail.com
+  email: daniella@gmail.com
   date_of_birth: "1990-03-10"
   notified_of_six_month_reminder: false
 
@@ -48,6 +51,7 @@ four:
   practice_id: 1
   firstname: Raul
   lastname: Riera
+  fullname_search: raul riera
   firstname_initial: r
   email: raulriera@hotmail.com
   date_of_birth: "1988-11-20"

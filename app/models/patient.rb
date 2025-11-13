@@ -35,9 +35,13 @@ class Patient < ApplicationRecord
 
   scope :search, lambda { |q|
     # Escape special characters to prevent SQL injection and PostgreSQL LIKE pattern errors
-    escaped_q = ActiveRecord::Base.sanitize_sql_like(q)
+    sanitized_query = ActiveRecord::Base.sanitize_sql_like(q.to_s)
+    normalized = sanitized_query.downcase
+
     select('id, uid, firstname, lastname, email, updated_at, date_of_birth')
-      .where("uid ILIKE ? OR (firstname || ' ' || lastname) ILIKE ?", "%#{escaped_q}%", "%#{escaped_q}%")
+      .where('uid ILIKE :pattern OR fullname_search ILIKE :normalized',
+             pattern: "%#{sanitized_query}%",
+             normalized: "%#{normalized}%")
       .limit(25)
       .order('firstname')
   }
@@ -66,6 +70,7 @@ class Patient < ApplicationRecord
 
   # callbacks
   before_validation :assign_firstname_initial
+  before_validation :set_fullname_search
   before_save :squish_whitespace
   after_create :destroy_nils
 
@@ -121,6 +126,14 @@ class Patient < ApplicationRecord
   def squish_whitespace
     firstname&.squish!
     lastname&.squish!
+  end
+
+  def set_fullname_search
+    normalized_firstname = firstname.to_s.strip
+    normalized_lastname = lastname.to_s.strip
+
+    parts = [normalized_firstname, normalized_lastname].reject(&:blank?).map(&:downcase)
+    self.fullname_search = parts.join(' ').presence
   end
 
   def assign_firstname_initial

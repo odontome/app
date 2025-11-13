@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_10_123000) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_13_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -127,9 +127,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_10_123000) do
     t.boolean "notified_of_six_month_reminder", default: false, null: false
     t.datetime "deleted_at", precision: nil
     t.string "firstname_initial", limit: 1
-    t.index "lower((((firstname)::text || ' '::text) || (lastname)::text)) gin_trgm_ops", name: "index_patients_on_fullname_trgm", using: :gin
+    t.string "fullname_search"
     t.index "lower((uid)::text) gin_trgm_ops", name: "index_patients_on_lower_uid_trgm", using: :gin
     t.index ["deleted_at"], name: "index_patients_on_deleted_at"
+    t.index ["fullname_search"], name: "index_patients_on_fullname_search", opclass: :gin_trgm_ops, using: :gin
     t.index ["practice_id", "firstname_initial"], name: "index_patients_on_practice_id_and_firstname_initial"
     t.index ["practice_id"], name: "index_patients_on_practice_id"
   end
