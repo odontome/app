@@ -21,26 +21,34 @@ class Patient < ApplicationRecord
   }
 
   scope :anything_with_letter, lambda { |letter|
+    normalized_letter = letter.to_s[0]&.downcase
+
     select('firstname, lastname, uid, id, date_of_birth, allergies, email, updated_at')
-      .where('LOWER(SUBSTRING(firstname, 1, 1)) = ?', letter.downcase)
+      .where(firstname_initial: normalized_letter)
   }
 
   scope :anything_not_in_alphabet, lambda {
     select('firstname, lastname, uid, id, date_of_birth, allergies, email, updated_at')
-      .where('LOWER(SUBSTRING(firstname, 1, 1)) NOT IN (?)', [*'a'..'z'])
+      .where.not(firstname_initial: [*'a'..'z'])
+      .where.not(firstname_initial: nil)
   }
 
   scope :search, lambda { |q|
     # Escape special characters to prevent SQL injection and PostgreSQL LIKE pattern errors
-    escaped_q = ActiveRecord::Base.sanitize_sql_like(q)
+    sanitized_query = ActiveRecord::Base.sanitize_sql_like(q.to_s)
+    normalized = sanitized_query.downcase
+
     select('id, uid, firstname, lastname, email, updated_at, date_of_birth')
-      .where("uid ILIKE ? OR (firstname || ' ' || lastname) ILIKE ?", "%#{escaped_q}%", "%#{escaped_q}%")
+      .where('uid ILIKE :pattern OR fullname_search ILIKE :normalized',
+             pattern: "%#{sanitized_query}%",
+             normalized: "%#{normalized}%")
       .limit(25)
       .order('firstname')
   }
 
   scope :only_initials, lambda {
-    select('DISTINCT SUBSTRING(firstname, 1, 1) as firstname')
+    select('DISTINCT firstname_initial AS firstname')
+      .where.not(firstname_initial: nil)
   }
 
   # validations
@@ -61,6 +69,8 @@ class Patient < ApplicationRecord
   validates_length_of :emergency_telephone, within: 5..20, allow_blank: true
 
   # callbacks
+  before_validation :assign_firstname_initial
+  before_validation :set_fullname_search
   before_save :squish_whitespace
   after_create :destroy_nils
 
@@ -116,6 +126,18 @@ class Patient < ApplicationRecord
   def squish_whitespace
     firstname&.squish!
     lastname&.squish!
+  end
+
+  def set_fullname_search
+    normalized_firstname = firstname.to_s.strip
+    normalized_lastname = lastname.to_s.strip
+
+    parts = [normalized_firstname, normalized_lastname].reject(&:blank?).map(&:downcase)
+    self.fullname_search = parts.join(' ').presence
+  end
+
+  def assign_firstname_initial
+    self.firstname_initial = firstname.to_s.strip[0]&.downcase
   end
 
   # this function is a small compromise to bypass that weird situation where a patient is created with everything set to nil

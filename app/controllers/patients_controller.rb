@@ -20,7 +20,7 @@ class PatientsController < ApplicationController
       # just send "A"
       if params[:letter].blank?
         first_patient = Patient.with_practice(current_user.practice_id).order('firstname ASC').limit(1).first
-        params[:letter] = first_patient&.firstname&.first || 'A'
+        params[:letter] = first_patient&.firstname_initial || 'A'
       end
 
       # if the provided letter is not in the alphabet, send back anything else

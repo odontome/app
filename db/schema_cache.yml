@@ -905,6 +905,36 @@ columns:
     default_function:
     collation:
     comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: firstname_initial
+    sql_type_metadata: !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
+      delegate_dc_obj: !ruby/object:ActiveRecord::ConnectionAdapters::SqlTypeMetadata
+        sql_type: character varying(1)
+        type: :string
+        limit: 1
+        precision:
+        scale:
+      oid: 1043
+      fmod: 5
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
+    serial:
+    identity:
+    generated: ''
+    name: fullname_search
+    sql_type_metadata: *1
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
   practices:
   - !ruby/object:ActiveRecord::ConnectionAdapters::PostgreSQL::Column
     serial: true
@@ -1659,12 +1689,13 @@ indexes:
     valid: true
   - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
     table: patients
-    name: index_patients_on_fullname_trgm
+    name: index_patients_on_fullname_search
     unique: false
-    columns: lower((((firstname)::text || ' '::text) || (lastname)::text)) gin_trgm_ops
+    columns:
+    - fullname_search
     lengths: {}
     orders: {}
-    opclasses: {}
+    opclasses: :gin_trgm_ops
     where:
     type:
     using: :gin
@@ -1693,6 +1724,23 @@ indexes:
     unique: false
     columns:
     - practice_id
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using: :btree
+    include:
+    nulls_not_distinct: false
+    comment:
+    valid: true
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: patients
+    name: index_patients_on_practice_id_and_firstname_initial
+    unique: false
+    columns:
+    - practice_id
+    - firstname_initial
     lengths: {}
     orders: {}
     opclasses: {}
@@ -1840,4 +1888,4 @@ indexes:
     nulls_not_distinct: false
     comment:
     valid: true
-version: 20251006000000
+version: 20251113100000

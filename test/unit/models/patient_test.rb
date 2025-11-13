@@ -158,6 +158,30 @@ class PatientTest < ActiveSupport::TestCase
     assert_equal patient.lastname, 'Lopez'
   end
 
+  test 'patient fullname search is assigned automatically' do
+    patient = Patient.create!(firstname: ' Carla ', lastname: 'Jones', practice_id: 1, date_of_birth: '1980-01-01')
+
+    assert_equal 'carla jones', patient.fullname_search
+  end
+
+  test 'anything_with_letter scope filters by stored initial' do
+    result_ids = Patient.anything_with_letter('E').map(&:id)
+
+    assert_includes result_ids, patients(:one).id
+  end
+
+  test 'anything_not_in_alphabet scope returns non letter initials' do
+    patient = Patient.create!(firstname: '9Lives', lastname: 'Cat', practice_id: 1, date_of_birth: '1990-01-01')
+
+    assert_includes Patient.anything_not_in_alphabet.map(&:id), patient.id
+  end
+
+  test 'search scope matches normalized fullname' do
+    results = Patient.search('BRI')
+
+    assert_includes results.map(&:id), patients(:one).id
+  end
+
   test 'patient name can be used as initials' do
     patient = Patient.new(firstname: 'Antonio', lastname: 'Santos')
     patient_empty_firstname = Patient.new(firstname: '', lastname: 'Santos')
