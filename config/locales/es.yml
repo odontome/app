@@ -11,7 +11,9 @@ es:
   review: Calificación
   no_comment: No hay comentarios
   showing_all_reviews: Mostrando todas las calificaciones
+  showing_all_patients: Mostrando todos los pacientes para esta letra
   total_reviews: "%{count} calificaciones"
+  load_more_patients: Cargar más pacientes
   thank_you: ¡Gracias!
   range: Rango
   active: Activa

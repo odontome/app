@@ -1,0 +1,2 @@
+$("#patients-list").append("<%= j render partial: 'patient', collection: @patients, as: :patient %>");
+$("#patient-letter-pagination").html("<%= j render partial: 'letter_pagination', locals: { letter: @current_letter, next_cursor: @next_cursor } %>");

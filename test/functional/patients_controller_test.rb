@@ -83,4 +83,52 @@ class PatientsControllerTest < ActionController::TestCase
 
     assert_redirected_to patients_path
   end
+
+  test 'letter listing uses cursor pagination' do
+    practice = practices(:complete)
+    total_records = PatientsController::LETTER_PAGE_SIZE + 1
+
+    total_records.times do |index|
+      Patient.create!(
+        practice: practice,
+        firstname: "Alice#{index}",
+        lastname: 'Cursor',
+        uid: "CUR#{index}",
+        date_of_birth: Date.new(1990, 1, 1)
+      )
+    end
+
+    get :index, params: { letter: 'A' }
+
+    assert_response :success
+    assert_equal PatientsController::LETTER_PAGE_SIZE, assigns(:patients).size
+    assert assigns(:next_cursor).present?
+    assert_equal 'A', assigns(:current_letter)
+  end
+
+  test 'cursor parameter returns subsequent patients' do
+    practice = practices(:complete)
+    total_records = PatientsController::LETTER_PAGE_SIZE + 2
+
+    total_records.times do |index|
+      Patient.create!(
+        practice: practice,
+        firstname: format('Aaron%03d', index),
+        lastname: 'FollowUp',
+        uid: "CURA#{index}",
+        date_of_birth: Date.new(1990, 2, 2)
+      )
+    end
+
+    get :index, params: { letter: 'A' }
+    cursor = assigns(:next_cursor)
+
+    assert cursor.present?
+
+    get :index, params: { letter: 'A', cursor: cursor }
+
+    assert_response :success
+    assert assigns(:patients).size.positive?
+    assert_nil assigns(:next_cursor)
+  end
 end
