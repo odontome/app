@@ -90,10 +90,8 @@ class PatientsController < ApplicationController
 
   def resolve_letter_context
     @current_letter = normalize_letter(params[:letter])
-    scope = scope_for_letter(@current_letter)
-    scoped = apply_letter_cursor(scope, params[:cursor])
-
-    page = scoped.limit(LETTER_PAGE_SIZE + 1).to_a
+    patients = patients_for_letter(@current_letter, cursor: params[:cursor])
+    page = patients.limit(LETTER_PAGE_SIZE + 1).to_a
 
     if page.length > LETTER_PAGE_SIZE
       last_patient = page.pop
@@ -105,25 +103,23 @@ class PatientsController < ApplicationController
     @patients = page
   end
 
-  def scope_for_letter(letter)
+  def patients_for_letter(letter, cursor: nil)
     base_scope = if letter == '#'
                    Patient.anything_not_in_alphabet
                  else
                    Patient.anything_with_letter(letter)
                  end
 
-    base_scope
-      .with_practice(current_user.practice_id)
-      .reorder('firstname ASC, lastname ASC, patients.id ASC')
-  end
+    scoped = base_scope
+             .with_practice(current_user.practice_id)
+             .reorder('firstname ASC, lastname ASC, patients.id ASC')
 
-  def apply_letter_cursor(scope, cursor)
-    return scope if cursor.blank?
+    return scoped if cursor.blank?
 
     decoded = decode_cursor(cursor)
-    return scope if decoded.blank?
+    return scoped if decoded.blank?
 
-    scope.where(
+    scoped.where(
       'firstname > :firstname OR (firstname = :firstname AND (lastname > :lastname OR (lastname = :lastname AND patients.id > :id)))',
       firstname: decoded[:firstname],
       lastname: decoded[:lastname],
