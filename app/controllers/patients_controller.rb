@@ -93,9 +93,9 @@ class PatientsController < ApplicationController
     scope = scope_for_letter(@current_letter)
     scoped = apply_letter_cursor(scope, params[:cursor])
 
-    page = scoped.limit(letter_page_size + 1).to_a
+    page = scoped.limit(LETTER_PAGE_SIZE + 1).to_a
 
-    if page.length > letter_page_size
+    if page.length > LETTER_PAGE_SIZE
       last_patient = page.pop
       @next_cursor = encode_cursor(last_patient)
     else
@@ -158,10 +158,6 @@ class PatientsController < ApplicationController
     JSON.parse(Base64.urlsafe_decode64(token)).symbolize_keys
   rescue JSON::ParserError, ArgumentError
     nil
-  end
-
-  def letter_page_size
-    LETTER_PAGE_SIZE
   end
 
   def patient_params
