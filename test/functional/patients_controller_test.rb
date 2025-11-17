@@ -108,7 +108,7 @@ class PatientsControllerTest < ActionController::TestCase
 
   test 'cursor parameter returns subsequent patients' do
     practice = practices(:complete)
-    total_records = PatientsController::LETTER_PAGE_SIZE + 2
+    total_records = PatientsController::LETTER_PAGE_SIZE + 1
 
     total_records.times do |index|
       Patient.create!(
@@ -130,5 +130,41 @@ class PatientsControllerTest < ActionController::TestCase
     assert_response :success
     assert assigns(:patients).size.positive?
     assert_nil assigns(:next_cursor)
+  end
+
+  test 'overflow patient becomes first record on next cursor page' do
+    practice = practices(:complete)
+    practice.patients.destroy_all
+    total_records = PatientsController::LETTER_PAGE_SIZE + 5
+
+    total_records.times do |index|
+      Patient.create!(
+        practice: practice,
+        firstname: format('Alex%03d', index),
+        lastname: 'Pager',
+        uid: "CURK#{index}",
+        date_of_birth: Date.new(1991, 3, 3)
+      )
+    end
+
+    expected_second_page_first = Patient
+                                 .where(practice: practice)
+                                 .order('firstname ASC, lastname ASC, id ASC')
+                                 .offset(PatientsController::LETTER_PAGE_SIZE)
+                                 .first
+
+    get :index, params: { letter: 'A' }
+    cursor = assigns(:next_cursor)
+
+    assert_equal PatientsController::LETTER_PAGE_SIZE, assigns(:patients).size
+    assert cursor.present?
+
+    get :index, params: { letter: 'A', cursor: cursor }
+
+    assert_equal expected_second_page_first.id, assigns(:patients).first.id
+
+    remaining_records = total_records - PatientsController::LETTER_PAGE_SIZE
+    expected_second_page_size = [remaining_records, PatientsController::LETTER_PAGE_SIZE].min
+    assert_equal expected_second_page_size, assigns(:patients).size
   end
 end

@@ -92,15 +92,15 @@ class PatientsController < ApplicationController
     @current_letter = normalize_letter(params[:letter])
     patients = patients_for_letter(@current_letter, cursor: params[:cursor])
     page = patients.limit(LETTER_PAGE_SIZE + 1).to_a
+    visible_patients = page.first(LETTER_PAGE_SIZE)
 
-    if page.length > LETTER_PAGE_SIZE
-      last_patient = page.pop
-      @next_cursor = encode_cursor(last_patient)
-    else
-      @next_cursor = nil
-    end
+    @next_cursor = if page.length > LETTER_PAGE_SIZE && visible_patients.any?
+                     encode_cursor(visible_patients.last)
+                   else
+                     nil
+                   end
 
-    @patients = page
+    @patients = visible_patients
   end
 
   def patients_for_letter(letter, cursor: nil)
