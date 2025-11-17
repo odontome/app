@@ -1,0 +1,5 @@
+<% if next_cursor.present? %>
+  <%= link_to t(:load_more_patients), patients_url(letter: letter, cursor: next_cursor), remote: true, class: "btn" %>
+<% else %>
+  <span class="text-muted"><%= t(:showing_all_patients) %></span>
+<% end %>

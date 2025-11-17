@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class PatientsController < ApplicationController
+  LETTER_PAGE_SIZE = 100
+
   before_action :require_user
   before_action :require_practice_admin, only: [:destroy]
 
@@ -16,19 +18,7 @@ class PatientsController < ApplicationController
                   .with_practice(current_user.practice_id)
                   .where('created_at >= ? AND created_at <= ?', week_start, week_end)
     else
-      # Always fetch the first letter of the first record, if not present
-      # just send "A"
-      if params[:letter].blank?
-        first_patient = Patient.with_practice(current_user.practice_id).order('firstname ASC').limit(1).first
-        params[:letter] = first_patient&.firstname_initial || 'A'
-      end
-
-      # if the provided letter is not in the alphabet, send back anything else
-      @patients = if [*'a'..'z'].include?(params[:letter].downcase)
-                    Patient.anything_with_letter(params[:letter]).with_practice(current_user.practice_id)
-                  else
-                    Patient.anything_not_in_alphabet.with_practice(current_user.practice_id)
-                  end
+      resolve_letter_context
     end
 
     respond_to do |format|
@@ -36,6 +26,7 @@ class PatientsController < ApplicationController
       format.json do
         render json: @patients, methods: :fullname
       end
+      format.js
     end
   end
 
@@ -96,6 +87,74 @@ class PatientsController < ApplicationController
   end
 
   private
+
+  def resolve_letter_context
+    @current_letter = normalize_letter(params[:letter])
+    patients = patients_for_letter(@current_letter, cursor: params[:cursor])
+    page = patients.limit(LETTER_PAGE_SIZE + 1).to_a
+
+    if page.length > LETTER_PAGE_SIZE
+      last_patient = page.pop
+      @next_cursor = encode_cursor(last_patient)
+    else
+      @next_cursor = nil
+    end
+
+    @patients = page
+  end
+
+  def patients_for_letter(letter, cursor: nil)
+    base_scope = if letter == '#'
+                   Patient.anything_not_in_alphabet
+                 else
+                   Patient.anything_with_letter(letter)
+                 end
+
+    scoped = base_scope
+             .with_practice(current_user.practice_id)
+             .reorder('firstname ASC, lastname ASC, patients.id ASC')
+
+    return scoped if cursor.blank?
+
+    decoded = decode_cursor(cursor)
+    return scoped if decoded.blank?
+
+    scoped.where(
+      'firstname > :firstname OR (firstname = :firstname AND (lastname > :lastname OR (lastname = :lastname AND patients.id > :id)))',
+      firstname: decoded[:firstname],
+      lastname: decoded[:lastname],
+      id: decoded[:id]
+    )
+  end
+
+  def normalize_letter(letter_param)
+    return '#' if letter_param == '#'
+
+    if letter_param.present?
+      return letter_param.upcase if letter_param.match?(/\A[a-z]\z/i)
+
+      return '#'
+    end
+
+    first_patient = Patient.with_practice(current_user.practice_id).order('firstname ASC').limit(1).first
+    (first_patient&.firstname_initial || 'A').upcase
+  end
+
+  def encode_cursor(patient)
+    payload = {
+      firstname: patient.firstname.to_s,
+      lastname: patient.lastname.to_s,
+      id: patient.id
+    }
+
+    Base64.urlsafe_encode64(payload.to_json)
+  end
+
+  def decode_cursor(token)
+    JSON.parse(Base64.urlsafe_decode64(token)).symbolize_keys
+  rescue JSON::ParserError, ArgumentError
+    nil
+  end
 
   def patient_params
     params.require(:patient).permit(:uid, :firstname, :lastname, :fullname, :date_of_birth, :past_illnesses, :surgeries, :medications,

@@ -13,7 +13,9 @@ pt:
   review: Avaliação
   no_comment: Nenhum comentário foi fornecido
   showing_all_reviews: Mostrando todas as avaliações
+  showing_all_patients: Mostrando todos os pacientes desta letra
   total_reviews: "%{cound} avaliações"
+  load_more_patients: Carregar mais pacientes
   thank_you: Obrigado!
   range: Intervalo
   active: Ativo
@@ -415,7 +417,7 @@ pt:
   showing_all_payments: Mostrando todos os pagamentos
   continue: Continuar
   schedule: Agendar
-  search: Buscar…
+  search: Buscar pacientes…
   select_doctor: Selecionar um médico
   show_past_appointments: Mostrar agendamentos passados
   signin: Entrar

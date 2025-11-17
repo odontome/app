@@ -36,62 +36,26 @@
             <th class="w-1"></th>
           </tr>
         </thead>
-        <tbody>
-          <% @patients.each do |patient| %>
-            <tr>
-              <td data-label="<%= t :name %>">
-                <div class="d-flex py-1 align-items-center">
-                  <%= link_to patient, class: 'p-0 border-0 bg-transparent', style: 'line-height: 0;' do %>
-                    <%= avatar_for(patient) %>
-                  <% end %>
-                  <div class="flex-fill">
-                    <div class="font-weight-medium"><%= patient.fullname %></div>
-                    <div class="text-muted"><%= patient.email %></div>
-                  </div>
-                </div>
-              </td>
-              <td class="text-muted" data-label="<%= t :uid %>">
-                <%= patient.uid %>
-              </td>
-              <td class="text-muted" data-label="<%= t :status %>">
-                <% if patient.missing_info? %>
-                  <%= label_tag t(:incomplete), :red %>
-                <% else %>
-                  <%= label_tag t(:active), :green %>
-                <% end %>
-              </td>
-              <td class="text-muted" data-label="<%= t :updated_at %>">
-                <%= time_ago_in_words patient.updated_at %>
-              </td>
-              <td>
-                <div class="btn-list flex-nowrap">
-                  <%= component :dropdown do %>
-                    <%= link_to t(:view_profile), patient, class: "dropdown-item" %>
-                    <%= link_to t(:edit), edit_patient_path(patient), class: "dropdown-item" %>
-                    <% unless patient.missing_info? %>
-                      <%= link_to t(:create_new_payment), new_payment_path(patient_id: patient.id), class: "dropdown-item" %>
-                    <% end %>
-                    <% if user_is_admin?(current_user) %>
-                      <%= link_to t(:delete), patient, method: :delete, data: { confirm: t(:are_you_sure_no_undo) }, class: "dropdown-item text-red" %>
-                    <% end %>
-                  <% end %>
-                </div>
-              </td>
-            </tr>
-          <% end %>
+        <tbody id="patients-list">
+          <%= render partial: 'patient', collection: @patients, as: :patient %>
         </tbody>
       </table>
+      <% if params[:term].nil? && params[:segment].nil? %>
+        <div class="card-footer" id="patient-letter-pagination">
+          <%= render partial: 'letter_pagination', locals: { letter: @current_letter, next_cursor: @next_cursor } %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>
 
 <% if params[:term].nil? and params[:segment].nil? %>
   <ul class="pagination">
-    <li class="page-item <%= params[:letter] == '#' ? 'active' : '' %>">
+    <li class="page-item <%= @current_letter == '#' ? 'active' : '' %>">
       <%= link_to "#", patients_url(letter: "#"), class: "page-link" %>
     </li> 
     <% letter_options.each do |letter| %>
-      <li class="page-item <%= params[:letter] == letter[:value] ? 'active' : '' %> <%= letter[:included?] ? '' : 'disabled' %>">
+      <li class="page-item <%= @current_letter == letter[:value] ? 'active' : '' %> <%= letter[:included?] ? '' : 'disabled' %>">
         <%= link_to letter[:value], patients_url(letter: letter[:value]), class: "page-link" %>
       </li>      
     <% end %>
