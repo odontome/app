@@ -86,6 +86,7 @@ class PatientsControllerTest < ActionController::TestCase
 
   test 'letter listing uses cursor pagination' do
     practice = practices(:complete)
+    other_practice = practices(:complete_another_language)
     total_records = PatientsController::LETTER_PAGE_SIZE + 1
 
     total_records.times do |index|
@@ -98,16 +99,30 @@ class PatientsControllerTest < ActionController::TestCase
       )
     end
 
+    # Create patients in a different practice that should NOT appear in results
+    5.times do |index|
+      Patient.create!(
+        practice: other_practice,
+        firstname: "Alice#{index}",
+        lastname: 'OtherPractice',
+        uid: "OTHER#{index}",
+        date_of_birth: Date.new(1990, 1, 1)
+      )
+    end
+
     get :index, params: { letter: 'A' }
 
     assert_response :success
     assert_equal PatientsController::LETTER_PAGE_SIZE, assigns(:patients).size
     assert assigns(:next_cursor).present?
     assert_equal 'A', assigns(:current_letter)
+    # Verify that only patients from the current user's practice are returned
+    assert assigns(:patients).all? { |p| p.practice_id == practice.id }
   end
 
   test 'cursor parameter returns subsequent patients' do
     practice = practices(:complete)
+    other_practice = practices(:complete_another_language)
     total_records = PatientsController::LETTER_PAGE_SIZE + 2
 
     total_records.times do |index|
@@ -120,15 +135,30 @@ class PatientsControllerTest < ActionController::TestCase
       )
     end
 
+    # Create patients in a different practice that should NOT appear in results
+    10.times do |index|
+      Patient.create!(
+        practice: other_practice,
+        firstname: format('Aaron%03d', index),
+        lastname: 'OtherFollowUp',
+        uid: "OTHERA#{index}",
+        date_of_birth: Date.new(1990, 2, 2)
+      )
+    end
+
     get :index, params: { letter: 'A' }
     cursor = assigns(:next_cursor)
 
     assert cursor.present?
+    # Verify first page only contains patients from current practice
+    assert assigns(:patients).all? { |p| p.practice_id == practice.id }
 
     get :index, params: { letter: 'A', cursor: cursor }
 
     assert_response :success
     assert assigns(:patients).size.positive?
     assert_nil assigns(:next_cursor)
+    # Verify subsequent page also only contains patients from current practice
+    assert assigns(:patients).all? { |p| p.practice_id == practice.id }
   end
 end
