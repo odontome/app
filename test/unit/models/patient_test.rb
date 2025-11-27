@@ -191,4 +191,33 @@ class PatientTest < ActiveSupport::TestCase
     assert_equal patient_empty_firstname.initials, 'S'
     assert_equal patient_empty_lastname.initials, 'A'
   end
+
+  test 'find_or_create_from sets search fields when creating new patient' do
+    practice_id = practices(:complete).id
+    patient_id = Patient.find_or_create_from('Maria Garcia'.dup, practice_id)
+    patient = Patient.find(patient_id)
+
+    assert_equal 'Maria', patient.firstname
+    assert_equal 'Garcia', patient.lastname
+    assert_equal 'm', patient.firstname_initial, 'firstname_initial should be set for index lookup'
+    assert_equal 'maria garcia', patient.fullname_search, 'fullname_search should be set for search'
+  end
+
+  test 'find_or_create_from patient is findable by anything_with_letter scope' do
+    practice_id = practices(:complete).id
+    patient_id = Patient.find_or_create_from('Carlos Rodriguez'.dup, practice_id)
+
+    result_ids = Patient.anything_with_letter('C').with_practice(practice_id).map(&:id)
+
+    assert_includes result_ids, patient_id, 'Patient created via find_or_create_from should appear in letter index'
+  end
+
+  test 'find_or_create_from patient is findable by search scope' do
+    practice_id = practices(:complete).id
+    patient_id = Patient.find_or_create_from('Sofia Martinez'.dup, practice_id)
+
+    result_ids = Patient.search('Sofia').with_practice(practice_id).map(&:id)
+
+    assert_includes result_ids, patient_id, 'Patient created via find_or_create_from should be searchable'
+  end
 end

@@ -109,6 +109,9 @@ class Patient < ApplicationRecord
       patient.fullname = patient_id_or_name
       # set the practice_id manually because validation (and callbacks apparently as well) are skipped
       patient.practice_id = practice_id
+      # manually set search fields since validation is skipped
+      patient.send(:assign_firstname_initial)
+      patient.send(:set_fullname_search)
       # skip validation when saving this patient
       patient.save!(validate: false)
 
