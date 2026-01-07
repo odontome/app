@@ -17,8 +17,8 @@
 		    <%= f.label :date_of_birth, class: "form-label" %>
         <div class="row">
           <%= f.date_select :date_of_birth, { 
-            start_year: Time.now.year - 90, 
-            end_year: Time.now.year - 3, 
+            start_year: Time.now.year - 100, 
+            end_year: Time.now.year, 
           }, 
           class: "form-select date-select" %>
         </div>
