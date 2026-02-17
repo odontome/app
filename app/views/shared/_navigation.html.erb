@@ -38,7 +38,7 @@
             <%= button_to 'Stop impersonating', admin_stop_impersonating_path, method: :delete, class: 'dropdown-item text-danger', form: { data: { turbo: false } } %>
           <% end %>
           <div class="dropdown-divider"></div>
-          <%= link_to t(:signout), logout_url, class: "dropdown-item" %>
+          <%= button_to t(:signout), logout_url, method: :delete, class: "dropdown-item" %>
         </div>
       </div>
     </div>
