@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   # authentication
   resource :user_session
   get '/signin' => 'user_sessions#new', :as => :signin
-  get '/logout' => 'user_sessions#destroy', :as => :logout
+  delete '/logout' => 'user_sessions#destroy', :as => :logout
   get '/signup' => 'practices#new', :as => :signup
 
   # practice management
