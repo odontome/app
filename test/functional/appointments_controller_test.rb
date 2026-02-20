@@ -8,9 +8,17 @@ class AppointmentsControllerTest < ActionController::TestCase
   end
 
   test 'should get index' do
-    get :index, params: { datebook_id: 1 }, format: :json
+    start_ts = 1.month.ago.to_i
+    end_ts   = 1.month.from_now.to_i
+    get :index, params: { datebook_id: 1, start: start_ts, end: end_ts }, format: :json
     assert_response :success
     assert_not_nil assigns(:appointments)
+  end
+
+  test 'should return empty array when index is missing date params' do
+    get :index, params: { datebook_id: 1 }, format: :json
+    assert_response :success
+    assert_equal '[]', response.body
   end
 
   test 'should get new' do
@@ -113,10 +121,10 @@ class AppointmentsControllerTest < ActionController::TestCase
     assert_equal updated_appointment.ends_at.to_time.to_i, new_ends_at.to_time.to_i
   end
 
-  test 'should return not found for appointment not in datebook' do
-    assert_raises(ActiveRecord::RecordNotFound) do
-      get :show, params: { datebook_id: 1, id: 999999 }, format: :html
-    end
+  test 'should alert when appointment not found' do
+    get :show, params: { datebook_id: 1, id: 999999 }, format: :html
+    assert_response :success
+    assert_includes response.body, "alert("
   end
 
   test 'should not create an appointment with in a foreign practice' do

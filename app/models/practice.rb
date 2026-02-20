@@ -42,7 +42,11 @@ class Practice < ApplicationRecord
   end
 
   def populate_default_treatments
-    Rails.configuration.patient_treatments[locale || 'en']['treatments'].each do |treatment|
+    locale_key = locale.presence || 'en'
+    treatments_config = Rails.configuration.patient_treatments[locale_key] || Rails.configuration.patient_treatments['en']
+    return unless treatments_config
+
+    treatments_config['treatments'].each do |treatment|
       treatments << Treatment.new(name: treatment, price: 0)
     end
   end
