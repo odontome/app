@@ -2,22 +2,36 @@
 
 class AppointmentsController < ApplicationController
   before_action :require_user
+  rescue_from ActiveRecord::RecordNotFound, with: :appointment_not_found
 
   layout false, except: :show
 
   def index
     datebook = Datebook.with_practice(current_user.practice_id).find(params[:datebook_id])
 
+    unless params[:start].present? && params[:end].present?
+      respond_to do |format|
+        format.html { @appointments = Appointment.none }
+        format.json { render json: [] }
+      end
+      return
+    end
+
+    start_ts = params[:start].to_i
+    end_ts   = params[:end].to_i
+    max_window = 90.days.to_i
+    end_ts = start_ts + max_window if (end_ts - start_ts) > max_window
+
     @appointments = if params[:doctor_id]
-                      datebook.appointments.find_from_doctor_and_between(params[:doctor_id], params[:start],
-                                                                         params[:end])
+                      datebook.appointments.find_from_doctor_and_between(params[:doctor_id], start_ts,
+                                                                         end_ts)
                     else
-                      datebook.appointments.find_between(params[:start], params[:end])
+                      datebook.appointments.find_between(start_ts, end_ts)
                     end
 
     respond_to do |format|
       format.html
-      format.json { render json: @appointments, methods: %w[doctor patient] }
+      format.json { render json: @appointments }
     end
   end
 
@@ -113,5 +127,14 @@ class AppointmentsController < ApplicationController
 
   def appointment_params
     params.require(:appointment).permit(:datebook_id, :doctor_id, :patient_id, :starts_at, :ends_at, :notes, :status)
+  end
+
+  def appointment_not_found
+    message = I18n.t(:appointment_not_found_message)
+    respond_to do |format|
+      format.html { render inline: "<script>alert('#{helpers.sanitize(message)}');</script>", layout: false }
+      format.json { render json: { error: "Not found" }, status: :not_found }
+      format.js   { render js: "alert('#{helpers.sanitize(message)}');" }
+    end
   end
 end

@@ -126,6 +126,7 @@ pt:
   appointment_deleted_error_message: Houve um problema ao deletar o agendamento
   appointment_updated_success_message: O agendamento foi atualizado com sucesso
   appointment_updated_error_message: Houve um problema ao atualizar o agendamento
+  appointment_not_found_message: Agendamento não encontrado. Pode ter sido excluído por outro usuário ou nunca ter existido.
   appointments: Agendamentos
   appointments_in_datebook: ! "%{count} agendamentos"
   are_you_sure: Tem certeza?
