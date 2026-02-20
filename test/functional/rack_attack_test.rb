@@ -213,6 +213,12 @@ class RackAttackTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'should not crash when login email param is nil' do
+    post '/user_session', params: { signin: { email: nil, password: 'wrong' } },
+                          headers: { 'REMOTE_ADDR' => '192.168.1.110' }
+    assert_not_equal 500, response.status, 'Nil email param should not cause a server error'
+  end
+
   test 'allows signup from non-Russian timezone' do
     post '/practice', params: { practice: { name: 'Test Clinic', timezone: 'America/New_York' } }
     refute_equal 403, response.status, 'Non-Russian timezone should not be blocked'

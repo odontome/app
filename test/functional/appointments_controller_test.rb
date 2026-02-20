@@ -113,6 +113,12 @@ class AppointmentsControllerTest < ActionController::TestCase
     assert_equal updated_appointment.ends_at.to_time.to_i, new_ends_at.to_time.to_i
   end
 
+  test 'should return not found for appointment not in datebook' do
+    assert_raises(ActiveRecord::RecordNotFound) do
+      get :show, params: { datebook_id: 1, id: 999999 }, format: :html
+    end
+  end
+
   test 'should not create an appointment with in a foreign practice' do
     appointment = {
       doctor_id: 2,

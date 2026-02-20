@@ -54,19 +54,19 @@ class AppointmentsController < ApplicationController
 
   def show
     datebook = Datebook.with_practice(current_user.practice_id).find(params[:datebook_id])
-    @appointment = Appointment.includes(%i[doctor patient]).where(id: params[:id], datebook_id: datebook.id).first
+    @appointment = Appointment.includes(%i[doctor patient]).find_by!(id: params[:id], datebook_id: datebook.id)
   end
 
   def edit
     @datebook = Datebook.with_practice(current_user.practice_id).find params[:datebook_id]
-    @appointment = Appointment.where(id: params[:id], datebook_id: @datebook.id).first
+    @appointment = Appointment.find_by!(id: params[:id], datebook_id: @datebook.id)
     @patient = Patient.with_practice(current_user.practice_id).find(params[:patient_id])
     @doctors = Doctor.with_practice(current_user.practice_id).valid
   end
 
   def update
     datebook = Datebook.with_practice(current_user.practice_id).find params[:datebook_id]
-    @appointment = Appointment.where(id: params[:id], datebook_id: datebook.id).first
+    @appointment = Appointment.find_by!(id: params[:id], datebook_id: datebook.id)
 
     # if there is no `as_values_patient_id` the appointment is just getting moved
     # otherwise, clean up the fields
@@ -96,7 +96,7 @@ class AppointmentsController < ApplicationController
 
   def destroy
     datebook = Datebook.with_practice(current_user.practice_id).find params[:datebook_id]
-    @appointment = Appointment.where(id: params[:id], datebook_id: datebook.id).first
+    @appointment = Appointment.find_by!(id: params[:id], datebook_id: datebook.id)
 
     respond_to do |format|
       if @appointment.destroy
