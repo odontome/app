@@ -415,6 +415,19 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_includes instructions, @practice.timezone
   end
 
+  test 'initialize should include scheduling rules in instructions' do
+    raw_key = enable_agent_access(@practice)
+    @request.headers['X-Agent-Key'] = raw_key
+
+    post_mcp(method: 'initialize', id: 24)
+    assert_response :success
+
+    body = JSON.parse(@response.body)
+    instructions = body.dig('result', 'instructions')
+    assert_includes instructions, 'double-booking'
+    assert_includes instructions, '60 minutes'
+  end
+
   # --- error: record not found ---
 
   test 'should return isError true for record not found' do
