@@ -13,8 +13,9 @@
         <div class="row g-2">          
           <div class="col-auto">
             <%= form_tag audits_path, method: :get, local: true, class: 'filter-form' do %>
+              <% agent_options = @agent_labels.map { |label| [t(:agent_display_name, label: label), "agent:#{label}"] } %>
               <%= select_tag :user_id,
-                    options_for_select([[t("filters.title"), '']] + @practice_users.map { |user| [user.fullname, user.id] }, @filter_params[:user_id]),
+                    options_for_select([[t("filters.title"), '']] + @practice_users.map { |user| [user.fullname, user.id] } + agent_options, @filter_params[:user_id]),
                     { class: 'form-select', onchange: 'this.form.submit();' } %>
               <% @filter_params.except(:user_id).each do |key, value| %>
                 <%= hidden_field_tag key, value %>
@@ -45,16 +46,20 @@
             <tr>
               <td>
                 <% if version.whodunnit.present? %>
-                  <% user = @users_hash[version.whodunnit.to_i] %>
-                  <% if user %>
-                    <div class="d-flex align-items-center">
-                      <span class="avatar avatar-sm rounded-circle me-2">
-                        <%= user.initials %>
-                      </span>
-                      <%= user.fullname %>
-                    </div>
+                  <% if version.whodunnit.to_s.start_with?('agent:') %>
+                    <span class="text-muted"><%= t(:agent_display_name, label: version.whodunnit.to_s.delete_prefix('agent:')) %></span>
                   <% else %>
-                    <span class="text-muted">ID: <%= version.whodunnit %></span>
+                    <% user = @users_hash[version.whodunnit.to_i] %>
+                    <% if user %>
+                      <div class="d-flex align-items-center">
+                        <span class="avatar avatar-sm rounded-circle me-2">
+                          <%= user.initials %>
+                        </span>
+                        <%= user.fullname %>
+                      </div>
+                    <% else %>
+                      <span class="text-muted">ID: <%= version.whodunnit %></span>
+                    <% end %>
                   <% end %>
                 <% else %>
                   <span class="text-muted">System</span>

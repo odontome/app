@@ -37,6 +37,9 @@ Rails.application.routes.draw do
   get '/practice/balance' => 'practices#balance', :as => :practice_balance
   get '/practice/appointments' => 'practices#appointments', :as => :practice_appointments
   get '/practice/settings' => 'practices#settings', :as => :practice_settings
+  get '/practice/agent-settings' => 'practices#agent_settings', :as => :practice_agent_settings
+  patch '/practice/agent-settings' => 'practices#update_agent_settings', :as => :practice_agent_settings_update
+  post '/practice/agent-settings/rotate' => 'practices#rotate_agent_api_key', :as => :practice_agent_api_key_rotate
   get '/practice/cancel' => 'practices#cancel', :as => :practice_cancel
   post '/practice/close' => 'practices#close', :as => :practice_close
   post '/practice/:id' => 'practices#update', :as => :practice_update
@@ -79,7 +82,21 @@ Rails.application.routes.draw do
   # Public payment completion using Stripe client_secret (no auth required)
   get '/pay/:client_secret', to: 'payments#pay', as: 'pay_payment'
 
+  # OAuth discovery for MCP
+  get '/.well-known/oauth-protected-resource', to: 'api/agent/oauth#protected_resource_metadata'
+  get '/.well-known/oauth-authorization-server', to: 'api/agent/oauth#authorization_server_metadata'
+
   namespace :api do
+    namespace :agent do
+      resources :datebooks, only: [] do
+        resources :appointments, only: %i[index create update]
+      end
+      post 'mcp', to: 'mcp#create'
+      delete 'mcp', to: 'mcp#destroy'
+      get 'oauth/authorize', to: 'oauth#authorize'
+      post 'oauth/token', to: 'oauth#token'
+    end
+
     namespace :webhooks do
       post '/stripe', to: 'stripe#event'
     end

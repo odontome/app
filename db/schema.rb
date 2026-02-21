@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_27_020806) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_08_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -155,6 +155,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_27_020806) do
     t.boolean "connect_details_submitted", default: false
     t.string "currency", default: "mxn", null: false
     t.string "custom_review_url"
+    t.boolean "agent_access_enabled", default: false, null: false
+    t.string "agent_api_key_digest"
+    t.string "agent_label", default: "Agent"
+    t.index ["agent_api_key_digest"], name: "index_practices_on_agent_api_key_digest", unique: true
     t.index ["connect_onboarding_status"], name: "index_practices_on_connect_onboarding_status"
     t.index ["stripe_account_id"], name: "index_practices_on_stripe_account_id"
   end

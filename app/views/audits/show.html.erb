@@ -37,6 +37,8 @@
                         </span>
                         <%= @whodunnit_user.fullname %>
                       </div>
+                    <% elsif @whodunnit_agent_label.present? %>
+                      <span class="text-muted"><%= t(:agent_display_name, label: @whodunnit_agent_label) %></span>
                     <% elsif @version.whodunnit.present? %>
                       <span class="text-muted">ID: <%= @version.whodunnit %></span>
                     <% else %>

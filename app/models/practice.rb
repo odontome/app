@@ -76,6 +76,26 @@ class Practice < ApplicationRecord
     has_connect_account? && connect_charges_enabled? && connect_payouts_enabled?
   end
 
+  def agent_access_enabled?
+    agent_access_enabled
+  end
+
+  def generate_agent_api_key!
+    raw_key = SecureRandom.hex(32)
+    update!(agent_api_key_digest: self.class.agent_api_key_digest(raw_key))
+    raw_key
+  end
+
+  def agent_api_key_valid?(raw_key)
+    return false if agent_api_key_digest.blank? || raw_key.blank?
+
+    ActiveSupport::SecurityUtils.secure_compare(agent_api_key_digest, self.class.agent_api_key_digest(raw_key))
+  end
+
+  def self.agent_api_key_digest(raw_key)
+    Digest::SHA256.hexdigest(raw_key.to_s)
+  end
+
   def create_connect_account!
     return if has_connect_account?
 

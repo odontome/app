@@ -1,0 +1,92 @@
+<div class="page-header mb-4">
+  <div class="row align-items-center">
+    <div class="col">
+      <div class="page-pretitle">
+        <%= link_to t(:practice_settings), practice_settings_url, class: 'text-muted' %>
+      </div>
+      <h2 class="page-title"><%= t(:agent_access_settings) %></h2>
+      <div class="text-muted"><%= t(:agent_access_settings_description) %></div>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="row row-cards">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"><%= t(:agent_access_settings) %></h3>
+        </div>
+        <div class="card-body">
+          <%= form_with model: @practice, url: practice_agent_settings_update_url, method: :patch, local: true do |f| %>
+            <div class="mb-3">
+              <div class="form-check form-switch">
+                <%= f.check_box :agent_access_enabled, class: 'form-check-input', role: 'switch' %>
+                <%= f.label :agent_access_enabled, t(:agent_access_enabled), class: 'form-check-label' %>
+              </div>
+              <div class="form-hint"><%= t(:agent_access_enabled_hint) %></div>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :agent_label, t(:agent_label), class: 'form-label' %>
+              <%= f.text_field :agent_label, class: 'form-control', maxlength: 50 %>
+              <div class="form-hint"><%= t(:agent_label_hint) %></div>
+            </div>
+
+            <div class="d-flex">
+              <%= f.submit t(:save_changes), class: 'btn btn-primary' %>
+              <%= link_to t(:cancel), practice_settings_url, class: 'btn btn-outline-secondary ms-2' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card mb-3">
+        <div class="card-header">
+          <h3 class="card-title"><%= t(:agent_api_usage_title) %></h3>
+        </div>
+        <div class="card-body">
+          <p class="text-muted"><%= t(:agent_api_usage_description) %></p>
+          <ul class="list-unstyled mb-0">
+            <li><strong><%= t(:agent_api_header) %>:</strong> <code>X-Agent-Key</code></li>
+            <li><strong><%= t(:agent_api_base) %>:</strong> <code>/api/agent</code></li>
+            <li><strong><%= t(:agent_api_endpoints) %>:</strong>
+              <ul>
+                <li><code>GET /datebooks/:datebook_id/appointments?start=...&amp;end=...&amp;doctor_id=...</code></li>
+                <li><code>POST /datebooks/:datebook_id/appointments</code></li>
+                <li><code>PATCH /datebooks/:datebook_id/appointments/:id</code></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"><%= t(:agent_api_key_manage) %></h3>
+        </div>
+        <div class="card-body">
+          <% if flash[:agent_api_key].present? %>
+            <div class="alert alert-success">
+              <strong><%= t(:agent_api_key_rotated) %></strong>
+              <div class="mt-2"><%= t(:agent_api_key_copy_prompt) %></div>
+              <code class="d-block mt-2"><%= flash[:agent_api_key] %></code>
+            </div>
+          <% end %>
+
+          <% if @practice.agent_api_key_digest.present? %>
+            <p class="text-muted"><%= t(:agent_api_key_set) %></p>
+          <% else %>
+            <p class="text-muted"><%= t(:agent_api_key_not_set) %></p>
+          <% end %>
+
+          <%= button_to t(:agent_api_key_rotate), practice_agent_api_key_rotate_url, method: :post,
+                        class: 'btn btn-outline-primary',
+                        data: { confirm: t(:agent_api_key_rotate_confirm) } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
