@@ -721,3 +721,5 @@ en:
         record_not_found: "Record not found"
         rate_limited: "Too many requests. Please slow down and try again in a moment."
         request_too_large: "Request body is too large."
+        invalid_date_range: "Start date must be before end date."
+        date_range_too_wide: "Date range cannot exceed %{max} days. Please use a narrower range."

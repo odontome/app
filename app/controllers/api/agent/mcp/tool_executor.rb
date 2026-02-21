@@ -37,10 +37,19 @@ module Api
           success_result(doctors)
         end
 
+        MAX_DATE_RANGE_DAYS = 90
+        MAX_RESULTS = 500
+
         def list_appointments(args)
           datebook = resolve_datebook(args)
           starts_at = normalize_time(args["start"])
           ends_at = normalize_time(args["end"])
+
+          return error_result(I18n.t("agents.mcp.errors.invalid_date_range")) if starts_at >= ends_at
+
+          if (ends_at - starts_at) > MAX_DATE_RANGE_DAYS.days
+            return error_result(I18n.t("agents.mcp.errors.date_range_too_wide", max: MAX_DATE_RANGE_DAYS))
+          end
 
           appointments = if args["doctor_id"].present?
                            datebook.appointments.find_from_doctor_and_between(args["doctor_id"], starts_at, ends_at)
@@ -48,7 +57,7 @@ module Api
                            datebook.appointments.find_between(starts_at, ends_at)
                          end
 
-          success_result(appointments.map { |a| a.as_json(agent: true) })
+          success_result(appointments.limit(MAX_RESULTS).map { |a| a.as_json(agent: true) })
         end
 
         def create_appointment(args)

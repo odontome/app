@@ -712,3 +712,5 @@ pt:
         record_not_found: "Registro não encontrado"
         rate_limited: "Muitas solicitações. Por favor aguarde um momento e tente novamente."
         request_too_large: "O corpo da solicitação é grande demais."
+        invalid_date_range: "A data de início deve ser anterior à data de fim."
+        date_range_too_wide: "O intervalo de datas não pode exceder %{max} dias. Por favor use um intervalo mais curto."

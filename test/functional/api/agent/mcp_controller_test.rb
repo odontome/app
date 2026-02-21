@@ -105,7 +105,7 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
         name: 'list_appointments',
         arguments: {
           datebook_id: @datebook.id,
-          start: 1.year.ago.to_i.to_s,
+          start: 1.week.ago.to_i.to_s,
           end: 1.day.from_now.to_i.to_s
         }
       }
@@ -114,6 +114,51 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
 
     body = JSON.parse(@response.body)
     assert_equal false, body.dig('result', 'isError')
+  end
+
+  # --- tools/call: list_appointments date range validation ---
+
+  test 'should reject list_appointments with date range over 90 days' do
+    raw_key = enable_agent_access(@practice)
+    @request.headers['X-Agent-Key'] = raw_key
+
+    post_mcp(
+      method: 'tools/call', id: 13,
+      params: {
+        name: 'list_appointments',
+        arguments: {
+          datebook_id: @datebook.id,
+          start: Time.now.iso8601,
+          end: (Time.now + 91.days).iso8601
+        }
+      }
+    )
+    assert_response :success
+
+    body = JSON.parse(@response.body)
+    assert_equal true, body.dig('result', 'isError')
+    assert_match(/90/, body.dig('result', 'content', 0, 'text'))
+  end
+
+  test 'should reject list_appointments when start is after end' do
+    raw_key = enable_agent_access(@practice)
+    @request.headers['X-Agent-Key'] = raw_key
+
+    post_mcp(
+      method: 'tools/call', id: 14,
+      params: {
+        name: 'list_appointments',
+        arguments: {
+          datebook_id: @datebook.id,
+          start: 1.day.from_now.iso8601,
+          end: 1.day.ago.iso8601
+        }
+      }
+    )
+    assert_response :success
+
+    body = JSON.parse(@response.body)
+    assert_equal true, body.dig('result', 'isError')
   end
 
   # --- tools/call: create_appointment ---
