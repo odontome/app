@@ -1,0 +1,121 @@
+<div class="page-header mb-4">
+  <div class="row align-items-center">
+    <div class="col">
+      <div class="page-pretitle">
+        <%= link_to t(:practice_settings), practice_settings_url, class: 'text-muted' %>
+      </div>
+      <h2 class="page-title"><%= t(:agent_access_settings) %></h2>
+      <div class="text-muted"><%= t(:agent_access_settings_description) %></div>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="row row-cards">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"><%= t(:agent_access_settings) %></h3>
+        </div>
+        <div class="card-body">
+          <%= form_with model: @practice, url: practice_agent_settings_update_url, method: :patch, local: true do |f| %>
+            <div class="mb-3">
+              <div class="form-check form-switch">
+                <%= f.check_box :agent_access_enabled, class: 'form-check-input', role: 'switch' %>
+                <%= f.label :agent_access_enabled, t(:agent_access_enabled), class: 'form-check-label' %>
+              </div>
+              <div class="form-hint"><%= t(:agent_access_enabled_hint) %></div>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :agent_label, t(:agent_label), class: 'form-label' %>
+              <%= f.text_field :agent_label, class: 'form-control', maxlength: 50 %>
+              <div class="form-hint"><%= t(:agent_label_hint) %></div>
+            </div>
+
+            <div class="d-flex">
+              <%= f.submit t(:save_changes), class: 'btn btn-primary' %>
+              <%= link_to t(:cancel), practice_settings_url, class: 'btn btn-outline-secondary ms-2' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card mb-3">
+        <div class="card-header">
+          <h3 class="card-title"><%= t(:agent_connect_title) %></h3>
+        </div>
+        <div class="card-body">
+          <p class="text-muted"><%= t(:agent_connect_description) %></p>
+
+          <div class="mb-3">
+            <label class="form-label"><%= t(:agent_connect_url_label) %></label>
+            <div class="input-group input-group-flat">
+              <input type="text" class="form-control" value="<%= request.base_url %>/api/agent/mcp" readonly id="agent-url-input">
+              <span class="input-group-text">
+                <a href="#" class="link-secondary" onclick="navigator.clipboard.writeText(document.getElementById('agent-url-input').value); return false;" title="<%= t(:copy) %>">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg>
+                </a>
+              </span>
+            </div>
+          </div>
+
+          <ul class="list-unstyled space-y-1 mb-0">
+            <li><%= link_to "Claude", "https://support.anthropic.com/en/articles/11175166-about-custom-integrations-using-remote-mcp", target: "_blank", rel: "noopener" %> — <%= t(:agent_connect_claude_hint) %></li>
+            <li><%= link_to "ChatGPT", "https://help.openai.com/en/articles/11487775-connectors-in-chatgpt", target: "_blank", rel: "noopener" %> — <%= t(:agent_connect_chatgpt_hint) %></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"><%= t(:agent_secret_key_title) %></h3>
+        </div>
+        <div class="card-body">
+          <% if @practice.agent_api_key_digest.present? %>
+            <p class="text-muted">
+              <%= t(:agent_secret_key_set) %>
+            </p>
+            <% if @practice.agent_api_key_prefix.present? %>
+              <p><code><%= @practice.agent_api_key_prefix %>••••••••</code></p>
+            <% end %>
+          <% else %>
+            <p class="text-muted"><%= t(:agent_secret_key_not_set) %></p>
+          <% end %>
+
+          <p class="text-muted small"><%= t(:agent_secret_key_warning) %></p>
+
+          <%= button_to t(:agent_secret_key_regenerate), practice_agent_api_key_rotate_url, method: :post,
+                        class: 'btn btn-outline-primary',
+                        data: { confirm: t(:agent_secret_key_regenerate_confirm) } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if @new_agent_key.present? %>
+  <div class="modal modal-blur show d-block" tabindex="-1" role="dialog" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-status bg-success"></div>
+        <div class="modal-body py-4">
+          <h3><%= t(:agent_api_key_rotated) %></h3>
+          <p class="text-muted"><%= t(:agent_api_key_copy_prompt) %></p>
+          <div class="input-group">
+            <input type="text" class="form-control" value="<%= @new_agent_key %>" readonly id="agent-key-input">
+            <button class="btn btn-outline-secondary" type="button" onclick="navigator.clipboard.writeText(document.getElementById('agent-key-input').value)">
+              <%= t(:copy) %>
+            </button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <%= link_to t(:done), practice_agent_settings_url, class: 'btn btn-success w-100' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop show"></div>
+<% end %>

@@ -136,6 +136,8 @@ pt:
   balance: Saldo
   balance_created_error_message: Houve um problema ao criar este item
   cancel: Cancelar
+  copy: Copiar
+  done: Pronto
   cigarettes_per_day: Cigarros por dia
   close_account: Fechar conta
   close_your_account: Fechar sua conta
@@ -668,3 +670,48 @@ pt:
     deleted_datebook: "␡ %{name}"
     deleted_appointment_with_notes: "␡ %{notes}"
     deleted_appointment_with_id: "␡ Agendamento #%{id}"
+
+  agent_access_settings: "Assistente de IA"
+  agent_access_settings_description: "Permita que um assistente de IA ajude você a gerenciar suas consultas."
+  agent_access_status_enabled: "habilitado"
+  agent_access_status_disabled: "não configurado"
+  manage_agent_access: "Configurar assistente"
+  agent_access_enabled: "Ativar assistente de IA"
+  agent_access_enabled_hint: "Quando ativado, seu assistente de IA pode ajudar a gerenciar consultas."
+  agent_label: "Nome do assistente"
+  agent_label_hint: "Este nome aparece no registro de atividades para você saber o que o assistente alterou."
+  agent_settings_updated: "Alterações salvas."
+  agent_display_name: "Agente: %{label}"
+  save_changes: "Salvar alterações"
+  agent_connect_title: "Conecte seu app de IA"
+  agent_connect_description: "Você pode conectar o Odonto.me ao app de IA que já usa. Siga o guia do seu app:"
+  agent_connect_url_label: "Sua URL de conexão"
+  agent_connect_claude_hint: "Configurações → Conectores"
+  agent_connect_chatgpt_hint: "Configurações → Apps"
+  agent_secret_key_title: "Chave secreta"
+  agent_secret_key_set: "Sua chave secreta está ativa. Você vai precisar dela para conectar seu app de IA."
+  agent_secret_key_not_set: "Você ainda não criou uma chave secreta. Gere uma para conectar seu app de IA."
+  agent_secret_key_warning: "Mantenha esta chave em sigilo. Quem tiver acesso a ela pode gerenciar consultas em seu nome. Se achar que foi compartilhada por engano, gere uma nova imediatamente."
+  agent_secret_key_regenerate: "Gerar nova chave"
+  agent_secret_key_regenerate_confirm: "Isso substituirá sua chave atual e desconectará qualquer app que a esteja usando. Continuar?"
+  agent_api_key_rotated: "Nova chave criada"
+  agent_api_key_copy_prompt: "Copie esta chave agora e cole no seu app de IA. Você não poderá vê-la novamente."
+
+  agents:
+    default_label: "Agente"
+    errors:
+      unauthorized: "Não autorizado"
+      not_found: "Não encontrado"
+    mcp:
+      errors:
+        parse_error: "Erro de análise"
+        invalid_request: "Solicitação inválida"
+        method_not_found: "Método não encontrado"
+        invalid_params: "Parâmetros inválidos"
+        invalid_session: "Sessão inválida ou ausente"
+        unknown_tool: "Ferramenta desconhecida: %{tool}"
+        record_not_found: "Registro não encontrado"
+        rate_limited: "Muitas solicitações. Por favor aguarde um momento e tente novamente."
+        request_too_large: "O corpo da solicitação é grande demais."
+        invalid_date_range: "A data de início deve ser anterior à data de fim."
+        date_range_too_wide: "O intervalo de datas não pode exceder %{max} dias. Por favor use um intervalo mais curto."

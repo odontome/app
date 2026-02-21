@@ -62,6 +62,11 @@ class Rack::Attack
     req.ip unless req.path.start_with?('/assets')
   end
 
+  # Throttle agent API requests by IP (stricter than global)
+  throttle('agent_api/ip', limit: 60, period: 1.minute) do |req|
+    req.ip if req.path.start_with?('/api/agent')
+  end
+
   # Throttle POST requests to /user_session by IP address
   #
   # Key: "rack::attack:#{Time.now.to_i/:period}:logins/ip:#{req.ip}"

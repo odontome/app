@@ -33,6 +33,12 @@ class AuditsController < ApplicationController
 
     @practice_users = User.with_practice(current_user.practice_id).order('firstname')
 
+    agent_whodunnit_values = PaperTrail::Version.where(practice_id: current_user.practice_id)
+                                                 .where("whodunnit LIKE ?", 'agent:%')
+                                                 .distinct
+                                                 .pluck(:whodunnit)
+    @agent_labels = agent_whodunnit_values.map { |value| value.to_s.delete_prefix('agent:') }.sort
+
     # Create hash for efficient user lookups in the view to avoid N+1 queries
     @users_hash = @practice_users.index_by(&:id)
   end
@@ -53,5 +59,15 @@ class AuditsController < ApplicationController
     end
 
     @whodunnit_user = @version.whodunnit.present? ? User.find_by(id: @version.whodunnit) : nil
+    @whodunnit_agent_label = agent_label_from(@version.whodunnit)
+  end
+
+  private
+
+  def agent_label_from(whodunnit)
+    return if whodunnit.blank?
+    return unless whodunnit.to_s.start_with?('agent:')
+
+    whodunnit.to_s.delete_prefix('agent:')
   end
 end

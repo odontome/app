@@ -57,7 +57,9 @@ class Appointment < ApplicationRecord
 
   # Overwrite de JSON response to comply with what the event calendar wants
   # this needs to be overwritten in the "web" version and not the whole app
-  def as_json(_options = {})
+  def as_json(options = {})
+    return agent_as_json if options[:agent]
+
     bg_color = is_confirmed ? doctor.color : '#cdcdcd'
     border_color = doctor.color
     text_color = is_confirmed ? '#ffffff' : '#333333'
@@ -81,6 +83,24 @@ class Appointment < ApplicationRecord
       lastname: patient.lastname,
       patient_uid: patient.uid
     }
+  end
+
+  def agent_as_json
+    tz = datebook.practice.timezone
+    json = {
+      id: id,
+      start: starts_at.in_time_zone(tz).iso8601,
+      end: ends_at.in_time_zone(tz).iso8601,
+      doctor_id: doctor_id,
+      doctor_name: doctor.fullname,
+      datebook_id: datebook_id,
+      datebook_name: datebook.name,
+      patient_id: patient_id,
+      patient_name: patient&.fullname,
+      status: status,
+      notes: notes
+    }
+    json
   end
 
   # find all the appointments of a give patient and arrange them

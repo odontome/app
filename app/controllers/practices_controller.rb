@@ -4,7 +4,7 @@ class PracticesController < ApplicationController
   before_action :require_user, except: %i[new create]
   before_action :require_no_user, only: %i[new create]
   before_action :require_superadmin, only: %i[index destroy edit]
-  before_action :require_practice_admin, only: %i[show settings balance appointments update close cancel]
+  before_action :require_practice_admin, only: %i[show settings balance appointments update close cancel agent_settings update_agent_settings rotate_agent_api_key]
   skip_before_action :check_subscription_status
 
   def index
@@ -112,6 +112,27 @@ class PracticesController < ApplicationController
     end
   end
 
+  def agent_settings
+    @practice = current_user.practice
+  end
+
+  def update_agent_settings
+    @practice = current_user.practice
+
+    if @practice.update(agent_settings_params)
+      redirect_to practice_agent_settings_url, notice: t(:agent_settings_updated)
+    else
+      render action: 'agent_settings'
+    end
+  end
+
+  def rotate_agent_api_key
+    @practice = current_user.practice
+    @new_agent_key = @practice.generate_agent_api_key!
+
+    render :agent_settings
+  end
+
   def cancel
     # Intentionally left blank
   end
@@ -206,5 +227,9 @@ class PracticesController < ApplicationController
   def practice_params
     params.require(:practice).permit(:name, :locale, :timezone, :currency, :email, :custom_review_url,
                                      users_attributes: %i[firstname lastname email password password_confirmation])
+  end
+
+  def agent_settings_params
+    params.require(:practice).permit(:agent_access_enabled, :agent_label)
   end
 end

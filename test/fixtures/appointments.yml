@@ -11,5 +11,5 @@ unreviewed:
   datebook_id: 1
   doctor_id: 1
   patient_id: 4
-  starts_at: <%= 2.days.ago %>
-  ends_at: <%= 2.days.ago + 1.hour %>
+  starts_at: <%= 12.hours.ago %>
+  ends_at: <%= 12.hours.ago + 1.hour %>
