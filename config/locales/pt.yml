@@ -685,6 +685,7 @@ pt:
   save_changes: "Salvar alterações"
   agent_connect_title: "Conecte seu app de IA"
   agent_connect_description: "Você pode conectar o Odonto.me ao app de IA que já usa. Siga o guia do seu app:"
+  agent_connect_url_label: "Sua URL de conexão"
   agent_connect_claude_hint: "Configurações → Conectores"
   agent_connect_chatgpt_hint: "Configurações → Apps"
   agent_secret_key_title: "Chave secreta"

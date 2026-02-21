@@ -49,6 +49,19 @@
         </div>
         <div class="card-body">
           <p class="text-muted"><%= t(:agent_connect_description) %></p>
+
+          <div class="mb-3">
+            <label class="form-label"><%= t(:agent_connect_url_label) %></label>
+            <div class="input-group input-group-flat">
+              <input type="text" class="form-control" value="<%= request.base_url %>/api/agent/mcp" readonly id="agent-url-input">
+              <span class="input-group-text">
+                <a href="#" class="link-secondary" onclick="navigator.clipboard.writeText(document.getElementById('agent-url-input').value); return false;" title="<%= t(:copy) %>">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg>
+                </a>
+              </span>
+            </div>
+          </div>
+
           <ul class="list-unstyled space-y-1 mb-0">
             <li><%= link_to "Claude", "https://support.anthropic.com/en/articles/11175166-about-custom-integrations-using-remote-mcp", target: "_blank", rel: "noopener" %> — <%= t(:agent_connect_claude_hint) %></li>
             <li><%= link_to "ChatGPT", "https://help.openai.com/en/articles/11487775-connectors-in-chatgpt", target: "_blank", rel: "noopener" %> — <%= t(:agent_connect_chatgpt_hint) %></li>
