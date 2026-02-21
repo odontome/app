@@ -116,6 +116,38 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_equal false, body.dig('result', 'isError')
   end
 
+  test 'should include patient info in appointment response without PII' do
+    raw_key = enable_agent_access(@practice)
+    @request.headers['X-Agent-Key'] = raw_key
+
+    post_mcp(
+      method: 'tools/call', id: 50,
+      params: {
+        name: 'list_appointments',
+        arguments: {
+          datebook_id: @datebook.id,
+          start: 1.week.ago.to_i.to_s,
+          end: 1.day.from_now.to_i.to_s
+        }
+      }
+    )
+    assert_response :success
+
+    body = JSON.parse(@response.body)
+    content = JSON.parse(body.dig('result', 'content', 0, 'text'))
+    assert content.any?, 'Expected at least one appointment'
+
+    entry = content.first
+    # Should include patient identity
+    assert entry.key?('patient_id'), 'Appointment should include patient_id'
+    assert entry.key?('patient_name'), 'Appointment should include patient_name'
+
+    # Should NOT include any PII fields
+    %w[email phone telephone address date_of_birth allergies insurance].each do |pii_field|
+      assert_not entry.key?(pii_field), "Appointment must not expose PII field: #{pii_field}"
+    end
+  end
+
   # --- tools/call: list_appointments date range validation ---
 
   test 'should reject list_appointments with date range over 90 days' do
@@ -262,6 +294,32 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     body = JSON.parse(@response.body)
     content = JSON.parse(body.dig('result', 'content', 0, 'text'))
     assert content.is_a?(Array)
+  end
+
+  test 'should not expose PII in search_patients response' do
+    raw_key = enable_agent_access(@practice)
+    @request.headers['X-Agent-Key'] = raw_key
+
+    post_mcp(
+      method: 'tools/call', id: 51,
+      params: { name: 'search_patients', arguments: { query: @patient.firstname } }
+    )
+    assert_response :success
+
+    body = JSON.parse(@response.body)
+    content = JSON.parse(body.dig('result', 'content', 0, 'text'))
+    assert content.any?, 'Expected at least one patient'
+
+    entry = content.first
+    # Should only include safe fields
+    assert entry.key?('id')
+    assert entry.key?('firstname')
+    assert entry.key?('lastname')
+
+    # Should NOT include PII
+    %w[email phone telephone address date_of_birth allergies insurance].each do |pii_field|
+      assert_not entry.key?(pii_field), "search_patients must not expose PII field: #{pii_field}"
+    end
   end
 
   # --- error: unknown method ---

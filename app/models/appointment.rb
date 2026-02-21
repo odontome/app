@@ -87,7 +87,7 @@ class Appointment < ApplicationRecord
 
   def agent_as_json
     tz = datebook.practice.timezone
-    {
+    json = {
       id: id,
       start: starts_at.in_time_zone(tz).iso8601,
       end: ends_at.in_time_zone(tz).iso8601,
@@ -95,9 +95,12 @@ class Appointment < ApplicationRecord
       doctor_name: doctor.fullname,
       datebook_id: datebook_id,
       datebook_name: datebook.name,
+      patient_id: patient_id,
+      patient_name: patient&.fullname,
       status: status,
       notes: notes
     }
+    json
   end
 
   # find all the appointments of a give patient and arrange them

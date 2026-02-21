@@ -44,13 +44,15 @@ class Api::Agent::AppointmentsControllerTest < ActionController::TestCase
     assert first.key?('doctor_name')
     assert first.key?('datebook_id')
     assert first.key?('datebook_name')
+    assert first.key?('patient_id')
+    assert first.key?('patient_name')
     assert first.key?('status')
     assert first.key?('notes')
 
-    assert_not first.key?('patient_id')
-    assert_not first.key?('patient_uid')
-    assert_not first.key?('firstname')
-    assert_not first.key?('lastname')
+    # Should NOT expose PII
+    %w[email phone telephone address date_of_birth allergies insurance].each do |pii_field|
+      assert_not first.key?(pii_field), "Appointment must not expose PII field: #{pii_field}"
+    end
   end
 
   test 'should list appointments with datebook name and readable dates' do
@@ -98,7 +100,8 @@ class Api::Agent::AppointmentsControllerTest < ActionController::TestCase
 
     assert_response :created
     body = JSON.parse(@response.body)
-    assert_not body.key?('patient_id')
+    assert body.key?('patient_id')
+    assert body.key?('patient_name')
   end
 
   test 'should create appointment with new patient name' do
