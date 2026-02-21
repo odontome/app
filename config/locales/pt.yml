@@ -711,3 +711,4 @@ pt:
         unknown_tool: "Ferramenta desconhecida: %{tool}"
         record_not_found: "Registro não encontrado"
         rate_limited: "Muitas solicitações. Por favor aguarde um momento e tente novamente."
+        request_too_large: "O corpo da solicitação é grande demais."

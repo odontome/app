@@ -38,8 +38,17 @@ module Api
 
       private
 
+      MAX_BODY_SIZE = 1.megabyte
+
       def parse_body
-        JSON.parse(request.body.read)
+        body_str = request.body.read(MAX_BODY_SIZE + 1)
+
+        if body_str && body_str.bytesize > MAX_BODY_SIZE
+          render_jsonrpc_error(nil, -32600, I18n.t("agents.mcp.errors.request_too_large"))
+          return nil
+        end
+
+        JSON.parse(body_str.to_s)
       rescue JSON::ParserError
         render_jsonrpc_error(nil, -32700, I18n.t("agents.mcp.errors.parse_error"))
         nil

@@ -442,6 +442,21 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  # --- error: request too large ---
+
+  test 'should reject oversized request body' do
+    raw_key = enable_agent_access(@practice)
+    @request.headers['X-Agent-Key'] = raw_key
+    @request.headers['Content-Type'] = 'application/json'
+
+    oversized_body = '{"jsonrpc":"2.0","method":"initialize","id":1,"padding":"' + ('x' * 2.megabytes) + '"}'
+    post :create, body: oversized_body, format: :json
+    assert_response :success
+
+    body = JSON.parse(@response.body)
+    assert_equal(-32600, body.dig('error', 'code'))
+  end
+
   # --- error: record not found ---
 
   test 'should return isError true for record not found' do
