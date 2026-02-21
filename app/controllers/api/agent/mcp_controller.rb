@@ -48,7 +48,14 @@ module Api
           return nil
         end
 
-        JSON.parse(body_str.to_s)
+        parsed = JSON.parse(body_str.to_s)
+
+        unless parsed.is_a?(Hash)
+          render_jsonrpc_error(nil, -32600, I18n.t("agents.mcp.errors.invalid_request"))
+          return nil
+        end
+
+        parsed
       rescue JSON::ParserError
         render_jsonrpc_error(nil, -32700, I18n.t("agents.mcp.errors.parse_error"))
         nil

@@ -931,6 +931,23 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert body.key?('error'), 'Should return a JSON-RPC error for missing method'
   end
 
+  test 'protocol: should reject batch JSON-RPC array requests' do
+    raw_key = enable_agent_access(@practice)
+    @request.headers['X-Agent-Key'] = raw_key
+    @request.headers['Content-Type'] = 'application/json'
+
+    batch_body = [
+      { jsonrpc: '2.0', method: 'initialize', id: 1 },
+      { jsonrpc: '2.0', method: 'tools/list', id: 2 }
+    ].to_json
+
+    post :create, body: batch_body, format: :json
+    assert_response :success
+
+    body = JSON.parse(@response.body)
+    assert_equal(-32600, body.dig('error', 'code'))
+  end
+
   test 'protocol: should handle empty tool name' do
     raw_key = enable_agent_access(@practice)
     @request.headers['X-Agent-Key'] = raw_key
