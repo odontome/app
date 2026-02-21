@@ -99,7 +99,13 @@ module Api
           attrs = {}
           attrs[:doctor_id] = args["doctor_id"] if args["doctor_id"].present?
           attrs[:notes] = args["notes"] if args.key?("notes")
-          attrs[:status] = args["status"] if args["status"].present?
+
+          if args["status"].present?
+            unless ALLOWED_STATUSES.include?(args["status"])
+              return error_result("Invalid status. Allowed values: #{ALLOWED_STATUSES.join(', ')}")
+            end
+            attrs[:status] = args["status"]
+          end
           appointment.assign_attributes(attrs) if attrs.any?
 
           appointment.starts_at = normalize_time(args["starts_at"]) if args["starts_at"].present?
@@ -188,13 +194,21 @@ module Api
           ActiveSupport::TimeZone[@practice.timezone]
         end
 
+        ALLOWED_STATUSES = %w[confirmed cancelled].freeze
+
         def find_patient_id(patient_id, patient_name)
           if patient_id.present?
             patient = Patient.with_practice(@practice.id).find_by(id: patient_id)
             return patient.id if patient
           end
 
-          return Patient.find_or_create_from(patient_name, @practice.id) if patient_name.present?
+          if patient_name.present?
+            result_id = Patient.find_or_create_from(patient_name, @practice.id)
+            # Verify the patient belongs to this practice. find_or_create_from
+            # treats numeric strings as patient ID lookups without practice
+            # scoping, which could link to a patient from another practice.
+            return result_id if result_id && Patient.with_practice(@practice.id).where(id: result_id).exists?
+          end
 
           nil
         end
