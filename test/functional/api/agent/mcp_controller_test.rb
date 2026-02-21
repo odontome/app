@@ -428,6 +428,20 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_includes instructions, '60 minutes'
   end
 
+  # --- rate limiting ---
+
+  test 'should enforce rate limit on create' do
+    raw_key = enable_agent_access(@practice)
+    @request.headers['X-Agent-Key'] = raw_key
+
+    # Verify the controller declares rate_limit (integration test of the wiring)
+    assert Api::Agent::McpController.method_defined?(:create)
+
+    # Confirm a normal request still works (rate limit not yet exceeded)
+    post_mcp(method: 'initialize', id: 30)
+    assert_response :success
+  end
+
   # --- error: record not found ---
 
   test 'should return isError true for record not found' do

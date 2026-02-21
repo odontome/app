@@ -6,6 +6,11 @@ module Api
       PROTOCOL_VERSION = "2025-11-25"
       SERVER_INFO = { name: "odontome", version: "1.0.0" }.freeze
 
+      rate_limit to: 120, within: 1.minute,
+                 by: -> { @practice&.id || request.remote_ip },
+                 with: -> { render_jsonrpc_error(nil, -32000, I18n.t("agents.mcp.errors.rate_limited")) },
+                 only: :create
+
       def destroy
         head :ok
       end

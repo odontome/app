@@ -719,3 +719,4 @@ en:
         invalid_session: "Invalid or missing session"
         unknown_tool: "Unknown tool: %{tool}"
         record_not_found: "Record not found"
+        rate_limited: "Too many requests. Please slow down and try again in a moment."
