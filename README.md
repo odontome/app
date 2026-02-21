@@ -191,6 +191,34 @@ Or compile assets manually when needed:
 ./bin/webpack --watch
 ```
 
+## AI Assistant (MCP Agent)
+
+Odonto.me includes a built-in AI assistant that lets practices connect AI apps like [Claude](https://claude.ai) or [ChatGPT](https://chatgpt.com) to manage appointments through natural language.
+
+### How it works
+
+The assistant exposes an [MCP (Model Context Protocol)](https://modelcontextprotocol.io) endpoint at `/api/agent/mcp`. Once connected, the AI can:
+
+- List datebooks, doctors, and patients
+- Search the patient directory
+- Create, reschedule, and cancel appointments
+- Respect working hours and timezone rules
+
+### Setup
+
+1. Go to **My Practice > AI Assistant** in the app
+2. Enable the AI assistant toggle
+3. Generate a secret key
+4. Copy the connection URL and key into your AI app's connector settings
+
+### Security
+
+- Each practice has its own API key (SHA-256 hashed, only the first 8 characters stored for display)
+- All data is scoped to the authenticated practice — no cross-practice access is possible
+- Rate limited to 120 requests/minute per practice and 60 requests/minute per IP
+- Request bodies capped at 1 MB; appointment queries limited to 90-day ranges
+- All changes are logged in the audit trail
+
 ## Deployment
 
 Deploys automatically every commit on the `master` branch to the staging environment. It's important to keep the branch in a deployable state.
