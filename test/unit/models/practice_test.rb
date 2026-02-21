@@ -83,6 +83,33 @@ class PracticeTest < ActiveSupport::TestCase
     assert_nil practice.stripe_customer_id
   end
 
+  test 'practice resolves IANA timezone with a matching ActiveSupport city name' do
+    practice = Practice.new(name: 'Test', timezone: 'America/Mexico_City')
+    practice.users << User.new(firstname: 'A', lastname: 'B', email: 'tz1@test.com',
+                               password: '1234567', password_confirmation: '1234567')
+    practice.save!
+
+    assert_not_equal 'UTC', practice.timezone
+    assert ActiveSupport::TimeZone[practice.timezone].present?,
+           "Expected a valid timezone, got: #{practice.timezone}"
+    # Offset should match Mexico City (UTC-6)
+    assert_equal -6, ActiveSupport::TimeZone[practice.timezone].utc_offset / 3600
+  end
+
+  test 'practice resolves IANA timezone without a matching ActiveSupport city name' do
+    practice = Practice.new(name: 'Test', timezone: 'America/Cancun')
+    practice.users << User.new(firstname: 'A', lastname: 'B', email: 'tz2@test.com',
+                               password: '1234567', password_confirmation: '1234567')
+    practice.save!
+
+    # Should NOT fall back to UTC — Cancun is a valid IANA timezone
+    assert_not_equal 'UTC', practice.timezone
+    assert ActiveSupport::TimeZone[practice.timezone].present?,
+           "Expected a valid timezone, got: #{practice.timezone}"
+    # Offset should match Cancun (UTC-5)
+    assert_equal -5, ActiveSupport::TimeZone[practice.timezone].utc_offset / 3600
+  end
+
   test 'practice allows blank custom_review_url' do
     practice = practices(:complete)
     practice.custom_review_url = ''

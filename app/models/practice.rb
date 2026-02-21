@@ -158,20 +158,18 @@ class Practice < ApplicationRecord
   end
 
   def set_timezone_and_locale
-    begin
-      # parse the [Continent]/[City_Name] into [City Name]
-      timezone_without_continent = timezone.split('/').last.sub('_', ' ')
-      # check if the parsed city name is part of the locales
-      self.timezone = if ActiveSupport::TimeZone.all.map(&:name).include? timezone_without_continent
-                        timezone_without_continent
-                      else
-                        Time.zone.name
-                      end
-    rescue StandardError
-      self.timezone = Time.zone.name
+    tz = ActiveSupport::TimeZone[timezone]
+
+    if tz.nil?
+      city = timezone.to_s.split("/").last.tr("_", " ")
+      tz = ActiveSupport::TimeZone[city]
     end
 
-    self.locale = 'en'
+    self.timezone = tz&.name || Time.zone.name
+    self.locale = "en"
+  rescue StandardError
+    self.timezone = Time.zone.name
+    self.locale = "en"
   end
 
   def set_first_user_data
