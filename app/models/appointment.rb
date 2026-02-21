@@ -86,10 +86,11 @@ class Appointment < ApplicationRecord
   end
 
   def agent_as_json
+    tz = datebook.practice.timezone
     {
       id: id,
-      start: starts_at.to_formatted_s(:rfc822),
-      end: ends_at.to_formatted_s(:rfc822),
+      start: starts_at.in_time_zone(tz).iso8601,
+      end: ends_at.in_time_zone(tz).iso8601,
       doctor_id: doctor_id,
       doctor_name: doctor.fullname,
       datebook_id: datebook_id,

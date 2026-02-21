@@ -184,7 +184,6 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
       params: {
         name: 'update_appointment',
         arguments: {
-          datebook_id: @datebook.id,
           appointment_id: appointment.id,
           starts_at: new_starts.to_s,
           ends_at: new_ends.to_s
@@ -260,6 +259,159 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_equal(-32700, body.dig('error', 'code'))
   end
 
+  # --- timezone handling ---
+
+  test 'should parse ISO 8601 times in practice timezone' do
+    raw_key = enable_agent_access(@practice)
+    @request.headers['X-Agent-Key'] = raw_key
+
+    tz = @practice.timezone # Europe/London
+    local_start = 3.days.from_now.in_time_zone(tz).change(hour: 15, min: 0)
+    local_end = local_start + 1.hour
+
+    assert_difference 'Appointment.count' do
+      post_mcp(
+        method: 'tools/call', id: 20,
+        params: {
+          name: 'create_appointment',
+          arguments: {
+            datebook_id: @datebook.id,
+            doctor_id: @doctor.id,
+            patient_id: @patient.id,
+            starts_at: local_start.iso8601,
+            ends_at: local_end.iso8601,
+            notes: 'Timezone test'
+          }
+        }
+      )
+    end
+
+    assert_response :success
+    body = JSON.parse(@response.body)
+    assert_equal false, body.dig('result', 'isError')
+
+    appointment = Appointment.last
+    assert_equal 15, appointment.starts_at.in_time_zone(tz).hour
+    assert_equal 16, appointment.ends_at.in_time_zone(tz).hour
+  end
+
+  test 'should parse naive time strings in practice timezone not UTC' do
+    raw_key = enable_agent_access(@practice)
+    @request.headers['X-Agent-Key'] = raw_key
+
+    tz = @practice.timezone
+    # Send a naive datetime string WITHOUT offset — should be interpreted as practice tz
+    date = 3.days.from_now.strftime('%Y-%m-%d')
+
+    assert_difference 'Appointment.count' do
+      post_mcp(
+        method: 'tools/call', id: 21,
+        params: {
+          name: 'create_appointment',
+          arguments: {
+            datebook_id: @datebook.id,
+            doctor_id: @doctor.id,
+            patient_id: @patient.id,
+            starts_at: "#{date} 15:00",
+            ends_at: "#{date} 16:00",
+            notes: 'Naive time test'
+          }
+        }
+      )
+    end
+
+    assert_response :success
+    body = JSON.parse(@response.body)
+    assert_equal false, body.dig('result', 'isError')
+
+    appointment = Appointment.last
+    # 15:00 naive should become 15:00 in the practice's timezone, NOT 15:00 UTC
+    assert_equal 15, appointment.starts_at.in_time_zone(tz).hour
+  end
+
+  test 'should strip UTC offset and interpret as practice local time' do
+    raw_key = enable_agent_access(@practice)
+    @request.headers['X-Agent-Key'] = raw_key
+
+    tz = @practice.timezone
+    date = 3.days.from_now.strftime('%Y-%m-%d')
+
+    # Send "15:00Z" (UTC) — should still be treated as 15:00 in practice tz
+    assert_difference 'Appointment.count' do
+      post_mcp(
+        method: 'tools/call', id: 25,
+        params: {
+          name: 'create_appointment',
+          arguments: {
+            datebook_id: @datebook.id,
+            doctor_id: @doctor.id,
+            patient_id: @patient.id,
+            starts_at: "#{date}T15:00:00Z",
+            ends_at: "#{date}T16:00:00Z",
+            notes: 'UTC offset stripped test'
+          }
+        }
+      )
+    end
+
+    assert_response :success
+    body = JSON.parse(@response.body)
+    assert_equal false, body.dig('result', 'isError')
+
+    appointment = Appointment.last
+    # Even though "Z" was sent, 15:00 should be 15:00 in the practice timezone
+    assert_equal 15, appointment.starts_at.in_time_zone(tz).hour
+    assert_equal 16, appointment.ends_at.in_time_zone(tz).hour
+  end
+
+  test 'should return times in practice timezone in responses' do
+    raw_key = enable_agent_access(@practice)
+    @request.headers['X-Agent-Key'] = raw_key
+
+    tz = @practice.timezone
+    appointment = appointments(:unreviewed)
+
+    post_mcp(
+      method: 'tools/call', id: 22,
+      params: {
+        name: 'list_appointments',
+        arguments: {
+          datebook_id: @datebook.id,
+          start: 1.day.ago.to_i.to_s,
+          end: 1.day.from_now.to_i.to_s
+        }
+      }
+    )
+    assert_response :success
+
+    body = JSON.parse(@response.body)
+    content = JSON.parse(body.dig('result', 'content', 0, 'text'))
+    assert content.any?, 'Expected at least one appointment'
+
+    entry = content.find { |a| a['id'] == appointment.id }
+    assert entry, 'Expected to find the unreviewed appointment'
+
+    # Returned time should match the appointment's time in the practice timezone
+    returned_start = Time.iso8601(entry['start'])
+    expected_start = appointment.starts_at
+    assert_equal expected_start.to_i, returned_start.to_i
+
+    # The ISO string should contain a timezone offset, not be naive
+    assert_match(/[+-]\d{2}:\d{2}\z/, entry['start'])
+  end
+
+  test 'initialize should include practice timezone in instructions' do
+    raw_key = enable_agent_access(@practice)
+    @request.headers['X-Agent-Key'] = raw_key
+
+    post_mcp(method: 'initialize', id: 23)
+    assert_response :success
+
+    body = JSON.parse(@response.body)
+    instructions = body.dig('result', 'instructions')
+    assert_includes instructions, @practice.timezone
+  end
+
   # --- error: record not found ---
 
   test 'should return isError true for record not found' do
@@ -270,7 +422,7 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
       method: 'tools/call', id: 12,
       params: {
         name: 'update_appointment',
-        arguments: { datebook_id: @datebook.id, appointment_id: 999999 }
+        arguments: { appointment_id: 999999 }
       }
     )
     assert_response :success

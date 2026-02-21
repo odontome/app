@@ -78,9 +78,9 @@ module Api
         end
 
         def update_appointment(args)
-          datebook = resolve_datebook(args)
-          appointment = ::Appointment.where(id: args["appointment_id"], datebook_id: datebook.id).first
+          appointment = find_practice_appointment(args["appointment_id"])
           raise ActiveRecord::RecordNotFound unless appointment
+          datebook = appointment.datebook
 
           if args["doctor_id"].present?
             error = validate_doctor(args["doctor_id"])
@@ -141,6 +141,13 @@ module Api
 
         # --- helpers (same patterns as AppointmentsController) ---
 
+        def find_practice_appointment(appointment_id)
+          ::Appointment.joins(:datebook)
+                       .where(datebooks: { practice_id: @practice.id })
+                       .where(id: appointment_id)
+                       .first
+        end
+
         def resolve_datebook(args)
           scope = Datebook.with_practice(@practice.id)
 
@@ -160,8 +167,16 @@ module Api
           if value.to_s.match?(/\A\d+\z/)
             Time.at(value.to_i)
           else
-            Time.zone.parse(value.to_s)
+            # Strip any timezone offset so the time is always interpreted
+            # as the practice's local time. The MCP instructions tell agents
+            # to send times in the practice timezone, but some send UTC.
+            naive = value.to_s.sub(/[Zz]$/, "").sub(/[+-]\d{2}:\d{2}$/, "")
+            practice_tz.parse(naive)
           end
+        end
+
+        def practice_tz
+          ActiveSupport::TimeZone[@practice.timezone]
         end
 
         def find_patient_id(patient_id, patient_name)

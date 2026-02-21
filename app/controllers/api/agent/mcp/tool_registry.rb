@@ -31,8 +31,8 @@ module Api
               properties: {
                 datebook_id: { type: "integer", description: "Datebook ID" },
                 datebook_name: { type: "string", description: "Datebook name (alternative to datebook_id)" },
-                start: { type: "string", description: "Range start (ISO 8601 or Unix timestamp)" },
-                end: { type: "string", description: "Range end (ISO 8601 or Unix timestamp)" },
+                start: { type: "string", description: "Range start — ISO 8601 in the practice's timezone (e.g. '2026-02-21T08:00:00-05:00')" },
+                end: { type: "string", description: "Range end — ISO 8601 in the practice's timezone" },
                 doctor_id: { type: "integer", description: "Filter by a specific doctor's schedule (optional)" }
               },
               required: %w[start end]
@@ -49,8 +49,8 @@ module Api
                 doctor_id: { type: "integer", description: "Doctor who will see the patient" },
                 patient_id: { type: "integer", description: "Existing patient ID (use search_patients to find). Optional if patient_name is given." },
                 patient_name: { type: "string", description: "Full name for a new patient (a record will be created automatically). Optional if patient_id is given." },
-                starts_at: { type: "string", description: "Appointment start time (ISO 8601 or Unix timestamp)" },
-                ends_at: { type: "string", description: "Appointment end time (ISO 8601 or Unix timestamp)" },
+                starts_at: { type: "string", description: "Appointment start time — ISO 8601 in the practice's timezone (e.g. '2026-02-21T15:00:00-05:00')" },
+                ends_at: { type: "string", description: "Appointment end time — ISO 8601 in the practice's timezone" },
                 notes: { type: "string", description: "Reason for visit or clinical notes, e.g. 'Routine cleaning', 'Crown prep', 'Emergency toothache' (max 255 chars)" }
               },
               required: %w[doctor_id starts_at ends_at]
@@ -62,12 +62,10 @@ module Api
             inputSchema: {
               type: "object",
               properties: {
-                datebook_id: { type: "integer", description: "Datebook ID" },
-                datebook_name: { type: "string", description: "Datebook name (alternative to datebook_id)" },
                 appointment_id: { type: "integer", description: "Appointment ID to update" },
                 doctor_id: { type: "integer", description: "Reassign to a different doctor (optional)" },
-                starts_at: { type: "string", description: "New start time for rescheduling (optional)" },
-                ends_at: { type: "string", description: "New end time for rescheduling (optional)" },
+                starts_at: { type: "string", description: "New start time — ISO 8601 in the practice's timezone (optional)" },
+                ends_at: { type: "string", description: "New end time — ISO 8601 in the practice's timezone (optional)" },
                 notes: { type: "string", description: "Updated reason for visit or clinical notes (optional)" },
                 status: { type: "string", enum: %w[confirmed cancelled], description: "Set to 'cancelled' to cancel or 'confirmed' to confirm the appointment (optional)" }
               },
