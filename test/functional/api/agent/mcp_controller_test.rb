@@ -122,6 +122,8 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     raw_key = enable_agent_access(@practice)
     @request.headers['X-Agent-Key'] = raw_key
 
+    start_time = 3.days.from_now.in_time_zone(@practice.timezone).change(hour: 10, min: 0)
+
     assert_difference 'Appointment.count' do
       post_mcp(
         method: 'tools/call', id: 6,
@@ -131,8 +133,8 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
             datebook_id: @datebook.id,
             doctor_id: @doctor.id,
             patient_id: @patient.id,
-            starts_at: 3.days.from_now.to_i.to_s,
-            ends_at: (3.days.from_now + 1.hour).to_i.to_s,
+            starts_at: start_time.to_i.to_s,
+            ends_at: (start_time + 1.hour).to_i.to_s,
             notes: 'MCP test'
           }
         }
@@ -150,6 +152,8 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     raw_key = enable_agent_access(@practice)
     @request.headers['X-Agent-Key'] = raw_key
 
+    start_time = 4.days.from_now.in_time_zone(@practice.timezone).change(hour: 10, min: 0)
+
     assert_difference ['Patient.count', 'Appointment.count'] do
       post_mcp(
         method: 'tools/call', id: 7,
@@ -159,8 +163,8 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
             datebook_id: @datebook.id,
             doctor_id: @doctor.id,
             patient_name: 'MCP New Patient',
-            starts_at: 4.days.from_now.to_i.to_s,
-            ends_at: (4.days.from_now + 1.hour).to_i.to_s
+            starts_at: start_time.to_i.to_s,
+            ends_at: (start_time + 1.hour).to_i.to_s
           }
         }
       )
@@ -176,8 +180,7 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     @request.headers['X-Agent-Key'] = raw_key
 
     appointment = appointments(:first_visit)
-    new_starts = 5.days.from_now.to_i
-    new_ends = (5.days.from_now + 1.hour).to_i
+    start_time = 5.days.from_now.in_time_zone(@practice.timezone).change(hour: 10, min: 0)
 
     post_mcp(
       method: 'tools/call', id: 8,
@@ -185,8 +188,8 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
         name: 'update_appointment',
         arguments: {
           appointment_id: appointment.id,
-          starts_at: new_starts.to_s,
-          ends_at: new_ends.to_s
+          starts_at: start_time.to_i.to_s,
+          ends_at: (start_time + 1.hour).to_i.to_s
         }
       }
     )
@@ -196,7 +199,7 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_equal false, body.dig('result', 'isError')
 
     appointment.reload
-    assert_equal Time.at(new_starts).to_i, appointment.starts_at.to_i
+    assert_equal start_time.to_i, appointment.starts_at.to_i
   end
 
   # --- tools/call: search_patients ---
