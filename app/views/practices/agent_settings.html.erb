@@ -45,48 +45,64 @@
     <div class="col-md-4">
       <div class="card mb-3">
         <div class="card-header">
-          <h3 class="card-title"><%= t(:agent_api_usage_title) %></h3>
+          <h3 class="card-title"><%= t(:agent_connect_title) %></h3>
         </div>
         <div class="card-body">
-          <p class="text-muted"><%= t(:agent_api_usage_description) %></p>
-          <ul class="list-unstyled mb-0">
-            <li><strong><%= t(:agent_api_header) %>:</strong> <code>X-Agent-Key</code></li>
-            <li><strong><%= t(:agent_api_base) %>:</strong> <code>/api/agent</code></li>
-            <li><strong><%= t(:agent_api_endpoints) %>:</strong>
-              <ul>
-                <li><code>GET /datebooks/:datebook_id/appointments?start=...&amp;end=...&amp;doctor_id=...</code></li>
-                <li><code>POST /datebooks/:datebook_id/appointments</code></li>
-                <li><code>PATCH /datebooks/:datebook_id/appointments/:id</code></li>
-              </ul>
-            </li>
+          <p class="text-muted"><%= t(:agent_connect_description) %></p>
+          <ul class="list-unstyled space-y-1 mb-0">
+            <li><%= link_to "Claude", "https://support.anthropic.com/en/articles/11175166-about-custom-integrations-using-remote-mcp", target: "_blank", rel: "noopener" %> — <%= t(:agent_connect_claude_hint) %></li>
+            <li><%= link_to "ChatGPT", "https://help.openai.com/en/articles/11487775-connectors-in-chatgpt", target: "_blank", rel: "noopener" %> — <%= t(:agent_connect_chatgpt_hint) %></li>
           </ul>
         </div>
       </div>
 
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title"><%= t(:agent_api_key_manage) %></h3>
+          <h3 class="card-title"><%= t(:agent_secret_key_title) %></h3>
         </div>
         <div class="card-body">
-          <% if flash[:agent_api_key].present? %>
-            <div class="alert alert-success">
-              <strong><%= t(:agent_api_key_rotated) %></strong>
-              <div class="mt-2"><%= t(:agent_api_key_copy_prompt) %></div>
-              <code class="d-block mt-2"><%= flash[:agent_api_key] %></code>
-            </div>
-          <% end %>
-
           <% if @practice.agent_api_key_digest.present? %>
-            <p class="text-muted"><%= t(:agent_api_key_set) %></p>
+            <p class="text-muted">
+              <%= t(:agent_secret_key_set) %>
+            </p>
+            <% if @practice.agent_api_key_prefix.present? %>
+              <p><code><%= @practice.agent_api_key_prefix %>••••••••</code></p>
+            <% end %>
           <% else %>
-            <p class="text-muted"><%= t(:agent_api_key_not_set) %></p>
+            <p class="text-muted"><%= t(:agent_secret_key_not_set) %></p>
           <% end %>
 
-          <%= button_to t(:agent_api_key_rotate), practice_agent_api_key_rotate_url, method: :post,
+          <p class="text-muted small"><%= t(:agent_secret_key_warning) %></p>
+
+          <%= button_to t(:agent_secret_key_regenerate), practice_agent_api_key_rotate_url, method: :post,
                         class: 'btn btn-outline-primary',
-                        data: { confirm: t(:agent_api_key_rotate_confirm) } %>
+                        data: { confirm: t(:agent_secret_key_regenerate_confirm) } %>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<% if @new_agent_key.present? %>
+  <div class="modal modal-blur show d-block" tabindex="-1" role="dialog" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-status bg-success"></div>
+        <div class="modal-body py-4">
+          <h3><%= t(:agent_api_key_rotated) %></h3>
+          <p class="text-muted"><%= t(:agent_api_key_copy_prompt) %></p>
+          <div class="input-group">
+            <input type="text" class="form-control" value="<%= @new_agent_key %>" readonly id="agent-key-input">
+            <button class="btn btn-outline-secondary" type="button" onclick="navigator.clipboard.writeText(document.getElementById('agent-key-input').value)">
+              <%= t(:copy) %>
+            </button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <%= link_to t(:done), practice_agent_settings_url, class: 'btn btn-success w-100' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop show"></div>
+<% end %>

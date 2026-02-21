@@ -82,7 +82,10 @@ class Practice < ApplicationRecord
 
   def generate_agent_api_key!
     raw_key = SecureRandom.hex(32)
-    update!(agent_api_key_digest: self.class.agent_api_key_digest(raw_key))
+    update!(
+      agent_api_key_digest: self.class.agent_api_key_digest(raw_key),
+      agent_api_key_prefix: raw_key.first(8)
+    )
     raw_key
   end
 

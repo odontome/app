@@ -137,6 +137,8 @@ en:
   balance: Balance
   balance_created_error_message: There was a problem creating this item
   cancel: Cancel
+  copy: Copy
+  done: Done
   cigarettes_per_day: Cigarettes per day
   close_account: Close account
   close_your_account: Close your account
@@ -678,28 +680,30 @@ en:
       refresh_cta: "Refresh account"
       continue_cta: "Continue setup"
 
-  agent_access_settings: "Agent access"
-  agent_access_settings_description: "Allow external agents to schedule and reschedule appointments only."
-  manage_agent_access: "Manage agent access"
-  agent_access_enabled: "Enable agent access"
-  agent_access_enabled_hint: "When enabled, agents can only schedule and reschedule appointments."
-  agent_label: "Agent label"
-  agent_label_hint: "This label appears in the audit trail."
-  agent_api_key_manage: "Agent API key"
-  agent_api_key_rotate: "Rotate API key"
-  agent_api_key_rotate_confirm: "This will invalidate the current API key. Continue?"
-  agent_api_key_rotated: "API key rotated"
-  agent_api_key_copy_prompt: "Copy this key now. You will not be able to view it again."
-  agent_api_key_set: "An API key is configured."
-  agent_api_key_not_set: "No API key configured."
-  agent_settings_updated: "Agent settings updated successfully."
+  agent_access_settings: "AI assistant"
+  agent_access_settings_description: "Let an AI assistant help you manage your appointments."
+  agent_access_status_enabled: "enabled"
+  agent_access_status_disabled: "not set up"
+  manage_agent_access: "Set up assistant"
+  agent_access_enabled: "Enable AI assistant"
+  agent_access_enabled_hint: "When enabled, your AI assistant can help manage appointments on your behalf."
+  agent_label: "Assistant name"
+  agent_label_hint: "This name shows up in your activity log so you know what the assistant changed."
+  agent_settings_updated: "Settings saved."
   agent_display_name: "Agent: %{label}"
   save_changes: "Save changes"
-  agent_api_usage_title: "API usage"
-  agent_api_usage_description: "Use the API key header when calling the agent scheduling endpoints."
-  agent_api_header: "Header"
-  agent_api_base: "Base path"
-  agent_api_endpoints: "Endpoints"
+  agent_connect_title: "Connect your AI app"
+  agent_connect_description: "You can connect Odonto.me to the AI app you already use. Follow the guide for your app:"
+  agent_connect_claude_hint: "Settings → Connectors"
+  agent_connect_chatgpt_hint: "Settings → Apps"
+  agent_secret_key_title: "Secret key"
+  agent_secret_key_set: "Your secret key is active. You'll need it when connecting your AI app."
+  agent_secret_key_not_set: "You haven't created a secret key yet. Generate one to connect your AI app."
+  agent_secret_key_warning: "Keep this key private. Anyone with it can manage appointments on your behalf. If you think it was shared by mistake, generate a new one right away."
+  agent_secret_key_regenerate: "Generate new key"
+  agent_secret_key_regenerate_confirm: "This will replace your current key and disconnect any app using it. Continue?"
+  agent_api_key_rotated: "New key created"
+  agent_api_key_copy_prompt: "Copy this key now and paste it into your AI app. You won't be able to see it again."
 
   agents:
     default_label: "Agent"

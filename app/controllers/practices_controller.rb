@@ -128,10 +128,9 @@ class PracticesController < ApplicationController
 
   def rotate_agent_api_key
     @practice = current_user.practice
-    new_key = @practice.generate_agent_api_key!
+    @new_agent_key = @practice.generate_agent_api_key!
 
-    flash[:agent_api_key] = new_key
-    redirect_to practice_agent_settings_url, notice: t(:agent_api_key_rotated)
+    render :agent_settings
   end
 
   def cancel

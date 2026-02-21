@@ -68,6 +68,13 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title"><%= t(:agent_access_settings) %></h3>
+              <div class="card-actions">
+                <% if @practice.agent_access_enabled? %>
+                  <%= label_tag t(:agent_access_status_enabled), :green %>
+                <% else %>
+                  <%= label_tag t(:agent_access_status_disabled) %>
+                <% end %>
+              </div>
             </div>
             <div class="card-body">
               <p class="text-muted"><%= t(:agent_access_settings_description) %></p>
