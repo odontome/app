@@ -14,6 +14,7 @@ Dental practice management app (Ruby on Rails). Users are non-tech-savvy dental 
 ## MCP Agent
 - Code: `app/controllers/api/agent/mcp_controller.rb` + `app/controllers/api/agent/mcp/`
 - Never expose PII (email, phone, address, date of birth, allergies, insurance) through agent API responses. Only return names and internal IDs needed for scheduling.
+- When changing anything in the agent/MCP code (tools, parameters, auth, responses, security), update `docs/mcp-server.md` to match.
 
 ## Key paths
 - MCP agent: `app/controllers/api/agent/mcp_controller.rb` + `app/controllers/api/agent/mcp/`
