@@ -64,6 +64,74 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_includes tool_names, 'search_patients'
   end
 
+  test 'should include safety annotations on all tools' do
+    raw_key = enable_agent_access(@practice)
+    @request.headers['X-Agent-Key'] = raw_key
+
+    post_mcp(method: 'tools/list', id: 52)
+    assert_response :success
+
+    body = JSON.parse(@response.body)
+    tools = body.dig('result', 'tools')
+
+    tools.each do |tool|
+      annotations = tool['annotations']
+      assert annotations.present?, "Tool '#{tool['name']}' must have annotations"
+      assert annotations.key?('title'), "Tool '#{tool['name']}' annotations must include title"
+      assert [true, false].include?(annotations['readOnlyHint']), "Tool '#{tool['name']}' must declare readOnlyHint"
+      assert [true, false].include?(annotations['destructiveHint']), "Tool '#{tool['name']}' must declare destructiveHint"
+      assert [true, false].include?(annotations['idempotentHint']), "Tool '#{tool['name']}' must declare idempotentHint"
+      assert [true, false].include?(annotations['openWorldHint']), "Tool '#{tool['name']}' must declare openWorldHint"
+    end
+
+    # Verify read-only tools are marked correctly
+    read_only_tools = %w[list_datebooks list_doctors list_appointments search_patients]
+    write_tools = %w[create_appointment update_appointment]
+
+    tools.each do |tool|
+      if read_only_tools.include?(tool['name'])
+        assert_equal true, tool.dig('annotations', 'readOnlyHint'), "#{tool['name']} should be readOnly"
+        assert_equal false, tool.dig('annotations', 'destructiveHint'), "#{tool['name']} should not be destructive"
+      end
+      if write_tools.include?(tool['name'])
+        assert_equal false, tool.dig('annotations', 'readOnlyHint'), "#{tool['name']} should not be readOnly"
+      end
+    end
+
+    # update_appointment is destructive (can cancel)
+    update_tool = tools.find { |t| t['name'] == 'update_appointment' }
+    assert_equal true, update_tool.dig('annotations', 'destructiveHint')
+
+    # create_appointment is not idempotent (creates duplicates)
+    create_tool = tools.find { |t| t['name'] == 'create_appointment' }
+    assert_equal false, create_tool.dig('annotations', 'idempotentHint')
+  end
+
+  # --- CORS ---
+
+  test 'should return CORS headers for claude.ai origin' do
+    raw_key = enable_agent_access(@practice)
+    @request.headers['X-Agent-Key'] = raw_key
+    @request.headers['Origin'] = 'https://claude.ai'
+
+    post_mcp(method: 'initialize', id: 53)
+    assert_response :success
+
+    assert_equal 'https://claude.ai', @response.headers['Access-Control-Allow-Origin']
+    assert_includes @response.headers['Access-Control-Allow-Methods'], 'POST'
+  end
+
+  test 'should not return CORS headers for unknown origin' do
+    raw_key = enable_agent_access(@practice)
+    @request.headers['X-Agent-Key'] = raw_key
+    @request.headers['Origin'] = 'https://evil.com'
+
+    post_mcp(method: 'initialize', id: 54)
+    assert_response :success
+
+    assert_nil @response.headers['Access-Control-Allow-Origin']
+  end
+
   # --- tools/call: list_datebooks ---
 
   test 'should call list_datebooks' do

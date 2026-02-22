@@ -12,6 +12,13 @@ module Api
               type: "object",
               properties: {},
               required: []
+            },
+            annotations: {
+              title: "List datebooks",
+              readOnlyHint: true,
+              destructiveHint: false,
+              idempotentHint: true,
+              openWorldHint: false
             }
           },
           {
@@ -21,6 +28,13 @@ module Api
               type: "object",
               properties: {},
               required: []
+            },
+            annotations: {
+              title: "List doctors",
+              readOnlyHint: true,
+              destructiveHint: false,
+              idempotentHint: true,
+              openWorldHint: false
             }
           },
           {
@@ -36,6 +50,13 @@ module Api
                 doctor_id: { type: "integer", description: "Filter by a specific doctor's schedule (optional)" }
               },
               required: %w[start end]
+            },
+            annotations: {
+              title: "List appointments",
+              readOnlyHint: true,
+              destructiveHint: false,
+              idempotentHint: true,
+              openWorldHint: false
             }
           },
           {
@@ -54,6 +75,13 @@ module Api
                 notes: { type: "string", description: "Reason for visit or clinical notes, e.g. 'Routine cleaning', 'Crown prep', 'Emergency toothache' (max 255 chars)" }
               },
               required: %w[doctor_id starts_at ends_at]
+            },
+            annotations: {
+              title: "Create appointment",
+              readOnlyHint: false,
+              destructiveHint: false,
+              idempotentHint: false,
+              openWorldHint: false
             }
           },
           {
@@ -70,6 +98,13 @@ module Api
                 status: { type: "string", enum: %w[confirmed cancelled], description: "Set to 'cancelled' to cancel or 'confirmed' to confirm the appointment (optional)" }
               },
               required: %w[appointment_id]
+            },
+            annotations: {
+              title: "Update appointment",
+              readOnlyHint: false,
+              destructiveHint: true,
+              idempotentHint: true,
+              openWorldHint: false
             }
           },
           {
@@ -81,6 +116,13 @@ module Api
                 query: { type: "string", description: "Patient name or UID to search for" }
               },
               required: %w[query]
+            },
+            annotations: {
+              title: "Search patients",
+              readOnlyHint: true,
+              destructiveHint: false,
+              idempotentHint: true,
+              openWorldHint: false
             }
           }
         ].freeze

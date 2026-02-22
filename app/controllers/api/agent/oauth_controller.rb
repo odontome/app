@@ -5,6 +5,13 @@ module Api
     class OauthController < ActionController::Base
       protect_from_forgery with: :null_session
 
+      ALLOWED_ORIGINS = %w[
+        https://claude.ai
+        https://claude.com
+      ].freeze
+
+      after_action :set_cors_headers
+
       AUTH_CODE_STORE_MUTEX = Mutex.new
       AUTH_CODE_STORE = {}
 
@@ -30,7 +37,19 @@ module Api
         }
       end
 
+      ALLOWED_REDIRECT_PATTERNS = [
+        # Claude Desktop & Claude Code (local)
+        %r{\Ahttp://localhost:6274/oauth/callback(/debug)?\z},
+        # Claude.ai and claude.com (web)
+        %r{\Ahttps://claude\.(ai|com)/api/mcp/auth_callback\z}
+      ].freeze
+
       def authorize
+        unless params[:redirect_uri].present? && valid_redirect_uri?(params[:redirect_uri])
+          render json: { error: "invalid_redirect_uri" }, status: :bad_request
+          return
+        end
+
         code = SecureRandom.hex(32)
 
         AUTH_CODE_STORE_MUTEX.synchronize do
@@ -122,6 +141,20 @@ module Api
         end
 
         practice
+      end
+
+      def valid_redirect_uri?(uri)
+        ALLOWED_REDIRECT_PATTERNS.any? { |pattern| uri.match?(pattern) }
+      end
+
+      def set_cors_headers
+        origin = request.headers["Origin"].to_s
+        return unless ALLOWED_ORIGINS.include?(origin)
+
+        response.headers["Access-Control-Allow-Origin"] = origin
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+        response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+        response.headers["Access-Control-Max-Age"] = "86400"
       end
 
       def cleanup_expired_codes

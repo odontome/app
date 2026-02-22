@@ -93,6 +93,7 @@ Rails.application.routes.draw do
       end
       post 'mcp', to: 'mcp#create'
       delete 'mcp', to: 'mcp#destroy'
+      match 'mcp', to: 'mcp#preflight', via: :options
       get 'oauth/authorize', to: 'oauth#authorize'
       post 'oauth/token', to: 'oauth#token'
     end

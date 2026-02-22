@@ -6,10 +6,22 @@ module Api
       PROTOCOL_VERSION = "2025-11-25"
       SERVER_INFO = { name: "odontome", version: "1.0.0" }.freeze
 
+      ALLOWED_ORIGINS = %w[
+        https://claude.ai
+        https://claude.com
+      ].freeze
+
+      skip_before_action :authenticate_agent!, only: :preflight
+      after_action :set_cors_headers
+
       rate_limit to: 120, within: 1.minute,
                  by: -> { @practice&.id || request.remote_ip },
                  with: -> { render_jsonrpc_error(nil, -32000, I18n.t("agents.mcp.errors.rate_limited")) },
                  only: :create
+
+      def preflight
+        head :no_content
+      end
 
       def destroy
         head :ok
@@ -90,6 +102,16 @@ module Api
         result = executor.call(tool_name, arguments)
 
         render json: { jsonrpc: "2.0", id: id, result: result }
+      end
+
+      def set_cors_headers
+        origin = request.headers["Origin"].to_s
+        return unless ALLOWED_ORIGINS.include?(origin)
+
+        response.headers["Access-Control-Allow-Origin"] = origin
+        response.headers["Access-Control-Allow-Methods"] = "POST, DELETE, OPTIONS"
+        response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization, X-Agent-Key"
+        response.headers["Access-Control-Max-Age"] = "86400"
       end
 
       def render_jsonrpc_error(id, code, message, status: :ok)
