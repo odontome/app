@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_session, :current_user, :user_is_admin?, :current_user_is_superadmin?, :impersonating?
 
-  before_action :set_locale, :set_timezone, :check_account_status, :check_subscription_status, :find_datebooks, :prevent_impersonation_mutations, :set_paper_trail_whodunnit
+  before_action :set_locale, :set_timezone, :check_account_status, :check_subscription_status, :check_consent_status, :find_datebooks, :prevent_impersonation_mutations, :set_paper_trail_whodunnit
 
   before_bugsnag_notify :add_user_info_to_bugsnag
 
@@ -18,6 +18,13 @@ class ApplicationController < ActionController::Base
       session.clear
       redirect_to signin_url, alert: I18n.t(:account_cancelled)
     end
+  end
+
+  def check_consent_status
+    return unless current_user
+    return if current_user.accepted_current_terms? && current_user.accepted_current_privacy?
+
+    redirect_to consent_review_path
   end
 
   def check_subscription_status

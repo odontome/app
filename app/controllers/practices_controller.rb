@@ -6,6 +6,7 @@ class PracticesController < ApplicationController
   before_action :require_superadmin, only: %i[index destroy edit]
   before_action :require_practice_admin, only: %i[show settings balance appointments update close cancel agent_settings update_agent_settings rotate_agent_api_key]
   skip_before_action :check_subscription_status
+  skip_before_action :check_consent_status
 
   def index
     @practices = Practice.all
@@ -81,10 +82,35 @@ class PracticesController < ApplicationController
   def create
     @practice = Practice.new(practice_params)
 
+    unless params[:consent_terms] == "1" && params[:consent_privacy] == "1"
+      @practice.errors.add(:base, I18n.t(:consent_required))
+      respond_to do |format|
+        format.html { render action: 'new', as: :signup, layout: 'user_sessions' }
+      end
+      return
+    end
+
     respond_to do |format|
       if @practice.save
         # find the previously created user
         new_user = @practice.users.first
+
+        # Record consent
+        now = Time.current
+        [
+          { consent_type: "terms", policy_version: UserConsent::CURRENT_TERMS_VERSION },
+          { consent_type: "privacy", policy_version: UserConsent::CURRENT_PRIVACY_VERSION }
+        ].each do |consent|
+          UserConsent.create!(
+            user: new_user,
+            practice: @practice,
+            consent_type: consent[:consent_type],
+            policy_version: consent[:policy_version],
+            accepted_at: now,
+            ip_address: request.remote_ip,
+            user_agent: request.user_agent
+          )
+        end
 
         # extract the user password from the request
         user_password = params[:practice][:users_attributes]['0']['password']
@@ -118,8 +144,27 @@ class PracticesController < ApplicationController
 
   def update_agent_settings
     @practice = current_user.practice
+    needs_ai_consent = agent_settings_params[:agent_access_enabled] == "1" && !UserConsent.accepted?(current_user, "ai_data_processing")
+
+    if needs_ai_consent && params[:consent_ai] != "1"
+      @practice.errors.add(:base, I18n.t(:consent_ai_required))
+      render action: 'agent_settings'
+      return
+    end
 
     if @practice.update(agent_settings_params)
+      if params[:consent_ai] == "1" && !UserConsent.accepted?(current_user, "ai_data_processing")
+        UserConsent.create!(
+          user: current_user,
+          practice: @practice,
+          consent_type: "ai_data_processing",
+          policy_version: UserConsent::CURRENT_AI_VERSION,
+          accepted_at: Time.current,
+          ip_address: request.remote_ip,
+          user_agent: request.user_agent
+        )
+      end
+
       redirect_to practice_agent_settings_url, notice: t(:agent_settings_updated)
     else
       render action: 'agent_settings'

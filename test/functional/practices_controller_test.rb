@@ -27,7 +27,7 @@ class PracticesControllerTest < ActionController::TestCase
                                               'password_confirmation' => '1234567890' } } }
 
     assert_difference('Practice.count') do
-      post :create, params: { practice: practice }
+      post :create, params: { practice: practice, consent_terms: '1', consent_privacy: '1' }
     end
 
     welcome_email = ActionMailer::Base.deliveries.last
@@ -39,6 +39,25 @@ class PracticesControllerTest < ActionController::TestCase
 
     assert_equal @controller.session['user'].email, practice[:users_attributes]['0']['email']
     assert_redirected_to practice_path(ref: 'signup')
+
+    # Verify consent records were created
+    new_user = Practice.last.users.first
+    assert UserConsent.accepted?(new_user, 'terms')
+    assert UserConsent.accepted?(new_user, 'privacy')
+  end
+
+  test 'should not create practice without consent' do
+    @controller.session['user'] = nil
+
+    practice = { name: 'Odonto.me Demo Practice',
+                 timezone: 'Europe/London',
+                 users_attributes: { '0' => { 'email' => 'demo@odonto.me', 'password' => '1234567890',
+                                              'password_confirmation' => '1234567890' } } }
+
+    assert_no_difference('Practice.count') do
+      post :create, params: { practice: practice }
+    end
+    assert_response :success
   end
 
   test 'should create practice with invalid timezone' do
@@ -50,7 +69,7 @@ class PracticesControllerTest < ActionController::TestCase
                                               'password_confirmation' => '1234567890' } } }
 
     assert_difference('Practice.count') do
-      post :create, params: { practice: practice }
+      post :create, params: { practice: practice, consent_terms: '1', consent_privacy: '1' }
     end
     assert_equal Practice.last.email, 'demo@odonto.me'
   end

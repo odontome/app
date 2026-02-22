@@ -3,6 +3,7 @@
 class UserSessionsController < ApplicationController
   before_action :require_user, only: %i[show destroy]
   skip_before_action :check_subscription_status
+  skip_before_action :check_consent_status
 
   def new; end
 

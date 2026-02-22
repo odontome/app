@@ -13,18 +13,25 @@
 <div class="page-body">
   <div class="row row-cards">
     <div class="col-md-8">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title"><%= t(:agent_access_settings) %></h3>
-        </div>
-        <div class="card-body">
-          <%= form_with model: @practice, url: practice_agent_settings_update_url, method: :patch, local: true do |f| %>
+      <%= form_with model: @practice, url: practice_agent_settings_update_url, method: :patch, local: true do |f| %>
+        <%= render "shared/error_messages", target: @practice %>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"><%= t(:agent_access_settings) %></h3>
+          </div>
+          <div class="card-body">
             <div class="mb-3">
               <div class="form-check form-switch">
                 <%= f.check_box :agent_access_enabled, class: 'form-check-input', role: 'switch' %>
                 <%= f.label :agent_access_enabled, t(:agent_access_enabled), class: 'form-check-label' %>
               </div>
-              <div class="form-hint"><%= t(:agent_access_enabled_hint) %></div>
+              <div class="form-hint"><%= t(:consent_ai_disclosure) %></div>
+              <% unless UserConsent.accepted?(current_user, "ai_data_processing") %>
+                <label class="form-check mt-2">
+                  <input type="checkbox" name="consent_ai" value="1" class="form-check-input">
+                  <span class="form-check-label"><%= t(:consent_ai_label) %></span>
+                </label>
+              <% end %>
             </div>
 
             <div class="mb-3">
@@ -37,9 +44,9 @@
               <%= f.submit t(:save_changes), class: 'btn btn-primary' %>
               <%= link_to t(:cancel), practice_settings_url, class: 'btn btn-outline-secondary ms-2' %>
             </div>
-          <% end %>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
 
     <div class="col-md-4">

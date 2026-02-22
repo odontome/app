@@ -41,6 +41,7 @@ class AuditsController < ApplicationController
 
     # Create hash for efficient user lookups in the view to avoid N+1 queries
     @users_hash = @practice_users.index_by(&:id)
+
   end
 
   def show

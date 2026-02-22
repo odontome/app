@@ -2,6 +2,7 @@
 
 class WelcomeController < ApplicationController
   layout 'simple'
+  skip_before_action :check_consent_status, only: %i[privacy terms]
 
   def index
     flash.keep

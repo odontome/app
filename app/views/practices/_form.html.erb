@@ -18,8 +18,21 @@
       </div>
     <% end %>
 
+    <div class="mb-3">
+      <label class="form-check">
+        <input type="checkbox" name="consent_terms" value="1" class="form-check-input" required>
+        <span class="form-check-label">
+          <%= raw t(:consent_terms_label, terms_url: link_to(t(:terms_of_service).downcase, "/terms", target: "_blank")) %>
+        </span>
+      </label>
+    </div>
     <div class="mb-2">
-      <%= raw t :you_agree_to_our_terms_and_privacy_policy, terms_url: link_to(t(:terms_of_service).downcase, "/terms", :target => "_blank"), privacy_url: link_to(t(:privacy_policy).downcase, "/privacy", :target => "_blank") %>
+      <label class="form-check">
+        <input type="checkbox" name="consent_privacy" value="1" class="form-check-input" required>
+        <span class="form-check-label">
+          <%= raw t(:consent_privacy_label, privacy_url: link_to(t(:privacy_policy).downcase, "/privacy", target: "_blank")) %>
+        </span>
+      </label>
     </div>
 
     <%= practice_form.hidden_field :timezone, :class => "form-control" %> 

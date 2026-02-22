@@ -657,6 +657,20 @@ es:
   agent_api_key_rotated: "Nueva clave creada"
   agent_api_key_copy_prompt: "Copia esta clave ahora y pégala en tu app de IA. No podrás verla de nuevo."
 
+  consent_terms_label: "Acepto los %{terms_url}"
+  consent_privacy_label: "Acepto la %{privacy_url}"
+  consent_review_title: "Revisa nuestras políticas actualizadas"
+  consent_review_description: "Hemos actualizado nuestros términos. Por favor revisa y acepta para continuar usando tu cuenta."
+  consent_accepted: "Gracias por aceptar nuestras políticas actualizadas"
+  consent_required: "Debes aceptar nuestros términos y política de privacidad para continuar"
+  consent_ai_disclosure: "Los nombres de pacientes y detalles de citas se envían a servicios de IA de terceros (Anthropic, OpenAI). No se comparten datos médicos, información de contacto ni datos de seguros."
+  consent_ai_required: "Debes aceptar los términos de procesamiento de datos antes de activar el asistente de IA"
+  consent_ai_label: "Entiendo y acepto el procesamiento de datos descrito arriba"
+  consent_types:
+    terms: "Términos del servicio"
+    privacy: "Política de privacidad"
+    ai_data_processing: "Procesamiento de datos de IA"
+
   agents:
     default_label: "Agente"
     errors:

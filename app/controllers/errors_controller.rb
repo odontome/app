@@ -2,6 +2,7 @@
 
 class ErrorsController < ApplicationController
   layout 'simple'
+  skip_before_action :check_consent_status
 
   def not_found
     render status: 404, formats: [:html]

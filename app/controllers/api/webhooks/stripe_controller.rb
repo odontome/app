@@ -2,6 +2,7 @@ module Api::Webhooks
   class StripeController < ApplicationController
     skip_forgery_protection
     skip_before_action :check_subscription_status
+    skip_before_action :check_consent_status
     skip_before_action :prevent_impersonation_mutations
 
     def event

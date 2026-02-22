@@ -12,6 +12,7 @@ class User < ApplicationRecord
   # associations
   belongs_to :practice, counter_cache: true
   has_many :notes, dependent: :delete_all
+  has_many :user_consents, dependent: :delete_all
 
   has_secure_password
 
@@ -50,6 +51,14 @@ class User < ApplicationRecord
 
   def is_admin?
     roles.include?('admin')
+  end
+
+  def accepted_current_terms?
+    UserConsent.accepted?(self, "terms")
+  end
+
+  def accepted_current_privacy?
+    UserConsent.accepted?(self, "privacy")
   end
 
   # Remember token functionality for persistent login

@@ -5,6 +5,7 @@ class Practice < ApplicationRecord
   has_paper_trail meta: { practice_id: ->(practice) { practice.id } }
 
   # associations
+  has_many :user_consents, dependent: :delete_all
   has_many :users, dependent: :delete_all # didn't work with :destroy 'cause if the before_destroy callback in User.rb
   has_many :datebooks, dependent: :delete_all
   has_many :doctors, dependent: :destroy

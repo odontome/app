@@ -44,6 +44,10 @@ Rails.application.routes.draw do
   post '/practice/close' => 'practices#close', :as => :practice_close
   post '/practice/:id' => 'practices#update', :as => :practice_update
 
+  # consent
+  get '/consent' => 'consents#review', :as => :consent_review
+  post '/consent' => 'consents#accept', :as => :consent_accept
+
   # static pages
   get '/privacy' => 'welcome#privacy'
   get '/terms' => 'welcome#terms'

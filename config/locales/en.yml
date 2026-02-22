@@ -706,6 +706,20 @@ en:
   agent_api_key_rotated: "New key created"
   agent_api_key_copy_prompt: "Copy this key now and paste it into your AI app. You won't be able to see it again."
 
+  consent_terms_label: "I agree to the %{terms_url}"
+  consent_privacy_label: "I agree to the %{privacy_url}"
+  consent_review_title: "Please review our updated policies"
+  consent_review_description: "We've updated our terms. Please review and accept to continue using your account."
+  consent_accepted: "Thank you for accepting our updated policies"
+  consent_required: "You must accept our terms and privacy policy to continue"
+  consent_ai_disclosure: "Patient names and appointment details are sent to third-party AI services (Anthropic, OpenAI). No medical data, contact info, or insurance details are shared."
+  consent_ai_required: "You must agree to the data processing terms before enabling the AI assistant"
+  consent_ai_label: "I understand and agree to the data processing described above"
+  consent_types:
+    terms: "Terms of service"
+    privacy: "Privacy policy"
+    ai_data_processing: "AI data processing"
+
   agents:
     default_label: "Agent"
     errors:

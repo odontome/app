@@ -1,0 +1,99 @@
+founder_terms:
+  id: 1
+  user_id: 1
+  practice_id: 1
+  consent_type: terms
+  policy_version: "1.1"
+  accepted_at: '2025-01-01 00:00:00'
+  ip_address: '127.0.0.1'
+  user_agent: 'Test Browser'
+
+founder_privacy:
+  id: 2
+  user_id: 1
+  practice_id: 1
+  consent_type: privacy
+  policy_version: "1.1"
+  accepted_at: '2025-01-01 00:00:00'
+  ip_address: '127.0.0.1'
+  user_agent: 'Test Browser'
+
+perishable_terms:
+  id: 3
+  user_id: 2
+  practice_id: 1
+  consent_type: terms
+  policy_version: "1.1"
+  accepted_at: '2025-01-01 00:00:00'
+  ip_address: '127.0.0.1'
+  user_agent: 'Test Browser'
+
+perishable_privacy:
+  id: 4
+  user_id: 2
+  practice_id: 1
+  consent_type: privacy
+  policy_version: "1.1"
+  accepted_at: '2025-01-01 00:00:00'
+  ip_address: '127.0.0.1'
+  user_agent: 'Test Browser'
+
+superadmin_terms:
+  id: 5
+  user_id: 5
+  practice_id: 1
+  consent_type: terms
+  policy_version: "1.1"
+  accepted_at: '2025-01-01 00:00:00'
+  ip_address: '127.0.0.1'
+  user_agent: 'Test Browser'
+
+superadmin_privacy:
+  id: 6
+  user_id: 5
+  practice_id: 1
+  consent_type: privacy
+  policy_version: "1.1"
+  accepted_at: '2025-01-01 00:00:00'
+  ip_address: '127.0.0.1'
+  user_agent: 'Test Browser'
+
+non_migrated_user_terms:
+  id: 9
+  user_id: 4
+  practice_id: 1
+  consent_type: terms
+  policy_version: "1.1"
+  accepted_at: '2025-01-01 00:00:00'
+  ip_address: '127.0.0.1'
+  user_agent: 'Test Browser'
+
+non_migrated_user_privacy:
+  id: 10
+  user_id: 4
+  practice_id: 1
+  consent_type: privacy
+  policy_version: "1.1"
+  accepted_at: '2025-01-01 00:00:00'
+  ip_address: '127.0.0.1'
+  user_agent: 'Test Browser'
+
+yet_another_user_terms:
+  id: 7
+  user_id: 3
+  practice_id: 3
+  consent_type: terms
+  policy_version: "1.1"
+  accepted_at: '2025-01-01 00:00:00'
+  ip_address: '127.0.0.1'
+  user_agent: 'Test Browser'
+
+yet_another_user_privacy:
+  id: 8
+  user_id: 3
+  practice_id: 3
+  consent_type: privacy
+  policy_version: "1.1"
+  accepted_at: '2025-01-01 00:00:00'
+  ip_address: '127.0.0.1'
+  user_agent: 'Test Browser'

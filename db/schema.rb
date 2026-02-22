@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_21_203331) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_22_202040) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -191,6 +191,21 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_21_203331) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
+  create_table "user_consents", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "practice_id", null: false
+    t.string "consent_type", null: false
+    t.string "policy_version", null: false
+    t.datetime "accepted_at", null: false
+    t.string "ip_address"
+    t.string "user_agent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["practice_id"], name: "index_user_consents_on_practice_id"
+    t.index ["user_id", "consent_type", "policy_version"], name: "idx_on_user_id_consent_type_policy_version_c78467206a", unique: true
+    t.index ["user_id"], name: "index_user_consents_on_user_id"
+  end
+
   create_table "users", id: :serial, force: :cascade do |t|
     t.string "firstname"
     t.string "lastname"
@@ -228,4 +243,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_21_203331) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "subscriptions", "practices"
+  add_foreign_key "user_consents", "practices"
+  add_foreign_key "user_consents", "users"
 end
