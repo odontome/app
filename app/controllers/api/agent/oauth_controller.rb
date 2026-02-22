@@ -15,6 +15,11 @@ module Api
       AUTH_CODE_STORE_MUTEX = Mutex.new
       AUTH_CODE_STORE = {}
 
+      def openai_apps_challenge
+        token = ENV["OPENAI_APPS_CHALLENGE_TOKEN"].to_s
+        render plain: token, content_type: "text/plain"
+      end
+
       def protected_resource_metadata
         render json: {
           resource: "#{request.base_url}/api/agent/mcp",
@@ -41,7 +46,12 @@ module Api
         # Claude Desktop & Claude Code (local)
         %r{\Ahttp://localhost:6274/oauth/callback(/debug)?\z},
         # Claude.ai and claude.com (web)
-        %r{\Ahttps://claude\.(ai|com)/api/mcp/auth_callback\z}
+        %r{\Ahttps://claude\.(ai|com)/api/mcp/auth_callback\z},
+        # ChatGPT (web)
+        %r{\Ahttps://chatgpt\.com/(oauth/callback|connector_platform_oauth_redirect)\z},
+        %r{\Ahttps://chat\.openai\.com/oauth/callback\z},
+        # OpenAI Platform (review flow)
+        %r{\Ahttps://platform\.openai\.com/apps-manage/oauth\z}
       ].freeze
 
       def authorize
