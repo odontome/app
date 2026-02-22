@@ -229,8 +229,9 @@ Include the following environment variables in your production instance:
 | `CLOUDFLARE_R2_REGION`            | Cloudflare R2 region (use `auto` unless directed) | Yes      | No         |
 | `CLOUDFLARE_R2_BUCKET`            | Cloudflare R2 bucket used for uploads             | Yes      | No         |
 | `CLOUDFLARE_R2_ENDPOINT`          | Cloudflare R2 endpoint URL                        | Yes      | No         |
+| `OPENAI_APPS_CHALLENGE_TOKEN`     | OpenAI domain verification token for ChatGPT App Directory | No | No    |
 
-\* For local development, you can skip payment and email functionality  
+\* For local development, you can skip payment and email functionality
 \*\* Required for production; for local development, database.yml is used
 \*\*\* Only required locally if you switch Active Storage to use Cloudflare R2
 
