@@ -108,6 +108,85 @@ class Api::Agent::OauthControllerTest < ActionController::TestCase
     assert_response :bad_request
   end
 
+  # --- OpenAI redirect URIs ---
+
+  test 'should allow ChatGPT oauth callback' do
+    raw_key = enable_agent_access(@practice)
+
+    get :authorize, params: {
+      client_id: raw_key,
+      redirect_uri: 'https://chatgpt.com/oauth/callback',
+      code_challenge: 'test_challenge',
+      code_challenge_method: 'S256',
+      response_type: 'code',
+      state: 'test_state'
+    }
+    assert_response :redirect
+  end
+
+  test 'should allow ChatGPT connector platform callback' do
+    raw_key = enable_agent_access(@practice)
+
+    get :authorize, params: {
+      client_id: raw_key,
+      redirect_uri: 'https://chatgpt.com/connector_platform_oauth_redirect',
+      code_challenge: 'test_challenge',
+      code_challenge_method: 'S256',
+      response_type: 'code',
+      state: 'test_state'
+    }
+    assert_response :redirect
+  end
+
+  test 'should allow chat.openai.com callback' do
+    raw_key = enable_agent_access(@practice)
+
+    get :authorize, params: {
+      client_id: raw_key,
+      redirect_uri: 'https://chat.openai.com/oauth/callback',
+      code_challenge: 'test_challenge',
+      code_challenge_method: 'S256',
+      response_type: 'code',
+      state: 'test_state'
+    }
+    assert_response :redirect
+  end
+
+  test 'should allow OpenAI Platform review callback' do
+    raw_key = enable_agent_access(@practice)
+
+    get :authorize, params: {
+      client_id: raw_key,
+      redirect_uri: 'https://platform.openai.com/apps-manage/oauth',
+      code_challenge: 'test_challenge',
+      code_challenge_method: 'S256',
+      response_type: 'code',
+      state: 'test_state'
+    }
+    assert_response :redirect
+  end
+
+  # --- OpenAI domain verification ---
+
+  test 'should return openai apps challenge token' do
+    ENV['OPENAI_APPS_CHALLENGE_TOKEN'] = 'test-verification-token-123'
+
+    get :openai_apps_challenge
+    assert_response :success
+    assert_equal 'text/plain', @response.content_type.split(';').first
+    assert_equal 'test-verification-token-123', @response.body
+  ensure
+    ENV.delete('OPENAI_APPS_CHALLENGE_TOKEN')
+  end
+
+  test 'should return empty body when challenge token not configured' do
+    ENV.delete('OPENAI_APPS_CHALLENGE_TOKEN')
+
+    get :openai_apps_challenge
+    assert_response :success
+    assert_equal '', @response.body
+  end
+
   # --- CORS on OAuth endpoints ---
 
   test 'should return CORS headers for claude.ai on token endpoint' do
