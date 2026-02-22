@@ -12,12 +12,12 @@ gem 'icalendar', '~> 2.12.0'
 gem 'image_processing', '~> 1.2'
 gem 'jquery-minicolors-rails', '~>2.2.6.2'
 gem 'jquery-rails', '~> 4.6'
-gem 'paper_trail', '~> 16.0'
+gem 'paper_trail', '~> 17.0'
 gem 'pg', '~> 1.6.2'
 gem 'premailer-rails', '~> 1.11.1'
-gem 'puma', '~> 7.0.4'
+gem 'puma', '~> 7.0'
 gem 'rack-attack', '~> 6.8'
-gem 'rails', '~> 8.0.0'
+gem 'rails', '~> 8.1.0'
 gem 'rails-i18n', '~> 8.0'
 gem 'sprockets-rails', '~> 3.5.2'
 gem 'stripe', '~> 5.53.0'
@@ -30,8 +30,7 @@ group :development do
 end
 
 group :test do
-  # pretty printed test output
-  # gem 'turn'
+  gem 'minitest-mock'
 end
 
 group :development, :test do
