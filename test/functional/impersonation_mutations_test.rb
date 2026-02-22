@@ -93,6 +93,16 @@ class ImpersonationMutationsTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'consent check is skipped during impersonation' do
+    # Simulate impersonation of a user who has not accepted consent
+    @admin.user_consents.delete_all
+    @controller.session['user'] = @admin
+    @controller.session['impersonator_id'] = @superadmin.id
+
+    get :index
+    assert_response :success
+  end
+
   test 'normal operations work without impersonation' do
     # Normal session without impersonation
     @controller.session['user'] = @admin

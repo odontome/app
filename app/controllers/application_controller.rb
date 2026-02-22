@@ -22,6 +22,7 @@ class ApplicationController < ActionController::Base
 
   def check_consent_status
     return unless current_user
+    return if impersonating?
     return if current_user.accepted_current_terms? && current_user.accepted_current_privacy?
 
     redirect_to consent_review_path
