@@ -145,7 +145,7 @@ class Patient < ApplicationRecord
 
   # this function is a small compromise to bypass that weird situation where a patient is created with everything set to nil
   def destroy_nils
-    Patient.where(firstname: nil).destroy_all
-    Appointment.where(patient_id: nil).destroy_all
+    Patient.where(firstname: nil, practice_id: practice_id).delete_all
+    Appointment.where(patient_id: nil).delete_all
   end
 end

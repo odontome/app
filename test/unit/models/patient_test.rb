@@ -220,4 +220,23 @@ class PatientTest < ActiveSupport::TestCase
 
     assert_includes result_ids, patient_id, 'Patient created via find_or_create_from should be searchable'
   end
+
+  test 'destroy_nils is scoped to the current practice' do
+    patient = patients(:one)
+
+    same_practice_id = Patient.insert({ practice_id: patient.practice_id, firstname: nil, lastname: 'Ghost',
+                                        date_of_birth: Date.new(2000, 1, 1) }).first['id']
+    other_practice_id = Patient.insert({ practice_id: practices(:canceled_practice).id, firstname: nil,
+                                         lastname: 'Other', date_of_birth: Date.new(2000, 1, 1) }).first['id']
+
+    patient.send(:destroy_nils)
+
+    refute Patient.exists?(same_practice_id), 'Should delete nil-firstname patient in same practice'
+    assert Patient.exists?(other_practice_id), 'Should NOT delete nil-firstname patient in other practice'
+  end
+
+  test 'destroy_nils is called after create' do
+    assert Patient._create_callbacks.any? { |cb| cb.filter == :destroy_nils },
+           'destroy_nils should be registered as an after_create callback'
+  end
 end
