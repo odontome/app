@@ -4,48 +4,44 @@ namespace :odontome do
   desc 'Send appointment reminders to patients'
   task send_appointment_reminder_notifications: :environment do
     Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
+    disable_parallel_workers
 
-    to_update = []
     appointment_notificacion_hours = 48.hours
 
-    appointments = Appointment.includes(:doctor, :patient).joins(:doctor, :patient)
+    appointments = Appointment.includes(:doctor, :patient, datebook: :practice).joins(:doctor, :patient)
                               .where('appointments.starts_at > ? AND appointments.ends_at < ?', Time.now, Time.now + appointment_notificacion_hours)
                               .where('appointments.notified_of_reminder = ?', false)
                               .where("patients.email <> ''")
                               .where('appointments.status = ?', Appointment.status[:confirmed])
 
-    appointments.each do |appointment|
+    appointments.find_each do |appointment|
       practice = appointment.datebook.practice
 
       PatientMailer.appointment_soon_email(appointment.patient.email, appointment.patient.fullname,
                                            appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, appointment.doctor, practice.email).deliver_now
 
-      to_update << appointment.id
+      appointment.update_column(:notified_of_reminder, true)
     end
-    Appointment.where(id: to_update).update_all(notified_of_reminder: true)
   end
 
   desc 'Send appointment schedule notification to patients'
   task send_appointment_scheduled_notifications: :environment do
     Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
+    disable_parallel_workers
 
-    to_update = []
-
-    appointments = Appointment.includes(:doctor, :patient).joins(:doctor, :patient)
+    appointments = Appointment.includes(:doctor, :patient, datebook: :practice).joins(:doctor, :patient)
                               .where('appointments.created_at < ? AND appointments.notified_of_schedule = ?', 5.minutes.ago, false)
                               .where('appointments.status = ?', Appointment.status[:confirmed])
                               .where("patients.email <> ''")
 
-    appointments.each do |appointment|
+    appointments.find_each do |appointment|
       practice = appointment.datebook.practice
 
       PatientMailer.appointment_scheduled_email(appointment.patient.email, appointment.patient.fullname,
                                                 appointment.starts_at, appointment.ends_at, practice.name, practice.locale, practice.timezone, appointment.doctor, practice.email).deliver_now
 
-      to_update << appointment.id
+      appointment.update_column(:notified_of_schedule, true)
     end
-
-    Appointment.where(id: to_update).update_all(notified_of_schedule: true)
   end
 
   desc 'Delete practices cancelled more than 15 days ago'
@@ -59,6 +55,7 @@ namespace :odontome do
   desc "Send today's appointments everyday in their timezone"
   task send_todays_appointments_to_doctors: :environment do
     Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
+    disable_parallel_workers
 
     # configuration
     hour_to_send_emails = 7
@@ -93,6 +90,7 @@ namespace :odontome do
   desc 'Send birthday wishes to patients in their timezone'
   task send_birthday_wishes_to_patients: :environment do
     Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
+    disable_parallel_workers
 
     hour_to_send_emails = 15
     timezones_where_hour_is = timezones_where_hour_are(hour_to_send_emails)
@@ -138,6 +136,7 @@ namespace :odontome do
   desc 'Send appointment review request to patients in their timezone'
   task send_appointment_review_to_patients: :environment do
     Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
+    disable_parallel_workers
 
     appointments_pending_review = Datebook.select("practices.name as practice,
       practices.id as practice_id, practices.locale as practice_locale, practices.email as practice_email,
@@ -155,11 +154,13 @@ namespace :odontome do
 
     exit unless appointments_pending_review.exists?
 
+    loaded_appointments = appointments_pending_review.to_a
+
     # mark all the appointments found as "reviewed"
-    Appointment.where(id: appointments_pending_review.map(&:appointment_id)).update_all(notified_of_review: true)
+    Appointment.where(id: loaded_appointments.map(&:appointment_id)).update_all(notified_of_review: true)
 
     # go through every appointment found and email them
-    appointments_pending_review.each do |appointment|
+    loaded_appointments.each do |appointment|
       PatientMailer.review_recent_appointment(appointment).deliver_now
     end
   end
@@ -167,6 +168,7 @@ namespace :odontome do
   desc 'Send six-month checkup reminder to patients (one-time)'
   task send_six_month_checkup_reminders: :environment do
     Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
+    disable_parallel_workers
 
     # Consider practices where local time is mid-morning to avoid odd-hour sends
     hour_to_send_emails = 10
@@ -191,12 +193,14 @@ namespace :odontome do
                                    .group('patients.id, patients.email, patients.firstname, patients.lastname, practices.id, practices.name, practices.locale, practices.timezone, practices.email')
 
     # Patients with a future confirmed appointment should not receive this reminder
-    future_confirmed_patient_ids = Appointment.joins(:patient)
-                                              .where('appointments.starts_at > ?', Time.now)
-                                              .where('appointments.status = ?', Appointment.status[:confirmed])
-                                              .where(patients: { practice_id: practice_ids })
-                                              .distinct
-                                              .pluck(:patient_id)
+    future_confirmed_patient_ids = Set.new(
+      Appointment.joins(:patient)
+                 .where('appointments.starts_at > ?', Time.now)
+                 .where('appointments.status = ?', Appointment.status[:confirmed])
+                 .where(patients: { practice_id: practice_ids })
+                 .distinct
+                 .pluck(:patient_id)
+    )
 
     last_appointments.each do |row|
       # Skip if they already have a future confirmed appointment
@@ -262,6 +266,10 @@ namespace :odontome do
     end
 
     Rails.logger.info "Marked #{marked_count} inactive practices for cancellation (trialing > 60 days)"
+  end
+
+  def disable_parallel_workers
+    ActiveRecord::Base.connection.execute('SET max_parallel_workers_per_gather = 0')
   end
 
   # find all the timezones where the hour is @hour
