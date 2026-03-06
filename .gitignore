@@ -44,3 +44,6 @@ yarn-debug.log*
 # Environment variables
 .env
 .env.local
+
+# Competitive analysis (revisit later)
+/docs/competitive-gaps/
