@@ -61,4 +61,14 @@ class AdminControllerTest < ActionController::TestCase
     get :practices
     assert_redirected_to '/401'
   end
+
+  test 'should reject stop impersonating for invalid impersonation session' do
+    @controller.session['user'] = users(:founder)
+    @controller.session['impersonator_id'] = users(:founder).id
+
+    delete :stop_impersonating
+
+    assert_redirected_to root_path
+    assert_nil @controller.session['impersonator_id']
+  end
 end

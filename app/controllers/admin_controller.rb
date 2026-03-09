@@ -29,7 +29,7 @@ class AdminController < ApplicationController
 
   def impersonate
     # Prevent nested impersonation
-    if session[:impersonator_id].present?
+    if impersonating?
       redirect_back_or_default('/401', I18n.t('errors.messages.unauthorised'))
       return
     end
@@ -54,16 +54,16 @@ class AdminController < ApplicationController
   end
 
   def stop_impersonating
-    if session[:impersonator_id]
-      admin = User.find_by(id: session[:impersonator_id])
+    admin = impersonator_user
+
+    unless impersonating? && admin.present?
       session.delete(:impersonator_id)
-      if admin
-        session[:user] = admin
-        redirect_to practices_admin_path, notice: I18n.t(:impersonation_stopped, default: 'Stopped impersonation.')
-        return
-      end
+      redirect_to root_path, alert: I18n.t('errors.messages.unauthorised')
+      return
     end
 
-    redirect_to root_path, alert: I18n.t('errors.messages.unauthorised')
+    session.delete(:impersonator_id)
+    session[:user] = admin
+    redirect_to practices_admin_path, notice: I18n.t(:impersonation_stopped, default: 'Stopped impersonation.')
   end
 end

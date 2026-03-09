@@ -10,6 +10,15 @@ class ImpersonationMutationsTest < ActionController::TestCase
     @admin      = users(:founder)
     @practice   = practices(:complete)
     @patient    = patients(:one)
+    @expired_admin = User.create!(
+      practice: practices(:canceled_practice),
+      firstname: 'Expired',
+      lastname: 'Admin',
+      email: 'expired-admin@example.test',
+      roles: 'admin',
+      password: '1234567890',
+      password_confirmation: '1234567890'
+    )
   end
 
   test 'patient creation is blocked during impersonation' do
@@ -101,6 +110,23 @@ class ImpersonationMutationsTest < ActionController::TestCase
 
     get :index
     assert_response :success
+  end
+
+  test 'subscription redirect is skipped during valid impersonation' do
+    @controller.session['user'] = @expired_admin
+    @controller.session['impersonator_id'] = @superadmin.id
+
+    get :index
+    assert_response :success
+  end
+
+  test 'subscription redirect is not skipped with invalid impersonation session' do
+    @controller.session['user'] = @expired_admin
+    @controller.session['impersonator_id'] = @admin.id
+
+    get :index
+    assert_response :redirect
+    assert_redirected_to practice_settings_url
   end
 
   test 'normal operations work without impersonation' do

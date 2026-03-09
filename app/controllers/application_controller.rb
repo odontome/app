@@ -14,6 +14,8 @@ class ApplicationController < ActionController::Base
   before_bugsnag_notify :add_user_info_to_bugsnag
 
   def check_account_status
+    return if impersonating?
+
     if current_user && (current_user.practice.status == 'cancelled')
       session.clear
       redirect_to signin_url, alert: I18n.t(:account_cancelled)
@@ -29,6 +31,8 @@ class ApplicationController < ActionController::Base
   end
 
   def check_subscription_status
+    return if impersonating?
+
     if current_user && !current_user.practice.subscription.active_or_trialing?
       redirect_to_subscription_error
     elsif current_user && current_user.practice.subscription.is_trial_expired?
@@ -101,10 +105,6 @@ class ApplicationController < ActionController::Base
     current_user&.roles&.include?('superadmin')
   end
 
-  def impersonating?
-    session[:impersonator_id].present?
-  end
-
   def require_user
     unless current_user
       store_location
@@ -134,13 +134,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_superadmin
-    is_superadmin = if session[:impersonator_id].present?
-      # Check if the original impersonating user is a superadmin
-      original_user = User.find_by(id: session[:impersonator_id])
-      original_user&.roles&.include?('superadmin')
-    else
-      current_user_is_superadmin?
-    end
+    is_superadmin = impersonating? || current_user_is_superadmin?
 
     unless is_superadmin
       redirect_back_or_default('/401', I18n.t(:admin_credentials_required))
@@ -173,7 +167,7 @@ class ApplicationController < ActionController::Base
   end
 
   def prevent_impersonation_mutations
-    return unless session[:impersonator_id].present?
+    return unless impersonating?
     return if request.get? || request.head?
     
     respond_to do |format|
@@ -191,6 +185,22 @@ class ApplicationController < ActionController::Base
 
   def set_paper_trail_whodunnit
     PaperTrail.request.whodunnit = current_user&.id
+  end
+
+  def impersonator_user
+    return @impersonator_user if defined?(@impersonator_user)
+    return @impersonator_user = nil if session[:impersonator_id].blank?
+
+    @impersonator_user = User.find_by(id: session[:impersonator_id])
+  end
+
+  def impersonating?
+    return false if session[:impersonator_id].blank?
+
+    impersonator = impersonator_user
+    return false unless impersonator&.roles&.include?('superadmin')
+
+    current_user.present? && current_user.id != impersonator.id
   end
 
   def authenticate_and_set_session(user, password, remember_me = false)
