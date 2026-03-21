@@ -124,7 +124,7 @@ class PatientsController < ApplicationController
 
     @patients = Patient.with_practice(current_user.practice_id)
                        .birthday_this_week(current_user.practice.timezone)
-                       .reorder("EXTRACT(MONTH FROM date_of_birth), EXTRACT(DAY FROM date_of_birth)")
+                       .reorder(Arel.sql("EXTRACT(MONTH FROM date_of_birth), EXTRACT(DAY FROM date_of_birth)"))
   end
 
   def resolve_needs_follow_up_context
