@@ -59,13 +59,30 @@ module PatientsHelper
         end
       end
 
+      birthday_pill = content_tag(:li, class: 'nav-item') do
+        link_to patients_url(segment: 'birthdays'),
+                class: "nav-link #{@segment == 'birthdays' ? 'active' : ''}" do
+          safe_join([t(:patients_segment_birthdays), " (#{@birthday_count})"])
+        end
+      end
+
       all_pill = content_tag(:li, class: 'nav-item') do
         link_to t(:patients_segment_all),
                 patients_url(segment: 'all'),
                 class: "nav-link #{@segment == 'all' ? 'active' : ''}"
       end
 
-      today_pill + follow_up_pill + all_pill
+      today_pill + follow_up_pill + birthday_pill + all_pill
+    end
+  end
+
+  def follow_up_overdue_label(last_visit_at)
+    if last_visit_at.blank?
+      content_tag(:span, t(:never), class: 'text-red fw-semibold')
+    else
+      months_ago = ((Time.current - last_visit_at) / 1.month).floor
+      color = months_ago >= 9 ? 'text-red' : 'text-yellow'
+      content_tag(:span, t(:follow_up_overdue, time: time_ago_in_words(last_visit_at)), class: "#{color} fw-semibold")
     end
   end
 

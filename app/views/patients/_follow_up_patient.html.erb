@@ -10,8 +10,8 @@
       <span class="badge bg-warning me-1"></span> <%= t(:follow_up_not_contacted) %>
     <% end %>
   </td>
-  <td class="text-muted" data-label="<%= t :last_visit %>">
-    <%= follow_up_patient.last_visit_at.present? ? l(follow_up_patient.last_visit_at.to_date, format: :short) : t(:never) %>
+  <td data-label="<%= t :last_visit %>">
+    <%= follow_up_overdue_label(follow_up_patient.last_visit_at) %>
   </td>
   <td>
     <%= render 'patient_actions', patient: follow_up_patient %>

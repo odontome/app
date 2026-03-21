@@ -75,6 +75,28 @@
         </div>
       <% end %>
 
+    <% elsif @segment == 'birthdays' %>
+      <% if @patients.empty? %>
+        <div class="card-body text-center py-5">
+          <p class="text-muted mb-0"><%= t :patients_birthdays_empty %></p>
+        </div>
+      <% else %>
+        <table class="table table-vcenter table-mobile-md card-table">
+          <thead>
+            <tr>
+              <th><%= t :name %></th>
+              <th><%= t :uid %></th>
+              <th><%= t :birthday %></th>
+              <th><%= t :age %></th>
+              <th class="w-1"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= render partial: 'birthday_patient', collection: @patients, as: :birthday_patient %>
+          </tbody>
+        </table>
+      <% end %>
+
     <% else %>
       <% if @patients.empty? %>
         <div class="card-body text-center py-5">

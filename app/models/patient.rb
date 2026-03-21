@@ -26,6 +26,21 @@ class Patient < ApplicationRecord
     )
   }
 
+  scope :birthday_this_week, ->(timezone) {
+    tz = ActiveSupport::TimeZone[timezone] || Time.zone
+    today = tz.now.to_date
+    week_end = today + 6.days
+
+    if today.month == week_end.month
+      where("EXTRACT(MONTH FROM date_of_birth) = ? AND EXTRACT(DAY FROM date_of_birth) BETWEEN ? AND ?",
+            today.month, today.day, week_end.day)
+    else
+      where("(EXTRACT(MONTH FROM date_of_birth) = ? AND EXTRACT(DAY FROM date_of_birth) >= ?) OR " \
+            "(EXTRACT(MONTH FROM date_of_birth) = ? AND EXTRACT(DAY FROM date_of_birth) <= ?)",
+            today.month, today.day, week_end.month, week_end.day)
+    end
+  }
+
   scope :new_this_week, ->(timezone) {
     tz = ActiveSupport::TimeZone[timezone] || Time.zone
     where(created_at: tz.now.beginning_of_week..tz.now.end_of_week)

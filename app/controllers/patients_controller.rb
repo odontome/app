@@ -23,6 +23,9 @@ class PatientsController < ApplicationController
     elsif params[:segment] == 'needs_follow_up'
       @segment = 'needs_follow_up'
       resolve_needs_follow_up_context
+    elsif params[:segment] == 'birthdays'
+      @segment = 'birthdays'
+      resolve_birthdays_context
     elsif infer_all_segment?
       @segment = 'all'
       resolve_letter_context
@@ -105,6 +108,7 @@ class PatientsController < ApplicationController
     @appointments = Appointment.today_for_practice(practice.id, practice.timezone)
     @today_count = @appointments.size
     @follow_up_count = needs_follow_up_count
+    @birthday_count = birthday_this_week_count
     @show_datebook = practice.datebooks_count.to_i > 1
   end
 
@@ -112,6 +116,15 @@ class PatientsController < ApplicationController
     practice = current_user.practice
     @today_count = Appointment.today_for_practice(practice.id, practice.timezone).count
     @follow_up_count = needs_follow_up_count
+    @birthday_count = birthday_this_week_count
+  end
+
+  def resolve_birthdays_context
+    load_segment_counts
+
+    @patients = Patient.with_practice(current_user.practice_id)
+                       .birthday_this_week(current_user.practice.timezone)
+                       .reorder("EXTRACT(MONTH FROM date_of_birth), EXTRACT(DAY FROM date_of_birth)")
   end
 
   def resolve_needs_follow_up_context
@@ -135,6 +148,12 @@ class PatientsController < ApplicationController
       params[:letter].present? ||
       params[:sort].present? ||
       params[:cursor].present?
+  end
+
+  def birthday_this_week_count
+    Patient.with_practice(current_user.practice_id)
+      .birthday_this_week(current_user.practice.timezone)
+      .count
   end
 
   def needs_follow_up_count
