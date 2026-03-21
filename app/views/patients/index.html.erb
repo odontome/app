@@ -17,7 +17,7 @@
 </div>
 
 <% if @segment.present? %>
-  <%= patients_segment_pills %>
+  <%= render 'segment_pills' %>
 <% end %>
 
 <div class="page-body">
@@ -108,7 +108,7 @@
             <tr>
               <th>
                 <% if @segment == 'all' %>
-                  <%= patients_sort_link(column: PatientsController::SORT_NAME, label_key: :name, letter: @current_letter) %>
+                  <%= patients_sort_link(column: 'name', label_key: :name, letter: @current_letter) %>
                 <% else %>
                   <%= t :name %>
                 <% end %>
@@ -120,7 +120,7 @@
               </th>
               <th>
                 <% if @segment == 'all' %>
-                  <%= patients_sort_link(column: PatientsController::SORT_LAST_VISIT, label_key: :last_visit, letter: @current_letter) %>
+                  <%= patients_sort_link(column: 'last_visit', label_key: :last_visit, letter: @current_letter) %>
                 <% else %>
                   <%= t :last_visit %>
                 <% end %>
@@ -147,7 +147,7 @@
     <li class="page-item <%= @current_letter == '#' ? 'active' : '' %>">
       <%= link_to "#", patients_url(letter: '#', sort: @sort_column, direction: @sort_direction), class: "page-link" %>
     </li>
-    <% letter_options.each do |letter| %>
+    <% @letter_options.each do |letter| %>
       <li class="page-item <%= @current_letter == letter[:value] ? 'active' : '' %> <%= letter[:included?] ? '' : 'disabled' %>">
         <%= link_to letter[:value], patients_url(letter: letter[:value], sort: @sort_column, direction: @sort_direction), class: "page-link" %>
       </li>

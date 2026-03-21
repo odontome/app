@@ -15,6 +15,21 @@ class Patient < ApplicationRecord
   has_many :doctors, through: :appointments
   belongs_to :practice, counter_cache: true
 
+  scope :with_last_visit, -> {
+    joins(<<~SQL.squish)
+      LEFT JOIN LATERAL (
+        SELECT appointments.ends_at AS last_visit_at
+        FROM appointments
+        WHERE appointments.patient_id = patients.id
+          AND appointments.status = '#{Appointment.status[:confirmed]}'
+          AND appointments.ends_at <= CURRENT_TIMESTAMP
+        ORDER BY appointments.ends_at DESC
+        LIMIT 1
+      ) last_visits ON TRUE
+    SQL
+    .select("patients.*, last_visits.last_visit_at AS last_visit_at")
+  }
+
   scope :without_upcoming_appointment, -> {
     where(
       "NOT EXISTS (
@@ -24,6 +39,12 @@ class Patient < ApplicationRecord
           AND appointments.status != ?
       )", Time.current, Appointment.status[:cancelled]
     )
+  }
+
+  scope :needs_follow_up, -> {
+    with_last_visit
+      .without_upcoming_appointment
+      .where("last_visits.last_visit_at < ? OR last_visits.last_visit_at IS NULL", 6.months.ago)
   }
 
   scope :birthday_this_week, ->(timezone) {

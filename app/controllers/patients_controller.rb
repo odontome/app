@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class PatientsController < ApplicationController
+  include CursorPaginatable
+
   LETTER_PAGE_SIZE = 100
   SORT_NAME = 'name'
   SORT_LAST_VISIT = 'last_visit'
@@ -12,14 +14,11 @@ class PatientsController < ApplicationController
 
   def index
     if params[:term].present?
-      @patients = with_last_visit_for_listing(
-        Patient.search(params[:term]).with_practice(current_user.practice_id)
-      )
+      @patients = Patient.search(params[:term]).with_practice(current_user.practice_id).with_last_visit
     elsif params[:segment].present? && params[:segment] == 'new_this_week'
-      @patients = with_last_visit_for_listing(
-        Patient.with_practice(current_user.practice_id)
-               .new_this_week(current_user.practice.timezone)
-      )
+      @patients = Patient.with_practice(current_user.practice_id)
+                         .new_this_week(current_user.practice.timezone)
+                         .with_last_visit
     elsif params[:segment] == 'needs_follow_up'
       @segment = 'needs_follow_up'
       resolve_needs_follow_up_context
@@ -130,12 +129,9 @@ class PatientsController < ApplicationController
   def resolve_needs_follow_up_context
     load_segment_counts
 
-    base_scope = with_last_visit_for_listing(
-      Patient.with_practice(current_user.practice_id).without_upcoming_appointment
-    ).where(
-      "last_visits.last_visit_at < ? OR last_visits.last_visit_at IS NULL",
-      6.months.ago
-    ).reorder("last_visits.last_visit_at ASC NULLS FIRST, patients.id ASC")
+    base_scope = Patient.with_practice(current_user.practice_id)
+      .needs_follow_up
+      .reorder("last_visits.last_visit_at ASC NULLS FIRST, patients.id ASC")
 
     offset = [params[:offset].to_i, 0].max
     page = base_scope.limit(LETTER_PAGE_SIZE + 1).offset(offset).to_a
@@ -158,19 +154,25 @@ class PatientsController < ApplicationController
 
   def needs_follow_up_count
     Patient.with_practice(current_user.practice_id)
-      .without_upcoming_appointment
-      .where(
-        "NOT EXISTS (
-          SELECT 1 FROM appointments
-          WHERE appointments.patient_id = patients.id
-            AND appointments.status = ?
-            AND appointments.ends_at > ?
-        )", Appointment.status[:confirmed], 6.months.ago
-      ).count
+      .needs_follow_up
+      .reselect('patients.id')
+      .count
+  end
+
+  def letter_options_for_practice
+    present_initials = Patient.with_practice(current_user.practice_id)
+                              .where.not(firstname_initial: nil)
+                              .reorder('')
+                              .distinct
+                              .pluck(:firstname_initial)
+                              .map(&:upcase)
+
+    [*'A'..'Z'].map { |letter| { value: letter, included?: present_initials.include?(letter) } }
   end
 
   def resolve_letter_context
     load_segment_counts
+    @letter_options = letter_options_for_practice
     @current_letter = normalize_letter(params[:letter])
     @sort_column = normalize_sort_column(params[:sort])
     @sort_direction = normalize_sort_direction(params[:direction], @sort_column)
@@ -205,9 +207,7 @@ class PatientsController < ApplicationController
                    Patient.anything_with_letter(letter)
                  end
 
-    scoped = with_last_visit_for_listing(
-      base_scope.with_practice(current_user.practice_id)
-    )
+    scoped = base_scope.with_practice(current_user.practice_id).with_last_visit
 
     scoped = apply_listing_sort(scoped, sort_column: sort_column, sort_direction: sort_direction)
 
@@ -249,108 +249,6 @@ class PatientsController < ApplicationController
     normalized = sort_direction_param.to_s.downcase
 
     [SORT_ASC, SORT_DESC].include?(normalized) ? normalized : default_direction
-  end
-
-  def encode_cursor(patient, sort_column:, sort_direction:)
-    payload = {
-      id: patient.id,
-      sort_column: sort_column,
-      sort_direction: sort_direction
-    }
-
-    if sort_column == SORT_LAST_VISIT
-      payload[:last_visit_at] = patient.last_visit_at&.iso8601
-    else
-      payload[:firstname] = patient.firstname.to_s
-      payload[:lastname] = patient.lastname.to_s
-    end
-
-    Base64.urlsafe_encode64(payload.to_json)
-  end
-
-  def decode_cursor(token)
-    JSON.parse(Base64.urlsafe_decode64(token)).symbolize_keys
-  rescue JSON::ParserError, ArgumentError
-    nil
-  end
-
-  def with_last_visit_for_listing(scope)
-    scope
-      .joins(last_visit_join_sql)
-      .select('patients.*, last_visits.last_visit_at AS last_visit_at')
-  end
-
-  CONFIRMED_STATUS_SQL = "'confirmed'".freeze
-
-  def last_visit_join_sql
-    <<~SQL.squish
-      LEFT JOIN LATERAL (
-        SELECT appointments.ends_at AS last_visit_at
-        FROM appointments
-        WHERE appointments.patient_id = patients.id
-          AND appointments.status = #{CONFIRMED_STATUS_SQL}
-          AND appointments.ends_at <= CURRENT_TIMESTAMP
-        ORDER BY appointments.ends_at DESC
-        LIMIT 1
-      ) last_visits ON TRUE
-    SQL
-  end
-
-  def apply_listing_sort(scope, sort_column:, sort_direction:)
-    if sort_column == SORT_LAST_VISIT
-      last_visit_direction = sort_direction == SORT_ASC ? 'ASC' : 'DESC'
-
-      return scope.reorder(
-        Arel.sql("CASE WHEN last_visits.last_visit_at IS NULL THEN 1 ELSE 0 END ASC, last_visits.last_visit_at #{last_visit_direction}, patients.id ASC")
-      )
-    end
-
-    name_direction = sort_direction == SORT_DESC ? 'DESC' : 'ASC'
-    scope.reorder("firstname #{name_direction}, lastname #{name_direction}, patients.id #{name_direction}")
-  end
-
-  def apply_cursor_scope(scope, decoded, sort_column:, sort_direction:)
-    if sort_column == SORT_LAST_VISIT
-      return apply_last_visit_cursor_scope(scope, decoded, sort_direction: sort_direction)
-    end
-
-    apply_name_cursor_scope(scope, decoded, sort_direction: sort_direction)
-  end
-
-  def apply_name_cursor_scope(scope, decoded, sort_direction:)
-    comparator = sort_direction == SORT_DESC ? '<' : '>'
-
-    scope.where(
-      "firstname #{comparator} :firstname OR (firstname = :firstname AND (lastname #{comparator} :lastname OR (lastname = :lastname AND patients.id #{comparator} :id)))",
-      firstname: decoded[:firstname].to_s,
-      lastname: decoded[:lastname].to_s,
-      id: decoded[:id].to_i
-    )
-  end
-
-  def apply_last_visit_cursor_scope(scope, decoded, sort_direction:)
-    cursor_last_visit = parse_cursor_time(decoded[:last_visit_at])
-    cursor_id = decoded[:id].to_i
-
-    if cursor_last_visit.nil?
-      return scope.where('last_visits.last_visit_at IS NULL AND patients.id > :id', id: cursor_id)
-    end
-
-    comparator = sort_direction == SORT_ASC ? '>' : '<'
-
-    scope.where(
-      "(last_visits.last_visit_at IS NOT NULL AND (last_visits.last_visit_at #{comparator} :last_visit OR (last_visits.last_visit_at = :last_visit AND patients.id > :id))) OR last_visits.last_visit_at IS NULL",
-      last_visit: cursor_last_visit,
-      id: cursor_id
-    )
-  end
-
-  def parse_cursor_time(value)
-    return nil if value.blank?
-
-    Time.zone.parse(value.to_s)
-  rescue ArgumentError, TypeError
-    nil
   end
 
   def patient_params

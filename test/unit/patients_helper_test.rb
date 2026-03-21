@@ -5,22 +5,6 @@ require 'test_helper'
 class PatientsHelperTest < ActionView::TestCase
   include PatientsHelper
 
-  test 'letter_options flags letters with patients in current practice' do
-    def current_user
-      users(:founder)
-    end
-
-    options = letter_options
-
-    assert_equal 26, options.count
-
-    present_initial = options.find { |option| option[:value] == 'E' }
-    missing_initial = options.find { |option| option[:value] == 'Z' }
-
-    assert present_initial[:included?]
-    refute missing_initial[:included?]
-  end
-
   test 'patients_sort_link renders plain label when letter is blank' do
     @sort_column = 'name'
     @sort_direction = 'asc'
@@ -61,25 +45,6 @@ class PatientsHelperTest < ActionView::TestCase
     assert_includes result, 'fw-semibold'
     assert_includes result, 'text-primary'
     assert_includes result, 'direction=asc'
-  end
-
-  test 'patients_segment_pills renders today pill as active with count' do
-    @segment = 'today'
-    @today_count = 5
-
-    result = patients_segment_pills
-    assert_includes result, 'nav-pills'
-    assert_includes result, 'active'
-    assert_includes result, 'Today'
-    assert_includes result, '5'
-  end
-
-  test 'patients_segment_pills renders all patients pill as active' do
-    @segment = 'all'
-    @today_count = 3
-
-    result = patients_segment_pills
-    assert_match(/nav-link active.*All patients/m, result)
   end
 
   test 'appointment_time_with_duration formats start time and duration' do

@@ -1,0 +1,20 @@
+<ul class="nav nav-pills mb-3">
+  <li class="nav-item">
+    <%= link_to patients_url(segment: 'today'), class: "nav-link #{@segment == 'today' ? 'active' : ''}" do %>
+      <%= safe_join([t(:patients_segment_today), " (#{@today_count})"]) %>
+    <% end %>
+  </li>
+  <li class="nav-item">
+    <%= link_to patients_url(segment: 'needs_follow_up'), class: "nav-link #{@segment == 'needs_follow_up' ? 'active' : ''}" do %>
+      <%= safe_join([t(:patients_segment_needs_follow_up), " (#{@follow_up_count})"]) %>
+    <% end %>
+  </li>
+  <li class="nav-item">
+    <%= link_to patients_url(segment: 'birthdays'), class: "nav-link #{@segment == 'birthdays' ? 'active' : ''}" do %>
+      <%= safe_join([t(:patients_segment_birthdays), " (#{@birthday_count})"]) %>
+    <% end %>
+  </li>
+  <li class="nav-item">
+    <%= link_to t(:patients_segment_all), patients_url(segment: 'all'), class: "nav-link #{@segment == 'all' ? 'active' : ''}" %>
+  </li>
+</ul>
