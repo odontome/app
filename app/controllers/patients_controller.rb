@@ -113,22 +113,20 @@ class PatientsController < ApplicationController
     @show_datebook = practice.datebooks_count.to_i > 1
   end
 
-  def resolve_needs_follow_up_context
-    @today_count = today_appointment_count
+  def load_segment_counts
+    practice = current_user.practice
+    @today_count = Appointment.today_for_practice(practice.id, practice.timezone).count
     @follow_up_count = needs_follow_up_count
+  end
+
+  def resolve_needs_follow_up_context
+    load_segment_counts
 
     base_scope = with_last_visit_for_listing(
-      Patient.with_practice(current_user.practice_id)
+      Patient.with_practice(current_user.practice_id).without_upcoming_appointment
     ).where(
       "last_visits.last_visit_at < ? OR last_visits.last_visit_at IS NULL",
       6.months.ago
-    ).where(
-      "NOT EXISTS (
-        SELECT 1 FROM appointments
-        WHERE appointments.patient_id = patients.id
-          AND appointments.starts_at > ?
-          AND appointments.status != ?
-      )", Time.current, Appointment.status[:cancelled]
     ).reorder("last_visits.last_visit_at ASC NULLS FIRST, patients.id ASC")
 
     offset = [params[:offset].to_i, 0].max
@@ -144,43 +142,21 @@ class PatientsController < ApplicationController
       params[:cursor].present?
   end
 
-  def today_appointment_count
-    practice = current_user.practice
-    tz = ActiveSupport::TimeZone[practice.timezone] || Time.zone
-
-    Appointment
-      .joins(:patient)
-      .where(patients: { practice_id: practice.id })
-      .where(starts_at: tz.now.beginning_of_day..tz.now.end_of_day)
-      .count
-  end
-
   def needs_follow_up_count
-    # Lightweight count — no LATERAL JOIN, uses subqueries only
-    confirmed_status = Appointment.status[:confirmed]
-    cancelled_status = Appointment.status[:cancelled]
-
     Patient.with_practice(current_user.practice_id)
+      .without_upcoming_appointment
       .where(
         "NOT EXISTS (
           SELECT 1 FROM appointments
           WHERE appointments.patient_id = patients.id
             AND appointments.status = ?
             AND appointments.ends_at > ?
-        )", confirmed_status, 6.months.ago
-      ).where(
-        "NOT EXISTS (
-          SELECT 1 FROM appointments
-          WHERE appointments.patient_id = patients.id
-            AND appointments.starts_at > ?
-            AND appointments.status != ?
-        )", Time.current, cancelled_status
+        )", Appointment.status[:confirmed], 6.months.ago
       ).count
   end
 
   def resolve_letter_context
-    @today_count = today_appointment_count
-    @follow_up_count = needs_follow_up_count
+    load_segment_counts
     @current_letter = normalize_letter(params[:letter])
     @sort_column = normalize_sort_column(params[:sort])
     @sort_direction = normalize_sort_direction(params[:direction], @sort_column)

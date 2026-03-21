@@ -15,6 +15,17 @@ class Patient < ApplicationRecord
   has_many :doctors, through: :appointments
   belongs_to :practice, counter_cache: true
 
+  scope :without_upcoming_appointment, -> {
+    where(
+      "NOT EXISTS (
+        SELECT 1 FROM appointments
+        WHERE appointments.patient_id = patients.id
+          AND appointments.starts_at > ?
+          AND appointments.status != ?
+      )", Time.current, Appointment.status[:cancelled]
+    )
+  }
+
   scope :with_practice, lambda { |practice_id|
     where('patients.practice_id = ? ', practice_id)
       .order('firstname')
