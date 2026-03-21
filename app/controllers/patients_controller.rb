@@ -16,14 +16,9 @@ class PatientsController < ApplicationController
         Patient.search(params[:term]).with_practice(current_user.practice_id)
       )
     elsif params[:segment].present? && params[:segment] == 'new_this_week'
-      # Align with KPI: use practice timezone and current calendar week (Mon–Sun), inclusive
-      tz = ActiveSupport::TimeZone[current_user.practice.timezone] || Time.zone
-      week_start = tz.now.beginning_of_week
-      week_end = tz.now.end_of_week
       @patients = with_last_visit_for_listing(
-        Patient
-          .with_practice(current_user.practice_id)
-          .where('created_at >= ? AND created_at <= ?', week_start, week_end)
+        Patient.with_practice(current_user.practice_id)
+               .new_this_week(current_user.practice.timezone)
       )
     elsif params[:segment] == 'needs_follow_up'
       @segment = 'needs_follow_up'

@@ -1,14 +1,5 @@
 <tr>
-  <td data-label="<%= t :name %>">
-    <div class="d-flex py-1 align-items-center">
-      <%= link_to today_patient.patient, class: 'p-0 border-0 bg-transparent', style: 'line-height: 0;' do %>
-        <%= avatar_for(today_patient.patient) %>
-      <% end %>
-      <div class="flex-fill">
-        <div class="font-weight-medium"><%= today_patient.patient.fullname %></div>
-      </div>
-    </div>
-  </td>
+  <%= render 'patient_name_cell', patient: today_patient.patient, show_email: false %>
   <td class="text-muted" data-label="<%= t :uid %>">
     <%= today_patient.patient.uid %>
   </td>

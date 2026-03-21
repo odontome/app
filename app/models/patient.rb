@@ -26,6 +26,11 @@ class Patient < ApplicationRecord
     )
   }
 
+  scope :new_this_week, ->(timezone) {
+    tz = ActiveSupport::TimeZone[timezone] || Time.zone
+    where(created_at: tz.now.beginning_of_week..tz.now.end_of_week)
+  }
+
   scope :with_practice, lambda { |practice_id|
     where('patients.practice_id = ? ', practice_id)
       .order('firstname')

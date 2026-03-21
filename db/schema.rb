@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_11_091500) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_21_230000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -59,6 +59,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_11_091500) do
     t.index ["datebook_id", "starts_at", "ends_at"], name: "index_appointments_on_datebook_id_and_times"
     t.index ["doctor_id"], name: "index_appointments_on_doctor_id"
     t.index ["patient_id", "ends_at"], name: "index_appointments_on_patient_id_and_ends_at_confirmed", order: { ends_at: :desc }, where: "((status)::text = 'confirmed'::text)"
+    t.index ["patient_id", "starts_at"], name: "index_appointments_on_patient_id_and_starts_at_not_cancelled", where: "((status)::text <> 'cancelled'::text)"
     t.index ["starts_at", "ends_at"], name: "index_appointments_on_starts_at_and_ends_at"
   end
 

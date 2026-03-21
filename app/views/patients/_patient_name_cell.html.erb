@@ -1,0 +1,13 @@
+<td data-label="<%= t :name %>">
+  <div class="d-flex py-1 align-items-center">
+    <%= link_to patient, class: 'p-0 border-0 bg-transparent lh-1' do %>
+      <%= avatar_for(patient) %>
+    <% end %>
+    <div class="flex-fill">
+      <div class="font-weight-medium"><%= patient.fullname %></div>
+      <% if local_assigns.fetch(:show_email, true) %>
+        <div class="text-muted"><%= patient.email %></div>
+      <% end %>
+    </div>
+  </div>
+</td>
