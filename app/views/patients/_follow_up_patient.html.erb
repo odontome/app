@@ -1,0 +1,40 @@
+<tr>
+  <td data-label="<%= t :name %>">
+    <div class="d-flex py-1 align-items-center">
+      <%= link_to follow_up_patient, class: 'p-0 border-0 bg-transparent', style: 'line-height: 0;' do %>
+        <%= avatar_for(follow_up_patient) %>
+      <% end %>
+      <div class="flex-fill">
+        <div class="font-weight-medium"><%= follow_up_patient.fullname %></div>
+        <div class="text-muted"><%= follow_up_patient.email %></div>
+      </div>
+    </div>
+  </td>
+  <td class="text-muted" data-label="<%= t :uid %>">
+    <%= follow_up_patient.uid %>
+  </td>
+  <td data-label="<%= t :follow_up_status %>">
+    <% if follow_up_patient.notified_of_six_month_reminder? %>
+      <span class="badge bg-success me-1"></span> <%= t(:follow_up_reminder_sent) %>
+    <% else %>
+      <span class="badge bg-warning me-1"></span> <%= t(:follow_up_not_contacted) %>
+    <% end %>
+  </td>
+  <td class="text-muted" data-label="<%= t :last_visit %>">
+    <%= follow_up_patient.last_visit_at.present? ? l(follow_up_patient.last_visit_at.to_date, format: :short) : t(:never) %>
+  </td>
+  <td>
+    <div class="btn-list flex-nowrap">
+      <%= component :dropdown do %>
+        <%= link_to t(:view_profile), follow_up_patient, class: "dropdown-item" %>
+        <%= link_to t(:edit), edit_patient_path(follow_up_patient), class: "dropdown-item" %>
+        <% unless follow_up_patient.missing_info? %>
+          <%= link_to t(:create_new_payment), new_payment_path(patient_id: follow_up_patient.id), class: "dropdown-item" %>
+        <% end %>
+        <% if user_is_admin?(current_user) %>
+          <%= link_to t(:delete), follow_up_patient, method: :delete, data: { confirm: t(:are_you_sure_no_undo) }, class: "dropdown-item text-red" %>
+        <% end %>
+      <% end %>
+    </div>
+  </td>
+</tr>

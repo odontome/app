@@ -57,13 +57,13 @@
             <tr>
               <th><%= t :name %></th>
               <th><%= t :uid %></th>
-              <th><%= t :status %></th>
+              <th><%= t :follow_up_status %></th>
               <th><%= t :last_visit %></th>
               <th class="w-1"></th>
             </tr>
           </thead>
-          <tbody id="patients-list">
-            <%= render partial: 'patient', collection: @patients, as: :patient %>
+          <tbody>
+            <%= render partial: 'follow_up_patient', collection: @patients, as: :follow_up_patient %>
           </tbody>
         </table>
       <% end %>

@@ -375,6 +375,9 @@ pt:
   patient_treatment_updated_error_message: Houve um problema ao criar este item
   patient_updated_success_message: O paciente foi atualizado com sucesso
   patients: Pacientes
+  follow_up_not_contacted: Não contactado
+  follow_up_reminder_sent: Lembrete enviado
+  follow_up_status: Acompanhamento
   patients_follow_up_empty: Todos os pacientes estão em dia
   patients_segment_all: Todos os pacientes
   patients_segment_needs_follow_up: Precisa de acompanhamento
