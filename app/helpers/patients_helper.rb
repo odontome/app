@@ -64,12 +64,14 @@ module PatientsHelper
     t(:appointment_time_duration, time: time, duration: duration)
   end
 
-  def appointment_status_label(status)
+  def appointment_status_badge(status)
     case status
     when Appointment.status[:confirmed]
-      content_tag(:span, t(:appointment_status_confirmed), class: 'text-green')
+      label_tag t(:appointment_status_confirmed), :green
     when Appointment.status[:waiting_room]
-      content_tag(:span, t(:appointment_status_waiting), class: 'text-yellow')
+      label_tag t(:appointment_status_waiting), :azure
+    when Appointment.status[:cancelled]
+      label_tag t(:appointment_status_cancelled), :red
     end
   end
 end

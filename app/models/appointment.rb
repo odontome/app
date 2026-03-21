@@ -28,7 +28,6 @@ class Appointment < ApplicationRecord
 
     eager_load(:patient, :doctor)
       .where(patients: { practice_id: practice_id })
-      .where(status: [status[:confirmed], status[:waiting_room]])
       .where(starts_at: today_start..today_end)
       .order(:starts_at)
   }

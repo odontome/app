@@ -122,7 +122,6 @@ class PatientsController < ApplicationController
     Appointment
       .joins(:patient)
       .where(patients: { practice_id: practice.id })
-      .where(status: [Appointment.status[:confirmed], Appointment.status[:waiting_room]])
       .where(starts_at: tz.now.beginning_of_day..tz.now.end_of_day)
       .count
   end

@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class AppointmentTest < ActiveSupport::TestCase
-  test 'today_for_practice returns only todays confirmed and waiting appointments for practice' do
+  test 'today_for_practice returns all todays appointments for practice' do
     practice = practices(:complete)
     doctor = doctors(:rebecca)
     datebook = datebooks(:playa_del_carmen)
@@ -27,7 +27,7 @@ class AppointmentTest < ActiveSupport::TestCase
       status: Appointment.status[:waiting_room]
     )
 
-    # Today's cancelled appointment (should be excluded)
+    # Today's cancelled appointment (should be included)
     today_cancelled = Appointment.create!(
       datebook: datebook, doctor: doctor, patient: patient,
       starts_at: Time.current.change(hour: 14), ends_at: Time.current.change(hour: 14, min: 30),
@@ -46,7 +46,7 @@ class AppointmentTest < ActiveSupport::TestCase
 
     assert_includes result_ids, today_confirmed.id
     assert_includes result_ids, today_waiting.id
-    refute_includes result_ids, today_cancelled.id
+    assert_includes result_ids, today_cancelled.id
     refute_includes result_ids, yesterday_confirmed.id
   end
 end

@@ -128,6 +128,7 @@ pt:
   appointment_updated_success_message: O agendamento foi atualizado com sucesso
   appointment_updated_error_message: Houve um problema ao atualizar o agendamento
   appointment_not_found_message: Agendamento não encontrado. Pode ter sido excluído por outro usuário ou nunca ter existido.
+  appointment_status_cancelled: Cancelada
   appointment_status_confirmed: Confirmada
   appointment_status_waiting: Na sala de espera
   appointment_time_column: Hora

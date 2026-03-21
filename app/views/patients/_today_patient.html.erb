@@ -1,7 +1,4 @@
 <tr>
-  <td data-label="<%= t :appointment_time_column %>">
-    <span class="fw-medium"><%= appointment_time_with_duration(today_patient.starts_at, today_patient.ends_at) %></span>
-  </td>
   <td data-label="<%= t :name %>">
     <div class="d-flex py-1 align-items-center">
       <%= link_to today_patient.patient, class: 'p-0 border-0 bg-transparent', style: 'line-height: 0;' do %>
@@ -18,8 +15,11 @@
   <td class="text-muted" data-label="<%= t :doctor_column %>">
     <%= today_patient.doctor.fullname %>
   </td>
+  <td data-label="<%= t :appointment_time_column %>">
+    <span class="fw-medium"><%= appointment_time_with_duration(today_patient.starts_at, today_patient.ends_at) %></span>
+  </td>
   <td data-label="<%= t :status %>">
-    <%= appointment_status_label(today_patient.status) %>
+    <%= appointment_status_badge(today_patient.status) %>
   </td>
   <td>
     <div class="btn-list flex-nowrap">

@@ -26,7 +26,7 @@ class PatientsControllerTest < ActionController::TestCase
     assert_equal 'today', assigns(:segment)
   end
 
-  test 'today segment shows only todays confirmed and waiting appointments' do
+  test 'today segment shows all todays appointments including cancelled' do
     practice = practices(:complete)
     doctor = doctors(:rebecca)
     datebook = datebooks(:playa_del_carmen)
@@ -58,8 +58,8 @@ class PatientsControllerTest < ActionController::TestCase
     appointment_ids = assigns(:appointments).map(&:id)
 
     assert_includes appointment_ids, today_appt.id
+    assert_includes appointment_ids, cancelled_appt.id
     refute_includes appointment_ids, yesterday_appt.id
-    refute_includes appointment_ids, cancelled_appt.id
   end
 
   test 'today segment empty state' do

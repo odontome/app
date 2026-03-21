@@ -129,6 +129,7 @@ en:
   appointment_updated_success_message: The appointment was updated successfully
   appointment_updated_error_message: There was a problem updating the appointment
   appointment_not_found_message: Appointment not found. It may have been deleted by another user or never existed.
+  appointment_status_cancelled: Cancelled
   appointment_status_confirmed: Confirmed
   appointment_status_waiting: In waiting room
   appointment_time_column: Time
