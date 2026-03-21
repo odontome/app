@@ -43,8 +43,7 @@ module PatientsHelper
       today_pill = content_tag(:li, class: 'nav-item') do
         link_to patients_url(segment: 'today'),
                 class: "nav-link #{@segment == 'today' ? 'active' : ''}" do
-          badge = content_tag(:span, @today_count, class: 'badge ms-1')
-          "#{t(:patients_segment_today)} #{badge}".html_safe
+          safe_join([t(:patients_segment_today), " (#{@today_count})"])
         end
       end
 

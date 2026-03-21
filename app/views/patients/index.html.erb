@@ -48,8 +48,8 @@
 
     <% else %>
       <% if @patients.empty? %>
-        <div class="card-body">
-          <%= t :no_patients %>
+        <div class="card-body text-center py-5">
+          <p class="text-muted mb-0"><%= t :no_patients %></p>
         </div>
       <% else %>
         <table class="table table-vcenter table-mobile-md card-table">
