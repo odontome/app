@@ -20,8 +20,8 @@
       <%= label_tag t(:active), :green %>
     <% end %>
   </td>
-  <td class="text-muted" data-label="<%= t :updated_at %>">
-    <%= time_ago_in_words patient.updated_at %>
+  <td class="text-muted" data-label="<%= t :last_visit %>">
+    <%= patient.last_visit_at.present? ? l(patient.last_visit_at.to_date, format: :short) : t(:never) %>
   </td>
   <td>
     <div class="btn-list flex-nowrap">
