@@ -25,6 +25,9 @@ class PatientsController < ApplicationController
           .with_practice(current_user.practice_id)
           .where('created_at >= ? AND created_at <= ?', week_start, week_end)
       )
+    elsif params[:segment] == 'needs_follow_up'
+      @segment = 'needs_follow_up'
+      resolve_needs_follow_up_context
     elsif infer_all_segment?
       @segment = 'all'
       resolve_letter_context
@@ -106,7 +109,27 @@ class PatientsController < ApplicationController
     practice = current_user.practice
     @appointments = Appointment.today_for_practice(practice.id, practice.timezone)
     @today_count = @appointments.size
+    @follow_up_count = needs_follow_up_count
     @show_datebook = practice.datebooks_count.to_i > 1
+  end
+
+  def resolve_needs_follow_up_context
+    @today_count = today_appointment_count
+    @patients = with_last_visit_for_listing(
+      Patient.with_practice(current_user.practice_id)
+    ).where(
+      "last_visits.last_visit_at < ? OR last_visits.last_visit_at IS NULL",
+      6.months.ago
+    ).where(
+      "NOT EXISTS (
+        SELECT 1 FROM appointments
+        WHERE appointments.patient_id = patients.id
+          AND appointments.starts_at > ?
+          AND appointments.status != ?
+      )", Time.current, Appointment.status[:cancelled]
+    ).reorder("last_visits.last_visit_at ASC NULLS FIRST")
+
+    @follow_up_count = @patients.length
   end
 
   def infer_all_segment?
@@ -127,8 +150,25 @@ class PatientsController < ApplicationController
       .count
   end
 
+  def needs_follow_up_count
+    Patient.with_practice(current_user.practice_id)
+      .joins(last_visit_join_sql)
+      .where(
+        "last_visits.last_visit_at < ? OR last_visits.last_visit_at IS NULL",
+        6.months.ago
+      ).where(
+        "NOT EXISTS (
+          SELECT 1 FROM appointments
+          WHERE appointments.patient_id = patients.id
+            AND appointments.starts_at > ?
+            AND appointments.status != ?
+        )", Time.current, Appointment.status[:cancelled]
+      ).count
+  end
+
   def resolve_letter_context
     @today_count = today_appointment_count
+    @follow_up_count = needs_follow_up_count
     @current_letter = normalize_letter(params[:letter])
     @sort_column = normalize_sort_column(params[:sort])
     @sort_direction = normalize_sort_direction(params[:direction], @sort_column)

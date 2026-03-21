@@ -46,6 +46,28 @@
         </table>
       <% end %>
 
+    <% elsif @segment == 'needs_follow_up' %>
+      <% if @patients.empty? %>
+        <div class="card-body text-center py-5">
+          <p class="text-muted mb-0"><%= t :patients_follow_up_empty %></p>
+        </div>
+      <% else %>
+        <table class="table table-vcenter table-mobile-md card-table">
+          <thead>
+            <tr>
+              <th><%= t :name %></th>
+              <th><%= t :uid %></th>
+              <th><%= t :status %></th>
+              <th><%= t :last_visit %></th>
+              <th class="w-1"></th>
+            </tr>
+          </thead>
+          <tbody id="patients-list">
+            <%= render partial: 'patient', collection: @patients, as: :patient %>
+          </tbody>
+        </table>
+      <% end %>
+
     <% else %>
       <% if @patients.empty? %>
         <div class="card-body text-center py-5">

@@ -93,6 +93,71 @@ class PatientsControllerTest < ActionController::TestCase
     assert_nil assigns(:segment)
   end
 
+  test 'needs_follow_up segment shows patients with no recent visit and no future appointment' do
+    practice = practices(:complete)
+    doctor = doctors(:rebecca)
+    datebook = datebooks(:playa_del_carmen)
+
+    # Patient with old visit and no future appointment — should appear
+    overdue_patient = Patient.create!(
+      practice: practice, firstname: 'Overdue', lastname: 'Patient',
+      uid: 'OVD001', date_of_birth: Date.new(1985, 5, 5)
+    )
+    Appointment.create!(
+      datebook: datebook, doctor: doctor, patient: overdue_patient,
+      starts_at: 8.months.ago, ends_at: 8.months.ago + 30.minutes,
+      status: Appointment.status[:confirmed]
+    )
+
+    # Patient with recent visit — should NOT appear
+    recent_patient = Patient.create!(
+      practice: practice, firstname: 'Recent', lastname: 'Patient',
+      uid: 'RCT001', date_of_birth: Date.new(1990, 1, 1)
+    )
+    Appointment.create!(
+      datebook: datebook, doctor: doctor, patient: recent_patient,
+      starts_at: 2.months.ago, ends_at: 2.months.ago + 30.minutes,
+      status: Appointment.status[:confirmed]
+    )
+
+    # Patient with old visit but a future appointment — should NOT appear
+    scheduled_patient = Patient.create!(
+      practice: practice, firstname: 'Scheduled', lastname: 'Patient',
+      uid: 'SCH001', date_of_birth: Date.new(1992, 3, 3)
+    )
+    Appointment.create!(
+      datebook: datebook, doctor: doctor, patient: scheduled_patient,
+      starts_at: 7.months.ago, ends_at: 7.months.ago + 30.minutes,
+      status: Appointment.status[:confirmed]
+    )
+    Appointment.create!(
+      datebook: datebook, doctor: doctor, patient: scheduled_patient,
+      starts_at: 2.weeks.from_now, ends_at: 2.weeks.from_now + 30.minutes,
+      status: Appointment.status[:confirmed]
+    )
+
+    get :index, params: { segment: 'needs_follow_up' }
+
+    assert_response :success
+    assert_equal 'needs_follow_up', assigns(:segment)
+
+    patient_ids = assigns(:patients).map(&:id)
+    assert_includes patient_ids, overdue_patient.id
+    refute_includes patient_ids, recent_patient.id
+    refute_includes patient_ids, scheduled_patient.id
+  end
+
+  test 'needs_follow_up segment empty state' do
+    # Delete all patients so none can be overdue
+    Patient.with_practice(practices(:complete).id).destroy_all
+
+    get :index, params: { segment: 'needs_follow_up' }
+
+    assert_response :success
+    assert_equal 'needs_follow_up', assigns(:segment)
+    assert_empty assigns(:patients)
+  end
+
   test 'should get new' do
     get :new
     assert_response :success

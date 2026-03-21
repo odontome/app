@@ -47,13 +47,20 @@ module PatientsHelper
         end
       end
 
+      follow_up_pill = content_tag(:li, class: 'nav-item') do
+        link_to patients_url(segment: 'needs_follow_up'),
+                class: "nav-link #{@segment == 'needs_follow_up' ? 'active' : ''}" do
+          safe_join([t(:patients_segment_needs_follow_up), " (#{@follow_up_count})"])
+        end
+      end
+
       all_pill = content_tag(:li, class: 'nav-item') do
         link_to t(:patients_segment_all),
                 patients_url(segment: 'all'),
                 class: "nav-link #{@segment == 'all' ? 'active' : ''}"
       end
 
-      today_pill + all_pill
+      today_pill + follow_up_pill + all_pill
     end
   end
 

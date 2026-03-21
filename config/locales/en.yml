@@ -382,7 +382,9 @@ en:
   patient_treatment_updated_error_message: There was a problem creating this item
   patient_updated_success_message: The patient was updated successfully
   patients: Patients
+  patients_follow_up_empty: All patients are up to date
   patients_segment_all: All patients
+  patients_segment_needs_follow_up: Needs follow-up
   patients_segment_today: Today
   patients_today_empty: No appointments today
   patients_today_empty_hint: View all patients

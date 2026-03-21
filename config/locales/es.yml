@@ -355,7 +355,9 @@ es:
   patient_treatment_updated_error_message: Ocurrió un problema para crear este item
   patient_updated_success_message: El paciente fue actualizado con éxito
   patients: Pacientes
+  patients_follow_up_empty: Todos los pacientes están al día
   patients_segment_all: Todos los pacientes
+  patients_segment_needs_follow_up: Necesitan seguimiento
   patients_segment_today: Hoy
   patients_today_empty: Sin citas para hoy
   patients_today_empty_hint: Ver todos los pacientes
