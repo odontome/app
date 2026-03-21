@@ -386,6 +386,7 @@ en:
   follow_up_reminder_sent: Reminder sent
   follow_up_status: Follow-up
   patients_follow_up_empty: All patients are up to date
+  patients_follow_up_showing_all: Showing all patients that need follow-up
   patients_segment_all: All patients
   patients_segment_needs_follow_up: Needs follow-up
   patients_segment_today: Today

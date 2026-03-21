@@ -66,6 +66,13 @@
             <%= render partial: 'follow_up_patient', collection: @patients, as: :follow_up_patient %>
           </tbody>
         </table>
+        <div class="card-footer">
+          <% if @next_follow_up_offset.present? %>
+            <%= link_to t(:load_more_patients), patients_url(segment: 'needs_follow_up', offset: @next_follow_up_offset), class: "btn" %>
+          <% else %>
+            <span class="text-muted"><%= t(:patients_follow_up_showing_all) %></span>
+          <% end %>
+        </div>
       <% end %>
 
     <% else %>

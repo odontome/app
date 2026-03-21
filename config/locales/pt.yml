@@ -379,6 +379,7 @@ pt:
   follow_up_reminder_sent: Lembrete enviado
   follow_up_status: Acompanhamento
   patients_follow_up_empty: Todos os pacientes estão em dia
+  patients_follow_up_showing_all: Mostrando todos os pacientes que precisam de acompanhamento
   patients_segment_all: Todos os pacientes
   patients_segment_needs_follow_up: Precisa de acompanhamento
   patients_segment_today: Hoje

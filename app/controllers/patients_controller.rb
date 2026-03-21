@@ -115,7 +115,9 @@ class PatientsController < ApplicationController
 
   def resolve_needs_follow_up_context
     @today_count = today_appointment_count
-    @patients = with_last_visit_for_listing(
+    @follow_up_count = needs_follow_up_count
+
+    base_scope = with_last_visit_for_listing(
       Patient.with_practice(current_user.practice_id)
     ).where(
       "last_visits.last_visit_at < ? OR last_visits.last_visit_at IS NULL",
@@ -127,9 +129,12 @@ class PatientsController < ApplicationController
           AND appointments.starts_at > ?
           AND appointments.status != ?
       )", Time.current, Appointment.status[:cancelled]
-    ).reorder("last_visits.last_visit_at ASC NULLS FIRST")
+    ).reorder("last_visits.last_visit_at ASC NULLS FIRST, patients.id ASC")
 
-    @follow_up_count = @patients.length
+    offset = [params[:offset].to_i, 0].max
+    page = base_scope.limit(LETTER_PAGE_SIZE + 1).offset(offset).to_a
+    @patients = page.first(LETTER_PAGE_SIZE)
+    @next_follow_up_offset = page.length > LETTER_PAGE_SIZE ? offset + LETTER_PAGE_SIZE : nil
   end
 
   def infer_all_segment?
@@ -151,18 +156,25 @@ class PatientsController < ApplicationController
   end
 
   def needs_follow_up_count
+    # Lightweight count — no LATERAL JOIN, uses subqueries only
+    confirmed_status = Appointment.status[:confirmed]
+    cancelled_status = Appointment.status[:cancelled]
+
     Patient.with_practice(current_user.practice_id)
-      .joins(last_visit_join_sql)
       .where(
-        "last_visits.last_visit_at < ? OR last_visits.last_visit_at IS NULL",
-        6.months.ago
+        "NOT EXISTS (
+          SELECT 1 FROM appointments
+          WHERE appointments.patient_id = patients.id
+            AND appointments.status = ?
+            AND appointments.ends_at > ?
+        )", confirmed_status, 6.months.ago
       ).where(
         "NOT EXISTS (
           SELECT 1 FROM appointments
           WHERE appointments.patient_id = patients.id
             AND appointments.starts_at > ?
             AND appointments.status != ?
-        )", Time.current, Appointment.status[:cancelled]
+        )", Time.current, cancelled_status
       ).count
   end
 
