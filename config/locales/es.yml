@@ -14,6 +14,7 @@ es:
   showing_all_patients: Mostrando todos los pacientes para esta letra
   total_reviews: "%{count} calificaciones"
   load_more_patients: Cargar más pacientes
+  last_visit: Última visita
   thank_you: ¡Gracias!
   range: Rango
   active: Activa
@@ -128,6 +129,9 @@ es:
   appointment_updated_success_message: La cita ha sido actualizada con éxito.
   appointment_updated_error_message: Ocurrió un problema al intentar actualizar la cita.
   appointment_not_found_message: Cita no encontrada. Es posible que haya sido eliminada por otro usuario o que nunca haya existido.
+  appointment_status_confirmed: Confirmada
+  appointment_status_waiting: En sala de espera
+  appointment_time_duration: "%{time} (%{duration} min)"
   appointments: Citas
   appointments_in_datebook: ! "%{count} citas"
   are_you_sure: ¿Estás seguro?
@@ -348,6 +352,10 @@ es:
   patient_treatment_updated_error_message: Ocurrió un problema para crear este item
   patient_updated_success_message: El paciente fue actualizado con éxito
   patients: Pacientes
+  patients_segment_all: Todos los pacientes
+  patients_segment_today: Hoy
+  patients_today_empty: Sin citas para hoy
+  patients_today_empty_hint: Ver todos los pacientes
   personal_information: Información personal
   please_wait: Por favor espera...
   practice_cancellation: Cancelación de cuenta

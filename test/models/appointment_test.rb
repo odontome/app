@@ -28,14 +28,14 @@ class AppointmentTest < ActiveSupport::TestCase
     )
 
     # Today's cancelled appointment (should be excluded)
-    Appointment.create!(
+    today_cancelled = Appointment.create!(
       datebook: datebook, doctor: doctor, patient: patient,
       starts_at: Time.current.change(hour: 14), ends_at: Time.current.change(hour: 14, min: 30),
       status: Appointment.status[:cancelled]
     )
 
     # Yesterday's confirmed appointment (should be excluded)
-    Appointment.create!(
+    yesterday_confirmed = Appointment.create!(
       datebook: datebook, doctor: doctor, patient: patient,
       starts_at: 1.day.ago.change(hour: 10), ends_at: 1.day.ago.change(hour: 10, min: 30),
       status: Appointment.status[:confirmed]
@@ -46,6 +46,7 @@ class AppointmentTest < ActiveSupport::TestCase
 
     assert_includes result_ids, today_confirmed.id
     assert_includes result_ids, today_waiting.id
-    assert_equal 2, result_ids.count { |id| [today_confirmed.id, today_waiting.id].include?(id) }
+    refute_includes result_ids, today_cancelled.id
+    refute_includes result_ids, yesterday_confirmed.id
   end
 end

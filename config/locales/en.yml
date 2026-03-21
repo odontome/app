@@ -16,6 +16,7 @@ en:
   showing_all_patients: Showing all patients for this letter
   total_reviews: "%{count} reviews"
   load_more_patients: Load more patients
+  last_visit: Last visit
   thank_you: Thank you!
   range: Range
   active: Active
@@ -128,6 +129,9 @@ en:
   appointment_updated_success_message: The appointment was updated successfully
   appointment_updated_error_message: There was a problem updating the appointment
   appointment_not_found_message: Appointment not found. It may have been deleted by another user or never existed.
+  appointment_status_confirmed: Confirmed
+  appointment_status_waiting: In waiting room
+  appointment_time_duration: "%{time} (%{duration} min)"
   appointments: Appointments
   appointments_in_datebook: ! "%{count} appointments"
   are_you_sure: Are you sure?
@@ -375,6 +379,10 @@ en:
   patient_treatment_updated_error_message: There was a problem creating this item
   patient_updated_success_message: The patient was updated successfully
   patients: Patients
+  patients_segment_all: All patients
+  patients_segment_today: Today
+  patients_today_empty: No appointments today
+  patients_today_empty_hint: View all patients
   personal_information: Personal information
   please_wait: Pleast wait...
   practice_cancellation: Practice cancellation

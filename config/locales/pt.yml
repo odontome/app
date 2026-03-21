@@ -16,6 +16,7 @@ pt:
   showing_all_patients: Mostrando todos os pacientes desta letra
   total_reviews: "%{cound} avaliações"
   load_more_patients: Carregar mais pacientes
+  last_visit: Última visita
   thank_you: Obrigado!
   range: Intervalo
   active: Ativo
@@ -127,6 +128,9 @@ pt:
   appointment_updated_success_message: O agendamento foi atualizado com sucesso
   appointment_updated_error_message: Houve um problema ao atualizar o agendamento
   appointment_not_found_message: Agendamento não encontrado. Pode ter sido excluído por outro usuário ou nunca ter existido.
+  appointment_status_confirmed: Confirmada
+  appointment_status_waiting: Na sala de espera
+  appointment_time_duration: "%{time} (%{duration} min)"
   appointments: Agendamentos
   appointments_in_datebook: ! "%{count} agendamentos"
   are_you_sure: Tem certeza?
@@ -368,6 +372,10 @@ pt:
   patient_treatment_updated_error_message: Houve um problema ao criar este item
   patient_updated_success_message: O paciente foi atualizado com sucesso
   patients: Pacientes
+  patients_segment_all: Todos os pacientes
+  patients_segment_today: Hoje
+  patients_today_empty: Sem consultas hoje
+  patients_today_empty_hint: Ver todos os pacientes
   personal_information: Informações pessoais
   please_wait: Por favor, aguarde...
   practice_cancellation: Cancelamento da clínica
