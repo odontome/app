@@ -26,7 +26,7 @@ class Appointment < ApplicationRecord
     today_start = tz.now.beginning_of_day
     today_end = tz.now.end_of_day
 
-    eager_load(:patient, :doctor)
+    eager_load(:patient, :doctor, :datebook)
       .where(patients: { practice_id: practice_id })
       .where(starts_at: today_start..today_end)
       .order(:starts_at)

@@ -14,6 +14,9 @@
   </td>
   <td class="text-muted" data-label="<%= t :doctor_column %>">
     <%= today_patient.doctor.fullname %>
+    <% if @show_datebook %>
+      <div class="text-muted small"><%= today_patient.datebook.name %></div>
+    <% end %>
   </td>
   <td data-label="<%= t :appointment_time_column %>">
     <span class="fw-medium"><%= appointment_time_with_duration(today_patient.starts_at, today_patient.ends_at) %></span>

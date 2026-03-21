@@ -106,6 +106,7 @@ class PatientsController < ApplicationController
     practice = current_user.practice
     @appointments = Appointment.today_for_practice(practice.id, practice.timezone)
     @today_count = @appointments.size
+    @show_datebook = practice.datebooks_count.to_i > 1
   end
 
   def infer_all_segment?
