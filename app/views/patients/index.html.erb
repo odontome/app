@@ -8,7 +8,7 @@
     <div class="col-auto ms-auto">
       <div class="btn-list">
         <%= link_to new_patient_url, class: "btn btn-primary d-sm-inline-block" do %>
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg><!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
           <%= t(:create_new_patient) %>
         <% end %>
       </div>
@@ -16,52 +16,94 @@
   </div>
 </div>
 
+<% if @segment.present? %>
+  <%= patients_segment_pills %>
+<% end %>
+
 <div class="page-body">
   <div class="card">
-    <% if @patients.empty? %>
-      <div class="card-body">
-        <%= t :no_patients %>
-      </div>
-    <% else %>
-      <table class="table table-vcenter table-mobile-md card-table">
-        <thead>
-          <tr>
-            <th><%= t :name %></th>
-            <th><%= t :uid %></th>
-            <th>
-              <%= t :status %>
-              <%= help_tag t 'help.patients.status' %>
-            </th>
-            <th><%= t :updated_at %></th>
-            <th class="w-1"></th>
-          </tr>
-        </thead>
-        <tbody id="patients-list">
-          <%= render partial: 'patient', collection: @patients, as: :patient %>
-        </tbody>
-      </table>
-      <% if params[:term].nil? && params[:segment].nil? %>
-        <div class="card-footer" id="patient-letter-pagination">
-          <%= render partial: 'letter_pagination', locals: { letter: @current_letter, next_cursor: @next_cursor } %>
+    <% if @segment == 'today' %>
+      <% if @appointments.empty? %>
+        <div class="card-body text-center py-5">
+          <p class="text-muted mb-2"><%= t :patients_today_empty %></p>
+          <%= link_to t(:patients_today_empty_hint), patients_url(segment: 'all'), class: "btn btn-outline-primary" %>
         </div>
+      <% else %>
+        <table class="table table-vcenter table-mobile-md card-table">
+          <thead>
+            <tr>
+              <th><%= t :time %></th>
+              <th><%= t :name %></th>
+              <th><%= t :uid %></th>
+              <th><%= t :doctor %></th>
+              <th><%= t :status %></th>
+              <th class="w-1"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= render partial: 'today_patient', collection: @appointments, as: :today_patient %>
+          </tbody>
+        </table>
+      <% end %>
+
+    <% else %>
+      <% if @patients.empty? %>
+        <div class="card-body">
+          <%= t :no_patients %>
+        </div>
+      <% else %>
+        <table class="table table-vcenter table-mobile-md card-table">
+          <thead>
+            <tr>
+              <th>
+                <% if @segment == 'all' %>
+                  <%= patients_sort_link(column: 'name', label_key: :name, letter: @current_letter) %>
+                <% else %>
+                  <%= t :name %>
+                <% end %>
+              </th>
+              <th><%= t :uid %></th>
+              <th>
+                <%= t :status %>
+                <%= help_tag t 'help.patients.status' %>
+              </th>
+              <th>
+                <% if @segment == 'all' %>
+                  <%= patients_sort_link(column: 'last_visit', label_key: :last_visit, letter: @current_letter) %>
+                <% else %>
+                  <%= t :last_visit %>
+                <% end %>
+              </th>
+              <th class="w-1"></th>
+            </tr>
+          </thead>
+          <tbody id="patients-list">
+            <%= render partial: 'patient', collection: @patients, as: :patient %>
+          </tbody>
+        </table>
+        <% if @segment == 'all' %>
+          <div class="card-footer" id="patient-letter-pagination">
+            <%= render partial: 'letter_pagination', locals: { letter: @current_letter, next_cursor: @next_cursor, sort_column: @sort_column, sort_direction: @sort_direction } %>
+          </div>
+        <% end %>
       <% end %>
     <% end %>
   </div>
 </div>
 
-<% if params[:term].nil? and params[:segment].nil? %>
+<% if @segment == 'all' %>
   <ul class="pagination">
     <li class="page-item <%= @current_letter == '#' ? 'active' : '' %>">
-      <%= link_to "#", patients_url(letter: "#"), class: "page-link" %>
-    </li> 
+      <%= link_to "#", patients_url(letter: '#', sort: @sort_column, direction: @sort_direction), class: "page-link" %>
+    </li>
     <% letter_options.each do |letter| %>
       <li class="page-item <%= @current_letter == letter[:value] ? 'active' : '' %> <%= letter[:included?] ? '' : 'disabled' %>">
-        <%= link_to letter[:value], patients_url(letter: letter[:value]), class: "page-link" %>
-      </li>      
+        <%= link_to letter[:value], patients_url(letter: letter[:value], sort: @sort_column, direction: @sort_direction), class: "page-link" %>
+      </li>
     <% end %>
   </ul>
 
-<% else %>
+<% elsif @segment.nil? %>
   <span class="text-muted">
     <% if @patients.size == 0 %>
       <%= t :patient_search_results_zero, :patients_count => @patients.size %>
