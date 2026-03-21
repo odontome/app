@@ -130,6 +130,7 @@ pt:
   appointment_not_found_message: Agendamento não encontrado. Pode ter sido excluído por outro usuário ou nunca ter existido.
   appointment_status_confirmed: Confirmada
   appointment_status_waiting: Na sala de espera
+  appointment_time_column: Hora
   appointment_time_duration: "%{time} (%{duration} min)"
   appointments: Agendamentos
   appointments_in_datebook: ! "%{count} agendamentos"
@@ -180,6 +181,7 @@ pt:
   confirm_resize: Tem certeza de que deseja alterar a duração deste agendamento?
   delete_appointment: Deletar este agendamento
   delete_patient: Deletar este paciente
+  doctor_column: Médico
   doctor_created_success_message: O médico foi criado com sucesso
   doctor_has_no_future_appointments: A agenda está livre. Que tal se agendarmos
     alguns %{datebooks_url}?

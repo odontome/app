@@ -131,6 +131,7 @@ en:
   appointment_not_found_message: Appointment not found. It may have been deleted by another user or never existed.
   appointment_status_confirmed: Confirmed
   appointment_status_waiting: In waiting room
+  appointment_time_column: Time
   appointment_time_duration: "%{time} (%{duration} min)"
   appointments: Appointments
   appointments_in_datebook: ! "%{count} appointments"
@@ -181,6 +182,7 @@ en:
   confirm_resize: Are you sure you want to change the duration of this appointment?
   delete_appointment: Delete this appointment
   delete_patient: Delete this patient
+  doctor_column: Doctor
   doctor_created_success_message: The doctor was created successfully
   doctor_has_no_future_appointments:
     The schedule is free. How about if we schedule

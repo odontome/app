@@ -131,6 +131,7 @@ es:
   appointment_not_found_message: Cita no encontrada. Es posible que haya sido eliminada por otro usuario o que nunca haya existido.
   appointment_status_confirmed: Confirmada
   appointment_status_waiting: En sala de espera
+  appointment_time_column: Hora
   appointment_time_duration: "%{time} (%{duration} min)"
   appointments: Citas
   appointments_in_datebook: ! "%{count} citas"
@@ -179,6 +180,7 @@ es:
   confirm_resize: ¿Estás seguro de que quieres cambiar la duración de esta cita?
   delete_appointment: Borrar esta cita
   delete_patient: Borrar este paciente
+  doctor_column: Doctor
   doctor_created_success_message: El doctor ha sido creado con éxito.
   doctor_has_no_future_appointments: La agenda está libre. ¿Qué tal si %{datebooks_url} algo?
   doctor_updated_success_message: El doctor ha sido actualizado con éxito.

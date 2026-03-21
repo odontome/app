@@ -235,10 +235,10 @@ class PatientsController < ApplicationController
   def with_last_visit_for_listing(scope)
     scope
       .joins(last_visit_join_sql)
-      .select('last_visits.last_visit_at AS last_visit_at')
+      .select('patients.*, last_visits.last_visit_at AS last_visit_at')
   end
 
-  CONFIRMED_STATUS_SQL = ActiveRecord::Base.connection.quote('confirmed').freeze
+  CONFIRMED_STATUS_SQL = "'confirmed'".freeze
 
   def last_visit_join_sql
     <<~SQL.squish
