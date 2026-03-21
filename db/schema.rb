@@ -10,30 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_22_202040) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_22_202040) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
 
   create_table "active_storage_attachments", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "record_type", null: false
-    t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
     t.datetime "created_at", precision: nil, null: false
+    t.string "name", null: false
+    t.bigint "record_id", null: false
+    t.string "record_type", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
   create_table "active_storage_blobs", force: :cascade do |t|
-    t.string "key", null: false
-    t.string "filename", null: false
-    t.string "content_type"
-    t.text "metadata"
-    t.string "service_name", null: false
     t.bigint "byte_size", null: false
     t.string "checksum"
+    t.string "content_type"
     t.datetime "created_at", precision: nil, null: false
+    t.string "filename", null: false
+    t.string "key", null: false
+    t.text "metadata"
+    t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
@@ -44,90 +44,90 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_22_202040) do
   end
 
   create_table "appointments", id: :serial, force: :cascade do |t|
-    t.integer "doctor_id"
-    t.integer "patient_id"
-    t.string "notes", limit: 255
-    t.string "status", default: "confirmed"
-    t.datetime "starts_at", precision: nil
-    t.datetime "ends_at", precision: nil
     t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.boolean "notified_of_reminder", default: false
     t.integer "datebook_id"
-    t.boolean "notified_of_schedule", default: false
+    t.integer "doctor_id"
+    t.datetime "ends_at", precision: nil
+    t.string "notes", limit: 255
+    t.boolean "notified_of_reminder", default: false
     t.boolean "notified_of_review", default: false
+    t.boolean "notified_of_schedule", default: false
+    t.integer "patient_id"
+    t.datetime "starts_at", precision: nil
+    t.string "status", default: "confirmed"
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["datebook_id", "starts_at", "ends_at"], name: "index_appointments_on_datebook_id_and_times"
     t.index ["doctor_id"], name: "index_appointments_on_doctor_id"
     t.index ["starts_at", "ends_at"], name: "index_appointments_on_starts_at_and_ends_at"
   end
 
   create_table "balances", id: :serial, force: :cascade do |t|
-    t.integer "patient_id"
     t.float "amount"
-    t.string "notes"
     t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
     t.string "currency"
+    t.string "notes"
+    t.integer "patient_id"
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "datebooks", id: :serial, force: :cascade do |t|
-    t.integer "practice_id"
-    t.string "name", limit: 100
     t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.integer "starts_at", default: 8
     t.integer "ends_at", default: 20
+    t.string "name", limit: 100
+    t.integer "practice_id"
+    t.integer "starts_at", default: 8
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "doctors", id: :serial, force: :cascade do |t|
-    t.string "uid"
-    t.integer "practice_id"
+    t.string "color", limit: 7, default: "#3366CC"
+    t.datetime "created_at", precision: nil, null: false
+    t.string "email"
     t.string "firstname"
-    t.string "lastname"
     t.string "gender"
     t.boolean "is_active", default: true
+    t.string "lastname"
+    t.integer "practice_id"
     t.string "speciality"
-    t.datetime "created_at", precision: nil, null: false
+    t.string "uid"
     t.datetime "updated_at", precision: nil, null: false
-    t.string "email"
-    t.string "color", limit: 7, default: "#3366CC"
   end
 
   create_table "notes", id: :serial, force: :cascade do |t|
-    t.string "notes", limit: 500
     t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.string "noteable_type"
     t.integer "noteable_id"
+    t.string "noteable_type"
+    t.string "notes", limit: 500
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "user_id"
     t.index ["noteable_type", "noteable_id"], name: "index_notes_on_noteable_type_and_noteable_id"
   end
 
   create_table "patients", id: :serial, force: :cascade do |t|
-    t.string "uid"
-    t.integer "practice_id"
-    t.string "firstname"
-    t.string "lastname"
     t.text "address"
-    t.string "email"
-    t.string "telephone"
-    t.string "mobile"
-    t.string "emergency_telephone"
-    t.date "date_of_birth"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
     t.text "allergies"
-    t.text "past_illnesses"
-    t.text "surgeries"
-    t.text "medications"
     t.string "cigarettes_per_day"
+    t.datetime "created_at", precision: nil, null: false
+    t.date "date_of_birth"
+    t.datetime "deleted_at", precision: nil
     t.string "drinks_per_day"
     t.text "drugs_use"
+    t.string "email"
+    t.string "emergency_telephone"
     t.text "family_diseases"
-    t.boolean "notified_of_six_month_reminder", default: false, null: false
-    t.datetime "deleted_at", precision: nil
+    t.string "firstname"
     t.string "firstname_initial", limit: 1
     t.string "fullname_search"
+    t.string "lastname"
+    t.text "medications"
+    t.string "mobile"
+    t.boolean "notified_of_six_month_reminder", default: false, null: false
+    t.text "past_illnesses"
+    t.integer "practice_id"
+    t.text "surgeries"
+    t.string "telephone"
+    t.string "uid"
+    t.datetime "updated_at", precision: nil, null: false
     t.index "lower((uid)::text) gin_trgm_ops", name: "index_patients_on_lower_uid_trgm", using: :gin
     t.index ["deleted_at"], name: "index_patients_on_deleted_at"
     t.index ["fullname_search"], name: "index_patients_on_fullname_search", opclass: :gin_trgm_ops, using: :gin
@@ -136,29 +136,29 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_22_202040) do
   end
 
   create_table "practices", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.string "locale", default: "en_US"
-    t.string "timezone", default: "UTC"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.datetime "cancelled_at", precision: nil
-    t.integer "patients_count", default: 0
-    t.integer "doctors_count", default: 0
-    t.integer "users_count", default: 0
-    t.integer "datebooks_count"
-    t.string "email"
-    t.text "stripe_customer_id"
-    t.text "stripe_account_id"
-    t.string "connect_onboarding_status", default: "not_started"
-    t.boolean "connect_charges_enabled", default: false
-    t.boolean "connect_payouts_enabled", default: false
-    t.boolean "connect_details_submitted", default: false
-    t.string "currency", default: "mxn", null: false
-    t.string "custom_review_url"
     t.boolean "agent_access_enabled", default: false, null: false
     t.string "agent_api_key_digest"
-    t.string "agent_label", default: "Agent"
     t.string "agent_api_key_prefix"
+    t.string "agent_label", default: "Agent"
+    t.datetime "cancelled_at", precision: nil
+    t.boolean "connect_charges_enabled", default: false
+    t.boolean "connect_details_submitted", default: false
+    t.string "connect_onboarding_status", default: "not_started"
+    t.boolean "connect_payouts_enabled", default: false
+    t.datetime "created_at", precision: nil, null: false
+    t.string "currency", default: "mxn", null: false
+    t.string "custom_review_url"
+    t.integer "datebooks_count"
+    t.integer "doctors_count", default: 0
+    t.string "email"
+    t.string "locale", default: "en_US"
+    t.string "name"
+    t.integer "patients_count", default: 0
+    t.text "stripe_account_id"
+    t.text "stripe_customer_id"
+    t.string "timezone", default: "UTC"
+    t.datetime "updated_at", precision: nil, null: false
+    t.integer "users_count", default: 0
     t.index ["agent_api_key_digest"], name: "index_practices_on_agent_api_key_digest", unique: true
     t.index ["connect_onboarding_status"], name: "index_practices_on_connect_onboarding_status"
     t.index ["stripe_account_id"], name: "index_practices_on_stripe_account_id"
@@ -166,75 +166,75 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_22_202040) do
 
   create_table "reviews", id: :serial, force: :cascade do |t|
     t.integer "appointment_id"
-    t.integer "score"
     t.string "comment"
     t.datetime "created_at", precision: nil, null: false
+    t.integer "score"
     t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "subscriptions", force: :cascade do |t|
+    t.boolean "cancel_at_period_end", default: false, null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "current_period_end", precision: nil, null: false
+    t.datetime "current_period_start", precision: nil, null: false
     t.bigint "practice_id", null: false
     t.text "status", null: false
-    t.boolean "cancel_at_period_end", default: false, null: false
-    t.datetime "current_period_start", precision: nil, null: false
-    t.datetime "current_period_end", precision: nil, null: false
-    t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["practice_id"], name: "index_subscriptions_on_practice_id"
   end
 
   create_table "treatments", id: :serial, force: :cascade do |t|
-    t.integer "practice_id"
-    t.string "name", limit: 100
-    t.float "price"
     t.datetime "created_at", precision: nil, null: false
+    t.string "name", limit: 100
+    t.integer "practice_id"
+    t.float "price"
     t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "user_consents", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "practice_id", null: false
-    t.string "consent_type", null: false
-    t.string "policy_version", null: false
     t.datetime "accepted_at", null: false
-    t.string "ip_address"
-    t.string "user_agent"
+    t.string "consent_type", null: false
     t.datetime "created_at", null: false
+    t.string "ip_address"
+    t.string "policy_version", null: false
+    t.bigint "practice_id", null: false
     t.datetime "updated_at", null: false
+    t.string "user_agent"
+    t.bigint "user_id", null: false
     t.index ["practice_id"], name: "index_user_consents_on_practice_id"
     t.index ["user_id", "consent_type", "policy_version"], name: "idx_on_user_id_consent_type_policy_version_c78467206a", unique: true
     t.index ["user_id"], name: "index_user_consents_on_user_id"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
-    t.string "firstname"
-    t.string "lastname"
-    t.string "email"
-    t.string "roles", default: "user"
-    t.integer "practice_id"
     t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
     t.datetime "current_login_at", precision: nil
-    t.datetime "last_login_at", precision: nil
-    t.string "perishable_token", default: "", null: false
+    t.string "email"
     t.integer "failed_login_count", default: 0
-    t.boolean "subscribed_to_digest", default: true
+    t.string "firstname"
+    t.datetime "last_login_at", precision: nil
+    t.string "lastname"
     t.string "password_digest"
+    t.string "perishable_token", default: "", null: false
+    t.integer "practice_id"
     t.string "remember_token"
     t.datetime "remember_token_expires_at"
+    t.string "roles", default: "user"
+    t.boolean "subscribed_to_digest", default: true
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["perishable_token"], name: "index_users_on_perishable_token"
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end
 
   create_table "versions", force: :cascade do |t|
-    t.string "whodunnit"
     t.datetime "created_at"
+    t.string "event", null: false
     t.bigint "item_id", null: false
     t.string "item_type", null: false
-    t.string "event", null: false
     t.text "object"
     t.text "object_changes"
     t.integer "practice_id"
+    t.string "whodunnit"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
     t.index ["practice_id", "created_at"], name: "index_versions_on_practice_id_and_created_at"
     t.index ["practice_id"], name: "index_versions_on_practice_id"
