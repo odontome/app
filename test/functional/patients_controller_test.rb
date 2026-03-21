@@ -289,6 +289,35 @@ class PatientsControllerTest < ActionController::TestCase
     assert_nil assigns(:next_cursor)
   end
 
+  test 'today segment respects practice timezone' do
+    practice = practices(:complete) # Europe/London
+    doctor = doctors(:rebecca)
+    datebook = datebooks(:playa_del_carmen)
+
+    patient = Patient.create!(
+      practice: practice, firstname: 'Timezone', lastname: 'Test',
+      uid: 'TZ001', date_of_birth: Date.new(1990, 1, 1)
+    )
+
+    # Freeze time to 11 PM London time (March 21)
+    london_tz = ActiveSupport::TimeZone['Europe/London']
+    frozen_time = london_tz.parse('2026-03-21 23:00:00')
+
+    travel_to frozen_time do
+      late_appt = Appointment.create!(
+        datebook: datebook, doctor: doctor, patient: patient,
+        starts_at: london_tz.parse('2026-03-21 22:00:00'),
+        ends_at: london_tz.parse('2026-03-21 22:30:00'),
+        status: Appointment.status[:confirmed]
+      )
+
+      get :index
+      assert_response :success
+      appointment_ids = assigns(:appointments).map(&:id)
+      assert_includes appointment_ids, late_appt.id
+    end
+  end
+
   test 'changing sort column ignores stale cursor and returns first page' do
     practice = practices(:complete)
 
