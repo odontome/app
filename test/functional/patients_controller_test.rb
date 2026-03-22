@@ -222,6 +222,14 @@ class PatientsControllerTest < ActionController::TestCase
     assert_redirected_to patients_path
   end
 
+  test 'non-admin cannot destroy patient' do
+    @controller.session['user'] = users(:perishable) # roles: user, not admin
+
+    assert_no_difference('Patient.count') do
+      delete :destroy, params: { id: patients(:one).to_param }
+    end
+  end
+
   test 'letter listing uses cursor pagination' do
     practice = practices(:complete)
     total_records = PatientsController::LETTER_PAGE_SIZE + 1
