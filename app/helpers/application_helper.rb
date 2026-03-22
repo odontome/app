@@ -51,6 +51,17 @@ module ApplicationHelper
     content_tag 'span', message, class: "badge bg-#{color}-lt"
   end
 
+  def appointment_status_badge(status)
+    case status
+    when Appointment.status[:confirmed]
+      label_tag t(:appointment_status_confirmed), :green
+    when Appointment.status[:waiting_room]
+      label_tag t(:appointment_status_waiting), :azure
+    when Appointment.status[:cancelled]
+      label_tag t(:appointment_status_cancelled), :red
+    end
+  end
+
   def value_tag(title, value)
     aggregated_value = content_tag 'strong', title
 

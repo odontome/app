@@ -64,13 +64,7 @@
                       </span>
                     </td>
                     <td data-label="<%= t :status %>">
-                      <% if appointment.is_confirmed %>
-                        <%= label_tag t(:valid), :green %>
-                      <% elsif appointment.is_cancelled %>
-                        <%= label_tag t(:cancel), :red %>
-                      <% else %>
-                        <%= label_tag t(:invalid) %>
-                      <% end %>
+                      <%= appointment_status_badge(appointment.status) %>
                     </td>
                     <td data-label="<%= t :notes %>">
                       <% note = appointment.notes.to_s %>

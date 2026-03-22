@@ -1,0 +1,19 @@
+<tr>
+  <%= render 'patient_name_cell', patient: follow_up_patient %>
+  <td class="text-muted" data-label="<%= t :uid %>">
+    <%= follow_up_patient.uid %>
+  </td>
+  <td data-label="<%= t :follow_up_status %>">
+    <% if follow_up_patient.notified_of_six_month_reminder? %>
+      <span class="badge bg-success me-1"></span> <%= t(:follow_up_reminder_sent) %>
+    <% else %>
+      <span class="badge bg-warning me-1"></span> <%= t(:follow_up_not_contacted) %>
+    <% end %>
+  </td>
+  <td data-label="<%= t :last_visit %>">
+    <%= follow_up_overdue_label(follow_up_patient.last_visit_at) %>
+  </td>
+  <td>
+    <%= render 'patient_actions', patient: follow_up_patient %>
+  </td>
+</tr>

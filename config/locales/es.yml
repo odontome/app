@@ -14,6 +14,7 @@ es:
   showing_all_patients: Mostrando todos los pacientes para esta letra
   total_reviews: "%{count} calificaciones"
   load_more_patients: Cargar más pacientes
+  last_visit: Última visita
   thank_you: ¡Gracias!
   range: Rango
   active: Activa
@@ -128,8 +129,14 @@ es:
   appointment_updated_success_message: La cita ha sido actualizada con éxito.
   appointment_updated_error_message: Ocurrió un problema al intentar actualizar la cita.
   appointment_not_found_message: Cita no encontrada. Es posible que haya sido eliminada por otro usuario o que nunca haya existido.
+  appointment_status_cancelled: Cancelada
+  appointment_status_confirmed: Confirmada
+  appointment_status_waiting: En sala de espera
+  appointment_time_column: Hora
+  appointment_time_duration: "%{time} (%{duration} min)"
   appointments: Citas
   appointments_in_datebook: ! "%{count} citas"
+  birthday: Cumpleaños
   are_you_sure: ¿Estás seguro?
   are_you_sure_no_undo: ¿Estás seguro? Toda la información relacionada será borrada.
   balance: Estado de cuenta
@@ -175,6 +182,7 @@ es:
   confirm_resize: ¿Estás seguro de que quieres cambiar la duración de esta cita?
   delete_appointment: Borrar esta cita
   delete_patient: Borrar este paciente
+  doctor_column: Doctor
   doctor_created_success_message: El doctor ha sido creado con éxito.
   doctor_has_no_future_appointments: La agenda está libre. ¿Qué tal si %{datebooks_url} algo?
   doctor_updated_success_message: El doctor ha sido actualizado con éxito.
@@ -348,6 +356,19 @@ es:
   patient_treatment_updated_error_message: Ocurrió un problema para crear este item
   patient_updated_success_message: El paciente fue actualizado con éxito
   patients: Pacientes
+  follow_up_not_contacted: Sin contactar
+  follow_up_reminder_sent: Recordatorio enviado
+  follow_up_overdue: "hace %{time}"
+  follow_up_status: Seguimiento
+  patients_birthdays_empty: Sin cumpleaños esta semana
+  patients_follow_up_empty: Todos los pacientes están al día
+  patients_follow_up_showing_all: Mostrando todos los pacientes que necesitan seguimiento
+  patients_segment_all: Todos los pacientes
+  patients_segment_birthdays: Cumpleaños
+  patients_segment_needs_follow_up: Necesitan seguimiento
+  patients_segment_today: Hoy
+  patients_today_empty: Sin citas para hoy
+  patients_today_empty_hint: Ver todos los pacientes
   personal_information: Información personal
   please_wait: Por favor espera...
   practice_cancellation: Cancelación de cuenta

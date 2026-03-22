@@ -1,0 +1,15 @@
+<tr>
+  <%= render 'patient_name_cell', patient: birthday_patient %>
+  <td class="text-muted" data-label="<%= t :uid %>">
+    <%= birthday_patient.uid %>
+  </td>
+  <td data-label="<%= t :birthday %>">
+    <%= l(birthday_patient.date_of_birth, format: :short) %>
+  </td>
+  <td class="text-muted" data-label="<%= t :age %>">
+    <%= birthday_patient.age %>
+  </td>
+  <td>
+    <%= render 'patient_actions', patient: birthday_patient %>
+  </td>
+</tr>

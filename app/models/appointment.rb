@@ -21,6 +21,17 @@ class Appointment < ApplicationRecord
       .find_between starts_at, ends_at
   }
 
+  scope :today_for_practice, ->(practice_id, timezone) {
+    tz = ActiveSupport::TimeZone[timezone] || Time.zone
+    today_start = tz.now.beginning_of_day
+    today_end = tz.now.end_of_day
+
+    eager_load(:patient, :doctor, :datebook)
+      .where(patients: { practice_id: practice_id })
+      .where(starts_at: today_start..today_end)
+      .order(:starts_at)
+  }
+
   # validations
   validates_presence_of :datebook_id, :doctor_id, :patient_id
   validates_numericality_of :datebook_id, :doctor_id, :patient_id

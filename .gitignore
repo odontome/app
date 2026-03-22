@@ -47,3 +47,6 @@ yarn-debug.log*
 
 # Competitive analysis (revisit later)
 /docs/competitive-gaps/
+/.atelier
+/.superpowers
+/docs/superpowers/

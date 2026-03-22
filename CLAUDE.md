@@ -4,9 +4,11 @@ Dental practice management app (Ruby on Rails). Users are non-tech-savvy dental 
 
 ## Stack
 - Ruby on Rails, Minitest (test/), ERB views
+- Tabler UI — always use Tabler components before custom styling
 - Three locales: en, es, pt — always add translations to all three
 
 ## Conventions
+- Stick to Rails conventions only — no query objects, service layers, or patterns from other frameworks. Use model scopes, controller private methods, and concerns.
 - Never use `default:` on `I18n.t` calls
 - Commit messages: `feat/fix/refactor(scope): description`
 - Tests: `bin/rails test` (full suite), `bin/rails test test/functional/path` (targeted)
