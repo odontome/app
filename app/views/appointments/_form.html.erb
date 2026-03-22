@@ -3,7 +3,9 @@
 		<div class="mb-3">
 			<%= f.label :patient_id, class: "form-label required" %>
       <div class="input-icon mb-3">
-        <input type="text" name="as_values_patient_id" class="form-control autocomplete" autocomplete="off" placeholder="<%= t(:enter_patient_name_or_uid) %>">
+        <%# readonly prevents browser autocomplete suggestions (autocomplete="off" is ignored by modern browsers).
+            onfocus removes readonly so the user can type normally. background-color overrides the greyed-out readonly styling. %>
+        <input type="text" name="as_values_patient_id" class="form-control autocomplete" autocomplete="off" readonly onfocus="this.removeAttribute('readonly')" style="background-color: #ffffff;" placeholder="<%= t(:enter_patient_name_or_uid) %>">
         <span class="input-icon-addon">
           <div class="spinner-border spinner-border-sm text-muted d-none" role="status"></div>
         </span>
