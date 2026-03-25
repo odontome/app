@@ -165,9 +165,12 @@ class PatientsController < ApplicationController
                               .reorder('')
                               .distinct
                               .pluck(:firstname_initial)
-                              .map(&:upcase)
+                              .map(&:downcase)
 
-    [*'A'..'Z'].map { |letter| { value: letter, included?: present_initials.include?(letter) } }
+    alpha_set = Set.new(present_initials.select { |i| i.match?(/\A[a-z]\z/) }.map(&:upcase))
+    @has_non_alpha_patients = present_initials.any? { |i| !i.match?(/\A[a-z]\z/) }
+
+    [*'A'..'Z'].map { |letter| { value: letter, included?: alpha_set.include?(letter) } }
   end
 
   def resolve_letter_context
@@ -233,8 +236,10 @@ class PatientsController < ApplicationController
       return '#'
     end
 
-    first_patient = Patient.with_practice(current_user.practice_id).order('firstname ASC').limit(1).first
-    (first_patient&.firstname_initial || 'A').upcase
+    return '#' if @has_non_alpha_patients
+
+    first_included = @letter_options&.find { |opt| opt[:included?] }
+    first_included ? first_included[:value] : 'A'
   end
 
   def normalize_sort_column(sort_column_param)

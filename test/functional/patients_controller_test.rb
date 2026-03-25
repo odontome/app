@@ -73,12 +73,29 @@ class PatientsControllerTest < ActionController::TestCase
     assert assigns(:appointments).empty?
   end
 
-  test 'all segment preserves existing letter behavior' do
+  test 'all segment defaults to first letter with patients' do
     get :index, params: { segment: 'all' }
     assert_response :success
     assert_equal 'all', assigns(:segment)
-    assert_not_nil assigns(:patients)
-    assert_not_nil assigns(:current_letter)
+    assert_not_empty assigns(:patients), 'should default to a letter that has patients'
+
+    first_available = assigns(:letter_options).find { |opt| opt[:included?] }
+    assert_equal first_available[:value], assigns(:current_letter)
+  end
+
+  test 'all segment defaults to hash when only non-alpha patients exist' do
+    practice = practices(:complete)
+    practice.patients.destroy_all
+
+    Patient.create!(
+      practice: practice, firstname: '1st', lastname: 'Patient',
+      uid: 'NUM001', date_of_birth: Date.new(1990, 1, 1)
+    )
+
+    get :index, params: { segment: 'all' }
+    assert_response :success
+    assert_equal '#', assigns(:current_letter)
+    assert_not_empty assigns(:patients)
   end
 
   test 'letter param infers all segment' do
