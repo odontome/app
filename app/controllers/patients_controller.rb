@@ -96,7 +96,7 @@ class PatientsController < ApplicationController
     @patient = Patient.with_practice(current_user.practice_id).find(params[:id])
     @patient.destroy
     respond_to do |format|
-      format.html { redirect_to(patients_path, notice: I18n.t(:patient_deleted_success_message)) }
+      format.html { redirect_to(patients_path(segment: params[:segment], letter: params[:letter]), notice: I18n.t(:patient_deleted_success_message)) }
     end
   end
 

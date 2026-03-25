@@ -239,6 +239,22 @@ class PatientsControllerTest < ActionController::TestCase
     assert_redirected_to patients_path
   end
 
+  test 'destroy redirects back to current segment' do
+    assert_difference('Patient.count', -1) do
+      delete :destroy, params: { id: patients(:one).to_param, segment: 'needs_follow_up' }
+    end
+
+    assert_redirected_to patients_path(segment: 'needs_follow_up')
+  end
+
+  test 'destroy redirects back to all segment with letter' do
+    assert_difference('Patient.count', -1) do
+      delete :destroy, params: { id: patients(:two).to_param, segment: 'all', letter: 'M' }
+    end
+
+    assert_redirected_to patients_path(segment: 'all', letter: 'M')
+  end
+
   test 'non-admin cannot destroy patient' do
     @controller.session['user'] = users(:perishable) # roles: user, not admin
 
