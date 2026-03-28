@@ -20,7 +20,7 @@ gem 'rack-attack', '~> 6.8'
 gem 'rails', '~> 8.1.0'
 gem 'rails-i18n', '~> 8.0'
 gem 'sprockets-rails', '~> 3.5.2'
-gem 'stripe', '~> 5.53.0'
+gem 'stripe', '~> 18.3.1'
 gem 'taps', '~> 0.3.24'
 gem 'uglifier', '~> 4.2'
 
