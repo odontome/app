@@ -8,7 +8,12 @@ class SubscriptionsControllerTest < ActionController::TestCase
   end
 
   test 'should be redirected to stripe when using a valid configuration' do
-    post :create
-    assert_redirected_to %r{\Ahttps://checkout.stripe.com/c/pay/}
+    checkout_session = Struct.new(:url).new('https://checkout.stripe.com/c/pay/cs_test_123')
+
+    Stripe::Checkout::Session.stub(:create, checkout_session) do
+      post :create
+    end
+
+    assert_redirected_to 'https://checkout.stripe.com/c/pay/cs_test_123'
   end
 end
