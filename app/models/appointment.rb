@@ -122,18 +122,6 @@ class Appointment < ApplicationRecord
                .order('starts_at desc')
   end
 
-  def ciphered_url
-    encoded_id = ciphered_id
-
-    "https://my.odonto.me/datebooks/#{datebook_id}/appointments/#{encoded_id}"
-  end
-
-  def ciphered_review_url
-    encoded_appointment_id = ciphered_id
-
-    "https://my.odonto.me/reviews/new/?appointment_id=#{encoded_appointment_id}"
-  end
-
   def ciphered_id
     Cipher.encode(id.to_s)
   end

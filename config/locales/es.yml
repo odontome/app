@@ -117,7 +117,6 @@ es:
   administrator: Administrador
   age: Edad
   years_old: Años de edad
-  age_with_suffix: ! "%{age} años de edad"
   ago_in_words: ! "hace %{date}"
   distance_in_words: ! "en %{date}"
   allergic_to: Alérgico a
@@ -181,7 +180,6 @@ es:
   confirm_reschedule: ¿Estás seguro de que quieres reprogramar esta cita?
   confirm_resize: ¿Estás seguro de que quieres cambiar la duración de esta cita?
   delete_appointment: Borrar esta cita
-  delete_patient: Borrar este paciente
   doctor_column: Doctor
   doctor_created_success_message: El doctor ha sido creado con éxito.
   doctor_has_no_future_appointments: La agenda está libre. ¿Qué tal si %{datebooks_url} algo?
@@ -205,7 +203,6 @@ es:
       server_error: Ay...
       form_update: Oh oh, ourrió un problema
     cta:
-      try_again: ¡Inténtalo de nuevo!
       go_home: Ir a la página principal
     messages:
       invalid_date_range: Las fechas son invalidas.
@@ -228,9 +225,7 @@ es:
   for_your_information: Información adicional
   forgot_password: Olvidaste tu contraseña?
   future_appointments: Próximas citas
-  past_appointments: Citas anteriores
   gender: Sexo
-  hide_past_appointments: Esconder citas pasadas
   valid: Valido
   invalid: Invalido
   home: Inicio
@@ -263,7 +258,6 @@ es:
     users:
       <p>Las personas que pueden accesar a tu Odonto.me.</p> <p>Ya que solo tú puedes ver esta información, Es recomendado que crees tantos usuarios quieras para manejar Odonto.me pero dejes a este usuario <strong>administrador</strong>
       para la adminstración y configuración.</p>
-  last_login_at_with_date: Última sesión hace %{date}
   last_login_at: Última sesión
   roles: Roles
   logout: ¿Cerrar sesión?
@@ -291,8 +285,6 @@ es:
     practice:
       welcome:
         subject: Bienvenido a Odonto.me
-      daily_recap:
-        subject: Resumen diario de %{date}
       new_review_notification:
         subject: Tienes una nueva calificación
   male: Hombre
@@ -308,7 +300,6 @@ es:
   new_user: Nuevo usuario
   no_account: ¿No tienes una cuenta?
   no_doctors: Por favor crea algunos doctores antes.
-  no_patient_found_new_one_will_be_created: No se ha encontrado ningún paciente, se creara uno.
   no_patients: Aún no has creado ningún paciente que empiece con esta letra.
   no_treatments_message: Aún no has creado ningún tratamiento.
   no_user_with_that_email: Parece haber un problema. Si esto continua, por favor contacta con nosotros.
@@ -317,7 +308,6 @@ es:
   note_created_error_message: Ocurrió un problema al crear este comentario
   notes: Comentarios
   notes_about_this: Comentarios adicionales para este %{class_name}
-  number_of_signins: Número de ingresos
   only_if_clinic_uses_uid: Solo si tu clínica utiliza un sistema único de identificación
   or: o
   password: Contraseña
@@ -346,8 +336,6 @@ es:
   no_reviews:
     title: Sin calificaciones
     description: Ningún paciente ha calificado su experiencia aún.<br /> Cada vez que un paciente haya visitado tu clínica, un email será enviado para solicitar una calificación.
-  patient_has_no_appointments: Sin citas. ¿Quiéres %{datebooks_url}
-    una?
   patient_search_results_few: ! "%{patients_count} pacientes encontrados."
   patient_search_results_many: Mostrado %{patients_count} de muchos pacientes. Intenta refinar tu búsqueda.
   patient_search_results_one: Lo encontré
@@ -404,7 +392,6 @@ es:
   schedule: Agendar
   search: Buscar pacientes…
   select_doctor: Selecciona un doctor
-  show_past_appointments: Mostrar citas pasadas
   signin: Iniciar sesión
   signout: Cerrar sesión
   signup: Registrate
@@ -435,7 +422,6 @@ es:
   suspend: Suspender
   suspended: Suspendido
   telephone: Teléfono
-  more_information: Más información
   terms_of_service: Términos del servicio
   time:
     am: am
@@ -478,11 +464,6 @@ es:
   welcome: Bienvenido a Odonto.me
   you_agree_to_our_terms_and_privacy_policy: Aceptas nuestras %{terms_url} y nuestra %{privacy_url} cuando continuas.
   your_first_datebook: Tu agenda
-  email_notifications:
-    title: Notificaciones por correo
-    subscribe_message: "Ya no estás suscrito para recibir notificaciones de la <strong>%{name}</strong>. Suscríbete de nuevo <a href='%{url}?undo'>haciendo clic aquí</a>"
-    unsubscribe_message: "Estás suscrito para recibir notificaciones sobre la  <strong>%{name}</strong>. Date de baja <a href='%{url}'>haciendo clic aquí</a>"
-    daily_digest: "actividad de tu clínica"
   analytics:
     title: "Analíticas"
     vs_last_week: "vs semana pasada"
@@ -508,7 +489,6 @@ es:
       returning: "Recurrentes"
 
   # Appointments list footer counts (similar to patient search results)
-  appointments_results_zero: No se encontraron citas.
   appointments_results_one: ¡Ahí estaba esa cita!
   appointments_results_few: "%{appointments_count} citas."
   appointments_results_many: "Mostrando %{appointments_count} citas. Intenta refinar el rango."
@@ -517,7 +497,6 @@ es:
   audit_trail: "Registro de Auditoría"
   audit_trail_description: "Ver todos los cambios realizados en los datos de tu clínica en los últimos 30 días."
   audit_details: "Detalles de Auditoría"
-  back_to_audit_log: "Volver al Registro de Auditoría"
   basic_information: "Información Básica"
   changes_made: "Cambios Realizados"
   created_data: "Datos Creados"
@@ -658,7 +637,6 @@ es:
   agent_access_status_disabled: "sin configurar"
   manage_agent_access: "Configurar asistente"
   agent_access_enabled: "Activar asistente de IA"
-  agent_access_enabled_hint: "Cuando está activado, tu asistente de IA puede ayudarte a gestionar citas."
   agent_label: "Nombre del asistente"
   agent_label_hint: "Este nombre aparece en el registro de actividad para que sepas qué cambió el asistente."
   agent_settings_updated: "Cambios guardados."

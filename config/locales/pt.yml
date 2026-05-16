@@ -34,8 +34,6 @@ pt:
   sent_at: Enviado em
   my_practice: Minha clínica
 
-  number_of_recipients: Destinatários
-  number_of_opens: Aberturas
   subject: Assunto
 
   emergency_telephone: Telefone de emergência
@@ -116,7 +114,6 @@ pt:
   administrator: Administrador
   age: Idade
   years_old: Anos de idade
-  age_with_suffix: ! "%{age} anos de idade"
   ago_in_words: ! "%{date} atrás"
   distance_in_words: ! "em %{date}"
   allergic_to: Alérgico a
@@ -182,7 +179,6 @@ pt:
   confirm_reschedule: Tem certeza de que deseja reagendar este agendamento?
   confirm_resize: Tem certeza de que deseja alterar a duração deste agendamento?
   delete_appointment: Deletar este agendamento
-  delete_patient: Deletar este paciente
   doctor_column: Médico
   doctor_created_success_message: O médico foi criado com sucesso
   doctor_has_no_future_appointments: A agenda está livre. Que tal se agendarmos
@@ -207,7 +203,6 @@ pt:
       server_error: Ops...
       form_update: Ops, algo deu errado
     cta:
-      try_again: Tente novamente
       go_home: Ir para início
     messages:
       invalid_date_range: As datas escolhidas são inválidas
@@ -230,9 +225,7 @@ pt:
   for_your_information: Para sua informação
   forgot_password: Esqueceu sua senha?
   future_appointments: Agendamentos futuros
-  past_appointments: Agendamentos passados
   gender: Gênero
-  hide_past_appointments: Ocultar agendamentos passados
   home: Início
   "yes": Sim
   "no": "Não"
@@ -275,7 +268,6 @@ pt:
       apenas você tem acesso a estas seções, é recomendado que você crie usuários
       com menos privilégios para lidar com o uso diário e deixe sua conta de <strong>administrador</strong>
       para gerenciamento.</p>
-  last_login_at_with_date: Último login %{date} atrás
   last_login_at: Último login
   roles: Funções
   logout: Sair?
@@ -303,8 +295,6 @@ pt:
     practice:
       welcome:
         subject: Bem-vindo ao Odonto.me
-      daily_recap:
-        subject: Resumo diário para %{date}
       new_review_notification:
         subject: Você tem uma nova avaliação
   male: Masculino
@@ -320,9 +310,6 @@ pt:
   new_user: Novo usuário
   no_account: Não tem uma conta?
   no_doctors: Por favor, crie médicos antes de usar esta seção
-  no_patient_found_new_one_will_be_created:
-    Nenhum paciente foi encontrado, um novo será
-    criado
   no_patients: Você não criou nenhum paciente que comece com esta letra.
   no_treatments_message: Você não criou nenhum tratamento até agora.
   no_user_with_that_email:
@@ -333,7 +320,6 @@ pt:
   note_created_error_message: Houve um problema ao criar esta nota
   notes: Notas
   notes_about_this: Notas opcionais para este %{class_name}
-  number_of_signins: Número de logins
   only_if_clinic_uses_uid: Apenas se sua clínica usa um sistema de identificação único
   or: ou
   password: Senha
@@ -363,13 +349,10 @@ pt:
   no_reviews:
     title: Nenhuma avaliação
     description: Nenhum paciente avaliou sua experiência ainda.<br /> Toda vez que um paciente visita sua clínica, um email será enviado pedindo para avaliar a experiência.
-  patient_has_no_appointments: Nenhum agendamento. Gostaria de %{datebooks_url}
-    um?
   patient_search_results_few: ! "%{patients_count} pacientes encontrados."
   patient_search_results_many:
     Mostrando %{patients_count} de muitos pacientes. Tente uma
     busca mais precisa.
-  more_information: Mais informações
   patient_search_results_one: Lá estava aquele paciente!
   patient_search_results_zero: Nenhum paciente foi encontrado.
   patient_treatment_created_error_message: O item foi criado com sucesso
@@ -443,7 +426,6 @@ pt:
   schedule: Agendar
   search: Buscar pacientes…
   select_doctor: Selecionar um médico
-  show_past_appointments: Mostrar agendamentos passados
   signin: Entrar
   signout: Sair
   signup: Cadastrar-se
@@ -518,11 +500,6 @@ pt:
     Você concorda com nossos %{terms_url} e com
     nossa %{privacy_url} quando se registra.
   your_first_datebook: Sua primeira agenda
-  email_notifications:
-    title: Notificações por email
-    subscribe_message: "Você não está mais inscrito para receber emails sobre <strong>%{name}</strong>. Ative novamente, <a href='%{url}?undo'>clicando aqui</a>"
-    unsubscribe_message: "Você está inscrito para receber emails sobre <strong>%{name}</strong>. Para parar, <a href='%{url}'>clique aqui</a>"
-    daily_digest: "atividade diária da sua clínica"
   analytics:
     title: Análises
     vs_last_week: "vs semana passada"
@@ -548,7 +525,6 @@ pt:
       returning: "Retornando"
 
   # Appointments list footer counts (similar to patient search results)
-  appointments_results_zero: Nenhum agendamento foi encontrado.
   appointments_results_one: Lá estava aquele agendamento!
   appointments_results_few: "%{appointments_count} agendamentos."
   appointments_results_many: "Mostrando %{appointments_count} agendamentos. Tente refinar seu intervalo."
@@ -557,7 +533,6 @@ pt:
   audit_trail: "Trilha de Auditoria"
   audit_trail_description: "Visualizar todas as alterações feitas nos dados da sua clínica nos últimos 30 dias."
   audit_details: "Detalhes da Auditoria"
-  back_to_audit_log: "Voltar ao Log de Auditoria"
   basic_information: "Informações Básicas"
   changes_made: "Alterações Feitas"
   created_data: "Dados Criados"
@@ -698,7 +673,6 @@ pt:
   agent_access_status_disabled: "não configurado"
   manage_agent_access: "Configurar assistente"
   agent_access_enabled: "Ativar assistente de IA"
-  agent_access_enabled_hint: "Quando ativado, seu assistente de IA pode ajudar a gerenciar consultas."
   agent_label: "Nome do assistente"
   agent_label_hint: "Este nome aparece no registro de atividades para você saber o que o assistente alterou."
   agent_settings_updated: "Alterações salvas."

@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   resources :password_resets, only: %i[new create edit update]
 
   # apps
-  resources :reviews
+  resources :reviews, only: %i[index new create]
 
   # authentication
   resource :user_session

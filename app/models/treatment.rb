@@ -12,11 +12,6 @@ class Treatment < ApplicationRecord
       .order('name')
   }
 
-  scope :valid, lambda {
-    where('price IS NOT NULL')
-      .where('price != 0')
-  }
-
   # validations
   validates_presence_of :practice_id, :name, :price
   validates_length_of :name, within: 1..100

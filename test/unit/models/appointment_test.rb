@@ -59,18 +59,6 @@ class AppointmentTest < ActiveSupport::TestCase
     assert appointment.is_confirmed
   end
 
-  test 'appointment should generate a valid ciphered url' do
-    appointment = appointments(:first_visit)
-
-    assert_match(%r{https://my.odonto.me/datebooks/\d+/appointments/\w+}, appointment.ciphered_url)
-  end
-
-  test 'appointment should generate a valid review url' do
-    appointment = appointments(:unreviewed)
-
-    assert_match(%r{https://my.odonto.me/reviews/new/\?appointment_id=\w+}, appointment.ciphered_review_url)
-  end
-
   test 'appointment class method should generate valid ciphered review url for id' do
     appointment_id = 123
     ciphered_url = Appointment.ciphered_review_url_for_id(appointment_id)
