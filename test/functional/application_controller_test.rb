@@ -20,4 +20,13 @@ class ApplicationControllerTest < ActionController::TestCase
     assert_select '.alert.alert-warning .text-muted', text: /Your subscription will expire soon/
     assert_includes response.body, expected_warning
   end
+
+  test 'does not show expiring banner more than 7 days before trial end' do
+    users(:founder).practice.subscription.update_columns(current_period_end: 8.days.from_now)
+
+    get :index
+
+    assert_response :success
+    assert_nil flash[:warning]
+  end
 end

@@ -303,6 +303,14 @@ pt:
     practice:
       welcome:
         subject: Bem-vindo ao Odonto.me
+      activation_nudge:
+        subject: Quando quiser — adicione seu primeiro paciente
+      trial_ending:
+        subject: Seu teste grátis termina em breve
+      trial_ended:
+        subject: Seu teste grátis terminou
+      deletion_warning:
+        subject: Sua conta do Odonto.me será excluída em breve
       daily_recap:
         subject: Resumo diário para %{date}
       new_review_notification:
@@ -465,7 +473,9 @@ pt:
     message_to_admin:
       active: Sua assinatura está %{status}, você pode %{stripe_url} a qualquer momento.
       expired: Sua assinatura não está mais ativa, por favor %{stripe_url} para ativar sua conta.
-      trialing: Esta é uma assinatura de teste, por favor %{stripe_url} antes que seu período de teste termine.
+      past_due: Seu último pagamento não foi processado. Por favor %{stripe_url} para atualizar seus dados de pagamento.
+      trialing_intro: Você tem %{days} dias restantes no seu teste grátis.
+      trialing: Depois, custa %{price} por mês — %{stripe_url} quando estiver pronto, e cancele quando quiser.
     errors:
       expiring: Sua assinatura expirará em breve. Por favor <a href="%{practice_settings_url}">assine</a> para manter o acesso à sua conta.
       expired: Sua assinatura expirou, por favor renove-a para recuperar o acesso à sua conta.

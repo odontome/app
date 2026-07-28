@@ -30,10 +30,13 @@
             </div>
 
             <div class="card-body">
-              <% if !@practice.has_linked_subscription? && @practice.has_active_subscription? %>
-                <%= raw t('subscriptions.message_to_admin.trialing', stripe_url: link_to(t('subscriptions.cta.trialing'), subscriptions_url, method: :post).html_safe) %>
+              <% if @subscription.is_trialing? && !@subscription.is_trial_expired? %>
+                <p><%= t('subscriptions.message_to_admin.trialing_intro', days: @subscription.days_to_next_payment) %></p>
+                <p><%= raw t('subscriptions.message_to_admin.trialing', price: Rails.configuration.stripe[:price_display], stripe_url: link_to(t('subscriptions.cta.trialing'), subscriptions_url, method: :post).html_safe) %></p>
               <% elsif @practice.has_linked_subscription? && @practice.has_active_subscription? %>
                 <%= raw t('subscriptions.message_to_admin.active', status: @subscription.status, stripe_url: link_to(t('subscriptions.cta.active'), subscriptions_url, method: :put).html_safe) %>
+              <% elsif @subscription.status == 'past_due' %>
+                <%= raw t('subscriptions.message_to_admin.past_due', stripe_url: link_to(t('subscriptions.cta.active'), subscriptions_url, method: :put).html_safe) %>
               <% else %>
                 <%= raw t('subscriptions.message_to_admin.expired', stripe_url: link_to(t('subscriptions.cta.expired'), subscriptions_url, method: :post).html_safe) %>
               <% end %>

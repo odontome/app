@@ -291,6 +291,14 @@ es:
     practice:
       welcome:
         subject: Bienvenido a Odonto.me
+      activation_nudge:
+        subject: Cuando quieras — agrega tu primer paciente
+      trial_ending:
+        subject: Tu prueba gratis termina pronto
+      trial_ended:
+        subject: Tu prueba gratis ha terminado
+      deletion_warning:
+        subject: Tu cuenta de Odonto.me será eliminada pronto
       daily_recap:
         subject: Resumen diario de %{date}
       new_review_notification:
@@ -426,7 +434,9 @@ es:
     message_to_admin:
       active: Tu subscripción esta activa, puedes %{stripe_url} en cualquier momento.
       expired: Tu subscripción ha expirado, por favor %{stripe_url} para reactivar tu cuenta.
-      trialing: Estás usando una subscripción de prueba, por favor %{stripe_url} para activarla.
+      past_due: Tu último pago no se pudo procesar. Por favor %{stripe_url} para actualizar tus datos de pago.
+      trialing_intro: Te quedan %{days} días de tu prueba gratis.
+      trialing: Después, cuesta %{price} al mes — %{stripe_url} cuando estés listo, y puedes cancelar cuando quieras.
     errors:
       expiring: Tu subscripción va a expirar pronto. Por favor <a href="%{practice_settings_url}">subscríbete</a> para no perder acceso a tu cuenta.
       expired: Tu subscripción ha expirado, por favor renueva la subscripción para obtener acceso a tu cuenta.

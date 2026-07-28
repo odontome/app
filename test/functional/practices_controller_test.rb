@@ -7,6 +7,10 @@ class PracticesControllerTest < ActionController::TestCase
     @controller.session['user'] = users(:founder)
   end
 
+  teardown do
+    I18n.locale = I18n.default_locale
+  end
+
   test 'should get new' do
     @controller.session['user'] = nil
     get :new
@@ -72,6 +76,51 @@ class PracticesControllerTest < ActionController::TestCase
       post :create, params: { practice: practice, consent_terms: '1', consent_privacy: '1' }
     end
     assert_equal Practice.last.email, 'demo@odonto.me'
+  end
+
+  test 'signup page renders in Spanish for Spanish browsers' do
+    @controller.session['user'] = nil
+    @request.headers['Accept-Language'] = 'es-MX,es;q=0.9,en;q=0.8'
+
+    get :new
+
+    assert_response :success
+    assert_equal :es, I18n.locale
+  end
+
+  test 'should create practice with locale detected from browser' do
+    @controller.session['user'] = nil
+    @request.headers['Accept-Language'] = 'es-MX,es;q=0.9,en;q=0.8'
+
+    practice = { name: 'Clinica Demo',
+                 timezone: 'America/Mexico_City',
+                 users_attributes: { '0' => { 'email' => 'demo-es@odonto.me', 'password' => '1234567890',
+                                              'password_confirmation' => '1234567890' } } }
+
+    assert_difference('Practice.count') do
+      post :create, params: { practice: practice, consent_terms: '1', consent_privacy: '1' }
+    end
+
+    assert_equal 'es', Practice.last.locale
+
+    welcome_email = ActionMailer::Base.deliveries.last
+    assert_equal I18n.t('mailers.practice.welcome.subject', locale: :es), welcome_email.subject
+  end
+
+  test 'should create practice with English locale for unsupported browser language' do
+    @controller.session['user'] = nil
+    @request.headers['Accept-Language'] = 'de-DE,de;q=0.9'
+
+    practice = { name: 'Deutsche Praxis',
+                 timezone: 'Europe/London',
+                 users_attributes: { '0' => { 'email' => 'demo-de@odonto.me', 'password' => '1234567890',
+                                              'password_confirmation' => '1234567890' } } }
+
+    assert_difference('Practice.count') do
+      post :create, params: { practice: practice, consent_terms: '1', consent_privacy: '1' }
+    end
+
+    assert_equal 'en', Practice.last.locale
   end
 
   test 'should update practice with custom review URL' do
@@ -168,5 +217,35 @@ class PracticesControllerTest < ActionController::TestCase
     get :show, params: { id: practices(:complete).to_param }
     assert_response :redirect
     assert_redirected_to signin_path
+  end
+
+  test 'settings shows trial copy with days left and price while trialing' do
+    users(:founder).practice.subscription.update_columns(status: 'trialing',
+                                                          current_period_end: 20.days.from_now)
+
+    get :settings
+
+    assert_response :success
+    assert_match I18n.t('subscriptions.message_to_admin.trialing_intro', days: 20), response.body
+    assert_match Rails.configuration.stripe[:price_display], response.body
+  end
+
+  test 'settings shows expired copy after trial ends' do
+    users(:founder).practice.subscription.update_columns(status: 'trialing',
+                                                          current_period_end: 1.day.ago)
+
+    get :settings
+
+    assert_response :success
+    assert_match(/no longer active/, response.body)
+  end
+
+  test 'settings shows past due copy when payment failed' do
+    users(:founder).practice.subscription.update_columns(status: 'past_due')
+
+    get :settings
+
+    assert_response :success
+    assert_match(/update your billing details/, response.body)
   end
 end

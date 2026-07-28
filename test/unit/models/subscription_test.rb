@@ -42,4 +42,18 @@ class SubscriptionTest < ActiveSupport::TestCase
     past_due = subscriptions(:past_due)
     assert past_due.active_or_trialing?
   end
+
+  test 'trial is expiring inside 7 days' do
+    subscription = subscriptions(:trialing)
+    subscription.update_columns(current_period_end: 6.days.from_now)
+
+    assert subscription.is_trial_expiring?
+  end
+
+  test 'trial is not expiring outside 7 days' do
+    subscription = subscriptions(:trialing)
+    subscription.update_columns(current_period_end: 8.days.from_now)
+
+    refute subscription.is_trial_expiring?
+  end
 end

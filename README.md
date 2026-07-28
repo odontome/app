@@ -303,13 +303,16 @@ Add all the jobs in `/lib/tasks/odontome.rake` to your scheduler:
   - Requests reviews from patients after appointments
 - `odontome:send_six_month_checkup_reminders` - Every hour (targets 10 AM local time per practice)
   - Reminds patients about their 6-month dental checkups
+- `odontome:practice_lifecycle` - Every hour (targets 10 AM local time per practice)
+  - Single hub job for trial lifecycle emails: day-2 activation nudge, day-25 trial-ending
+    notice, day-31 trial-ended notice, and day-37 deletion warning
 
 #### Maintenance Tasks
 
 - `odontome:cleanup_audit_logs` - Daily
   - Removes audit logs older than 30 days to prevent database bloat
 - `odontome:cleanup_old_practices` - Daily
-  - Deletes practices older than 7 days with 0 patients
+  - Deletes practices older than 40 days with 0 patients (they receive a warning email at day 37)
 - `odontome:mark_inactive_practices_for_cancellation` - Daily
   - Marks practices for cancellation where no user has logged in for 60+ days (excludes active subscriptions)
 - `odontome:delete_practices_cancelled_a_while_ago` - Daily
