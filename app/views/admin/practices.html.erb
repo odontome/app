@@ -7,6 +7,11 @@
       <h2 class="page-title">
         Practices
       </h2>
+      <div class="text-muted mt-1">
+        Last 30 days: <%= @funnel[:signups] %> signups
+        · <%= @funnel[:activated] %> activated (<%= @funnel[:signups].zero? ? 0 : (@funnel[:activated] * 100 / @funnel[:signups]) %>%)
+        · <%= @funnel[:subscribed] %> subscribed
+      </div>
     </div>
 		<div class="col-auto ms-auto">
         <div class="btn-list">

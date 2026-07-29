@@ -9,6 +9,13 @@ class AdminController < ApplicationController
     @filter = params[:filter] || 'all'
     @total_practices = Practice.count
 
+    recent_signups = Practice.where('practices.created_at > ?', 30.days.ago)
+    @funnel = {
+      signups: recent_signups.count,
+      activated: recent_signups.where('doctors_count > 0 AND patients_count > 0').count,
+      subscribed: recent_signups.joins(:subscription).where(subscriptions: { status: 'active' }).count
+    }
+
     case @filter
     when 'all'
       @practices = Practice.includes(:subscription).order('created_at desc').limit(250)
