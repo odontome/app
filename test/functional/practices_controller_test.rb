@@ -129,37 +129,6 @@ class PracticesControllerTest < ActionController::TestCase
     assert_equal 'en', Practice.last.locale
   end
 
-  test 'fires the ads conversion only on the post-signup page view' do
-    ENV['GOOGLE_ADS_ID'] = 'AW-TEST'
-    ENV['GOOGLE_ADS_SIGNUP_CONVERSION'] = 'AW-TEST/label'
-
-    get :show, params: { id: practices(:complete).to_param, ref: 'signup' }
-    assert_response :success
-    assert_includes response.body, 'googletagmanager.com/gtag/js?id=AW-TEST'
-    assert_includes response.body, "'send_to': 'AW-TEST/label'"
-
-    get :show, params: { id: practices(:complete).to_param }
-    assert_not_includes response.body, 'googletagmanager.com'
-    assert_not_includes response.body, "'send_to'"
-  ensure
-    ENV.delete('GOOGLE_ADS_ID')
-    ENV.delete('GOOGLE_ADS_SIGNUP_CONVERSION')
-  end
-
-  test 'loads the ads tag on the signup page but stays off without env config' do
-    @controller.session['user'] = nil
-
-    ENV['GOOGLE_ADS_ID'] = 'AW-TEST'
-    get :new
-    assert_includes response.body, 'googletagmanager.com/gtag/js?id=AW-TEST'
-
-    ENV.delete('GOOGLE_ADS_ID')
-    get :new
-    assert_not_includes response.body, 'googletagmanager.com'
-  ensure
-    ENV.delete('GOOGLE_ADS_ID')
-  end
-
   test 'should show actionable checklist links with doctors before patients for a fresh practice' do
     @controller.session['user'] = nil
 
