@@ -27,7 +27,7 @@ class Practice < ApplicationRecord
   # callbacks
   before_validation :set_timezone_and_locale, on: :create
   before_validation :set_first_user_data, on: :create
-  after_create :create_first_datebook, :create_trial_subscription
+  after_create :create_first_datebook, :create_trial_subscription, :populate_default_treatments
   before_create :set_email_practice
 
   def set_as_cancelled
@@ -43,6 +43,8 @@ class Practice < ApplicationRecord
   end
 
   def populate_default_treatments
+    return if treatments.exists?
+
     locale_key = locale.presence || 'en'
     treatments_config = Rails.configuration.patient_treatments[locale_key] || Rails.configuration.patient_treatments['en']
     return unless treatments_config

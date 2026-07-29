@@ -99,9 +99,15 @@
 
     <% else %>
       <% if @patients.empty? %>
-        <div class="card-body text-center py-5">
-          <p class="text-muted mb-0"><%= t :no_patients %></p>
-        </div>
+        <% if current_user.practice.patients_count.to_i.zero? %>
+          <%= component :empty, title: t("empty.patients.title"), description: t("empty.patients.description"), image_name: 'no-data.svg' do %>
+            <%= link_to t("empty.patients.cta"), new_patient_path, class: "btn btn-primary" %>
+          <% end %>
+        <% else %>
+          <div class="card-body text-center py-5">
+            <p class="text-muted mb-0"><%= t :no_patients %></p>
+          </div>
+        <% end %>
       <% else %>
         <table class="table table-vcenter table-mobile-md card-table">
           <thead>

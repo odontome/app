@@ -143,7 +143,8 @@ class PatientsController < ApplicationController
     params[:segment] == 'all' ||
       params[:letter].present? ||
       params[:sort].present? ||
-      params[:cursor].present?
+      params[:cursor].present? ||
+      (params[:segment].blank? && current_user.practice.patients_count.to_i.zero?)
   end
 
   def birthday_this_week_count

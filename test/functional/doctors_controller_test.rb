@@ -18,6 +18,24 @@ class DoctorsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:doctors)
   end
 
+  test 'shows empty state cta when practice has no doctors' do
+    practice = practices(:complete)
+    Doctor.with_practice(practice.id).destroy_all
+    practice.update_columns(doctors_count: 0)
+
+    get :index
+
+    assert_response :success
+    assert_select "a[href='#{new_doctor_path}']"
+  end
+
+  test 'does not show empty state cta when practice has doctors' do
+    get :index
+
+    assert_response :success
+    assert_select "a[href='#{new_doctor_path}']", false
+  end
+
   test 'should get new' do
     get :new
     assert_response :success

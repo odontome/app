@@ -19,9 +19,9 @@
 <div class="page-body">
   <div class="card">
     <% if @doctors.empty? %>
-      <div class="card-body">
-        <%= t :no_doctors %>
-      </div>
+      <%= component :empty, title: t("empty.doctors.title"), description: t("empty.doctors.description"), image_name: 'no-data.svg' do %>
+        <%= link_to t("empty.doctors.cta"), new_doctor_path, class: "btn btn-primary" %>
+      <% end %>
     <% else %>
       <table class="table table-vcenter table-mobile-md card-table">
         <thead>

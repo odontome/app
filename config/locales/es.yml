@@ -348,6 +348,14 @@ es:
     payments:
       title: Aún no has creado ningún pago.
       description: Comienza a cobrar pagos de tus pacientes configurando tu clínica en la configuración.
+    doctors:
+      title: Aún no has agregado ningún doctor.
+      description: Agrega tu primer doctor para empezar a programar sus citas.
+      cta: Agregar tu primer doctor
+    patients:
+      title: Aún no has agregado ningún paciente.
+      description: Agrega tu primer paciente para empezar a programar citas y llevar el registro de sus visitas.
+      cta: Agregar tu primer paciente
   no_appointments:
     title: Sin citas
     description: No tienen ninguna cita programada.

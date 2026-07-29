@@ -10,6 +10,9 @@ complete:
   connect_charges_enabled: true
   connect_payouts_enabled: true
   connect_details_submitted: true
+  # counter caches must match the child fixtures (Rails doesn't compute them for fixtures)
+  patients_count: 3
+  doctors_count: 3
 
 complete_another_language:
   id: 2
@@ -26,6 +29,7 @@ trialing_practice:
   timezone: Europe/London
   currency: usd
   email: trialing@odonto.me
+  patients_count: 1
 
 past_due_practice:
   id: 4

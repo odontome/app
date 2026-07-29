@@ -21,6 +21,7 @@ class WelcomeController < ApplicationController
 
   def determine_home_url
     return practices_admin_url if current_user_is_superadmin?
+    return practice_url if user_is_admin? && practice_needs_setup?
 
     # Always attempt to send the user back to their most relevant datebook
     home_datebook = last_visited_datebook || first_available_datebook
@@ -31,6 +32,12 @@ class WelcomeController < ApplicationController
     return new_datebook_url if user_is_admin?
 
     patients_url
+  end
+
+  def practice_needs_setup?
+    practice = current_user.practice
+
+    practice.doctors_count.to_i.zero? || practice.patients_count.to_i.zero?
   end
 
   def last_visited_datebook

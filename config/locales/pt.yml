@@ -365,6 +365,14 @@ pt:
     payments:
       title: Você ainda não criou nenhum pagamento.
       description: Comece a coletar pagamentos de seus pacientes configurando sua clínica nas configurações.
+    doctors:
+      title: Você ainda não adicionou nenhum médico.
+      description: Adicione seu primeiro médico para começar a agendar as consultas dele.
+      cta: Adicionar seu primeiro médico
+    patients:
+      title: Você ainda não adicionou nenhum paciente.
+      description: Adicione seu primeiro paciente para começar a agendar consultas e acompanhar suas visitas.
+      cta: Adicionar seu primeiro paciente
   no_appointments:
     title: Nenhum agendamento
     description: Eles não têm nenhum agendamento programado.
