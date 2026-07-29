@@ -104,6 +104,57 @@ class PatientsControllerTest < ActionController::TestCase
     assert_equal 'all', assigns(:segment)
   end
 
+  test 'shows empty state cta when practice has no patients at all' do
+    practice = practices(:complete)
+    Patient.with_practice(practice.id).destroy_all
+    practice.update_columns(patients_count: 0)
+
+    get :index, params: { segment: 'all' }
+
+    assert_response :success
+    assert_empty assigns(:patients)
+    assert_select "a[href='#{new_patient_path}']"
+  end
+
+  test 'defaults to the all segment with empty state when practice has no patients' do
+    practice = practices(:complete)
+    Patient.with_practice(practice.id).destroy_all
+    practice.update_columns(patients_count: 0)
+
+    get :index
+
+    assert_response :success
+    assert_equal 'all', assigns(:segment)
+    assert_select "a[href='#{new_patient_path}']"
+  end
+
+  test 'still defaults to the today segment when practice has patients' do
+    get :index
+
+    assert_response :success
+    assert_equal 'today', assigns(:segment)
+  end
+
+  test 'does not show empty state cta when practice has patients' do
+    get :index, params: { segment: 'all' }
+
+    assert_response :success
+    assert_not_empty assigns(:patients)
+    assert_select "a[href='#{new_patient_path}']", false
+  end
+
+  test 'browsing a letter with no patients keeps the per-letter message when the practice has other patients' do
+    practice = practices(:complete)
+    practice.update_columns(patients_count: Patient.with_practice(practice.id).count)
+
+    get :index, params: { segment: 'all', letter: 'Z' }
+
+    assert_response :success
+    assert_empty assigns(:patients)
+    assert_select "a[href='#{new_patient_path}']", false
+    assert_select 'p', text: I18n.t(:no_patients)
+  end
+
   test 'segment pills not shown during search' do
     get :index, params: { term: 'test' }
     assert_response :success

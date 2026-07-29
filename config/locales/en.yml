@@ -371,6 +371,14 @@ en:
     payments:
       title: You haven't created any payments yet.
       description: Start collecting payments from your patients by configuring your practice in your settings.
+    doctors:
+      title: You haven't added any doctors yet.
+      description: Add your first doctor to start scheduling their appointments.
+      cta: Add your first doctor
+    patients:
+      title: You haven't added any patients yet.
+      description: Add your first patient to start booking appointments and keeping track of their visits.
+      cta: Add your first patient
   no_appointments:
     title: No appointments
     description: They don't have any appointments scheduled.

@@ -130,16 +130,23 @@
                 },
                 {
                   key: :doctors,
-                  checked: @practice.doctors_count.to_i >= 1
+                  checked: @practice.doctors_count.to_i >= 1,
+                  url: new_doctor_path
                 },
                 {
                   key: :patients,
-                  checked: @practice.patients_count.to_i >= 1
+                  checked: @practice.patients_count.to_i >= 1,
+                  url: new_patient_path
                 }
               ] %>
 
               <% steps.each do |step| %>
-                <div class="list-group-item">
+                <% item_options = { class: 'list-group-item' } %>
+                <% if step[:url]
+                     item_options[:href] = step[:url]
+                     item_options[:class] += ' list-group-item-action'
+                   end %>
+                <%= content_tag(step[:url] ? :a : :div, item_options) do %>
                   <div class="row align-items-center">
                     <div class="col-auto">
                       <%= check_icon_tag step[:checked] %>
@@ -157,7 +164,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                <% end %>
               <% end %>
             </div>
         </div>

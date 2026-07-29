@@ -48,6 +48,9 @@ class PracticesControllerTest < ActionController::TestCase
     new_user = Practice.last.users.first
     assert UserConsent.accepted?(new_user, 'terms')
     assert UserConsent.accepted?(new_user, 'privacy')
+
+    # Verify default treatments were seeded for the new practice
+    assert_not_empty Practice.last.treatments
   end
 
   test 'should not create practice without consent' do
@@ -105,6 +108,9 @@ class PracticesControllerTest < ActionController::TestCase
 
     welcome_email = ActionMailer::Base.deliveries.last
     assert_equal I18n.t('mailers.practice.welcome.subject', locale: :es), welcome_email.subject
+
+    # Verify default treatments were seeded in Spanish
+    assert_includes Practice.last.treatments.pluck(:name), 'Limpieza dental'
   end
 
   test 'should create practice with English locale for unsupported browser language' do
@@ -121,6 +127,27 @@ class PracticesControllerTest < ActionController::TestCase
     end
 
     assert_equal 'en', Practice.last.locale
+  end
+
+  test 'should show actionable checklist links with doctors before patients for a fresh practice' do
+    @controller.session['user'] = nil
+
+    practice = { name: 'Fresh Practice',
+                 timezone: 'Europe/London',
+                 users_attributes: { '0' => { 'email' => 'fresh@odonto.me', 'password' => '1234567890',
+                                              'password_confirmation' => '1234567890' } } }
+
+    post :create, params: { practice: practice, consent_terms: '1', consent_privacy: '1' }
+
+    get :show, params: { id: Practice.last.to_param }
+
+    assert_response :success
+    assert_select "a[href='#{new_doctor_path}']"
+    assert_select "a[href='#{new_patient_path}']"
+
+    doctors_position = response.body.index(new_doctor_path)
+    patients_position = response.body.index(new_patient_path)
+    assert doctors_position < patients_position, 'expected the doctors step to appear before the patients step'
   end
 
   test 'should update practice with custom review URL' do
