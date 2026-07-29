@@ -220,14 +220,18 @@ class PracticesControllerTest < ActionController::TestCase
   end
 
   test 'settings shows trial copy with days left and price while trialing' do
-    users(:founder).practice.subscription.update_columns(status: 'trialing',
-                                                          current_period_end: 20.days.from_now)
+    # Freeze at mid-day UTC: near midnight the practice timezone is already on
+    # the next date, which shifts days_to_next_payment by one and flakes CI
+    travel_to Time.utc(2026, 8, 15, 12, 0, 0) do
+      users(:founder).practice.subscription.update_columns(status: 'trialing',
+                                                            current_period_end: 20.days.from_now)
 
-    get :settings
+      get :settings
 
-    assert_response :success
-    assert_match I18n.t('subscriptions.message_to_admin.trialing_intro', days: 20), response.body
-    assert_match Rails.configuration.stripe[:price_display], response.body
+      assert_response :success
+      assert_match I18n.t('subscriptions.message_to_admin.trialing_intro', days: 20), response.body
+      assert_match Rails.configuration.stripe[:price_display], response.body
+    end
   end
 
   test 'settings shows expired copy after trial ends' do
