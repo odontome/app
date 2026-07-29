@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_locale
-    I18n.locale = current_user&.practice&.locale || I18n.default_locale
+    I18n.locale = current_user&.practice&.locale || browser_locale || I18n.default_locale
   end
 
   def set_timezone
@@ -53,6 +53,15 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  # Best-effort match of the browser's Accept-Language header against our
+  # supported locales. Quality values are ignored on purpose: with only
+  # three locales, first match in header order is correct in practice.
+  def browser_locale
+    header = request.headers['Accept-Language'].to_s
+    header.split(',').map { |entry| entry.split(';').first.to_s.strip.downcase[0, 2] }
+          .find { |code| %w[en es pt].include?(code) }
+  end
 
   def redirect_to_subscription_error
     if user_is_admin?

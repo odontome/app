@@ -232,13 +232,15 @@ namespace :odontome do
     Rails.logger.info "Cleaned up #{deleted_count} audit log entries older than #{cutoff_date.strftime('%Y-%m-%d')}"
   end
 
-  desc 'Cleanup practices older than 7 days with 0 patients'
+  desc 'Cleanup practices older than 40 days with 0 patients (deletion warning goes out at day 37)'
   task cleanup_old_practices: :environment do
     Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
 
-    cutoff_date = 7.days.ago
-    practices = Practice.where('created_at < ?', cutoff_date)
-                        .where('patients_count = ?', 0)
+    cutoff_date = 40.days.ago
+    practices = Practice.left_joins(:subscription)
+                        .where('practices.created_at < ?', cutoff_date)
+                        .where(patients_count: 0)
+                        .where.not(subscriptions: { status: %w[active past_due] })
     deleted_count = practices.destroy_all
 
     Rails.logger.info "Cleaned up #{deleted_count} practices older than #{cutoff_date.strftime('%Y-%m-%d')} with 0 patients"
@@ -268,6 +270,23 @@ namespace :odontome do
     Rails.logger.info "Marked #{marked_count} inactive practices for cancellation (trialing > 60 days)"
   end
 
+  desc 'Practice lifecycle emails hub: activation nudge, trial ending, trial ended, deletion warning'
+  task practice_lifecycle: :environment do
+    Rails.logger = Logger.new($stdout) if defined?(Rails) && (Rails.env == 'development')
+
+    # Consider practices where local time is mid-morning to avoid odd-hour sends
+    hour_to_send_emails = 10
+    timezones_where_hour_is = timezones_where_hour_are(hour_to_send_emails)
+    practice_ids = practices_in_timezones(timezones_where_hour_is)
+
+    next if practice_ids.empty?
+
+    send_activation_nudges(practice_ids)
+    send_trial_ending_notices(practice_ids)
+    send_trial_ended_notices(practice_ids)
+    send_deletion_warnings(practice_ids)
+  end
+
   def disable_parallel_workers
     ActiveRecord::Base.connection.execute('SET max_parallel_workers_per_gather = 0')
   end
@@ -287,9 +306,13 @@ namespace :odontome do
   def practices_in_timezones(timezones)
     return [] if timezones.empty?
 
+    # Practices store either Rails-friendly names ("London") or IANA
+    # identifiers ("Europe/London") depending on signup path — match both.
+    timezone_names = timezones.flat_map { |name| [name, ActiveSupport::TimeZone::MAPPING[name]] }.compact.uniq
+
     # Only include practices that are active or trialing, and not cancelled
     Practice.joins(:subscription)
-            .where(timezone: timezones)
+            .where(timezone: timezone_names)
             .where(subscriptions: { status: %w[trialing active] })
             .pluck(:id)
   end
@@ -301,5 +324,63 @@ namespace :odontome do
         .where('roles = ?', 'admin')
         .joins(:practice)
         .order(:practice_id)
+  end
+
+  # a practice is only eligible for lifecycle emails while it is
+  # trialing, not cancelled, and hasn't received that email before
+  def trialing_practices_for_lifecycle(practice_ids, notified_flag)
+    Practice.joins(:subscription).includes(:subscription)
+            .where(id: practice_ids, cancelled_at: nil, notified_flag => false)
+            .where(subscriptions: { status: 'trialing' })
+  end
+
+  def send_activation_nudges(practice_ids)
+    practices = trialing_practices_for_lifecycle(practice_ids, :notified_of_activation_nudge)
+                .where(patients_count: 0)
+                .where(created_at: 5.days.ago..2.days.ago)
+
+    practices.find_each do |practice|
+      PracticeMailer.activation_nudge(practice).deliver_now
+      practice.update_column(:notified_of_activation_nudge, true)
+    rescue StandardError => e
+      Rails.logger.error "practice_lifecycle: activation_nudge failed for practice #{practice.id}: #{e.message}"
+    end
+  end
+
+  def send_trial_ending_notices(practice_ids)
+    practices = trialing_practices_for_lifecycle(practice_ids, :notified_of_trial_ending)
+                .where(subscriptions: { current_period_end: 1.day.from_now..5.days.from_now })
+
+    practices.find_each do |practice|
+      PracticeMailer.trial_ending(practice).deliver_now
+      practice.update_column(:notified_of_trial_ending, true)
+    rescue StandardError => e
+      Rails.logger.error "practice_lifecycle: trial_ending failed for practice #{practice.id}: #{e.message}"
+    end
+  end
+
+  def send_trial_ended_notices(practice_ids)
+    practices = trialing_practices_for_lifecycle(practice_ids, :notified_of_trial_ended)
+                .where(subscriptions: { current_period_end: 4.days.ago..Time.now })
+
+    practices.find_each do |practice|
+      PracticeMailer.trial_ended(practice).deliver_now
+      practice.update_column(:notified_of_trial_ended, true)
+    rescue StandardError => e
+      Rails.logger.error "practice_lifecycle: trial_ended failed for practice #{practice.id}: #{e.message}"
+    end
+  end
+
+  def send_deletion_warnings(practice_ids)
+    practices = trialing_practices_for_lifecycle(practice_ids, :notified_of_deletion_warning)
+                .where(patients_count: 0)
+                .where(created_at: ..37.days.ago)
+
+    practices.find_each do |practice|
+      PracticeMailer.deletion_warning(practice).deliver_now
+      practice.update_column(:notified_of_deletion_warning, true)
+    rescue StandardError => e
+      Rails.logger.error "practice_lifecycle: deletion_warning failed for practice #{practice.id}: #{e.message}"
+    end
   end
 end

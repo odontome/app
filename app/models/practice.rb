@@ -190,10 +190,10 @@ class Practice < ApplicationRecord
     end
 
     self.timezone = tz&.name || Time.zone.name
-    self.locale = "en"
+    self.locale = 'en' unless %w[en es pt].include?(locale)
   rescue StandardError
     self.timezone = Time.zone.name
-    self.locale = "en"
+    self.locale = 'en' unless %w[en es pt].include?(locale)
   end
 
   def set_first_user_data

@@ -308,6 +308,14 @@ en:
     practice:
       welcome:
         subject: Welcome to Odonto.me
+      activation_nudge:
+        subject: Ready when you are — add your first patient
+      trial_ending:
+        subject: Your free trial ends soon
+      trial_ended:
+        subject: Your free trial has ended
+      deletion_warning:
+        subject: Your Odonto.me account will be deleted soon
       daily_recap:
         subject: Daily recap for %{date}
       new_review_notification:
@@ -474,7 +482,9 @@ en:
     message_to_admin:
       active: Your subscription is %{status}, you can %{stripe_url} at any time.
       expired: Your subscription is no longer active, please %{stripe_url} to activate your account.
-      trialing: This is a trial subcription, please %{stripe_url} before your trial period ends.
+      past_due: Your last payment didn't go through. Please %{stripe_url} to update your billing details.
+      trialing_intro: You have %{days} days left in your free trial.
+      trialing: After that, it's %{price} per month — %{stripe_url} whenever you're ready, and cancel anytime.
     errors:
       expiring: Your subscription will expire soon. Please <a href="%{practice_settings_url}">subscribe</a> in order to keep access to your account.
       expired: Your subscription has expired, please renew it to regain access to your account.

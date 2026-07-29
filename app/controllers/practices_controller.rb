@@ -81,6 +81,7 @@ class PracticesController < ApplicationController
 
   def create
     @practice = Practice.new(practice_params)
+    @practice.locale = browser_locale || 'en'
 
     unless params[:consent_terms] == "1" && params[:consent_privacy] == "1"
       @practice.errors.add(:base, I18n.t(:consent_required))

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_21_230000) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_28_000001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -155,6 +155,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_21_230000) do
     t.string "email"
     t.string "locale", default: "en_US"
     t.string "name"
+    t.boolean "notified_of_activation_nudge", default: false, null: false
+    t.boolean "notified_of_deletion_warning", default: false, null: false
+    t.boolean "notified_of_trial_ended", default: false, null: false
+    t.boolean "notified_of_trial_ending", default: false, null: false
     t.integer "patients_count", default: 0
     t.text "stripe_account_id"
     t.text "stripe_customer_id"

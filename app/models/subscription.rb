@@ -28,7 +28,7 @@ class Subscription < ApplicationRecord
   end
 
   def is_trial_expiring?
-    is_trialing? && days_to_next_payment <= 14
+    is_trialing? && days_to_next_payment <= 7
   end
 
   def is_trial_expired?
