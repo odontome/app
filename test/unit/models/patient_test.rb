@@ -221,6 +221,26 @@ class PatientTest < ActiveSupport::TestCase
     assert_includes result_ids, patient_id, 'Patient created via find_or_create_from should be searchable'
   end
 
+  test 'find_or_create_from resolves a patient id from the same practice' do
+    patient = patients(:four)
+
+    result = Patient.find_or_create_from(patient.id.to_s.dup, patient.practice_id)
+
+    assert_equal patient.id, result.to_i
+  end
+
+  test 'find_or_create_from ignores a patient id from another practice' do
+    foreign_patient = patients(:three)
+    practice_id = practices(:complete).id
+
+    assert_not_equal practice_id, foreign_patient.practice_id,
+                     'fixture precondition: patient must belong to a different practice'
+
+    result = Patient.find_or_create_from(foreign_patient.id.to_s.dup, practice_id)
+
+    assert_nil result, 'A patient id belonging to another practice must not resolve'
+  end
+
   test 'destroy_nils is scoped to the current practice' do
     patient = patients(:one)
 

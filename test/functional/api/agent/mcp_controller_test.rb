@@ -318,6 +318,36 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'should not link create_appointment to a patient from another practice' do
+    raw_key = enable_agent_access(@practice)
+    @request.headers['X-Agent-Key'] = raw_key
+
+    foreign_patient = patients(:three)
+    assert_not_equal @practice.id, foreign_patient.practice_id,
+                     'fixture precondition: patient must belong to a different practice'
+
+    start_time = 4.days.from_now.in_time_zone(@practice.timezone).change(hour: 10, min: 0)
+
+    assert_no_difference 'Appointment.count' do
+      post_mcp(
+        method: 'tools/call', id: 70,
+        params: {
+          name: 'create_appointment',
+          arguments: {
+            datebook_id: @datebook.id,
+            doctor_id: @doctor.id,
+            patient_name: foreign_patient.id.to_s,
+            starts_at: start_time.to_i.to_s,
+            ends_at: (start_time + 1.hour).to_i.to_s
+          }
+        }
+      )
+    end
+
+    assert_not_includes @response.body, foreign_patient.firstname,
+                        'Must not leak the name of a patient from another practice'
+  end
+
   # --- tools/call: update_appointment ---
 
   test 'should call update_appointment' do

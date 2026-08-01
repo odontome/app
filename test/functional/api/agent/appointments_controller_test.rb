@@ -173,7 +173,89 @@ class Api::Agent::AppointmentsControllerTest < ActionController::TestCase
     assert_response :not_found
   end
 
+  test 'should not link an appointment to a patient from another practice' do
+    raw_key = enable_agent_access(@practice)
+    @request.headers['X-Agent-Key'] = raw_key
+
+    foreign_patient = patients(:three)
+    assert_not_equal @practice.id, foreign_patient.practice_id,
+                     'fixture precondition: patient must belong to a different practice'
+
+    post :create,
+         params: {
+           datebook_id: @datebook.id,
+           appointment: {
+             doctor_id: @doctor.id,
+             patient_name: foreign_patient.id.to_s,
+             starts_at: 3.days.from_now.to_i,
+             ends_at: (3.days.from_now + 1.hour).to_i
+           }
+         },
+         format: :json
+
+    assert_response :unprocessable_entity
+    assert_not Appointment.exists?(patient_id: foreign_patient.id, datebook_id: @datebook.id),
+               'Must not link an appointment to a patient from another practice'
+    assert_not_includes @response.body, foreign_patient.firstname,
+                        'Must not leak the name of a patient from another practice'
+  end
+
+  test 'should reject creating an appointment for a doctor from another practice' do
+    raw_key = enable_agent_access(@practice)
+    @request.headers['X-Agent-Key'] = raw_key
+
+    foreign_doctor = foreign_practice_doctor
+
+    assert_no_difference 'Appointment.count' do
+      post :create,
+           params: {
+             datebook_id: @datebook.id,
+             appointment: {
+               doctor_id: foreign_doctor.id,
+               patient_id: @patient.id,
+               starts_at: 3.days.from_now.to_i,
+               ends_at: (3.days.from_now + 1.hour).to_i
+             }
+           },
+           format: :json
+    end
+
+    assert_response :unprocessable_entity
+    assert_not_includes @response.body, foreign_doctor.firstname,
+                        'Must not leak the name of a doctor from another practice'
+  end
+
+  test 'should reject reassigning an appointment to a doctor from another practice' do
+    raw_key = enable_agent_access(@practice)
+    @request.headers['X-Agent-Key'] = raw_key
+
+    appointment = appointments(:first_visit)
+    foreign_doctor = foreign_practice_doctor
+
+    patch :update,
+          params: {
+            datebook_id: @datebook.id,
+            id: appointment.id,
+            appointment: { doctor_id: foreign_doctor.id }
+          },
+          format: :json
+
+    assert_response :unprocessable_entity
+    appointment.reload
+    assert_not_equal foreign_doctor.id, appointment.doctor_id,
+                     'Must not reassign an appointment to a doctor from another practice'
+  end
+
   private
+
+  def foreign_practice_doctor
+    Doctor.create!(
+      practice_id: practices(:trialing_practice).id,
+      firstname: 'Foreign',
+      lastname: 'Doctor',
+      gender: 'female'
+    )
+  end
 
   def enable_agent_access(practice)
     practice.update!(agent_access_enabled: true)

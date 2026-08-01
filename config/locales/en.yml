@@ -764,6 +764,7 @@ en:
     errors:
       unauthorized: "Unauthorized"
       not_found: "Not found"
+      doctor_not_found: "Doctor not found in this practice"
     mcp:
       errors:
         parse_error: "Parse error"
