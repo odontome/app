@@ -715,6 +715,7 @@ es:
     errors:
       unauthorized: "No autorizado"
       not_found: "No encontrado"
+      doctor_not_found: "Doctor no encontrado en esta clínica"
     mcp:
       errors:
         parse_error: "Error de análisis"

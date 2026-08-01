@@ -204,9 +204,8 @@ module Api
 
           if patient_name.present?
             result_id = Patient.find_or_create_from(patient_name, @practice.id)
-            # Verify the patient belongs to this practice. find_or_create_from
-            # treats numeric strings as patient ID lookups without practice
-            # scoping, which could link to a patient from another practice.
+            # find_or_create_from is practice-scoped, so this is a second line of
+            # defence on a tenant boundary rather than the only one.
             return result_id if result_id && Patient.with_practice(@practice.id).where(id: result_id).exists?
           end
 

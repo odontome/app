@@ -755,6 +755,7 @@ pt:
     errors:
       unauthorized: "Não autorizado"
       not_found: "Não encontrado"
+      doctor_not_found: "Dentista não encontrado nesta clínica"
     mcp:
       errors:
         parse_error: "Erro de análise"

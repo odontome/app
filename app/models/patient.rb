@@ -170,8 +170,9 @@ class Patient < ApplicationRecord
       patient_id_or_name = patient.id
     end
 
-    # validate that this patient really exists
-    patient_id_or_name = nil unless Patient.exists?(patient_id_or_name)
+    # validate that this patient really exists *within this practice*, so a numeric
+    # value can never resolve to another practice's patient
+    patient_id_or_name = nil unless Patient.exists?(id: patient_id_or_name, practice_id: practice_id)
 
     patient_id_or_name
   end

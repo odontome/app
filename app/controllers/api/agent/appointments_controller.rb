@@ -17,6 +17,8 @@ module Api
 
       def create
         datebook = resolve_datebook
+        return if reject_foreign_doctor!
+
         appointment = Appointment.new(appointment_params)
         appointment.datebook_id = datebook.id
         apply_time_params(appointment)
@@ -35,6 +37,8 @@ module Api
 
       def update
         datebook = resolve_datebook
+        return if reject_foreign_doctor!
+
         appointment = Appointment.where(id: params[:id], datebook_id: datebook.id).first
 
         unless appointment
@@ -52,6 +56,17 @@ module Api
       end
 
       private
+
+      # A doctor from another practice must never be assigned to an appointment,
+      # otherwise the response would echo back that practice's doctor name.
+      def reject_foreign_doctor!
+        doctor_id = params.dig(:appointment, :doctor_id)
+        return false if doctor_id.blank?
+        return false if Doctor.with_practice(@practice.id).exists?(id: doctor_id)
+
+        render json: { errors: [I18n.t('agents.errors.doctor_not_found')] }, status: :unprocessable_entity
+        true
+      end
 
       def appointment_params
         params.require(:appointment).permit(:doctor_id, :starts_at, :ends_at, :notes)
