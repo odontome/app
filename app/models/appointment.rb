@@ -36,6 +36,7 @@ class Appointment < ApplicationRecord
   validates_presence_of :datebook_id, :doctor_id, :patient_id
   validates_numericality_of :datebook_id, :doctor_id, :patient_id
   validate :ends_at_should_be_later_than_starts_at
+  validate :associations_must_share_a_practice
   validates :notes, length: { within: 0..255 }, allow_blank: true
 
   # callbacks
@@ -149,6 +150,17 @@ class Appointment < ApplicationRecord
     return unless !starts_at.nil? && !ends_at.nil? && (starts_at >= ends_at)
 
     errors.add(:base, I18n.t('errors.messages.invalid_date_range'))
+  end
+
+  # The datebook, doctor and patient must all belong to the same practice, so a
+  # missing scope in a controller cannot link records across practices.
+  def associations_must_share_a_practice
+    return if datebook.nil?
+
+    practice_id = datebook.practice_id
+
+    errors.add(:doctor_id, I18n.t('errors.messages.different_practice')) if doctor && doctor.practice_id != practice_id
+    errors.add(:patient_id, I18n.t('errors.messages.different_practice')) if patient && patient.practice_id != practice_id
   end
 
   def set_ends_at

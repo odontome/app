@@ -211,6 +211,7 @@ pt:
       go_home: Ir para início
     messages:
       invalid_date_range: As datas escolhidas são inválidas
+      different_practice: Deve pertencer a esta clínica
       invalid_email_format: Formato inválido
       unauthorised: Você não tem permissão para fazer isso
       not_found: Pode ter sido deletado ou nunca existiu
