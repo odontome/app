@@ -209,6 +209,7 @@ es:
       go_home: Ir a la página principal
     messages:
       invalid_date_range: Las fechas son invalidas.
+      different_practice: Debe pertenecer a esta clínica
       invalid_email_format: Formato invalido.
       unauthorised: No posees los permisos necesarios para hacer esto.
       not_found: Puede ser que haya sido borrado o nunca existió

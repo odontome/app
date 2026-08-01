@@ -9,6 +9,29 @@ class AppointmentTest < ActiveSupport::TestCase
 
   setup :create_session
 
+  test 'is valid when datebook, doctor and patient share a practice' do
+    assert appointments(:first_visit).valid?
+  end
+
+  test 'is invalid when the doctor belongs to another practice' do
+    appointment = appointments(:first_visit)
+    appointment.doctor = Doctor.create!(
+      practice_id: practices(:trialing_practice).id,
+      firstname: 'Foreign', lastname: 'Doctor', gender: 'female'
+    )
+
+    assert appointment.invalid?
+    assert appointment.errors[:doctor_id].any?
+  end
+
+  test 'is invalid when the patient belongs to another practice' do
+    appointment = appointments(:first_visit)
+    appointment.patient = patients(:three)
+
+    assert appointment.invalid?
+    assert appointment.errors[:patient_id].any?
+  end
+
   test 'appointment attributes must not be empty' do
     appointment = Appointment.new
 
