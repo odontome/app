@@ -427,6 +427,7 @@ es:
   signup: Registrate
   spanish: Español
   speciality: Especialidad
+  stale_page_message: Lo sentimos, eso no funcionó — esta página llevaba abierta mucho tiempo. Por favor, inténtalo de nuevo.
   starts_at: Comienza el
   status: Estatus
   subscriptions:

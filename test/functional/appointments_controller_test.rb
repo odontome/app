@@ -39,6 +39,26 @@ class AppointmentsControllerTest < ActionController::TestCase
     end
   end
 
+  test 'should ask the browser to reload when the CSRF token is stale' do
+    appointment = {
+      doctor_id: 1,
+      starts_at: '2014-01-04 14:00:00 +0000',
+      ends_at: '2014-01-04 15:00:00 +0000'
+    }
+
+    ActionController::Base.allow_forgery_protection = true
+    assert_no_difference 'Appointment.count' do
+      post :create, params: { appointment: appointment, datebook_id: 1, as_values_patient_id: '4,' }, format: :js
+    end
+
+    assert_response :success
+    assert_includes response.body, 'window.location.reload'
+    # the message is JavaScript-escaped in the response, so match a plain part of it
+    assert_includes response.body, 'Please try again.'
+  ensure
+    ActionController::Base.allow_forgery_protection = false
+  end
+
   test 'should create an appointment with a new patient' do
     appointment = {
       doctor_id: 2,
