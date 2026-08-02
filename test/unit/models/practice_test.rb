@@ -110,6 +110,46 @@ class PracticeTest < ActiveSupport::TestCase
     assert_equal -5, ActiveSupport::TimeZone[practice.timezone].utc_offset / 3600
   end
 
+  test 'destroying a practice deletes its Stripe customer' do
+    practice = practices(:canceled_practice)
+    practice.update_column(:stripe_customer_id, 'cus_test123')
+
+    deleted_customer_ids = []
+    delete_stub = ->(id) { deleted_customer_ids << id }
+
+    Stripe::Customer.stub(:delete, delete_stub) do
+      practice.destroy
+    end
+
+    assert_equal ['cus_test123'], deleted_customer_ids
+    assert_not Practice.exists?(practice.id)
+  end
+
+  test 'destroying a practice without a Stripe customer does not call Stripe' do
+    practice = practices(:canceled_practice)
+
+    delete_stub = ->(_id) { flunk 'Stripe::Customer.delete should not be called' }
+
+    Stripe::Customer.stub(:delete, delete_stub) do
+      practice.destroy
+    end
+
+    assert_not Practice.exists?(practice.id)
+  end
+
+  test 'destroying a practice proceeds when the Stripe customer is already gone' do
+    practice = practices(:canceled_practice)
+    practice.update_column(:stripe_customer_id, 'cus_missing')
+
+    delete_stub = ->(_id) { raise Stripe::InvalidRequestError.new('No such customer: cus_missing', 'id') }
+
+    Stripe::Customer.stub(:delete, delete_stub) do
+      assert practice.destroy
+    end
+
+    assert_not Practice.exists?(practice.id)
+  end
+
   test 'practice allows blank custom_review_url' do
     practice = practices(:complete)
     practice.custom_review_url = ''

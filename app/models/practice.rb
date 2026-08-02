@@ -29,6 +29,7 @@ class Practice < ApplicationRecord
   before_validation :set_first_user_data, on: :create
   after_create :create_first_datebook, :create_trial_subscription, :populate_default_treatments
   before_create :set_email_practice
+  before_destroy :delete_stripe_customer
 
   def set_as_cancelled
     self.cancelled_at = Time.now
@@ -178,6 +179,16 @@ class Practice < ApplicationRecord
   end
 
   private
+
+  # Deleting the Stripe customer also cancels any active subscriptions and
+  # stops Stripe from sending webhooks for a practice that no longer exists.
+  def delete_stripe_customer
+    return if stripe_customer_id.nil?
+
+    Stripe::Customer.delete(stripe_customer_id)
+  rescue Stripe::StripeError => e
+    Rails.logger.error "Failed to delete Stripe customer for practice #{id}: #{e.message}"
+  end
 
   def set_email_practice
     self.email = users.first.email
