@@ -466,6 +466,7 @@ pt:
   signup: Cadastrar-se
   spanish: Espanhol
   speciality: Especialidade
+  stale_page_message: Desculpe, não deu certo — esta página ficou aberta por muito tempo. Por favor, tente novamente.
   starts_at: Inicia às
   status: Status
   subscriptions:

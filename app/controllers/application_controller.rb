@@ -5,6 +5,12 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  # A long-open page can hold a CSRF token that no longer matches the session
+  # (e.g. the session cookie expired and the remember token rebuilt it), so
+  # recover with a fresh page instead of an error screen. The request is
+  # still rejected.
+  rescue_from ActionController::InvalidAuthenticityToken, with: :handle_stale_page
+
   helper :all
 
   helper_method :current_session, :current_user, :user_is_admin?, :current_user_is_superadmin?, :impersonating?
@@ -169,6 +175,15 @@ class ApplicationController < ActionController::Base
              item: object,
              notice: message
            }
+  end
+
+  def handle_stale_page
+    message = I18n.t(:stale_page_message)
+    respond_to do |format|
+      format.html { redirect_back fallback_location: signin_path, allow_other_host: false, alert: message }
+      format.js { render js: "alert('#{helpers.j(message)}'); window.location.reload();" }
+      format.json { render json: { error: message }, status: :unprocessable_entity }
+    end
   end
 
   def add_user_info_to_bugsnag(event)

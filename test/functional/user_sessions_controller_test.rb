@@ -110,6 +110,17 @@ class UserSessionsControllerTest < ActionController::TestCase
     assert_redirected_to root_url
   end
 
+  test 'should redirect back to signin with a friendly message when the CSRF token is stale' do
+    ActionController::Base.allow_forgery_protection = true
+    post :create, params: { signin: { email: users(:founder).email, password: '1234567890' } }
+
+    assert_nil @controller.session['user']
+    assert_redirected_to signin_path
+    assert_equal I18n.t(:stale_page_message), flash[:alert]
+  ensure
+    ActionController::Base.allow_forgery_protection = false
+  end
+
   test 'should handle login with expired remember token gracefully' do
     user = users(:founder)
     user.remember_token = 'expired_token'

@@ -475,6 +475,7 @@ en:
   signup: Sign up
   spanish: Spanish
   speciality: Speciality
+  stale_page_message: Sorry, that didn't go through — this page had been open for a while. Please try again.
   starts_at: Starts at
   status: Status
   subscriptions:
