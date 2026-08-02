@@ -5,7 +5,7 @@ description: Triage production errors from Bugsnag and fix the highest-priority 
 
 # Production error triage
 
-Fetch open errors from Bugsnag (odontome-prod), rank them by business impact, fix the top one end to end, and open a PR for Raul to verify. Exactly one error per run — re-run for the next.
+Fetch open errors from Bugsnag (odontome-prod), rank them by business impact, fix the top one end to end, and open a PR for verification. Exactly one error per run — re-run for the next.
 
 ## Constants
 
@@ -16,8 +16,8 @@ Fetch open errors from Bugsnag (odontome-prod), rank them by business impact, fi
 
 ## Guardrails (absolute)
 
-- **Read-only against Bugsnag.** GET requests only. Never comment on, snooze, or change the status of an error. Raul marks errors fixed after deploying.
-- **Never merge the PR.** Only Raul merges.
+- **Read-only against Bugsnag.** GET requests only. Never comment on, snooze, or change the status of an error. The user marks errors fixed after deploying.
+- **Never merge the PR.** Only the user merges.
 - **No PII in written artifacts.** Events carry patient/user emails, names, and request params in `metaData`, `request`, and `user`. Use them to diagnose, but terminal summaries, commit messages, and PR bodies may only contain: error class, controller#action context, counts, timestamps, and in-project stack frames.
 - **Never print the token.** Read it into a shell variable; don't echo it or put it in URLs.
 
@@ -29,7 +29,7 @@ Read the token (strip whitespace — a trailing space in `.env` has caused a rea
 TOKEN=$(grep '^BUGSNAG_DATA_ACCESS_TOKEN=' <repo-root>/.env | cut -d= -f2- | tr -d '[:space:]')
 ```
 
-List open errors (Raul's ignored/snoozed errors are excluded by this filter). Write responses to files in the scratchpad and parse from the file — zsh `echo` corrupts JSON backslashes:
+List open errors (ignored/snoozed errors are excluded by this filter). Write responses to files in the scratchpad and parse from the file — zsh `echo` corrupts JSON backslashes:
 
 ```bash
 curl -s -H "Authorization: token $TOKEN" -o errors.json \
@@ -47,7 +47,7 @@ curl -s -H "Authorization: token $TOKEN" -o event_<error_id>.json \
 
 Useful fields per event: `exceptions[0].message`, `exceptions[0].stacktrace` (filter `in_project: true`), `request`, `breadcrumbs`, `metaData`, `context`, `unhandled`.
 
-**Stop conditions:** 401 → tell Raul to re-check `BUGSNAG_DATA_ACCESS_TOKEN` in `.env` (Bugsnag → Settings → My account → Personal auth tokens) and stop. Empty list → report "no open errors 🎉" and stop. 429 → wait for `Retry-After`, then retry once.
+**Stop conditions:** 401 → ask the user to re-check `BUGSNAG_DATA_ACCESS_TOKEN` in `.env` (Bugsnag → Settings → My account → Personal auth tokens) and stop. Empty list → report "no open errors 🎉" and stop. 429 → wait for `Retry-After`, then retry once.
 
 ## Step 2 — Rank
 
@@ -81,11 +81,10 @@ Use superpowers:requesting-code-review to self-review the diff against the root 
 ## Step 5 — Present
 
 - Push the branch and open a PR with `gh pr create` (base `master`).
-- PR format: semantic title (`fix(scope): …`), concise summary explaining root cause and fix, `## Test plan` checklist with few-word items.
-- PR body links the Bugsnag error page and includes the triage table with the remaining open errors so Raul sees the full picture.
-- Report the PR link and the next-priority error. **Do not merge.**
+- The PR body is exactly two parts: one concise summary paragraph explaining root cause and fix, with the Bugsnag error page linked inline, then a `## Test plan` checklist with few-word items. Title is semantic (`fix(scope): …`).
+- Report in chat: the PR link, the triage table with the remaining open errors for the full picture, and the next-priority error. **Do not merge.**
 
 ## Edge cases
 
-- **Not fixable from code** (third-party outage, needs a data backfill or console action): report findings and a recommendation instead of forcing a PR. Move to the next error only if Raul asks.
+- **Not fixable from code** (third-party outage, needs a data backfill or console action): report findings and a recommendation instead of forcing a PR. Move to the next error only if asked.
 - **Already fixed on master** but still firing from the deployed release: report that, recommend deploy + marking fixed after; no duplicate fix.
