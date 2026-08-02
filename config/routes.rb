@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   resources :reviews
 
   # authentication
-  resource :user_session
+  resource :user_session, only: %i[new create show destroy]
   get '/signin' => 'user_sessions#new', :as => :signin
   delete '/logout' => 'user_sessions#destroy', :as => :logout
   get '/signup' => 'practices#new', :as => :signup

@@ -21,6 +21,11 @@ class UserSessionsControllerTest < ActionController::TestCase
     assert_redirected_to signin_path
   end
 
+  test 'should not route to edit or update' do
+    assert_raises(ActionController::UrlGenerationError) { get :edit }
+    assert_raises(ActionController::UrlGenerationError) { patch :update }
+  end
+
   test 'should create user session if valid params are given' do
     post :create, params: { signin: { email: users(:founder).email, password: '1234567890' } }
 
