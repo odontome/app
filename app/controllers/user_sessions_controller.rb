@@ -7,7 +7,9 @@ class UserSessionsController < ApplicationController
 
   def new; end
 
-  def show; end
+  def show
+    redirect_to root_url
+  end
 
   def create
     # Look up User in db by the email address submitted to the login form and
