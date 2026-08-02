@@ -81,9 +81,8 @@ Use superpowers:requesting-code-review to self-review the diff against the root 
 ## Step 5 — Present
 
 - Push the branch and open a PR with `gh pr create` (base `master`).
-- PR format: semantic title (`fix(scope): …`), concise summary explaining root cause and fix, `## Test plan` checklist with few-word items.
-- PR body links the Bugsnag error page and includes the triage table with the remaining open errors so Raul sees the full picture.
-- Report the PR link and the next-priority error. **Do not merge.**
+- The PR body is exactly two parts: one concise summary paragraph explaining root cause and fix, with the Bugsnag error page linked inline, then a `## Test plan` checklist with few-word items. Title is semantic (`fix(scope): …`).
+- Report to Raul in chat: the PR link, the triage table with the remaining open errors so he sees the full picture, and the next-priority error. **Do not merge.**
 
 ## Edge cases
 
