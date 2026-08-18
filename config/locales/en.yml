@@ -237,8 +237,8 @@ en:
   gender: Gender
   hide_past_appointments: Hide past appointments
   home: Home
-  yes: Yes
-  no: No
+  "yes": "Yes"
+  "no": "No"
   help:
     patients:
       status: Patients without the required profile information are marked as "incomplete".
