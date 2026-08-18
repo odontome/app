@@ -684,10 +684,18 @@ en:
         payouts_enabled: "Payouts enabled"
         details_submitted: "Details submitted"
       status:
-        in_progress:
+        pending:
           title: "In progress"
           description: "Your practice is in progress. Complete your account setup to start accepting payments directly from patients."
           cta: "Complete setup"
+        pending_review:
+          title: "Under review"
+          description: "Your details have been submitted and Stripe is reviewing them. This usually doesn't take long."
+          cta: "Check status"
+        unknown:
+          title: "Unknown"
+          description: "We couldn't determine the status of your account. Try refreshing it, or contact us if this keeps happening."
+          cta: "Refresh status"
         complete:
           title: "Complete"
           description: "Your practice is configured to accept payments directly from patients."

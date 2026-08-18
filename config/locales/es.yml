@@ -622,10 +622,18 @@ es:
         payouts_enabled: "Pagos habilitados"
         details_submitted: "Detalles enviados"
       status:
-        in_progress:
+        pending:
           title: "En progreso"
           description: "Tu clínica está en progreso. Completa la configuración de tu cuenta para comenzar a aceptar pagos directamente de pacientes."
           cta: "Completar configuración"
+        pending_review:
+          title: "En revisión"
+          description: "Tus datos fueron enviados y Stripe los está revisando. Esto normalmente no toma mucho tiempo."
+          cta: "Verificar estado"
+        unknown:
+          title: "Desconocido"
+          description: "No pudimos determinar el estado de tu cuenta. Intenta actualizarlo, o contáctanos si esto continúa."
+          cta: "Actualizar estado"
         complete:
           title: "Completo"
           description: "Tu clínica está configurada para aceptar pagos directamente de pacientes."
