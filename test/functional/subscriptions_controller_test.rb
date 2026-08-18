@@ -7,6 +7,14 @@ class SubscriptionsControllerTest < ActionController::TestCase
     @controller.session['user'] = users(:founder)
   end
 
+  test 'redirects anonymous users to sign in' do
+    @controller.session['user'] = nil
+
+    post :create
+
+    assert_redirected_to signin_path
+  end
+
   test 'should be redirected to stripe when using a valid configuration' do
     checkout_session = Struct.new(:url).new('https://checkout.stripe.com/c/pay/cs_test_123')
 
