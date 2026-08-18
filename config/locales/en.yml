@@ -344,6 +344,7 @@ en:
     please contact us.
   none: none
   not_logged_in: Not logged in
+  already_signed_in: You are already signed in.
   note_created_error_message: There was a problem creating this note
   notes: Notes
   notes_about_this: Optional notes for this %{class_name}

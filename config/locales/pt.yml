@@ -339,6 +339,7 @@ pt:
     entre em contato conosco.
   none: nenhum
   not_logged_in: Não logado
+  already_signed_in: Você já está conectado.
   note_created_error_message: Houve um problema ao criar esta nota
   notes: Notas
   notes_about_this: Notas opcionais para este %{class_name}
