@@ -125,6 +125,24 @@ class PracticeTest < ActiveSupport::TestCase
     assert_not Practice.exists?(practice.id)
   end
 
+  test 'a rolled back destroy does not delete the Stripe customer' do
+    practice = practices(:canceled_practice)
+    practice.update_column(:stripe_customer_id, 'cus_test123')
+
+    deleted_customer_ids = []
+    delete_stub = ->(id) { deleted_customer_ids << id }
+
+    Stripe::Customer.stub(:delete, delete_stub) do
+      Practice.transaction do
+        practice.destroy
+        raise ActiveRecord::Rollback
+      end
+    end
+
+    assert Practice.exists?(practice.id)
+    assert_empty deleted_customer_ids
+  end
+
   test 'destroying a practice without a Stripe customer does not call Stripe' do
     practice = practices(:canceled_practice)
 

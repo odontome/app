@@ -29,7 +29,7 @@ class Practice < ApplicationRecord
   before_validation :set_first_user_data, on: :create
   after_create :create_first_datebook, :create_trial_subscription, :populate_default_treatments
   before_create :set_email_practice
-  before_destroy :delete_stripe_customer
+  after_commit :delete_stripe_customer, on: :destroy
 
   def set_as_cancelled
     self.cancelled_at = Time.now
