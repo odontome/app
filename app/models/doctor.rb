@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Doctor < ApplicationRecord
+  # Stored as-is in the database; translate only when displaying.
+  GENDERS = %w[male female].freeze
+
   # PaperTrail for audit logging
   has_paper_trail meta: { practice_id: ->(doctor) { doctor.practice_id } }
 
