@@ -50,13 +50,13 @@ class AuditsController < ApplicationController
 
     # When deleting an appointment, override the patient and doctor information
     if @version.item_type == 'Appointment' && @version.event == 'destroy'
-      begin
-        object = JSON.parse(@version.object)
-        object['doctor_id'] = Doctor.find_by(id: object['doctor_id']).fullname
-        object['patient_id'] = Patient.find_by(id: object['patient_id']).fullname
+      object = JSON.parse(@version.object)
+      object['doctor_id'] = Doctor.find_by(id: object['doctor_id'])&.fullname ||
+                            I18n.t('audits.deleted_item_with_id', id: object['doctor_id'])
+      object['patient_id'] = Patient.find_by(id: object['patient_id'])&.fullname ||
+                             I18n.t('audits.deleted_item_with_id', id: object['patient_id'])
 
-        @version.object = object.to_json
-      end
+      @version.object = object.to_json
     end
 
     @whodunnit_user = @version.whodunnit.present? ? User.find_by(id: @version.whodunnit) : nil

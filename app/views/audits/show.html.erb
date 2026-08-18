@@ -143,12 +143,11 @@
                         </td>
                       </tr>
                     <% end %>
-                  <% rescue => e %>
+                  <% rescue %>
                     <tr>
                       <td colspan="3">
                         <div class="alert alert-warning">
-                          <%= t(:error_parsing_changes) %>: <%= e.message %>
-                          <br><small class="text-muted">Debug: <%= @version.object_changes.present? ? 'Data present' : 'No data' %></small>
+                          <%= t(:error_parsing_changes) %>
                         </div>
                       </td>
                     </tr>
