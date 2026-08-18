@@ -46,6 +46,16 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to user_url
   end
 
+  test 'should not allow a non-admin to update an admin' do
+    @controller.session['user'] = users(:perishable)
+    admin = users(:founder)
+
+    put :update, params: { id: admin.to_param, user: { firstname: 'Hacked' } }
+
+    assert_not_equal 'Hacked', admin.reload.firstname
+    assert_redirected_to '/401'
+  end
+
   test 'should destroy user' do
     assert_difference('User.count', -1) do
       delete :destroy, params: { id: users(:perishable).to_param }

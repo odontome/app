@@ -40,12 +40,13 @@ class UsersController < ApplicationController
   def update
     @user = User.with_practice(current_user.practice_id).find(params[:id])
 
-    respond_to do |format|
-      # prevent normal users from changing admins
-      if @user.roles.include?('admin') && !current_user.roles.include?('admin')
-        format.html { render action: 'edit', error: I18n.t('errors.messages.unauthorised') }
-      end
+    # prevent normal users from changing admins
+    if @user.roles.include?('admin') && !current_user.roles.include?('admin')
+      redirect_back_or_default('/401', I18n.t('errors.messages.unauthorised'))
+      return
+    end
 
+    respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to(@user, notice: I18n.t(:user_updated_success_message)) }
       else
