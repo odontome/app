@@ -80,6 +80,16 @@ class DoctorTest < ActiveSupport::TestCase
     assert_equal doctor.initials, 'RR'
   end
 
+  test 'doctor with appointments cannot be destroyed' do
+    doctor = doctors(:rebecca)
+
+    assert_no_difference 'Doctor.count' do
+      assert_not doctor.destroy
+    end
+
+    assert doctor.errors[:base].any?
+  end
+
   test 'destroying doctor purges profile picture attachment' do
     doctor = Doctor.create!(
       practice: practices(:complete),

@@ -87,8 +87,8 @@ class User < ApplicationRecord
   def check_if_admin
     return unless is_admin?
 
-    errors[:base] << I18n.t('errors.messages.unauthorised')
-    false
+    errors.add(:base, I18n.t('errors.messages.unauthorised'))
+    throw :abort
   end
 
   def set_admin_role_for_first_user

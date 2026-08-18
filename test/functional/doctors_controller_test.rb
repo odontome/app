@@ -20,6 +20,7 @@ class DoctorsControllerTest < ActionController::TestCase
 
   test 'shows empty state cta when practice has no doctors' do
     practice = practices(:complete)
+    Appointment.where(doctor_id: Doctor.with_practice(practice.id)).delete_all
     Doctor.with_practice(practice.id).destroy_all
     practice.update_columns(doctors_count: 0)
 

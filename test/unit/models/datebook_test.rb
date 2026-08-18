@@ -43,6 +43,16 @@ class DatebookTest < ActiveSupport::TestCase
     assert_equal I18n.t('errors.messages.less_than_or_equal_to', count: 23), datebook.errors[:ends_at].join('; ')
   end
 
+  test 'datebook with appointments cannot be destroyed' do
+    datebook = datebooks(:playa_del_carmen)
+
+    assert_no_difference 'Datebook.count' do
+      assert_not datebook.destroy
+    end
+
+    assert datebook.errors[:base].any?
+  end
+
   test 'datebook name should be less than 100 chars' do
     datebook = Datebook.new(name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula arcu ante, nec eleifend ipsum. Proin vestibulum nisi sit amet diam mattis tempor.')
 
