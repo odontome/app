@@ -213,6 +213,7 @@ en:
       go_home: Go home
     messages:
       invalid_date_range: The chosen dates are invalid
+      unprocessable: We couldn't process your request. Please go back and try again.
       different_practice: Must belong to this practice
       invalid_email_format: Invalid format
       unauthorised: You don't have permission to do this
