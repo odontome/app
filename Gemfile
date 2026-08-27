@@ -31,6 +31,7 @@ end
 
 group :test do
   gem 'minitest-mock'
+  gem 'simplecov', require: false
 end
 
 group :development, :test do

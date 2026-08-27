@@ -11,6 +11,8 @@ class User < ApplicationRecord
 
   # associations
   belongs_to :practice, counter_cache: true
+  has_many :agent_oauth_authorizations, dependent: :delete_all
+  has_many :agent_oauth_access_tokens, dependent: :delete_all
   has_many :notes, dependent: :delete_all
   has_many :user_consents, dependent: :delete_all
 

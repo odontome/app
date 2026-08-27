@@ -76,53 +76,6 @@
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title"><%= t(:agent_secret_key_title) %></h3>
-        </div>
-        <div class="card-body">
-          <% if @practice.agent_api_key_digest.present? %>
-            <p class="text-muted">
-              <%= t(:agent_secret_key_set) %>
-            </p>
-            <% if @practice.agent_api_key_prefix.present? %>
-              <p><code><%= @practice.agent_api_key_prefix %>••••••••</code></p>
-            <% end %>
-          <% else %>
-            <p class="text-muted"><%= t(:agent_secret_key_not_set) %></p>
-          <% end %>
-
-          <p class="text-muted small"><%= t(:agent_secret_key_warning) %></p>
-
-          <%= button_to t(:agent_secret_key_regenerate), practice_agent_api_key_rotate_url, method: :post,
-                        class: 'btn btn-outline-primary',
-                        data: { confirm: t(:agent_secret_key_regenerate_confirm) } %>
-        </div>
-      </div>
     </div>
   </div>
 </div>
-
-<% if @new_agent_key.present? %>
-  <div class="modal modal-blur show d-block" tabindex="-1" role="dialog" data-bs-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-status bg-success"></div>
-        <div class="modal-body py-4">
-          <h3><%= t(:agent_api_key_rotated) %></h3>
-          <p class="text-muted"><%= t(:agent_api_key_copy_prompt) %></p>
-          <div class="input-group">
-            <input type="text" class="form-control" value="<%= @new_agent_key %>" readonly id="agent-key-input">
-            <button class="btn btn-outline-secondary" type="button" onclick="navigator.clipboard.writeText(document.getElementById('agent-key-input').value)">
-              <%= t(:copy) %>
-            </button>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <%= link_to t(:done), practice_agent_settings_url, class: 'btn btn-success w-100' %>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal-backdrop show"></div>
-<% end %>

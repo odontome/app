@@ -4,7 +4,7 @@ class PracticesController < ApplicationController
   before_action :require_user, except: %i[new create]
   before_action :require_no_user, only: %i[new create]
   before_action :require_superadmin, only: %i[index destroy edit]
-  before_action :require_practice_admin, only: %i[show settings balance appointments update close cancel agent_settings update_agent_settings rotate_agent_api_key]
+  before_action :require_practice_admin, only: %i[show settings balance appointments update close cancel agent_settings update_agent_settings]
   skip_before_action :check_subscription_status
   skip_before_action :check_consent_status
 
@@ -170,13 +170,6 @@ class PracticesController < ApplicationController
     else
       render action: 'agent_settings'
     end
-  end
-
-  def rotate_agent_api_key
-    @practice = current_user.practice
-    @new_agent_key = @practice.generate_agent_api_key!
-
-    render :agent_settings
   end
 
   def cancel

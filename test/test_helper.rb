@@ -1,5 +1,15 @@
 # frozen_string_literal: true
 
+if ENV['AGENT_COVERAGE'] == '1'
+  require 'simplecov'
+
+  SimpleCov.start do
+    root File.expand_path('..', __dir__)
+    cover 'app/controllers/api/agent/**/*.rb', 'app/models/agent_oauth_*.rb'
+    minimum_coverage 100
+  end
+end
+
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'

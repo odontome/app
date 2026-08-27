@@ -71,8 +71,7 @@ module Api
                 patient_id: { type: "integer", description: "Existing patient ID (use search_patients to find). Optional if patient_name is given." },
                 patient_name: { type: "string", description: "Full name for a new patient (a record will be created automatically). Optional if patient_id is given." },
                 starts_at: { type: "string", description: "Appointment start time — ISO 8601 in the practice's timezone (e.g. '2026-02-21T15:00:00-05:00')" },
-                ends_at: { type: "string", description: "Appointment end time — ISO 8601 in the practice's timezone" },
-                notes: { type: "string", description: "Reason for visit or clinical notes, e.g. 'Routine cleaning', 'Crown prep', 'Emergency toothache' (max 255 chars)" }
+                ends_at: { type: "string", description: "Appointment end time — ISO 8601 in the practice's timezone" }
               },
               required: %w[doctor_id starts_at ends_at]
             },
@@ -86,7 +85,7 @@ module Api
           },
           {
             name: "update_appointment",
-            description: "Modify an existing appointment. Use this to reschedule (change time), reassign to a different doctor, update notes, cancel, or confirm. To cancel an appointment set status to 'cancelled'. To confirm set status to 'confirmed'.",
+            description: "Modify an existing appointment. Use this to reschedule (change time), reassign to a different doctor, cancel, or confirm. To cancel an appointment set status to 'cancelled'. To confirm set status to 'confirmed'.",
             inputSchema: {
               type: "object",
               properties: {
@@ -94,7 +93,6 @@ module Api
                 doctor_id: { type: "integer", description: "Reassign to a different doctor (optional)" },
                 starts_at: { type: "string", description: "New start time — ISO 8601 in the practice's timezone (optional)" },
                 ends_at: { type: "string", description: "New end time — ISO 8601 in the practice's timezone (optional)" },
-                notes: { type: "string", description: "Updated reason for visit or clinical notes (optional)" },
                 status: { type: "string", enum: %w[confirmed cancelled], description: "Set to 'cancelled' to cancel or 'confirmed' to confirm the appointment (optional)" }
               },
               required: %w[appointment_id]
@@ -128,7 +126,9 @@ module Api
         ].freeze
 
         def self.definitions
-          TOOLS
+          TOOLS.map do |tool|
+            tool.merge(securitySchemes: [{ type: "oauth2", scopes: [] }])
+          end
         end
       end
     end

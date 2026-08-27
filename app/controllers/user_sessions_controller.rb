@@ -22,7 +22,7 @@ class UserSessionsController < ApplicationController
       redirect_to new_password_reset_url
     # Verify user exists in db and authenticate using shared method
     elsif authenticate_and_set_session(user, params[:signin][:password], params[:signin][:remember_me] == '1')
-      redirect_to root_url
+      redirect_back_or_default(root_url)
     else
       # if email or password incorrect, re-render login page:
       flash[:alert] = I18n.t('errors.titles.not_found')
