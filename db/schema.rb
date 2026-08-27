@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_28_000001) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_27_142000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -41,6 +41,40 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_28_000001) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "agent_oauth_access_tokens", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "expires_at", null: false
+    t.bigint "practice_id", null: false
+    t.string "resource", null: false
+    t.datetime "revoked_at"
+    t.string "token_digest", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["practice_id"], name: "index_agent_oauth_access_tokens_on_practice_id"
+    t.index ["token_digest"], name: "index_agent_oauth_access_tokens_on_token_digest", unique: true
+    t.index ["user_id"], name: "index_agent_oauth_access_tokens_on_user_id"
+  end
+
+  create_table "agent_oauth_authorizations", force: :cascade do |t|
+    t.string "approval_token_digest", null: false
+    t.datetime "approved_at"
+    t.string "client_id", null: false
+    t.string "code_challenge", null: false
+    t.string "code_digest"
+    t.datetime "consumed_at"
+    t.datetime "created_at", null: false
+    t.datetime "expires_at", null: false
+    t.bigint "practice_id", null: false
+    t.string "redirect_uri", null: false
+    t.string "resource", null: false
+    t.text "state"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["code_digest"], name: "index_agent_oauth_authorizations_on_code_digest", unique: true
+    t.index ["practice_id"], name: "index_agent_oauth_authorizations_on_practice_id"
+    t.index ["user_id"], name: "index_agent_oauth_authorizations_on_user_id"
   end
 
   create_table "appointments", id: :serial, force: :cascade do |t|
@@ -139,8 +173,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_28_000001) do
 
   create_table "practices", id: :serial, force: :cascade do |t|
     t.boolean "agent_access_enabled", default: false, null: false
-    t.string "agent_api_key_digest"
-    t.string "agent_api_key_prefix"
     t.string "agent_label", default: "Agent"
     t.datetime "cancelled_at", precision: nil
     t.boolean "connect_charges_enabled", default: false
@@ -165,7 +197,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_28_000001) do
     t.string "timezone", default: "UTC"
     t.datetime "updated_at", precision: nil, null: false
     t.integer "users_count", default: 0
-    t.index ["agent_api_key_digest"], name: "index_practices_on_agent_api_key_digest", unique: true
     t.index ["connect_onboarding_status"], name: "index_practices_on_connect_onboarding_status"
     t.index ["stripe_account_id"], name: "index_practices_on_stripe_account_id"
   end
@@ -248,6 +279,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_28_000001) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "agent_oauth_access_tokens", "practices", on_delete: :cascade
+  add_foreign_key "agent_oauth_access_tokens", "users", on_delete: :cascade
+  add_foreign_key "agent_oauth_authorizations", "practices", on_delete: :cascade
+  add_foreign_key "agent_oauth_authorizations", "users", on_delete: :cascade
   add_foreign_key "subscriptions", "practices"
   add_foreign_key "user_consents", "practices"
   add_foreign_key "user_consents", "users"

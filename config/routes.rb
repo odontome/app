@@ -39,7 +39,6 @@ Rails.application.routes.draw do
   get '/practice/settings' => 'practices#settings', :as => :practice_settings
   get '/practice/agent-settings' => 'practices#agent_settings', :as => :practice_agent_settings
   patch '/practice/agent-settings' => 'practices#update_agent_settings', :as => :practice_agent_settings_update
-  post '/practice/agent-settings/rotate' => 'practices#rotate_agent_api_key', :as => :practice_agent_api_key_rotate
   get '/practice/cancel' => 'practices#cancel', :as => :practice_cancel
   post '/practice/close' => 'practices#close', :as => :practice_close
   post '/practice/:id' => 'practices#update', :as => :practice_update
@@ -93,13 +92,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :agent do
-      resources :datebooks, only: [] do
-        resources :appointments, only: %i[index create update]
-      end
       post 'mcp', to: 'mcp#create'
       delete 'mcp', to: 'mcp#destroy'
       match 'mcp', to: 'mcp#preflight', via: :options
       get 'oauth/authorize', to: 'oauth#authorize'
+      post 'oauth/approve', to: 'oauth#approve'
       post 'oauth/token', to: 'oauth#token'
     end
 

@@ -19,6 +19,7 @@ ssl-cert
 
 # files created by running the specs
 /tmp/
+/coverage/
 
 # gems built by `rake build`
 /pkg/

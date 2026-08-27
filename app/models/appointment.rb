@@ -109,8 +109,7 @@ class Appointment < ApplicationRecord
       datebook_name: datebook.name,
       patient_id: patient_id,
       patient_name: patient&.fullname,
-      status: status,
-      notes: notes
+      status: status
     }
     json
   end

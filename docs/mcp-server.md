@@ -8,12 +8,12 @@ Odonto.me exposes an [MCP (Model Context Protocol)](https://modelcontextprotocol
 https://my.odonto.me/api/agent/mcp
 ```
 
-- **Transport:** Streamable HTTP (POST for JSON-RPC, GET with `Accept: text/event-stream` for SSE)
+- **Transport:** HTTP POST for JSON-RPC
 - **Protocol version:** `2025-11-25`
 
 ## Authentication
 
-The server uses **OAuth 2.0 with PKCE**. Most MCP clients (Claude Desktop, Claude.ai) handle this automatically.
+The server uses **OAuth 2.1 with PKCE**. Users sign in to Odonto.me and approve access for their own practice; no practice key is shared with ChatGPT.
 
 ### OAuth endpoints
 
@@ -28,10 +28,8 @@ The server uses **OAuth 2.0 with PKCE**. Most MCP clients (Claude Desktop, Claud
 
 1. Go to **My Practice > AI Assistant** in odonto.me
 2. Enable the AI assistant toggle
-3. Generate a secret key — this is your `client_id` and `client_secret`
-4. Copy the connection URL into your AI app's MCP connector settings
-
-The secret key is shown once. If lost, generate a new one (the old key is immediately revoked).
+3. Sign in to Odonto.me when ChatGPT asks you to connect.
+4. Review and approve access for your practice.
 
 ## Available tools
 
@@ -69,7 +67,7 @@ Query the schedule for a date range. Use this to check availability, see who is 
 
 *One of `datebook_id` or `datebook_name` is required.
 
-**Returns:** Array of `{ id, start, end, doctor_id, doctor_name, datebook_id, datebook_name, patient_id, patient_name, status, notes }`
+**Returns:** Array of `{ id, start, end, doctor_id, doctor_name, datebook_id, datebook_name, patient_id, patient_name, status }`
 
 **Limits:** Maximum 90-day range, 500 results per query.
 
@@ -88,7 +86,6 @@ Book a new patient appointment. You can reference an existing patient by ID or p
 | `patient_name` | string | no** | Full name for a new patient |
 | `starts_at` | string | yes | Start time — ISO 8601 in the practice's timezone |
 | `ends_at` | string | yes | End time — ISO 8601 in the practice's timezone |
-| `notes` | string | no | Reason for visit (max 255 characters) |
 
 *One of `datebook_id` or `datebook_name` is required.
 **One of `patient_id` or `patient_name` is required.
@@ -96,7 +93,6 @@ Book a new patient appointment. You can reference an existing patient by ID or p
 **Returns:** The created appointment object.
 
 **Notes:**
-- If `ends_at` is omitted, it defaults to 60 minutes after `starts_at`
 - Times must fall within the datebook's working hours
 - The server does not prevent double-booking — check availability first with `list_appointments`
 
@@ -104,7 +100,7 @@ Book a new patient appointment. You can reference an existing patient by ID or p
 
 ### update_appointment
 
-Modify an existing appointment — reschedule, reassign to a different doctor, update notes, cancel, or confirm.
+Modify an existing appointment — reschedule, reassign to a different doctor, cancel, or confirm.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
@@ -112,7 +108,6 @@ Modify an existing appointment — reschedule, reassign to a different doctor, u
 | `doctor_id` | integer | no | Reassign to a different doctor |
 | `starts_at` | string | no | New start time — ISO 8601 |
 | `ends_at` | string | no | New end time — ISO 8601 |
-| `notes` | string | no | Updated reason for visit |
 | `status` | string | no | `confirmed` or `cancelled` |
 
 **Returns:** The updated appointment object.
@@ -139,9 +134,9 @@ Search the patient directory by name or patient ID number (UID). Use this to loo
 
 The assistant calls `list_datebooks` to find available calendars, then `list_appointments` with today's date range. It returns a formatted list like:
 
-- 9:00 AM — Maria Santos with Dr. Garcia — Routine cleaning
-- 10:30 AM — Carlos Lopez with Dr. Garcia — Crown prep
-- 2:00 PM — Ana Martinez with Dr. Rodriguez — Orthodontic check-up
+- 9:00 AM — Maria Santos with Dr. Garcia
+- 10:30 AM — Carlos Lopez with Dr. Garcia
+- 2:00 PM — Ana Martinez with Dr. Rodriguez
 
 ### Book a new appointment
 
@@ -175,7 +170,17 @@ All tools include [MCP safety annotations](https://modelcontextprotocol.io/speci
 
 - **Practice isolation:** All data is scoped to the authenticated practice. There is no cross-practice access.
 - **No PII in responses:** The server only returns patient names and internal IDs. Email addresses, phone numbers, physical addresses, dates of birth, allergies, and insurance information are never exposed.
-- **Rate limiting:** 120 requests/minute per practice, 60 requests/minute per IP.
+- **Rate limiting:** 120 requests/minute per authenticated practice or unauthenticated IP.
 - **Request limits:** Bodies capped at 1 MB, date range queries limited to 90 days.
 - **Audit trail:** All changes made through the AI assistant are logged and visible in the practice's audit trail.
-- **Key management:** API keys are SHA-256 hashed at rest. Keys can be revoked and regenerated at any time from the practice settings.
+- **Token management:** OAuth access tokens are SHA-256 hashed at rest, expire after one hour, and are revoked when AI access is disabled or the practice closes.
+
+## Testing
+
+Run the focused agent suite with its enforced 100% line-coverage gate:
+
+```sh
+AGENT_COVERAGE=1 bin/rails test test/functional/api/agent test/models/agent_oauth_credential_test.rb
+```
+
+The gate covers the agent controllers, MCP tool implementation, and OAuth credential models. The full application suite remains `bin/rails test`.

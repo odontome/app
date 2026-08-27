@@ -7,6 +7,8 @@ class Practice < ApplicationRecord
   # associations
   has_many :user_consents, dependent: :delete_all
   has_many :users, dependent: :delete_all # didn't work with :destroy 'cause if the before_destroy callback in User.rb
+  has_many :agent_oauth_authorizations, dependent: :delete_all
+  has_many :agent_oauth_access_tokens, dependent: :delete_all
   has_many :datebooks, dependent: :delete_all
   has_many :doctors, dependent: :destroy
   has_many :patients, dependent: :destroy # uses :destroy so User.rb deletes_all its children
@@ -29,6 +31,7 @@ class Practice < ApplicationRecord
   before_validation :set_first_user_data, on: :create
   after_create :create_first_datebook, :create_trial_subscription, :populate_default_treatments
   before_create :set_email_practice
+  after_update :revoke_agent_oauth_credentials, if: :agent_access_revoked?
   before_destroy :delete_stripe_customer
 
   def set_as_cancelled
@@ -84,23 +87,12 @@ class Practice < ApplicationRecord
     agent_access_enabled
   end
 
-  def generate_agent_api_key!
-    raw_key = SecureRandom.hex(32)
-    update!(
-      agent_api_key_digest: self.class.agent_api_key_digest(raw_key),
-      agent_api_key_prefix: raw_key.first(8)
-    )
-    raw_key
-  end
+  def agent_access_eligible?
+    return false unless agent_access_enabled? && status == 'active'
+    return false unless subscription&.active_or_trialing?
+    return false if subscription.is_trial_expired?
 
-  def agent_api_key_valid?(raw_key)
-    return false if agent_api_key_digest.blank? || raw_key.blank?
-
-    ActiveSupport::SecurityUtils.secure_compare(agent_api_key_digest, self.class.agent_api_key_digest(raw_key))
-  end
-
-  def self.agent_api_key_digest(raw_key)
-    Digest::SHA256.hexdigest(raw_key.to_s)
+    user_consents.current_ai.exists?
   end
 
   def create_connect_account!
@@ -179,6 +171,15 @@ class Practice < ApplicationRecord
   end
 
   private
+
+  def agent_access_revoked?
+    (saved_change_to_agent_access_enabled? && !agent_access_enabled?) || saved_change_to_cancelled_at?
+  end
+
+  def revoke_agent_oauth_credentials
+    agent_oauth_access_tokens.active.update_all(revoked_at: Time.current)
+    agent_oauth_authorizations.where(consumed_at: nil).delete_all
+  end
 
   # Deleting the Stripe customer also cancels any active subscriptions and
   # stops Stripe from sending webhooks for a practice that no longer exists.

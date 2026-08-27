@@ -39,6 +39,7 @@ module Api
 
         MAX_DATE_RANGE_DAYS = 90
         MAX_RESULTS = 500
+        MAX_PATIENT_RESULTS = 25
 
         def list_appointments(args)
           datebook = resolve_datebook(args)
@@ -68,8 +69,7 @@ module Api
 
           appointment = ::Appointment.new(
             datebook_id: datebook.id,
-            doctor_id: args["doctor_id"],
-            notes: args["notes"]
+            doctor_id: args["doctor_id"]
           )
 
           appointment.starts_at = normalize_time(args["starts_at"]) if args["starts_at"].present?
@@ -98,7 +98,6 @@ module Api
 
           attrs = {}
           attrs[:doctor_id] = args["doctor_id"] if args["doctor_id"].present?
-          attrs[:notes] = args["notes"] if args.key?("notes")
 
           if args["status"].present?
             unless ALLOWED_STATUSES.include?(args["status"])
@@ -122,7 +121,8 @@ module Api
         end
 
         def search_patients(args)
-          patients = Patient.with_practice(@practice.id).search(args["query"]).map do |p|
+          patients = Patient.with_practice(@practice.id).search(args["query"])
+                            .order(:lastname, :firstname, :id).limit(MAX_PATIENT_RESULTS).map do |p|
             { id: p.id, uid: p.uid, firstname: p.firstname, lastname: p.lastname }
           end
           success_result(patients)
@@ -154,7 +154,7 @@ module Api
           )
         end
 
-        # --- helpers (same patterns as AppointmentsController) ---
+        # --- helpers ---
 
         def find_practice_appointment(appointment_id)
           ::Appointment.joins(:datebook)

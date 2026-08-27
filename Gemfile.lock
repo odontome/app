@@ -319,6 +319,7 @@ GEM
       logger
     securerandom (0.4.1)
     sequel (3.20.0)
+    simplecov (1.1.1)
     sinatra (1.0)
       rack (>= 1.0)
     sprockets (4.2.2)
@@ -385,6 +386,7 @@ DEPENDENCIES
   rails-i18n (~> 8.0)
   rubocop
   ruby-lsp
+  simplecov
   sprockets-rails (~> 3.5.2)
   stripe (~> 5.53.0)
   taps (~> 0.3.24)

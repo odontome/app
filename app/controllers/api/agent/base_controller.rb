@@ -11,27 +11,30 @@ module Api
       private
 
       def authenticate_agent!
-        raw_key = request.headers['X-Agent-Key'].presence ||
-                  request.headers['HTTP_X_AGENT_KEY'].presence ||
-                  extract_bearer_token
-        raw_key = raw_key.to_s
-        if raw_key.blank?
-          render json: { error: I18n.t('agents.errors.unauthorized') }, status: :unauthorized
-          return
-        end
+        raw_token = extract_bearer_token.to_s
+        return render_unauthorized if raw_token.blank?
 
-        digest = Practice.agent_api_key_digest(raw_key)
-        @practice = Practice.find_by(agent_api_key_digest: digest)
+        access_token = AgentOauthAccessToken.active.find_by(
+          token_digest: AgentOauthAccessToken.digest(raw_token),
+          resource: resource_url
+        )
+        @practice = access_token&.practice
 
-        unless @practice&.agent_access_enabled? && @practice&.agent_api_key_valid?(raw_key)
-          render json: { error: I18n.t('agents.errors.unauthorized') }, status: :unauthorized
-          return
-        end
+        render_unauthorized unless @practice&.agent_access_eligible?
       end
 
       def extract_bearer_token
         header = request.headers['Authorization'].to_s
         header.start_with?('Bearer ') ? header.delete_prefix('Bearer ') : nil
+      end
+
+      def resource_url
+        "#{request.base_url}/api/agent/mcp"
+      end
+
+      def render_unauthorized
+        response.headers['WWW-Authenticate'] = %(Bearer resource_metadata="#{request.base_url}/.well-known/oauth-protected-resource", error="invalid_token", error_description="A valid Odonto.me access token is required")
+        render json: { error: I18n.t('agents.errors.unauthorized') }, status: :unauthorized
       end
 
       def set_paper_trail_whodunnit
