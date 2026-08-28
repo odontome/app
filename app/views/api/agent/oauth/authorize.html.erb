@@ -1,12 +1,11 @@
 <div class="card card-md">
   <div class="card-body">
-    <h2 class="card-title text-center mb-3"><%= t(:agent_oauth_authorize_title) %></h2>
-    <p class="text-muted"><%= t(:agent_oauth_authorize_description, practice: @authorization.practice.name) %></p>
+    <h2 class="card-title text-center mb-3"><%= t(:agent_oauth_authorize_description, practice: @authorization.practice.name) %></h2>
 
-    <div class="alert alert-info" role="status">
-      <div class="fw-bold"><%= t(:agent_oauth_signed_in_as, user: current_user.fullname) %></div>
-      <div><%= t(:agent_oauth_session_description) %></div>
-    </div>
+    <p>
+      <div class="text-muted"><%= t(:agent_oauth_signed_in_as, user: current_user.fullname) %></div>
+      <div class="text-muted"><%= t(:agent_oauth_session_description) %></div>
+    </p>
 
     <%= form_with url: "/api/agent/oauth/approve", method: :post, local: true do %>
       <%= hidden_field_tag :authorization_id, @authorization.id %>
