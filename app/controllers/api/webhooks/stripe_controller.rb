@@ -60,7 +60,7 @@ module Api::Webhooks
       # A 404 makes Stripe retry later: if the customer reference simply hasn't
       # been saved yet (checkout webhooks can arrive out of order) the retry
       # will succeed; events for deleted practices stop once retries exhaust.
-      puts "Stripe webhooks - no matching record for event: #{event.type}"
+      Rails.logger.warn "Stripe webhooks - no matching record for event: #{event.type}"
       head :not_found
     end
 

@@ -729,7 +729,6 @@ pt:
   agent_connect_url_label: "Sua URL de conexão"
   agent_connect_claude_hint: "Configurações → Conectores"
   agent_connect_chatgpt_hint: "Configurações → Plugins"
-  agent_oauth_authorize_title: "Conectar o ChatGPT"
   agent_oauth_authorize_description: "Permita que o ChatGPT gerencie os agendamentos de %{practice}."
   agent_oauth_authorize_button: "Permitir acesso"
   agent_oauth_signed_in_as: "Sessão iniciada como %{user}"

@@ -125,7 +125,7 @@ class Api::Agent::OauthControllerTest < ActionController::TestCase
     assert_response :success
     assert_select "body.border-top-wide"
     assert_select "img[src*='logo']"
-    assert_select ".alert.alert-info", text: /#{Regexp.escape(@user.fullname)}/
+    assert_select ".text-muted", text: /#{Regexp.escape(@user.fullname)}/
     assert_select "form[action='/api/agent/oauth/approve'][method='post']"
     assert_select "input[type=submit][value=?]", I18n.t(:agent_oauth_authorize_button)
     assert_select "input[name=authorization_id]"
