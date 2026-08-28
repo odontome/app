@@ -19,6 +19,10 @@ class Subscription < ApplicationRecord
     ACCESS_GRANTING_STATUSES.include?(status)
   end
 
+  def grants_agent_access?
+    active? || (trialing? && !is_trial_expired?)
+  end
+
   def is_trialing?
     status == 'trialing'
   end

@@ -3,6 +3,8 @@
 module Api
   module Agent
     class OauthController < ApplicationController
+      layout "simple", only: :authorize
+
       skip_before_action :check_account_status, :check_subscription_status, :check_consent_status,
                          :find_datebooks, :prevent_impersonation_mutations, :set_paper_trail_whodunnit
       skip_forgery_protection only: :token
@@ -46,7 +48,7 @@ module Api
           approval_token_digest: AgentOauthAuthorization.digest(@approval_token), client_id: params[:client_id],
           redirect_uri: params[:redirect_uri], code_challenge: params[:code_challenge], resource: params[:resource],
           state: params[:state], expires_at: CODE_LIFETIME.from_now)
-        render :authorize, layout: false
+        render :authorize
       end
 
       def approve

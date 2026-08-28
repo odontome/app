@@ -692,6 +692,9 @@ es:
   agent_oauth_authorize_title: "Conectar ChatGPT"
   agent_oauth_authorize_description: "Permite que ChatGPT gestione las citas de %{practice}."
   agent_oauth_authorize_button: "Permitir acceso"
+  agent_oauth_signed_in_as: "Sesión iniciada como %{user}"
+  agent_oauth_session_description: "El acceso solo se concederá a esta clínica."
+  agent_oauth_wrong_account: "¿No es la cuenta correcta?"
 
   consent_terms_label: "Acepto los %{terms_url}"
   consent_privacy_label: "Acepto la %{privacy_url}"

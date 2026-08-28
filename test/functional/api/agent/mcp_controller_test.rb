@@ -1102,6 +1102,16 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_response :unauthorized
   end
 
+  test 'auth: should reject token when subscription is past due' do
+    raw_token = enable_agent_access(@practice)
+    @practice.subscription.update!(status: 'past_due')
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+
+    post_mcp(method: 'initialize', id: 208)
+
+    assert_response :unauthorized
+  end
+
   # ==========================================================================
   # Security: Input validation & sanitization
   # ==========================================================================
