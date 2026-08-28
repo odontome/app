@@ -80,6 +80,10 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     tools = body.dig('result', 'tools')
 
     tools.each do |tool|
+      output_schema = tool['outputSchema']
+      assert_equal 'object', output_schema['type'], "Tool '#{tool['name']}' must return an object"
+      assert output_schema['properties'].present?, "Tool '#{tool['name']}' must describe its output properties"
+
       annotations = tool['annotations']
       assert annotations.present?, "Tool '#{tool['name']}' must have annotations"
       assert annotations.key?('title'), "Tool '#{tool['name']}' annotations must include title"
@@ -165,9 +169,10 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_response :success
 
     body = JSON.parse(@response.body)
-    content = JSON.parse(body.dig('result', 'content', 0, 'text'))
+    content = body.dig('result', 'structuredContent', 'datebooks')
     assert content.is_a?(Array)
     assert(content.any? { |d| d['name'] == 'Playa del Carmen' })
+    assert_equal body.dig('result', 'structuredContent'), JSON.parse(body.dig('result', 'content', 0, 'text'))
   end
 
   # --- tools/call: list_doctors ---
@@ -180,7 +185,7 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_response :success
 
     body = JSON.parse(@response.body)
-    content = JSON.parse(body.dig('result', 'content', 0, 'text'))
+    content = body.dig('result', 'structuredContent', 'doctors')
     assert content.is_a?(Array)
   end
 
@@ -226,7 +231,7 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
 
     body = JSON.parse(@response.body)
     assert_equal false, body.dig('result', 'isError')
-    content = JSON.parse(body.dig('result', 'content', 0, 'text'))
+    content = body.dig('result', 'structuredContent', 'appointments')
     assert(content.all? { |appointment| appointment['doctor_id'] == @doctor.id })
   end
 
@@ -248,7 +253,7 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_response :success
 
     body = JSON.parse(@response.body)
-    content = JSON.parse(body.dig('result', 'content', 0, 'text'))
+    content = body.dig('result', 'structuredContent', 'appointments')
     assert content.any?, 'Expected at least one appointment'
 
     entry = content.first
@@ -525,7 +530,7 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_response :success
 
     body = JSON.parse(@response.body)
-    content = JSON.parse(body.dig('result', 'content', 0, 'text'))
+    content = body.dig('result', 'structuredContent', 'patients')
     assert content.is_a?(Array)
   end
 
@@ -540,7 +545,7 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_response :success
 
     body = JSON.parse(@response.body)
-    content = JSON.parse(body.dig('result', 'content', 0, 'text'))
+    content = body.dig('result', 'structuredContent', 'patients')
     assert content.any?, 'Expected at least one patient'
 
     entry = content.first
@@ -578,7 +583,7 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     )
 
     body = JSON.parse(@response.body)
-    content = JSON.parse(body.dig('result', 'content', 0, 'text'))
+    content = body.dig('result', 'structuredContent', 'patients')
     assert_equal 25, content.length
     assert_equal content.sort_by { |patient| [patient['lastname'], patient['firstname'], patient['id']] }, content
   end
@@ -749,7 +754,7 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_response :success
 
     body = JSON.parse(@response.body)
-    content = JSON.parse(body.dig('result', 'content', 0, 'text'))
+    content = body.dig('result', 'structuredContent', 'appointments')
     assert content.any?, 'Expected at least one appointment'
 
     entry = content.find { |a| a['id'] == appointment.id }
@@ -852,7 +857,7 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_response :success
 
     body = JSON.parse(@response.body)
-    content = JSON.parse(body.dig('result', 'content', 0, 'text'))
+    content = body.dig('result', 'structuredContent', 'datebooks')
     assert_equal [], content, 'Should not see datebooks from other practices'
   end
 
@@ -887,7 +892,7 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_response :success
 
     body = JSON.parse(@response.body)
-    content = JSON.parse(body.dig('result', 'content', 0, 'text'))
+    content = body.dig('result', 'structuredContent', 'doctors')
     assert_equal [], content, 'Should not see doctors from other practices'
   end
 
@@ -985,7 +990,7 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_response :success
 
     body = JSON.parse(@response.body)
-    content = JSON.parse(body.dig('result', 'content', 0, 'text'))
+    content = body.dig('result', 'structuredContent', 'patients')
     patient_ids = content.map { |p| p['id'] }
     assert_not_includes patient_ids, patients(:four).id, 'Should not find patients from other practices'
   end

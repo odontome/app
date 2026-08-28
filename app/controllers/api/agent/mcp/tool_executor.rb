@@ -27,14 +27,14 @@ module Api
 
         def list_datebooks
           datebooks = Datebook.with_practice(@practice.id).map { |d| { id: d.id, name: d.name } }
-          success_result(datebooks)
+          success_result(:datebooks, datebooks)
         end
 
         def list_doctors
           doctors = Doctor.with_practice(@practice.id).valid.map do |d|
             { id: d.id, uid: d.uid, name: d.fullname, speciality: d.speciality }
           end
-          success_result(doctors)
+          success_result(:doctors, doctors)
         end
 
         MAX_DATE_RANGE_DAYS = 90
@@ -58,7 +58,7 @@ module Api
                            datebook.appointments.find_between(starts_at, ends_at)
                          end
 
-          success_result(appointments.limit(MAX_RESULTS).map { |a| a.as_json(agent: true) })
+          success_result(:appointments, appointments.limit(MAX_RESULTS).map { |a| a.as_json(agent: true) })
         end
 
         def create_appointment(args)
@@ -80,7 +80,7 @@ module Api
           return error if error
 
           if appointment.save
-            success_result(appointment.as_json(agent: true))
+            success_result(:appointment, appointment.as_json(agent: true))
           else
             error_result(appointment.errors.full_messages.join(", "))
           end
@@ -114,7 +114,7 @@ module Api
           return error if error
 
           if appointment.save
-            success_result(appointment.as_json(agent: true))
+            success_result(:appointment, appointment.as_json(agent: true))
           else
             error_result(appointment.errors.full_messages.join(", "))
           end
@@ -125,7 +125,7 @@ module Api
                             .order(:lastname, :firstname, :id).limit(MAX_PATIENT_RESULTS).map do |p|
             { id: p.id, uid: p.uid, firstname: p.firstname, lastname: p.lastname }
           end
-          success_result(patients)
+          success_result(:patients, patients)
         end
 
         def validate_doctor(doctor_id)
@@ -212,8 +212,13 @@ module Api
           nil
         end
 
-        def success_result(data)
-          { content: [{ type: "text", text: data.to_json }], isError: false }
+        def success_result(key, data)
+          structured_content = { key => data }
+          {
+            content: [{ type: "text", text: structured_content.to_json }],
+            structuredContent: structured_content,
+            isError: false
+          }
         end
 
         def error_result(message)

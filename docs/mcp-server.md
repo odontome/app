@@ -39,7 +39,7 @@ List all datebooks (appointment calendars) for the practice. Each datebook typic
 
 **Parameters:** None
 
-**Returns:** Array of `{ id, name }`
+**Returns:** Structured content `{ datebooks: [{ id, name }] }`
 
 ---
 
@@ -49,7 +49,7 @@ List all active dentists and specialists. Returns their name, specialty, and ID 
 
 **Parameters:** None
 
-**Returns:** Array of `{ id, uid, name, speciality }`
+**Returns:** Structured content `{ doctors: [{ id, uid, name, speciality }] }`
 
 ---
 
@@ -67,7 +67,7 @@ Query the schedule for a date range. Use this to check availability, see who is 
 
 *One of `datebook_id` or `datebook_name` is required.
 
-**Returns:** Array of `{ id, start, end, doctor_id, doctor_name, datebook_id, datebook_name, patient_id, patient_name, status }`
+**Returns:** Structured content `{ appointments: [{ id, start, end, doctor_id, doctor_name, datebook_id, datebook_name, patient_id, patient_name, status }] }`
 
 **Limits:** Maximum 90-day range, 500 results per query.
 
@@ -90,7 +90,7 @@ Book a new patient appointment. You can reference an existing patient by ID or p
 *One of `datebook_id` or `datebook_name` is required.
 **One of `patient_id` or `patient_name` is required.
 
-**Returns:** The created appointment object.
+**Returns:** Structured content `{ appointment: { id, start, end, doctor_id, doctor_name, datebook_id, datebook_name, patient_id, patient_name, status } }`.
 
 **Notes:**
 - Times must fall within the datebook's working hours
@@ -110,7 +110,7 @@ Modify an existing appointment — reschedule, reassign to a different doctor, c
 | `ends_at` | string | no | New end time — ISO 8601 |
 | `status` | string | no | `confirmed` or `cancelled` |
 
-**Returns:** The updated appointment object.
+**Returns:** Structured content `{ appointment: { id, start, end, doctor_id, doctor_name, datebook_id, datebook_name, patient_id, patient_name, status } }`.
 
 ---
 
@@ -122,7 +122,7 @@ Search the patient directory by name or patient ID number (UID). Use this to loo
 |---|---|---|---|
 | `query` | string | yes | Patient name or UID to search for |
 
-**Returns:** Array of `{ id, uid, firstname, lastname }`
+**Returns:** Structured content `{ patients: [{ id, uid, firstname, lastname }] }`
 
 **Limits:** Maximum 25 results.
 
