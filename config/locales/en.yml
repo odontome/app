@@ -737,7 +737,7 @@ en:
   agent_connect_description: "You can connect Odonto.me to the AI app you already use. Follow the guide for your app:"
   agent_connect_url_label: "Your connection URL"
   agent_connect_claude_hint: "Settings → Connectors"
-  agent_connect_chatgpt_hint: "Settings → Apps"
+  agent_connect_chatgpt_hint: "Settings → Plugins"
   agent_oauth_authorize_title: "Connect ChatGPT"
   agent_oauth_authorize_description: "Allow ChatGPT to manage appointments for %{practice}."
   agent_oauth_authorize_button: "Allow access"
