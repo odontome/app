@@ -89,8 +89,7 @@ class Practice < ApplicationRecord
 
   def agent_access_eligible?
     return false unless agent_access_enabled? && status == 'active'
-    return false unless subscription&.active_or_trialing?
-    return false if subscription.is_trial_expired?
+    return false unless subscription&.grants_agent_access?
 
     user_consents.current_ai.exists?
   end

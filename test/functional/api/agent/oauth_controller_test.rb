@@ -68,10 +68,22 @@ class Api::Agent::OauthControllerTest < ActionController::TestCase
   end
 
   test "requires an Odonto.me session before approval" do
-    get :authorize, params: authorization_params
+    assert_no_difference "AgentOauthAuthorization.count" do
+      get :authorize, params: authorization_params
+    end
 
     assert_redirected_to signin_path
     assert_includes @request.session[:return_to], "/api/agent/oauth/authorize"
+  end
+
+  test "denies authorization when agent access is disabled" do
+    @practice.update!(agent_access_enabled: false)
+    @request.session[:user] = @user
+
+    get :authorize, params: authorization_params(state: "denied-state")
+
+    assert_equal "access_denied", redirect_query["error"]
+    assert_equal "denied-state", redirect_query["state"]
   end
 
   test "denies authorization when the practice is not eligible" do
@@ -84,6 +96,17 @@ class Api::Agent::OauthControllerTest < ActionController::TestCase
     assert_equal "access_denied", query["error"]
     assert_equal "denied-state", query["state"]
     assert_equal @request.base_url, query["iss"]
+  end
+
+  test "denies authorization when the subscription is past due" do
+    @practice.subscription.update!(status: "past_due")
+    @request.session[:user] = @user
+
+    get :authorize, params: authorization_params(state: "past-due-state")
+
+    query = redirect_query
+    assert_equal "access_denied", query["error"]
+    assert_equal "past-due-state", query["state"]
   end
 
   test "requires current terms and privacy consent" do
@@ -100,6 +123,11 @@ class Api::Agent::OauthControllerTest < ActionController::TestCase
     authorization, approval_token = begin_authorization(state: "original-state")
 
     assert_response :success
+    assert_select "body.border-top-wide"
+    assert_select "img[src*='logo']"
+    assert_select ".text-muted", text: /#{Regexp.escape(@user.fullname)}/
+    assert_select "form[action='/api/agent/oauth/approve'][method='post']"
+    assert_select "input[type=submit][value=?]", I18n.t(:agent_oauth_authorize_button)
     assert_select "input[name=authorization_id]"
     assert_select "input[name=approval_token][value=?]", approval_token
     assert_select "input[name=code]", count: 0
@@ -127,6 +155,30 @@ class Api::Agent::OauthControllerTest < ActionController::TestCase
 
     assert_response :bad_request
     assert_equal "invalid_request", JSON.parse(@response.body)["error"]
+  end
+
+  test "rejects approval from a different signed-in user" do
+    authorization, approval_token = begin_authorization
+    @controller = Api::Agent::OauthController.new
+    @request.session[:user] = users(:perishable)
+
+    post :approve, params: { authorization_id: authorization.id, approval_token: approval_token }
+
+    assert_response :bad_request
+    assert_equal "invalid_request", JSON.parse(@response.body)["error"]
+    assert_nil authorization.reload.approved_at
+  end
+
+  test "rejects approval when the subscription becomes past due" do
+    authorization, approval_token = begin_authorization(state: "expired-eligibility")
+    @practice.subscription.update!(status: "past_due")
+
+    post :approve, params: { authorization_id: authorization.id, approval_token: approval_token }
+
+    query = redirect_query
+    assert_equal "access_denied", query["error"]
+    assert_equal "expired-eligibility", query["state"]
+    assert_nil authorization.reload.approved_at
   end
 
   test "rejects an unknown approval request" do

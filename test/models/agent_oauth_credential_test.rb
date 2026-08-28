@@ -26,6 +26,13 @@ class AgentOauthCredentialTest < ActiveSupport::TestCase
     assert_not @practice.agent_access_eligible?
   end
 
+  test 'past due subscriptions are not eligible for agent access' do
+    create_ai_consent(@user)
+    @practice.subscription.update!(status: 'past_due')
+
+    assert_not @practice.agent_access_eligible?
+  end
+
   test 'cancelled practices are not eligible for agent access' do
     create_ai_consent(@user)
     @practice.update!(cancelled_at: Time.current)

@@ -22,6 +22,16 @@ class PracticesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'agent settings links ChatGPT users to plugin installation instructions' do
+    get :agent_settings
+
+    assert_response :success
+    assert_select "a[href='https://learn.chatgpt.com/docs/plugins'][target='_blank'][rel='noopener']", text: 'ChatGPT'
+    assert_select 'li', text: /Settings → Plugins/
+    assert_select "a[href='https://developers.openai.com/plugins/deploy/connect-chatgpt']", count: 0
+    assert_select "a[href='https://help.openai.com/en/articles/11487775-connectors-in-chatgpt']", count: 0
+  end
+
   test 'should create practice, authenticate user, and send welcome email' do
     @controller.session['user'] = nil
 

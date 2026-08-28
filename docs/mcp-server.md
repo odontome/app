@@ -31,6 +31,8 @@ The server uses **OAuth 2.1 with PKCE**. Users sign in to Odonto.me and approve 
 3. Sign in to Odonto.me when ChatGPT asks you to connect.
 4. Review and approve access for your practice.
 
+The connection is available only while the AI assistant is enabled and the practice has an active subscription or an unexpired trial. Past-due, cancelled, and expired subscriptions cannot authorize or use the MCP server. The approval screen identifies the signed-in user and practice, and the approval is bound to that exact Odonto.me session.
+
 ## Available tools
 
 ### list_datebooks
