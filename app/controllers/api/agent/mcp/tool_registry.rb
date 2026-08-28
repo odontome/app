@@ -4,6 +4,97 @@ module Api
   module Agent
     module Mcp
       module ToolRegistry
+        DATEBOOK_SCHEMA = {
+          type: "object",
+          properties: {
+            id: { type: "integer" },
+            name: { type: "string" }
+          },
+          required: %w[id name],
+          additionalProperties: false
+        }.freeze
+
+        DOCTOR_SCHEMA = {
+          type: "object",
+          properties: {
+            id: { type: "integer" },
+            uid: { type: %w[string null] },
+            name: { type: "string" },
+            speciality: { type: %w[string null] }
+          },
+          required: %w[id uid name speciality],
+          additionalProperties: false
+        }.freeze
+
+        APPOINTMENT_SCHEMA = {
+          type: "object",
+          properties: {
+            id: { type: "integer" },
+            start: { type: "string", format: "date-time" },
+            end: { type: "string", format: "date-time" },
+            doctor_id: { type: "integer" },
+            doctor_name: { type: "string" },
+            datebook_id: { type: "integer" },
+            datebook_name: { type: "string" },
+            patient_id: { type: "integer" },
+            patient_name: { type: "string" },
+            status: { type: "string" }
+          },
+          required: %w[id start end doctor_id doctor_name datebook_id datebook_name patient_id patient_name status],
+          additionalProperties: false
+        }.freeze
+
+        PATIENT_SCHEMA = {
+          type: "object",
+          properties: {
+            id: { type: "integer" },
+            uid: { type: %w[string null] },
+            firstname: { type: "string" },
+            lastname: { type: "string" }
+          },
+          required: %w[id uid firstname lastname],
+          additionalProperties: false
+        }.freeze
+
+        OUTPUT_SCHEMAS = {
+          "list_datebooks" => {
+            type: "object",
+            properties: { datebooks: { type: "array", items: DATEBOOK_SCHEMA } },
+            required: %w[datebooks],
+            additionalProperties: false
+          },
+          "list_doctors" => {
+            type: "object",
+            properties: { doctors: { type: "array", items: DOCTOR_SCHEMA } },
+            required: %w[doctors],
+            additionalProperties: false
+          },
+          "list_appointments" => {
+            type: "object",
+            properties: { appointments: { type: "array", items: APPOINTMENT_SCHEMA } },
+            required: %w[appointments],
+            additionalProperties: false
+          },
+          "create_appointment" => {
+            type: "object",
+            properties: { appointment: APPOINTMENT_SCHEMA },
+            required: %w[appointment],
+            additionalProperties: false
+          },
+          "update_appointment" => {
+            type: "object",
+            properties: { appointment: APPOINTMENT_SCHEMA },
+            required: %w[appointment],
+            additionalProperties: false
+          },
+          "search_patients" => {
+            type: "object",
+            properties: { patients: { type: "array", items: PATIENT_SCHEMA } },
+            required: %w[patients],
+            additionalProperties: false
+          }
+        }.freeze
+
         TOOLS = [
           {
             name: "list_datebooks",
@@ -127,7 +218,10 @@ module Api
 
         def self.definitions
           TOOLS.map do |tool|
-            tool.merge(securitySchemes: [{ type: "oauth2", scopes: [] }])
+            tool.merge(
+              outputSchema: OUTPUT_SCHEMAS.fetch(tool[:name]),
+              securitySchemes: [{ type: "oauth2", scopes: [] }]
+            )
           end
         end
       end
