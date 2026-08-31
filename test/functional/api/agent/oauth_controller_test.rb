@@ -3,11 +3,20 @@
 require "test_helper"
 
 class Api::Agent::OauthControllerTest < ActionController::TestCase
+  include AgentOauthTestClients
+
   setup do
     @practice = practices(:complete)
     @user = users(:founder)
     enable_agent_access
     @controller = Api::Agent::OauthController.new
+    @test_clients = CLIENTS.deep_dup
+    test_clients = @test_clients
+    clients = ->(client_id) do
+      document = test_clients.values.find { |candidate| candidate['client_id'] == client_id }
+      AgentOauthClient.new(client_id, document) if document
+    end
+    @controller.define_singleton_method(:oauth_client, &clients)
     @routes = Rails.application.routes
   end
 
@@ -17,15 +26,17 @@ class Api::Agent::OauthControllerTest < ActionController::TestCase
     body = JSON.parse(@response.body)
     assert_equal "#{@request.base_url}/api/agent/mcp", body["resource"]
     assert_equal [@request.base_url], body["authorization_servers"]
-    assert_equal [], body["scopes_supported"]
+    assert_equal ["offline_access"], body["scopes_supported"]
+    assert_recognizes({ controller: 'api/agent/oauth', action: 'protected_resource_metadata' },
+      { path: '/.well-known/oauth-protected-resource/api/agent/mcp', method: :get })
   end
 
-  test "publishes ChatGPT OAuth metadata" do
+  test "publishes public multi-client OAuth metadata" do
     get :authorization_server_metadata
 
     body = JSON.parse(@response.body)
     assert_equal @request.base_url, body["issuer"]
-    assert_equal ["authorization_code"], body["grant_types_supported"]
+    assert_equal ["authorization_code", "refresh_token"], body["grant_types_supported"]
     assert_equal ["S256"], body["code_challenge_methods_supported"]
     assert_equal ["none"], body["token_endpoint_auth_methods_supported"]
     assert_equal true, body["client_id_metadata_document_supported"]
@@ -51,11 +62,31 @@ class Api::Agent::OauthControllerTest < ActionController::TestCase
     assert_equal "", @response.body
   end
 
+  test 'production client resolver rejects a non-HTTPS client before network access' do
+    assert_nil Api::Agent::OauthController.new.send(:oauth_client, 'http://client.example/metadata.json')
+  end
+
+  test 'rate limits authorization and credential endpoints by remote address' do
+    store = Api::Agent::OauthController.cache_store
+    store.stub(:increment, 31) do
+      get :authorize, params: authorization_params
+      assert_response :too_many_requests
+      assert_equal 'slow_down', JSON.parse(@response.body)['error']
+    end
+    store.stub(:increment, 61) do
+      post :token, params: { grant_type: 'authorization_code' }
+      assert_response :too_many_requests
+      assert_equal 'slow_down', JSON.parse(@response.body)['error']
+      assert_equal 'no-store', @response.headers['Cache-Control']
+      assert_equal 'no-cache', @response.headers['Pragma']
+    end
+  end
+
   test "rejects authorization requests from unknown clients without redirecting" do
     get :authorize, params: authorization_params(client_id: "https://evil.example/client.json")
 
     assert_response :bad_request
-    assert_equal "invalid_request", JSON.parse(@response.body)["error"]
+    assert_select 'h2', text: I18n.t(:agent_oauth_unknown_title)
   end
 
   test "redirects safe invalid authorization requests with state and issuer" do
@@ -229,7 +260,7 @@ class Api::Agent::OauthControllerTest < ActionController::TestCase
   end
 
   test "exchanges an approved PKCE code for one access token" do
-    verifier = "test-verifier"
+    verifier = VERIFIER
     code = approved_code(verifier: verifier)
 
     assert_difference "AgentOauthAccessToken.count", 1 do
@@ -250,7 +281,7 @@ class Api::Agent::OauthControllerTest < ActionController::TestCase
   end
 
   test "rejects authorization-code replay" do
-    verifier = "test-verifier"
+    verifier = VERIFIER
     code = approved_code(verifier: verifier)
     params = token_params(code: code, verifier: verifier)
 
@@ -265,9 +296,9 @@ class Api::Agent::OauthControllerTest < ActionController::TestCase
   end
 
   test "rejects an incorrect PKCE verifier" do
-    code = approved_code(verifier: "correct-verifier")
+    code = approved_code(verifier: 'c' * 43)
 
-    post :token, params: token_params(code: code, verifier: "wrong-verifier")
+    post :token, params: token_params(code: code, verifier: 'w' * 43)
 
     assert_response :bad_request
     assert_equal "invalid_grant", JSON.parse(@response.body)["error"]
@@ -308,6 +339,197 @@ class Api::Agent::OauthControllerTest < ActionController::TestCase
     assert_equal "unsupported_grant_type", JSON.parse(@response.body)["error"]
   end
 
+  test 'unregistered or unsafe callbacks never receive redirects' do
+    [CHATGPT_REDIRECT + '/evil', CHATGPT_REDIRECT + '#fragment', 'http://localhost/callback',
+      'https://evil.example/return', ['https://evil.example/return']].each do |uri|
+      get :authorize, params: authorization_params(redirect_uri: uri)
+      assert_response :bad_request
+      assert_nil @response.location
+    end
+  end
+
+  test 'authorization enforces S256 syntax required resource and scalar state' do
+    [{ code_challenge_method: 'plain' }, { code_challenge: '' }, { code_challenge: 'x' * 42 },
+      { code_challenge: 'x' * 44 }, { code_challenge: ['x' * 43] }, { code_challenge: '+' * 43 },
+      { resource: nil }, { resource: 'http://test.host/other' }, { resource: ['http://test.host/api/agent/mcp'] },
+      { resource: 'http://test.host/api/agent/mcp#fragment' }, { state: { nested: 'value' } }].each do |invalid|
+      assert_no_difference('AgentOauthAuthorization.count') { get :authorize, params: authorization_params(invalid) }
+      assert_equal 'invalid_request', redirect_query['error'], invalid.inspect
+    end
+  end
+
+  test 'resource normalization accepts host case and default port but not a different path' do
+    @request.session[:user] = @user
+    get :authorize, params: authorization_params(resource: 'http://TEST.HOST:80/api/agent/mcp')
+    assert_response :success
+    assert_equal 'http://test.host/api/agent/mcp', AgentOauthAuthorization.last.resource
+    ['http://test.host/api/agent/mcp/', 'http://test.host/api/agent/../agent/mcp',
+      'http://test.host/api/agent/%6dcp', 'http://test.host/api/agent/mcp?query=1'].each do |resource|
+      get :authorize, params: authorization_params(resource: resource)
+      assert_equal 'invalid_request', redirect_query['error'], resource
+    end
+  end
+
+  test 'only the supported offline scope is accepted' do
+    ['patients:write', ['offline_access']].each do |scope|
+      get :authorize, params: authorization_params(scope: scope)
+      assert_equal 'invalid_scope', redirect_query['error']
+      post :token, params: { grant_type: 'refresh_token', scope: scope }
+      assert_response :bad_request
+      assert_equal 'invalid_scope', JSON.parse(@response.body)['error']
+    end
+    @request.session[:user] = @user
+    get :authorize, params: authorization_params(scope: 'offline_access')
+    assert_response :success
+    assert AgentOauthAuthorization.last.refresh_allowed?
+  end
+
+  test 'client without refresh grant receives only an access token' do
+    document = CLIENTS[:chatgpt].merge('grant_types' => ['authorization_code'])
+    @test_clients[:chatgpt] = document
+    get :authorize, params: authorization_params(scope: 'offline_access')
+    assert_equal 'invalid_scope', redirect_query['error']
+    code = approved_code
+    post :token, params: token_params(code: code)
+    assert_response :success
+    assert_nil JSON.parse(@response.body)['refresh_token']
+    assert_nil AgentOauthAccessToken.last.refresh_token_digest
+  end
+
+  test 'consent shows escaped client and callback hosts and local application warning' do
+    @request.session[:user] = @user
+    CLIENTS.values.each do |document|
+      uri = document['redirect_uris'].first
+      uri = uri.sub('localhost', 'localhost:45678') if uri.start_with?('http://localhost')
+      get :authorize, params: authorization_params(client_id: document['client_id'], redirect_uri: uri)
+      assert_response :success
+      assert_select '.alert', text: /#{Regexp.escape(URI.parse(document['client_id']).hostname)}/
+      assert_select '.alert', text: /#{Regexp.escape(URI.parse(uri).hostname)}/
+      if uri.start_with?('http://localhost')
+        assert_select '.alert', text: /#{Regexp.escape(I18n.t(:agent_oauth_local_warning))}/
+      end
+    end
+    document = CLIENTS[:chatgpt].merge('client_name' => '<script>alert(1)</script>')
+    @test_clients[:chatgpt] = document
+    get :authorize, params: authorization_params
+    assert_response :success
+    assert_includes @response.body, '&lt;script&gt;alert(1)&lt;/script&gt;'
+    assert_select 'h2 script', count: 0
+  end
+
+  test 'token endpoint rejects non-public authentication and does not cache errors' do
+    [{ client_secret: 'secret' }, { client_assertion: 'jwt' }, { client_assertion_type: 'jwt' }].each do |authentication|
+      post :token, params: { grant_type: 'authorization_code' }.merge(authentication)
+      assert_response :bad_request
+      assert_equal 'invalid_client', JSON.parse(@response.body)['error']
+      assert_equal 'no-store', @response.headers['Cache-Control']
+    end
+    @request.headers['Authorization'] = 'Basic secret'
+    post :token, params: { grant_type: 'authorization_code' }
+    assert_equal 'invalid_client', JSON.parse(@response.body)['error']
+  end
+
+  test 'code exchange rejects missing malformed or mismatched bindings without consuming the code' do
+    code = approved_code
+    [{ code_verifier: nil }, { code_verifier: ['x' * 43] }, { code_verifier: 'x' * 42 },
+      { code_verifier: 'x' * 129 }, { code_verifier: '/' * 43 }, { code: [] },
+      { client_id: nil }, { redirect_uri: CHATGPT_REDIRECT + '/' }, { resource: nil },
+      { resource: 'http://test.host/other' }].each do |invalid|
+      post :token, params: token_params(code: code).merge(invalid)
+      assert_response :bad_request
+      assert_equal 'invalid_grant', JSON.parse(@response.body)['error'], invalid.inspect
+      assert_nil AgentOauthAuthorization.last.consumed_at
+    end
+    post :token, params: token_params(code: code)
+    assert_response :success
+  end
+
+  test 'expired approved code cannot be exchanged' do
+    code = approved_code
+    AgentOauthAuthorization.last.update!(expires_at: 1.second.ago)
+    post :token, params: token_params(code: code)
+    assert_equal 'invalid_grant', JSON.parse(@response.body)['error']
+  end
+
+  test 'refresh rotates credentials without metadata fetch and accepts omitted public client id and resource' do
+    code = approved_code
+    post :token, params: token_params(code: code)
+    original = JSON.parse(@response.body)
+    token = AgentOauthAccessToken.last
+    assert_equal 'offline_access', original['scope']
+    assert_equal AgentOauthAccessToken.digest(original['refresh_token']), token.refresh_token_digest
+    assert_not_equal original['access_token'], token.token_digest
+    assert_not_equal original['refresh_token'], token.refresh_token_digest
+    travel 2.hours do
+      post :token, params: { grant_type: 'refresh_token', refresh_token: original['refresh_token'] }
+      assert_response :success
+      fresh = JSON.parse(@response.body)
+      assert_not_equal original['access_token'], fresh['access_token']
+      assert_not_equal original['refresh_token'], fresh['refresh_token']
+      assert token.reload.refresh_consumed_at
+      assert_nil token.revoked_at
+      assert_equal token.agent_oauth_authorization_id, AgentOauthAccessToken.last.agent_oauth_authorization_id
+      assert AgentOauthAccessToken.last.expires_at.future?
+    end
+  end
+
+  test 'refresh rejects malformed unknown expired revoked or incorrectly bound tokens' do
+    post :token, params: token_params(code: approved_code)
+    raw = JSON.parse(@response.body).fetch('refresh_token')
+    token = AgentOauthAccessToken.last
+    [{ refresh_token: nil }, { refresh_token: ['x'] }, { refresh_token: 'unknown' },
+      { client_id: ['x'] }, { client_id: '' }, { client_id: 'https://wrong.example/client.json' },
+      { resource: 'http://test.host/other' }, { resource: '' }].each do |invalid|
+      post :token, params: { grant_type: 'refresh_token', refresh_token: raw }.merge(invalid)
+      assert_equal 'invalid_grant', JSON.parse(@response.body)['error'], invalid.inspect
+      assert_nil token.reload.refresh_consumed_at
+    end
+    token.update!(refresh_expires_at: 1.second.ago)
+    post :token, params: { grant_type: 'refresh_token', refresh_token: raw }
+    assert_equal 'invalid_grant', JSON.parse(@response.body)['error']
+    token.update!(refresh_expires_at: 1.day.from_now, revoked_at: Time.current)
+    post :token, params: { grant_type: 'refresh_token', refresh_token: raw }
+    assert_equal 'invalid_grant', JSON.parse(@response.body)['error']
+  end
+
+  test 'refresh and code replay revoke every descendant but not a separate connection' do
+    [:refresh, :code].each do |replay|
+      post :token, params: token_params(code: approved_code)
+      unrelated = AgentOauthAccessToken.last
+      code = approved_code
+      post :token, params: token_params(code: code)
+      original = JSON.parse(@response.body)
+      grant = AgentOauthAuthorization.last
+      latest = original
+      2.times do
+        post :token, params: { grant_type: 'refresh_token', refresh_token: latest['refresh_token'],
+          client_id: CHATGPT_ID, resource: 'http://test.host/api/agent/mcp', scope: 'offline_access' }
+        assert_response :success
+        latest = JSON.parse(@response.body)
+      end
+      assert_equal 3, grant.access_tokens.active.count
+      request = replay == :code ? token_params(code: code) : { grant_type: 'refresh_token', refresh_token: original['refresh_token'] }
+      post :token, params: request
+      assert_equal 'invalid_grant', JSON.parse(@response.body)['error']
+      assert grant.access_tokens.all?(&:revoked_at?)
+      assert_nil unrelated.reload.revoked_at
+      post :token, params: { grant_type: 'refresh_token', refresh_token: latest['refresh_token'] }
+      assert_equal 'invalid_grant', JSON.parse(@response.body)['error']
+    end
+  end
+
+  test 'disabling and reenabling practice does not resurrect refresh tokens with expired access tokens' do
+    post :token, params: token_params(code: approved_code)
+    raw = JSON.parse(@response.body)['refresh_token']
+    travel 2.hours do
+      @practice.update!(agent_access_enabled: false)
+      @practice.update!(agent_access_enabled: true)
+      assert AgentOauthAccessToken.last.revoked_at
+      post :token, params: { grant_type: 'refresh_token', refresh_token: raw }
+      assert_equal 'invalid_grant', JSON.parse(@response.body)['error']
+    end
+  end
+
   private
 
   def enable_agent_access
@@ -323,7 +545,7 @@ class Api::Agent::OauthControllerTest < ActionController::TestCase
     @practice.update!(agent_access_enabled: true)
   end
 
-  def begin_authorization(verifier: "test-verifier", state: nil)
+  def begin_authorization(verifier: VERIFIER, state: nil)
     challenge = Base64.urlsafe_encode64(Digest::SHA256.digest(verifier), padding: false)
     @request.session[:user] = @user
     get :authorize, params: authorization_params(code_challenge: challenge, state: state)
@@ -333,7 +555,7 @@ class Api::Agent::OauthControllerTest < ActionController::TestCase
     [authorization, approval_token]
   end
 
-  def approved_code(verifier: "test-verifier")
+  def approved_code(verifier: VERIFIER)
     authorization, approval_token = begin_authorization(verifier: verifier)
     post :approve, params: { authorization_id: authorization.id, approval_token: approval_token }
     redirect_query.fetch("code")
@@ -342,15 +564,15 @@ class Api::Agent::OauthControllerTest < ActionController::TestCase
   def authorization_params(overrides = {})
     {
       response_type: "code",
-      client_id: Api::Agent::OauthController::CHATGPT_CLIENT_ID,
-      redirect_uri: Api::Agent::OauthController::CHATGPT_REDIRECT_URI,
-      code_challenge: "challenge",
+      client_id: CHATGPT_ID,
+      redirect_uri: CHATGPT_REDIRECT,
+      code_challenge: Base64.urlsafe_encode64(Digest::SHA256.digest(VERIFIER), padding: false),
       code_challenge_method: "S256",
       resource: "#{@request.base_url}/api/agent/mcp"
-    }.merge(overrides.compact)
+    }.merge(overrides)
   end
 
-  def token_params(code:, verifier: "test-verifier", client_id: Api::Agent::OauthController::CHATGPT_CLIENT_ID)
+  def token_params(code:, verifier: VERIFIER, client_id: CHATGPT_ID)
     authorization_params(
       grant_type: "authorization_code",
       code: code,

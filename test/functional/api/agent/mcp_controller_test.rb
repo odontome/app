@@ -36,6 +36,43 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_equal 'odontome', body.dig('result', 'serverInfo', 'name')
   end
 
+  test 'should negotiate each supported protocol version and select latest for unknown initialize version' do
+    raw_token = enable_agent_access(@practice)
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+    Api::Agent::McpController::SUPPORTED_PROTOCOL_VERSIONS.each do |version|
+      post_mcp(method: 'initialize', id: version, params: { protocolVersion: version })
+      assert_response :success
+      assert_equal version, JSON.parse(@response.body).dig('result', 'protocolVersion')
+    end
+    post_mcp(method: 'initialize', params: { protocolVersion: '2099-01-01' })
+    assert_equal Api::Agent::McpController::PROTOCOL_VERSION, JSON.parse(@response.body).dig('result', 'protocolVersion')
+  end
+
+  test 'should reject unsupported protocol headers and accept supported or absent headers' do
+    raw_token = enable_agent_access(@practice)
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+    @request.headers['MCP-Protocol-Version'] = '2099-01-01'
+    post_mcp(method: 'tools/list')
+    assert_response :bad_request
+    @request.headers['MCP-Protocol-Version'] = '2025-06-18'
+    post_mcp(method: 'tools/list')
+    assert_response :success
+    @request.headers['MCP-Protocol-Version'] = nil
+    post_mcp(method: 'tools/list')
+    assert_response :success
+  end
+
+  test 'should reject non-object params with invalid params JSON-RPC error' do
+    raw_token = enable_agent_access(@practice)
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+    @request.headers['Content-Type'] = 'application/json'
+    post :create, body: { jsonrpc: '2.0', id: 8, method: 'initialize', params: [] }.to_json
+    assert_response :success
+    body = JSON.parse(@response.body)
+    assert_equal 8, body['id']
+    assert_equal(-32602, body.dig('error', 'code'))
+  end
+
   # --- notifications/initialized ---
 
   test 'should handle notifications/initialized' do
@@ -136,9 +173,32 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     @request.headers['Origin'] = 'https://evil.com'
 
     post_mcp(method: 'initialize', id: 54)
-    assert_response :success
+    assert_response :forbidden
 
     assert_nil @response.headers['Access-Control-Allow-Origin']
+  end
+
+  test 'should return complete CORS headers for ChatGPT own and configured origins including errors' do
+    original = ENV['MCP_ALLOWED_ORIGINS']
+    ENV['MCP_ALLOWED_ORIGINS'] = 'https://custom.example, https://another.example'
+    ['https://chatgpt.com', @request.base_url, 'https://custom.example'].each do |origin|
+      @request.headers['Origin'] = origin
+      @request.headers['Authorization'] = nil
+      post_mcp(method: 'initialize')
+      assert_response :unauthorized
+      assert_equal origin, @response.headers['Access-Control-Allow-Origin']
+      assert_equal 'Origin', @response.headers['Vary']
+      assert_includes @response.headers['Access-Control-Allow-Headers'], 'MCP-Protocol-Version'
+      assert_equal 'WWW-Authenticate', @response.headers['Access-Control-Expose-Headers']
+    end
+  ensure
+    ENV['MCP_ALLOWED_ORIGINS'] = original
+  end
+
+  test 'should reject preflight from an unknown origin' do
+    @request.headers['Origin'] = 'https://evil.example'
+    process :preflight, method: :options
+    assert_response :forbidden
   end
 
   test 'should answer authenticated session deletion' do
@@ -157,6 +217,14 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
 
     assert_response :no_content
     assert_equal 'https://claude.ai', @response.headers['Access-Control-Allow-Origin']
+  end
+
+  test 'should reject streamable HTTP GET explicitly and advertise supported methods' do
+    assert_routing({ method: :get, path: '/api/agent/mcp' },
+      { controller: 'api/agent/mcp', action: 'unsupported_stream' })
+    process :unsupported_stream, method: :get
+    assert_response :method_not_allowed
+    assert_equal 'POST, DELETE, OPTIONS', @response.headers['Allow']
   end
 
   # --- tools/call: list_datebooks ---
@@ -805,6 +873,7 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
       post_mcp(method: 'initialize', id: 30)
     end
 
+    assert_response :too_many_requests
     body = JSON.parse(@response.body)
     assert_equal(-32000, body.dig('error', 'code'))
   end

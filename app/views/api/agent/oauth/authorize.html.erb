@@ -1,6 +1,16 @@
 <div class="card card-md">
   <div class="card-body">
-    <h2 class="card-title text-center mb-3"><%= t(:agent_oauth_authorize_description, practice: @authorization.practice.name) %></h2>
+    <h2 class="card-title text-center mb-3"><%= t(:agent_oauth_authorize_description, client: @client.document['client_name'], practice: @authorization.practice.name) %></h2>
+
+    <div class="alert alert-info" role="alert">
+      <div>
+        <div><%= t(:agent_oauth_client_host, host: @client.host) %></div>
+        <div><%= t(:agent_oauth_return_host, host: URI.parse(@authorization.redirect_uri).hostname) %></div>
+        <% if @client.local_redirect?(@authorization.redirect_uri) %>
+          <div><%= t(:agent_oauth_local_warning) %></div>
+        <% end %>
+      </div>
+    </div>
 
     <p>
       <div class="text-muted"><%= t(:agent_oauth_signed_in_as, user: current_user.fullname) %></div>

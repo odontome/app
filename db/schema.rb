@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_27_142000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_31_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -44,15 +44,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_27_142000) do
   end
 
   create_table "agent_oauth_access_tokens", force: :cascade do |t|
+    t.bigint "agent_oauth_authorization_id"
     t.datetime "created_at", null: false
     t.datetime "expires_at", null: false
     t.bigint "practice_id", null: false
+    t.datetime "refresh_consumed_at"
+    t.datetime "refresh_expires_at"
+    t.string "refresh_token_digest"
     t.string "resource", null: false
     t.datetime "revoked_at"
     t.string "token_digest", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.index ["agent_oauth_authorization_id"], name: "idx_on_agent_oauth_authorization_id_8537d3e5cc"
     t.index ["practice_id"], name: "index_agent_oauth_access_tokens_on_practice_id"
+    t.index ["refresh_token_digest"], name: "index_agent_oauth_access_tokens_on_refresh_token_digest", unique: true
     t.index ["token_digest"], name: "index_agent_oauth_access_tokens_on_token_digest", unique: true
     t.index ["user_id"], name: "index_agent_oauth_access_tokens_on_user_id"
   end
@@ -68,6 +74,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_27_142000) do
     t.datetime "expires_at", null: false
     t.bigint "practice_id", null: false
     t.string "redirect_uri", null: false
+    t.boolean "refresh_allowed", default: false, null: false
     t.string "resource", null: false
     t.text "state"
     t.datetime "updated_at", null: false
@@ -279,6 +286,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_27_142000) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "agent_oauth_access_tokens", "agent_oauth_authorizations", on_delete: :cascade
   add_foreign_key "agent_oauth_access_tokens", "practices", on_delete: :cascade
   add_foreign_key "agent_oauth_access_tokens", "users", on_delete: :cascade
   add_foreign_key "agent_oauth_authorizations", "practices", on_delete: :cascade
