@@ -52,6 +52,7 @@ class PracticesControllerTest < ActionController::TestCase
     get :agent_settings
 
     assert_response :success
+    assert_select 'svg.icon-tabler-plug-connected[aria-hidden="true"]', count: 1
     assert_select "a[href='https://learn.chatgpt.com/docs/plugins'][target='_blank'][rel='noopener']", text: 'ChatGPT'
     assert_select 'li', text: /Settings → Plugins/
     assert_select "a[href='https://developers.openai.com/plugins/deploy/connect-chatgpt']", count: 0

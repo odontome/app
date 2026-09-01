@@ -51,6 +51,7 @@ class DoctorsControllerTest < ActionController::TestCase
   test 'should show doctor' do
     get :show, params: { id: doctors(:rebecca).to_param }
     assert_response :success
+    assert_select 'svg.icon-tabler-calendar-time[aria-hidden="true"]', count: 1
   end
 
   test 'should get edit' do

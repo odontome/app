@@ -11,6 +11,7 @@ class BalancesControllerTest < ActionController::TestCase
     get :index, params: { patient_id: 1 }
     assert_response :success
     assert_not_nil assigns(:treatments)
+    assert_select 'svg.icon-tabler-stethoscope[aria-hidden="true"]', count: 1
   end
 
   test 'should create an income entry' do
