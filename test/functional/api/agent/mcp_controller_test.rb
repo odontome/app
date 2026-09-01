@@ -3,6 +3,8 @@
 require 'test_helper'
 
 class Api::Agent::McpControllerTest < ActionController::TestCase
+  TEST_PROTOCOL_VERSION = '2025-11-25'
+
   setup do
     @practice = practices(:complete)
     @datebook = datebooks(:playa_del_carmen)
@@ -32,33 +34,42 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     body = JSON.parse(@response.body)
     assert_equal '2.0', body['jsonrpc']
     assert_equal 1, body['id']
-    assert_equal '2025-11-25', body.dig('result', 'protocolVersion')
+    assert_equal TEST_PROTOCOL_VERSION, body.dig('result', 'protocolVersion')
     assert_equal 'odontome', body.dig('result', 'serverInfo', 'name')
   end
 
-  test 'should select the implemented protocol version during initialization' do
+  test 'should echo the client protocol version during initialization' do
     raw_token = enable_agent_access(@practice)
     @request.headers['Authorization'] = "Bearer #{raw_token}"
     ['2025-06-18', '2099-01-01'].each do |version|
       post_mcp(method: 'initialize', id: version, params: { protocolVersion: version })
       assert_response :success
-      assert_equal Api::Agent::McpController::PROTOCOL_VERSION,
-        JSON.parse(@response.body).dig('result', 'protocolVersion')
+      assert_equal version, JSON.parse(@response.body).dig('result', 'protocolVersion')
     end
   end
 
-  test 'should reject different protocol headers and accept the implemented or absent version' do
+  test 'should ignore protocol headers after initialization' do
     raw_token = enable_agent_access(@practice)
     @request.headers['Authorization'] = "Bearer #{raw_token}"
     @request.headers['MCP-Protocol-Version'] = '2099-01-01'
     post_mcp(method: 'tools/list')
-    assert_response :bad_request
-    @request.headers['MCP-Protocol-Version'] = Api::Agent::McpController::PROTOCOL_VERSION
+    assert_response :success
+    @request.headers['MCP-Protocol-Version'] = 'not-a-date'
     post_mcp(method: 'tools/list')
     assert_response :success
     @request.headers['MCP-Protocol-Version'] = nil
     post_mcp(method: 'tools/list')
     assert_response :success
+  end
+
+  test 'should reject a missing or malformed initialize protocol version' do
+    raw_token = enable_agent_access(@practice)
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+    [{}, { protocolVersion: '' }, { protocolVersion: 'future' }, { protocolVersion: ['2025-11-25'] }].each do |params|
+      post_mcp(method: 'initialize', id: 9, params: params)
+      assert_response :success
+      assert_equal(-32602, JSON.parse(@response.body).dig('error', 'code'))
+    end
   end
 
   test 'should reject non-object params with invalid params JSON-RPC error' do
@@ -1445,6 +1456,7 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
   end
 
   def post_mcp(method:, id: nil, params: nil)
+    params = { protocolVersion: TEST_PROTOCOL_VERSION } if method == 'initialize' && params.nil?
     body = { jsonrpc: '2.0', method: method }
     body[:id] = id if id
     body[:params] = params if params

@@ -3,7 +3,6 @@
 module Api
   module Agent
     class McpController < BaseController
-      PROTOCOL_VERSION = "2025-11-25"
       SERVER_INFO = { name: "odontome", version: "1.0.0" }.freeze
 
       ALLOWED_ORIGINS = %w[
@@ -14,7 +13,6 @@ module Api
 
       skip_before_action :authenticate_agent!, only: [:preflight, :unsupported_stream]
       prepend_before_action :check_origin_and_set_cors_headers
-      before_action :check_protocol_version, only: [:create, :destroy]
 
       rate_limit to: 120, within: 1.minute,
                  by: -> { @practice&.id || request.remote_ip },
@@ -46,7 +44,7 @@ module Api
 
         case method
         when "initialize"
-          handle_initialize(id)
+          handle_initialize(id, body['params'] || {})
         when "notifications/initialized"
           head :accepted
         when "tools/list"
@@ -83,12 +81,17 @@ module Api
         nil
       end
 
-      def handle_initialize(id)
+      def handle_initialize(id, params)
+        version = params['protocolVersion']
+        unless version.is_a?(String) && version.match?(/\A\d{4}-\d{2}-\d{2}\z/)
+          return render_jsonrpc_error(id, -32602, I18n.t("agents.mcp.errors.invalid_request"))
+        end
+
         render json: {
           jsonrpc: "2.0",
           id: id,
           result: {
-            protocolVersion: PROTOCOL_VERSION,
+            protocolVersion: version,
             capabilities: { tools: { listChanged: false } },
             serverInfo: SERVER_INFO,
             instructions: Mcp::Instructions.for(@practice)
@@ -112,11 +115,6 @@ module Api
         result = executor.call(tool_name, arguments)
 
         render json: { jsonrpc: "2.0", id: id, result: result }
-      end
-
-      def check_protocol_version
-        version = request.headers['MCP-Protocol-Version']
-        head :bad_request if version && version != PROTOCOL_VERSION
       end
 
       def check_origin_and_set_cors_headers
