@@ -22,6 +22,32 @@ class PracticesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'shows only onboarding until a practice has doctors and patients' do
+    practice = practices(:complete)
+    practice.update_columns(doctors_count: 0, patients_count: 0)
+
+    get :show, params: { id: practice.to_param }
+
+    assert_response :success
+    assert_select '.page-pretitle', text: I18n.t('tutorial.pretitle')
+    assert_not_includes response.body, 'chart-appts-per-day'
+    assert_nil assigns(:weekly_appointments_per_day)
+  end
+
+  test 'shows one weekly empty state instead of zero-value charts' do
+    practice = practices(:complete)
+    patient_ids = Patient.where(practice_id: practice.id).pluck(:id)
+    Appointment.where(patient_id: patient_ids).delete_all
+    Balance.where(patient_id: patient_ids).delete_all
+
+    get :show, params: { id: practice.to_param }
+
+    assert_response :success
+    assert_select '.empty-title', text: I18n.t('analytics.empty.week_title')
+    assert_select '#chart-appts-per-day', count: 0
+    assert_select '#chart-revenue-per-day', count: 0
+  end
+
   test 'agent settings links ChatGPT users to plugin installation instructions' do
     get :agent_settings
 

@@ -1,14 +1,19 @@
 <div class="page-header mb-4">
   <div class="row align-items-center">
     <div class="col">
-      <div class="page-pretitle">From <%= @week_start.strftime('%b %d') %> to <%= @week_end.strftime('%b %d') %></div>
+      <div class="page-pretitle">
+        <% if @onboarding %>
+          <%= t('tutorial.pretitle') %>
+        <% else %>
+          From <%= @week_start.strftime('%b %d') %> to <%= @week_end.strftime('%b %d') %>
+        <% end %>
+      </div>
       <h2 class="page-title"><%= @practice.name %></h2>
     </div>
   </div>
 </div>
 
-<%# Make this using the "wizard?" %>
-<% if @practice.patients_count == 0 || @practice.doctors_count == 0 %>
+<% if @onboarding %>
  <div class="page-body">
     <div class="row row-deck row-cards">
       <div class="col-md-6">
@@ -171,12 +176,13 @@
       </div>
     </div>
   </div>
-<% end %>
+<% else %>
   <div class="page-body">
     <div class="row row-deck row-cards">
       <%= render partial: 'practices/weekly_analytics' %>
     </div>
   </div>
+<% end %>
 
 <% if params[:ref] == 'signup' && ENV['GOOGLE_ADS_SIGNUP_CONVERSION'].present? %>
   <script>
