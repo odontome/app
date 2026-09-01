@@ -14,11 +14,15 @@ class PracticesController < ApplicationController
 
   def show
     @practice = current_user.practice
+    @onboarding = @practice.patients_count.to_i.zero? || @practice.doctors_count.to_i.zero?
 
     # Weekly analytics (Mon-Sun) for charts
     tz = ActiveSupport::TimeZone[current_user.practice.timezone] || Time.zone
     @week_start = tz.now.beginning_of_week
     @week_end = tz.now.end_of_week
+
+    return if @onboarding
+
     @prev_week_start = (@week_start - 1.week).beginning_of_week
     @prev_week_end = (@week_end - 1.week).end_of_week
 

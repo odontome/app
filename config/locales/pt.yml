@@ -518,6 +518,7 @@ pt:
   user_updated_success_message: O usuário foi atualizado com sucesso
   users: Usuários
   tutorial:
+    pretitle: Configure sua clínica
     message: Percebemos que você está começando agora e queremos ajudar a configurar sua clínica.
     steps:
       signup:
@@ -546,6 +547,11 @@ pt:
   analytics:
     title: Análises
     vs_last_week: "vs semana passada"
+    empty:
+      week_title: Ainda não há atividade nesta semana
+      week_description: A atividade semanal aparecerá aqui quando você começar a agendar consultas e registrar pagamentos.
+      chart_title: Ainda não há nada para mostrar
+      chart_description: Este gráfico será preenchido à medida que sua clínica começar a funcionar.
     kpis:
       appointments: "Agendamentos"
       revenue: "Receita"

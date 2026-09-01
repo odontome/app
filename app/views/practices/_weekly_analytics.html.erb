@@ -57,47 +57,45 @@
   </div>
 </div>
 
-<!-- Row 2 charts -->
-<div class="col-md-6">
-  <div class="card">
-<div class="card-header"><h3 class="card-title"><%= t('analytics.charts.appointments_this_week') %></h3></div>
-    <div class="card-body"><div id="chart-appts-per-day" class="chart chart-lg"></div></div>
-  </div>
-</div>
-<div class="col-md-6">
-  <div class="card">
-<div class="card-header"><h3 class="card-title"><%= t('analytics.charts.revenue_this_week') %></h3></div>
-    <div class="card-body"><div id="chart-revenue-per-day" class="chart chart-lg"></div></div>
-  </div>
-</div>
+<% charts = [
+  { id: 'chart-appts-per-day', title: t('analytics.charts.appointments_this_week'), data: @weekly_appointments_per_day },
+  { id: 'chart-revenue-per-day', title: t('analytics.charts.revenue_this_week'), data: @weekly_revenue_per_day },
+  { id: 'chart-top-doctors', title: t('analytics.charts.top_doctors_by_unique_patients'), data: @weekly_top_doctors_values },
+  { id: 'chart-hours-doctors', title: t('analytics.charts.hours_worked_by_doctors'), data: @weekly_hours_doctor_values },
+  { id: 'chart-recurring-patients', title: t('analytics.charts.most_recurring_patients'), data: @weekly_recurring_patient_values },
+  { id: 'chart-avg-gap', title: t('analytics.charts.avg_time_gap_between_appointments_minutes'), data: @weekly_avg_gap_doctor_values }
+] %>
 
-<!-- Row 3 charts -->
-<div class="col-md-6">
-  <div class="card">
-<div class="card-header"><h3 class="card-title"><%= t('analytics.charts.top_doctors_by_unique_patients') %></h3></div>
-    <div class="card-body"><div id="chart-top-doctors" class="chart chart-lg"></div></div>
+<% if charts.none? { |chart| chart[:data].any?(&:nonzero?) } %>
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="empty py-4">
+          <p class="empty-title"><%= t('analytics.empty.week_title') %></p>
+          <p class="empty-subtitle text-muted"><%= t('analytics.empty.week_description') %></p>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-<div class="col-md-6">
-  <div class="card">
-<div class="card-header"><h3 class="card-title"><%= t('analytics.charts.hours_worked_by_doctors') %></h3></div>
-    <div class="card-body"><div id="chart-hours-doctors" class="chart chart-lg"></div></div>
-  </div>
-</div>
-
-<!-- Row 4 charts -->
-<div class="col-md-6">
-  <div class="card">
-<div class="card-header"><h3 class="card-title"><%= t('analytics.charts.most_recurring_patients') %></h3></div>
-    <div class="card-body"><div id="chart-recurring-patients" class="chart chart-lg"></div></div>
-  </div>
-</div>
-<div class="col-md-6">
-  <div class="card">
-<div class="card-header"><h3 class="card-title"><%= t('analytics.charts.avg_time_gap_between_appointments_minutes') %></h3></div>
-    <div class="card-body"><div id="chart-avg-gap" class="chart chart-lg"></div></div>
-  </div>
-</div>
+<% else %>
+  <% charts.each do |chart| %>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header"><h3 class="card-title"><%= chart[:title] %></h3></div>
+        <div class="card-body">
+          <% if chart[:data].any?(&:nonzero?) %>
+            <div id="<%= chart[:id] %>" class="chart chart-lg"></div>
+          <% else %>
+            <div class="empty py-4">
+              <p class="empty-title"><%= t('analytics.empty.chart_title') %></p>
+              <p class="empty-subtitle text-muted"><%= t('analytics.empty.chart_description') %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
 
 <script>
 (function(){
@@ -112,56 +110,60 @@
   const color = (rgb, a=1) => `rgba(${rgb}, ${a})`;
 
   const charts = [];
+  const renderChart = (selector, options) => {
+    const element = document.querySelector(selector);
+    if (element) charts.push(new ApexCharts(element, options));
+  };
   // simple helper to choose theme-aware grid/labels
   const foreColor = getComputedStyle(document.querySelector('.apexcharts-text') || document.body).color || '#94a3b8';
   const gridColor = getComputedStyle(document.body).getPropertyValue('--tblr-border-color') || '#2c3c56';
 
   // Top doctors by unique patients
-  charts.push(new ApexCharts(document.querySelector('#chart-top-doctors'), {
+  renderChart('#chart-top-doctors', {
     chart: { type: 'bar', height: 300, toolbar: { show: false } },
   series: [{ name: '<%= j t('analytics.series.patients') %>', data: <%= raw(@weekly_top_doctors_values.to_json) %> }],
     xaxis: { categories: <%= raw(@weekly_top_doctors_names.to_json) %> },
     plotOptions: { bar: { horizontal: true } },
     colors: [color(palette.primary)]
-  }));
+  });
 
   // Hours worked by doctors
-  charts.push(new ApexCharts(document.querySelector('#chart-hours-doctors'), {
+  renderChart('#chart-hours-doctors', {
     chart: { type: 'bar', height: 300, toolbar: { show: false } },
   series: [{ name: '<%= j t('analytics.series.hours') %>', data: <%= raw(@weekly_hours_doctor_values.to_json) %> }],
     xaxis: { categories: <%= raw(@weekly_hours_doctor_names.to_json) %> },
     plotOptions: { bar: { horizontal: true } },
     colors: [color(palette.green)]
-  }));
+  });
 
   // Most recurring patients
-  charts.push(new ApexCharts(document.querySelector('#chart-recurring-patients'), {
+  renderChart('#chart-recurring-patients', {
     chart: { type: 'bar', height: 300, toolbar: { show: false } },
   series: [{ name: '<%= j t('analytics.series.appointments') %>', data: <%= raw(@weekly_recurring_patient_values.to_json) %> }],
     xaxis: { categories: <%= raw(@weekly_recurring_patient_names.to_json) %> },
     plotOptions: { bar: { horizontal: true } },
     colors: [color(palette.orange)]
-  }));
+  });
 
   // Average gap between appointments
-  charts.push(new ApexCharts(document.querySelector('#chart-avg-gap'), {
+  renderChart('#chart-avg-gap', {
     chart: { type: 'bar', height: 300, toolbar: { show: false } },
   series: [{ name: '<%= j t('analytics.series.avg_gap_min') %>', data: <%= raw(@weekly_avg_gap_doctor_values.to_json) %> }],
     xaxis: { categories: <%= raw(@weekly_avg_gap_doctor_names.to_json) %> },
     plotOptions: { bar: { horizontal: true } },
     colors: [color(palette.red)]
-  }));
+  });
 
   // Appointments per day line
   const areaOpts = { toolbar: { show: false }, foreColor: foreColor };
 
-  charts.push(new ApexCharts(document.querySelector('#chart-appts-per-day'), {
+  renderChart('#chart-appts-per-day', {
     chart: { type: 'line', height: 300, toolbar: { show: false } },
   series: [{ name: '<%= j t('analytics.series.appointments') %>', data: <%= raw(@weekly_appointments_per_day.to_json) %> }],
     xaxis: { categories: <%= raw(@weekly_days_labels.to_json) %> },
     stroke: { width: 3 },
     colors: [color(palette.primary)]
-  }));
+  });
 
   // New vs Returning (guard: only if container exists)
   (function(el){ if (!el) return; charts.push(new ApexCharts(el, {
@@ -172,13 +174,13 @@
   })); })(document.querySelector('#chart-new-vs-returning'));
 
   // Revenue per day area
-  charts.push(new ApexCharts(document.querySelector('#chart-revenue-per-day'), {
+  renderChart('#chart-revenue-per-day', {
     chart: { type: 'area', height: 300, toolbar: { show: false } },
   series: [{ name: '<%= j t('analytics.kpis.revenue') %>', data: <%= raw(@weekly_revenue_per_day.to_json) %> }],
     xaxis: { categories: <%= raw(@weekly_days_labels.to_json) %> },
     stroke: { width: 3 },
     colors: [color(palette.primary)]
-  }));
+  });
 
   charts.forEach(c => c.render());
 

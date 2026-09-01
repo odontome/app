@@ -481,6 +481,7 @@ es:
   users: Usuarios
   week: Semana
   tutorial:
+    pretitle: Configura tu clínica
     message: Podemos ver que recién estás empezando y nos gustaría ayudarte a configurar tu clínica.
     steps:
       signup:
@@ -506,6 +507,11 @@ es:
   analytics:
     title: "Analíticas"
     vs_last_week: "vs semana pasada"
+    empty:
+      week_title: Aún no hay actividad esta semana
+      week_description: La actividad semanal aparecerá aquí cuando comiences a programar citas y registrar pagos.
+      chart_title: Aún no hay nada que mostrar
+      chart_description: Este gráfico se irá completando conforme tu clínica empiece a funcionar.
     kpis:
       appointments: "Citas"
       revenue: "Ingresos"

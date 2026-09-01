@@ -527,6 +527,7 @@ en:
   user_updated_success_message: The user was updated successfully
   users: Users
   tutorial:
+    pretitle: Set up your practice
     message: Hey doc! 👋 Looks like it’s your first time here. Let’s walk through the basics so your digital practice runs as smoothly as your next cleaning.
     steps:
       signup:
@@ -555,6 +556,11 @@ en:
   analytics:
     title: Analytics
     vs_last_week: "vs last week"
+    empty:
+      week_title: Nothing to show this week yet
+      week_description: Your weekly activity will appear here as you start scheduling appointments and recording payments.
+      chart_title: Nothing to show here yet
+      chart_description: This chart will fill in as your practice gets going.
     kpis:
       appointments: "Appointments"
       revenue: "Revenue"
