@@ -332,6 +332,7 @@ class PracticesControllerTest < ActionController::TestCase
     get :settings
 
     assert_response :success
+    assert_select '.col-md-4 > .row.py-3', count: 3
     assert_select 'h3.card-title.d-flex.align-items-center', count: 3
     assert_includes response.body, 'icon-tabler-calendar-dollar'
     assert_includes response.body, 'icon-tabler-robot-face'
