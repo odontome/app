@@ -302,6 +302,17 @@ class PracticesControllerTest < ActionController::TestCase
     end
   end
 
+  test 'settings shows section icons with AI assistance before payment processing' do
+    get :settings
+
+    assert_response :success
+    assert_select 'h3.card-title.d-flex.align-items-center', count: 3
+    assert_includes response.body, 'icon-tabler-calendar-dollar'
+    assert_includes response.body, 'icon-tabler-robot-face'
+    assert_includes response.body, 'icon-tabler-cash'
+    assert_operator response.body.index('icon-tabler-robot-face'), :<, response.body.index('icon-tabler-cash')
+  end
+
   test 'settings shows expired copy after trial ends' do
     users(:founder).practice.subscription.update_columns(status: 'trialing',
                                                           current_period_end: 1.day.ago)

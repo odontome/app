@@ -20,9 +20,16 @@
         <div class="col">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">
-                <%= t('subscriptions.title') %> 
-                
+              <h3 class="card-title d-flex align-items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-dollar me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M13 21h-7a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v3" />
+                  <path d="M16 3v4" />
+                  <path d="M8 3v4" />
+                  <path d="M4 11h12.5" />
+                  <path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
+                  <path d="M19 21v1m0 -8v1" />
+                </svg>
+                <%= t('subscriptions.title') %>
               </h3>
               <div class="card-actions">
                 <%= label_tag t("subscriptions.status.#{@subscription.status}") %>
@@ -49,28 +56,14 @@
         <div class="col">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">
-                <%= t('stripe_payment_processing.title') %>
-              </h3>
-              <div class="card-actions">
-                <%= content_tag :span, connect_account_status_i18n(@practice.connect_onboarding_status)[:title], 
-                                class: "badge bg-#{connect_account_status_badge_class(@practice.connect_onboarding_status)}-lt" %>
-              </div>
-            </div>
-
-            <div class="card-body">
-              <p><%= connect_account_status_i18n(@practice.connect_onboarding_status)[:description] %></p>
-              <p><%= link_to connect_account_status_i18n(@practice.connect_onboarding_status)[:cta], connect_account_path, class: "btn btn-outline-secondary" %></p>
-            </div>
-          </div>
-        </div>
-	    </div>
-
-      <div class="row py-3">
-        <div class="col">
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title"><%= t(:agent_access_settings) %></h3>
+              <h3 class="card-title d-flex align-items-center"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-robot-face me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 5h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
+                <path d="M9 16c1 .667 2 1 3 1s2 -.333 3 -1" />
+                <path d="M9 7l-1 -4" />
+                <path d="M15 7l1 -4" />
+                <path d="M9 12v-1" />
+                <path d="M15 12v-1" />
+              </svg><%= t(:agent_access_settings) %></h3>
               <div class="card-actions">
                 <% if @practice.agent_access_enabled? %>
                   <%= label_tag t(:agent_access_status_enabled), :green %>
@@ -82,6 +75,28 @@
             <div class="card-body">
               <p class="text-muted"><%= t(:agent_access_settings_description) %></p>
               <%= link_to t(:manage_agent_access), practice_agent_settings_url, class: "btn btn-outline-secondary" %>
+            </div>
+          </div>
+        </div>
+	  </div>
+
+      <div class="row py-3">
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title d-flex align-items-center"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-cash me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 15h-3a1 1 0 0 1 -1 -1v-8a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v3" />
+                <path d="M7 10a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1l0 -8" />
+                <path d="M12 14a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+              </svg><%= t('stripe_payment_processing.title') %></h3>
+              <div class="card-actions">
+                <%= content_tag :span, connect_account_status_i18n(@practice.connect_onboarding_status)[:title],
+                                class: "badge bg-#{connect_account_status_badge_class(@practice.connect_onboarding_status)}-lt" %>
+              </div>
+            </div>
+            <div class="card-body">
+              <p><%= connect_account_status_i18n(@practice.connect_onboarding_status)[:description] %></p>
+              <p><%= link_to connect_account_status_i18n(@practice.connect_onboarding_status)[:cta], connect_account_path, class: "btn btn-outline-secondary" %></p>
             </div>
           </div>
         </div>
