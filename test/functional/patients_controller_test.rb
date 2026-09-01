@@ -71,6 +71,10 @@ class PatientsControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal 'today', assigns(:segment)
     assert assigns(:appointments).empty?
+    assert_select '.empty-title', text: I18n.t(:patients_today_empty)
+    assert_select '.empty-subtitle', text: I18n.t(:patients_today_empty_description)
+    assert_select 'a.btn-outline-primary', text: I18n.t(:patients_today_empty_hint)
+    assert_select "nav[aria-label='#{I18n.t(:patients)}'] a[aria-current='page']", text: /#{I18n.t(:patients_segment_today)}/
   end
 
   test 'all segment defaults to first letter with patients' do
@@ -224,6 +228,20 @@ class PatientsControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal 'needs_follow_up', assigns(:segment)
     assert_empty assigns(:patients)
+    assert_select '.empty-title', text: I18n.t(:patients_follow_up_empty)
+    assert_select '.empty-subtitle', text: I18n.t(:patients_follow_up_empty_description)
+  end
+
+  test 'birthdays segment empty state' do
+    Patient.with_practice(practices(:complete).id).destroy_all
+
+    get :index, params: { segment: 'birthdays' }
+
+    assert_response :success
+    assert_equal 'birthdays', assigns(:segment)
+    assert_empty assigns(:patients)
+    assert_select '.empty-title', text: I18n.t(:patients_birthdays_empty)
+    assert_select '.empty-subtitle', text: I18n.t(:patients_birthdays_empty_description)
   end
 
   test 'should get new' do
