@@ -378,13 +378,16 @@ es:
   follow_up_overdue: "hace %{time}"
   follow_up_status: Seguimiento
   patients_birthdays_empty: Sin cumpleaños esta semana
+  patients_birthdays_empty_description: No hay cumpleaños de pacientes para celebrar esta semana.
   patients_follow_up_empty: Todos los pacientes están al día
+  patients_follow_up_empty_description: Nadie necesita seguimiento en este momento.
   patients_follow_up_showing_all: Mostrando todos los pacientes que necesitan seguimiento
   patients_segment_all: Todos los pacientes
   patients_segment_birthdays: Cumpleaños
   patients_segment_needs_follow_up: Necesitan seguimiento
   patients_segment_today: Hoy
   patients_today_empty: Sin citas para hoy
+  patients_today_empty_description: No hay pacientes programados para hoy. Consulta la lista completa de pacientes para planificar con anticipación.
   patients_today_empty_hint: Ver todos los pacientes
   personal_information: Información personal
   please_wait: Por favor espera...

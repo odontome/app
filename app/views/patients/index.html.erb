@@ -24,9 +24,14 @@
   <div class="card">
     <% if @segment == 'today' %>
       <% if @appointments.empty? %>
-        <div class="card-body text-center py-5">
-          <p class="text-muted mb-2"><%= t :patients_today_empty %></p>
-          <%= link_to t(:patients_today_empty_hint), patients_url(segment: 'all'), class: "btn btn-outline-primary" %>
+        <div class="card-body">
+          <div class="empty py-4">
+            <p class="empty-title"><%= t :patients_today_empty %></p>
+            <p class="empty-subtitle text-muted"><%= t :patients_today_empty_description %></p>
+            <div class="empty-action">
+              <%= link_to t(:patients_today_empty_hint), patients_url(segment: 'all'), class: "btn btn-outline-primary" %>
+            </div>
+          </div>
         </div>
       <% else %>
         <table class="table table-vcenter table-mobile-md card-table">
@@ -48,8 +53,11 @@
 
     <% elsif @segment == 'needs_follow_up' %>
       <% if @patients.empty? %>
-        <div class="card-body text-center py-5">
-          <p class="text-muted mb-0"><%= t :patients_follow_up_empty %></p>
+        <div class="card-body">
+          <div class="empty py-4">
+            <p class="empty-title"><%= t :patients_follow_up_empty %></p>
+            <p class="empty-subtitle text-muted"><%= t :patients_follow_up_empty_description %></p>
+          </div>
         </div>
       <% else %>
         <table class="table table-vcenter table-mobile-md card-table">
@@ -77,8 +85,11 @@
 
     <% elsif @segment == 'birthdays' %>
       <% if @patients.empty? %>
-        <div class="card-body text-center py-5">
-          <p class="text-muted mb-0"><%= t :patients_birthdays_empty %></p>
+        <div class="card-body">
+          <div class="empty py-4">
+            <p class="empty-title"><%= t :patients_birthdays_empty %></p>
+            <p class="empty-subtitle text-muted"><%= t :patients_birthdays_empty_description %></p>
+          </div>
         </div>
       <% else %>
         <table class="table table-vcenter table-mobile-md card-table">
