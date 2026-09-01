@@ -3,24 +3,29 @@
 module Api
   module Agent
     class McpController < BaseController
-      PROTOCOL_VERSION = "2025-11-25"
       SERVER_INFO = { name: "odontome", version: "1.0.0" }.freeze
 
       ALLOWED_ORIGINS = %w[
         https://claude.ai
         https://claude.com
+        https://chatgpt.com
       ].freeze
 
-      skip_before_action :authenticate_agent!, only: :preflight
-      after_action :set_cors_headers
+      skip_before_action :authenticate_agent!, only: [:preflight, :unsupported_stream]
+      prepend_before_action :check_origin_and_set_cors_headers
 
       rate_limit to: 120, within: 1.minute,
                  by: -> { @practice&.id || request.remote_ip },
-                 with: -> { render_jsonrpc_error(nil, -32000, I18n.t("agents.mcp.errors.rate_limited")) },
+                 with: -> { render_jsonrpc_error(nil, -32000, I18n.t("agents.mcp.errors.rate_limited"), status: :too_many_requests) },
                  only: :create
 
       def preflight
         head :no_content
+      end
+
+      def unsupported_stream
+        response.headers['Allow'] = 'POST, DELETE, OPTIONS'
+        head :method_not_allowed
       end
 
       def destroy
@@ -30,13 +35,16 @@ module Api
       def create
         body = parse_body
         return if performed?
+        unless body['params'].nil? || body['params'].is_a?(Hash)
+          return render_jsonrpc_error(body['id'], -32602, I18n.t("agents.mcp.errors.invalid_request"))
+        end
 
         method = body["method"].to_s
         id = body["id"]
 
         case method
         when "initialize"
-          handle_initialize(id)
+          handle_initialize(id, body['params'] || {})
         when "notifications/initialized"
           head :accepted
         when "tools/list"
@@ -73,12 +81,17 @@ module Api
         nil
       end
 
-      def handle_initialize(id)
+      def handle_initialize(id, params)
+        version = params['protocolVersion']
+        unless version.is_a?(String) && version.match?(/\A\d{4}-\d{2}-\d{2}\z/)
+          return render_jsonrpc_error(id, -32602, I18n.t("agents.mcp.errors.invalid_request"))
+        end
+
         render json: {
           jsonrpc: "2.0",
           id: id,
           result: {
-            protocolVersion: PROTOCOL_VERSION,
+            protocolVersion: version,
             capabilities: { tools: { listChanged: false } },
             serverInfo: SERVER_INFO,
             instructions: Mcp::Instructions.for(@practice)
@@ -104,13 +117,18 @@ module Api
         render json: { jsonrpc: "2.0", id: id, result: result }
       end
 
-      def set_cors_headers
+      def check_origin_and_set_cors_headers
         origin = request.headers["Origin"].to_s
-        return unless ALLOWED_ORIGINS.include?(origin)
+        return if origin.empty?
+
+        allowed = ALLOWED_ORIGINS + ENV.fetch('MCP_ALLOWED_ORIGINS', '').split(',').map(&:strip) + [request.base_url]
+        return head :forbidden unless allowed.include?(origin)
 
         response.headers["Access-Control-Allow-Origin"] = origin
+        response.headers['Vary'] = 'Origin'
         response.headers["Access-Control-Allow-Methods"] = "POST, DELETE, OPTIONS"
-        response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+        response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization, MCP-Protocol-Version"
+        response.headers['Access-Control-Expose-Headers'] = 'WWW-Authenticate'
         response.headers["Access-Control-Max-Age"] = "86400"
       end
 

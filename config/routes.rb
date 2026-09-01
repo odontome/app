@@ -87,11 +87,13 @@ Rails.application.routes.draw do
 
   # OAuth discovery for MCP
   get '/.well-known/oauth-protected-resource', to: 'api/agent/oauth#protected_resource_metadata'
+  get '/.well-known/oauth-protected-resource/api/agent/mcp', to: 'api/agent/oauth#protected_resource_metadata'
   get '/.well-known/oauth-authorization-server', to: 'api/agent/oauth#authorization_server_metadata'
   get '/.well-known/openai-apps-challenge', to: 'api/agent/oauth#openai_apps_challenge'
 
   namespace :api do
     namespace :agent do
+      get 'mcp', to: 'mcp#unsupported_stream'
       post 'mcp', to: 'mcp#create'
       delete 'mcp', to: 'mcp#destroy'
       match 'mcp', to: 'mcp#preflight', via: :options

@@ -176,7 +176,7 @@ class Practice < ApplicationRecord
   end
 
   def revoke_agent_oauth_credentials
-    agent_oauth_access_tokens.active.update_all(revoked_at: Time.current)
+    agent_oauth_access_tokens.where(revoked_at: nil).update_all(revoked_at: Time.current)
     agent_oauth_authorizations.where(consumed_at: nil).delete_all
   end
 

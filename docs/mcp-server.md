@@ -9,18 +9,20 @@ https://my.odonto.me/api/agent/mcp
 ```
 
 - **Transport:** HTTP POST for JSON-RPC
-- **Protocol version:** `2025-11-25`
+- **Protocol version:** Negotiated from the client's `initialize` request
 
 ## Authentication
 
-The server uses **OAuth 2.1 with PKCE**. Users sign in to Odonto.me and approve access for their own practice; no practice key is shared with ChatGPT.
+The server uses **OAuth 2.1 with PKCE** and public [Client ID Metadata Documents](https://datatracker.ietf.org/doc/draft-ietf-oauth-client-id-metadata-document/). Users sign in to Odonto.me and approve access for their own practice; no practice key is shared with the AI client.
+
+This is provider-neutral: ChatGPT, Claude Code, hosted clients, and future clients can connect when they publish a valid HTTPS metadata document. The document must declare a public `none` token authentication option and an exact HTTPS callback, or an HTTP callback on `localhost`, `127.0.0.1`, or `[::1]`. A loopback callback may select a different numeric port; every other byte must match. The consent screen shows both the metadata host and callback host before access is granted.
 
 ### OAuth endpoints
 
 | Endpoint | URL |
 |---|---|
 | Discovery | `https://my.odonto.me/.well-known/oauth-authorization-server` |
-| Protected resource | `https://my.odonto.me/.well-known/oauth-protected-resource` |
+| Protected resource | `https://my.odonto.me/.well-known/oauth-protected-resource/api/agent/mcp` |
 | Authorize | `https://my.odonto.me/api/agent/oauth/authorize` |
 | Token | `https://my.odonto.me/api/agent/oauth/token` |
 
@@ -28,10 +30,18 @@ The server uses **OAuth 2.1 with PKCE**. Users sign in to Odonto.me and approve 
 
 1. Go to **My Practice > AI Assistant** in odonto.me
 2. Enable the AI assistant toggle
-3. Sign in to Odonto.me when ChatGPT asks you to connect.
+3. Sign in to Odonto.me when your AI app asks you to connect.
 4. Review and approve access for your practice.
 
 The connection is available only while the AI assistant is enabled and the practice has an active subscription or an unexpired trial. Past-due, cancelled, and expired subscriptions cannot authorize or use the MCP server. The approval screen identifies the signed-in user and practice, and the approval is bound to that exact Odonto.me session.
+
+Authorization requires S256 PKCE and binds the code to the exact client ID, callback, and canonical protected-resource URL. Access tokens expire after one hour. Clients that declare the `refresh_token` grant receive a rotating refresh token with a 90-day lifetime. Reusing a spent refresh token or redeemed authorization code revokes that connection's full token family. Disabling AI access or closing a practice revokes all credentials, including refresh credentials.
+
+Client documents are fetched without ambient proxies, only after every resolved address passes public-address checks, and with a pinned vetted address for TLS and HTTP. Redirect responses are rejected, response bodies are streamed with a 64 KB maximum, and DNS, connection, TLS, and body processing share a five-second deadline. Invalid responses and errors are never cached; successful responses honor restrictive cache directives and are capped at one hour.
+
+Authorization requests are limited to 30 per minute per remote address. Token and approval requests share a 60-per-minute limit.
+
+Browser-based clients must send no `Origin`, use the server's own origin, or use one of the built-in ChatGPT/Claude origins. Extra trusted browser origins can be provided as a comma-separated `MCP_ALLOWED_ORIGINS` environment variable. Server-to-server clients normally send no `Origin` and are unaffected.
 
 ## Available tools
 
@@ -175,14 +185,14 @@ All tools include [MCP safety annotations](https://modelcontextprotocol.io/speci
 - **Rate limiting:** 120 requests/minute per authenticated practice or unauthenticated IP.
 - **Request limits:** Bodies capped at 1 MB, date range queries limited to 90 days.
 - **Audit trail:** All changes made through the AI assistant are logged and visible in the practice's audit trail.
-- **Token management:** OAuth access tokens are SHA-256 hashed at rest, expire after one hour, and are revoked when AI access is disabled or the practice closes.
+- **Token management:** OAuth access and refresh tokens are SHA-256 hashed at rest. Access tokens expire after one hour; refresh tokens rotate and expire after 90 days. Credentials are revoked when AI access is disabled or the practice closes.
 
 ## Testing
 
 Run the focused agent suite with its enforced 100% line-coverage gate:
 
 ```sh
-AGENT_COVERAGE=1 bin/rails test test/functional/api/agent test/models/agent_oauth_credential_test.rb
+AGENT_COVERAGE=1 bin/rails test test/functional/api/agent test/models/agent_oauth*_test.rb
 ```
 
 The gate covers the agent controllers, MCP tool implementation, and OAuth credential models. The full application suite remains `bin/rails test`.

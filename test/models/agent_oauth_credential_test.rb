@@ -3,6 +3,7 @@
 require 'test_helper'
 
 class AgentOauthCredentialTest < ActiveSupport::TestCase
+  include AgentOauthTestClients
   setup do
     @practice = practices(:complete)
     @user = users(:perishable)
@@ -82,6 +83,23 @@ class AgentOauthCredentialTest < ActiveSupport::TestCase
     assert_not AgentOauthAccessToken.exists?(token.id)
   end
 
+  test 'credential operations fail closed when records disappear during locking' do
+    create_ai_consent(@user)
+    authorization = create_authorization
+    practice = authorization.practice
+    practice.stub(:with_lock, ->(*) { raise ActiveRecord::RecordNotFound }) do
+      assert_nil authorization.approve('approval')
+      assert_nil authorization.exchange(client_id: authorization.client_id, redirect_uri: authorization.redirect_uri,
+        resource: authorization.resource, code_verifier: 'v' * 43)
+    end
+
+    token = create_access_token
+    practice = token.practice
+    practice.stub(:with_lock, ->(*) { raise ActiveRecord::RecordNotFound }) do
+      assert_nil token.refresh(client_id: nil, resource: token.resource)
+    end
+  end
+
   private
 
   def create_ai_consent(user)
@@ -99,8 +117,8 @@ class AgentOauthCredentialTest < ActiveSupport::TestCase
       user: @user,
       practice: @practice,
       approval_token_digest: AgentOauthAuthorization.digest(SecureRandom.hex(24)),
-      client_id: Api::Agent::OauthController::CHATGPT_CLIENT_ID,
-      redirect_uri: Api::Agent::OauthController::CHATGPT_REDIRECT_URI,
+      client_id: CHATGPT_ID,
+      redirect_uri: CHATGPT_REDIRECT,
       code_challenge: 'challenge',
       resource: 'https://my.odonto.me/api/agent/mcp',
       expires_at: 5.minutes.from_now

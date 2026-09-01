@@ -47,6 +47,15 @@ jobs:
         run: |
           bin/rails db:setup
 
+      - name: Enforce MCP and OAuth coverage
+        env:
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          RAILS_ENV: test
+          AGENT_COVERAGE: '1'
+        run: bin/rails test test/functional/api/agent test/models/agent_oauth*_test.rb
+
       - name: Run Tests
         env:
           PGHOST: localhost
