@@ -9,7 +9,7 @@ https://my.odonto.me/api/agent/mcp
 ```
 
 - **Transport:** HTTP POST for JSON-RPC
-- **Protocol versions:** `2025-11-25` and `2025-06-18`
+- **Protocol version:** `2025-11-25`
 
 ## Authentication
 

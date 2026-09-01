@@ -36,25 +36,24 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_equal 'odontome', body.dig('result', 'serverInfo', 'name')
   end
 
-  test 'should negotiate each supported protocol version and select latest for unknown initialize version' do
+  test 'should select the implemented protocol version during initialization' do
     raw_token = enable_agent_access(@practice)
     @request.headers['Authorization'] = "Bearer #{raw_token}"
-    Api::Agent::McpController::SUPPORTED_PROTOCOL_VERSIONS.each do |version|
+    ['2025-06-18', '2099-01-01'].each do |version|
       post_mcp(method: 'initialize', id: version, params: { protocolVersion: version })
       assert_response :success
-      assert_equal version, JSON.parse(@response.body).dig('result', 'protocolVersion')
+      assert_equal Api::Agent::McpController::PROTOCOL_VERSION,
+        JSON.parse(@response.body).dig('result', 'protocolVersion')
     end
-    post_mcp(method: 'initialize', params: { protocolVersion: '2099-01-01' })
-    assert_equal Api::Agent::McpController::PROTOCOL_VERSION, JSON.parse(@response.body).dig('result', 'protocolVersion')
   end
 
-  test 'should reject unsupported protocol headers and accept supported or absent headers' do
+  test 'should reject different protocol headers and accept the implemented or absent version' do
     raw_token = enable_agent_access(@practice)
     @request.headers['Authorization'] = "Bearer #{raw_token}"
     @request.headers['MCP-Protocol-Version'] = '2099-01-01'
     post_mcp(method: 'tools/list')
     assert_response :bad_request
-    @request.headers['MCP-Protocol-Version'] = '2025-06-18'
+    @request.headers['MCP-Protocol-Version'] = Api::Agent::McpController::PROTOCOL_VERSION
     post_mcp(method: 'tools/list')
     assert_response :success
     @request.headers['MCP-Protocol-Version'] = nil

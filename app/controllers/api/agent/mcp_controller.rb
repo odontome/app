@@ -4,7 +4,6 @@ module Api
   module Agent
     class McpController < BaseController
       PROTOCOL_VERSION = "2025-11-25"
-      SUPPORTED_PROTOCOL_VERSIONS = [PROTOCOL_VERSION, "2025-06-18"].freeze
       SERVER_INFO = { name: "odontome", version: "1.0.0" }.freeze
 
       ALLOWED_ORIGINS = %w[
@@ -47,7 +46,7 @@ module Api
 
         case method
         when "initialize"
-          handle_initialize(id, body['params'] || {})
+          handle_initialize(id)
         when "notifications/initialized"
           head :accepted
         when "tools/list"
@@ -84,13 +83,12 @@ module Api
         nil
       end
 
-      def handle_initialize(id, params)
-        requested_version = params['protocolVersion']
+      def handle_initialize(id)
         render json: {
           jsonrpc: "2.0",
           id: id,
           result: {
-            protocolVersion: SUPPORTED_PROTOCOL_VERSIONS.include?(requested_version) ? requested_version : PROTOCOL_VERSION,
+            protocolVersion: PROTOCOL_VERSION,
             capabilities: { tools: { listChanged: false } },
             serverInfo: SERVER_INFO,
             instructions: Mcp::Instructions.for(@practice)
@@ -118,7 +116,7 @@ module Api
 
       def check_protocol_version
         version = request.headers['MCP-Protocol-Version']
-        head :bad_request if version && !SUPPORTED_PROTOCOL_VERSIONS.include?(version)
+        head :bad_request if version && version != PROTOCOL_VERSION
       end
 
       def check_origin_and_set_cors_headers
