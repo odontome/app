@@ -38,6 +38,19 @@ class DatebooksControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'show redirects home when the datebook does not exist' do
+    get :show, params: { id: 999_999 }
+    assert_redirected_to root_url
+  end
+
+  test 'show does not swallow non-recoverable exceptions' do
+    Doctor.stub(:with_practice, proc { raise Interrupt }) do
+      assert_raises(Interrupt) do
+        get :show, params: { id: datebooks(:playa_del_carmen).to_param }
+      end
+    end
+  end
+
   test 'should get edit' do
     get :edit, params: { id: datebooks(:playa_del_carmen).to_param }
     assert_response :success

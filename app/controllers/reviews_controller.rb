@@ -48,7 +48,7 @@ class ReviewsController < ApplicationController
         @review.score = params[:score]
         @review.appointment_id = params[:appointment_id]
       end
-    rescue Exception
+    rescue ActiveRecord::RecordNotFound, ArgumentError, RuntimeError
       redirect_to 'https://www.odonto.me', allow_other_host: true
       return
     end

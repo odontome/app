@@ -28,7 +28,7 @@ class DatebooksController < ApplicationController
 
       # Detect if this is coming from a mobile device
       @is_mobile = request.user_agent =~ /iPhone|webOS|Android/
-    rescue Exception
+    rescue ActiveRecord::RecordNotFound
       redirect_to(root_url, notice: I18n.t("errors.messages.not_found"))
     end
   end

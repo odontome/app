@@ -48,6 +48,14 @@ class ReviewsControllerTest < ActionController::TestCase
     assert_redirected_to 'https://www.odonto.me'
   end
 
+  test 'new does not swallow non-recoverable exceptions' do
+    Cipher.stub(:decode, proc { raise Interrupt }) do
+      assert_raises(Interrupt) do
+        get :new, params: { appointment_id: 'anything' }
+      end
+    end
+  end
+
   test 'should create review' do
     assert_difference('Review.count') do
       post :create,
