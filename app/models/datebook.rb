@@ -28,6 +28,19 @@ class Datebook < ApplicationRecord
     appointments.count.zero?
   end
 
+  def working_hours
+    { start: format('%02d:00', starts_at), end: format('%02d:00', ends_at) }
+  end
+
+  def within_working_hours?(starts_at, ends_at)
+    return false unless starts_at && ends_at && starts_at < ends_at
+
+    local_start = starts_at.in_time_zone(practice.timezone)
+    opens = local_start.change(hour: self.starts_at)
+    closes = local_start.change(hour: self.ends_at)
+    starts_at >= opens && ends_at <= closes
+  end
+
   private
 
   def check_if_is_deleteable

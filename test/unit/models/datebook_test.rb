@@ -15,6 +15,24 @@ class DatebookTest < ActiveSupport::TestCase
     # assert datebook.errors[:name].any?
   end
 
+  test 'working hours use the practice local date and include exact boundaries' do
+    datebook = datebooks(:playa_del_carmen)
+    datebook.assign_attributes(starts_at: 8, ends_at: 20)
+    datebook.practice.timezone = 'Eastern Time (US & Canada)'
+
+    %w[2026-09-03 2026-12-03].each do |date|
+      zone = ActiveSupport::TimeZone[datebook.practice.timezone]
+      opens = zone.parse("#{date} 08:00")
+      closes = zone.parse("#{date} 20:00")
+      assert datebook.within_working_hours?(opens.utc, closes.utc)
+      refute datebook.within_working_hours?(opens - 1.second, opens + 1.hour)
+      refute datebook.within_working_hours?(closes - 1.hour, closes + 1.second)
+      refute datebook.within_working_hours?(opens, opens + 1.day)
+      refute datebook.within_working_hours?(opens, opens)
+      refute datebook.within_working_hours?(nil, closes)
+    end
+  end
+
   test 'datebook should save using a valid hours range' do
     datebook = Datebook.new(name: 'Valid datebook', starts_at: 9, ends_at: 19, practice_id: 1)
     assert datebook.save

@@ -38,6 +38,14 @@ class DatebooksControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'calendar does not display a timezone label' do
+    users(:founder).practice.update!(timezone: 'Eastern Time (US & Canada)')
+    get :show, params: { id: datebooks(:playa_del_carmen).id }
+    assert_response :success
+    assert_select '#calendar', count: 1
+    assert_select '.page-header p', text: /Eastern Time/, count: 0
+  end
+
   test 'should get edit' do
     get :edit, params: { id: datebooks(:playa_del_carmen).to_param }
     assert_response :success
