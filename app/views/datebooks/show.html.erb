@@ -10,15 +10,19 @@
 			}
 		}
 
-		var date = new Date();
-		var d = date.getDate();
-		var m = date.getMonth();
-		var y = date.getFullYear();
+		// FullCalendar v1 uses browser-local Date objects as practice wall clocks.
+		// Send their displayed fields to Rails; never convert them to browser epochs.
+		function calendarTime(date) {
+			return $.fullCalendar.formatDate(date, "yyyy-MM-dd'T'HH:mm:ss");
+		}
 		var withDoctorIdString = '<% if params[:doctor_id] %>?doctor_id=<%=params[:doctor_id]%><% end %>';
 		var datebookId = '<%= @datebook.id %>';
 		var endpointURL = "/datebooks/" + datebookId + "/appointments";
 
 		$("#calendar").fullCalendar({
+			year: <%= Time.zone.today.year %>,
+			month: <%= Time.zone.today.month - 1 %>,
+			date: <%= Time.zone.today.day %>,
 			defaultView: <% if @is_mobile.nil? %>"agendaWeek"<%else%>"agendaDay"<% end %>,
 			minTime: <%= @datebook.starts_at %>,
 			maxTime: <%= @datebook.ends_at %>,
@@ -55,7 +59,11 @@
 				resizeCalendar(view);
 			},
 			eventSources: [{
-				url: endpointURL + withDoctorIdString,
+				events: function(start, end, callback) {
+					$.getJSON(endpointURL + withDoctorIdString, {
+						start: calendarTime(start), end: calendarTime(end)
+					}).done(callback).fail(function() { callback([]); });
+				},
 				ignoreTimezone: true
 			}],
 			allDaySlot: false,
@@ -63,9 +71,7 @@
 			dayClick: function(dayDate, allDay, jsEvent, view){
 				if (view.name != "month"){
 					var url = endpointURL + '/new';
-					var timestamp = Math.round((dayDate).getTime() / 1000);
-
-					$.get(url, {"starts_at": timestamp}, function(data) {
+					$.get(url, {"starts_at": calendarTime(dayDate)}, function(data) {
 						$('.modal-title').html($.fullCalendar.formatDate(dayDate, "dd, MMMM · hh:mm tt"));
 						$('.body-container').html(data);
 						$("#modal-appointment").modal("toggle");
@@ -97,8 +103,8 @@
 							type: "PUT",
 							url: endpointURL + "/" + event.id,
 							data: {
-								"appointment[starts_at]": event.start,
-								"appointment[ends_at]": event.end
+								"appointment[starts_at]": calendarTime(event.start),
+								"appointment[ends_at]": calendarTime(event.end)
 								}
 					});
 				} else {
@@ -113,8 +119,8 @@
 						type: "PUT",
 						url: endpointURL + "/" + calEvent.id,
 						data: {
-							"appointment[starts_at]": calEvent.start,
-							"appointment[ends_at]": calEvent.end,
+							"appointment[starts_at]": calendarTime(calEvent.start),
+							"appointment[ends_at]": calendarTime(calEvent.end),
 							}
 					});
 				} else {

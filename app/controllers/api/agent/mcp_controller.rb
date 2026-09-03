@@ -3,7 +3,17 @@
 module Api
   module Agent
     class McpController < BaseController
-      SERVER_INFO = { name: "odontome", version: "1.0.0" }.freeze
+      SERVER_INFO = {
+        name: "odontome",
+        version: "1.0.0",
+        icons: [
+          {
+            src: "https://my.odonto.me/apple-touch-icon-precomposed.png",
+            mimeType: "image/png",
+            sizes: ["256x256"]
+          }
+        ]
+      }.freeze
 
       ALLOWED_ORIGINS = %w[
         https://claude.ai

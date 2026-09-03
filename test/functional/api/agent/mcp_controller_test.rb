@@ -36,6 +36,13 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_equal 1, body['id']
     assert_equal TEST_PROTOCOL_VERSION, body.dig('result', 'protocolVersion')
     assert_equal 'odontome', body.dig('result', 'serverInfo', 'name')
+    assert_equal [
+      {
+        'src' => 'https://my.odonto.me/apple-touch-icon-precomposed.png',
+        'mimeType' => 'image/png',
+        'sizes' => ['256x256']
+      }
+    ], body.dig('result', 'serverInfo', 'icons')
   end
 
   test 'should echo the client protocol version during initialization' do
@@ -114,6 +121,27 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     update_properties = tools.find { |tool| tool['name'] == 'update_appointment' }.dig('inputSchema', 'properties')
     assert_not create_properties.key?('notes')
     assert_not update_properties.key?('notes')
+
+    create_tool = tools.find { |tool| tool['name'] == 'create_appointment' }
+    update_tool = tools.find { |tool| tool['name'] == 'update_appointment' }
+    assert_includes create_tool['description'], 'explicitly confirms'
+    assert_includes update_tool['description'], 'explicitly confirms'
+  end
+
+  test 'appointment tool schemas require a datebook id or name' do
+    raw_token = enable_agent_access(@practice)
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+
+    post_mcp(method: 'tools/list', id: 53)
+    assert_response :success
+
+    tools = JSON.parse(@response.body).dig('result', 'tools')
+    %w[list_appointments create_appointment].each do |name|
+      schema = tools.find { |tool| tool['name'] == name }.fetch('inputSchema')
+      assert_equal [{ 'required' => ['datebook_id'] }, { 'required' => ['datebook_name'] }], schema['anyOf']
+      assert_equal 'integer', schema.dig('properties', 'datebook_id', 'type')
+      assert_equal 'string', schema.dig('properties', 'datebook_name', 'type')
+    end
   end
 
   test 'should include safety annotations on all tools' do
@@ -250,6 +278,9 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     content = body.dig('result', 'structuredContent', 'datebooks')
     assert content.is_a?(Array)
     assert(content.any? { |d| d['name'] == 'Playa del Carmen' })
+    calendar = content.find { |d| d['id'] == @datebook.id }
+    assert_equal ActiveSupport::TimeZone[@practice.timezone].tzinfo.name, calendar['timezone']
+    assert_equal({ 'start' => format('%02d:00', @datebook.starts_at), 'end' => format('%02d:00', @datebook.ends_at) }, calendar['working_hours'])
     assert_equal body.dig('result', 'structuredContent'), JSON.parse(body.dig('result', 'content', 0, 'text'))
   end
 
@@ -346,6 +377,55 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
   end
 
   # --- tools/call: list_appointments date range validation ---
+
+  test 'should reject list_appointments with missing or invalid dates without a server error' do
+    raw_token = enable_agent_access(@practice)
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+    times = { start: '2026-09-01T00:00:00-05:00', end: '2026-09-02T00:00:00-05:00' }
+    invalid_ranges = [
+      { starts_at: times[:start], ends_at: times[:end] },
+      {},
+      times.except(:start),
+      times.except(:end),
+      times.merge(start: nil),
+      times.merge(end: ''),
+      times.merge(start: ' '),
+      times.merge(start: 'not-a-date'),
+      times.merge(end: '2026-13-01T00:00:00'),
+      times.merge(start: {})
+    ]
+
+    invalid_ranges.each do |range|
+      post_mcp(
+        method: 'tools/call', id: 12,
+        params: { name: 'list_appointments', arguments: range.merge(datebook_id: @datebook.id) }
+      )
+      assert_response :success
+
+      result = JSON.parse(@response.body).fetch('result')
+      assert_equal true, result['isError'], range.inspect
+      assert_equal I18n.t('agents.mcp.errors.invalid_schedule_dates'), result.dig('content', 0, 'text')
+      assert_nil result['structuredContent'], 'A failed query must not look like an empty schedule'
+    end
+  end
+
+  test 'should accept list_appointments with the corrected ISO date field names' do
+    raw_token = enable_agent_access(@practice)
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+
+    post_mcp(
+      method: 'tools/call', id: 12,
+      params: {
+        name: 'list_appointments',
+        arguments: { datebook_id: @datebook.id, start: '2026-09-01T00:00:00-05:00', end: '2026-09-02T00:00:00-05:00' }
+      }
+    )
+    assert_response :success
+
+    result = JSON.parse(@response.body).fetch('result')
+    assert_equal false, result['isError']
+    assert_kind_of Array, result.dig('structuredContent', 'appointments')
+  end
 
   test 'should reject list_appointments with date range over 90 days' do
     raw_token = enable_agent_access(@practice)
@@ -444,6 +524,150 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     end
 
     assert_response :success
+  end
+
+  test 'should list an appointment that exactly matches the requested range' do
+    raw_token = enable_agent_access(@practice)
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+    start_time = 4.days.from_now.in_time_zone(@practice.timezone).change(hour: 10, min: 0)
+    appointment = Appointment.create!(datebook: @datebook, doctor: @doctor, patient: @patient,
+                                      starts_at: start_time, ends_at: start_time + 1.hour)
+
+    post_mcp(
+      method: 'tools/call', id: 71,
+      params: {
+        name: 'list_appointments',
+        arguments: {
+          datebook_id: @datebook.id,
+          doctor_id: @doctor.id,
+          start: start_time.iso8601,
+          end: (start_time + 1.hour).iso8601
+        }
+      }
+    )
+
+    appointments = JSON.parse(@response.body).dig('result', 'structuredContent', 'appointments')
+    assert_includes appointments.map { |entry| entry['id'] }, appointment.id
+  end
+
+  test 'should reject creating an appointment that overlaps the doctor schedule' do
+    raw_token = enable_agent_access(@practice)
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+    start_time = 5.days.from_now.in_time_zone(@practice.timezone).change(hour: 10, min: 0)
+    Appointment.create!(datebook: @datebook, doctor: @doctor, patient: @patient,
+                        starts_at: start_time, ends_at: start_time + 1.hour)
+
+    assert_no_difference 'Appointment.count' do
+      post_mcp(
+        method: 'tools/call', id: 72,
+        params: {
+          name: 'create_appointment',
+          arguments: {
+            datebook_id: @datebook.id,
+            doctor_id: @doctor.id,
+            patient_id: @patient.id,
+            starts_at: start_time.iso8601,
+            ends_at: (start_time + 1.hour).iso8601
+          }
+        }
+      )
+    end
+
+    body = JSON.parse(@response.body)
+    assert_equal true, body.dig('result', 'isError')
+    assert_match(/already has an appointment/i, body.dig('result', 'content', 0, 'text'))
+  end
+
+  test 'should allow another doctor to use the same time slot' do
+    raw_token = enable_agent_access(@practice)
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+    start_time = 6.days.from_now.in_time_zone(@practice.timezone).change(hour: 10, min: 0)
+    Appointment.create!(datebook: @datebook, doctor: @doctor, patient: @patient,
+                        starts_at: start_time, ends_at: start_time + 1.hour)
+
+    assert_difference 'Appointment.count' do
+      post_mcp(
+        method: 'tools/call', id: 73,
+        params: {
+          name: 'create_appointment',
+          arguments: {
+            datebook_id: @datebook.id,
+            doctor_id: doctors(:perishable).id,
+            patient_id: @patient.id,
+            starts_at: start_time.iso8601,
+            ends_at: (start_time + 1.hour).iso8601
+          }
+        }
+      )
+    end
+
+    assert_equal false, JSON.parse(@response.body).dig('result', 'isError')
+  end
+
+  test 'cancelled appointments do not prevent booking the same doctor and time' do
+    raw_token = enable_agent_access(@practice)
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+    starts_at = ActiveSupport::TimeZone[@practice.timezone].parse('2026-09-10 10:00')
+    Appointment.create!(datebook: @datebook, doctor: @doctor, patient: @patient,
+                        starts_at: starts_at, ends_at: starts_at + 1.hour, status: 'cancelled')
+
+    assert_difference 'Appointment.count', 1 do
+      post_mcp(method: 'tools/call', id: 75, params: {
+        name: 'create_appointment', arguments: {
+          datebook_id: @datebook.id, doctor_id: @doctor.id, patient_id: @patient.id,
+          starts_at: starts_at.iso8601, ends_at: (starts_at + 1.hour).iso8601
+        }
+      })
+    end
+    assert_response :success
+    assert_equal false, JSON.parse(response.body).dig('result', 'isError')
+  end
+
+  test 'rescheduling ignores the original interval and cancelled appointments' do
+    raw_token = enable_agent_access(@practice)
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+    starts_at = ActiveSupport::TimeZone[@practice.timezone].parse('2026-09-10 10:00')
+    appointment = Appointment.create!(datebook: @datebook, doctor: @doctor, patient: @patient,
+                                      starts_at: starts_at, ends_at: starts_at + 1.hour)
+    Appointment.create!(datebook: @datebook, doctor: @doctor, patient: @patient,
+                        starts_at: starts_at + 30.minutes, ends_at: starts_at + 90.minutes, status: 'cancelled')
+
+    assert_no_difference 'Appointment.count' do
+      post_mcp(method: 'tools/call', id: 76, params: {
+        name: 'update_appointment', arguments: {
+          appointment_id: appointment.id,
+          starts_at: (starts_at + 30.minutes).iso8601, ends_at: (starts_at + 90.minutes).iso8601
+        }
+      })
+    end
+    assert_response :success
+    assert_equal false, JSON.parse(response.body).dig('result', 'isError')
+    assert_equal starts_at + 30.minutes, appointment.reload.starts_at
+    assert_equal starts_at + 90.minutes, appointment.ends_at
+  end
+
+  test 'update returns model validation errors without saving the change' do
+    raw_token = enable_agent_access(@practice)
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+    starts_at = ActiveSupport::TimeZone[@practice.timezone].parse('2026-09-10 10:00')
+    appointment = Appointment.create!(datebook: @datebook, doctor: @doctor, patient: @patient,
+                                      starts_at: starts_at, ends_at: starts_at + 1.hour)
+    # Simulate a legacy record that no longer satisfies the model's validations.
+    appointment.update_column(:patient_id, Patient.where.not(practice_id: @practice.id).first!.id)
+
+    post_mcp(method: 'tools/call', id: 77, params: {
+      name: 'update_appointment', arguments: {
+        appointment_id: appointment.id,
+        starts_at: (starts_at + 1.hour).iso8601, ends_at: (starts_at + 2.hours).iso8601
+      }
+    })
+
+    assert_response :success
+    result = JSON.parse(response.body).fetch('result')
+    assert_equal true, result['isError']
+    assert_includes result.dig('content', 0, 'text'), I18n.t('errors.messages.different_practice')
+    assert_equal starts_at, appointment.reload.starts_at
+    assert_equal starts_at + 1.hour, appointment.ends_at
   end
 
   test 'should not link create_appointment to a patient from another practice' do
@@ -569,6 +793,33 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_equal true, body.dig('result', 'isError')
   end
 
+  test 'should reject rescheduling an appointment into another appointment for the same doctor' do
+    raw_token = enable_agent_access(@practice)
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+    start_time = 7.days.from_now.in_time_zone(@practice.timezone).change(hour: 10, min: 0)
+    appointment = Appointment.create!(datebook: @datebook, doctor: @doctor, patient: @patient,
+                                      starts_at: start_time - 2.hours, ends_at: start_time - 1.hour)
+    Appointment.create!(datebook: @datebook, doctor: @doctor, patient: @patient,
+                        starts_at: start_time, ends_at: start_time + 1.hour)
+
+    post_mcp(
+      method: 'tools/call', id: 74,
+      params: {
+        name: 'update_appointment',
+        arguments: {
+          appointment_id: appointment.id,
+          starts_at: start_time.iso8601,
+          ends_at: (start_time + 1.hour).iso8601
+        }
+      }
+    )
+
+    body = JSON.parse(@response.body)
+    assert_equal true, body.dig('result', 'isError')
+    assert_match(/already has an appointment/i, body.dig('result', 'content', 0, 'text'))
+    assert_equal (start_time - 2.hours).to_i, appointment.reload.starts_at.to_i
+  end
+
   test 'should reject appointments outside datebook working hours' do
     raw_token = enable_agent_access(@practice)
     @request.headers['Authorization'] = "Bearer #{raw_token}"
@@ -596,6 +847,32 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
   end
 
   # --- tools/call: search_patients ---
+
+  test 'should reject booking and rescheduling past closing or across days' do
+    raw_token = enable_agent_access(@practice)
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+    @datebook.update!(starts_at: 8, ends_at: 20)
+    start_time = 3.days.from_now.in_time_zone(@practice.timezone).change(hour: 10)
+    appointment = Appointment.create!(datebook: @datebook, doctor: @doctor, patient: @patient,
+                                      starts_at: start_time, ends_at: start_time + 1.hour)
+    ranges = [
+      [start_time.change(hour: 19), start_time.change(hour: 20, min: 30)],
+      [start_time.change(hour: 19), (start_time + 1.day).change(hour: 9)]
+    ]
+
+    %w[create_appointment update_appointment].each do |tool|
+      ranges.each do |starts_at, ends_at|
+        arguments = { datebook_id: @datebook.id, doctor_id: @doctor.id, patient_id: @patient.id,
+                      appointment_id: appointment.id, starts_at: starts_at.iso8601, ends_at: ends_at.iso8601 }
+        assert_no_difference 'Appointment.count' do
+          post_mcp(method: 'tools/call', id: 61, params: { name: tool, arguments: arguments })
+        end
+        assert_response :success
+        assert_equal true, JSON.parse(response.body).dig('result', 'isError')
+        assert_equal start_time.to_i, appointment.reload.starts_at.to_i
+      end
+    end
+  end
 
   test 'should call search_patients' do
     raw_token = enable_agent_access(@practice)
@@ -868,7 +1145,9 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
 
     body = JSON.parse(@response.body)
     instructions = body.dig('result', 'instructions')
-    assert_includes instructions, 'double-booking'
+    assert_includes instructions, 'explicit confirmation'
+    assert_includes instructions, 'new patient'
+    assert_includes instructions, 'selected datebook'
     assert_not_includes instructions, '60 minutes'
   end
 
@@ -1338,6 +1617,33 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     body = JSON.parse(@response.body)
     assert_equal false, body.dig('result', 'isError')
     assert_nil Appointment.last.notes
+  end
+
+  test 'input: missing or blank calendar returns actionable scheduling errors without writing records' do
+    raw_token = enable_agent_access(@practice)
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+    times = { start: '2026-09-01T09:00:00-05:00', end: '2026-09-01T10:00:00-05:00' }
+    calls = {
+      'list_appointments' => times,
+      'create_appointment' => {
+        doctor_id: @doctor.id, patient_name: 'Calendar Required Test',
+        starts_at: times[:start], ends_at: times[:end]
+      }
+    }
+
+    calls.each do |name, arguments|
+      [{}, { datebook_id: nil, datebook_name: '' }].each do |selectors|
+        assert_no_difference ['Patient.count', 'Appointment.count'] do
+          post_mcp(method: 'tools/call', id: 304, params: { name: name, arguments: arguments.merge(selectors) })
+        end
+        assert_response :success
+
+        result = JSON.parse(@response.body).fetch('result')
+        assert_equal true, result['isError']
+        assert_equal I18n.t('agents.mcp.errors.datebook_required'), result.dig('content', 0, 'text')
+        assert_nil result['structuredContent'], 'A failed query must not look like an empty schedule'
+      end
+    end
   end
 
   test 'input: should reject non-numeric datebook_id' do

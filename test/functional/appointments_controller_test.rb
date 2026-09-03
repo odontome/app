@@ -26,6 +26,53 @@ class AppointmentsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'calendar date range and click use practice time including daylight saving' do
+    practice = users(:founder).practice
+    practice.update!(timezone: 'Eastern Time (US & Canada)')
+    appointment = appointments(:first_visit)
+
+    { '2026-09-03' => 12, '2026-12-03' => 13 }.each do |date, utc_hour|
+      starts_at = Time.iso8601("#{date}T#{utc_hour}:00:00Z")
+      appointment.update!(starts_at: starts_at, ends_at: starts_at + 1.hour)
+      get :index, params: { datebook_id: appointment.datebook_id, start: "#{date}T00:00:00", end: "#{date}T09:00:00" }, format: :json
+      assert_response :success
+      result = JSON.parse(response.body).find { |entry| entry['id'] == appointment.id }
+      assert_equal "#{date}T08:00:00", result.fetch('start')[0, 19]
+
+      get :new, params: { datebook_id: appointment.datebook_id, starts_at: "#{date}T08:00:00" }, format: :html
+      assert_equal starts_at, assigns(:appointment).starts_at
+    end
+  end
+
+  test 'calendar create move and resize preserve practice wall time' do
+    users(:founder).practice.update!(timezone: 'Eastern Time (US & Canada)')
+    source = appointments(:first_visit)
+    post :create, params: { datebook_id: source.datebook_id, appointment: {
+      doctor_id: source.doctor_id, patient_id: source.patient_id, starts_at: '2026-09-03T08:00:00'
+    } }, format: :js
+    assert_response :success
+    appointment = Appointment.last
+    assert_equal Time.utc(2026, 9, 3, 12), appointment.starts_at
+    assert_equal Time.utc(2026, 9, 3, 13), appointment.ends_at
+
+    patch :update, params: { datebook_id: source.datebook_id, id: appointment.id, appointment: {
+      starts_at: '2026-09-04T08:00:00', ends_at: '2026-09-04T09:30:00'
+    } }, format: :js
+    assert_response :success
+    assert_equal Time.utc(2026, 9, 4, 12), appointment.reload.starts_at
+    assert_equal Time.utc(2026, 9, 4, 13, 30), appointment.ends_at
+  end
+
+  test 'calendar still accepts Unix timestamps for existing clients' do
+    source = appointments(:first_visit)
+    starts_at = Time.utc(2026, 9, 3, 12)
+    post :create, params: { datebook_id: source.datebook_id, appointment: {
+      doctor_id: source.doctor_id, patient_id: source.patient_id, starts_at: starts_at.to_i.to_s
+    } }, format: :js
+    assert_response :success
+    assert_equal starts_at, Appointment.last.starts_at
+  end
+
   test 'should create an appointment with an existing patient' do
     appointment = {
       doctor_id: 1,

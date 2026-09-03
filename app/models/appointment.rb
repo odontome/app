@@ -21,6 +21,10 @@ class Appointment < ApplicationRecord
       .find_between starts_at, ends_at
   }
 
+  scope :overlapping, lambda { |starts_at, ends_at|
+    where('appointments.starts_at < ? AND appointments.ends_at > ?', ends_at, starts_at)
+  }
+
   scope :today_for_practice, ->(practice_id, timezone) {
     tz = ActiveSupport::TimeZone[timezone] || Time.zone
     today_start = tz.now.beginning_of_day
@@ -79,8 +83,8 @@ class Appointment < ApplicationRecord
 
     {
       id: id,
-      start: starts_at.to_formatted_s(:rfc822),
-      end: ends_at.to_formatted_s(:rfc822),
+      start: starts_at.in_time_zone(datebook.practice.timezone).iso8601,
+      end: ends_at.in_time_zone(datebook.practice.timezone).iso8601,
       title: notes,
       doctor_id: doctor_id,
       datebook_id: datebook_id,

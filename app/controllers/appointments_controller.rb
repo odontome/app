@@ -9,7 +9,9 @@ class AppointmentsController < ApplicationController
   def index
     datebook = Datebook.with_practice(current_user.practice_id).find(params[:datebook_id])
 
-    unless params[:start].present? && params[:end].present?
+    starts_at = calendar_time(params[:start])
+    ends_at = calendar_time(params[:end])
+    unless starts_at && ends_at && starts_at < ends_at
       respond_to do |format|
         format.html { @appointments = Appointment.none }
         format.json { render json: [] }
@@ -17,17 +19,10 @@ class AppointmentsController < ApplicationController
       return
     end
 
-    start_ts = params[:start].to_i
-    end_ts   = params[:end].to_i
-    max_window = 90.days.to_i
-    end_ts = start_ts + max_window if (end_ts - start_ts) > max_window
-
-    @appointments = if params[:doctor_id]
-                      datebook.appointments.find_from_doctor_and_between(params[:doctor_id], start_ts,
-                                                                         end_ts)
-                    else
-                      datebook.appointments.find_between(start_ts, end_ts)
-                    end
+    ends_at = [ends_at, starts_at + 90.days].min
+    @appointments = datebook.appointments.overlapping(starts_at, ends_at)
+                            .includes(:doctor, :patient, datebook: :practice).order(:starts_at)
+    @appointments = @appointments.where(doctor_id: params[:doctor_id]) if params[:doctor_id].present?
 
     respond_to do |format|
       format.html
@@ -38,7 +33,7 @@ class AppointmentsController < ApplicationController
   def new
     @datebook = Datebook.with_practice(current_user.practice_id).find params[:datebook_id]
     @appointment = Appointment.new
-    @appointment.starts_at = params[:starts_at].to_i
+    @appointment.starts_at = calendar_time(params[:starts_at])
     @doctors = Doctor.with_practice(current_user.practice_id).valid
   end
 
@@ -46,7 +41,7 @@ class AppointmentsController < ApplicationController
     @appointment = Appointment.new
     @appointment.doctor_id = params[:appointment][:doctor_id]
     @appointment.notes = params[:appointment][:notes]
-    @appointment.starts_at = Time.at(params[:appointment][:starts_at].to_i)
+    @appointment.starts_at = calendar_time(params[:appointment][:starts_at])
     @appointment.datebook_id = params[:datebook_id]
 
     patient_id_or_name = params[:appointment][:patient_id].blank? ? params[:as_values_patient_id] : params[:appointment][:patient_id]
@@ -126,7 +121,21 @@ class AppointmentsController < ApplicationController
   private
 
   def appointment_params
-    params.require(:appointment).permit(:datebook_id, :doctor_id, :patient_id, :starts_at, :ends_at, :notes, :status)
+    attributes = params.require(:appointment).permit(:datebook_id, :doctor_id, :patient_id, :starts_at, :ends_at, :notes, :status)
+    %i[starts_at ends_at].each do |key|
+      attributes[key] = calendar_time(attributes[key]) if attributes.key?(key)
+    end
+    attributes
+  end
+
+  # Calendar clicks and moves send practice wall time, not a browser-local epoch.
+  # Keep accepting Unix timestamps and offset-bearing strings from existing clients.
+  def calendar_time(value)
+    return if value.blank?
+
+    value.to_s.match?(/\A\d+\z/) ? Time.at(value.to_i) : Time.zone.parse(value.to_s)
+  rescue ArgumentError, TypeError
+    nil
   end
 
   def appointment_not_found

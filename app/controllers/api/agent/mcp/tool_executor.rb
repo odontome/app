@@ -26,7 +26,10 @@ module Api
         private
 
         def list_datebooks
-          datebooks = Datebook.with_practice(@practice.id).map { |d| { id: d.id, name: d.name } }
+          datebooks = Datebook.with_practice(@practice.id).map do |datebook|
+            { id: datebook.id, name: datebook.name, timezone: practice_tz.tzinfo.name,
+              working_hours: datebook.working_hours }
+          end
           success_result(:datebooks, datebooks)
         end
 
@@ -42,9 +45,21 @@ module Api
         MAX_PATIENT_RESULTS = 25
 
         def list_appointments(args)
+          if args["datebook_id"].blank? && args["datebook_name"].blank?
+            return error_result(I18n.t("agents.mcp.errors.datebook_required"))
+          end
+
           datebook = resolve_datebook(args)
-          starts_at = normalize_time(args["start"])
-          ends_at = normalize_time(args["end"])
+          begin
+            starts_at = normalize_time(args["start"])
+            ends_at = normalize_time(args["end"])
+          rescue ArgumentError, TypeError
+            return error_result(I18n.t("agents.mcp.errors.invalid_schedule_dates"))
+          end
+
+          if starts_at.nil? || ends_at.nil?
+            return error_result(I18n.t("agents.mcp.errors.invalid_schedule_dates"))
+          end
 
           return error_result(I18n.t("agents.mcp.errors.invalid_date_range")) if starts_at >= ends_at
 
@@ -52,37 +67,41 @@ module Api
             return error_result(I18n.t("agents.mcp.errors.date_range_too_wide", max: MAX_DATE_RANGE_DAYS))
           end
 
-          appointments = if args["doctor_id"].present?
-                           datebook.appointments.find_from_doctor_and_between(args["doctor_id"], starts_at, ends_at)
-                         else
-                           datebook.appointments.find_between(starts_at, ends_at)
-                         end
+          appointments = datebook.appointments.overlapping(starts_at, ends_at)
+          appointments = appointments.where(doctor_id: args["doctor_id"]) if args["doctor_id"].present?
+          appointments = appointments.includes(:doctor, :patient).order(:starts_at)
 
           success_result(:appointments, appointments.limit(MAX_RESULTS).map { |a| a.as_json(agent: true) })
         end
 
         def create_appointment(args)
+          if args["datebook_id"].blank? && args["datebook_name"].blank?
+            return error_result(I18n.t("agents.mcp.errors.datebook_required"))
+          end
+
           datebook = resolve_datebook(args)
 
-          error = validate_doctor(args["doctor_id"])
-          return error if error
+          datebook.with_lock do
+            error = validate_doctor(args["doctor_id"])
+            return error if error
 
-          appointment = ::Appointment.new(
-            datebook_id: datebook.id,
-            doctor_id: args["doctor_id"]
-          )
+            appointment = ::Appointment.new(
+              datebook_id: datebook.id,
+              doctor_id: args["doctor_id"]
+            )
 
-          appointment.starts_at = normalize_time(args["starts_at"]) if args["starts_at"].present?
-          appointment.ends_at = normalize_time(args["ends_at"]) if args["ends_at"].present?
-          appointment.patient_id = find_patient_id(args["patient_id"], args["patient_name"])
+            appointment.starts_at = normalize_time(args["starts_at"]) if args["starts_at"].present?
+            appointment.ends_at = normalize_time(args["ends_at"]) if args["ends_at"].present?
+            appointment.patient_id = find_patient_id(args["patient_id"], args["patient_name"])
 
-          error = validate_working_hours(datebook, appointment)
-          return error if error
+            error = validate_working_hours(datebook, appointment) || validate_availability(datebook, appointment)
+            return error if error
 
-          if appointment.save
-            success_result(:appointment, appointment.as_json(agent: true))
-          else
-            error_result(appointment.errors.full_messages.join(", "))
+            if appointment.save
+              success_result(:appointment, appointment.as_json(agent: true))
+            else
+              error_result(appointment.errors.full_messages.join(", "))
+            end
           end
         end
 
@@ -91,32 +110,34 @@ module Api
           raise ActiveRecord::RecordNotFound unless appointment
           datebook = appointment.datebook
 
-          if args["doctor_id"].present?
-            error = validate_doctor(args["doctor_id"])
-            return error if error
-          end
-
-          attrs = {}
-          attrs[:doctor_id] = args["doctor_id"] if args["doctor_id"].present?
-
-          if args["status"].present?
-            unless ALLOWED_STATUSES.include?(args["status"])
-              return error_result("Invalid status. Allowed values: #{ALLOWED_STATUSES.join(', ')}")
+          datebook.with_lock do
+            if args["doctor_id"].present?
+              error = validate_doctor(args["doctor_id"])
+              return error if error
             end
-            attrs[:status] = args["status"]
-          end
-          appointment.assign_attributes(attrs) if attrs.any?
 
-          appointment.starts_at = normalize_time(args["starts_at"]) if args["starts_at"].present?
-          appointment.ends_at = normalize_time(args["ends_at"]) if args["ends_at"].present?
+            attrs = {}
+            attrs[:doctor_id] = args["doctor_id"] if args["doctor_id"].present?
 
-          error = validate_working_hours(datebook, appointment)
-          return error if error
+            if args["status"].present?
+              unless ALLOWED_STATUSES.include?(args["status"])
+                return error_result("Invalid status. Allowed values: #{ALLOWED_STATUSES.join(', ')}")
+              end
+              attrs[:status] = args["status"]
+            end
+            appointment.assign_attributes(attrs) if attrs.any?
 
-          if appointment.save
-            success_result(:appointment, appointment.as_json(agent: true))
-          else
-            error_result(appointment.errors.full_messages.join(", "))
+            appointment.starts_at = normalize_time(args["starts_at"]) if args["starts_at"].present?
+            appointment.ends_at = normalize_time(args["ends_at"]) if args["ends_at"].present?
+
+            error = validate_working_hours(datebook, appointment) || validate_availability(datebook, appointment)
+            return error if error
+
+            if appointment.save
+              success_result(:appointment, appointment.as_json(agent: true))
+            else
+              error_result(appointment.errors.full_messages.join(", "))
+            end
           end
         end
 
@@ -143,15 +164,24 @@ module Api
         end
 
         def validate_working_hours(datebook, appointment)
-          tz = datebook.practice.timezone
-          start_hour = appointment.starts_at.in_time_zone(tz).hour
-          end_hour = appointment.ends_at.in_time_zone(tz).hour
+          return if datebook.within_working_hours?(appointment.starts_at, appointment.ends_at)
 
-          return if start_hour >= datebook.starts_at && end_hour <= datebook.ends_at
+          error_result(I18n.t('agents.mcp.errors.outside_working_hours',
+                             start: datebook.working_hours[:start], end: datebook.working_hours[:end],
+                             timezone: practice_tz.tzinfo.name))
+        end
 
-          error_result(
-            "Appointment must be within working hours (#{datebook.starts_at}:00 - #{datebook.ends_at}:00)"
-          )
+        def validate_availability(datebook, appointment)
+          return if appointment.is_cancelled
+
+          conflict = datebook.appointments.where(doctor_id: appointment.doctor_id)
+                              .where.not(status: ::Appointment.status[:cancelled])
+                              .where.not(id: appointment.id)
+                              .overlapping(appointment.starts_at, appointment.ends_at)
+                              .exists?
+          return unless conflict
+
+          error_result(I18n.t("agents.mcp.errors.appointment_conflict"))
         end
 
         # --- helpers ---

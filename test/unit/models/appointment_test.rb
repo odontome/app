@@ -171,4 +171,17 @@ class AppointmentTest < ActiveSupport::TestCase
     assert_equal appointment.patient.lastname, json_data[:lastname]
     assert_equal appointment.patient.uid, json_data[:patient_uid]
   end
+
+  test 'calendar serializes practice wall time in ISO format for timezone-independent rendering' do
+    appointment = appointments(:first_visit)
+    appointment.datebook.practice.timezone = 'Eastern Time (US & Canada)'
+    appointment.starts_at = Time.utc(2026, 9, 3, 12)
+    appointment.ends_at = Time.utc(2026, 9, 3, 13)
+
+    Time.use_zone('America/Cancun') do
+      assert_equal '2026-09-03T08:00:00-04:00', appointment.as_json[:start]
+      assert_equal '2026-09-03T09:00:00-04:00', appointment.as_json[:end]
+      assert_equal appointment.as_json[:start], appointment.as_json(agent: true)[:start]
+    end
+  end
 end
