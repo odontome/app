@@ -1736,6 +1736,44 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_equal false, body.dig('result', 'isError')
   end
 
+  test 'AI writes identify each token owner and restore audit context after the request' do
+    original_enabled = PaperTrail.enabled?
+    PaperTrail.enabled = true
+    previous_actor = PaperTrail.request.whodunnit
+    previous_info = PaperTrail.request.controller_info
+    raw_token = enable_agent_access(@practice)
+    token = AgentOauthAccessToken.find_by!(token_digest: AgentOauthAccessToken.digest(raw_token))
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+    appointment = appointments(:first_visit)
+
+    appointment.update_columns(status: 'unconfirmed')
+    [users(:founder), users(:perishable)].each_with_index do |user, index|
+      token.update!(user: user)
+      post_mcp(method: 'tools/call', id: 900 + index, params: { name: 'update_appointment',
+        arguments: { appointment_id: appointment.id, status: index.zero? ? 'confirmed' : 'cancelled' } })
+      assert_response :success
+      assert_equal false, JSON.parse(response.body).dig('result', 'isError')
+      version = appointment.versions.order(:id).last
+      assert_equal user.id.to_s, version.whodunnit
+      assert_equal 'ai', version.activity_source
+      assert_equal @practice.id, version.practice_id
+      assert_equal [previous_actor, previous_info.to_h], [PaperTrail.request.whodunnit, PaperTrail.request.controller_info.to_h]
+    end
+    PaperTrail.request(whodunnit: users(:founder).id) { appointment.reload.update!(status: 'confirmed') }
+    assert_nil appointment.versions.order(:id).last.activity_source
+  ensure
+    PaperTrail.enabled = original_enabled
+  end
+
+  test 'tokens cannot access a practice after their user moves to another practice' do
+    raw_token = enable_agent_access(@practice)
+    token = AgentOauthAccessToken.find_by!(token_digest: AgentOauthAccessToken.digest(raw_token))
+    token.user.update_column(:practice_id, users(:user_in_yet_another_practice).practice_id)
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+    post_mcp(method: 'initialize', id: 910)
+    assert_response :unauthorized
+  end
+
   private
 
   def enable_agent_access(practice)

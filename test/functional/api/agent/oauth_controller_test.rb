@@ -530,6 +530,16 @@ class Api::Agent::OauthControllerTest < ActionController::TestCase
     end
   end
 
+  test 'regular users can authorize and exchange their own connection' do
+    @user = users(:perishable)
+    code = approved_code
+    post :token, params: token_params(code: code)
+    assert_response :success
+    token = AgentOauthAccessToken.find_by!(token_digest: AgentOauthAccessToken.digest(JSON.parse(response.body).fetch('access_token')))
+    assert_equal @user, token.user
+    assert_equal @practice, token.practice
+  end
+
   private
 
   def enable_agent_access

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_31_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_03_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -271,6 +271,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_120000) do
   end
 
   create_table "versions", force: :cascade do |t|
+    t.string "activity_source"
     t.datetime "created_at"
     t.string "event", null: false
     t.bigint "item_id", null: false

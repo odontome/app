@@ -9,6 +9,7 @@
 //= require apexcharts.min
 //= require masonry.min
 //= require copy
+//= require ai
 
 // This function prevents the session from ending
 window.iCallServerId = setInterval(function () {

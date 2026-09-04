@@ -118,7 +118,7 @@ module ApplicationHelper
   end
 
   def is_active_tab?(tabs)
-    allowed_values = %i[datebooks patients doctors practices users treatments reviews audits payments]
+    allowed_values = %i[datebooks patients doctors practices users treatments reviews audits payments ai]
 
     tabs = Array(tabs).map(&:to_s)
 

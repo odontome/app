@@ -6,7 +6,7 @@ module Api
       protect_from_forgery with: :null_session
 
       before_action :authenticate_agent!
-      before_action :set_paper_trail_whodunnit
+      around_action :attribute_ai_activity
 
       private
 
@@ -19,8 +19,9 @@ module Api
           resource: resource_url
         )
         @practice = access_token&.practice
+        @agent_user = access_token&.user
 
-        render_unauthorized unless @practice&.agent_access_eligible?
+        render_unauthorized unless @practice&.agent_access_eligible? && @agent_user&.practice_id == @practice.id
       end
 
       def extract_bearer_token
@@ -37,9 +38,10 @@ module Api
         render json: { error: I18n.t('agents.errors.unauthorized') }, status: :unauthorized
       end
 
-      def set_paper_trail_whodunnit
-        label = @practice&.agent_label.presence || I18n.t('agents.default_label')
-        PaperTrail.request.whodunnit = "agent:#{label}"
+      def attribute_ai_activity(&action)
+        return yield unless @agent_user
+
+        PaperTrail.request(whodunnit: @agent_user.id, controller_info: { activity_source: 'ai' }, &action)
       end
     end
   end

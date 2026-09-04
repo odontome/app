@@ -1,0 +1,77 @@
+<div class="ai-page">
+  <div class="page-header mb-4">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="page-title"><%= t('ai.title') %></h2>
+        <p class="text-secondary mt-1 mb-0"><%= t('ai.description') %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-body">
+    <div class="row row-cards">
+      <div class="col-md-8">
+        <% if @practice.agent_access_eligible? %>
+          <section class="card" id="ai-get-started">
+            <div class="card-body" id="ai-claude">
+              <div class="row g-3">
+                <div class="col-lg-3">
+                  <h3 class="card-title mb-0">Claude</h3>
+                </div>
+                <div class="col-lg-9">
+                  <p><%= t('ai.claude_steps') %></p>
+                  <div class="mb-3" data-ai-copy-container>
+                    <label class="form-label" for="agent-url-input"><%= t(:agent_connect_url_label) %></label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" value="<%= request.base_url %>/api/agent/mcp" readonly id="agent-url-input">
+                      <button type="button" class="btn" data-ai-copy data-copied="<%= t('ai.copied') %>" data-copy-failed="<%= t('ai.copy_failed') %>"><%= t('ai.copy_url') %></button>
+                    </div>
+                    <div class="form-hint" data-ai-copy-status role="status" aria-live="polite"></div>
+                  </div>
+                  <p class="text-secondary mb-2"><%= t('ai.sign_in_hint') %></p>
+                  <%= link_to t('ai.app_guide', app: 'Claude'), 'https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp', target: '_blank', rel: 'noopener' %>
+                </div>
+              </div>
+            </div>
+            <div class="card-body border-top" id="ai-chatgpt">
+              <div class="row align-items-center g-3">
+                <div class="col-lg-3">
+                  <h3 class="card-title mb-0">ChatGPT</h3>
+                </div>
+                <div class="col-lg">
+                  <p class="mb-0"><%= t('ai.chatgpt_steps') %></p>
+                </div>
+                <div class="col-lg-auto">
+                  <%= link_to t('ai.app_guide', app: 'ChatGPT'), 'https://learn.chatgpt.com/docs/plugins', target: '_blank', rel: 'noopener' %>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer" id="ai-sharing">
+              <p class="text-secondary small mb-0"><%= t('ai.privacy_hint') %></p>
+            </div>
+          </section>
+        <% else %>
+          <div class="card" data-ai-unavailable>
+            <div class="card-body">
+              <h3 class="card-title"><%= t(@practice.agent_access_enabled? ? 'ai.unavailable_title' : 'ai.disabled_title') %></h3>
+              <p class="text-secondary"><%= t(user_is_admin? ? (@practice.agent_access_enabled? ? 'ai.unavailable_admin' : 'ai.disabled_admin') : 'ai.disabled_user') %></p>
+              <% if user_is_admin? %>
+                <% if @practice.agent_access_enabled? && !@practice.subscription&.grants_agent_access? %>
+                  <%= link_to t(:practice_settings), practice_settings_path, class: 'btn btn-primary' %>
+                <% else %>
+                  <%= link_to t('ai.review_settings'), '#ai-practice-settings', class: 'btn btn-primary' %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <% if user_is_admin? %>
+        <div class="col-md-4">
+          <%= render 'practice_access' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -29,10 +29,13 @@ This is provider-neutral: ChatGPT, Claude Code, hosted clients, and future clien
 
 ### Setup
 
-1. Go to **My Practice > AI Assistant** in odonto.me
-2. Enable the AI assistant toggle
-3. Sign in to Odonto.me when your AI app asks you to connect.
-4. Review and approve access for your practice.
+1. Open **AI assistant** in the main navigation (`/ai`). Admins and regular users can both open this section. The previous `/practice/agent-settings` URL remains available.
+2. A practice administrator enables AI for the team and accepts the AI data-processing terms. Only admins can save this practice-wide setting, including through the legacy settings URL.
+3. Follow the guide for your AI app. ChatGPT uses plugin installation; Claude uses a remote connector with the existing MCP URL. Availability and workspace-owner setup in the AI app are separate from the user's role in Odonto.me.
+4. Each team member signs in to Odonto.me with their own account when their AI app asks them to connect, checks their name and practice, and approves access.
+5. Start a conversation and ask Odonto.me for today's schedule across all calendars.
+
+The setup screen shows actionable guidance when AI is disabled or eligibility requirements are unmet. It does not equate practice-wide enablement with a personally connected AI app. Current provider instructions are linked from the screen: [ChatGPT plugins](https://learn.chatgpt.com/docs/plugins) and [Claude connectors](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp).
 
 The connection is available only while the AI assistant is enabled and the practice has an active subscription or an unexpired trial. Past-due, cancelled, and expired subscriptions cannot authorize or use the MCP server. The approval screen identifies the signed-in user and practice, and the approval is bound to that exact Odonto.me session.
 
@@ -195,7 +198,9 @@ All tools include [MCP safety annotations](https://modelcontextprotocol.io/speci
 - **Scheduling workflow:** The server instructs clients to resolve ambiguous scheduling details, search before creating a patient record, check availability before a booking or move, and obtain explicit confirmation before every schedule change. Confirmation instructions guide clients; the server enforces working hours and appointment-overlap checks.
 - **Rate limiting:** 120 requests/minute per authenticated practice or unauthenticated IP.
 - **Request limits:** Bodies capped at 1 MB, date range queries limited to 90 days.
-- **Audit trail:** All changes made through the AI assistant are logged and visible in the practice's audit trail.
+- **Audit trail:** New changes made through the AI assistant use the OAuth access token owner's user ID as PaperTrail `whodunnit`, with `activity_source: "ai"`. The audit list and details show the user's name plus a localized “via AI” marker. Filtering by a user includes both their web and AI activity. Historical `agent:<label>` entries and filters remain readable; they are not reassigned to a guessed user. The legacy `agent_label` database field is retained, but no longer appears in settings or labels new changes.
+- **User identity:** Both admins and regular users can authorize their own connections. Each MCP request verifies that the token's owner still belongs to the token's practice. No user identity or new metadata is added to MCP tool responses.
+- **Request isolation:** AI audit metadata is scoped to the request and restored afterward, including error paths; ordinary web activity is not tagged as AI.
 - **Token management:** OAuth access and refresh tokens are SHA-256 hashed at rest. Access tokens expire after one hour; refresh tokens rotate and expire after 90 days. Credentials are revoked when AI access is disabled or the practice closes.
 
 ## Testing
@@ -207,3 +212,11 @@ AGENT_COVERAGE=1 bin/rails test test/functional/api/agent test/models/agent_oaut
 ```
 
 The gate covers the agent controllers, MCP tool implementation, and OAuth credential models. The full application suite remains `bin/rails test`.
+
+### AI section compatibility and deployment
+
+Apply `bin/rails db:migrate`, then restart all web and worker processes before serving requests with the updated app. Already-running processes can cache the old PaperTrail schema. The migration adds one nullable `versions.activity_source` column; it preserves existing audit rows and OAuth credentials.
+
+The MCP URL, discovery and OAuth endpoints, tool names and argument schemas, response shapes, protocol negotiation, token lifetimes, PKCE and refresh rotation are unchanged. Existing valid tokens still work and now identify their owner in new audit entries. Turning AI off continues to revoke all practice credentials; turning it back on does not revive old connections.
+
+See [AI assistant validation](ai-assistant-validation.md) for the automated checks and manual acceptance checklist.
