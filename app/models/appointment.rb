@@ -172,16 +172,11 @@ class Appointment < ApplicationRecord
 
   # Reset the one-time six-month reminder flag once a new confirmed appointment exists
   def reset_six_month_reminder_flag_if_confirmed
+    return unless previously_new_record? || saved_change_to_status?
     return unless status == self.class.status[:confirmed]
-    # Be defensive in case associations change in the future
     return if patient.nil?
 
-    # Mark as not-notified so the next six-month cycle can email again
     # Use update_column to avoid triggering validations/callbacks on Patient
-    begin
-      patient.update_column(:notified_of_six_month_reminder, false)
-    rescue StandardError
-      # no-op: failing to reset the flag should not affect the appointment lifecycle
-    end
+    patient.update_column(:notified_of_six_month_reminder, false)
   end
 end
