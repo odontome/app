@@ -36,7 +36,7 @@
 <div class="mt-3 px-3">
     <div class="d-flex align-items-center">
       <div>
-        <div class="font-weight-medium"><%= t("payments.pay.secure_payment") %></div>
+        <div class="fw-medium"><%= t("payments.pay.secure_payment") %></div>
         <div class="text-muted"><%= t("payments.pay.secure_payment_description") %></div>
       </div>
     </div>
@@ -141,7 +141,7 @@ function showSuccess(paymentIntent) {
   const resultElement = document.getElementById('payment-result');
   resultElement.innerHTML = `
     <div class="alert alert-success">
-      <h4 class="alert-title">Payment Successful!</h4>
+      <h4 class="alert-heading">Payment Successful!</h4>
       <div class="text-muted">Payment ID: ${paymentIntent.id}</div>
     </div>
   `;

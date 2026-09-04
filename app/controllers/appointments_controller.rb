@@ -26,7 +26,10 @@ class AppointmentsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: @appointments }
+      format.json do
+        wall_clock = params[:wall_clock] == '1'
+        render json: @appointments.map { |appointment| appointment.as_json(wall_clock: wall_clock) }
+      end
     end
   end
 

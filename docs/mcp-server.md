@@ -59,7 +59,7 @@ List all datebooks (appointment calendars) for the practice. Each datebook typic
 
 `timezone` is the practice's IANA timezone (for example, `America/New_York`). `working_hours.start` and `working_hours.end` are local `HH:MM` opening and closing times on each day. Read these values before proposing a booking or reschedule; do not infer opening hours from an empty appointment list. Use the timezone offset applicable to the appointment date, including daylight-saving changes. The entire appointment must fit inside the same day's working hours; ending exactly at closing is allowed, but ending even part of an hour later or on another day is rejected.
 
-The Rails calendar also displays practice-local time without an extra timezone label. Calendar clicks, moves, resizes, and date-range queries send displayed wall-clock fields rather than browser-local epochs. FullCalendar 1.6.4 still has viewer-DST limitations; see [calendar timezone regression coverage](calendar-timezone-testing.md). MCP appointment timestamps retain their explicit offsets. Existing calendar Unix-timestamp inputs remain accepted.
+The Rails calendar also displays practice-local time without an extra timezone label. FullCalendar 6.1.18 runs in UTC as a neutral wall-clock carrier, so a staff member's device timezone cannot shift the practice schedule. Calendar clicks, moves, resizes, and date-range queries send displayed wall-clock fields rather than browser-local epochs. See [calendar timezone regression coverage](calendar-timezone-testing.md). MCP appointment timestamps retain their explicit offsets. Existing calendar Unix-timestamp inputs remain accepted.
 
 ---
 

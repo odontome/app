@@ -26,6 +26,23 @@ class PatientsControllerTest < ActionController::TestCase
     assert_equal 'today', assigns(:segment)
   end
 
+  test 'header sizes the logo image rather than its link' do
+    get :index
+
+    assert_select 'header .navbar-brand a:not(.navbar-brand-image) img.navbar-brand-image[height="32"]', count: 1
+  end
+
+  test 'each selected patient segment has a contrasting count badge' do
+    %w[today needs_follow_up birthdays].each do |segment|
+      get :index, params: { segment: segment }
+      assert_response :success
+
+      assert_select 'nav a.active[aria-current="page"] .badge.bg-primary.text-primary-fg', count: 1
+      assert_select 'nav a:not(.active) .badge.bg-secondary-lt', count: 2
+      assert_select 'nav .badge.bg-white-lt', count: 0
+    end
+  end
+
   test 'today segment shows all todays appointments including cancelled' do
     practice = practices(:complete)
     doctor = doctors(:rebecca)

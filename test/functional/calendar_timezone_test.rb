@@ -118,5 +118,14 @@ class CalendarTimezoneTest < ActionController::TestCase
       assert_equal "#{date}T#{ends_at}#{offset}", result.fetch('end').sub(/Z\z/, '+00:00')
       assert_equal saved_times, appointment.reload.attributes.slice('starts_at', 'ends_at')
     end
+
+    get :index, params: { datebook_id: appointment.datebook_id, doctor_id: appointment.doctor_id,
+                          start: "#{date}T00:00:00", end: "#{Date.iso8601(date) + 1}T00:00:00",
+                          wall_clock: '1' }, format: :json
+    assert_response :success
+    result = JSON.parse(response.body).find { |entry| entry['id'] == appointment.id }
+    assert_equal "#{date}T#{starts_at}", result.fetch('start')
+    assert_equal "#{date}T#{ends_at}", result.fetch('end')
+    assert_equal saved_times, appointment.reload.attributes.slice('starts_at', 'ends_at')
   end
 end

@@ -4,6 +4,8 @@ pt:
     Sua conta está marcada para cancelamento. Se você acredita que
     isso é um erro, entre em contato conosco o mais rápido possível.
   activate: Ativar
+  enable_dark_mode: Usar modo escuro
+  enable_light_mode: Usar modo claro
   all_appointments: Todos os agendamentos
 
   appointment: Agendamento

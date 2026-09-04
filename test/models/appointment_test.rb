@@ -3,6 +3,17 @@
 require 'test_helper'
 
 class AppointmentTest < ActiveSupport::TestCase
+  test 'calendar titles normalize missing notes and preserve entered notes' do
+    appointment = appointments(:first_visit)
+
+    [nil, '', 'Review & follow-up'].each do |notes|
+      appointment.notes = notes
+      [false, true].each do |wall_clock|
+        assert_equal notes.to_s, appointment.as_json(wall_clock: wall_clock).fetch(:title)
+      end
+    end
+  end
+
   test 'today_for_practice returns all todays appointments for practice' do
     practice = practices(:complete)
     doctor = doctors(:rebecca)

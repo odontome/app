@@ -4,6 +4,8 @@ en:
     Your account is marked for cancellation. If you believe this
     is a mistake, please contact us as soon as possible.
   activate: Activate
+  enable_dark_mode: Use dark mode
+  enable_light_mode: Use light mode
   all_appointments: All appointments
 
   appointment: Appointment

@@ -4,11 +4,7 @@
   <%= avatar_for(@doctor, variant: :medium, classes: 'avatar avatar-lg rounded-circle') %>
     </div>
     <div class="col">
-      <h4 class="m-0">
-        <h2 class="page-title">
-          <%= @doctor.fullname %>
-        </h2>
-      </h4>
+      <h2 class="page-title"><%= @doctor.fullname %></h2>
       <div class="text-muted">
         <%= @doctor.speciality %>
       </div>
@@ -77,25 +73,25 @@
       </div>
       <div class="card-body">
         <% if @appointments.size > 0 %>
-          <ul class="list list-timeline">
+          <div class="list-group list-group-flush">
             <% @appointments.each do |appointment| %>
-              <li>
-                <div class="list-timeline-icon bg-azure">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"></path> <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4"></path> <circle cx="18" cy="18" r="4"></circle> <path d="M15 3v4"></path> <path d="M7 3v4"></path> <path d="M3 11h16"></path> <path d="M18 16.496v1.504l1 1"></path></svg>
+              <div class="list-group-item px-0">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <span class="avatar avatar-sm rounded-circle"><%= appointment.patient.initials %></span>
+                  </div>
+                  <div class="col">
+                    <div class="small text-secondary"><%= l appointment.starts_at, format: :just_the_date %></div>
+                    <div class="fw-medium"><%= appointment.patient.fullname %></div>
+                    <div class="text-secondary">
+                      <%= appointment.starts_at.to_formatted_s :time %> - <%= appointment.ends_at.to_formatted_s :time %>
+                    </div>
+                  </div>
                 </div>
-                <div class="list-timeline-content">
-                  <div class="list-timeline-time"><%= l appointment.starts_at, format: :just_the_date %></div>
-                  <p class="list-timeline-title">
-                    <%= appointment.patient.fullname %> 
-                  </p>
-                  <p class="text-muted">
-                    <%= appointment.starts_at.to_formatted_s :time %> - <%= appointment.ends_at.to_formatted_s :time %>
-                  </p>
-                </div>
-              </li>
+              </div>
             <% end %>
-          </ul>
-        <% elsif %>
+          </div>
+        <% else %>
           <%= raw (t :doctor_has_no_future_appointments, datebooks_url: link_to(t(:appointments).downcase, root_url)).html_safe %>
         <% end %>
       </div>
