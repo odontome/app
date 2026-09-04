@@ -38,7 +38,7 @@
             <%= value_tag t(:email), @doctor.email %>
           </div>
           <div class="col-md-6 mb-2">
-             <%= value_tag t(:gender), @doctor.gender %>
+             <%= value_tag t(:gender), @doctor.gender.in?(Doctor::GENDERS) ? t(@doctor.gender) : @doctor.gender %>
           </div>
           <div class="col-md-6 mb-2">
             <%= value_tag t(:speciality), @doctor.speciality %>
