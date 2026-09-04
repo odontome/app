@@ -4,7 +4,7 @@ class PracticesController < ApplicationController
   before_action :require_user, except: %i[new create]
   before_action :require_no_user, only: %i[new create]
   before_action :require_superadmin, only: %i[index destroy edit]
-  before_action :require_practice_admin, only: %i[show settings balance appointments update close cancel agent_settings update_agent_settings]
+  before_action :require_practice_admin, only: %i[show settings balance appointments update close cancel]
   skip_before_action :check_subscription_status
   skip_before_action :check_consent_status
 
@@ -143,39 +143,6 @@ class PracticesController < ApplicationController
     end
   end
 
-  def agent_settings
-    @practice = current_user.practice
-  end
-
-  def update_agent_settings
-    @practice = current_user.practice
-    needs_ai_consent = agent_settings_params[:agent_access_enabled] == "1" && !UserConsent.accepted?(current_user, "ai_data_processing")
-
-    if needs_ai_consent && params[:consent_ai] != "1"
-      @practice.errors.add(:base, I18n.t(:consent_ai_required))
-      render action: 'agent_settings'
-      return
-    end
-
-    if @practice.update(agent_settings_params)
-      if params[:consent_ai] == "1" && !UserConsent.accepted?(current_user, "ai_data_processing")
-        UserConsent.create!(
-          user: current_user,
-          practice: @practice,
-          consent_type: "ai_data_processing",
-          policy_version: UserConsent::CURRENT_AI_VERSION,
-          accepted_at: Time.current,
-          ip_address: request.remote_ip,
-          user_agent: request.user_agent
-        )
-      end
-
-      redirect_to practice_agent_settings_url, notice: t(:agent_settings_updated)
-    else
-      render action: 'agent_settings'
-    end
-  end
-
   def cancel
     # Intentionally left blank
   end
@@ -272,7 +239,4 @@ class PracticesController < ApplicationController
                                      users_attributes: %i[firstname lastname email password password_confirmation])
   end
 
-  def agent_settings_params
-    params.require(:practice).permit(:agent_access_enabled, :agent_label)
-  end
 end

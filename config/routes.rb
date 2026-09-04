@@ -37,8 +37,10 @@ Rails.application.routes.draw do
   get '/practice/balance' => 'practices#balance', :as => :practice_balance
   get '/practice/appointments' => 'practices#appointments', :as => :practice_appointments
   get '/practice/settings' => 'practices#settings', :as => :practice_settings
-  get '/practice/agent-settings' => 'practices#agent_settings', :as => :practice_agent_settings
-  patch '/practice/agent-settings' => 'practices#update_agent_settings', :as => :practice_agent_settings_update
+  resource :ai, only: %i[show update], controller: 'ai'
+
+  get '/practice/agent-settings' => 'ai#show', :as => :practice_agent_settings
+  patch '/practice/agent-settings' => 'ai#update', :as => :practice_agent_settings_update
   get '/practice/cancel' => 'practices#cancel', :as => :practice_cancel
   post '/practice/close' => 'practices#close', :as => :practice_close
   post '/practice/:id' => 'practices#update', :as => :practice_update

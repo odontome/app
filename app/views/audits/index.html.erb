@@ -64,6 +64,9 @@
                 <% else %>
                   <span class="text-muted">System</span>
                 <% end %>
+                <% if version.activity_source == 'ai' %>
+                  <span class="badge bg-blue-lt mt-1" data-activity-source="ai"><%= t('ai.via_ai') %></span>
+                <% end %>
               </td>
               <td>
                 <% case version.event %>

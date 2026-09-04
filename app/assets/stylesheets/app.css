@@ -78,3 +78,32 @@ body.theme-dark .impersonation-banner {
 .announcement-alert .btn-close {
   padding: 0.375rem;
 }
+
+/* Keep AI instructions and activity attribution readable in dark mode. */
+.ai-page p {
+  max-width: 72ch;
+  text-wrap: pretty;
+}
+
+.ai-page h3 {
+  text-wrap: balance;
+}
+
+.ai-page .btn {
+  min-height: 44px;
+}
+
+.theme-dark .ai-page a:not(.btn):not(.nav-link) {
+  color: #8fc4ff;
+}
+
+.theme-dark .ai-page .text-secondary,
+.theme-dark .ai-page .form-hint,
+.theme-dark .ai-page .badge.bg-secondary-lt,
+.theme-dark .ai-page .alert .text-muted {
+  color: #aab5c5 !important;
+}
+
+.theme-dark [data-activity-source="ai"] {
+  color: #8fc4ff !important;
+}

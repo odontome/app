@@ -48,17 +48,6 @@ class PracticesControllerTest < ActionController::TestCase
     assert_select '#chart-revenue-per-day', count: 0
   end
 
-  test 'agent settings links ChatGPT users to plugin installation instructions' do
-    get :agent_settings
-
-    assert_response :success
-    assert_select 'svg.icon-tabler-plug-connected[aria-hidden="true"]', count: 1
-    assert_select "a[href='https://learn.chatgpt.com/docs/plugins'][target='_blank'][rel='noopener']", text: 'ChatGPT'
-    assert_select 'li', text: /Settings → Plugins/
-    assert_select "a[href='https://developers.openai.com/plugins/deploy/connect-chatgpt']", count: 0
-    assert_select "a[href='https://help.openai.com/en/articles/11487775-connectors-in-chatgpt']", count: 0
-  end
-
   test 'should create practice, authenticate user, and send welcome email' do
     @controller.session['user'] = nil
 
@@ -329,16 +318,16 @@ class PracticesControllerTest < ActionController::TestCase
     end
   end
 
-  test 'settings shows section icons with AI assistance before payment processing' do
+  test 'settings keeps subscription and payments after AI moves to its own section' do
     get :settings
 
     assert_response :success
-    assert_select '.col-md-4 > .row.mb-3', count: 2
-    assert_select 'h3.card-title.d-flex.align-items-center', count: 3
+    assert_select '.col-md-4 > .row.mb-3', count: 1
+    assert_select 'h3.card-title.d-flex.align-items-center', count: 2
     assert_includes response.body, 'icon-tabler-calendar-dollar'
-    assert_includes response.body, 'icon-tabler-robot-face'
     assert_includes response.body, 'icon-tabler-cash'
-    assert_operator response.body.index('icon-tabler-robot-face'), :<, response.body.index('icon-tabler-cash')
+    assert_select "a[href='/ai'].nav-link", count: 1
+    assert_select "a[href='/practice/agent-settings']", count: 0
   end
 
   test 'settings shows expired copy after trial ends' do
