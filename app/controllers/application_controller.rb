@@ -161,10 +161,11 @@ class ApplicationController < ActionController::Base
     if current_user
       unless user_is_admin?(current_user)
         redirect_back_or_default('/401', I18n.t(:admin_credentials_required))
-        false
       end
     else
-      false
+      store_location
+      flash[:notice] = t :not_logged_in
+      redirect_to signin_path
     end
   end
 
