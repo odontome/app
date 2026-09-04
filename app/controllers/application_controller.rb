@@ -132,7 +132,7 @@ class ApplicationController < ActionController::Base
   def require_no_user
     if current_user
       store_location
-      flash[:notice] = t :not_logged_in
+      flash[:notice] = t :already_signed_in
       redirect_to root_path
       false
     end

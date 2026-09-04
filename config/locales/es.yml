@@ -323,6 +323,7 @@ es:
   no_user_with_that_email: Parece haber un problema. Si esto continua, por favor contacta con nosotros.
   none: Ninguna
   not_logged_in: No tienes ninguna sesión abierta
+  already_signed_in: Ya tienes una sesión abierta.
   note_created_error_message: Ocurrió un problema al crear este comentario
   notes: Comentarios
   notes_about_this: Comentarios adicionales para este %{class_name}
