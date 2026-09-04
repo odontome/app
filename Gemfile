@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 ruby '3.2.3'
 
-gem 'aws-sdk-s3', '~> 1.145'
+gem 'aws-sdk-s3', '~> 1.228'
 gem 'bcrypt', '~> 3.1', '>= 3.1.20'
 gem 'bugsnag', '~> 6.28'
 gem 'font-awesome-rails', '~> 4.7.0.8'
