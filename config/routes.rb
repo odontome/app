@@ -113,7 +113,7 @@ Rails.application.routes.draw do
   # error handling
   get '/404', to: 'errors#not_found'
   get '/401', to: 'errors#unauthorised'
-  get '/422', to: 'errors#server_error'
+  get '/422', to: 'errors#unprocessable'
   get '/500', to: 'errors#server_error'
 
   root to: 'welcome#index'
