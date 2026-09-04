@@ -55,7 +55,12 @@
                         <span class="avatar avatar-sm rounded-circle me-2">
                           <%= user.initials %>
                         </span>
-                        <%= user.fullname %>
+                        <span>
+                          <%= user.fullname %>
+                          <% if version.activity_source == 'ai' %>
+                            <span data-activity-source="ai">(<%= t('ai.via_ai') %>)</span>
+                          <% end %>
+                        </span>
                       </div>
                     <% else %>
                       <span class="text-muted">ID: <%= version.whodunnit %></span>
@@ -63,9 +68,6 @@
                   <% end %>
                 <% else %>
                   <span class="text-muted">System</span>
-                <% end %>
-                <% if version.activity_source == 'ai' %>
-                  <span class="badge bg-blue-lt mt-1" data-activity-source="ai"><%= t('ai.via_ai') %></span>
                 <% end %>
               </td>
               <td>

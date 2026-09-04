@@ -35,7 +35,12 @@
                         <span class="avatar avatar-sm rounded-circle me-2">
                           <%= @whodunnit_user.initials %>
                         </span>
-                        <%= @whodunnit_user.fullname %>
+                        <span>
+                          <%= @whodunnit_user.fullname %>
+                          <% if @version.activity_source == 'ai' %>
+                            <span data-activity-source="ai">(<%= t('ai.via_ai') %>)</span>
+                          <% end %>
+                        </span>
                       </div>
                     <% elsif @whodunnit_agent_label.present? %>
                       <span class="text-muted"><%= t(:agent_display_name, label: @whodunnit_agent_label) %></span>
@@ -43,9 +48,6 @@
                       <span class="text-muted">ID: <%= @version.whodunnit %></span>
                     <% else %>
                       <span class="text-muted"><%= t(:system) %></span>
-                    <% end %>
-                    <% if @version.activity_source == 'ai' %>
-                      <span class="badge bg-blue-lt mt-1" data-activity-source="ai"><%= t('ai.via_ai') %></span>
                     <% end %>
                   </dd>
                   

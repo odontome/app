@@ -18,7 +18,8 @@ class AuditsControllerTest < ActionController::TestCase
     get :index, params: { user_id: @user.id }
     assert_response :success
     assert_equal [@ai_version.id, @web_version.id].sort, assigns(:versions).map(&:id).sort
-    assert_select '[data-activity-source=ai]', text: I18n.t('ai.via_ai'), count: 1
+    assert_select '[data-activity-source=ai]', text: "(#{I18n.t('ai.via_ai')})", count: 1
+    assert_select '[data-activity-source=ai].badge', count: 0
     assert_select 'td', text: /#{Regexp.escape(@user.fullname)}/, count: 2
     assert_select 'option[value="agent:Old assistant"]'
   end
@@ -27,7 +28,8 @@ class AuditsControllerTest < ActionController::TestCase
     get :show, params: { id: @ai_version.id }
     assert_response :success
     assert_includes response.body, @user.fullname
-    assert_select '[data-activity-source=ai]', text: I18n.t('ai.via_ai')
+    assert_select '[data-activity-source=ai]', text: "(#{I18n.t('ai.via_ai')})"
+    assert_select '[data-activity-source=ai].badge', count: 0
     get :show, params: { id: @legacy_version.id }
     assert_response :success
     assert_includes response.body, I18n.t(:agent_display_name, label: 'Old assistant')
