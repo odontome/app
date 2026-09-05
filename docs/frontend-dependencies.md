@@ -33,3 +33,23 @@ When upgrading, pin the exact `@tabler/core` version in `package.json`, confirm
 the bundled FullCalendar version in
 `node_modules/@tabler/core/dist/libs/fullcalendar/package.json`, and rerun the
 full Rails suite plus the browser checks above.
+
+## Deployment
+
+Tabler and FullCalendar assets come from `node_modules`, not vendored files.
+Install dependencies with `yarn install --frozen-lockfile` before running Rails
+asset precompilation. `package.json` selects Node 24 and Yarn 1.22.22; CI uses
+the same versions and lockfile, then checks production asset precompilation.
+
+On Heroku, the `heroku/nodejs` buildpack must run before `heroku/ruby` so those
+files exist when Sprockets compiles assets. `app.json` declares that order for
+new apps; it does not update existing apps. For an existing app with only the
+Ruby buildpack, add Node first:
+
+```sh
+heroku buildpacks:add --index 1 heroku/nodejs --app YOUR_APP_NAME
+heroku buildpacks --app YOUR_APP_NAME
+```
+
+The resulting order must be Node.js first, Ruby last. This setting takes effect
+on the next deployment; changing buildpacks does not deploy the app.
