@@ -76,3 +76,7 @@
 .row {
   --tblr-gutter-x: 1rem;
 }
+
+.badge {
+  text-transform: uppercase;
+}
