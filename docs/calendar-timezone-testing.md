@@ -1,68 +1,48 @@
 # Calendar timezone regression coverage
 
 All calendar times are intended to be practice-local, independent of a staff
-member's device timezone. The Rails tests cover server round trips; browser
-behavior and the legacy calendar's remaining limits are documented separately.
-FullCalendar remains **1.6.4**, unchanged; an upgrade was explicitly deferred.
+member's device timezone. The browser calendar uses FullCalendar 6.1.18 from
+Tabler's supported integration.
 
-## Passing regression gates
+FullCalendar is configured with `timeZone: "UTC"` as a neutral wall-clock
+carrier. The calendar endpoint's opt-in `wall_clock=1` response returns the
+practice's displayed date and time without an offset. JavaScript can therefore
+use native `Date` objects without applying the viewer's timezone or DST rules.
+Rails remains responsible for interpreting submitted wall-clock fields in the
+practice timezone. The default JSON endpoint retains offset-bearing timestamps
+for existing clients.
 
-Run with the project's existing Ruby 3.2.3 / Rails / Minitest setup:
+## Regression gates
+
+Run with the project's existing Ruby / Rails / Minitest setup:
 
 ```sh
 bin/rails test test/functional/calendar_timezone_test.rb
+bin/rails test test/functional/appointments_controller_test.rb test/functional/datebooks_controller_test.rb
 bin/rails test
 ```
 
-There is no additional test runtime or framework. The custom JavaScript runner
-and Node CI step have been removed. These Ruby tests do not execute browser
-JavaScript and must not be described as equivalent browser coverage.
+The tests cover both admin and user roles, real test-database create/move/resize
+round trips, repeated reads, unrelated edits, northern and southern DST,
+half-hour and quarter-hour offsets, opposite sides of the date line, and the
+offset-free FullCalendar feed. Controller coverage also verifies that the
+normal JSON contract remains offset-bearing.
 
-Full Rails suite before PR: **634 tests, 3,869 assertions, zero failures,
-errors, or skips**.
+These Rails tests do not execute browser JavaScript. Before release, verify the
+calendar in a real browser at desktop and mobile widths: load events, switch
+month/week/day views, create an appointment, drag it, resize it, cancel both
+confirmation dialogs, and confirm auto-refresh still works.
 
-- `calendar_timezone_test.rb`: 28 tests, 940 assertions. Both admin and user
-  roles; real test-database create, move, resize, repeated schedule reads, and
-  unrelated edits that must preserve stored timestamps. Twelve explicit
-  zone/date/offset cases include northern/southern DST, Lord Howe's half-hour
-  transition, Kathmandu's quarter-hour offset, and opposite sides of the date
-  line at New Year. Four additional cases move 9 AM appointments across DST.
-- Prior signed-in visual check: the existing September 3 appointment was visible
-  at 8–9 AM. The timezone label has since been removed at the user's request;
-  the underlying timezone handling is unchanged. No real appointment was changed.
+## Product rule still required
 
-## Known unresolved issue: viewer DST gaps
+A practice timezone can itself contain a nonexistent local hour when clocks
+move forward or a repeated local hour when clocks move backward. The upgrade
+does not change Rails' existing parser behavior for those inputs. If practices
+can schedule inside transition hours, the product should explicitly choose one
+of these policies:
 
-The earlier JavaScript diagnostic exposed the cases below. Removing that
-custom runner does not fix the underlying issue. They remain browser-verification
-targets for the separately deferred calendar work.
+- reject nonexistent and ambiguous local times; or
+- choose and communicate which occurrence is used.
 
-FullCalendar's `ignoreTimezone` preserves ISO wall-clock fields by constructing
-a native browser-local `Date`. A valid practice-local time can be nonexistent
-in the viewer's timezone. Native Date then normalizes it into a different hour:
-
-| Cancún practice time | Viewer timezone | Incorrect displayed time |
-| --- | --- | --- |
-| March 8, 2026, 02:30 | America/Los_Angeles or America/New_York | 03:30 |
-| March 29, 2026, 01:30 | Europe/London | 02:30 |
-| October 4, 2026, 02:30 | Australia/Sydney | 03:30 |
-| October 4, 2026, 02:00 | Australia/Lord_Howe | 02:30 |
-
-These examples are outside the current demo calendar's 08:00–20:00 hours, but
-the application permits earlier opening hours. Passing daytime tests must not
-be represented as a guarantee covering every time worldwide. The earlier check
-demonstrated a display/parser error, not an observed production database write.
-
-## Still outside the verified guarantee
-
-- Interactive create/drag/resize and reloads in multiple actual browser engines
-  and device timezones; Rails request tests do not cover pointer handling,
-  client-side payload construction, or pixel placement.
-- The legacy Today button and today's highlighting use the browser clock,
-  unlike the initial practice-local date passed by Rails. Midnight and long-open
-  tabs need explicit navigation tests when calendar date handling is revisited.
-- Missing/repeated times in the practice's own DST transition hour require an
-  explicit product rule; daytime create/move tests do not settle that ambiguity.
-
-The earlier passing Rails suite did not establish worldwide timezone safety.
-Do not make that release claim until these gaps have been addressed and tested.
+This is distinct from the former viewer-timezone bug, which the UTC wall-clock
+carrier removes.

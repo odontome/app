@@ -1,206 +1,193 @@
 <script type="text/javascript">
-	$(document).ready(function() {
-		function validateSubmit() {
-			var submitAppointmentElement = $('#appointment_submit');
-			var selectDoctorsElement = $('#appointment_doctor_id');
-			if (selectDoctorsElement.val()) {
-				submitAppointmentElement.attr('disabled', false);
-			} else {
-				submitAppointmentElement.attr('disabled', true);
-			}
-		}
+  document.addEventListener("DOMContentLoaded", function () {
+    function validateSubmit() {
+      var submitAppointmentElement = $('#appointment_submit');
+      var selectDoctorsElement = $('#appointment_doctor_id');
+      submitAppointmentElement.prop('disabled', !selectDoctorsElement.val());
+    }
 
-		// FullCalendar v1 uses browser-local Date objects as practice wall clocks.
-		// Send their displayed fields to Rails; never convert them to browser epochs.
-		function calendarTime(date) {
-			return $.fullCalendar.formatDate(date, "yyyy-MM-dd'T'HH:mm:ss");
-		}
-		var withDoctorIdString = '<% if params[:doctor_id] %>?doctor_id=<%=params[:doctor_id]%><% end %>';
-		var datebookId = '<%= @datebook.id %>';
-		var endpointURL = "/datebooks/" + datebookId + "/appointments";
+    // FullCalendar runs in UTC as a neutral wall-clock carrier. Rails converts
+    // these displayed fields using the practice timezone when reading or saving.
+    function calendarTime(date) {
+      return date.toISOString().slice(0, 19);
+    }
 
-		$("#calendar").fullCalendar({
-			year: <%= Time.zone.today.year %>,
-			month: <%= Time.zone.today.month - 1 %>,
-			date: <%= Time.zone.today.day %>,
-			defaultView: <% if @is_mobile.nil? %>"agendaWeek"<%else%>"agendaDay"<% end %>,
-			minTime: <%= @datebook.starts_at %>,
-			maxTime: <%= @datebook.ends_at %>,
-			firstDay: 1,
-			<% if @is_mobile.nil? %>
-				header: {
-					left: "month,agendaWeek,agendaDay",
-					center: "title",
-					right: "prev,next today"
-				},
-			<% else %>
-				header: {
-					left: "prev,next today",
-					center: "",
-					right: ""
-				},
-			<% end %>
-			monthNames: <%= raw (t "date.month_names").last(12) %>,
-			monthNamesShort: <%= raw (t "date.abbr_month_names").last(12) %>,
-			dayNames: <%= raw (t "date.day_names").last(7) %>,
-			dayNamesShort: <%= raw (t "date.abbr_day_names").last(7) %>,
-			buttonText: {
-			    prev:     '&nbsp;&#9668;&nbsp;',  // left triangle
-			    next:     '&nbsp;&#9658;&nbsp;',  // right triangle
-			    prevYear: '&nbsp;&lt;&lt;&nbsp;', // <<
-			    nextYear: '&nbsp;&gt;&gt;&nbsp;', // >>
-			    today:    '<%= t :today %>',
-			    month:    '<%= t :month %>',
-			    week:     '<%= t :week %>',
-			    day:      '<%= t :day %>'
-			},
-			editable: true,
-			viewDisplay: function(view) {
-				resizeCalendar(view);
-			},
-			eventSources: [{
-				events: function(start, end, callback) {
-					$.getJSON(endpointURL + withDoctorIdString, {
-						start: calendarTime(start), end: calendarTime(end)
-					}).done(callback).fail(function() { callback([]); });
-				},
-				ignoreTimezone: true
-			}],
-			allDaySlot: false,
-			allDayDefault: false,
-			dayClick: function(dayDate, allDay, jsEvent, view){
-				if (view.name != "month"){
-					var url = endpointURL + '/new';
-					$.get(url, {"starts_at": calendarTime(dayDate)}, function(data) {
-						$('.modal-title').html($.fullCalendar.formatDate(dayDate, "dd, MMMM · hh:mm tt"));
-						$('.body-container').html(data);
-						$("#modal-appointment").modal("toggle");
-						validateSubmit();
-					});
-				} else {
-					$("#calendar").fullCalendar('changeView', 'agendaDay');
-					$("#calendar").fullCalendar('gotoDate', dayDate);
-				}
+    function calendarLabel(date) {
+      return new Intl.DateTimeFormat('<%= I18n.locale %>', {
+        day: '2-digit',
+        month: 'long',
+        hour: 'numeric',
+        minute: '2-digit',
+        timeZone: 'UTC'
+      }).format(date);
+    }
 
-			},
-      
-			eventClick: function(calEvent, jsEvent, view) {
-				const url = endpointURL + '/' + calEvent.id + "/edit?patient_id=" + calEvent.patient_id;
+    function showAppointmentModal() {
+      tabler.Modal.getOrCreateInstance(document.getElementById('modal-appointment')).show();
+    }
 
-				$.get(url, function(data) {
-					$('.modal-title').html($.fullCalendar.formatDate(calEvent.start, "dd, MMMM · hh:mm tt"));
-	    			$('.body-container').html(data);
-					$("#modal-appointment").modal("toggle");
-					validateSubmit();
-				});
-			},
+    var doctorId = <%= params[:doctor_id].present? ? params[:doctor_id].to_i : 'null' %>;
+    var endpointURL = '/datebooks/<%= @datebook.id %>/appointments';
+    var calendarElement = document.getElementById('calendar');
+    var compactCalendar = window.matchMedia('(max-width: 767.98px)').matches;
+    var calendar = new FullCalendar.Calendar(calendarElement, {
+      initialDate: '<%= Time.zone.today.iso8601 %>',
+      now: '<%= Time.current.in_time_zone(@datebook.practice.timezone).strftime('%Y-%m-%dT%H:%M:%S') %>',
+      initialView: compactCalendar ? 'timeGridDay' : 'timeGridWeek',
+      timeZone: 'UTC',
+      slotDuration: '00:30:00',
+      snapDuration: '00:15:00',
+      slotMinTime: '<%= format('%02d:00:00', @datebook.starts_at) %>',
+      slotMaxTime: '<%= format('%02d:00:00', @datebook.ends_at) %>',
+      firstDay: 1,
+      locales: [{
+        code: '<%= I18n.locale %>',
+        week: { dow: 1, doy: 4 },
+        buttonText: {
+          today: '<%= j t(:today) %>',
+          month: '<%= j t(:month) %>',
+          week: '<%= j t(:week) %>',
+          day: '<%= j t(:day) %>'
+        }
+      }],
+      locale: '<%= I18n.locale %>',
+      headerToolbar: compactCalendar ?
+        { left: 'prev,next', center: 'title', right: 'today' } :
+        { left: 'dayGridMonth,timeGridWeek,timeGridDay', center: 'title', right: 'prev,next today' },
+      editable: true,
+      height: 'auto',
+      allDaySlot: false,
+      defaultAllDay: false,
+      events: function (fetchInfo, successCallback, failureCallback) {
+        var query = {
+          start: calendarTime(fetchInfo.start),
+          end: calendarTime(fetchInfo.end),
+          wall_clock: '1'
+        };
+        if (doctorId) query.doctor_id = doctorId;
 
-			eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc){
-				// Show confirmation modal before updating
-				if (confirm('<%= t(:confirm_reschedule) %>')) {
-					//update the event with the new data
-					$.ajax({
-							type: "PUT",
-							url: endpointURL + "/" + event.id,
-							data: {
-								"appointment[starts_at]": calendarTime(event.start),
-								"appointment[ends_at]": calendarTime(event.end)
-								}
-					});
-				} else {
-					revertFunc(); // Revert the event if user cancels
-				}
-			},
-			eventResize: function(calEvent, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) {
-				// Show confirmation modal before updating
-				if (confirm('<%= t(:confirm_resize) %>')) {
-					// update the event with the new data
-					$.ajax({
-						type: "PUT",
-						url: endpointURL + "/" + calEvent.id,
-						data: {
-							"appointment[starts_at]": calendarTime(calEvent.start),
-							"appointment[ends_at]": calendarTime(calEvent.end),
-							}
-					});
-				} else {
-					revertFunc(); // Revert the event if user cancels
-				}
-			},
-			eventAfterRender: function(event, element, view) {
-				var patientDisplay = event.firstname + " " + event.lastname;
-				if (event.patient_uid) {
-					patientDisplay += " (" + event.patient_uid + ")";
-				}
-				element.find('.fc-event-time').append(" " + patientDisplay);
-				// Add touch dragging to event element
-				element.addTouch();
-     	}
-		});
+        $.getJSON(endpointURL, query)
+          .done(successCallback)
+          .fail(failureCallback);
+      },
+      dateClick: function (info) {
+        if (info.view.type === 'dayGridMonth') {
+          calendar.changeView('timeGridDay', info.date);
+          return;
+        }
 
-    $('#modal-appointment').on('show.bs.modal', function (event) {
-      var el;
-    	window.TomSelect && (new TomSelect(el = document.getElementById('appointment_doctor_id'), {
-    		copyClassesToDropdown: false,
-    		dropdownClass: 'dropdown-menu',
-    		optionClass:'dropdown-item',
-    		controlInput: '<input>',
-    		render:{
-    			item: function(data,escape) {
-    				if( data.customProperties ){
-    					return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
-    				}
-    				return '<div>' + escape(data.text) + '</div>';
-    			},
-    			option: function(data,escape){
-    				if( data.customProperties ){
-    					return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
-    				}
-    				return '<div>' + escape(data.text) + '</div>';
-    			},
-    		},
-    	}));
+        $.get(endpointURL + '/new', { starts_at: calendarTime(info.date) }, function (data) {
+          $('.modal-title').text(calendarLabel(info.date));
+          $('.body-container').html(data);
+          showAppointmentModal();
+          validateSubmit();
+        });
+      },
+      eventClick: function (info) {
+        var appointment = info.event;
+        var patientId = appointment.extendedProps.patient_id;
+        var url = endpointURL + '/' + appointment.id + '/edit?patient_id=' + encodeURIComponent(patientId);
+
+        $.get(url, function (data) {
+          $('.modal-title').text(calendarLabel(appointment.start));
+          $('.body-container').html(data);
+          showAppointmentModal();
+          validateSubmit();
+        });
+      },
+      eventDrop: function (info) {
+        if (!confirm('<%= j t(:confirm_reschedule) %>')) {
+          info.revert();
+          return;
+        }
+
+        $.ajax({
+          type: 'PUT',
+          url: endpointURL + '/' + info.event.id,
+          data: {
+            'appointment[starts_at]': calendarTime(info.event.start),
+            'appointment[ends_at]': calendarTime(info.event.end),
+            type: 'drop'
+          }
+        }).fail(info.revert);
+      },
+      eventResize: function (info) {
+        if (!confirm('<%= j t(:confirm_resize) %>')) {
+          info.revert();
+          return;
+        }
+
+        $.ajax({
+          type: 'PUT',
+          url: endpointURL + '/' + info.event.id,
+          data: {
+            'appointment[starts_at]': calendarTime(info.event.start),
+            'appointment[ends_at]': calendarTime(info.event.end),
+            type: 'resize'
+          }
+        }).fail(info.revert);
+      },
+      eventDidMount: function (info) {
+        var appointment = info.event.extendedProps;
+        var patientDisplay = appointment.firstname + ' ' + appointment.lastname;
+        if (appointment.patient_uid) patientDisplay += ' (' + appointment.patient_uid + ')';
+
+        var timeElement = info.el.querySelector('.fc-event-time');
+        if (timeElement) timeElement.appendChild(document.createTextNode(' ' + patientDisplay));
+      }
     });
 
-		function resizeCalendar(calendarView) {
-			if(calendarView.name === 'agendaWeek' || calendarView.name === 'agendaDay') {
-				// if height is too big for these views, then scrollbars will be hidden
-				calendarView.setHeight(9999);
-			}
-		}
-		// Calendar auto-refresh functionality
-		var refreshInterval = 30_000; 
-		var refreshTimer;
+    calendar.render();
+    window.odontomeCalendar = calendar;
 
-		function startRefreshCycle() {
-			// Set refresh timer
-			refreshTimer = setTimeout(function() {
-				// Refresh calendar events using FullCalendar's built-in method
-				$("#calendar").fullCalendar("refetchEvents");
-				
-				// Reset and start next cycle
-				startRefreshCycle();
-			}, refreshInterval);
-		}
+    $('#modal-appointment').on('show.bs.modal', function () {
+      var doctorSelect = document.getElementById('appointment_doctor_id');
+      if (!window.TomSelect || !doctorSelect || doctorSelect.tomselect) return;
 
-		// Start the auto-refresh cycle
-		startRefreshCycle();
+      new TomSelect(doctorSelect, {
+        copyClassesToDropdown: false,
+        dropdownClass: 'dropdown-menu',
+        optionClass: 'dropdown-item',
+        controlInput: '<input>',
+        render: {
+          item: function (data, escape) {
+            if (data.customProperties) {
+              return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+            }
+            return '<div>' + escape(data.text) + '</div>';
+          },
+          option: function (data, escape) {
+            if (data.customProperties) {
+              return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+            }
+            return '<div>' + escape(data.text) + '</div>';
+          }
+        }
+      });
+    });
 
-		// Pause auto-refresh when user is interacting with the calendar
-		var userActivityTimeout;
-		function pauseRefreshOnActivity() {
-			clearTimeout(refreshTimer);
-			clearTimeout(userActivityTimeout);
-			
-			// Resume after 5 seconds of inactivity
-			userActivityTimeout = setTimeout(function() {
-				startRefreshCycle();
-			}, 5000);
-		}
+    var refreshInterval = 30_000;
+    var refreshTimer;
 
-		// Attach activity listeners to calendar events
-		$("#calendar").on('mousedown touchstart', pauseRefreshOnActivity);
-	});
+    function startRefreshCycle() {
+      clearTimeout(refreshTimer);
+      refreshTimer = setTimeout(function () {
+        calendar.refetchEvents();
+        startRefreshCycle();
+      }, refreshInterval);
+    }
+
+    var userActivityTimeout;
+    function pauseRefreshOnActivity() {
+      clearTimeout(refreshTimer);
+      clearTimeout(userActivityTimeout);
+      userActivityTimeout = setTimeout(startRefreshCycle, 5000);
+    }
+
+    startRefreshCycle();
+    calendarElement.addEventListener('mousedown', pauseRefreshOnActivity);
+    calendarElement.addEventListener('touchstart', pauseRefreshOnActivity, { passive: true });
+  });
 </script>
 
 <!-- Page title -->
@@ -218,7 +205,7 @@
 									<span class="avatar rounded-circle">∞</span>
 								</div>
 								<div class="col">
-									<div class="font-weight-medium"><%= t :everyone %></div>
+									<div class="fw-medium"><%= t :everyone %></div>
 									<div class="text-muted"><%= t :all_appointments %></div>
 								</div>
 							</div>
@@ -235,7 +222,7 @@
 									<%= avatar_for(doctor, variant: :small) %>
 								</div>
 								<div class="col">
-									<div class="font-weight-medium">
+									<div class="fw-medium">
 										<%= doctor.fullname %> <span class="badge" style="background-color: <%= doctor.color %>; margin-left: 4px"></span>
 									</div>
 									<div class="text-muted">

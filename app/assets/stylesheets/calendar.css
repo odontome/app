@@ -1,16 +1,23 @@
-.fc-agenda-slots td div {
-  height: 35px !important;
+.fc {
+  --fc-page-bg-color: var(--tblr-body-bg);
 }
 
-.fc-content {
-  background-color: white;
+/* Keep half-hour slots large enough to read appointment details. */
+.fc .fc-timegrid-slot {
+  height: 35px;
+}
+
+/* Soften the fill using the active theme without fading appointment text. */
+.fc-timegrid-event .fc-event-main {
+  background-color: color-mix(in srgb, var(--tblr-bg-surface) 25%, transparent);
 }
 
 /* Badge indicator for appointments with patient in the waiting room (only the dot on the right) */
-.fc-event.appointment-waiting .fc-event-inner {
+.fc-event.appointment-waiting {
   position: relative;
 }
-.fc-event.appointment-waiting .fc-event-inner::after {
+
+.fc-event.appointment-waiting::after {
   content: "";
   position: absolute;
   top: 4px;
@@ -18,6 +25,6 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #00ff00;
+  background: var(--tblr-success);
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
 }

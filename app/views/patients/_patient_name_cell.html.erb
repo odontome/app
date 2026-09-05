@@ -4,7 +4,7 @@
       <%= avatar_for(patient) %>
     <% end %>
     <div class="flex-fill">
-      <div class="font-weight-medium"><%= patient.fullname %></div>
+      <div class="fw-medium"><%= patient.fullname %></div>
       <% if local_assigns.fetch(:show_email, true) %>
         <div class="text-muted"><%= patient.email %></div>
       <% end %>

@@ -17,6 +17,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+  <%= javascript_include_tag "theme" %>
   <%= stylesheet_link_tag "application" %>
   <%= javascript_include_tag "application" %>
 
@@ -29,7 +30,7 @@
   <% end %>
 </head>
 
-<body class="theme-light" id="app-body">
+<body id="app-body">
   <div class="page">
     <%= render "shared/impersonation_banner" %>
     <%= render "shared/navigation" %>

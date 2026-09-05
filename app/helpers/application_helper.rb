@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  def theme_url(theme)
+    query = request.query_parameters.merge('theme' => theme).to_query
+    "#{request.path}?#{query}"
+  end
+
   def number_to_currency_with_code(number, code = 'USD')
     case code
     when 'usd'

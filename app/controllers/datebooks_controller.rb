@@ -25,9 +25,6 @@ class DatebooksController < ApplicationController
       # so when the user clicks on the logo it will send him
       # to this datebook
       session[:LAST_VISITED_DATEBOOK] = @datebook.id
-
-      # Detect if this is coming from a mobile device
-      @is_mobile = request.user_agent =~ /iPhone|webOS|Android/
     rescue Exception
       redirect_to(root_url, notice: I18n.t("errors.messages.not_found"))
     end

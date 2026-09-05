@@ -44,6 +44,33 @@ class AppointmentsControllerTest < ActionController::TestCase
     end
   end
 
+  test 'calendar wall-clock feed omits offsets without changing the default JSON contract' do
+    practice = users(:founder).practice
+    practice.update!(timezone: 'Eastern Time (US & Canada)')
+    appointment = appointments(:first_visit)
+    starts_at = Time.iso8601('2026-09-03T12:00:00Z')
+    appointment.update!(starts_at: starts_at, ends_at: starts_at + 1.hour)
+
+    get :index, params: {
+      datebook_id: appointment.datebook_id,
+      start: '2026-09-03T00:00:00',
+      end: '2026-09-04T00:00:00',
+      wall_clock: '1'
+    }, format: :json
+    wall_clock_event = JSON.parse(response.body).find { |entry| entry['id'] == appointment.id }
+    assert_equal '2026-09-03T08:00:00', wall_clock_event.fetch('start')
+    assert_equal '2026-09-03T09:00:00', wall_clock_event.fetch('end')
+
+    get :index, params: {
+      datebook_id: appointment.datebook_id,
+      start: '2026-09-03T00:00:00',
+      end: '2026-09-04T00:00:00'
+    }, format: :json
+    default_event = JSON.parse(response.body).find { |entry| entry['id'] == appointment.id }
+    assert_equal '2026-09-03T08:00:00-04:00', default_event.fetch('start')
+    assert_equal '2026-09-03T09:00:00-04:00', default_event.fetch('end')
+  end
+
   test 'calendar create move and resize preserve practice wall time' do
     users(:founder).practice.update!(timezone: 'Eastern Time (US & Canada)')
     source = appointments(:first_visit)
@@ -56,11 +83,11 @@ class AppointmentsControllerTest < ActionController::TestCase
     assert_equal Time.utc(2026, 9, 3, 13), appointment.ends_at
 
     patch :update, params: { datebook_id: source.datebook_id, id: appointment.id, appointment: {
-      starts_at: '2026-09-04T08:00:00', ends_at: '2026-09-04T09:30:00'
+      starts_at: '2026-09-04T08:15:00', ends_at: '2026-09-04T09:45:00'
     } }, format: :js
     assert_response :success
-    assert_equal Time.utc(2026, 9, 4, 12), appointment.reload.starts_at
-    assert_equal Time.utc(2026, 9, 4, 13, 30), appointment.ends_at
+    assert_equal Time.utc(2026, 9, 4, 12, 15), appointment.reload.starts_at
+    assert_equal Time.utc(2026, 9, 4, 13, 45), appointment.ends_at
   end
 
   test 'calendar still accepts Unix timestamps for existing clients' do

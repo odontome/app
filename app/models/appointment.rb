@@ -80,12 +80,22 @@ class Appointment < ApplicationRecord
     border_color = doctor.color
     text_color = is_confirmed ? '#ffffff' : '#333333'
     is_waiting_today = (status == self.class.status[:waiting_room]) && (starts_at.in_time_zone.to_date == Time.zone.today)
+    calendar_zone = datebook.practice.timezone
+    calendar_start = starts_at.in_time_zone(calendar_zone)
+    calendar_end = ends_at.in_time_zone(calendar_zone)
+    if options[:wall_clock]
+      calendar_start = calendar_start.strftime('%Y-%m-%dT%H:%M:%S')
+      calendar_end = calendar_end.strftime('%Y-%m-%dT%H:%M:%S')
+    else
+      calendar_start = calendar_start.iso8601
+      calendar_end = calendar_end.iso8601
+    end
 
     {
       id: id,
-      start: starts_at.in_time_zone(datebook.practice.timezone).iso8601,
-      end: ends_at.in_time_zone(datebook.practice.timezone).iso8601,
-      title: notes,
+      start: calendar_start,
+      end: calendar_end,
+      title: notes.to_s,
       doctor_id: doctor_id,
       datebook_id: datebook_id,
       patient_id: patient_id,

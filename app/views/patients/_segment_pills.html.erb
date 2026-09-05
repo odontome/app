@@ -3,19 +3,19 @@
   <li class="nav-item">
     <%= link_to patients_url(segment: 'today'), class: "nav-link d-inline-flex align-items-center gap-2 #{@segment == 'today' ? 'active' : ''}", aria: { current: @segment == 'today' ? 'page' : nil } do %>
       <span><%= t :patients_segment_today %></span>
-      <span class="badge <%= @segment == 'today' ? 'bg-white-lt' : 'bg-secondary-lt' %>"><%= @today_count %></span>
+      <span class="badge <%= @segment == 'today' ? 'bg-primary text-primary-fg' : 'bg-secondary-lt' %>"><%= @today_count %></span>
     <% end %>
   </li>
   <li class="nav-item">
     <%= link_to patients_url(segment: 'needs_follow_up'), class: "nav-link d-inline-flex align-items-center gap-2 #{@segment == 'needs_follow_up' ? 'active' : ''}", aria: { current: @segment == 'needs_follow_up' ? 'page' : nil } do %>
       <span><%= t :patients_segment_needs_follow_up %></span>
-      <span class="badge <%= @segment == 'needs_follow_up' ? 'bg-white-lt' : 'bg-secondary-lt' %>"><%= @follow_up_count %></span>
+      <span class="badge <%= @segment == 'needs_follow_up' ? 'bg-primary text-primary-fg' : 'bg-secondary-lt' %>"><%= @follow_up_count %></span>
     <% end %>
   </li>
   <li class="nav-item">
     <%= link_to patients_url(segment: 'birthdays'), class: "nav-link d-inline-flex align-items-center gap-2 #{@segment == 'birthdays' ? 'active' : ''}", aria: { current: @segment == 'birthdays' ? 'page' : nil } do %>
       <span><%= t :patients_segment_birthdays %></span>
-      <span class="badge <%= @segment == 'birthdays' ? 'bg-white-lt' : 'bg-secondary-lt' %>"><%= @birthday_count %></span>
+      <span class="badge <%= @segment == 'birthdays' ? 'bg-primary text-primary-fg' : 'bg-secondary-lt' %>"><%= @birthday_count %></span>
     <% end %>
   </li>
   <li class="nav-item">

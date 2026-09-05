@@ -1,4 +1,6 @@
 <% if params[:type] != "drop" && params[:type] != "resize" %>
-	$("#calendar").fullCalendar("refetchEvents");
-	$(".modal").modal('hide');
+	window.odontomeCalendar && window.odontomeCalendar.refetchEvents();
+	document.querySelectorAll('.modal.show').forEach(function (element) {
+		tabler.Modal.getOrCreateInstance(element).hide();
+	});
 <% end %>

@@ -24,6 +24,7 @@
   "homepage": "https://github.com/odontome/app#readme",
   "dependencies": {
     "@rails/webpacker": "5.4.3",
+    "@tabler/core": "1.4.0",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"
   },

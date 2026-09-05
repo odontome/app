@@ -2,6 +2,8 @@ es:
   tell_us_about_your_experience_at_practice: Cuentamos un poco sobre tu experiencia en %{practice_name}
   account_cancelled: Tu cuenta ha sido marcada para cancelación. Si crees que esto es un error, por favor contacta con nosotros lo más rápido posible.
   activate: Activar
+  enable_dark_mode: Usar modo oscuro
+  enable_light_mode: Usar modo claro
   appointment: Cita
   appointment_visit:
     past_tense: <strong>%{patient_name}</strong> vió al %{doctor_fullname}

@@ -6,7 +6,7 @@
 <div class="empty">
   <%# if image_name.present? %>
     <div class="empty-img">  
-      <%= image_tag image_name %>   
+      <%= image_tag image_name, height: 128, class: 'mw-100 object-fit-contain' %>
     </div>
   <%# end %>
   <p class="empty-title"><%= title %></p>

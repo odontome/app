@@ -1,6 +1,6 @@
 <%= form_for(@review, :remote => true, :class => "form-horizontal") do |f| %>
 
-  <p class="form-group">
+  <p class="mb-3">
     <a href="#" data-score="1" class="rating-star"><%= image_tag asset_path('rating-star@2x.png'), :width => 35 %></a>
     <a href="#" data-score="2" class="rating-star"><%= image_tag asset_path('rating-star@2x.png'), :width => 35 %></a>
     <a href="#" data-score="3" class="rating-star"><%= image_tag asset_path('rating-star@2x.png'), :width => 35 %></a>
@@ -8,12 +8,12 @@
     <a href="#" data-score="5" class="rating-star"><%= image_tag asset_path('rating-star@2x.png'), :width => 35 %></a>
   </p>
 
-  <p class="form-group">
+  <p class="mb-3">
     <label><%= t :tell_us_about_your_experience_at_practice, practice_name: @appointment.datebook.practice.name %></label><br>
     <%= f.text_area :comment, :rows => 2, :maxlength => 255, :class => "form-control" %>
   </p>
 
-  <p class="form-group">
+  <p class="mb-0">
     <%= f.hidden_field :appointment_id %>
     <%= f.hidden_field :score %>
     <%= f.submit(t(:save), :class => "btn btn-primary", data: { disable_with: t(:please_wait) }, disabled: true) %>

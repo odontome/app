@@ -46,6 +46,24 @@ class DatebooksControllerTest < ActionController::TestCase
     assert_select '.page-header p', text: /Eastern Time/, count: 0
   end
 
+  test 'calendar uses the Tabler FullCalendar integration and official theme controls' do
+    get :show, params: { id: datebooks(:playa_del_carmen).id }
+    assert_response :success
+
+    assert_includes response.body, 'new FullCalendar.Calendar'
+    assert_includes response.body, 'tabler.Modal.getOrCreateInstance'
+    assert_includes response.body, "timeZone: 'UTC'"
+    assert_includes response.body, "slotDuration: '00:30:00'"
+    assert_includes response.body, "snapDuration: '00:15:00'"
+    assert_includes response.body, "wall_clock: '1'"
+    assert_not_includes response.body, '.fullCalendar('
+    assert_not_includes response.body, 'ignoreTimezone'
+    assert_select 'script[src*="/theme-"]', count: 1
+    assert_select 'body#app-body:not(.theme-light):not(.theme-dark)', count: 1
+    assert_select 'a.hide-theme-dark[aria-label=?]', I18n.t(:enable_dark_mode), count: 1
+    assert_select 'a.hide-theme-light[aria-label=?]', I18n.t(:enable_light_mode), count: 1
+  end
+
   test 'should get edit' do
     get :edit, params: { id: datebooks(:playa_del_carmen).to_param }
     assert_response :success

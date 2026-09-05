@@ -1,6 +1,6 @@
 <% if target.errors.any? %>
 	<div class="alert alert-danger" role="alert">
-		<h4 class="alert-title"><%= t "errors.titles.form_update" %></h4>
+		<h4 class="alert-heading"><%= t "errors.titles.form_update" %></h4>
 
     <div class="text-muted">
       <% target.errors.full_messages.each do |msg| %>
