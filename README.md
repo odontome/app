@@ -51,6 +51,11 @@ brew services start postgresql@14
 brew services stop postgresql@14
 ```
 
+### 4. Node.js and Yarn
+
+Install Node.js 24 and Yarn 1.22.22, matching `package.json`. These install the
+Tabler assets that Rails serves through Sprockets.
+
 ## Local Development Setup
 
 Follow these steps to set up the application on your macOS machine:
@@ -64,6 +69,7 @@ cd app
 
 # Install dependencies
 bundle install
+yarn install --frozen-lockfile
 
 # Set up the database
 bundle exec rails db:setup
@@ -83,6 +89,7 @@ If you prefer the traditional Rails setup script:
 ```bash
 # Prerequisites: rbenv, PostgreSQL, and Homebrew must be installed first
 ./bin/setup
+yarn install --frozen-lockfile
 ```
 
 ### Manual Setup (Step by Step)
@@ -104,7 +111,7 @@ gem install bundler
 bundle install
 
 # Install JavaScript dependencies
-yarn install
+yarn install --frozen-lockfile
 ```
 
 #### 3. Configure Environment Variables
@@ -134,14 +141,11 @@ bundle exec rails db:migrate
 bundle exec rails db:seed
 ```
 
-#### 5. Compile Assets
+#### 5. Compile Assets (Production Only)
 
 ```bash
 # Compile JavaScript and CSS assets for production
-bundle exec rails assets:precompile
-
-# For development, compile once
-./bin/webpack
+RAILS_ENV=production SECRET_KEY_BASE_DUMMY=1 bundle exec rails assets:precompile
 ```
 
 #### 6. Start the Application
@@ -171,25 +175,18 @@ bundle exec rails test test/models/user_test.rb
 
 ## Asset Development
 
-For frontend development with automatic recompilation:
+Sprockets serves JavaScript and CSS from `app/assets` and Tabler's installed
+package. In development, it compiles assets on demand; no separate JavaScript
+build process is needed.
 
 ```bash
-# In one terminal, start the Rails server
+# Install the locked frontend dependencies, then start Rails
+yarn install --frozen-lockfile
 bundle exec rails server
-
-# In another terminal, start Webpack dev server for auto-recompilation
-./bin/webpack-dev-server
 ```
 
-Or compile assets manually when needed:
-
-```bash
-# Compile once
-./bin/webpack
-
-# Watch for changes and recompile automatically
-./bin/webpack --watch
-```
+See [Front-end dependency policy](docs/frontend-dependencies.md) for deployment
+buildpack order and production asset verification.
 
 ## AI Assistant (MCP Agent)
 
