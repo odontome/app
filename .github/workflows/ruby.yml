@@ -34,6 +34,15 @@ jobs:
           ruby-version: 3.2.3
           bundler-cache: true
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Node dependencies
+        run: npm install
+
       - name: Install PostgreSQL client
         run: |
           sudo apt-get -yqq install libpq-dev
@@ -46,7 +55,6 @@ jobs:
           RAILS_ENV: test
         run: |
           bin/rails db:setup
-          bin/rails assets:precompile
 
       - name: Enforce MCP and OAuth coverage
         env:
