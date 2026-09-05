@@ -90,6 +90,7 @@ class DatebooksControllerTest < ActionController::TestCase
       calendar = JSON.parse(output)
       assert_equal locale, calendar.fetch('locale')
       assert_equal layout == 'compact' ? 'timeGridDay' : 'timeGridWeek', calendar.fetch('view')
+      assert_equal ['1–2', '1:30–2:30', '11:30–12:30'], calendar.fetch('ranges')
 
       expected_times = ['12:00am', '9:15am', '12:00pm', '1:30pm', '11:45pm']
       assert_equal expected_times.length, calendar.fetch('results').length
@@ -97,7 +98,8 @@ class DatebooksControllerTest < ActionController::TestCase
         %w[slot event newTitle editTitle].each do |surface|
           # Spanish uses punctuation/spaces in a. m. and p. m.
           text = result.fetch(surface).downcase.gsub(/[\p{Space}.]/, '')
-          assert text.end_with?(expected), "#{locale} #{layout} #{surface} at #{result.fetch('time')}: #{result.fetch(surface)}"
+          expected_text = surface == 'event' ? expected.sub(/:00/, '').sub(/[ap]m\z/, '') : expected
+          assert text.end_with?(expected_text), "#{locale} #{layout} #{surface} at #{result.fetch('time')}: #{result.fetch(surface)}"
         end
       end
     end

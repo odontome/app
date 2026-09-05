@@ -40,7 +40,13 @@
       snapDuration: '00:15:00',
       // Preserve 12-hour display regardless of the practice locale.
       slotLabelFormat: { hour: 'numeric', minute: '2-digit', hour12: true, meridiem: 'short' },
-      eventTimeFormat: { hour: 'numeric', minute: '2-digit', hour12: true, meridiem: 'short' },
+      eventTimeFormat: function (info) {
+        // FullCalendar's meridiem:false does not strip localized Spanish suffixes.
+        function shortTime(date) {
+          return (date.hour % 12 || 12) + (date.minute ? ':' + String(date.minute).padStart(2, '0') : '');
+        }
+        return shortTime(info.start) + (info.end ? '–' + shortTime(info.end) : '');
+      },
       slotMinTime: '<%= format('%02d:00:00', @datebook.starts_at) %>',
       slotMaxTime: '<%= format('%02d:00:00', @datebook.ends_at) %>',
       firstDay: 1,
