@@ -37,11 +37,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version-file: package.json
 
       - name: Install Node dependencies
-        run: npm install
+        run: |
+          npm install --global yarn@1.22.22
+          yarn install --frozen-lockfile
 
       - name: Install PostgreSQL client
         run: |
@@ -73,3 +74,12 @@ jobs:
           RAILS_ENV: test
         run: |
           bundle exec rake test
+
+      - name: Run JavaScript tests
+        run: node --test test/javascript/*_test.js
+
+      - name: Precompile production assets
+        env:
+          RAILS_ENV: production
+          SECRET_KEY_BASE_DUMMY: '1'
+        run: bin/rails assets:precompile

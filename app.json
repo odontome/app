@@ -4,6 +4,10 @@
   "website": "https://www.odonto.me",
   "repository": "https://github.com/odontome/app",
   "logo": "https://my.odonto.me/apple-touch-icon-precomposed.png",
+  "buildpacks": [
+    { "url": "heroku/nodejs" },
+    { "url": "heroku/ruby" }
+  ],
   "addons": [
     "heroku-postgresql:hobby-dev", 
     "scheduler:standard", 

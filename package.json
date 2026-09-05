@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Docker is the recommended way to run this project locally. Just follow their [instructions](https://docs.docker.com) to get started.",
   "main": "index.js",
+  "engines": {
+    "node": "24.x",
+    "yarn": "1.22.22"
+  },
   "directories": {
     "doc": "doc",
     "lib": "lib",
