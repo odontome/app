@@ -53,6 +53,8 @@ class DatebooksControllerTest < ActionController::TestCase
     assert_includes response.body, 'new FullCalendar.Calendar'
     assert_includes response.body, 'tabler.Modal.getOrCreateInstance'
     assert_includes response.body, "timeZone: 'UTC'"
+    assert_includes response.body, "slotDuration: '00:30:00'"
+    assert_includes response.body, "snapDuration: '00:15:00'"
     assert_includes response.body, "wall_clock: '1'"
     assert_not_includes response.body, '.fullCalendar('
     assert_not_includes response.body, 'ignoreTimezone'

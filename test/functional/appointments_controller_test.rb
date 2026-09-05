@@ -83,11 +83,11 @@ class AppointmentsControllerTest < ActionController::TestCase
     assert_equal Time.utc(2026, 9, 3, 13), appointment.ends_at
 
     patch :update, params: { datebook_id: source.datebook_id, id: appointment.id, appointment: {
-      starts_at: '2026-09-04T08:00:00', ends_at: '2026-09-04T09:30:00'
+      starts_at: '2026-09-04T08:15:00', ends_at: '2026-09-04T09:45:00'
     } }, format: :js
     assert_response :success
-    assert_equal Time.utc(2026, 9, 4, 12), appointment.reload.starts_at
-    assert_equal Time.utc(2026, 9, 4, 13, 30), appointment.ends_at
+    assert_equal Time.utc(2026, 9, 4, 12, 15), appointment.reload.starts_at
+    assert_equal Time.utc(2026, 9, 4, 13, 45), appointment.ends_at
   end
 
   test 'calendar still accepts Unix timestamps for existing clients' do

@@ -35,6 +35,8 @@
       now: '<%= Time.current.in_time_zone(@datebook.practice.timezone).strftime('%Y-%m-%dT%H:%M:%S') %>',
       initialView: compactCalendar ? 'timeGridDay' : 'timeGridWeek',
       timeZone: 'UTC',
+      slotDuration: '00:30:00',
+      snapDuration: '00:15:00',
       slotMinTime: '<%= format('%02d:00:00', @datebook.starts_at) %>',
       slotMaxTime: '<%= format('%02d:00:00', @datebook.ends_at) %>',
       firstDay: 1,
