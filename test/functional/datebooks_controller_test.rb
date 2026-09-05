@@ -1,11 +1,17 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+require 'open3'
 
 class DatebooksControllerTest < ActionController::TestCase
   setup do
+    @previous_locale = I18n.locale
     @controller.session['user'] = users(:founder)
     @datebook = { name: 'Bokanova Dental' }
+  end
+
+  teardown do
+    I18n.locale = @previous_locale
   end
 
   test 'should get index' do
@@ -67,6 +73,34 @@ class DatebooksControllerTest < ActionController::TestCase
   test 'should get edit' do
     get :edit, params: { id: datebooks(:playa_del_carmen).to_param }
     assert_response :success
+  end
+
+  %w[en es pt].product(%w[wide compact], %w[UTC Pacific/Honolulu]).each do |locale, layout, timezone|
+    test "calendar keeps 12-hour times in #{locale} on #{layout} screens with #{timezone} host time" do
+      users(:founder).practice.update!(locale: locale)
+      get :show, params: { id: datebooks(:playa_del_carmen).id }
+      assert_response :success
+
+      output, error, status = Open3.capture3(
+        { 'TZ' => timezone },
+        'node', Rails.root.join('test/support/calendar_time_formats.js').to_s, layout,
+        stdin_data: response.body
+      )
+      assert status.success?, error
+      calendar = JSON.parse(output)
+      assert_equal locale, calendar.fetch('locale')
+      assert_equal layout == 'compact' ? 'timeGridDay' : 'timeGridWeek', calendar.fetch('view')
+
+      expected_times = ['12:00am', '9:15am', '12:00pm', '1:30pm', '11:45pm']
+      assert_equal expected_times.length, calendar.fetch('results').length
+      calendar.fetch('results').zip(expected_times).each do |result, expected|
+        %w[slot event newTitle editTitle].each do |surface|
+          # Spanish uses punctuation/spaces in a. m. and p. m.
+          text = result.fetch(surface).downcase.gsub(/[\p{Space}.]/, '')
+          assert text.end_with?(expected), "#{locale} #{layout} #{surface} at #{result.fetch('time')}: #{result.fetch(surface)}"
+        end
+      end
+    end
   end
 
   test 'should not get edit if not admin' do
