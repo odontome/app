@@ -46,6 +46,7 @@ jobs:
           RAILS_ENV: test
         run: |
           bin/rails db:setup
+          bin/rails assets:precompile
 
       - name: Enforce MCP and OAuth coverage
         env:
