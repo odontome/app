@@ -35,7 +35,7 @@ vm.runInNewContext(script, {
   setTimeout() {}, clearTimeout() {}
 });
 
-const results = ['00:00', '09:15', '12:00', '13:30', '23:45'].map(time => {
+const results = ['00:00', '09:00', '09:15', '12:00', '13:30', '21:00', '23:45'].map(time => {
   const date = new Date(`2026-09-05T${time}:00Z`);
   const format = config => fullCalendar.FullCalendar.formatDate(date.toISOString().slice(0, 19), typeof config === 'function' ? config : {
     locale: options.locale, timeZone: options.timeZone,

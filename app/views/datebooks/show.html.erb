@@ -12,15 +12,17 @@
       return date.toISOString().slice(0, 19);
     }
 
+    function calendarClock(hour, minute, meridiem) {
+      var time = (hour % 12 || 12) + (minute ? ':' + String(minute).padStart(2, '0') : '');
+      return time + (meridiem ? (hour < 12 ? 'am' : 'pm') : '');
+    }
+
     function calendarLabel(date) {
       return new Intl.DateTimeFormat('<%= I18n.locale %>', {
         day: '2-digit',
         month: 'long',
-        hour: 'numeric',
-        minute: '2-digit',
-        hour12: true,
         timeZone: 'UTC'
-      }).format(date);
+      }).format(date) + ' · ' + calendarClock(date.getUTCHours(), date.getUTCMinutes(), true);
     }
 
     function showAppointmentModal() {
@@ -39,13 +41,12 @@
       slotDuration: '00:30:00',
       snapDuration: '00:15:00',
       // Preserve 12-hour display regardless of the practice locale.
-      slotLabelFormat: { hour: 'numeric', minute: '2-digit', hour12: true, meridiem: 'short' },
+      slotLabelFormat: function (info) {
+        return calendarClock(info.date.hour, info.date.minute, true);
+      },
       eventTimeFormat: function (info) {
-        // FullCalendar's meridiem:false does not strip localized Spanish suffixes.
-        function shortTime(date) {
-          return (date.hour % 12 || 12) + (date.minute ? ':' + String(date.minute).padStart(2, '0') : '');
-        }
-        return shortTime(info.start) + (info.end ? '–' + shortTime(info.end) : '');
+        return calendarClock(info.start.hour, info.start.minute, false) +
+          (info.end ? '–' + calendarClock(info.end.hour, info.end.minute, false) : '');
       },
       slotMinTime: '<%= format('%02d:00:00', @datebook.starts_at) %>',
       slotMaxTime: '<%= format('%02d:00:00', @datebook.ends_at) %>',

@@ -92,14 +92,14 @@ class DatebooksControllerTest < ActionController::TestCase
       assert_equal layout == 'compact' ? 'timeGridDay' : 'timeGridWeek', calendar.fetch('view')
       assert_equal ['1–2', '1:30–2:30', '11:30–12:30'], calendar.fetch('ranges')
 
-      expected_times = ['12:00am', '9:15am', '12:00pm', '1:30pm', '11:45pm']
+      expected_times = ['12am', '9am', '9:15am', '12pm', '1:30pm', '9pm', '11:45pm']
       assert_equal expected_times.length, calendar.fetch('results').length
       calendar.fetch('results').zip(expected_times).each do |result, expected|
-        %w[slot event newTitle editTitle].each do |surface|
-          # Spanish uses punctuation/spaces in a. m. and p. m.
-          text = result.fetch(surface).downcase.gsub(/[\p{Space}.]/, '')
-          expected_text = surface == 'event' ? expected.sub(/:00/, '').sub(/[ap]m\z/, '') : expected
-          assert text.end_with?(expected_text), "#{locale} #{layout} #{surface} at #{result.fetch('time')}: #{result.fetch(surface)}"
+        assert_equal expected, result.fetch('slot')
+        assert_equal expected.sub(/[ap]m\z/, ''), result.fetch('event')
+        %w[newTitle editTitle].each do |surface|
+          assert_equal expected, result.fetch(surface).split(' · ').last,
+                       "#{locale} #{layout} #{surface} at #{result.fetch('time')}"
         end
       end
     end
