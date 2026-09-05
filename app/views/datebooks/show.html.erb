@@ -45,8 +45,9 @@
         return calendarClock(info.date.hour, info.date.minute, true);
       },
       eventTimeFormat: function (info) {
-        return calendarClock(info.start.hour, info.start.minute, false) +
-          (info.end ? '–' + calendarClock(info.end.hour, info.end.minute, false) : '');
+        var showStartMeridiem = !info.end || (info.start.hour < 12) !== (info.end.hour < 12);
+        return calendarClock(info.start.hour, info.start.minute, showStartMeridiem) +
+          (info.end ? '–' + calendarClock(info.end.hour, info.end.minute, true) : '');
       },
       slotMinTime: '<%= format('%02d:00:00', @datebook.starts_at) %>',
       slotMaxTime: '<%= format('%02d:00:00', @datebook.ends_at) %>',

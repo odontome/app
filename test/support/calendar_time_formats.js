@@ -49,7 +49,7 @@ const results = ['00:00', '09:00', '09:15', '12:00', '13:30', '21:00', '23:45'].
     newTitle, editTitle: modalTitle
   };
 });
-const ranges = [['13:00', '14:00'], ['13:30', '14:30'], ['11:30', '12:30']].map(([start, end]) =>
-  fullCalendar.FullCalendar.formatRange(`2026-09-05T${start}:00`, `2026-09-05T${end}:00`, options.eventTimeFormat)
+const ranges = [['10:00', '10:30'], ['13:00', '14:00'], ['13:30', '14:30'], ['11:30', '12:30'], ['23:30', '00:30']].map(([start, end]) =>
+  fullCalendar.FullCalendar.formatRange(`2026-09-05T${start}:00`, `2026-09-${end < start ? '06' : '05'}T${end}:00`, options.eventTimeFormat)
 );
 process.stdout.write(JSON.stringify({ locale: options.locale, view: options.initialView, results, ranges }));

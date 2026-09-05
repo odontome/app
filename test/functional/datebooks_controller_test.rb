@@ -90,13 +90,14 @@ class DatebooksControllerTest < ActionController::TestCase
       calendar = JSON.parse(output)
       assert_equal locale, calendar.fetch('locale')
       assert_equal layout == 'compact' ? 'timeGridDay' : 'timeGridWeek', calendar.fetch('view')
-      assert_equal ['1–2', '1:30–2:30', '11:30–12:30'], calendar.fetch('ranges')
+      assert_equal ['10–10:30am', '1–2pm', '1:30–2:30pm', '11:30am–12:30pm', '11:30pm–12:30am'],
+                   calendar.fetch('ranges')
 
       expected_times = ['12am', '9am', '9:15am', '12pm', '1:30pm', '9pm', '11:45pm']
       assert_equal expected_times.length, calendar.fetch('results').length
       calendar.fetch('results').zip(expected_times).each do |result, expected|
         assert_equal expected, result.fetch('slot')
-        assert_equal expected.sub(/[ap]m\z/, ''), result.fetch('event')
+        assert_equal expected, result.fetch('event')
         %w[newTitle editTitle].each do |surface|
           assert_equal expected, result.fetch(surface).split(' · ').last,
                        "#{locale} #{layout} #{surface} at #{result.fetch('time')}"
