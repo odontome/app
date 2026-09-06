@@ -168,7 +168,6 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
       assert [true, false].include?(annotations['openWorldHint']), "Tool '#{tool['name']}' must declare openWorldHint"
     end
 
-    # Verify read-only tools are marked correctly
     read_only_tools = %w[list_datebooks list_doctors list_appointments search_patients]
     write_tools = %w[create_appointment update_appointment]
 
@@ -295,7 +294,12 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
 
     body = JSON.parse(@response.body)
     content = body.dig('result', 'structuredContent', 'doctors')
-    assert content.is_a?(Array)
+    expected = [:perishable, :rebecca, :no_email].map do |name|
+      doctor = doctors(name)
+      { 'id' => doctor.id, 'uid' => doctor.uid, 'name' => doctor.fullname, 'speciality' => doctor.speciality }
+    end
+    assert_equal expected, content
+    content.each { |doctor| assert_equal %w[id name speciality uid], doctor.keys.sort }
   end
 
   # --- tools/call: list_appointments ---
@@ -366,11 +370,9 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert content.any?, 'Expected at least one appointment'
 
     entry = content.first
-    # Should include patient identity
     assert entry.key?('patient_id'), 'Appointment should include patient_id'
     assert entry.key?('patient_name'), 'Appointment should include patient_name'
 
-    # Should NOT include any PII fields
     %w[email phone telephone address date_of_birth allergies insurance].each do |pii_field|
       assert_not entry.key?(pii_field), "Appointment must not expose PII field: #{pii_field}"
     end
@@ -886,7 +888,10 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
 
     body = JSON.parse(@response.body)
     content = body.dig('result', 'structuredContent', 'patients')
-    assert content.is_a?(Array)
+    patient = patients(:four)
+    assert_equal [{ 'id' => patient.id, 'uid' => patient.uid,
+                    'firstname' => patient.firstname, 'lastname' => patient.lastname }], content
+    assert_equal %w[firstname id lastname uid], content.first.keys.sort
   end
 
   test 'should not expose PII in search_patients response' do
@@ -904,12 +909,10 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert content.any?, 'Expected at least one patient'
 
     entry = content.first
-    # Should only include safe fields
     assert entry.key?('id')
     assert entry.key?('firstname')
     assert entry.key?('lastname')
 
-    # Should NOT include PII
     %w[email phone telephone address date_of_birth allergies insurance].each do |pii_field|
       assert_not entry.key?(pii_field), "search_patients must not expose PII field: #{pii_field}"
     end
@@ -976,7 +979,6 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
 
   test 'should return parse error for invalid JSON' do
     raw_token = enable_agent_access(@practice)
-    @request.headers['Authorization'] = "Bearer #{raw_token}"
     @request.headers['Authorization'] = "Bearer #{raw_token}"
 
     @request.headers['Content-Type'] = 'application/json'
@@ -1171,7 +1173,6 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
 
   test 'should reject oversized request body' do
     raw_token = enable_agent_access(@practice)
-    @request.headers['Authorization'] = "Bearer #{raw_token}"
     @request.headers['Authorization'] = "Bearer #{raw_token}"
     @request.headers['Content-Type'] = 'application/json'
 
@@ -1674,7 +1675,6 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
   test 'protocol: should handle missing method field' do
     raw_token = enable_agent_access(@practice)
     @request.headers['Authorization'] = "Bearer #{raw_token}"
-    @request.headers['Authorization'] = "Bearer #{raw_token}"
     @request.headers['Content-Type'] = 'application/json'
 
     post :create, body: { jsonrpc: '2.0', id: 400 }.to_json, format: :json
@@ -1686,7 +1686,6 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
 
   test 'protocol: should reject batch JSON-RPC array requests' do
     raw_token = enable_agent_access(@practice)
-    @request.headers['Authorization'] = "Bearer #{raw_token}"
     @request.headers['Authorization'] = "Bearer #{raw_token}"
     @request.headers['Content-Type'] = 'application/json'
 
