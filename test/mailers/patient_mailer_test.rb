@@ -9,18 +9,15 @@ class PatientMailerTest < ActionMailer::TestCase
     doctor = doctors(:rebecca)
     patient = patients(:four)
 
-    # Send the email, then test that it got queued
     email = PatientMailer.appointment_soon_email(patient.email, patient.fullname, appointment.starts_at,
                                                  appointment.ends_at, practice.name, practice.locale, practice.timezone, doctor, users(:perishable).email).deliver_now
 
     assert !ActionMailer::Base.deliveries.empty?
 
-    # Test the body of the sent email contains what we expect it to
     assert_equal ['hello@odonto.me'], email.from
     assert_equal ['contact@bokanova.mx'], email.reply_to
     assert_equal ['raulriera@hotmail.com'], email.to
     assert_equal I18n.t('mailers.patient.appointment_soon_email.subject', practice_name: practice.name), email.subject
-    # assert_equal read_fixture('welcome_email').join, email.body.to_s
     assert_match(/Your appointment with Odonto.me demo practice is soon/, email.encoded)
     assert_match(/D.D.S. Rebecca Riera/, email.encoded)
   end
@@ -32,13 +29,11 @@ class PatientMailerTest < ActionMailer::TestCase
     doctor = doctors(:rebecca)
     patient = patients(:four)
 
-    # Send the email, then test that it got queued
     email = PatientMailer.appointment_soon_email(patient.email, patient.fullname, appointment.starts_at,
                                                  appointment.ends_at, practice.name, practice.locale, practice.timezone, doctor, practice_email).deliver_now
 
     assert !ActionMailer::Base.deliveries.empty?
 
-    # Test the body of the sent email contains what we expect it to
     assert_match(/Comienza a las: (.*)08:00/, email.encoded)
     assert_match(/y termina a las: (.*)09:00/, email.encoded)
     assert_match(/Dra. Rebecca Riera/, email.encoded)
@@ -50,13 +45,11 @@ class PatientMailerTest < ActionMailer::TestCase
     doctor = doctors(:rebecca)
     patient = patients(:four)
 
-    # Send the email, then test that it got queued
     email = PatientMailer.appointment_scheduled_email(patient.email, patient.fullname, appointment.starts_at,
                                                       appointment.ends_at, practice.name, practice.locale, practice.timezone, doctor, users(:perishable).email).deliver_now
 
     assert !ActionMailer::Base.deliveries.empty?
 
-    # Test the body of the sent email contains what we expect it to
     assert_equal ['hello@odonto.me'], email.from
     assert_equal ['contact@bokanova.mx'], email.reply_to
     assert_equal ['raulriera@hotmail.com'], email.to
@@ -75,12 +68,10 @@ class PatientMailerTest < ActionMailer::TestCase
       'email' => 'raulriera@hotmail.com'
     }
 
-    # Send the email, then test that it got queued
     email = PatientMailer.birthday_wishes(admin, patient).deliver_now
 
     assert !ActionMailer::Base.deliveries.empty?
 
-    # Test the body of the sent email contains what we expect it to
     assert_equal ['hello@odonto.me'], email.from
     assert_equal ['contact@bokanova.mx'], email.reply_to
     assert_equal ['raulriera@hotmail.com'], email.to
