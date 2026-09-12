@@ -194,8 +194,7 @@ class OdontogramEntry < ApplicationRecord
     absent_teeth = patient.odontogram_entries.present_in_mouth.where(category: 'missing').pluck(:tooth)
     absence_recorded = category == 'complete_denture' ? absent_arch : absent_arch || (replacement_teeth - absent_teeth).empty?
     errors.add(:base, I18n.t(category == 'complete_denture' ? 'odontogram.editor.denture_absence' : 'odontogram.editor.partial_absence')) unless planned? || absence_recorded
-    dentures = peers.where(category: DENTURE_CATEGORIES)
-    overlap = dentures.any? { |entry| category == 'complete_denture' || entry.category == 'complete_denture' || (replacement_teeth & entry.replacement_teeth).any? }
+    overlap = marking_peers.where(category: DENTURE_CATEGORIES + ['fixed_bridge']).touching_any(target_teeth).exists?
     errors.add(:base, I18n.t('odontogram.editor.denture_overlap')) if overlap
   end
 
