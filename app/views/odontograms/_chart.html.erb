@@ -1,0 +1,74 @@
+<section class="card mb-3 od-chart" data-odontogram
+         data-odontogram-session="<%= [current_user.id, patient.practice_id, patient.id].join(':') %>"
+         data-odontogram-session-enabled="<%= current_user.practice.odontogram_enabled? && !impersonating? %>"
+         data-endpoint="<%= patient_odontogram_path(patient) %>"
+         data-snapshot-id="<%= local_assigns[:snapshot]&.id %>"
+         data-changed-teeth="<%= (local_assigns[:changed_teeth] || []).to_json %>"
+         data-arch-teeth="<%= OdontogramEntry::ARCH_TEETH.to_json %>"
+         data-attachment-conflicts="<%= OdontogramEntry::ATTACHMENT_CONFLICTS.to_json %>"
+         data-treatment-categories="<%= OdontogramEntry::TREATMENT_CATEGORIES.to_json %>"
+         data-group-categories="<%= OdontogramEntry::GROUP_CATEGORIES.to_json %>"
+         data-tooth-arches="<%= OdontogramEntry::ARCHES.to_json %>"
+         data-paired-categories="<%= OdontogramEntry::PAIRED_CATEGORIES.to_json %>"
+         data-paired-neighbors="<%= OdontogramEntry::TEETH.to_h { |tooth| [tooth, OdontogramEntry.neighbors(tooth)] }.to_json %>"
+         data-transposition-partners="<%= OdontogramEntry::TEETH.to_h { |tooth| [tooth, OdontogramEntry.pair_candidates(tooth, 'transposition')] }.to_json %>"
+         data-surface-categories="<%= OdontogramEntry::SURFACE_CATEGORIES.to_json %>"
+         data-optional-surface-categories="<%= OdontogramEntry::OPTIONAL_SURFACE_CATEGORIES.to_json %>"
+         data-artwork="<%= asset_path('odontogram-artwork.js') %>"
+         data-copy="<%= t('odontogram.editor').merge(categories: t('odontogram.categories'), tooth: t('odontogram.tooth', number: '%{number}'), empty: t('odontogram.empty'), read_only: t(local_assigns[:snapshot] ? 'odontogram.history.read_only' : 'odontogram.read_only')).to_json %>">
+  <div class="card-header">
+    <h2 class="card-title"><%= t('odontogram.title') %></h2>
+    <div class="ms-auto">
+      <%= link_to patient_odontogram_path(patient), class: 'btn btn-sm btn-ghost-secondary' do %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M12 8l0 4l2 2" />
+          <path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" />
+        </svg>
+        <%= t('odontogram.editor.records') %>
+      <% end %>
+    </div>
+  </div>
+  <div class="card-body od-summary" data-odontogram-summary>
+    <% entries = local_assigns[:snapshot_entries] ? snapshot_entries.last(3).reverse : patient.odontogram_entries.active.recent.limit(3) %>
+    <% if entries.any? %>
+      <% entries.each do |entry| %>
+        <div><%= entry.target_name %> · <%= entry.marking_name %><% if entry.surfaces.any? %> · <%= entry.surfaces.join('') %><% end %></div>
+      <% end %>
+    <% else %>
+      <p class="text-muted mb-0"><%= t('odontogram.empty') %></p>
+    <% end %>
+    <p class="text-muted mt-2 mb-0 od-phone-note"><%= t('odontogram.editor.phone') %></p>
+  </div>
+  <div class="card-body od-desktop" hidden>
+    <div class="d-flex align-items-center gap-2 flex-wrap mb-3">
+      <div class="od-tools" hidden>
+        <button type="button" class="btn" data-tool aria-expanded="false">
+          <span data-tool-icon aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0M12 18c-.328 0 -.652 -.017 -.97 -.05c-3.172 -.332 -5.85 -2.315 -8.03 -5.95c2.4 -4 5.4 -6 9 -6c3.465 0 6.374 1.853 8.727 5.558M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0M20.2 20.2l1.8 1.8"/></svg>
+          </span><span data-tool-label><%= t('odontogram.editor.inspect') %></span>
+        </button>
+        <div class="dropdown-menu od-menu" data-menu hidden>
+          <input type="search" class="form-control mb-2" data-search aria-label="<%= t('odontogram.editor.search') %>" placeholder="<%= t('odontogram.editor.search') %>">
+          <div data-options></div>
+        </div>
+      </div>
+      <select class="form-select form-select-sm w-auto" data-treatment-status aria-label="<%= t('odontogram.editor.treatment_status') %>" hidden>
+        <% %w[existing planned].each do |status| %><option value="<%= status %>"><%= t("odontogram.editor.treatment_statuses.#{status}") %></option><% end %>
+      </select>
+      <span class="text-muted small" data-hint><%= t('odontogram.editor.inspect_hint') %></span>
+      <select class="form-select form-select-sm ms-auto od-dentition" data-dentition aria-label="<%= t('odontogram.editor.dentition') %>">
+        <% %w[permanent primary mixed].each do |view| %><option value="<%= view %>"><%= t("odontogram.editor.#{view}") %></option><% end %>
+      </select>
+    </div>
+    <p class="text-muted small" data-hidden-teeth hidden></p>
+    <div class="od-arches" data-arches></div>
+    <div class="od-details" data-details hidden></div>
+    <div class="d-flex align-items-center flex-wrap gap-2 mt-3 rounded" data-feedback>
+      <span class="small" data-status role="status" aria-live="polite"></span>
+      <button type="button" class="btn btn-sm btn-ghost-secondary" data-retry hidden><%= t('odontogram.editor.retry') %></button>
+      <button type="button" class="btn btn-sm btn-ghost-secondary" data-refresh hidden><%= t('odontogram.editor.refresh') %></button>
+      <button type="button" class="btn btn-sm btn-ghost-secondary" data-undo hidden><%= t('odontogram.editor.undo') %></button>
+      <span class="ms-auto small text-muted"><span class="od-finding"><%= t('odontogram.editor.red_legend') %></span> · <span class="od-work"><%= t('odontogram.editor.blue_legend') %></span> · <%= t('odontogram.editor.unrecorded') %></span>
+    </div>
+  </div>
+</section>

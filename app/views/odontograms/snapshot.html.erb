@@ -1,0 +1,47 @@
+<div class="page-header mb-4">
+  <div class="row align-items-center g-2">
+    <div class="col">
+      <h1 class="page-title"><%= t('odontogram.title') %></h1>
+      <div class="text-muted"><%= @patient.fullname %></div>
+    </div>
+    <div class="col-auto"><%= link_to t('odontogram.back_to_patient'), patient_path(@patient), class: 'btn' %></div>
+  </div>
+</div>
+
+<div class="alert alert-info" data-saved-chart>
+  <div>
+    <div class="fw-medium"><%= t('odontogram.history.saved_chart') %> · <time datetime="<%= @snapshot.created_at.iso8601 %>"><%= l(@snapshot.created_at, format: :long) %></time></div>
+    <div><%= t('odontogram.history.read_only') %></div>
+  </div>
+</div>
+
+<%= render 'chart', patient: @patient, snapshot: @snapshot, snapshot_entries: @snapshot_entries, changed_teeth: @comparison.fetch('teeth') %>
+
+<section class="card" data-comparison>
+  <div class="card-header"><h2 class="card-title"><%= t('odontogram.history.what_changed') %></h2></div>
+  <div class="card-body">
+    <p class="text-muted"><%= t('odontogram.history.compared_at', time: l(@compared_at, format: :long)) %></p>
+    <% if @comparison.fetch('teeth').empty? %>
+      <p class="mb-0"><%= t('odontogram.history.unchanged') %></p>
+    <% else %>
+      <p class="text-muted small"><%= t('odontogram.history.underlined_teeth') %></p>
+      <% %w[added removed].each do |kind| %>
+        <% if @comparison.fetch(kind).any? %>
+          <h3 class="h4 mt-3"><%= t("odontogram.history.#{kind}_since") %></h3>
+          <% @comparison.fetch(kind).each do |attributes| %>
+            <div class="py-1" data-<%= kind %>="<%= attributes.fetch('id') %>"><%= render 'marking', attributes: attributes %></div>
+          <% end %>
+        <% end %>
+      <% end %>
+      <% if @comparison.fetch('updated').any? %>
+        <h3 class="h4 mt-3"><%= t('odontogram.history.updated_since') %></h3>
+        <% @comparison.fetch('updated').each do |pair| %>
+          <div class="py-2" data-updated="<%= pair.fetch('after').fetch('id') %>">
+            <div><span class="text-muted"><%= t('odontogram.history.before') %>:</span> <%= render 'marking', attributes: pair.fetch('before') %></div>
+            <div><span class="text-muted"><%= t('odontogram.history.now') %>:</span> <%= render 'marking', attributes: pair.fetch('after') %></div>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</section>

@@ -1,0 +1,2 @@
+<% entry = OdontogramEntry.new(attributes) %>
+<%= entry.target_name %> · <%= entry.marking_name %><% if entry.surfaces.present? %> · <%= entry.surfaces.join('') %><% end %><% if entry.observed_on %> · <%= t('odontogram.observed_on', date: l(entry.observed_on, format: :long)) %><% end %>

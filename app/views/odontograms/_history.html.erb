@@ -1,0 +1,47 @@
+<section class="card mb-3" data-odontogram-history>
+  <div class="card-header d-flex justify-content-between">
+    <h2 class="card-title"><%= t('odontogram.history.title') %><% if @history_tooth %> · <%= t('odontogram.tooth', number: @history_tooth) %><% end %></h2>
+    <% if @history_tooth %><%= link_to t('odontogram.history.all_teeth'), patient_odontogram_path(@patient, **@history_filters.except(:tooth)), class: 'small' %><% end %>
+  </div>
+  <% if @history_cutoff %>
+    <div class="card-body border-bottom" data-history-cutoff>
+      <p class="text-muted mb-2"><%= t('odontogram.history.through', time: l(@history_cutoff.created_at, format: :long)) %></p>
+      <%= link_to t('odontogram.history.view_chart'), patient_odontogram_path(@patient, at: @history_cutoff.id), class: 'small' %>
+    </div>
+  <% end %>
+  <% if @history_day %>
+    <div class="card-body pb-2">
+      <%= link_to t('odontogram.history.all_days'), patient_odontogram_path(@patient, **@history_filters), class: 'small' %>
+      <h3 class="mt-2 mb-0"><%= l(@history_day, format: :long) %></h3>
+    </div>
+    <div class="list-group list-group-flush">
+      <%= render partial: 'change', collection: @history_changes %>
+    </div>
+    <% if @history_changes.empty? %><p class="card-body text-muted mb-0"><%= t('odontogram.history.empty') %></p><% end %>
+    <% if @earlier_changes %>
+      <div class="card-footer"><%= link_to t('odontogram.history.earlier_changes'), patient_odontogram_path(@patient, **@history_filters, history_day: @history_day.iso8601, before_change: @history_changes.last.id) %></div>
+    <% end %>
+  <% elsif @history_groups.empty? %>
+    <p class="card-body text-muted mb-0"><%= t('odontogram.history.empty') %></p>
+  <% else %>
+    <div class="card-body py-0">
+      <% @history_groups.each do |group| %>
+        <details class="border-bottom py-3" data-history-day="<%= group[:day].iso8601 %>">
+          <summary>
+            <span class="fw-medium"><%= l(group[:day], format: :long) %></span>
+            <span class="text-muted small ms-2"><%= t('odontogram.history.change_count', count: group[:count]) %></span>
+          </summary>
+          <% if group[:day] == Date.current && !@history_cutoff %><div class="text-muted small mt-2"><%= t('odontogram.history.latest_today') %></div><% end %>
+          <div class="mt-2"><%= link_to t('odontogram.history.view_chart'), patient_odontogram_path(@patient, at: group[:changes].first.id), class: 'btn btn-sm btn-ghost-primary' %></div>
+          <div class="list-group list-group-flush mt-2"><%= render partial: 'change', collection: group[:changes] %></div>
+          <% if group[:count] > 5 %>
+            <div class="mt-2"><%= link_to t('odontogram.history.all_changes'), patient_odontogram_path(@patient, **@history_filters, history_day: group[:day].iso8601) %></div>
+          <% end %>
+        </details>
+      <% end %>
+    </div>
+    <% if @earlier_days %>
+      <div class="card-footer"><%= link_to t('odontogram.history.earlier_days'), patient_odontogram_path(@patient, **@history_filters, before_day: @history_groups.last[:day].iso8601) %></div>
+    <% end %>
+  <% end %>
+</section>

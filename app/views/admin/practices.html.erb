@@ -41,6 +41,7 @@
 						<th>doctors</th>
 						<th>photos</th>
 						<th>joined</th>
+						<th><%= t('odontogram.pilot.title') %></th>
 						<th></th>
 					</tr>
 				</thead>
@@ -68,6 +69,17 @@
 							<td><%= practice.doctors_count %></td>
 							<td><%= @profile_picture_counts.fetch(practice.id, 0) %></td>
 							<td><%= practice.created_at.strftime('%F at %I:%M %P') %></td>
+							<td>
+                <% if current_user_is_superadmin? && !impersonating? %>
+                  <% action = practice.odontogram_enabled? ? 'disable' : 'enable' %>
+                  <%= button_to t("odontogram.pilot.#{action}"), admin_practice_odontogram_path(practice),
+                                method: :patch, class: 'btn btn-sm',
+                                params: { practice: { odontogram_enabled: practice.odontogram_enabled? ? '0' : '1' } },
+                                aria: { label: t("odontogram.pilot.#{action}_for", practice: practice.name) } %>
+                <% else %>
+                  <%= t(practice.odontogram_enabled? ? 'odontogram.pilot.enabled' : 'odontogram.pilot.disabled') %>
+                <% end %>
+              </td>
 							<td class="text-end">
 								<% if current_user_is_superadmin? %>
 									<%= link_to admin_practice_impersonate_path(practice), method: :post, class: 'btn btn-icon', data: { turbo: false } do %>

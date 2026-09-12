@@ -2,7 +2,7 @@
 
 class Patient < ApplicationRecord
   # PaperTrail for audit logging
-  has_paper_trail meta: { practice_id: ->(patient) { patient.practice_id } }
+  has_paper_trail skip: [:odontogram_revision], meta: { practice_id: ->(patient) { patient.practice_id } }
 
   # concerns
   include Initials
@@ -12,6 +12,8 @@ class Patient < ApplicationRecord
   has_many :appointments, dependent: :delete_all
   has_many :balances, dependent: :delete_all
   has_many :notes, as: :noteable, dependent: :delete_all
+  has_many :odontogram_changes, dependent: :delete_all
+  has_many :odontogram_entries, dependent: :delete_all
   has_many :doctors, through: :appointments
   belongs_to :practice, counter_cache: true
 

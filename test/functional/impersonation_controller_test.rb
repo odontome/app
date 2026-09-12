@@ -37,13 +37,23 @@ class ImpersonationControllerTest < ActionController::TestCase
   end
 
   test 'cannot impersonate superadmin target' do
-    # Ensure only the superadmin remains in the practice so fallback selection would hit it
-    users_in_practice = User.where(practice_id: @practice.id).where.not(id: @superadmin.id)
-    users_in_practice.each { |u| u.update_columns(practice_id: practices(:complete_another_language).id) }
+    @admin.update_columns(roles: 'superadmin')
 
     post :impersonate, params: { id: @practice.id }
-    # Either blocked by guard or by superadmin requirement
-    assert_response :redirect
+
+    assert_redirected_to practices_admin_path
+    assert_equal @superadmin.id, @controller.session['user']['id']
+    assert_nil @controller.session['impersonator_id']
+  end
+
+  test 'cannot start impersonation of oneself' do
+    @practice.users.where.not(id: @superadmin.id).update_all(practice_id: practices(:complete_another_language).id)
+
+    post :impersonate, params: { id: @practice.id }
+
+    assert_redirected_to practices_admin_path
+    assert_equal @superadmin.id, @controller.session['user']['id']
+    assert_nil @controller.session['impersonator_id']
   end
 
   test 'impersonation blocks mutation via POST requests' do
