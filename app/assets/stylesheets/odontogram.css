@@ -1,0 +1,79 @@
+.od-chart { --od-blue: var(--tblr-primary, #206bc4); --od-red: var(--tblr-danger, #d63939); --od-panel: var(--tblr-bg-surface, #fff); }
+.od-chart [hidden] { display: none !important; }
+.od-chart .od-tools { position: relative; }
+.od-chart .od-menu { display: block; padding: .5rem; min-width: 260px; max-height: 360px; overflow-y: auto; z-index: 10; }
+.od-chart .od-dentition { width: auto; }
+.od-chart .od-arch { display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); }
+.od-chart .od-arch-primary { grid-template-columns: repeat(10, minmax(0, 1fr)); margin-inline: 18.75%; }
+.od-chart .od-tooth { position: relative; display: flex; flex-direction: column; align-items: center; border: 0; border-radius: 4px; background: transparent; color: var(--tblr-body-color); padding: 2px 0; min-width: 0; }
+.od-chart .od-pair-start { z-index: 1; }
+.od-chart .od-tooth-artwork { display: block; position: relative; width: 100%; line-height: 0; }
+.od-chart .od-tooth .od-gap { position: absolute; left: 100%; transform: translate(-50%, -50%); width: 14px; height: 24px; pointer-events: none; }
+.od-chart .od-tooth:hover, .od-chart .od-tooth[aria-expanded=true] { background: var(--tblr-primary-lt); }
+.od-chart .od-tooth:focus-visible { outline: 2px solid var(--od-blue); outline-offset: 1px; z-index: 1; }
+.od-chart .od-tooth svg { width: 100%; height: auto; max-height: 180px; overflow: visible; }
+.od-chart .od-tooth svg [data-part] { fill: var(--od-panel); stroke: var(--tblr-secondary, #667180); }
+.od-chart .od-tooth svg text { fill: var(--tblr-secondary); }
+.od-chart .od-tooth-number { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 1.5em; height: 1.5em; margin-top: 14px; flex: none; font-size: .875rem; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.od-chart .od-tooth-number-text { opacity: .55; }
+.od-chart .od-gemination .od-tooth-number::before, .od-chart .od-fusion .od-tooth-number::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 1.75em; height: 1.75em; border: 1.5px solid var(--od-blue); border-radius: 50%; pointer-events: none; }
+.od-chart .od-gemination .od-count, .od-chart .od-fusion .od-count { top: 42px; }
+.od-chart .od-fusion .od-tooth-number { width: 100%; z-index: 2; }
+.od-chart .od-fusion-start .od-tooth-number::after { content: ""; position: absolute; left: calc(50% + .875em); top: 50%; width: calc(100% - 1.75em); border-top: 1.5px solid var(--od-blue); pointer-events: none; }
+.od-chart .od-changed .od-tooth-number-text { text-decoration: underline; text-decoration-color: var(--od-blue); text-underline-offset: .25em; text-decoration-thickness: 2px; }
+.od-chart .od-tooth [data-part^=surface-] { cursor: crosshair; }
+.od-chart .od-tooth [data-work] { fill: var(--od-blue) !important; fill-opacity: .6; }
+.od-chart .od-tooth [data-finding] { fill: var(--od-red) !important; fill-opacity: .6; }
+.od-chart .od-tooth [data-preview] { stroke: var(--od-blue); stroke-width: 4; }
+.od-chart .od-overlay { pointer-events: none; }
+.od-chart .od-count { position: absolute; right: 2px; top: 32px; }
+.od-chart .od-notations { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%; height: 1.3em; flex: none; margin-top: .25rem; padding-inline: 2px; font-size: .6875rem; line-height: 1.3; }
+.od-chart .od-temporary, .od-chart .od-notation { font: inherit; }
+.od-chart .od-notation.od-impaction { font-family: var(--tblr-font-monospace, monospace); font-size: 1.15em; font-weight: 700; line-height: 1; }
+.od-chart .od-missing [data-part] { stroke-dasharray: 4 3; fill: none; opacity: .65; }
+.od-chart .od-implant [data-part^=root], .od-chart .od-implant [data-part^=crown-],
+.od-chart .od-implant-bare [data-part=crown], .od-chart .od-implant [data-part^=surface-],
+.od-chart .od-implant svg text { visibility: hidden; }
+.od-chart .od-retained-root [data-part^=crown], .od-chart .od-retained-root [data-part^=surface-],
+.od-chart .od-retained-root svg text { visibility: hidden; }
+.od-chart .od-finding { color: var(--od-red); }
+.od-chart .od-work { color: var(--od-blue); }
+.od-chart [data-tool-icon] { display: inline-flex; align-items: center; margin-right: .35rem; }
+.od-chart .od-swatch { display: inline-block; width: 12px; height: 12px; border-radius: 2px; background: var(--od-blue); }
+.od-chart .od-swatch-finding { background: var(--od-red); }
+.od-chart .od-tooth-popover { --tblr-popover-max-width: 360px; width: min(var(--tblr-popover-max-width), calc(100vw - 24px)); max-width: calc(100vw - 24px); }
+.od-chart .od-inspect-popover { --tblr-popover-max-width: 320px; }
+.od-chart .od-entry-description { min-width: 0; overflow-wrap: anywhere; }
+.od-chart .od-tooth-popover .popover-body { max-height: min(480px, calc(100vh - 32px)); overflow-y: auto; overscroll-behavior: contain; }
+.od-chart .od-details h3 { font-size: 1rem; }
+.od-chart .od-entry { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .5rem; }
+.od-chart .od-surface { display: inline-flex; align-items: center; gap: .4rem; margin: .25rem; padding: .5rem; border: 1px solid var(--tblr-border-color); border-radius: var(--tblr-border-radius); }
+.od-chart .od-saved { animation: od-saved .7s cubic-bezier(.16, 1, .3, 1); }
+@keyframes od-saved { from { background-color: var(--tblr-primary-lt); transform: scale(1.06); } to { background-color: transparent; transform: scale(1); } }
+@media (min-width: 736px) { .od-chart.od-loaded .od-summary { display: none; } .od-phone-note { display: none; } }
+@media (max-width: 735px) { .od-chart .od-desktop, .od-chart .od-tooth-popover { display: none !important; } }
+@media (prefers-reduced-motion: reduce) { .od-chart .od-saved { animation: none; outline: 2px solid var(--od-blue); } }
+
+.od-chart .od-transposition-start .od-tooth-number { width: 100%; }
+.od-chart .od-transposition { position: absolute; left: 50%; top: -14px; height: 12px; pointer-events: none; }
+.od-chart .od-transposition > svg { display: block; width: 100%; height: 12px; }
+.od-chart .od-transposition .od-transposition-tip { position: absolute; top: 6px; width: 8px; height: 8px; }
+.od-chart .od-transposition .od-tip-left { left: -1px; }
+.od-chart .od-transposition .od-tip-right { right: -1px; }
+
+.od-chart .od-appliance { position: absolute; left: 50%; height: 12px; transform: translateY(-50%); pointer-events: none; }
+.od-chart .od-appliance-wire { position: absolute; top: 50%; left: 0; width: 100%; border-top: 1.5px solid var(--od-blue); }
+.od-chart .od-tooth .od-appliance-attachment { position: absolute; left: -6px; top: 0; width: 12px; height: 12px; }
+
+.od-chart .od-tooth .od-removable { position: absolute; height: 12px; transform: translateY(-50%); pointer-events: none; }
+
+.od-chart .od-arch-absence { position: absolute; left: 0; width: 100%; border-top: 1.5px solid var(--od-blue); pointer-events: none; }
+
+.od-chart .od-denture-span { position: absolute; left: 0; width: 100%; height: 9px; transform: translateY(-50%); border-top: 1.5px solid var(--od-blue); border-bottom: 1.5px solid var(--od-blue); pointer-events: none; }
+.od-chart .od-bridge { position: absolute; left: 0; width: 100%; height: 12px; transform: translateY(-50%); pointer-events: none; }
+.od-chart .od-bridge-wire { position: absolute; top: 50%; border-top: 1.5px solid var(--od-blue); }
+.od-chart .od-bridge-support { position: absolute; left: 50%; height: 12px; border-left: 1.5px solid var(--od-blue); }
+.od-chart .od-bridge-pontic [data-part^=root], .od-chart .od-bridge-pontic [data-part^=crown-],
+.od-chart .od-bridge-pontic [data-part^=surface-], .od-chart .od-bridge-pontic svg text { visibility: hidden; }
+
+.od-chart .od-tooth-artwork.od-planned-layer { position: absolute; inset: 0; pointer-events: none; --od-blue: var(--od-red); }

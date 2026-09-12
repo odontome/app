@@ -11,6 +11,17 @@ class PracticesControllerTest < ActionController::TestCase
     I18n.locale = I18n.default_locale
   end
 
+  test 'practice settings cannot change the internal odontogram flag' do
+    practice = practices(:complete)
+    [false, true].each do |enabled|
+      practice.update!(odontogram_enabled: enabled)
+      post :update, params: { id: practice.id, practice: { odontogram_enabled: enabled ? '0' : '1' } }
+
+      assert_redirected_to practice_settings_path
+      assert_equal enabled, practice.reload.odontogram_enabled?
+    end
+  end
+
   test 'should get new' do
     @controller.session['user'] = nil
     get :new

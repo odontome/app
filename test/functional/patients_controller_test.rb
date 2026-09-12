@@ -20,10 +20,86 @@ class PatientsControllerTest < ActionController::TestCase
     assert_equal 'today', assigns(:segment)
   end
 
+  test 'default off patient profile has no odontogram controls' do
+    get :show, params: { id: patients(:one).id }
+    assert_response :success
+    assert_select '[data-odontogram-summary]', count: 0
+    assert_select "a[href='#{patient_odontogram_path(patients(:one))}']", count: 0
+  end
+
+  test 'patient profile keeps access to saved chart records when the pilot is disabled' do
+    patient = patients(:one)
+    patient.odontogram_entries.create!(category: 'caries', tooth: 16, surfaces: ['O'],
+      recorded_by: users(:founder), recorded_by_name: users(:founder).fullname)
+    assert_not patient.practice.odontogram_enabled?
+
+    get :show, params: { id: patient.id }
+    assert_response :success
+    assert_select "a[href='#{patient_odontogram_path(patient)}']", text: 'Recorded markings'
+    assert_select '[data-odontogram-summary]' do
+      assert_select 'div', text: /Tooth 16 · Caries · O/
+      assert_select 'form, input, canvas', count: 0
+    end
+    assert_select "a[href='#{edit_patient_path(patient)}']"
+  end
+
+  test 'all locales supply the same authoritative chart targeting rules' do
+    patient = patients(:one)
+    patient.practice.update!(odontogram_enabled: true)
+    %i[en es pt].each do |locale|
+      I18n.with_locale(locale) do
+        get :show, params: { id: patient.id }
+        assert_response :success
+        assert_select '[data-odontogram]' do |charts|
+          chart = charts.first
+          assert_equal [users(:founder).id, patient.practice_id, patient.id].join(':'), chart['data-odontogram-session']
+          assert_equal 'true', chart['data-odontogram-session-enabled']
+          assert_equal %w[diastema fusion transposition], JSON.parse(chart['data-paired-categories'])
+          assert_equal %w[missing implant retained_root edentulous_arch], JSON.parse(chart['data-attachment-conflicts'])
+          assert_equal OdontogramEntry::ARCH_TEETH, JSON.parse(chart['data-arch-teeth'])
+          assert_equal %w[fixed_orthodontic removable_orthodontic], JSON.parse(chart['data-group-categories'])
+          assert_equal OdontogramEntry::ARCHES, JSON.parse(chart['data-tooth-arches'])
+          partners = JSON.parse(chart['data-transposition-partners'])
+          assert_equal [18,17,16,15,14,12,11,21,22,23,24,25,26,27,28], partners['13']
+          assert_equal [55,54,53,52,61,62,63,64,65], partners['51']
+          neighbors = JSON.parse(chart['data-paired-neighbors'])
+          assert_equal [12, 21], neighbors['11']
+          assert_equal [52, 61], neighbors['51']
+          assert_equal [17], neighbors['18']
+          assert_equal OdontogramEntry::SURFACE_CATEGORIES, JSON.parse(chart['data-surface-categories'])
+          assert_equal OdontogramEntry::OPTIONAL_SURFACE_CATEGORIES, JSON.parse(chart['data-optional-surface-categories'])
+          copy = JSON.parse(chart['data-copy'])
+          %w[on_implant implant_has_markings invalid_implant_support structural_conflict].each do |key|
+            assert copy[key].present?, "#{locale} #{key}"
+          end
+          assert_equal OdontogramEntry::CATEGORIES.sort, copy['categories'].keys.sort
+          assert_equal OdontogramEntry::ROTATION_DIRECTIONS.sort, copy['rotation_directions'].keys.sort
+          assert_equal %w[D L M P V], copy.fetch('position_directions').keys.sort
+          %w[core enamel_defect deep_fissures sealant fracture inlay rct post macrodontia microdontia mobility rotation impaction ectopic erupting abnormal_position retained_root].each do |category|
+            assert copy['notation'][category].present?, "#{locale} #{category}"
+          end
+        end
+      end
+    end
+  end
+
   test 'index defaults to today segment' do
     get :index
     assert_response :success
     assert_equal 'today', assigns(:segment)
+  end
+
+  test 'phone summary retains the saved custom treatment label and escapes its content' do
+    patient = patients(:one)
+    patient.odontogram_entries.create!(category: 'filling', tooth: 16, surfaces: ['O'],
+      recorded_by_name: users(:founder).fullname,
+      treatment_snapshot: { id: treatments(:complete).id, name: '<b>Composite</b>' })
+    get :show, params: { id: patient.id }
+    assert_response :success
+    assert_select '[data-odontogram-summary]' do
+      assert_select 'div', text: 'Tooth 16 · <b>Composite</b> (Filling) · Already there · O'
+      assert_select 'b', count: 0
+    end
   end
 
   test 'header sizes the logo image rather than its link' do

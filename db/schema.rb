@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_03_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_11_200000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -146,6 +146,62 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_03_120000) do
     t.index ["noteable_type", "noteable_id"], name: "index_notes_on_noteable_type_and_noteable_id"
   end
 
+  create_table "odontogram_changes", force: :cascade do |t|
+    t.jsonb "after_state", null: false
+    t.jsonb "before_state"
+    t.datetime "created_at", null: false
+    t.string "editor_id", null: false
+    t.bigint "odontogram_entry_id", null: false
+    t.string "operation", null: false
+    t.bigint "patient_id", null: false
+    t.bigint "recorded_by_id"
+    t.string "recorded_by_name", null: false
+    t.string "request_digest", null: false
+    t.string "request_id", null: false
+    t.bigint "reverses_id"
+    t.integer "revision", null: false
+    t.datetime "updated_at", null: false
+    t.index ["odontogram_entry_id"], name: "index_odontogram_changes_on_odontogram_entry_id"
+    t.index ["patient_id", "request_id"], name: "index_odontogram_changes_on_patient_id_and_request_id", unique: true
+    t.index ["patient_id", "revision"], name: "index_odontogram_changes_on_patient_id_and_revision", unique: true
+    t.index ["patient_id"], name: "index_odontogram_changes_on_patient_id"
+    t.index ["recorded_by_id"], name: "index_odontogram_changes_on_recorded_by_id"
+    t.index ["reverses_id"], name: "index_odontogram_changes_on_reverses_id", unique: true
+  end
+
+  create_table "odontogram_entries", force: :cascade do |t|
+    t.string "arch"
+    t.jsonb "bridge_units", default: [], null: false
+    t.string "category", null: false
+    t.datetime "completed_at"
+    t.datetime "created_at", null: false
+    t.bigint "implant_entry_id"
+    t.integer "member_teeth", default: [], null: false, array: true
+    t.string "mobility_grade", limit: 10
+    t.string "mobility_scale", limit: 60
+    t.date "observed_on"
+    t.integer "paired_tooth"
+    t.bigint "patient_id", null: false
+    t.string "position_directions", default: [], null: false, array: true
+    t.bigint "recorded_by_id"
+    t.string "recorded_by_name", null: false
+    t.integer "replacement_teeth", default: [], null: false, array: true
+    t.string "rotation_direction"
+    t.string "state", default: "active", null: false
+    t.string "surfaces", default: [], null: false, array: true
+    t.integer "tooth", null: false
+    t.jsonb "treatment_snapshot", default: {}, null: false
+    t.string "treatment_status", default: "existing", null: false
+    t.datetime "updated_at", null: false
+    t.index ["implant_entry_id"], name: "index_odontogram_entries_on_implant_entry_id"
+    t.index ["member_teeth"], name: "index_odontogram_entries_on_member_teeth", using: :gin
+    t.index ["patient_id", "created_at", "id"], name: "index_odontogram_entries_on_patient_id_and_created_at_and_id"
+    t.index ["patient_id", "paired_tooth"], name: "index_odontogram_entries_on_patient_id_and_paired_tooth"
+    t.index ["patient_id"], name: "index_odontogram_entries_on_patient_id"
+    t.index ["recorded_by_id"], name: "index_odontogram_entries_on_recorded_by_id"
+    t.check_constraint "treatment_status::text = ANY (ARRAY['existing'::character varying, 'planned'::character varying, 'completed'::character varying]::text[])", name: "odontogram_treatment_status"
+  end
+
   create_table "patients", id: :serial, force: :cascade do |t|
     t.text "address"
     t.text "allergies"
@@ -165,6 +221,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_03_120000) do
     t.text "medications"
     t.string "mobile"
     t.boolean "notified_of_six_month_reminder", default: false, null: false
+    t.integer "odontogram_revision", default: 0, null: false
     t.text "past_illnesses"
     t.integer "practice_id"
     t.text "surgeries"
@@ -198,6 +255,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_03_120000) do
     t.boolean "notified_of_deletion_warning", default: false, null: false
     t.boolean "notified_of_trial_ended", default: false, null: false
     t.boolean "notified_of_trial_ending", default: false, null: false
+    t.boolean "odontogram_enabled", default: false, null: false
     t.integer "patients_count", default: 0
     t.text "stripe_account_id"
     t.text "stripe_customer_id"
@@ -230,6 +288,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_03_120000) do
   create_table "treatments", id: :serial, force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.string "name", limit: 100
+    t.string "odontogram_category"
     t.integer "practice_id"
     t.float "price"
     t.datetime "updated_at", precision: nil, null: false
@@ -292,6 +351,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_03_120000) do
   add_foreign_key "agent_oauth_access_tokens", "users", on_delete: :cascade
   add_foreign_key "agent_oauth_authorizations", "practices", on_delete: :cascade
   add_foreign_key "agent_oauth_authorizations", "users", on_delete: :cascade
+  add_foreign_key "odontogram_changes", "odontogram_entries", on_delete: :cascade
+  add_foreign_key "odontogram_changes", "patients"
+  add_foreign_key "odontogram_changes", "users", column: "recorded_by_id", on_delete: :nullify
+  add_foreign_key "odontogram_entries", "odontogram_entries", column: "implant_entry_id"
+  add_foreign_key "odontogram_entries", "patients"
+  add_foreign_key "odontogram_entries", "users", column: "recorded_by_id", on_delete: :nullify
   add_foreign_key "subscriptions", "practices"
   add_foreign_key "user_consents", "practices"
   add_foreign_key "user_consents", "users"

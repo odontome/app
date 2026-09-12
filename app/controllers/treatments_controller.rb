@@ -2,6 +2,7 @@
 
 class TreatmentsController < ApplicationController
   before_action :require_user
+  around_action :check_odontogram_configuration, only: %i[create update]
 
   def index
     @treatments = Treatment.with_practice(current_user.practice_id).order('name')
@@ -69,7 +70,19 @@ class TreatmentsController < ApplicationController
 
   private
 
+  def check_odontogram_configuration
+    if params[:treatment]&.key?(:odontogram_category)
+      current_user.practice.with_lock do
+        return head :forbidden unless current_user.practice.odontogram_enabled?
+
+        yield
+      end
+    else
+      yield
+    end
+  end
+
   def treatment_params
-    params.require(:treatment).permit(:name, :price)
+    params.require(:treatment).permit(:name, :price, :odontogram_category)
   end
 end

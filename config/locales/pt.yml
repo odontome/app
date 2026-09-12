@@ -1,4 +1,266 @@
 pt:
+  odontogram:
+    teeth: "Dentes %{numbers}"
+    title: Odontograma
+    back_to_patient: Perfil do paciente
+    read_only: "Você pode consultar este odontograma. As alterações estão desativadas no momento."
+    recorded_entries: Marcações registradas
+    empty: "Nenhuma marcação registrada. Um dente sem marcações não foi avaliado neste odontograma."
+    tooth: "Dente %{number}"
+    recorded_by: "Registrado em %{date} por %{name}"
+    observed_on: "Observado em %{date}"
+    earlier_entries: Marcações anteriores
+    history:
+      all_teeth: "Todos os dentes"
+      through: "Alterações registradas até %{time}."
+      read_only: "Você está vendo um odontograma salvo. Não é possível fazer alterações aqui."
+      view_chart: "Ver odontograma salvo"
+      view_moment: "Ver odontograma salvo em %{time}"
+      saved_chart: "Odontograma salvo"
+      what_changed: "O que mudou desde então?"
+      compared_at: "Comparado com o odontograma atual em %{time}."
+      unchanged: "O odontograma não mudou. As alterações desfeitas permanecem no histórico."
+      underlined_teeth: "Os números de dentes sublinhados têm alterações indicadas abaixo."
+      added_since: "Marcações adicionadas desde então"
+      removed_since: "Marcações removidas desde então"
+      updated_since: "Marcações atualizadas desde então"
+      before: "Antes"
+      now: "Agora"
+      title: "Histórico"
+      all_days: "Todos os dias registrados"
+      empty: "Nenhuma alteração registrada neste período."
+      earlier_changes: "Alterações anteriores deste dia"
+      latest_today: "Últimas alterações salvas hoje"
+      all_changes: "Todas as alterações deste dia"
+      earlier_days: "Histórico anterior"
+      undo_restored: "Desfazer: marcação restaurada"
+      undo_removed: "Desfazer: marcação removida"
+      change_count:
+        one: "%{count} alteração"
+        other: "%{count} alterações"
+    editor:
+      treatment_statuses:
+        existing: Já existe
+        planned: A fazer
+        completed: Realizado
+      treatment_status: "Estado do tratamento"
+      mark_done: "Marcar realizado"
+      completed_action: "Marcado como realizado"
+      completed_date: "Realizado em %{date}"
+      completion_undone: "Realização desfeita"
+      red_legend: "Vermelho: a fazer ou achado"
+      blue_legend: "Azul: já existe / realizado"
+      bridge_end: "Outra extremidade da ponte"
+      bridge_choose_end: "Escolha a outra extremidade"
+      bridge_hint: "Escolha a extensão e a função de cada unidade. Os dentes de substituição devem estar registrados como ausentes."
+      bridge_choose_role: "Escolha uma função"
+      bridge_roles:
+        natural_support: "Apoio em dente natural"
+        implant_support: "Apoio em implante"
+        pontic: "Dente de substituição"
+      bridge_support: "Revise o estado e o apoio registrados no dente %{tooth}. Uma substituição precisa de ausência registrada; um apoio em implante precisa de seu implante registrado."
+      bridge_overlap: "Uma prótese já cobre parte desta ponte. Inspecione esse registro primeiro."
+      bridge_dependency: "Revise a ponte antes de alterar um dente, implante ou registro de ausência do qual ela depende."
+      replacement_teeth: "Dentes da prótese"
+      select_all: "Selecionar todos"
+      choose_replacement: "Selecione os dentes presentes nesta prótese."
+      denture_review: "Selecione os dentes presentes nesta prótese. A ausência de dentes naturais é registrada separadamente."
+      replacement_positions: "Substitui: %{teeth}"
+      partial_picker_hint: "Sem marcas significa sem avaliação registrada. Primeiro escolha Ausente e marque os dentes naturais ausentes; depois volte a esta prótese."
+      partial_absence: "Registre a ausência deste dente natural antes de substituí-lo por uma prótese."
+      denture_absence: "Registre esta arcada sem dentes naturais antes de adicionar uma prótese total."
+      denture_overlap: "Estas posições já estão cobertas por uma prótese. Inspecione esse registro antes de adicionar outra prótese."
+      arch_has_denture: "Corrija primeiro a prótese antes de remover a marca de ausência necessária."
+      arches:
+        upper: "Arcada superior"
+        lower: "Arcada inferior"
+      arch_review: "Registra a ausência de dentes naturais em toda esta arcada, nas duas dentições. Os implantes e suas restaurações são mantidos."
+      arch_conflict: "Revise e corrija estas marcações atuais antes de registrar a ausência em toda a arcada."
+      confirm_arch: "Registrar %{arch} sem dentes naturais?"
+      removable_extent: "Extensão"
+      whole_arch: "Toda a arcada"
+      extent_to: "Até %{number}"
+      removable_hint: "Escolha toda a arcada ou a outra extremidade do trecho. Isso registra a área coberta, não os dentes de apoio."
+      attachment_in_use: "Já faz parte de um aparelho: %{teeth}"
+      appliance_overlap: "Um aparelho deste tipo já ocupa parte desta seleção. Inspecione-o e remova a marcação incorreta antes de adicionar outra."
+      attachment_unavailable: "Indisponível: %{reason}"
+      attachment_teeth: "Dentes de apoio"
+      attachment_hint: "Selecione os dentes onde este aparelho está fixado. Ele é salvo como uma única marcação."
+      transposition_tooth: "Outro dente"
+      transposition_hint: "Escolha o outro dente da mesma arcada. Os números e os registros existentes permanecem no lugar."
+      fusion_hint: "Escolha o dente vizinho envolvido na fusão."
+      paired_tooth: "Dente vizinho"
+      choose_neighbor: "Escolha um dente…"
+      pair_hint: "Escolha o dente vizinho que limita este espaço."
+      position_label: "Direções (opcional)"
+      position_hint: "Deixe em branco se a direção não foi registrada."
+      position_directions:
+        M: "Mesializado"
+        D: "Distalizado"
+        V: "Vestibularizado"
+        P: "Palatinizado"
+        L: "Lingualizado"
+      rotation_direction: "Direção"
+      rotation_hint: "Direção vista no círculo de superfícies deste odontograma."
+      rotation_directions:
+        unspecified: "Direção não registrada"
+        clockwise: "Sentido horário"
+        counterclockwise: "Sentido anti-horário"
+      natural_tooth: "Dente natural"
+      mobility_grade: "Grau"
+      mobility_scale: "Escala utilizada"
+      mobility_hint: "Deixe os dois campos vazios se nenhum grau foi registrado."
+      view_history: "Ver histórico"
+      inspect: "Inspecionar dentes"
+      custom_treatments: "Seus tratamentos"
+      standard_markings: "Marcações gerais"
+      temporary_indicator: "Temp"
+      notation:
+        retained_root: "RR"
+        abnormal_position: "Pos."
+        erupting: "Erup."
+        impaction: "I"
+        ectopic: "E"
+        rotation: "Giro"
+        mobility: "M"
+        macrodontia: "MAC"
+        microdontia: "MIC"
+        core: "Núcleo"
+        enamel_defect: "Esmalte"
+        deep_fissures: "FFP"
+        sealant: "S"
+        fracture: "Fratura"
+        inlay: "Inlay"
+        rct: "TC"
+        post: "Pino"
+      inspect_hint: "Selecione um dente para ver suas marcações."
+      search: "Buscar uma marcação…"
+      surface_hint: "Clique em uma superfície, arraste sobre superfícies conectadas ou selecione um dente."
+      tooth_hint: "Selecione um dente para adicionar esta marcação."
+      dentition: "Dentição"
+      permanent: "Permanente"
+      primary: "Decídua"
+      mixed: "Mista"
+      records: "Marcações registradas"
+      phone: "Abra a ficha em um computador para visualizar e atualizar o odontograma."
+      retry: "Tentar salvar novamente"
+      refresh: "Recarregar odontograma"
+      undo: "Desfazer"
+      finding: "Achado"
+      work: "Trabalho existente / anotação"
+      unrecorded: "Sem marcação = sem registro"
+      saving: "Salvando…"
+      saved: "Salvo: %{marking}"
+      already_recorded: "Já registrado: %{marking}"
+      removed: "Removido: %{marking}"
+      undone: "Alteração desfeita."
+      failed: "Não foi possível salvar. Sua seleção foi mantida; tente novamente."
+      load_failed: "Não foi possível carregar o odontograma. Recarregue para tentar novamente."
+      conflict: "O odontograma mudou. Recarregue antes de fazer outra alteração."
+      on_implant: "Sobre implante"
+      implant_has_markings: "Primeiro remova as marcações associadas a este implante. Os registros serão mantidos no histórico."
+      invalid_implant_support: "Esta marcação precisa de um implante ativo na mesma posição."
+      structural_conflict: "Inspecione este dente e remova as marcações que não se aplicam mais antes de mudar seu estado. Para uma coroa em um dente ausente, registre primeiro o implante. Nenhuma marcação foi substituída."
+      close: "Fechar"
+      add: "Adicionar marcação"
+      remove: "Remover"
+      cancel: "Cancelar"
+      confirm_remove: "Remover %{marking}? O registro original permanece no histórico."
+      surfaces: "Escolha as superfícies para esta marcação."
+      optional_surfaces: "Escolha as superfícies se forem conhecidas, ou deixe-as vazias para registrar esta marca no dente."
+      choose_surface: "Escolha pelo menos uma superfície."
+      observation_date: "Data da observação (opcional)"
+      no_matches: "Nenhuma marcação encontrada."
+      hidden_teeth: "Há marcações em dentes fora desta visualização. Escolha Mista para vê-las."
+      removed_state: "Removido"
+      history: "Alterações"
+      added_action: "Adicionado"
+      removed_action: "Removido"
+      undo_action: "Desfeito"
+      unknown: "Data não registrada"
+      date: "Registrado em"
+      by: "por"
+      surface_names: "M: mesial · D: distal · O: oclusal · I: incisal · B: bucal · F: facial · P: palatina · L: lingual"
+    categories:
+      fixed_bridge: "Ponte fixa"
+      partial_denture: "Prótese parcial removível"
+      complete_denture: "Prótese total"
+      edentulous_arch: "Arcada sem dentes naturais"
+      removable_orthodontic: "Aparelho ortodôntico removível"
+      fixed_orthodontic: "Aparelho ortodôntico fixo"
+      transposition: "Transposição"
+      fusion: "Fusão"
+      diastema: "Diastema"
+      retained_root: "Remanescente radicular"
+      abnormal_position: "Posição anormal"
+      erupting: "Dente em erupção"
+      impaction: "Impactação"
+      ectopic: "Dente ectópico"
+      gemination: "Geminação"
+      rotation: "Giroversão"
+      extrusion: "Dente extruído"
+      intrusion: "Dente intruído"
+      mobility: "Mobilidade"
+      peg_shaped: "Dente conoide"
+      macrodontia: "Macrodontia"
+      microdontia: "Microdontia"
+      caries: Cárie
+      enamel_defect: Defeito do esmalte
+      deep_fissures: Fossas e fissuras profundas
+      veneer: Faceta
+      core: Núcleo sem pino
+      filling: Restauração
+      temporary_filling: Restauração temporária
+      sealant: Selante
+      inlay: Inlay
+      crown: Coroa
+      temporary_crown: Coroa temporária
+      pulpotomy: Pulpotomia
+      wear: Desgaste
+      rct: Tratamento de canal
+      post: Pino e núcleo
+      fracture: Fratura de coroa
+      missing: Ausente
+      implant: Implante
+    errors:
+      treatment_status: "Escolha Já existe ou A fazer para um tratamento. Os achados são registrados como observações."
+      bridge_units: "Escolha uma extensão contínua em uma única arcada e dentição, com pelo menos um apoio e uma substituição."
+      replacement_teeth: "Selecione dentes de uma única dentição nesta arcada."
+      arch: "Escolha a arcada superior ou inferior. Esta marca deve abranger toda a arcada."
+      removable_extent: "Escolha um trecho contínuo da mesma arcada e dentição, incluindo a posição selecionada."
+      member_teeth: "Escolha dentes de apoio da mesma arcada e dentição, incluindo o dente selecionado."
+      attachment_support: "Cada apoio precisa de um dente natural presente. Corrija primeiro as marcações de ausente, implante ou remanescente radicular."
+      transposition_pair: "Escolha dois dentes diferentes da mesma arcada e dentição."
+      pair_conflict: "Fusão e diastema não podem descrever o mesmo par ao mesmo tempo. Inspecione o par e remova primeiro a marca incorreta."
+      paired_tooth: "Escolha dois dentes vizinhos da mesma arcada e dentição. O segundo dente se aplica apenas a marcações compartilhadas."
+      pair_support: "Os dois dentes devem estar presentes. Inspecione e corrija primeiro as marcações de ausente, implante ou remanescente radicular."
+      retained_root_conflict: "Um remanescente radicular não pode ser combinado com marcações atuais de coroa ou de suas superfícies. Inspecione o dente e remova primeiro a marca incorreta."
+      position_directions: "Escolha direções para este dente sem combinar direções opostas. Elas se aplicam apenas a marcações de posição anormal."
+      rotation_direction: "Escolha uma direção de giro válida. A direção se aplica apenas a marcações de giroversão."
+      vertical_position_conflict: "Este dente já tem a posição oposta registrada. Inspecione-o e remova a marcação incorreta antes de adicionar esta."
+      mobility_details: "Informe o grau (até 10 caracteres) e sua escala (até 60 caracteres), ou deixe ambos vazios."
+      tooth_size_conflict: "Este dente já tem outra observação de tamanho. Inspecione-o e remova a marcação incorreta antes de adicionar esta."
+      already_recorded: Esta marcação já está registrada neste dente e suas superfícies.
+      category: Escolha uma marcação disponível.
+      tooth: Escolha um número de dente válido.
+      surfaces: Escolha superfícies válidas para este dente e esta marcação.
+      observed_on: Escolha uma data de observação válida, de hoje ou anterior.
+    treatments:
+      marking: "Marcação no odontograma (opcional)"
+      none: "Sem marcação no odontograma"
+      hint: "Escolha como este tratamento aparece no odontograma. As alterações valem para novas marcações; os registros existentes dos pacientes são mantidos. Adicionar uma marcação não gera uma cobrança."
+      transition: "Agora você pode conectar seus tratamentos ao odontograma. Edite um tratamento para escolher sua marcação; seus nomes, preços e forma habitual de trabalhar continuam disponíveis."
+      configured: "Odontograma: %{marking}"
+    pilot:
+      title: Teste de odontogramas
+      enable: Ativar odontogramas
+      disable: Desativar odontogramas
+      enable_for: "Ativar odontogramas para %{practice}"
+      disable_for: "Desativar odontogramas para %{practice}"
+      enabled: Ativados
+      disabled: Desativados
+      updated: "O acesso aos odontogramas de %{practice} foi atualizado."
+      update_failed: "Não foi possível atualizar o acesso aos odontogramas. Tente novamente."
   tell_us_about_your_experience_at_practice: Conte-nos sobre sua experiência na %{practice_name}
   account_cancelled:
     Sua conta está marcada para cancelamento. Se você acredita que

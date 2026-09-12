@@ -1,4 +1,266 @@
 en:
+  odontogram:
+    teeth: "Teeth %{numbers}"
+    title: Odontogram
+    back_to_patient: Patient profile
+    read_only: "This odontogram is available to view. Changes are currently turned off."
+    recorded_entries: Recorded markings
+    empty: "No markings recorded. An unmarked tooth has not been assessed on this chart."
+    tooth: "Tooth %{number}"
+    recorded_by: "Recorded %{date} by %{name}"
+    observed_on: "Observed on %{date}"
+    earlier_entries: Earlier markings
+    history:
+      all_teeth: "All teeth"
+      through: "Changes recorded through %{time}."
+      read_only: "You are viewing a saved chart. Changes are turned off here."
+      view_chart: "View saved chart"
+      view_moment: "View chart saved at %{time}"
+      saved_chart: "Saved chart"
+      what_changed: "What changed since then?"
+      compared_at: "Compared with the current chart at %{time}."
+      unchanged: "The chart is unchanged. Edits followed by Undo remain in the activity history."
+      underlined_teeth: "Underlined tooth numbers have changes listed below."
+      added_since: "Added since then"
+      removed_since: "Removed since then"
+      updated_since: "Updated since then"
+      before: "Then"
+      now: "Now"
+      title: "History"
+      all_days: "All recorded days"
+      empty: "No changes recorded for this period."
+      earlier_changes: "Earlier changes this day"
+      latest_today: "Latest changes saved today"
+      all_changes: "All changes this day"
+      earlier_days: "Earlier history"
+      undo_restored: "Undo: marking restored"
+      undo_removed: "Undo: marking removed"
+      change_count:
+        one: "%{count} change"
+        other: "%{count} changes"
+    editor:
+      treatment_statuses:
+        existing: Already there
+        planned: To do
+        completed: Done
+      treatment_status: "Treatment status"
+      mark_done: "Mark done"
+      completed_action: "Marked done"
+      completed_date: "Done on %{date}"
+      completion_undone: "Completion undone"
+      red_legend: "Red: to do or finding"
+      blue_legend: "Blue: already there / done"
+      bridge_end: "Other end of the bridge"
+      bridge_choose_end: "Choose the other end"
+      bridge_hint: "Choose the span, then the role of each unit. Replacement teeth must already be recorded as missing."
+      bridge_choose_role: "Choose a role"
+      bridge_roles:
+        natural_support: "Natural tooth support"
+        implant_support: "Implant support"
+        pontic: "Replacement tooth"
+      bridge_support: "Review the status and support recorded at tooth %{tooth}. A replacement needs recorded absence; an implant support needs its recorded implant."
+      bridge_overlap: "A prosthesis already covers part of this bridge. Inspect that record first."
+      bridge_dependency: "Review the bridge before changing a tooth status, implant or absence record that it depends on."
+      replacement_teeth: "Replacement teeth"
+      select_all: "Select all"
+      choose_replacement: "Choose the teeth present in this denture."
+      denture_review: "Select the teeth present in this denture. Missing natural teeth are recorded separately."
+      replacement_positions: "Replaces: %{teeth}"
+      partial_picker_hint: "Unmarked means no assessment is recorded. First choose Missing and mark the natural teeth that are absent, then return to this denture."
+      partial_absence: "Record this natural tooth as missing before replacing it with a denture."
+      denture_absence: "Record this arch as having no natural teeth before adding a complete denture."
+      denture_overlap: "These positions are already covered by a denture. Inspect that record before adding another prosthesis."
+      arch_has_denture: "Correct the denture first before removing the absence marking it needs."
+      arches:
+        upper: "Upper arch"
+        lower: "Lower arch"
+      arch_review: "This records the absence of natural teeth in this entire arch, including both dentitions. Implants and their restorations stay in place."
+      arch_conflict: "Review and correct these current markings before recording arch absence."
+      confirm_arch: "Record %{arch} as having no natural teeth?"
+      removable_extent: "Extent"
+      whole_arch: "Whole arch"
+      extent_to: "Through %{number}"
+      removable_hint: "Choose the whole arch or the other end of the span. This records coverage, not attachment teeth."
+      attachment_in_use: "Already part of an appliance: %{teeth}"
+      appliance_overlap: "An appliance of this type already covers part of this selection. Inspect it and remove the incorrect marking before adding another."
+      attachment_unavailable: "Unavailable: %{reason}"
+      attachment_teeth: "Attachment teeth"
+      attachment_hint: "Select the teeth where this appliance is attached. It is saved as one marking."
+      transposition_tooth: "Other tooth"
+      transposition_hint: "Choose the other tooth in the same arch. Tooth numbers and existing records stay in place."
+      fusion_hint: "Choose the neighboring tooth involved in the fusion."
+      paired_tooth: "Neighboring tooth"
+      choose_neighbor: "Choose a tooth…"
+      pair_hint: "Choose the neighboring tooth that bounds this gap."
+      position_label: "Directions (optional)"
+      position_hint: "Leave blank if the direction was not recorded."
+      position_directions:
+        M: "Mesial"
+        D: "Distal"
+        V: "Vestibular"
+        P: "Palatal"
+        L: "Lingual"
+      rotation_direction: "Direction"
+      rotation_hint: "Direction as viewed in the surface circle shown on this chart."
+      rotation_directions:
+        unspecified: "Direction not recorded"
+        clockwise: "Clockwise"
+        counterclockwise: "Counterclockwise"
+      natural_tooth: "Natural tooth"
+      mobility_grade: "Grade"
+      mobility_scale: "Scale used"
+      mobility_hint: "Leave both blank if no grade was recorded."
+      view_history: "View history"
+      inspect: "Inspect teeth"
+      custom_treatments: "Your treatments"
+      standard_markings: "Standard markings"
+      temporary_indicator: "Temp"
+      notation:
+        retained_root: "RR"
+        abnormal_position: "Pos."
+        erupting: "Erupt."
+        impaction: "I"
+        ectopic: "E"
+        rotation: "Rot."
+        mobility: "M"
+        macrodontia: "MAC"
+        microdontia: "MIC"
+        core: "Core"
+        enamel_defect: "Enamel"
+        deep_fissures: "FFP"
+        sealant: "S"
+        fracture: "Fracture"
+        inlay: "Inlay"
+        rct: "RCT"
+        post: "Post"
+      inspect_hint: "Select a tooth to see its markings."
+      search: "Find a marking…"
+      surface_hint: "Click a surface, drag across connected surfaces, or select a tooth."
+      tooth_hint: "Select a tooth to add this marking."
+      dentition: "Dentition"
+      permanent: "Permanent"
+      primary: "Primary"
+      mixed: "Mixed"
+      records: "Recorded markings"
+      phone: "Open on a computer to view and update the chart."
+      retry: "Retry save"
+      refresh: "Reload chart"
+      undo: "Undo"
+      finding: "Finding"
+      work: "Existing work / notation"
+      unrecorded: "Unmarked = not recorded"
+      saving: "Saving…"
+      saved: "Saved: %{marking}"
+      already_recorded: "Already recorded: %{marking}"
+      removed: "Removed: %{marking}"
+      undone: "Change undone."
+      failed: "Could not save. Your selection is kept; retry to save it."
+      load_failed: "Could not load the chart. Reload to try again."
+      conflict: "The chart has changed. Reload it before making another change."
+      on_implant: "On implant"
+      implant_has_markings: "Remove the markings attached to this implant first. Their records will remain in history."
+      invalid_implant_support: "This marking needs an active implant at the same tooth position."
+      structural_conflict: "Inspect this tooth and remove any markings that no longer apply before changing its status. For a crown on a missing tooth, record the implant first. No markings were replaced."
+      close: "Close"
+      add: "Add marking"
+      remove: "Remove"
+      cancel: "Cancel"
+      confirm_remove: "Remove %{marking}? The original remains in the recorded history."
+      surfaces: "Choose the surfaces for this marking."
+      optional_surfaces: "Choose surfaces if known, or leave them empty to record this marking for the tooth."
+      choose_surface: "Choose at least one surface."
+      observation_date: "Observation date (optional)"
+      no_matches: "No matching markings."
+      hidden_teeth: "Some markings belong to teeth outside this view. Choose Mixed to see them."
+      removed_state: "Removed"
+      history: "Changes"
+      added_action: "Added"
+      removed_action: "Removed"
+      undo_action: "Undone"
+      unknown: "Date not recorded"
+      date: "Recorded on"
+      by: "by"
+      surface_names: "M: mesial · D: distal · O: occlusal · I: incisal · B: buccal · F: facial · P: palatal · L: lingual"
+    categories:
+      fixed_bridge: "Fixed bridge"
+      partial_denture: "Removable partial denture"
+      complete_denture: "Complete denture"
+      edentulous_arch: "Edentulous arch"
+      removable_orthodontic: "Removable orthodontic appliance"
+      fixed_orthodontic: "Fixed orthodontic appliance"
+      transposition: "Transposition"
+      fusion: "Fusion"
+      diastema: "Diastema"
+      retained_root: "Retained root"
+      abnormal_position: "Abnormal tooth position"
+      erupting: "Erupting tooth"
+      impaction: "Impaction"
+      ectopic: "Ectopic tooth"
+      gemination: "Gemination"
+      rotation: "Rotation"
+      extrusion: "Extruded tooth"
+      intrusion: "Intruded tooth"
+      mobility: "Mobility"
+      peg_shaped: "Peg-shaped tooth"
+      macrodontia: "Macrodontia"
+      microdontia: "Microdontia"
+      caries: Caries
+      enamel_defect: Enamel defect
+      deep_fissures: Deep pits and fissures
+      veneer: Veneer
+      core: Core without post
+      filling: Filling
+      temporary_filling: Temporary filling
+      sealant: Sealant
+      inlay: Inlay
+      crown: Crown
+      temporary_crown: Temporary crown
+      pulpotomy: Pulpotomy
+      wear: Wear
+      rct: Root canal treatment
+      post: Post and core
+      fracture: Crown fracture
+      missing: Missing
+      implant: Implant
+    errors:
+      treatment_status: "Choose Already there or To do for treatment. Findings are recorded as observations."
+      bridge_units: "Choose a continuous span in one arch and dentition, with at least one support and one replacement."
+      replacement_teeth: "Select replacement teeth from one dentition in this arch."
+      arch: "Choose the upper or lower arch. This marking must cover the entire arch."
+      removable_extent: "Choose a continuous span in one arch and dentition, including the selected position."
+      member_teeth: "Choose attachment teeth from one arch and dentition, including the selected tooth."
+      attachment_support: "Each attachment needs a present natural tooth. Correct any missing, implant or retained-root marking first."
+      transposition_pair: "Choose two different teeth in the same arch and dentition."
+      pair_conflict: "Fusion and diastema cannot describe the same pair at the same time. Inspect the pair and remove the incorrect marking first."
+      paired_tooth: "Choose two neighboring teeth in the same arch and dentition. A second tooth applies only to paired markings."
+      pair_support: "Both teeth must be present. Inspect and correct any missing, implant or retained-root markings first."
+      retained_root_conflict: "A retained root cannot be combined with current crown or crown-surface markings. Inspect the tooth and remove the incorrect marking first."
+      position_directions: "Choose directions for this tooth without combining opposite directions. Directions apply only to abnormal position markings."
+      rotation_direction: "Choose a supported rotation direction. Direction applies only to rotation markings."
+      vertical_position_conflict: "This tooth already has the opposite position recorded. Inspect it and remove the incorrect marking before adding this one."
+      mobility_details: "Enter both the grade (up to 10 characters) and its scale (up to 60 characters), or leave both blank."
+      tooth_size_conflict: "This tooth already has a different size observation. Inspect it and remove the incorrect marking before adding this one."
+      already_recorded: This marking is already recorded on this tooth and surfaces.
+      category: Choose a supported marking.
+      tooth: Choose a valid tooth number.
+      surfaces: Choose valid surfaces for this tooth and marking.
+      observed_on: Choose a valid observation date, today or earlier.
+    treatments:
+      marking: "Chart marking (optional)"
+      none: "No chart marking"
+      hint: "Choose how this treatment appears in the odontogram. Changes apply to new markings; existing patient records stay unchanged. Adding a marking does not create a charge."
+      transition: "You can now connect your treatments to the odontogram. Edit a treatment to choose its marking; your names, prices and usual workflow stay available."
+      configured: "Odontogram: %{marking}"
+    pilot:
+      title: Odontogram pilot
+      enable: Enable odontograms
+      disable: Disable odontograms
+      enable_for: "Enable odontograms for %{practice}"
+      disable_for: "Disable odontograms for %{practice}"
+      enabled: Enabled
+      disabled: Disabled
+      updated: "Odontogram access updated for %{practice}."
+      update_failed: "We couldn't update odontogram access. Please try again."
   tell_us_about_your_experience_at_practice: Tell us about your experience at %{practice_name}
   account_cancelled:
     Your account is marked for cancellation. If you believe this

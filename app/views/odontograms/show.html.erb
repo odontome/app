@@ -1,0 +1,43 @@
+<div class="page-header mb-4" data-odontogram-session="<%= [current_user.id, @patient.practice_id, @patient.id].join(':') %>" data-odontogram-session-enabled="<%= current_user.practice.odontogram_enabled? && !impersonating? %>">
+  <div class="row align-items-center g-2">
+    <div class="col">
+      <h1 class="page-title"><%= t('odontogram.title') %></h1>
+      <div class="text-muted"><%= @patient.fullname %></div>
+    </div>
+    <div class="col-auto">
+      <%= link_to t('odontogram.back_to_patient'), patient_path(@patient), class: 'btn' %>
+    </div>
+  </div>
+</div>
+
+<% if @read_only && !@history_cutoff %>
+  <div class="alert alert-info" data-odontogram-read-only><%= t('odontogram.read_only') %></div>
+<% end %>
+
+<%= render 'history' %>
+
+<% unless @history_cutoff %>
+<details class="card" data-odontogram-records <%= 'open' if params[:before].present? || (@history_groups.empty? && !@history_day) %>>
+  <summary class="card-body fw-medium"><%= t('odontogram.recorded_entries') %></summary>
+  <% if @entries.empty? %>
+    <div class="card-body text-muted"><%= t('odontogram.empty') %></div>
+  <% else %>
+    <div class="list-group list-group-flush">
+      <% @entries.each do |entry| %>
+        <div class="list-group-item" data-odontogram-entry="<%= entry.id %>">
+          <div><% if !@history_tooth || entry.paired_tooth || entry.member_teeth.present? %><%= entry.target_name %> · <% end %><%= entry.marking_name %><% if entry.surfaces.present? %> · <%= entry.surfaces.join('') %><% end %></div>
+          <% if entry.state == 'removed' %><span class="badge bg-secondary-lt"><%= t('odontogram.editor.removed_state') %></span><% end %>
+          <div class="text-muted small"><%= t('odontogram.recorded_by', date: l(entry.created_at, format: :long), name: entry.recorded_by_name) %></div>
+          <% if entry.observed_on %>
+            <div class="text-muted small"><%= t('odontogram.observed_on', date: l(entry.observed_on, format: :long)) %></div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <% if @earlier_entries %>
+      <div class="card-footer"><%= link_to t('odontogram.earlier_entries'), patient_odontogram_path(@patient, **@history_filters, before: @entries.last.id) %></div>
+    <% end %>
+  <% end %>
+</details>
+
+<% end %>

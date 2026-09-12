@@ -12,6 +12,13 @@
         <%= f.label :price, class: "form-label required" %>
         <%= f.number_field :price, :class => "form-control"  %>
       </div>
+      <% if current_user.practice.odontogram_enabled? && !impersonating? %>
+        <div class="mb-3">
+          <%= f.label :odontogram_category, t('odontogram.treatments.marking'), class: 'form-label' %>
+          <%= f.select :odontogram_category, OdontogramEntry::CATEGORIES.map { |category| [t("odontogram.categories.#{category}"), category] }, { include_blank: t('odontogram.treatments.none') }, class: 'form-select', aria: { describedby: 'odontogram-treatment-hint' } %>
+          <div class="form-hint" id="odontogram-treatment-hint" data-odontogram-treatment-hint><%= t('odontogram.treatments.hint') %></div>
+        </div>
+      <% end %>
     </div>
   
     <div class="card-footer text-end">

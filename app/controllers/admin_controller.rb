@@ -44,7 +44,7 @@ class AdminController < ApplicationController
     practice = Practice.find(params[:id])
     target_user = practice.users.order('id ASC').first
 
-    unless target_user
+    if target_user.nil? || target_user.roles.include?('superadmin')
       redirect_back_or_default(practices_admin_path, I18n.t('errors.messages.unauthorised'))
       return
     end
@@ -60,6 +60,19 @@ class AdminController < ApplicationController
                 notice: I18n.t(:impersonation_started, default: 'You are now impersonating this practice.')
   end
 
+  def update_odontogram_access
+    attributes = params[:practice]
+    enabled = attributes[:odontogram_enabled] if attributes.is_a?(ActionController::Parameters)
+    return head :bad_request unless %w[0 1].include?(enabled)
+
+    practice = Practice.find(params[:id])
+    if practice.update(odontogram_enabled: enabled == '1')
+      redirect_to practices_admin_path, notice: I18n.t('odontogram.pilot.updated', practice: practice.name)
+    else
+      redirect_to practices_admin_path, alert: I18n.t('odontogram.pilot.update_failed')
+    end
+  end
+
   def stop_impersonating
     admin = impersonator_user
 
@@ -73,4 +86,5 @@ class AdminController < ApplicationController
     session[:user] = admin
     redirect_to practices_admin_path, notice: I18n.t(:impersonation_stopped, default: 'Stopped impersonation.')
   end
+
 end
