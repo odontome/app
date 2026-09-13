@@ -674,6 +674,7 @@ en:
   patients_follow_up_empty_description: No one needs a follow-up right now.
   patients_follow_up_showing_all: Showing all patients that need follow-up
   patients_segment_all: All patients
+  patients_counts_loading: Loading count
   patients_segment_birthdays: Birthdays
   patients_segment_needs_follow_up: Needs follow-up
   patients_segment_today: Today

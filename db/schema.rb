@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_11_200000) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_12_193000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -229,6 +229,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_11_200000) do
     t.string "uid"
     t.datetime "updated_at", precision: nil, null: false
     t.index "lower((uid)::text) gin_trgm_ops", name: "index_patients_on_lower_uid_trgm", using: :gin
+    t.index "practice_id, EXTRACT(month FROM date_of_birth), EXTRACT(day FROM date_of_birth)", name: "index_patients_on_practice_id_and_birthday"
     t.index ["deleted_at"], name: "index_patients_on_deleted_at"
     t.index ["fullname_search"], name: "index_patients_on_fullname_search", opclass: :gin_trgm_ops, using: :gin
     t.index ["practice_id", "firstname_initial"], name: "index_patients_on_practice_id_and_firstname_initial"
