@@ -667,6 +667,7 @@ pt:
   patients_follow_up_empty_description: Ninguém precisa de acompanhamento agora.
   patients_follow_up_showing_all: Mostrando todos os pacientes que precisam de acompanhamento
   patients_segment_all: Todos os pacientes
+  patients_counts_loading: Carregando quantidade
   patients_segment_birthdays: Aniversários
   patients_segment_needs_follow_up: Precisa de acompanhamento
   patients_segment_today: Hoje

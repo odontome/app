@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   end
 
   resources :patients do
+    get :segment_counts, on: :collection
     resources :notes
     resources :balances
     resource :odontogram, only: %i[show create]

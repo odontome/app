@@ -14,11 +14,13 @@ class PatientsController < ApplicationController
 
   def index
     if params[:term].present?
-      @patients = Patient.search(params[:term]).with_practice(current_user.practice_id).with_last_visit
+      @patients = Patient.search(params[:term]).with_practice(current_user.practice_id)
+                         .with_last_visit.preload(profile_picture_attachment: :blob)
     elsif params[:segment].present? && params[:segment] == 'new_this_week'
       @patients = Patient.with_practice(current_user.practice_id)
                          .new_this_week(current_user.practice.timezone)
                          .with_last_visit
+                         .preload(profile_picture_attachment: :blob)
     elsif params[:segment] == 'needs_follow_up'
       @segment = 'needs_follow_up'
       resolve_needs_follow_up_context
@@ -42,6 +44,16 @@ class PatientsController < ApplicationController
       end
       format.js
     end
+  end
+
+  def segment_counts
+    practice = current_user.practice
+    response.headers['Cache-Control'] = 'no-store'
+    render json: {
+      today: Appointment.today_for_practice(practice.id, practice.timezone).count,
+      needs_follow_up: needs_follow_up_count,
+      birthdays: birthday_this_week_count
+    }
   end
 
   def show
@@ -105,32 +117,22 @@ class PatientsController < ApplicationController
   def resolve_today_context
     practice = current_user.practice
     @appointments = Appointment.today_for_practice(practice.id, practice.timezone)
-    @today_count = @appointments.size
-    @follow_up_count = needs_follow_up_count
-    @birthday_count = birthday_this_week_count
+                               .preload(:doctor, :datebook, patient: { profile_picture_attachment: :blob })
+    @today_count = @appointments.length
     @show_datebook = practice.datebooks_count.to_i > 1
   end
 
-  def load_segment_counts
-    practice = current_user.practice
-    @today_count = Appointment.today_for_practice(practice.id, practice.timezone).count
-    @follow_up_count = needs_follow_up_count
-    @birthday_count = birthday_this_week_count
-  end
-
   def resolve_birthdays_context
-    load_segment_counts
-
     @patients = Patient.with_practice(current_user.practice_id)
                        .birthday_this_week(current_user.practice.timezone)
+                       .preload(profile_picture_attachment: :blob)
                        .reorder(Arel.sql("EXTRACT(MONTH FROM date_of_birth), EXTRACT(DAY FROM date_of_birth)"))
   end
 
   def resolve_needs_follow_up_context
-    load_segment_counts
-
     base_scope = Patient.with_practice(current_user.practice_id)
       .needs_follow_up
+      .preload(profile_picture_attachment: :blob)
       .reorder("last_visits.last_visit_at ASC NULLS FIRST, patients.id ASC")
 
     offset = [params[:offset].to_i, 0].max
@@ -175,7 +177,6 @@ class PatientsController < ApplicationController
   end
 
   def resolve_letter_context
-    load_segment_counts
     @letter_options = letter_options_for_practice
     @current_letter = normalize_letter(params[:letter])
     @sort_column = normalize_sort_column(params[:sort])
@@ -211,7 +212,7 @@ class PatientsController < ApplicationController
                    Patient.anything_with_letter(letter)
                  end
 
-    scoped = base_scope.with_practice(current_user.practice_id).with_last_visit
+    scoped = base_scope.with_practice(current_user.practice_id).with_last_visit.preload(profile_picture_attachment: :blob)
 
     scoped = apply_listing_sort(scoped, sort_column: sort_column, sort_direction: sort_direction)
 

@@ -9,6 +9,7 @@
 //= require masonry.min
 //= require copy
 //= require ai
+//= require patient_counts
 //= require odontogram
 
 // This function prevents the session from ending

@@ -32,14 +32,15 @@ class Patient < ApplicationRecord
     .select("patients.*, last_visits.last_visit_at AS last_visit_at")
   }
 
+  # Keep the fixed status literal so generic plans can use the partial index.
   scope :without_upcoming_appointment, -> {
     where(
       "NOT EXISTS (
         SELECT 1 FROM appointments
         WHERE appointments.patient_id = patients.id
           AND appointments.starts_at > ?
-          AND appointments.status != ?
-      )", Time.current, Appointment.status[:cancelled]
+          AND appointments.status != #{connection.quote(Appointment.status[:cancelled])}
+      )", Time.current
     )
   }
 
