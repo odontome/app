@@ -53,6 +53,21 @@ class PatientFollowUpTest < ActiveSupport::TestCase
     assert_empty Patient.where(id: patient.id).needs_follow_up
   end
 
+  test 'future appointment status is treated as a value even when it contains SQL syntax' do
+    cancelled_status = "cancelled' OR '1'='1"
+    ids = [cancelled_status, 'confirmed'].map do |status|
+      patient = Patient.create!(practice: practices(:complete), firstname: 'Quoted', lastname: 'Status', date_of_birth: '1990-01-01')
+      Appointment.insert_all!([{ patient_id: patient.id, doctor_id: doctors(:rebecca).id,
+        datebook_id: datebooks(:playa_del_carmen).id, starts_at: 1.day.from_now,
+        ends_at: 1.day.from_now + 30.minutes, status: status }])
+      patient.id
+    end
+
+    Appointment.stub :status, Appointment.status.merge(cancelled: cancelled_status) do
+      assert_equal [ids.first], Patient.where(id: ids).without_upcoming_appointment.pluck(:id)
+    end
+  end
+
   test 'prepared follow-up queries preserve indexed last visits and a fixed future status' do
     connection = ActiveRecord::Base.connection
     query = nil

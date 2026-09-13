@@ -39,7 +39,7 @@ class Patient < ApplicationRecord
         SELECT 1 FROM appointments
         WHERE appointments.patient_id = patients.id
           AND appointments.starts_at > ?
-          AND appointments.status != '#{Appointment.status[:cancelled]}'
+          AND appointments.status != #{connection.quote(Appointment.status[:cancelled])}
       )", Time.current
     )
   }
