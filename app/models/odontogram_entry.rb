@@ -106,7 +106,7 @@ class OdontogramEntry < ApplicationRecord
     attributes
   end
 
-  def marking_name
+  def marking_name(include_status: true)
     category_name = I18n.t("odontogram.categories.#{category}")
     name = treatment_snapshot.present? ? "#{treatment_snapshot.fetch('name')} (#{category_name})" : category_name
     name = "#{name} · #{I18n.t('odontogram.editor.replacement_positions', teeth: replacement_teeth.join(', '))}" if replacement_teeth.present?
@@ -120,7 +120,7 @@ class OdontogramEntry < ApplicationRecord
       directions = position_directions.map { |direction| I18n.t("odontogram.editor.position_directions.#{direction}") }
       name = "#{name} · #{directions.join(' · ')}"
     end
-    name = "#{name} · #{I18n.t("odontogram.editor.treatment_statuses.#{treatment_status}")}" if TREATMENT_CATEGORIES.include?(category)
+    name = "#{name} · #{I18n.t("odontogram.editor.treatment_statuses.#{treatment_status}")}" if include_status && TREATMENT_CATEGORIES.include?(category)
     implant_entry_id.present? ? "#{name} · #{I18n.t('odontogram.editor.on_implant')}" : name
   end
 

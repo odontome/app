@@ -80,3 +80,14 @@
 .od-chart .od-bridge-pontic [data-part^=surface-], .od-chart .od-bridge-pontic svg text { visibility: hidden; }
 
 .od-chart .od-tooth-artwork.od-planned-layer { position: absolute; inset: 0; pointer-events: none; --od-blue: var(--od-red); }
+
+.od-history-group > summary { list-style: none; cursor: pointer; }
+.od-history-group > summary::-webkit-details-marker { display: none; }
+.od-history-group > summary:focus-visible { outline: 2px solid var(--tblr-primary); outline-offset: 4px; border-radius: var(--tblr-border-radius); }
+.od-history-group > summary .od-history-chevron { flex: none; width: 1rem; height: 1rem; }
+.od-history-group[open] > summary .od-history-chevron { transform: rotate(90deg); }
+.od-history-group + .od-history-group { border-top: 1px solid var(--tblr-border-color); }
+.od-history-change { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr) auto; align-items: start; gap: .75rem; }
+.od-history-description { min-width: 0; overflow-wrap: anywhere; }
+.od-history-time { white-space: nowrap; font-variant-numeric: tabular-nums; }
+@media (max-width: 575px) { .od-history-change { grid-template-columns: 1.5rem minmax(0, 1fr); } .od-history-time { grid-column: 2; justify-self: start; } }
