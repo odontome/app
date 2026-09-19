@@ -2,9 +2,16 @@
   --fc-page-bg-color: var(--tblr-body-bg);
 }
 
-/* Keep half-hour slots large enough to read appointment details. */
+/* Keep the same 70px/hour density with quarter-hour drag targets. */
 .fc .fc-timegrid-slot {
-  height: 35px;
+  height: 17.5px;
+  line-height: 1;
+}
+
+/* Keep visible grid lines at half-hour intervals. */
+.fc .fc-timegrid-slot[data-time$=":15:00"],
+.fc .fc-timegrid-slot[data-time$=":45:00"] {
+  border-top-color: transparent;
 }
 
 /* Soften the fill using the active theme without fading appointment text. */

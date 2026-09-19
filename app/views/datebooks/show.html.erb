@@ -38,8 +38,10 @@
       now: '<%= Time.current.in_time_zone(@datebook.practice.timezone).strftime('%Y-%m-%dT%H:%M:%S') %>',
       initialView: compactCalendar ? 'timeGridDay' : 'timeGridWeek',
       timeZone: 'UTC',
-      slotDuration: '00:30:00',
+      // Match slots to drag increments so a long press cannot change the initial hit.
+      slotDuration: '00:15:00',
       snapDuration: '00:15:00',
+      slotLabelInterval: '01:00:00',
       // Preserve 12-hour display regardless of the practice locale.
       slotLabelFormat: function (info) {
         return calendarClock(info.date.hour, info.date.minute, true);
