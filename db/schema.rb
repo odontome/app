@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_12_193000) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_15_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -175,6 +175,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_12_193000) do
     t.string "category", null: false
     t.datetime "completed_at"
     t.datetime "created_at", null: false
+    t.string "currency"
     t.bigint "implant_entry_id"
     t.integer "member_teeth", default: [], null: false, array: true
     t.string "mobility_grade", limit: 10
@@ -183,6 +184,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_12_193000) do
     t.integer "paired_tooth"
     t.bigint "patient_id", null: false
     t.string "position_directions", default: [], null: false, array: true
+    t.decimal "price", precision: 12, scale: 2
     t.bigint "recorded_by_id"
     t.string "recorded_by_name", null: false
     t.integer "replacement_teeth", default: [], null: false, array: true
@@ -287,12 +289,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_12_193000) do
   end
 
   create_table "treatments", id: :serial, force: :cascade do |t|
+    t.string "builtin_category"
     t.datetime "created_at", precision: nil, null: false
     t.string "name", limit: 100
     t.string "odontogram_category"
     t.integer "practice_id"
     t.float "price"
     t.datetime "updated_at", precision: nil, null: false
+    t.index ["practice_id", "builtin_category"], name: "index_treatments_on_practice_id_and_builtin_category", unique: true
   end
 
   create_table "user_consents", force: :cascade do |t|

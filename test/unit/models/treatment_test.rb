@@ -7,7 +7,7 @@ class TreatmentTest < ActiveSupport::TestCase
     treatment = Treatment.new
     assert treatment.invalid?
     assert treatment.errors[:name].any?
-    assert treatment.errors[:price].any?
+    assert_empty treatment.errors[:price]
   end
 
   test 'treatment name must be between 1 and 100 characters' do

@@ -112,8 +112,6 @@ pt:
       mobility_hint: "Deixe os dois campos vazios se nenhum grau foi registrado."
       view_history: "Ver histórico"
       inspect: "Inspecionar dentes"
-      custom_treatments: "Seus tratamentos"
-      standard_markings: "Marcações gerais"
       temporary_indicator: "Temp"
       notation:
         retained_root: "RR"
@@ -249,7 +247,6 @@ pt:
       marking: "Marcação no odontograma (opcional)"
       none: "Sem marcação no odontograma"
       hint: "Escolha como este tratamento aparece no odontograma. As alterações valem para novas marcações; os registros existentes dos pacientes são mantidos. Adicionar uma marcação não gera uma cobrança."
-      transition: "Agora você pode conectar seus tratamentos ao odontograma. Edite um tratamento para escolher sua marcação; seus nomes, preços e forma habitual de trabalhar continuam disponíveis."
       configured: "Odontograma: %{marking}"
     pilot:
       title: Teste de odontogramas
@@ -462,8 +459,6 @@ pt:
   english: Inglês
   portuguese: Português
   enter_patient_name_or_uid: Nome do paciente ou número do prontuário…
-  valid: Válido
-  invalid: Inválido
   errors:
     titles:
       unauthorised: Você não pode fazer isso
@@ -509,8 +504,6 @@ pt:
     doctors:
       feed: Para iPhones, siga as instruções neste <a href="https://support.apple.com/en-ca/guide/iphone/iph3d1110d4/ios">artigo</a> para adicionar o calendário ao seu telefone.
       suspended: Médicos suspensos não aparecerão como opções para seus novos agendamentos. Agendamentos anteriores não são afetados.
-    treatments:
-      status: Tratamentos inválidos não têm preço especificado, definir um é obrigatório para que o tratamento apareça no perfil do paciente.
     payments:
       status: Pagamentos com status "Requer Método de Pagamento" estão incompletos e não podem ser processados até que um método de pagamento válido seja anexado a eles.
       charge_status: O status do cargo indica o estado atual do processo de pagamento. Pagamentos que não estão "Bem-sucedidos" podem requerer ação adicional para completar.
@@ -774,7 +767,6 @@ pt:
       w3c: ! "%Y-%m-%dT%H:%M:%S%:z"
     pm: pm
   today: Hoje
-  treatment_without_price: Adicione um preço a este tratamento, ou simplesmente delete-o
   treatments: Tratamentos
   treatments_created_success_message: Tratamento criado com sucesso
   treatments_updated_success_message: Tratamento atualizado com sucesso
@@ -1078,3 +1070,19 @@ pt:
         date_range_too_wide: "O intervalo de datas não pode exceder %{max} dias. Por favor use um intervalo mais curto."
         appointment_conflict: "Este dentista já tem uma consulta nesse horário. Por favor escolha outro horário."
         outside_working_hours: "A consulta inteira deve estar dentro do horário de atendimento, %{start}–%{end} (%{timezone}), no mesmo dia."
+
+  treatment_catalogue:
+    builtin_hint: 'Este tratamento faz parte do odontograma. Apenas seu preço pode ser alterado, e ele não pode ser excluído.'
+    price_hint: 'Opcional, em %{currency}. Deixe em branco se não houver preço; digite 0 se for gratuito.'
+    unpriced: 'Sem preço'
+  treatment_report:
+    title: 'Resumo de tratamentos'
+    link: 'Resumo de tratamentos'
+    print: 'Imprimir / Salvar como PDF'
+    generated: 'Preparado em %{date}'
+    empty: 'Ainda não há tratamentos planejados ou realizados para incluir.'
+    location: 'Dente / região'
+    date: 'Data'
+    total: 'Total'
+    partial_total: 'Total dos tratamentos com preço'
+    footer: 'Tratamentos atuais planejados e realizados do odontograma. Não inclui trabalhos que já existiam nem achados clínicos. Os preços são salvos ao adicionar cada tratamento. Este resumo não é uma fatura nem um registro de pagamentos.'

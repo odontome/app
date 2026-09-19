@@ -112,8 +112,6 @@ es:
       mobility_hint: "Deja ambos campos vacíos si no se registró un grado."
       view_history: "Ver historial"
       inspect: "Inspeccionar dientes"
-      custom_treatments: "Tus tratamientos"
-      standard_markings: "Marcas generales"
       temporary_indicator: "Temp"
       notation:
         retained_root: "RR"
@@ -249,7 +247,6 @@ es:
       marking: "Marca en el odontograma (opcional)"
       none: "Sin marca en el odontograma"
       hint: "Elige cómo se muestra este tratamiento en el odontograma. Los cambios se aplican a marcas nuevas; los registros existentes de los pacientes se conservan. Agregar una marca no genera un cobro."
-      transition: "Ya puedes conectar tus tratamientos al odontograma. Edita un tratamiento para elegir su marca; tus nombres, precios y forma habitual de trabajar siguen disponibles."
       configured: "Odontograma: %{marking}"
     pilot:
       title: Prueba de odontogramas
@@ -496,8 +493,6 @@ es:
   past_appointments: Citas anteriores
   gender: Sexo
   hide_past_appointments: Esconder citas pasadas
-  valid: Valido
-  invalid: Invalido
   home: Inicio
   "yes": Sí
   "no": "No"
@@ -509,8 +504,6 @@ es:
     doctors:
       feed: Para iPhones, sigue las instrucciones en <a href="https://support.apple.com/en-ca/guide/iphone/iph3d1110d4/ios">este artículo</a> para agregar el calendario a tu teléfono.
       suspended: Doctores suspendidos no aparecen como opciones para nuevas citas. Las citas anteriores no se ven afectadas.
-    treatments:
-      status: Tratamientos invalidos no poseen precios. Debes corregir el precio antes de poder utilizarlo
     payments:
       status: Pagos con estado "Requiere Método de Pago" están incompletos y no pueden ser procesados hasta que se adjunte un método de pago válido.
       charge_status: El estado del cargo indica el estado actual del proceso de pago. Los pagos que no están "Exitosos" pueden requerir acción adicional para completarse.
@@ -736,7 +729,6 @@ es:
       w3c: ! "%Y-%m-%dT%H:%M:%S%:z"
     pm: pm
   today: Hoy
-  treatment_without_price: Agrega un precio a este tratamiento, o simplemente borralo
   treatments: Tratamientos
   treatments_created_success_message: El tratamiento ha sido creado con éxito.
   treatments_updated_success_message: El tratamiento ha sido actualizado con éxito.
@@ -1038,3 +1030,19 @@ es:
         date_range_too_wide: "El rango de fechas no puede exceder %{max} días. Por favor usa un rango más corto."
         appointment_conflict: "Este doctor ya tiene una cita durante ese horario. Por favor elige otro horario."
         outside_working_hours: "La cita completa debe estar dentro del horario de atención, %{start}–%{end} (%{timezone}), en el mismo día."
+
+  treatment_catalogue:
+    builtin_hint: 'Este tratamiento forma parte del odontograma. Solo puedes cambiar su precio y no se puede eliminar.'
+    price_hint: 'Opcional, en %{currency}. Déjalo vacío si no tiene precio; escribe 0 si es gratuito.'
+    unpriced: 'Sin precio'
+  treatment_report:
+    title: 'Resumen de tratamientos'
+    link: 'Resumen de tratamientos'
+    print: 'Imprimir / Guardar como PDF'
+    generated: 'Preparado el %{date}'
+    empty: 'Aún no hay tratamientos por hacer o realizados para incluir.'
+    location: 'Diente / zona'
+    date: 'Fecha'
+    total: 'Total'
+    partial_total: 'Total de tratamientos con precio'
+    footer: 'Tratamientos actuales por hacer y realizados del odontograma. No incluye trabajos que ya existían ni hallazgos clínicos. Los precios se guardan al agregar cada tratamiento. Este resumen no es una factura ni un registro de pagos.'
