@@ -1,8 +1,7 @@
-<div class="d-flex justify-content-between gap-3 flex-wrap mb-4 report-toolbar">
-  <%= link_to t('odontogram.back_to_patient'), patient_path(@patient), class: 'btn' %>
-  <button type="button" class="btn btn-primary" data-print-report>
-    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 17h2a2 2 0 0 0 2 -2v-6a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2m0 -10v-4h10v4m-10 6h10v8h-10zM17 10h.01"/></svg>
-    <%= t('treatment_report.print') %>
+<div class="d-flex align-items-center gap-2 mb-3 report-toolbar">
+  <%= link_to t('odontogram.back_to_patient'), patient_path(@patient), class: 'btn btn-sm' %>
+  <button type="button" class="btn btn-sm btn-primary" data-print-report title="<%= t('treatment_report.print') %>" aria-label="<%= t('treatment_report.print') %>">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon m-0" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 17h2a2 2 0 0 0 2 -2v-6a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2m0 -10v-4h10v4m-10 6h10v8h-10zM17 10h.01"/></svg>
   </button>
 </div>
 <article class="card report-document">
