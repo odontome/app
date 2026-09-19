@@ -39,6 +39,7 @@ es:
         one: "%{count} cambio"
         other: "%{count} cambios"
     editor:
+      completed: "Realizado: %{marking}"
       treatment_statuses:
         existing: Ya está
         planned: Por hacer
@@ -48,8 +49,8 @@ es:
       completed_action: "Marcado como realizado"
       completed_date: "Realizado el %{date}"
       completion_undone: "Realización deshecha"
-      red_legend: "Rojo: por hacer o hallazgo"
-      blue_legend: "Azul: ya está / realizado"
+      red_legend: "Por tratar"
+      blue_legend: "Existente"
       bridge_end: "Otro extremo del puente"
       bridge_choose_end: "Elige el otro extremo"
       bridge_hint: "Elige la extensión y la función de cada unidad. Los dientes de reemplazo deben estar registrados como ausentes."
@@ -146,7 +147,7 @@ es:
       undo: "Deshacer"
       finding: "Hallazgo"
       work: "Trabajo existente / anotación"
-      unrecorded: "Sin marca = sin registro"
+      unrecorded: "Sin registro"
       saving: "Guardando…"
       saved: "Guardado: %{marking}"
       already_recorded: "Ya está registrado: %{marking}"

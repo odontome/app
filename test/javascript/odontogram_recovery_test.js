@@ -35,7 +35,7 @@ test('choosing another treatment abandons retry and reloads authoritative state 
   assert.equal(loads, 1);
 });
 
-test('footer feedback restarts its fade and yellow highlight without animating loading or reduced motion', () => {
+test('footer feedback stays visible and restarts its yellow highlight without animating loading or reduced motion', () => {
   const animations = [], cancelled = [], text = {};
   const feedback = { getAnimations: () => [{ cancel: () => cancelled.push(true) }], animate: (...args) => animations.push(args) };
   const context = { $: selector => selector === '[data-feedback]' ? feedback : text,
@@ -44,7 +44,7 @@ test('footer feedback restarts its fade and yellow highlight without animating l
   vm.runInNewContext("status('Could not save'); status('Could not save')", context);
   assert.equal(text.textContent, 'Could not save');
   assert.equal(animations.length, 2);
-  assert.equal(animations[0][0][0].opacity, 0);
+  assert.equal(animations[0][0][0].opacity, 1);
   assert.equal(animations[0][0][0].backgroundColor, 'var(--tblr-warning-lt)');
   assert.equal(animations[0][0].at(-1).backgroundColor, 'transparent');
   vm.runInNewContext("status('Saving', false); status('')", context);
@@ -103,20 +103,20 @@ test('changing treatment after a conflict fetches the latest chart before entry 
 
 test('cancelling removal preserves a shared marking and confirmation submits its single identity', () => {
   const buttons = [], saved = [], prompts = [];
-  const element = () => ({ dataset: {}, append() {}, replaceChildren() {}, setAttribute() {}, querySelectorAll: () => [] });
+  const element = () => ({ dataset: {}, append() {}, prepend() {}, replaceChildren() {}, setAttribute() {}, querySelectorAll: () => [] });
   const entry = { id: 42, tooth: 16, member_teeth: [16, 15], treatment_status: 'existing' };
   const context = { desktop: { matches: true }, mode: 'inspect', selected: 15, active: '', editable: true,
     busy: false, pending: null, formError: '', editor: 'test', root: {}, details: element(), entries: [entry],
     node: element, button: (text, action) => { const item = { ...element(), text, action }; buttons.push(item); return item; },
     disposeDetailsPopover() {}, closeDetails() {}, toothLabel: n => 'Tooth ' + n,
-    markingLabel: () => 'Fixed bridge', label: () => 'Fixed bridge · 16, 15', entryTeeth: e => e.member_teeth,
+    actionIcon: element, markingName: () => 'Fixed bridge', treatmentCategories: [], markingLabel: () => 'Fixed bridge', label: () => 'Fixed bridge · 16, 15', entryTeeth: e => e.member_teeth,
     toothHistoryPath: () => '/history', canWrite: () => true, save: (...args) => saved.push(args),
     window: { confirm: text => { prompts.push(text); return false; } },
     copy: { close: 'Close', remove: 'Remove', add: 'Add marking', view_history: 'History', confirm_remove: 'Remove %{marking}?' },
     arches: { querySelector: () => ({}) }, tabler: { Popover: class { show() {} } } };
   vm.runInNewContext(source.slice(source.indexOf('    function showDetails('), source.indexOf('    let menuForTooth =')), context);
   context.showDetails(false);
-  const remove = buttons.find(item => item.text === 'Remove');
+  const remove = buttons.find(item => item.title === 'Remove');
   remove.action();
   assert.equal(prompts[0], 'Remove Fixed bridge · 16, 15?');
   assert.equal(saved.length, 0);
@@ -129,4 +129,20 @@ test('cancelling removal preserves a shared marking and confirmation submits its
   context.canWrite = () => false;
   remove.action();
   assert.equal(saved.length, 1);
+});
+
+test('changed hints highlight once and respect reduced motion', () => {
+  const animations = [];
+  const element = { textContent: 'Select a tooth', getAnimations: () => [], animate: frames => animations.push(frames) };
+  const context = { matchMedia: () => ({ matches: false }) };
+  vm.runInNewContext(source.slice(source.indexOf('    function highlightChange('), source.indexOf('    function reportFormError(')), context);
+  context.changeText(element, 'Select a tooth');
+  assert.equal(animations.length, 0);
+  context.changeText(element, 'Select a surface');
+  assert.equal(element.textContent, 'Select a surface');
+  assert.equal(animations.length, 1);
+  context.matchMedia = () => ({ matches: true });
+  context.changeText(element, 'Read only');
+  assert.equal(element.textContent, 'Read only');
+  assert.equal(animations.length, 1);
 });

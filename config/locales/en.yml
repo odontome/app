@@ -39,6 +39,7 @@ en:
         one: "%{count} change"
         other: "%{count} changes"
     editor:
+      completed: "Done: %{marking}"
       treatment_statuses:
         existing: Already there
         planned: To do
@@ -48,8 +49,8 @@ en:
       completed_action: "Marked done"
       completed_date: "Done on %{date}"
       completion_undone: "Completion undone"
-      red_legend: "Red: to do or finding"
-      blue_legend: "Blue: already there / done"
+      red_legend: "Needs treatment"
+      blue_legend: "Existing"
       bridge_end: "Other end of the bridge"
       bridge_choose_end: "Choose the other end"
       bridge_hint: "Choose the span, then the role of each unit. Replacement teeth must already be recorded as missing."
@@ -146,7 +147,7 @@ en:
       undo: "Undo"
       finding: "Finding"
       work: "Existing work / notation"
-      unrecorded: "Unmarked = not recorded"
+      unrecorded: "Not recorded"
       saving: "Saving…"
       saved: "Saved: %{marking}"
       already_recorded: "Already recorded: %{marking}"

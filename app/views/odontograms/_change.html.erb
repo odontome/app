@@ -1,14 +1,14 @@
-<div class="list-group-item" data-history-change="<%= change.id %>">
-  <div class="d-flex justify-content-between gap-2">
-    <span class="fw-medium"><%= change.action_label %></span>
-    <%= link_to patient_odontogram_path(@patient, at: change.id), class: 'small text-nowrap', aria: { label: t('odontogram.history.view_moment', time: l(change.created_at, format: :long)) } do %>
-      <time datetime="<%= change.created_at.iso8601 %>"><%= l(change.created_at, format: '%H:%M %Z') %></time>
+<div class="list-group-item py-2 py-sm-3 od-history-change" data-history-change="<%= change.id %>">
+  <span class="<%= change.operation == 'complete' ? 'text-primary' : 'text-muted' %>" title="<%= change.action_label %>"><%= odontogram_icon(change.operation) %></span>
+  <div class="od-history-description">
+    <% entry = change.saved_entry %>
+    <%= render 'history_marking', entry: entry %>
+    <div class="text-muted small mt-1"><span><%= change.action_label %></span> · <%= change.recorded_by_name %></div>
+    <% if entry.observed_on %>
+      <div class="text-muted small mt-1"><%= t('odontogram.observed_on', date: l(entry.observed_on, format: :long)) %></div>
     <% end %>
   </div>
-  <% entry = change.saved_entry %>
-  <div><% if !@history_tooth || entry.paired_tooth || entry.member_teeth.present? %><%= entry.target_name %> · <% end %><%= entry.marking_name %><% if entry.surfaces.present? %> · <%= entry.surfaces.join('') %><% end %></div>
-  <div class="text-muted small"><%= change.recorded_by_name %></div>
-  <% if entry.observed_on %>
-    <div class="text-muted small"><%= t('odontogram.observed_on', date: l(entry.observed_on, format: :long)) %></div>
+  <%= link_to patient_odontogram_path(@patient, at: change.id), class: 'btn btn-sm btn-ghost-secondary od-history-time', aria: { label: t('odontogram.history.view_moment', time: l(change.created_at, format: :long)) } do %>
+    <%= odontogram_icon(:history) %><time datetime="<%= change.created_at.iso8601 %>" title="<%= l(change.created_at, format: '%H:%M %Z') %>"><%= l(change.created_at, format: '%H:%M') %><span class="d-none d-sm-inline"> <%= l(change.created_at, format: '%Z') %></span></time>
   <% end %>
 </div>

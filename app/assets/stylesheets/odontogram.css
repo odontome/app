@@ -43,10 +43,13 @@
 .od-chart .od-swatch-finding { background: var(--od-red); }
 .od-chart .od-tooth-popover { --tblr-popover-max-width: 360px; width: min(var(--tblr-popover-max-width), calc(100vw - 24px)); max-width: calc(100vw - 24px); }
 .od-chart .od-inspect-popover { --tblr-popover-max-width: 320px; }
-.od-chart .od-entry-description { min-width: 0; overflow-wrap: anywhere; }
+.od-chart .od-entry-description { flex: 1; min-width: 0; overflow-wrap: anywhere; }
 .od-chart .od-tooth-popover .popover-body { max-height: min(480px, calc(100vh - 32px)); overflow-y: auto; overscroll-behavior: contain; }
 .od-chart .od-details h3 { font-size: 1rem; }
-.od-chart .od-entry { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .5rem; }
+.od-chart .od-entry { display: flex; align-items: center; gap: .75rem; padding-block: .75rem; }
+.od-chart .od-entry + .od-entry { border-top: 1px solid var(--tblr-border-color); }
+.od-chart .od-entry .btn-icon { width: 2rem; height: 2rem; flex: none; }
+.od-chart .od-entry .btn-icon .icon { margin: 0; }
 .od-chart .od-surface { display: inline-flex; align-items: center; gap: .4rem; margin: .25rem; padding: .5rem; border: 1px solid var(--tblr-border-color); border-radius: var(--tblr-border-radius); }
 .od-chart .od-saved { animation: od-saved .7s cubic-bezier(.16, 1, .3, 1); }
 @keyframes od-saved { from { background-color: var(--tblr-primary-lt); transform: scale(1.06); } to { background-color: transparent; transform: scale(1); } }
@@ -77,3 +80,31 @@
 .od-chart .od-bridge-pontic [data-part^=surface-], .od-chart .od-bridge-pontic svg text { visibility: hidden; }
 
 .od-chart .od-tooth-artwork.od-planned-layer { position: absolute; inset: 0; pointer-events: none; --od-blue: var(--od-red); }
+
+.od-history-group > summary { list-style: none; cursor: pointer; }
+.od-history-group > summary::-webkit-details-marker { display: none; }
+.od-history-group > summary:focus-visible { outline: 2px solid var(--tblr-primary); outline-offset: 4px; border-radius: var(--tblr-border-radius); }
+.od-history-group > summary .od-history-chevron { flex: none; width: 1rem; height: 1rem; }
+.od-history-group[open] > summary .od-history-chevron { transform: rotate(90deg); }
+.od-history-group + .od-history-group { border-top: 1px solid var(--tblr-border-color); }
+.od-history-change { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr) auto; align-items: start; gap: .75rem; }
+.od-history-description { min-width: 0; overflow-wrap: anywhere; }
+.od-history-time { white-space: nowrap; font-variant-numeric: tabular-nums; }
+@media (max-width: 575px) {
+  [data-odontogram-session] { margin-bottom: 1rem !important; }
+  [data-odontogram-session] .btn { padding: .25rem .5rem; font-size: .75rem; }
+  [data-odontogram-history] .card-header, [data-odontogram-history] .card-body,
+  [data-odontogram-records] > summary, [data-odontogram-records] .list-group-item { padding: .75rem; }
+  .od-history-group.py-3 { padding-block: .75rem !important; }
+  .od-history-change { grid-template-columns: 1rem minmax(0, 1fr) auto; gap: .125rem .5rem; padding-inline: 0; }
+  .od-history-change > span { grid-column: 1; grid-row: 1; }
+  .od-history-change > span .icon { width: 1rem; height: 1rem; }
+  .od-history-description { display: contents; }
+  .od-history-description > * { grid-column: 2 / -1; margin-top: 0 !important; overflow-wrap: anywhere; }
+  .od-history-description > :first-child { grid-column: 2; grid-row: 1; }
+  .od-history-description .status-dot, [data-odontogram-records] .status-dot { align-self: flex-start; margin-top: .375rem; }
+  [data-odontogram-records] .list-group-item { overflow-wrap: anywhere; }
+  .od-history-time { grid-column: 3; grid-row: 1; padding: 0; min-height: 1.5rem; font-size: .75rem; }
+  .od-history-time .icon { display: none; }
+  .od-history-chart .icon { margin: 0; }
+}

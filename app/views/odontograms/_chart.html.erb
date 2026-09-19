@@ -61,7 +61,7 @@
       <select class="form-select form-select-sm w-auto" data-treatment-status aria-label="<%= t('odontogram.editor.treatment_status') %>" hidden>
         <% %w[existing planned].each do |status| %><option value="<%= status %>"><%= t("odontogram.editor.treatment_statuses.#{status}") %></option><% end %>
       </select>
-      <span class="text-muted small" data-hint><%= t('odontogram.editor.inspect_hint') %></span>
+      <span class="text-muted small" data-hint aria-live="polite" aria-atomic="true"><%= t('odontogram.editor.inspect_hint') %></span>
       <select class="form-select form-select-sm ms-auto od-dentition" data-dentition aria-label="<%= t('odontogram.editor.dentition') %>">
         <% %w[permanent primary mixed].each do |view| %><option value="<%= view %>"><%= t("odontogram.editor.#{view}") %></option><% end %>
       </select>
@@ -74,7 +74,7 @@
       <button type="button" class="btn btn-sm btn-ghost-secondary" data-retry hidden><%= t('odontogram.editor.retry') %></button>
       <button type="button" class="btn btn-sm btn-ghost-secondary" data-refresh hidden><%= t('odontogram.editor.refresh') %></button>
       <button type="button" class="btn btn-sm btn-ghost-secondary" data-undo hidden><%= t('odontogram.editor.undo') %></button>
-      <span class="ms-auto small text-muted"><span class="od-finding"><%= t('odontogram.editor.red_legend') %></span> · <span class="od-work"><%= t('odontogram.editor.blue_legend') %></span> · <%= t('odontogram.editor.unrecorded') %></span>
+      <span class="ms-auto small text-muted"><span class="od-finding d-inline-flex align-items-center gap-1"><span class="status-dot bg-red" aria-hidden="true"></span><%= t('odontogram.editor.red_legend') %></span> · <span class="od-work d-inline-flex align-items-center gap-1"><span class="status-dot bg-blue" aria-hidden="true"></span><%= t('odontogram.editor.blue_legend') %></span> · <%= t('odontogram.editor.unrecorded') %></span>
     </div>
   </div>
 </section>

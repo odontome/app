@@ -1,0 +1,10 @@
+<div class="d-flex align-items-center gap-2 fw-medium">
+  <% if OdontogramEntry::TREATMENT_CATEGORIES.include?(entry.category) %>
+    <span class="status-dot flex-shrink-0 <%= entry.planned? ? 'bg-red' : 'bg-blue' %>" role="img" aria-label="<%= t("odontogram.editor.treatment_statuses.#{entry.treatment_status}") %>" title="<%= t("odontogram.editor.treatment_statuses.#{entry.treatment_status}") %>"></span>
+  <% end %>
+  <span><%= entry.marking_name(include_status: false) %></span>
+</div>
+<% details = [] %>
+<% details << entry.target_name if !@history_tooth || entry.paired_tooth || entry.member_teeth.present? %>
+<% details << entry.surfaces.join('') if entry.surfaces.present? %>
+<% if details.any? %><div class="text-muted small mt-1"><%= details.join(' · ') %></div><% end %>
