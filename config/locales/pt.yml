@@ -39,6 +39,7 @@ pt:
         one: "%{count} alteração"
         other: "%{count} alterações"
     editor:
+      completed: "Concluído: %{marking}"
       treatment_statuses:
         existing: Já existe
         planned: A fazer

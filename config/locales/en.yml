@@ -39,6 +39,7 @@ en:
         one: "%{count} change"
         other: "%{count} changes"
     editor:
+      completed: "Done: %{marking}"
       treatment_statuses:
         existing: Already there
         planned: To do

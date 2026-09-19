@@ -77,7 +77,7 @@
       return name && name.toLocaleLowerCase() !== category.toLocaleLowerCase() ? name + ' (' + category + ')' : name || category;
     };
     const activeName = () => activePreset ? activePreset.name : copy.categories[active];
-    const markingLabel = entry => markingName(entry) + (entry.bridge_units?.length ? ' · ' + entry.bridge_units.map(unit => unit.tooth + ': ' + copy.bridge_roles[unit.role]).join(', ') : '') + (entry.replacement_teeth?.length ? ' · ' + copy.replacement_positions.replace('%{teeth}', entry.replacement_teeth.join(', ')) : '') + (entry.arch ? ' · ' + copy.arches[entry.arch] : entry.member_teeth?.length ? ' · ' + entry.member_teeth.join(', ') : entry.paired_tooth ? ' · ' + entry.tooth + '–' + entry.paired_tooth : '') + (entry.position_directions?.length ? ' · ' + entry.position_directions.map(direction => copy.position_directions[direction]).join(' · ') : '') + (entry.rotation_direction ? ' · ' + copy.rotation_directions[entry.rotation_direction] : '') + (mobilityDetail(entry) ? ' · ' + mobilityDetail(entry) : '') + (entry.implant_entry_id ? ' · ' + copy.on_implant : '') + (treatmentCategories.includes(entry.category) ? ' · ' + copy.treatment_statuses[entry.treatment_status] : '') + (entry.surfaces.length ? ' · ' + entry.surfaces.join('') : '');
+    const markingLabel = (entry, showStatus = true) => markingName(entry) + (entry.bridge_units?.length ? ' · ' + entry.bridge_units.map(unit => unit.tooth + ': ' + copy.bridge_roles[unit.role]).join(', ') : '') + (entry.replacement_teeth?.length ? ' · ' + copy.replacement_positions.replace('%{teeth}', entry.replacement_teeth.join(', ')) : '') + (entry.arch ? ' · ' + copy.arches[entry.arch] : entry.member_teeth?.length ? ' · ' + entry.member_teeth.join(', ') : entry.paired_tooth ? ' · ' + entry.tooth + '–' + entry.paired_tooth : '') + (entry.position_directions?.length ? ' · ' + entry.position_directions.map(direction => copy.position_directions[direction]).join(' · ') : '') + (entry.rotation_direction ? ' · ' + copy.rotation_directions[entry.rotation_direction] : '') + (mobilityDetail(entry) ? ' · ' + mobilityDetail(entry) : '') + (entry.implant_entry_id ? ' · ' + copy.on_implant : '') + (showStatus && treatmentCategories.includes(entry.category) ? ' · ' + copy.treatment_statuses[entry.treatment_status] : '') + (entry.surfaces.length ? ' · ' + entry.surfaces.join('') : '');
     const label = entry => (entry.arch || entry.paired_tooth || entry.member_teeth?.length ? '' : toothLabel(entry.tooth) + ' · ') + markingLabel(entry);
     const status = (message, highlight = true) => {
       const feedback = $('[data-feedback]');
@@ -85,12 +85,27 @@
       $('[data-status]').textContent = message;
       if (message && highlight && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
         feedback.animate([
-          { opacity: 0, backgroundColor: 'var(--tblr-warning-lt)' },
+          { opacity: 1, backgroundColor: 'var(--tblr-warning-lt)' },
           { opacity: 1, backgroundColor: 'var(--tblr-warning-lt)', offset: .25 },
           { opacity: 1, backgroundColor: 'transparent' }
         ], { duration: 950, easing: 'ease-out' });
       }
     };
+    function highlightChange(element) {
+      if (!element) return;
+      element.getAnimations().forEach(animation => animation.cancel());
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      element.animate([
+        { backgroundColor: 'var(--tblr-warning-lt)' },
+        { backgroundColor: 'transparent' }
+      ], { duration: 1200, easing: 'ease-out' });
+    }
+    function changeText(element, message) {
+      if (element.textContent === message) return;
+      const previous = element.textContent;
+      element.textContent = message;
+      if (previous) highlightChange(element);
+    }
     function reportFormError(message, tooth) {
       if (selected === tooth && editable) {
         formError = message;
@@ -360,11 +375,11 @@
       const shown = rows.flat(); $('[data-hidden-teeth]').hidden = !entries.some(e => (e.replacement_teeth?.length ? e.replacement_teeth : e.arch ? [] : entryTeeth(e)).some(tooth => !shown.includes(tooth))); $('[data-hidden-teeth]').textContent = copy.hidden_teeth;
       if (selected && !shown.includes(selected)) closeDetails();
       if (selected) showDetails(false);
-      $('[data-tool-label]').textContent = active ? activeName() : copy.inspect;
+      changeText($('[data-tool-label]'), active ? activeName() : copy.inspect);
       $('[data-tool-icon]').replaceChildren(active ? node('span', 'od-swatch' + (findings.includes(active) || planning() ? ' od-swatch-finding' : '')) : inspectIcon.cloneNode(true));
       $('[data-treatment-status]').hidden = !editable || !treatmentCategories.includes(active);
       $('[data-treatment-status]').value = treatmentStatus;
-      $('[data-hint]').textContent = !editable ? copy.read_only : active ? (surfaceCategories.includes(active) ? copy.surface_hint : copy.tooth_hint) : copy.inspect_hint;
+      changeText($('[data-hint]'), !editable ? copy.read_only : active ? (surfaceCategories.includes(active) ? copy.surface_hint : copy.tooth_hint) : copy.inspect_hint);
     }
     function disposeDetailsPopover() {
       if (detailsPopover) { detailsPopover.dispose(); detailsPopover = null; }
@@ -444,6 +459,11 @@
         hints: reasons.map(reason => reason === copy.partial_absence ? copy.partial_picker_hint : reason)
       };
     }
+    function actionIcon(path) {
+      const icon = svgNode('svg', { class: 'icon', width: 24, height: 24, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true', focusable: 'false' });
+      icon.append(svgNode('path', { d: path }));
+      return icon;
+    }
     function showDetails(focus = true) {
       if (!desktop.matches) return;
       disposeDetailsPopover();
@@ -455,7 +475,10 @@
       header.append(heading, close); details.append(header);
       if (mode === 'add' && active && editable) {
         details.append(node('p', 'mt-2 mb-2', markingName({ category: active, treatment_snapshot: activePreset })));
-        if (treatmentCategories.includes(active)) details.append(node('p', planning() ? 'text-danger small mb-2' : 'text-primary small mb-2', copy.treatment_statuses[treatmentStatus]));
+        if (treatmentCategories.includes(active)) {
+          const stage = node('p', planning() ? 'text-danger small mb-2' : 'text-primary small mb-2', copy.treatment_statuses[treatmentStatus]);
+          stage.dataset.draftStatus = ''; details.append(stage);
+        }
         if (surfaceCategories.includes(active)) {
           details.append(node('p', 'text-muted small', optionalSurfaceCategories.includes(active) ? copy.optional_surfaces : copy.surfaces));
           const surfaces = node('div');
@@ -619,22 +642,44 @@
         const records = entries.filter(e => entryTeeth(e).includes(selected));
         if (!records.length) details.append(node('p', 'text-muted mt-2', copy.empty));
         records.forEach(entry => {
-          const row = node('div', 'od-entry'), text = node('div', 'od-entry-description'); text.append(node('div', '', markingLabel(entry)));
-          row.append(text);
-          if (editable && entry.treatment_status === 'planned') {
-            const done = button(copy.mark_done, () => { if (canWrite()) save({ operation: 'complete', entry_id: entry.id }, entry); }, 'btn btn-sm btn-ghost-primary text-nowrap');
-            const icon = svgNode('svg', { class: 'icon', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': 2, 'aria-hidden': 'true' });
-            icon.append(svgNode('path', { d: 'M5 12l4 4L19 6' })); done.prepend(icon);
-            text.append(done);
+          const row = node('div', 'od-entry'); row.dataset.entryId = entry.id;
+          const name = markingName(entry), description = node('div', 'od-entry-description');
+          const title = node('div', 'd-flex align-items-center gap-2 fw-medium');
+          if (treatmentCategories.includes(entry.category)) {
+            const dot = node('span', 'status-dot flex-shrink-0 ' + (entry.treatment_status === 'planned' ? 'bg-red' : 'bg-blue'));
+            dot.title = copy.treatment_statuses[entry.treatment_status];
+            dot.setAttribute('role', 'img'); dot.setAttribute('aria-label', dot.title);
+            title.append(dot);
           }
-          if (editable) row.append(button(copy.remove, () => { if (canWrite() && window.confirm(copy.confirm_remove.replace('%{marking}', label(entry)))) save({ operation: 'remove', entry_id: entry.id }, entry); }, 'btn btn-sm btn-ghost-danger flex-shrink-0'));
+          title.append(node('span', '', name)); description.append(title);
+          const detail = markingLabel(entry, false).slice(name.length).replace(/^ · /, '');
+          const metadata = node('div', 'd-flex align-items-center flex-wrap gap-2 mt-1');
+          if (detail) metadata.append(node('span', 'text-muted small', detail));
+          if (metadata.childElementCount) description.append(metadata);
+          row.append(description);
+          if (editable) {
+            const actions = node('div', 'd-flex align-items-center gap-1 flex-shrink-0');
+            if (entry.treatment_status === 'planned') {
+              const done = button('', () => { if (canWrite()) save({ operation: 'complete', entry_id: entry.id }, entry); }, 'btn btn-icon btn-sm btn-ghost-primary');
+              done.setAttribute('aria-label', copy.mark_done + ': ' + label(entry)); done.title = copy.mark_done;
+              done.append(actionIcon('M5 12l4 4L19 6')); actions.append(done);
+            }
+            const remove = button('', () => { if (canWrite() && window.confirm(copy.confirm_remove.replace('%{marking}', label(entry)))) save({ operation: 'remove', entry_id: entry.id }, entry); }, 'btn btn-icon btn-sm btn-ghost-danger');
+            remove.setAttribute('aria-label', copy.remove + ': ' + label(entry)); remove.title = copy.remove;
+            remove.append(actionIcon('M4 7h16M10 11v6M14 11v6M5 7l1 13h12l1 -13M9 7V4h6v3')); actions.append(remove);
+            row.append(actions);
+          }
           details.append(row);
         });
         const error = node('div', 'alert alert-danger py-2 mt-2 mb-0', formError);
         error.dataset.formError = ''; error.hidden = !formError; error.tabIndex = -1; error.setAttribute('role', 'alert'); details.append(error);
-        const footer = node('div', 'd-flex align-items-center justify-content-between gap-3 mt-2');
-        if (editable) footer.append(button(copy.add, event => { event.stopPropagation(); openMenu(true); }));
-        const history = node('a', 'small', copy.view_history);
+        const footer = node('div', 'd-flex align-items-center justify-content-between flex-wrap gap-2 border-top pt-3 mt-2');
+        if (editable) {
+          const addMarking = button(copy.add, event => { event.stopPropagation(); openMenu(true); }, 'btn btn-sm btn-primary');
+          addMarking.prepend(actionIcon('M12 5v14M5 12h14')); footer.append(addMarking);
+        }
+        const history = node('a', 'btn btn-sm btn-ghost-secondary', copy.view_history);
+        history.prepend(actionIcon('M12 8v4l2 2M3.05 11a9 9 0 1 1 .5 4M3.55 20v-5h5'));
         history.href = toothHistoryPath(root, selected);
         footer.append(history); details.append(footer);
       }
@@ -742,7 +787,9 @@
       }
       entry = result.entries.find(saved => saved.id === result.id) || entry;
       draftSurfaces.clear(); draftDate = ''; draftRotation = 'unspecified'; draftPosition = new Set(); draftPair = ''; draftExtent = 'arch'; draftMembers = new Set(selected ? [selected] : []); draftReplacement = new Set(); draftBridgeEnd = ''; draftBridgeRoles = {}; draftMobility = { grade: '', scale: '' }; mode = 'inspect'; adopt(result);
-      status(payload.operation === 'undo' ? copy.undone : (payload.operation === 'remove' ? copy.removed : copy.saved).replace('%{marking}', label(entry)));
+      const message = { undo: copy.undone, remove: copy.removed, complete: copy.completed }[payload.operation] || copy.saved;
+      status(message.replace('%{marking}', label(entry)));
+      highlightChange(details.querySelector('[data-entry-id="' + entry.id + '"]'));
       const targets = entryTeeth(entry).map(tooth => arches.querySelector('[data-tooth="' + tooth + '"]')).filter(Boolean);
       targets.forEach(tooth => { tooth.classList.add('od-saved'); setTimeout(() => tooth.classList.remove('od-saved'), 900); });
       if (selected) details.querySelector('button').focus(); else if (targets.length) targets[0].focus();
@@ -773,7 +820,7 @@
       const reconcile = !!pending || !ready; pending = null;
       treatmentStatus = event.target.value;
       if (selected && active === 'fixed_orthodontic') draftMembers.add(selected);
-      clearFormError(); render(); if (reconcile) load();
+      clearFormError(); render(); highlightChange(details.querySelector('[data-draft-status]')); if (reconcile) load();
     });
     $('[data-search]').addEventListener('input', options);
     $('[data-dentition]').addEventListener('change', render);
