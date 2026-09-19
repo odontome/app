@@ -40,10 +40,10 @@
             <span class="fw-medium"><%= l(group[:day], format: :long) %></span>
             <span class="badge bg-secondary-lt ms-auto"><%= t('odontogram.history.change_count', count: group[:count]) %></span>
           </summary>
-          <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mt-3 mb-2">
+          <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mt-2 mt-sm-3 mb-1 mb-sm-2">
             <% if group[:day] == Date.current && !@history_cutoff %><span class="text-muted small"><%= t('odontogram.history.latest_today') %></span><% end %>
-            <%= link_to patient_odontogram_path(@patient, at: group[:changes].first.id), class: 'btn btn-sm btn-ghost-primary ms-auto' do %>
-              <%= odontogram_icon(:chart) %><%= t('odontogram.history.view_chart') %>
+            <%= link_to patient_odontogram_path(@patient, at: group[:changes].first.id), class: 'btn btn-sm btn-ghost-primary ms-auto od-history-chart', title: t('odontogram.history.view_chart'), aria: { label: t('odontogram.history.view_chart') } do %>
+              <%= odontogram_icon(:chart) %><span class="d-none d-sm-inline"><%= t('odontogram.history.view_chart') %></span>
             <% end %>
           </div>
           <div class="list-group list-group-flush mt-2"><%= render partial: 'change', collection: group[:changes] %></div>

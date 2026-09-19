@@ -1,4 +1,4 @@
-<div class="list-group-item py-3 od-history-change" data-history-change="<%= change.id %>">
+<div class="list-group-item py-2 py-sm-3 od-history-change" data-history-change="<%= change.id %>">
   <span class="<%= change.operation == 'complete' ? 'text-primary' : 'text-muted' %>" title="<%= change.action_label %>"><%= odontogram_icon(change.operation) %></span>
   <div class="od-history-description">
     <% entry = change.saved_entry %>
@@ -9,6 +9,6 @@
     <% end %>
   </div>
   <%= link_to patient_odontogram_path(@patient, at: change.id), class: 'btn btn-sm btn-ghost-secondary od-history-time', aria: { label: t('odontogram.history.view_moment', time: l(change.created_at, format: :long)) } do %>
-    <%= odontogram_icon(:history) %><time datetime="<%= change.created_at.iso8601 %>"><%= l(change.created_at, format: '%H:%M %Z') %></time>
+    <%= odontogram_icon(:history) %><time datetime="<%= change.created_at.iso8601 %>" title="<%= l(change.created_at, format: '%H:%M %Z') %>"><%= l(change.created_at, format: '%H:%M') %><span class="d-none d-sm-inline"> <%= l(change.created_at, format: '%Z') %></span></time>
   <% end %>
 </div>
