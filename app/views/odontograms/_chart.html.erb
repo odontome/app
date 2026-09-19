@@ -19,12 +19,18 @@
   <div class="card-header">
     <h2 class="card-title"><%= t('odontogram.title') %></h2>
     <div class="ms-auto">
+      <% unless local_assigns[:snapshot] %>
+        <%= link_to report_patient_odontogram_path(patient), class: 'btn btn-sm btn-ghost-secondary' do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 17h2a2 2 0 0 0 2 -2v-6a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2m0 -10v-4h10v4m-10 6h10v8h-10zM17 10h.01"/></svg>
+          <span class="d-none d-sm-inline"><%= t('treatment_report.link') %></span>
+        <% end %>
+      <% end %>
       <%= link_to patient_odontogram_path(patient), class: 'btn btn-sm btn-ghost-secondary' do %>
         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
           <path d="M12 8l0 4l2 2" />
           <path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" />
         </svg>
-        <%= t('odontogram.editor.records') %>
+        <span class="d-none d-sm-inline"><%= t('odontogram.editor.records') %></span>
       <% end %>
     </div>
   </div>

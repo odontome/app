@@ -5,7 +5,7 @@ class TreatmentsController < ApplicationController
   around_action :check_odontogram_configuration, only: %i[create update]
 
   def index
-    @treatments = Treatment.with_practice(current_user.practice_id).order('name')
+    @treatments = Treatment.catalogue_for(current_user.practice)
   end
 
   def new
@@ -13,7 +13,7 @@ class TreatmentsController < ApplicationController
   end
 
   def show
-    @treatment = Treatment.with_practice(current_user.practice_id).find(params[:id])
+    @treatment = find_treatment
 
     respond_to do |format|
       format.html
@@ -21,7 +21,7 @@ class TreatmentsController < ApplicationController
   end
 
   def edit
-    @treatment = Treatment.with_practice(current_user.practice_id).find(params[:id])
+    @treatment = find_treatment
   end
 
   def create
@@ -38,10 +38,11 @@ class TreatmentsController < ApplicationController
   end
 
   def update
-    @treatment = Treatment.with_practice(current_user.practice_id).find(params[:id])
+    @treatment = find_treatment
+    return head :forbidden if @treatment.builtin? && !current_user.practice.odontogram_enabled?
 
     respond_to do |format|
-      if @treatment.update(treatment_params)
+      if @treatment.update(@treatment.builtin? ? treatment_params.slice(:price) : treatment_params)
         format.html { redirect_to(treatments_url, notice: t(:treatments_updated_success_message)) }
       else
         format.html { render action: 'edit' }
@@ -50,7 +51,8 @@ class TreatmentsController < ApplicationController
   end
 
   def destroy
-    @treatment = Treatment.with_practice(current_user.practice_id).find(params[:id])
+    @treatment = find_treatment
+    return head :forbidden if @treatment.builtin?
     @treatment.destroy
 
     respond_to do |format|
@@ -70,8 +72,18 @@ class TreatmentsController < ApplicationController
 
   private
 
+  def find_treatment
+    records = current_user.practice.treatments
+    return records.find(params[:id]) unless params[:id].to_s.start_with?('builtin-')
+
+    category = params[:id].delete_prefix('builtin-')
+    raise ActiveRecord::RecordNotFound unless OdontogramEntry::TREATMENT_CATEGORIES.include?(category)
+
+    records.find_by(builtin_category: category) || records.build(builtin_category: category, name: category, odontogram_category: category)
+  end
+
   def check_odontogram_configuration
-    if params[:treatment]&.key?(:odontogram_category)
+    if params[:id].to_s.start_with?('builtin-') || params[:treatment]&.key?(:odontogram_category)
       current_user.practice.with_lock do
         return head :forbidden unless current_user.practice.odontogram_enabled?
 

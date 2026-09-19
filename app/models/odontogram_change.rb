@@ -18,7 +18,7 @@ class OdontogramChange < ApplicationRecord
   end
 
   def saved_entry
-    @saved_entry ||= OdontogramEntry.new(after_state.slice('treatment_status', 'completed_at', 'bridge_units', 'replacement_teeth', 'arch', 'member_teeth', 'paired_tooth', 'tooth', 'category', 'surfaces', 'observed_on', 'treatment_snapshot', 'implant_entry_id', 'mobility_grade', 'mobility_scale', 'rotation_direction', 'position_directions'))
+    @saved_entry ||= OdontogramEntry.new(after_state.slice('price', 'currency', 'treatment_status', 'completed_at', 'bridge_units', 'replacement_teeth', 'arch', 'member_teeth', 'paired_tooth', 'tooth', 'category', 'surfaces', 'observed_on', 'treatment_snapshot', 'implant_entry_id', 'mobility_grade', 'mobility_scale', 'rotation_direction', 'position_directions'))
   end
 
   def chart_entries

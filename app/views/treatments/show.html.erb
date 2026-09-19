@@ -2,13 +2,13 @@
   <div class="row align-items-center">
     <div class="col">
       <h2 class="page-title">
-        <%= @treatment.name %>
+        <%= @treatment.display_name %>
       </h2>
     </div>
     <div class="col-auto">
       <div class="btn-list">
         <%= link_to t(:edit), edit_treatment_path(@treatment), class: "btn" %>
-        <%= link_to t(:delete), @treatment, :method => :delete, data: { confirm: t(:are_you_sure_no_undo) }, class: "btn btn-outline-danger" %>
+        <%= link_to t(:delete), @treatment, :method => :delete, data: { confirm: t(:are_you_sure_no_undo) }, class: "btn btn-outline-danger" unless @treatment.builtin? %>
       </div>
     </div>
   </div>
@@ -20,7 +20,7 @@
             <div class="card-body">
                 <div class="row">
                 <div class="col-md-6 mb-2">
-                    <%= value_tag t(:name), @treatment.name %>
+                    <%= value_tag t(:name), @treatment.display_name %>
                 </div>
                 <div class="col-md-6 mb-2">
                     <%= value_tag t(:price), @treatment.price %>

@@ -1,0 +1,38 @@
+.treatment-report { background: #f6f8fb; color: #182433; }
+.report-container { max-width: 1000px; margin: 0 auto; padding: 1.5rem 1rem; }
+.report-table { width: 100%; table-layout: fixed; }
+.report-table td, .report-table th { white-space: normal; overflow-wrap: anywhere; }
+.report-table th:first-child { width: 32%; }
+.report-price { font-variant-numeric: tabular-nums; }
+@media screen and (max-width: 575px) {
+  .report-document .card-body { padding: 1rem; }
+  .report-table, .report-table tbody { display: block; }
+  .report-table thead { display: none; }
+  .report-table tr { display: grid; grid-template-columns: 1fr 1fr; padding: .5rem 0; border-bottom: 1px solid var(--tblr-border-color); }
+  .report-table td { display: block; padding: .5rem .25rem; border: 0; text-align: left !important; }
+  .report-table td::before { content: attr(data-label); display: block; font-size: .75rem; color: var(--tblr-secondary-color); margin-bottom: .25rem; }
+}
+@page { margin: 15mm; }
+@media print {
+  /* Use a plain document for printing; the application stylesheet is screen-only. */
+  html, .treatment-report { width: auto; height: auto; min-height: 0; margin: 0; padding: 0; }
+  .treatment-report { background: white; color: #182433; font: 11pt/1.4 Arial, Helvetica, sans-serif; }
+  .report-container { display: block; width: auto; max-width: none; margin: 0; padding: 0; }
+  .report-toolbar { display: none; }
+  .report-document, .report-document .card-body { display: block; width: auto; margin: 0; padding: 0; border: 0; box-shadow: none; }
+  .report-document header { margin-bottom: 20pt; padding-bottom: 12pt; border-bottom: 1pt solid #dce1e7; }
+  .report-document p { margin: 0 0 6pt; }
+  .report-document h1 { margin: 0 0 8pt; font-size: 20pt; line-height: 1.2; }
+  .report-document .h3 { font-size: 13pt; font-weight: bold; }
+  .report-document h2 { margin: 0 0 10pt; font-size: 14pt; break-after: avoid; page-break-after: avoid; }
+  .report-document section { margin-bottom: 20pt; }
+  .report-table { width: 100%; border-collapse: collapse; }
+  .report-table thead { display: table-header-group; }
+  .report-table tr { break-inside: avoid; page-break-inside: avoid; }
+  .report-table td, .report-table th { padding: 8pt 4pt; border-bottom: 1pt solid #dce1e7; text-align: left; vertical-align: top; }
+  .report-table th { font-size: 9pt; font-weight: bold; }
+  .report-table .text-end, .report-document [data-report-total] { text-align: right; }
+  .report-document [data-report-total] { margin-top: 10pt; font-weight: bold; }
+  .report-document .text-secondary { color: #555; }
+  .report-document footer { margin-top: 16pt; padding-top: 10pt; border-top: 1pt solid #dce1e7; font-size: 9pt; }
+}

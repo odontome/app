@@ -1,0 +1,51 @@
+<div class="d-flex justify-content-between gap-3 flex-wrap mb-4 report-toolbar">
+  <%= link_to t('odontogram.back_to_patient'), patient_path(@patient), class: 'btn' %>
+  <button type="button" class="btn btn-primary" data-print-report>
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 17h2a2 2 0 0 0 2 -2v-6a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2m0 -10v-4h10v4m-10 6h10v8h-10zM17 10h.01"/></svg>
+    <%= t('treatment_report.print') %>
+  </button>
+</div>
+<article class="card report-document">
+  <div class="card-body">
+    <header class="mb-4 pb-3 border-bottom">
+      <p class="mb-2 text-secondary"><%= current_user.practice.name %></p>
+      <h1 class="mb-2"><%= t('treatment_report.title') %></h1>
+      <p class="h3 mb-2"><%= @patient.fullname %></p>
+      <p class="text-secondary mb-0"><%= t('treatment_report.generated', date: l(@generated_at.to_date, format: :long)) %></p>
+    </header>
+    <% if @report_entries.empty? %>
+      <p><%= t('treatment_report.empty') %></p>
+    <% else %>
+      <% %w[planned completed].each do |status| %>
+        <% entries = @report_entries[status]; next if entries.blank? %>
+        <section class="mb-4" data-report-section="<%= status %>">
+          <h2><%= t("odontogram.editor.treatment_statuses.#{status}") %></h2>
+          <% priced = entries.reject { |entry| entry.price.nil? } %>
+          <table class="table table-vcenter report-table">
+            <thead><tr>
+              <th><%= t(:treatments) %></th>
+              <th><%= t('treatment_report.location') %></th>
+              <th><%= t('treatment_report.date') %></th>
+              <% if priced.any? %><th class="text-end"><%= t(:price) %></th><% end %>
+            </tr></thead>
+            <tbody>
+              <% entries.each do |entry| %>
+                <tr data-report-entry="<%= entry.id %>">
+                  <td data-label="<%= t(:treatments) %>"><%= report_treatment_name(entry) %></td>
+                  <td data-label="<%= t('treatment_report.location') %>"><%= report_treatment_target(entry) %></td>
+                  <% date = status == 'completed' ? entry.completed_at&.to_date : entry.observed_on %>
+                  <td data-label="<%= t('treatment_report.date') %>"><%= date ? l(date, format: :default) : '—' %></td>
+                  <% if priced.any? %><td class="text-end report-price" data-label="<%= t(:price) %>"><%= entry.price.nil? ? t('treatment_catalogue.unpriced') : number_to_currency_with_code(entry.price, entry.currency) %></td><% end %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <% priced.group_by(&:currency).each do |currency, items| %>
+            <p class="text-end fw-semibold" data-report-total="<%= currency %>"><%= t(priced.length == entries.length ? 'treatment_report.total' : 'treatment_report.partial_total') %> (<%= currency.upcase %>): <%= number_to_currency_with_code(items.sum(&:price), currency) %></p>
+          <% end %>
+        </section>
+      <% end %>
+    <% end %>
+    <footer class="text-secondary small pt-3 border-top"><%= t('treatment_report.footer') %></footer>
+  </div>
+</article>

@@ -112,8 +112,6 @@ en:
       mobility_hint: "Leave both blank if no grade was recorded."
       view_history: "View history"
       inspect: "Inspect teeth"
-      custom_treatments: "Your treatments"
-      standard_markings: "Standard markings"
       temporary_indicator: "Temp"
       notation:
         retained_root: "RR"
@@ -249,7 +247,6 @@ en:
       marking: "Chart marking (optional)"
       none: "No chart marking"
       hint: "Choose how this treatment appears in the odontogram. Changes apply to new markings; existing patient records stay unchanged. Adding a marking does not create a charge."
-      transition: "You can now connect your treatments to the odontogram. Edit a treatment to choose its marking; your names, prices and usual workflow stay available."
       configured: "Odontogram: %{marking}"
     pilot:
       title: Odontogram pilot
@@ -464,8 +461,6 @@ en:
   english: English
   portuguese: Portuguese
   enter_patient_name_or_uid: Patient name or chart number…
-  valid: Valid
-  invalid: Invalid
   errors:
     titles:
       unauthorised: You can't do that
@@ -511,8 +506,6 @@ en:
     doctors:
       feed: For iPhones, follow the instruction in <a href="https://support.apple.com/en-ca/guide/iphone/iph3d1110d4/ios">this article</a> to add the calendar to your phone.
       suspended: Suspended doctors won't appear as options for your new appointments. Previous appointments aren't affected.
-    treatments:
-      status: Invalid treatments don't have a price specified, setting one is mandatory for the treatment to show up in the patient profile.
     payments:
       status: Payments with "Requires Payment Method" status are incomplete and cannot be processed until a valid payment method is attached to them.
       charge_status: The charge status indicates the current state of the payment process. Payments that are not "Succeeded" may require further action to complete.
@@ -783,7 +776,6 @@ en:
       w3c: ! "%Y-%m-%dT%H:%M:%S%:z"
     pm: pm
   today: Today
-  treatment_without_price: Add a price to this treatment, or simply delete it
   treatments: Treatments
   treatments_created_success_message: Treatment created successfully
   treatments_updated_success_message: Treatment updated successfully
@@ -1087,3 +1079,19 @@ en:
         date_range_too_wide: "Date range cannot exceed %{max} days. Please use a narrower range."
         appointment_conflict: "This doctor already has an appointment during that time. Please choose another time."
         outside_working_hours: "The full appointment must fit within working hours, %{start}–%{end} (%{timezone}), on the same day."
+
+  treatment_catalogue:
+    builtin_hint: 'This treatment is part of the odontogram. Only its price can be changed, and it cannot be deleted.'
+    price_hint: 'Optional, in %{currency}. Leave blank for no price; enter 0 for a free treatment.'
+    unpriced: 'No price'
+  treatment_report:
+    title: 'Treatment summary'
+    link: 'Treatment summary'
+    print: 'Print / Save as PDF'
+    generated: 'Prepared on %{date}'
+    empty: 'There are no planned or completed treatments to include yet.'
+    location: 'Tooth / area'
+    date: 'Date'
+    total: 'Total'
+    partial_total: 'Total of priced treatments'
+    footer: 'Current planned and completed treatments from the odontogram. Previously existing work and clinical findings are not included. Prices are saved when each treatment is added. This summary is not a bill or a record of payments.'

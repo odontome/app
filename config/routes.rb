@@ -9,7 +9,9 @@ Rails.application.routes.draw do
     get :segment_counts, on: :collection
     resources :notes
     resources :balances
-    resource :odontogram, only: %i[show create]
+    resource :odontogram, only: %i[show create] do
+      get :report
+    end
   end
 
   resources :treatments do

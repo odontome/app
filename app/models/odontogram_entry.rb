@@ -59,6 +59,7 @@ class OdontogramEntry < ApplicationRecord
 
   scope :recent, -> { order(created_at: :desc, id: :desc) }
   scope :active, -> { where(state: 'active') }
+  scope :for_treatment_report, -> { active.where(category: TREATMENT_CATEGORIES, treatment_status: %w[planned completed]).order(:created_at, :id) }
   scope :present_in_mouth, -> { active.where.not(treatment_status: 'planned') }
   scope :touching, ->(tooth) { where('tooth = :tooth OR paired_tooth = :tooth OR :tooth = ANY(member_teeth)', tooth: tooth) }
 
@@ -91,6 +92,7 @@ class OdontogramEntry < ApplicationRecord
   def chart_attributes
     attributes = as_json(only: %i[id tooth category surfaces observed_on state created_at recorded_by_name treatment_status completed_at])
     attributes['treatment_snapshot'] = treatment_snapshot if treatment_snapshot.present?
+    attributes.merge!(as_json(only: %i[price currency])) unless price.nil?
     attributes['implant_entry_id'] = implant_entry_id if implant_entry_id.present?
     attributes['mobility_grade'] = mobility_grade if mobility_grade.present?
     attributes['mobility_scale'] = mobility_scale if mobility_scale.present?

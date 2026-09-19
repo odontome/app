@@ -94,6 +94,7 @@ class OdontogramTreatmentStatusTest < ActionController::TestCase
     assert_equal categories, OdontogramEntry::TREATMENT_CATEGORIES
     categories.each do |category|
       ActiveRecord::Base.transaction(requires_new: true) do
+        practices(:complete).treatments.create!(builtin_category: category, price: 125.50)
         attrs = { category: category, surfaces: OdontogramEntry::SURFACE_CATEGORIES.include?(category) ? ['M', 'O'] : [] }
         attrs[:member_teeth] = [16, 15] if OdontogramEntry::GROUP_CATEGORIES.include?(category)
         if OdontogramEntry::DENTURE_CATEGORIES.include?(category)
@@ -105,6 +106,8 @@ class OdontogramTreatmentStatusTest < ActionController::TestCase
         assert_response :created, category
         entry = @patient.odontogram_entries.recent.first
         assert_equal 'planned', entry.treatment_status, category
+        assert_equal BigDecimal('125.50'), entry.price, category
+        assert_equal 'usd', entry.currency, category
         change(attrs)
         assert_response :unprocessable_entity, "duplicate #{category}"
         if %w[complete_denture partial_denture fixed_bridge].include?(category)
@@ -119,6 +122,7 @@ class OdontogramTreatmentStatusTest < ActionController::TestCase
         change({}, operation: 'complete', entry_id: entry.id)
         assert_response :created, category
         assert_equal 'completed', entry.reload.treatment_status, category
+        assert_equal BigDecimal('125.50'), entry.price, category
         change({}, operation: 'undo', change_id: @patient.odontogram_changes.recent.first.id)
         assert_response :created, category
         assert_equal 'planned', entry.reload.treatment_status, category

@@ -75,6 +75,16 @@ class OdontogramsController < ApplicationController
     render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
   end
 
+  def report
+    return head :not_acceptable unless request.format.html?
+    return head :not_found if !current_user.practice.odontogram_enabled? && !@patient.odontogram_entries.exists?
+
+    @report_entries = @patient.odontogram_entries.for_treatment_report.to_a.group_by(&:treatment_status)
+    @generated_at = Time.current
+    response.headers['Cache-Control'] = 'no-store'
+    render layout: 'treatment_report'
+  end
+
   private
 
   def saved_chart_state
@@ -159,11 +169,17 @@ class OdontogramsController < ApplicationController
     when 'add'
       entry = @patient.odontogram_entries.build(entry_params.except(:treatment_id, :treatment_version))
       if entry_params[:treatment_id].present?
-        treatment = current_user.practice.treatments.lock.find_by(id: entry_params[:treatment_id])
+        treatment = current_user.practice.treatments.where(builtin_category: nil).lock.find_by(id: entry_params[:treatment_id])
         raise Conflict unless treatment && treatment.odontogram_category.present? && treatment.odontogram_category == entry.category &&
           treatment.updated_at.utc.iso8601(6) == entry_params[:treatment_version]
 
         entry.treatment_snapshot = { id: treatment.id, name: treatment.name }
+      elsif OdontogramEntry::TREATMENT_CATEGORIES.include?(entry.category)
+        treatment = current_user.practice.treatments.find_by(builtin_category: entry.category)
+      end
+      if treatment && !treatment.price.nil? && OdontogramEntry::TREATMENT_CATEGORIES.include?(entry.category)
+        entry.price = treatment.price.to_s
+        entry.currency = current_user.practice.currency
       end
       entry.recorded_by = current_user
       entry.recorded_by_name = current_user.fullname

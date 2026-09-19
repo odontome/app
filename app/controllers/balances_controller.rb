@@ -7,7 +7,7 @@ class BalancesController < ApplicationController
     @patient = Patient.with_practice(current_user.practice_id).find(params[:patient_id])
     @balances = Balance.where('patient_id = ?', @patient.id)
     @total = Balance.where('patient_id = ?', params[:patient_id]).sum(:amount)
-    @treatments = Treatment.with_practice(current_user.practice_id).order('name')
+    @treatments = Treatment.catalogue_for(current_user.practice)
     @practice = @patient.practice
 
     respond_to do |format|

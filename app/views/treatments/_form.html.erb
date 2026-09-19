@@ -1,18 +1,21 @@
-<%= form_for(@treatment) do |f| %>
+<% form_options = @treatment.builtin? ? { url: treatment_path(@treatment), method: :patch } : {} %>
+<%= form_for(@treatment, **form_options) do |f| %>
   <%= render "shared/error_messages", :target => @treatment %>
 
   <div class="card card-md">
     <div class="card-body">
   	  <div class="mb-3">
         <%= f.label :name, class: "form-label required" %>
-        <%= f.text_field :name, :class => "form-control" %>
+        <%= f.text_field :name, value: @treatment.display_name, class: "form-control", disabled: @treatment.builtin? %>
+        <% if @treatment.builtin? %><div class="form-hint"><%= t("treatment_catalogue.builtin_hint") %></div><% end %>
       </div>
 
       <div class="mb-3">
-        <%= f.label :price, class: "form-label required" %>
-        <%= f.number_field :price, :class => "form-control"  %>
+        <%= f.label :price, class: "form-label" %>
+        <%= f.number_field :price, class: "form-control", step: "0.01", min: 0, aria: { describedby: "price-hint" } %>
+        <div class="form-hint" id="price-hint"><%= t("treatment_catalogue.price_hint", currency: current_user.practice.currency.upcase) %></div>
       </div>
-      <% if current_user.practice.odontogram_enabled? && !impersonating? %>
+      <% if current_user.practice.odontogram_enabled? && !impersonating? && !@treatment.builtin? %>
         <div class="mb-3">
           <%= f.label :odontogram_category, t('odontogram.treatments.marking'), class: 'form-label' %>
           <%= f.select :odontogram_category, OdontogramEntry::CATEGORIES.map { |category| [t("odontogram.categories.#{category}"), category] }, { include_blank: t('odontogram.treatments.none') }, class: 'form-select', aria: { describedby: 'odontogram-treatment-hint' } %>

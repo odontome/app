@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= t('treatment_report.title') %> · <%= @patient.fullname %></title>
+    <%= stylesheet_link_tag 'application', media: 'screen' %>
+    <%= stylesheet_link_tag 'treatment-report', media: 'all' %>
+    <%= javascript_include_tag 'treatment-report', defer: true %>
+  </head>
+  <body class="treatment-report">
+    <main class="report-container"><%= yield %></main>
+  </body>
+</html>

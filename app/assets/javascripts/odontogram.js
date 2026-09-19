@@ -660,23 +660,16 @@
       const inspect = button(copy.inspect, () => choose(''), 'dropdown-item fw-semibold'); inspect.prepend(inspectIcon.cloneNode(true)); target.append(inspect);
       const query = $('[data-search]').value.trim().toLocaleLowerCase(); let count = 0;
       const collator = new Intl.Collator(document.documentElement.lang || undefined, { sensitivity: 'base', numeric: true });
-      const matches = presets.filter(preset => (preset.name + ' ' + copy.categories[preset.category]).toLocaleLowerCase().includes(query))
+      const choices = presets.map(preset => ({ category: preset.category, name: preset.name, preset }))
+        .concat(Object.entries(copy.categories).map(([category, name]) => ({ category, name })))
+        .filter(choice => (choice.name + ' ' + copy.categories[choice.category]).toLocaleLowerCase().includes(query))
         .sort((a, b) => collator.compare(a.name, b.name));
-      if (matches.length) {
-        target.append(node('h6', 'dropdown-header', copy.custom_treatments));
-        matches.forEach(preset => {
-          const item = button('', () => choose(preset.category, preset), 'dropdown-item' + (activePreset && activePreset.id === preset.id ? ' active' : ''));
-          const text = node('span'); text.append(node('span', 'd-block text-wrap', preset.name));
-          if (preset.name.trim().toLocaleLowerCase() !== copy.categories[preset.category].toLocaleLowerCase()) text.append(node('small', 'd-block opacity-75', copy.categories[preset.category]));
-          item.append(text); target.append(item); count++;
-        });
-      }
-      const standardMatches = Object.entries(copy.categories).filter(([, name]) => name.toLocaleLowerCase().includes(query))
-        .sort(([, a], [, b]) => collator.compare(a, b));
-      if (presets.length && standardMatches.length) target.append(node('h6', 'dropdown-header', copy.standard_markings));
-      standardMatches.forEach(([category, name]) => {
-        count++;
-        target.append(button(name, () => choose(category), 'dropdown-item' + (active === category && !activePreset ? ' active' : '')));
+      choices.forEach(({ category, name, preset }) => {
+        const selected = preset ? activePreset && activePreset.id === preset.id : active === category && !activePreset;
+        const item = button('', () => choose(category, preset), 'dropdown-item' + (selected ? ' active' : ''));
+        const text = node('span'); text.append(node('span', 'd-block text-wrap', name));
+        if (preset && name.trim().toLocaleLowerCase() !== copy.categories[category].toLocaleLowerCase()) text.append(node('small', 'd-block opacity-75', copy.categories[category]));
+        item.append(text); target.append(item); count++;
       });
       if (!count) target.append(node('p', 'text-muted small p-2', copy.no_matches));
     }
