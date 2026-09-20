@@ -7,7 +7,6 @@ class OdontogramApplianceTest < ActionController::TestCase
     @controller.session['user'] = users(:founder)
     @patient = patients(:one)
     @practice = practices(:complete)
-    @practice.update!(odontogram_enabled: true)
     @editor = SecureRandom.uuid
   end
   teardown { I18n.locale = I18n.default_locale }

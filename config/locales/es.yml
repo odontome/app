@@ -1,4 +1,11 @@
 es:
+  announcements:
+    dismiss: Cerrar anuncio
+    odontogram_launch:
+      message: >-
+        <p><strong>¡Ya puedes usar los odontogramas!</strong> Registra hallazgos, planea tratamientos y consulta el historial de cada paciente desde su perfil.</p>
+        <p><a href="/patients">Abre el perfil de un paciente desde tu computadora</a> para probarlo. También puedes imprimir un resumen de tratamientos.</p>
+        <p>¿Qué te resulta útil? ¿Qué podría ser más sencillo? <a href="mailto:hello@odonto.me?subject=Comentarios%20sobre%20el%20odontograma">Cuéntanos tu experiencia</a> y ayúdanos a mejorarlo.</p>
   odontogram:
     teeth: "Dientes %{numbers}"
     title: Odontograma
@@ -249,16 +256,6 @@ es:
       none: "Sin marca en el odontograma"
       hint: "Elige cómo se muestra este tratamiento en el odontograma. Los cambios se aplican a marcas nuevas; los registros existentes de los pacientes se conservan. Agregar una marca no genera un cobro."
       configured: "Odontograma: %{marking}"
-    pilot:
-      title: Prueba de odontogramas
-      enable: Activar odontogramas
-      disable: Desactivar odontogramas
-      enable_for: "Activar odontogramas para %{practice}"
-      disable_for: "Desactivar odontogramas para %{practice}"
-      enabled: Activados
-      disabled: Desactivados
-      updated: "Se actualizó el acceso a los odontogramas de %{practice}."
-      update_failed: "No pudimos actualizar el acceso a los odontogramas. Inténtalo de nuevo."
   tell_us_about_your_experience_at_practice: Cuentamos un poco sobre tu experiencia en %{practice_name}
   account_cancelled: Tu cuenta ha sido marcada para cancelación. Si crees que esto es un error, por favor contacta con nosotros lo más rápido posible.
   activate: Activar

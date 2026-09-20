@@ -7,7 +7,6 @@ class OdontogramProsthesisOverlapTest < ActionController::TestCase
   setup do
     @controller.session['user'] = users(:founder)
     @patient = patients(:one)
-    practices(:complete).update!(odontogram_enabled: true)
     @editor = SecureRandom.uuid
     @bridge = { category: 'fixed_bridge', tooth: 16,
       bridge_units: [{ tooth: 16, role: 'natural_support' }, { tooth: 15, role: 'pontic' }] }

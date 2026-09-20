@@ -20,18 +20,18 @@ class PatientsControllerTest < ActionController::TestCase
     assert_equal 'today', assigns(:segment)
   end
 
-  test 'default off patient profile has no odontogram controls' do
+  test 'patient profile includes the odontogram without activation' do
     get :show, params: { id: patients(:one).id }
     assert_response :success
-    assert_select '[data-odontogram-summary]', count: 0
-    assert_select "a[href='#{patient_odontogram_path(patients(:one))}']", count: 0
+    assert_select '[data-odontogram-summary]', count: 1
+    assert_select '[data-odontogram-session-enabled="true"]', count: 1
+    assert_select "a[href='#{patient_odontogram_path(patients(:one))}']", count: 1
   end
 
-  test 'patient profile keeps access to saved chart records when the pilot is disabled' do
+  test 'patient profile shows saved chart records without activation' do
     patient = patients(:one)
     patient.odontogram_entries.create!(category: 'caries', tooth: 16, surfaces: ['O'],
       recorded_by: users(:founder), recorded_by_name: users(:founder).fullname)
-    assert_not patient.practice.odontogram_enabled?
 
     get :show, params: { id: patient.id }
     assert_response :success
@@ -45,7 +45,6 @@ class PatientsControllerTest < ActionController::TestCase
 
   test 'all locales supply the same authoritative chart targeting rules' do
     patient = patients(:one)
-    patient.practice.update!(odontogram_enabled: true)
     %i[en es pt].each do |locale|
       I18n.with_locale(locale) do
         get :show, params: { id: patient.id }

@@ -9,7 +9,7 @@ class OdontogramHistoryTest < ActionController::TestCase
     @controller.session['user'] = users(:founder)
     @patient = patients(:one)
     @practice = practices(:complete)
-    @practice.update!(odontogram_enabled: true, timezone: 'Eastern Time (US & Canada)')
+    @practice.update!(timezone: 'Eastern Time (US & Canada)')
     @entry = @patient.odontogram_entries.create!(category: 'crown', tooth: 16, surfaces: [], recorded_by_name: 'Original author')
   end
 
@@ -96,8 +96,9 @@ class OdontogramHistoryTest < ActionController::TestCase
     reversal = record(at: Time.utc(2026, 9, 10, 14), operation: 'undo', reverses_id: removal.id,
       before_state: removal.after_state, after_state: snapshot)
     @entry.update!(treatment_snapshot: { name: 'Different label' })
+    @controller.session['impersonator_id'] = users(:superadmin).id
     %w[en es pt].each do |locale|
-      @practice.update!(odontogram_enabled: false, locale: locale)
+      @practice.update!(locale: locale)
       get :show, params: { patient_id: @patient.id }, as: :html
       assert_response :success
       assert_select '[data-odontogram-session-enabled="false"]'

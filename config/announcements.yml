@@ -2,4 +2,7 @@
 # - type: alert type (info, success, warning, danger) - defaults to 'info'
 # - i18n_key: translation key for the announcement text (allows per-locale copy)
 
-announcements: []
+announcements:
+  - version: 2
+    i18n_key: "announcements.odontogram_launch.message"
+    type: "info"

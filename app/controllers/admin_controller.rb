@@ -60,19 +60,6 @@ class AdminController < ApplicationController
                 notice: I18n.t(:impersonation_started, default: 'You are now impersonating this practice.')
   end
 
-  def update_odontogram_access
-    attributes = params[:practice]
-    enabled = attributes[:odontogram_enabled] if attributes.is_a?(ActionController::Parameters)
-    return head :bad_request unless %w[0 1].include?(enabled)
-
-    practice = Practice.find(params[:id])
-    if practice.update(odontogram_enabled: enabled == '1')
-      redirect_to practices_admin_path, notice: I18n.t('odontogram.pilot.updated', practice: practice.name)
-    else
-      redirect_to practices_admin_path, alert: I18n.t('odontogram.pilot.update_failed')
-    end
-  end
-
   def stop_impersonating
     admin = impersonator_user
 

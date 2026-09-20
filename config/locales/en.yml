@@ -1,4 +1,11 @@
 en:
+  announcements:
+    dismiss: Dismiss announcement
+    odontogram_launch:
+      message: >-
+        <p><strong>Odontograms are here!</strong> Record findings, plan treatments, and follow each patient's history, all from their profile.</p>
+        <p><a href="/patients">Open a patient on your computer</a> to try it. You can also print a treatment summary.</p>
+        <p>What works well? What could be easier? <a href="mailto:hello@odonto.me?subject=Odontogram%20feedback">Share your feedback</a> and help us improve it.</p>
   odontogram:
     teeth: "Teeth %{numbers}"
     title: Odontogram
@@ -249,16 +256,6 @@ en:
       none: "No chart marking"
       hint: "Choose how this treatment appears in the odontogram. Changes apply to new markings; existing patient records stay unchanged. Adding a marking does not create a charge."
       configured: "Odontogram: %{marking}"
-    pilot:
-      title: Odontogram pilot
-      enable: Enable odontograms
-      disable: Disable odontograms
-      enable_for: "Enable odontograms for %{practice}"
-      disable_for: "Disable odontograms for %{practice}"
-      enabled: Enabled
-      disabled: Disabled
-      updated: "Odontogram access updated for %{practice}."
-      update_failed: "We couldn't update odontogram access. Please try again."
   tell_us_about_your_experience_at_practice: Tell us about your experience at %{practice_name}
   account_cancelled:
     Your account is marked for cancellation. If you believe this

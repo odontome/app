@@ -32,11 +32,9 @@ class Treatment < ApplicationRecord
   def self.catalogue_for(practice)
     records = practice.treatments.to_a
     custom = records.reject(&:builtin?)
-    if practice.odontogram_enabled?
-      overrides = records.select(&:builtin?).index_by(&:builtin_category)
-      custom += OdontogramEntry::TREATMENT_CATEGORIES.map do |category|
-        overrides[category] || new(practice_id: practice.id, builtin_category: category, name: category, odontogram_category: category)
-      end
+    overrides = records.select(&:builtin?).index_by(&:builtin_category)
+    custom += OdontogramEntry::TREATMENT_CATEGORIES.map do |category|
+      overrides[category] || new(practice_id: practice.id, builtin_category: category, name: category, odontogram_category: category)
     end
     custom.sort_by { |treatment| I18n.transliterate(treatment.display_name).downcase }
   end

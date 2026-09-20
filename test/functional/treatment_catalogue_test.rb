@@ -6,7 +6,6 @@ class TreatmentCatalogueTest < ActionController::TestCase
 
   setup do
     @controller.session['user'] = users(:founder)
-    practices(:complete).update!(odontogram_enabled: true)
   end
 
   test 'prices can be absent or explicitly zero' do
@@ -40,13 +39,19 @@ class TreatmentCatalogueTest < ActionController::TestCase
     assert_response :forbidden
   end
 
-  test 'builtins are scoped to the practice and flag' do
+  test 'builtin prices are scoped to the practice and editable without activation' do
     put :update, params: { id: 'builtin-crown', treatment: { price: 100 } }
     assert_nil practices(:complete_another_language).treatments.find_by(builtin_category: 'crown')
-    practices(:complete).update!(odontogram_enabled: false)
     put :update, params: { id: 'builtin-crown', treatment: { price: 200 } }
-    assert_response :forbidden
-    assert_equal 100, practices(:complete).treatments.find_by!(builtin_category: 'crown').price
+    assert_redirected_to treatments_url
+    crown = practices(:complete).treatments.find_by!(builtin_category: 'crown')
+    assert_equal 200, crown.price
+    assert_nil practices(:complete_another_language).treatments.find_by(builtin_category: 'crown')
+    @controller.session['user'] = users(:user_in_yet_another_practice)
+    assert_raises ActiveRecord::RecordNotFound do
+      put :update, params: { id: crown.id, treatment: { price: 300 } }
+    end
+    assert_equal 200, crown.reload.price
   end
 
   test 'builtins are translated and remain optional while custom treatment names are preserved' do

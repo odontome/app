@@ -9,7 +9,6 @@ class OdontogramsController < ApplicationController
   def show
     @entries = @patient.odontogram_entries.recent
     @read_only = !editable?
-    return head :not_found if !current_user.practice.odontogram_enabled? && !@entries.exists?
 
     if request.format.json?
       raise ActionController::BadRequest if params[:tooth].present? || params[:through].present?
@@ -77,7 +76,6 @@ class OdontogramsController < ApplicationController
 
   def report
     return head :not_acceptable unless request.format.html?
-    return head :not_found if !current_user.practice.odontogram_enabled? && !@patient.odontogram_entries.exists?
 
     @report_entries = @patient.odontogram_entries.for_treatment_report.to_a.group_by(&:treatment_status)
     @generated_at = Time.current
@@ -149,7 +147,7 @@ class OdontogramsController < ApplicationController
   end
 
   def editable?
-    current_user.practice.odontogram_enabled? && !impersonating? && params[:at].blank? && params[:through].blank?
+    !impersonating? && params[:at].blank? && params[:through].blank?
   end
 
   def validate_request!

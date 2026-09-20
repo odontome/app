@@ -8,7 +8,6 @@ class OdontogramReportTest < ActionController::TestCase
     @controller.session['user'] = users(:founder)
     @patient = patients(:one)
     @practice = practices(:complete)
-    @practice.update!(odontogram_enabled: true)
     @editor = SecureRandom.uuid
   end
 
@@ -82,15 +81,14 @@ class OdontogramReportTest < ActionController::TestCase
     assert_select '[data-report-total="cad"]', text: /200.00/
   end
 
-  test 'report works read only with feature disabled but respects patient and practice boundaries' do
+  test 'reports are available without activation and respect patient and practice boundaries' do
     change
-    @practice.update!(odontogram_enabled: false)
     get :report, format: :html, params: { patient_id: @patient.id }
     assert_response :success
     assert_equal 'no-store', response.headers['Cache-Control']
     assert_raises(ActiveRecord::RecordNotFound) { get :report, format: :html, params: { patient_id: patients(:three).id } }
     get :report, format: :html, params: { patient_id: patients(:two).id }
-    assert_response :not_found
+    assert_response :success
   end
 
   test 'print controls and empty report render in all locales' do

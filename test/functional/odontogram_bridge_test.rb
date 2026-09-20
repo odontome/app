@@ -6,7 +6,6 @@ class OdontogramBridgeTest < ActionController::TestCase
   setup do
     @controller.session['user'] = users(:founder)
     @patient = patients(:one)
-    practices(:complete).update!(odontogram_enabled: true)
     @editor = SecureRandom.uuid
     @missing = @patient.odontogram_entries.create!(category: 'missing', tooth: 15, surfaces: [], recorded_by_name: 'Sample')
     @units = [{ tooth: 16, role: 'natural_support' }, { tooth: 15, role: 'pontic' }, { tooth: 14, role: 'natural_support' }]

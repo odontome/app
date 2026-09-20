@@ -21,18 +21,19 @@ class OdontogramsControllerTest < ActionController::TestCase
       revision: Patient.find(params[:patient_id]).odontogram_revision }.merge(params), **options)
   end
 
-  test 'disabled practice cannot open an empty chart or write directly' do
+  test 'ordinary staff can open an empty chart and record entries without activation' do
+    @controller.session['user'] = users(:perishable)
     get :show, params: { patient_id: @patient.id }, as: :html
-    assert_response :not_found
+    assert_response :success
 
-    assert_no_difference 'OdontogramEntry.count' do
+    assert_difference 'OdontogramEntry.count', 1 do
       post :create, params: { patient_id: @patient.id, odontogram_entry: @attributes }, as: :json
     end
-    assert_response :forbidden
+    assert_response :created
+    assert_equal users(:perishable).id, @patient.odontogram_entries.sole.recorded_by_id
   end
 
-  test 'enabled practice can record an entry with authoritative ownership and author' do
-    @practice.update!(odontogram_enabled: true)
+  test 'practice can record an entry with authoritative ownership and author' do
     assert_difference 'OdontogramEntry.count', 1 do
       post :create, params: { patient_id: @patient.id, odontogram_entry: @attributes.merge(
         patient_id: patients(:three).id, recorded_by_id: users(:superadmin).id, recorded_by_name: 'Forged',
@@ -48,11 +49,10 @@ class OdontogramsControllerTest < ActionController::TestCase
     assert_in_delta Time.current, entry.created_at, 5
   end
 
-  test 'an open editor loses write access on the next request after disablement' do
-    @practice.update!(odontogram_enabled: true)
+  test 'an open editor loses write access when impersonation begins' do
     get :show, params: { patient_id: @patient.id }, as: :html
     assert_response :success
-    Practice.find(@practice.id).update!(odontogram_enabled: false)
+    @controller.session['impersonator_id'] = users(:superadmin).id
 
     assert_no_difference 'OdontogramEntry.count' do
       post :create, params: { patient_id: @patient.id, odontogram_entry: @attributes }, as: :json
@@ -60,26 +60,24 @@ class OdontogramsControllerTest < ActionController::TestCase
     assert_response :forbidden
   end
 
-  test 'enable disable enable preserves records and read-only access' do
-    @practice.update!(odontogram_enabled: true)
+  test 'impersonation preserves records and ending it restores editing' do
     post :create, params: { patient_id: @patient.id, odontogram_entry: @attributes }, as: :json
     assert_response :created
     saved = @patient.odontogram_entries.first.attributes
 
-    [false, true, false].each do |enabled|
-      @practice.update!(odontogram_enabled: enabled)
+    [true, false, true].each do |impersonating|
+      @controller.session['impersonator_id'] = impersonating ? users(:superadmin).id : nil
       get :show, params: { patient_id: @patient.id }, as: :html
       assert_response :success
       assert_equal saved, @patient.odontogram_entries.first.reload.attributes
       assert_select '[data-odontogram-entry]', count: 1
       assert_select '[data-odontogram-records] form', count: 0
       assert_select 'canvas, svg[data-odontogram]', count: 0
-      assert_select '[data-odontogram-read-only]', count: enabled ? 0 : 1
+      assert_select '[data-odontogram-read-only]', count: impersonating ? 1 : 0
     end
   end
 
   test 'chart reads and writes cannot cross practices' do
-    @practice.update!(odontogram_enabled: true)
     assert_raises ActiveRecord::RecordNotFound do
       get :show, params: { patient_id: patients(:three).id }
     end
@@ -91,7 +89,6 @@ class OdontogramsControllerTest < ActionController::TestCase
   end
 
   test 'impersonation can read but cannot record entries' do
-    @practice.update!(odontogram_enabled: true)
     @controller.session['impersonator_id'] = users(:superadmin).id
     get :show, params: { patient_id: @patient.id }, as: :html
     assert_response :success
@@ -113,7 +110,6 @@ class OdontogramsControllerTest < ActionController::TestCase
   end
 
   test 'invalid anatomy is rejected without persisting a partial record' do
-    @practice.update!(odontogram_enabled: true)
     assert_no_difference 'OdontogramEntry.count' do
       post :create, params: { patient_id: @patient.id, odontogram_entry: @attributes.merge(tooth: 99) }, as: :json
     end
@@ -121,7 +117,6 @@ class OdontogramsControllerTest < ActionController::TestCase
   end
 
   test 'older saved entries remain reachable without leaking another patients cursor' do
-    @practice.update!(odontogram_enabled: true)
     OdontogramEntry::TEETH.first(51).each do |tooth|
       @patient.odontogram_entries.create!(tooth: tooth, category: 'crown', surfaces: [], recorded_by_name: 'Sample Author')
     end
@@ -139,10 +134,8 @@ class OdontogramsControllerTest < ActionController::TestCase
   end
 
   test 'saved records are localized escaped and useful on a phone' do
-    @practice.update!(odontogram_enabled: true)
     post :create, params: { patient_id: @patient.id, odontogram_entry: @attributes }, as: :json
     @patient.odontogram_entries.last.update_column(:recorded_by_name, '<script>unsafe()</script>')
-    @practice.update!(odontogram_enabled: false)
     { 'en' => 'Caries', 'es' => 'Caries', 'pt' => 'Cárie' }.each do |locale, label|
       @practice.update!(locale: locale)
       @request.user_agent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)'

@@ -9,7 +9,6 @@ class OdontogramSnapshotsTest < ActionController::TestCase
     @controller.session['user'] = users(:founder)
     @patient = patients(:one)
     @practice = practices(:complete)
-    @practice.update!(odontogram_enabled: true)
     @editor = SecureRandom.uuid
   end
 
@@ -78,7 +77,6 @@ class OdontogramSnapshotsTest < ActionController::TestCase
   test 'historical pages and phone summaries are dated read only and use the selected state' do
     earlier = change
     change(odontogram_entry: { tooth: 11, category: 'crown', surfaces: [] })
-    @practice.update!(odontogram_enabled: false)
     %w[en es pt].each do |locale|
       @practice.update!(locale: locale)
       get :show, params: { patient_id: @patient.id, at: earlier.id }, as: :html

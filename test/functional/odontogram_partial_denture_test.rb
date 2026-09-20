@@ -6,7 +6,6 @@ class OdontogramPartialDentureTest < ActionController::TestCase
   setup do
     @controller.session['user'] = users(:founder)
     @patient = patients(:one)
-    practices(:complete).update!(odontogram_enabled: true)
     @editor = SecureRandom.uuid
     @missing = [16,15,12,24].map { |tooth| @patient.odontogram_entries.create!(category: 'missing', tooth: tooth, surfaces: [], recorded_by_name: 'Sample') }
   end

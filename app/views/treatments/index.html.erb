@@ -33,7 +33,7 @@
 						<tr>
 							<td data-label="<%= t :name %>">
 								<%= treatment.display_name %>
-                <% if current_user.practice.odontogram_enabled? && treatment.odontogram_category.present? && !treatment.builtin? %>
+                <% if treatment.odontogram_category.present? && !treatment.builtin? %>
                   <div class="text-muted small"><%= t('odontogram.treatments.configured', marking: t("odontogram.categories.#{treatment.odontogram_category}")) %></div>
                 <% end %>
 							</td>

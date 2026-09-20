@@ -9,7 +9,6 @@ class OdontogramTreatmentsTest < ActionController::TestCase
     @controller.session['user'] = users(:founder)
     @patient = patients(:one)
     @practice = practices(:complete)
-    @practice.update!(odontogram_enabled: true)
     @treatment = treatments(:complete)
     @treatment.update!(name: 'Composite restoration', odontogram_category: 'filling')
     @treatment.reload
@@ -177,9 +176,9 @@ class OdontogramTreatmentsTest < ActionController::TestCase
     assert_response :unprocessable_entity
   end
 
-  test 'disabled chart retains saved treatment names but offers no presets' do
+  test 'impersonation retains saved treatment names but offers no presets' do
     add_preset
-    @practice.update!(odontogram_enabled: false)
+    @controller.session['impersonator_id'] = users(:superadmin).id
     get :show, params: { patient_id: @patient.id }, as: :json
     assert_equal [], response.parsed_body['presets']
     assert_equal 'Composite restoration', response.parsed_body['entries'].sole['treatment_snapshot']['name']
