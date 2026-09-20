@@ -7,7 +7,6 @@ class OdontogramTreatmentStatusTest < ActionController::TestCase
   setup do
     @controller.session['user'] = users(:founder)
     @patient = patients(:one)
-    practices(:complete).update!(odontogram_enabled: true)
     @editor = SecureRandom.uuid
   end
 
@@ -79,12 +78,12 @@ class OdontogramTreatmentStatusTest < ActionController::TestCase
     assert_response :conflict
   end
 
-  test 'completion obeys practice flag and revision checks' do
+  test 'completion obeys impersonation and revision checks' do
     change
     entry = @patient.odontogram_entries.sole
     change({}, operation: 'complete', entry_id: entry.id, revision: 0)
     assert_response :conflict
-    practices(:complete).update!(odontogram_enabled: false)
+    @controller.session['impersonator_id'] = users(:superadmin).id
     change({}, operation: 'complete', entry_id: entry.id)
     assert_response :forbidden
   end

@@ -1,4 +1,9 @@
 pt:
+  announcements:
+    dismiss: Fechar aviso
+    odontogram_launch:
+      message: >-
+        <p><strong>Agora você pode usar odontogramas.</strong> <a href="/patients">Abra o perfil de qualquer paciente</a> para vê-los em ação.</p>
   odontogram:
     teeth: "Dentes %{numbers}"
     title: Odontograma
@@ -249,16 +254,6 @@ pt:
       none: "Sem marcação no odontograma"
       hint: "Escolha como este tratamento aparece no odontograma. As alterações valem para novas marcações; os registros existentes dos pacientes são mantidos. Adicionar uma marcação não gera uma cobrança."
       configured: "Odontograma: %{marking}"
-    pilot:
-      title: Teste de odontogramas
-      enable: Ativar odontogramas
-      disable: Desativar odontogramas
-      enable_for: "Ativar odontogramas para %{practice}"
-      disable_for: "Desativar odontogramas para %{practice}"
-      enabled: Ativados
-      disabled: Desativados
-      updated: "O acesso aos odontogramas de %{practice} foi atualizado."
-      update_failed: "Não foi possível atualizar o acesso aos odontogramas. Tente novamente."
   tell_us_about_your_experience_at_practice: Conte-nos sobre sua experiência na %{practice_name}
   account_cancelled:
     Sua conta está marcada para cancelamento. Se você acredita que

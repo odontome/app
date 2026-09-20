@@ -46,9 +46,7 @@
   </div>
 <% end %>
 
-<% if current_user.practice.odontogram_enabled? || @patient.odontogram_entries.exists? %>
-  <%= render 'odontograms/chart', patient: @patient %>
-<% end %>
+<%= render 'odontograms/chart', patient: @patient %>
 
 <div class="row row-cards" data-masonry='{"percentPosition": false }'>
   <% if !@patient.allergies.blank? %>

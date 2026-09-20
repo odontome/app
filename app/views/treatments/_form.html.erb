@@ -15,7 +15,7 @@
         <%= f.number_field :price, class: "form-control", step: "0.01", min: 0, aria: { describedby: "price-hint" } %>
         <div class="form-hint" id="price-hint"><%= t("treatment_catalogue.price_hint", currency: current_user.practice.currency.upcase) %></div>
       </div>
-      <% if current_user.practice.odontogram_enabled? && !impersonating? && !@treatment.builtin? %>
+      <% if !impersonating? && !@treatment.builtin? %>
         <div class="mb-3">
           <%= f.label :odontogram_category, t('odontogram.treatments.marking'), class: 'form-label' %>
           <%= f.select :odontogram_category, OdontogramEntry::CATEGORIES.map { |category| [t("odontogram.categories.#{category}"), category] }, { include_blank: t('odontogram.treatments.none') }, class: 'form-select', aria: { describedby: 'odontogram-treatment-hint' } %>

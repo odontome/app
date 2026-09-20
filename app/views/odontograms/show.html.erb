@@ -1,4 +1,4 @@
-<div class="page-header mb-4" data-odontogram-session="<%= [current_user.id, @patient.practice_id, @patient.id].join(':') %>" data-odontogram-session-enabled="<%= current_user.practice.odontogram_enabled? && !impersonating? %>">
+<div class="page-header mb-4" data-odontogram-session="<%= [current_user.id, @patient.practice_id, @patient.id].join(':') %>" data-odontogram-session-enabled="<%= !impersonating? %>">
   <div class="row align-items-center g-2">
     <div class="col">
       <h1 class="page-title"><%= t('odontogram.title') %></h1>

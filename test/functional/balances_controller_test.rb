@@ -27,7 +27,6 @@ class BalancesControllerTest < ActionController::TestCase
   end
 
   test 'configured odontogram treatments keep balance quick entry without creating chart records' do
-    practices(:complete).update!(odontogram_enabled: true)
     treatment = treatments(:complete)
     treatment.update!(odontogram_category: 'crown')
     get :index, params: { patient_id: patients(:one).id }

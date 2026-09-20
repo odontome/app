@@ -1,6 +1,6 @@
 <section class="card mb-3 od-chart" data-odontogram
          data-odontogram-session="<%= [current_user.id, patient.practice_id, patient.id].join(':') %>"
-         data-odontogram-session-enabled="<%= current_user.practice.odontogram_enabled? && !impersonating? %>"
+         data-odontogram-session-enabled="<%= !impersonating? %>"
          data-endpoint="<%= patient_odontogram_path(patient) %>"
          data-snapshot-id="<%= local_assigns[:snapshot]&.id %>"
          data-changed-teeth="<%= (local_assigns[:changed_teeth] || []).to_json %>"

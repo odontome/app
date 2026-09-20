@@ -9,7 +9,6 @@ class OdontogramPositionTest < ActionController::TestCase
     @controller.session['user'] = users(:founder)
     @patient = patients(:one)
     @practice = practices(:complete)
-    @practice.update!(odontogram_enabled: true)
     @editor = SecureRandom.uuid
   end
 

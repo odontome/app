@@ -12,7 +12,7 @@
       <div class="text-muted announcement-body">
         <%= sanitize(raw_message, tags: %w(p ul li a strong em br), attributes: %w(href title target rel)) %>
       </div>
-      <button type="button" class="btn-close" aria-label="Close" data-announcement-dismiss data-announcement-version="<%= version %>"></button>
+      <button type="button" class="btn-close" aria-label="<%= t('announcements.dismiss') %>" data-announcement-dismiss data-announcement-version="<%= version %>"></button>
     </div>
   </div>
 <% end %>

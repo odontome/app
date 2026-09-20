@@ -2,7 +2,7 @@
 
 class TreatmentsController < ApplicationController
   before_action :require_user
-  around_action :check_odontogram_configuration, only: %i[create update]
+  around_action :lock_odontogram_configuration, only: %i[create update]
 
   def index
     @treatments = Treatment.catalogue_for(current_user.practice)
@@ -39,7 +39,6 @@ class TreatmentsController < ApplicationController
 
   def update
     @treatment = find_treatment
-    return head :forbidden if @treatment.builtin? && !current_user.practice.odontogram_enabled?
 
     respond_to do |format|
       if @treatment.update(@treatment.builtin? ? treatment_params.slice(:price) : treatment_params)
@@ -82,11 +81,9 @@ class TreatmentsController < ApplicationController
     records.find_by(builtin_category: category) || records.build(builtin_category: category, name: category, odontogram_category: category)
   end
 
-  def check_odontogram_configuration
+  def lock_odontogram_configuration
     if params[:id].to_s.start_with?('builtin-') || params[:treatment]&.key?(:odontogram_category)
       current_user.practice.with_lock do
-        return head :forbidden unless current_user.practice.odontogram_enabled?
-
         yield
       end
     else

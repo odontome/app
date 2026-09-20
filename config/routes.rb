@@ -59,7 +59,6 @@ Rails.application.routes.draw do
 
   # admin
   get '/admin/practices' => 'admin#practices', :as => :practices_admin
-  patch '/admin/practices/:id/odontogram' => 'admin#update_odontogram_access', as: :admin_practice_odontogram
   post '/admin/practices/:id/impersonate' => 'admin#impersonate', as: :admin_practice_impersonate
   delete '/admin/impersonate' => 'admin#stop_impersonating', as: :admin_stop_impersonating
 

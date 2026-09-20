@@ -6,7 +6,6 @@ class OdontogramDentureTest < ActionController::TestCase
   setup do
     @controller.session['user'] = users(:founder)
     @patient = patients(:one)
-    practices(:complete).update!(odontogram_enabled: true)
     @editor = SecureRandom.uuid
   end
 

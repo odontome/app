@@ -44,12 +44,9 @@ class TreatmentsControllerTest < ActionController::TestCase
     assert_redirected_to treatments_url
   end
 
-  test 'chart configuration is optional and only appears for enabled practices in every locale' do
-    get :new
-    assert_select 'select[name="treatment[odontogram_category]"]', count: 0
-    assert_select '[data-odontogram-treatment-hint]', count: 0
+  test 'chart configuration is optional and appears without activation in every locale' do
     %w[en es pt].each do |locale|
-      practices(:complete).update!(odontogram_enabled: true, locale: locale)
+      practices(:complete).update!(locale: locale)
       get :new
       assert_select 'select[name="treatment[odontogram_category]"] option', count: OdontogramEntry::CATEGORIES.length + 1
       assert_select '[data-odontogram-treatment-hint]', count: 1
@@ -59,7 +56,6 @@ class TreatmentsControllerTest < ActionController::TestCase
   test 'existing treatments default to no chart marking and keep their price when configured' do
     treatment = treatments(:complete)
     assert_nil treatment.odontogram_category
-    practices(:complete).update!(odontogram_enabled: true)
     put :update, params: { id: treatment.id, treatment: { odontogram_category: 'filling' } }
     assert_redirected_to treatments_url
     assert_equal 'filling', treatment.reload.odontogram_category
@@ -69,26 +65,26 @@ class TreatmentsControllerTest < ActionController::TestCase
     assert_nil treatment.reload.odontogram_category
   end
 
-  test 'disabled practices cannot configure chart markings but can keep editing names and prices' do
+  test 'practices can configure chart markings and keep editing names and prices without activation' do
     treatment = treatments(:complete)
     treatment.update!(odontogram_category: 'filling')
-    put :update, params: { id: treatment.id, treatment: { odontogram_category: 'crown', name: 'Forged edit' } }
-    assert_response :forbidden
-    assert_equal 'filling', treatment.reload.odontogram_category
-    assert_equal 'Tooth pull (expensive)', treatment.name
+    put :update, params: { id: treatment.id, treatment: { odontogram_category: 'crown', name: 'Custom crown' } }
+    assert_redirected_to treatments_url
+    assert_equal 'crown', treatment.reload.odontogram_category
+    assert_equal 'Custom crown', treatment.name
     put :update, params: { id: treatment.id, treatment: { name: 'Updated', price: 100 } }
     assert_redirected_to treatments_url
-    assert_equal 'filling', treatment.reload.odontogram_category
+    assert_equal 'crown', treatment.reload.odontogram_category
     assert_equal 'Updated', treatment.name
     assert_equal 100, treatment.price
-    assert_no_difference 'Treatment.count' do
+    assert_difference 'Treatment.count', 1 do
       post :create, params: { treatment: @treatment.merge(odontogram_category: 'filling') }
     end
-    assert_response :forbidden
+    assert_redirected_to treatments_url
+    assert_equal 'filling', Treatment.order(:id).last.odontogram_category
   end
 
   test 'unsupported marking family cannot be saved and does not change the price' do
-    practices(:complete).update!(odontogram_enabled: true)
     put :update, params: { id: treatments(:complete).id, treatment: { odontogram_category: 'unknown', price: 1 } }
     assert_response :success
     assert assigns(:treatment).errors[:odontogram_category].any?

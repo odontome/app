@@ -8,7 +8,6 @@ class OdontogramChangesTest < ActionController::TestCase
   setup do
     @controller.session['user'] = users(:founder)
     @patient = patients(:one)
-    practices(:complete).update!(odontogram_enabled: true)
     @editor = SecureRandom.uuid
   end
 
@@ -231,9 +230,9 @@ class OdontogramChangesTest < ActionController::TestCase
     assert_equal 'active', @patient.odontogram_entries.sole.state
   end
 
-  test 'JSON chart includes all current entries and disabled eligibility' do
+  test 'JSON chart includes all current entries and impersonation read-only state' do
     change
-    practices(:complete).update!(odontogram_enabled: false)
+    @controller.session['impersonator_id'] = users(:superadmin).id
     get :show, params: { patient_id: @patient.id }, as: :json
     assert_response :success
     body = response.parsed_body
@@ -296,7 +295,7 @@ class OdontogramChangesTest < ActionController::TestCase
     change(operation: 'undo', change_id: last.id)
     assert_response :created
     assert_equal [], response.parsed_body.fetch('undo')
-    practices(:complete).update!(odontogram_enabled: false)
+    @controller.session['impersonator_id'] = users(:superadmin).id
     get :show, params: { patient_id: @patient.id, editor_id: other_editor }, as: :json
     assert_equal [], response.parsed_body.fetch('undo')
   end
