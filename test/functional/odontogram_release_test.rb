@@ -33,7 +33,7 @@ class OdontogramReleaseTest < ActionDispatch::IntegrationTest
   end
 
   test 'launch announcement is localized actionable and stays dismissed after navigation' do
-    titles = { 'en' => 'Odontograms are here!', 'es' => '¡Ya puedes usar los odontogramas!', 'pt' => 'Os odontogramas chegaram!' }
+    titles = { 'en' => 'Odontograms are now supported.', 'es' => 'Ya puedes usar odontogramas.', 'pt' => 'Agora você pode usar odontogramas.' }
     titles.each do |locale, title|
       practices(:complete).update!(locale: locale)
       get patient_path(patients(:one))
@@ -41,7 +41,7 @@ class OdontogramReleaseTest < ActionDispatch::IntegrationTest
       assert_select '[data-announcement-version="2"].announcement-alert' do
         assert_select 'strong', text: title
         assert_select 'a[href=?]', patients_path
-        assert_select 'a[href^="mailto:hello@odonto.me"]'
+        assert_select 'a[href^="mailto:hello@odonto.me"]', count: 0
         assert_select '[data-announcement-dismiss][aria-label=?]', I18n.t('announcements.dismiss', locale: locale)
       end
       assert_no_match(/translation_missing|Translation missing/, response.body)

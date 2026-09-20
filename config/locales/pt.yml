@@ -3,9 +3,7 @@ pt:
     dismiss: Fechar aviso
     odontogram_launch:
       message: >-
-        <p><strong>Os odontogramas chegaram!</strong> Registre achados, planeje tratamentos e acompanhe o histórico de cada paciente pelo perfil.</p>
-        <p><a href="/patients">Abra o perfil de um paciente no computador</a> para experimentar. Você também pode imprimir um resumo dos tratamentos.</p>
-        <p>O que funciona bem? O que poderia ser mais simples? <a href="mailto:hello@odonto.me?subject=Feedback%20sobre%20o%20odontograma">Conte sua experiência</a> e nos ajude a melhorar.</p>
+        <p><strong>Agora você pode usar odontogramas.</strong> <a href="/patients">Abra o perfil de qualquer paciente</a> para vê-los em ação.</p>
   odontogram:
     teeth: "Dentes %{numbers}"
     title: Odontograma

@@ -3,9 +3,7 @@ en:
     dismiss: Dismiss announcement
     odontogram_launch:
       message: >-
-        <p><strong>Odontograms are here!</strong> Record findings, plan treatments, and follow each patient's history, all from their profile.</p>
-        <p><a href="/patients">Open a patient on your computer</a> to try it. You can also print a treatment summary.</p>
-        <p>What works well? What could be easier? <a href="mailto:hello@odonto.me?subject=Odontogram%20feedback">Share your feedback</a> and help us improve it.</p>
+        <p><strong>Odontograms are now supported.</strong> <a href="/patients">Open any patient profile</a> to see them in action.</p>
   odontogram:
     teeth: "Teeth %{numbers}"
     title: Odontogram
