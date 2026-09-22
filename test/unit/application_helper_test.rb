@@ -8,6 +8,21 @@ class ApplicationHelperTest < ActionView::TestCase
 
   SAMPLE_PNG_BASE64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+rXbQAAAAASUVORK5CYII='
 
+  test 'connect account status i18n covers every status in every locale' do
+    statuses = %w[not_started pending pending_review complete disabled something_unexpected]
+
+    %i[en es pt].each do |locale|
+      I18n.with_locale(locale) do
+        statuses.each do |status|
+          result = connect_account_status_i18n(status)
+
+          assert_kind_of Hash, result, "expected a Hash for '#{status}' in #{locale}"
+          assert result[:title].present?, "missing title for '#{status}' in #{locale}"
+        end
+      end
+    end
+  end
+
   test "should return 'active' when controller name matches string tab" do
     def controller
       OpenStruct.new(controller_name: 'patients')
