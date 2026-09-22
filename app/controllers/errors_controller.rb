@@ -15,4 +15,8 @@ class ErrorsController < ApplicationController
   def unauthorised
     render status: 401, formats: [:html]
   end
+
+  def unprocessable
+    render status: 422, formats: [:html]
+  end
 end
