@@ -171,4 +171,14 @@ class UserTest < ActiveSupport::TestCase
     user.firstname = 'Super'
     assert user.save
   end
+
+  test 'admin user cannot be destroyed' do
+    admin = users(:founder)
+
+    assert_no_difference 'User.count' do
+      assert_not admin.destroy
+    end
+
+    assert admin.errors[:base].any?
+  end
 end
