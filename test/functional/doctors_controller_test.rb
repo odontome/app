@@ -41,6 +41,16 @@ class DoctorsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'gender options use stable values regardless of locale' do
+    users(:founder).practice.update_columns(locale: 'es')
+
+    get :new
+
+    assert_response :success
+    assert_select "select#doctor_gender option[value='male']"
+    assert_select "select#doctor_gender option[value='female']"
+  end
+
   test 'should create doctor' do
     assert_difference('Doctor.count') do
       post :create, params: { doctor: @new_doctor }
