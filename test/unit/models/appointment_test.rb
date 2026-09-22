@@ -160,6 +160,35 @@ class AppointmentTest < ActiveSupport::TestCase
     assert_equal true, patient.reload.notified_of_six_month_reminder
   end
 
+  test 'does not reset six-month reminder flag when editing without a status change' do
+    appointment = appointments(:first_visit)
+    patient = appointment.patient
+    patient.update_column(:notified_of_six_month_reminder, true)
+
+    appointment.update!(notes: 'Bring previous x-rays')
+
+    assert_equal true, patient.reload.notified_of_six_month_reminder
+  end
+
+  test 'does not swallow errors while resetting the six-month reminder flag' do
+    patient = patients(:one)
+
+    appt = Appointment.create!(
+      datebook_id: datebooks(:playa_del_carmen).id,
+      doctor_id: doctors(:rebecca).id,
+      patient_id: patient.id,
+      starts_at: Time.now + 2.days,
+      ends_at: Time.now + 2.days + 1.hour,
+      status: Appointment.status[:cancelled]
+    )
+
+    appt.patient.stub(:update_column, proc { raise ActiveRecord::StatementInvalid, 'boom' }) do
+      assert_raises(ActiveRecord::StatementInvalid) do
+        appt.update!(status: Appointment.status[:confirmed])
+      end
+    end
+  end
+
   test 'as_json includes patient name and uid for calendar display' do
     appointment = appointments(:first_visit)
     json_data = appointment.as_json
