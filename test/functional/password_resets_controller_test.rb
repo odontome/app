@@ -8,6 +8,15 @@ class PasswordResetsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'redirects signed in users away with the right message' do
+    @controller.session['user'] = users(:founder)
+
+    get :new
+
+    assert_redirected_to root_path
+    assert_equal I18n.t(:already_signed_in), flash[:notice]
+  end
+
   test 'create sends reset instructions for a valid email' do
     user = users(:founder)
     emails_before = ActionMailer::Base.deliveries.size
