@@ -26,6 +26,22 @@ class BalancesControllerTest < ActionController::TestCase
     end
   end
 
+  test 'patient without a birthday can open balances and record an entry without an assumed age' do
+    patient = patients(:one)
+    patient.update_column(:date_of_birth, nil)
+
+    get :index, params: { patient_id: patient.id }
+    assert_response :success
+    assert_select '.page-header', text: /#{Regexp.escape(I18n.t(:years_old).downcase)}/, count: 0
+
+    assert_difference 'Balance.count', 1 do
+      post :create, params: { patient_id: patient.id,
+        balance: { amount: 25, currency: 'usd', notes: 'Consultation' }, format: :js }
+    end
+    assert_response :success
+    assert_nil patient.reload.date_of_birth
+  end
+
   test 'configured odontogram treatments keep balance quick entry without creating chart records' do
     treatment = treatments(:complete)
     treatment.update!(odontogram_category: 'crown')

@@ -495,8 +495,6 @@ en:
   yes: Yes
   no: No
   help:
-    patients:
-      status: Patients without the required profile information are marked as "incomplete".
     datebooks:
       status: Inactive datebooks don't have any scheduled appointments. Only inactive datebooks can be deleted.
     doctors:
@@ -506,7 +504,6 @@ en:
       status: Payments with "Requires Payment Method" status are incomplete and cannot be processed until a valid payment method is attached to them.
       charge_status: The charge status indicates the current state of the payment process. Payments that are not "Succeeded" may require further action to complete.
   inactive: Inactive
-  incomplete: Incomplete
   instructions:
     datebooks:
       <p>Datebooks are the backbone of every practice.</p> <p>Because you

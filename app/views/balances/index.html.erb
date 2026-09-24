@@ -11,7 +11,9 @@
       </h4>
       <div class="text-muted">
         <%= @patient.uid %><br />
-        <span data-bs-toggle="tooltip" title="<%= @patient.date_of_birth.to_formatted_s(:long) %>" data-bs-placement="top"><%= @patient.age%> <%= t(:years_old).downcase %></span>
+        <% if @patient.date_of_birth.present? %>
+          <span data-bs-toggle="tooltip" title="<%= @patient.date_of_birth.to_formatted_s(:long) %>" data-bs-placement="top"><%= @patient.age%> <%= t(:years_old).downcase %></span>
+        <% end %>
       </div>
     </div>
     <div class="col-auto">

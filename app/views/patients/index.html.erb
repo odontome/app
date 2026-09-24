@@ -132,10 +132,6 @@
               </th>
               <th><%= t :uid %></th>
               <th>
-                <%= t :status %>
-                <%= help_tag t 'help.patients.status' %>
-              </th>
-              <th>
                 <% if @segment == 'all' %>
                   <%= patients_sort_link(column: 'last_visit', label_key: :last_visit, letter: @current_letter) %>
                 <% else %>

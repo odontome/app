@@ -3,13 +3,6 @@
   <td class="text-muted" data-label="<%= t :uid %>">
     <%= patient.uid %>
   </td>
-  <td class="text-muted" data-label="<%= t :status %>">
-    <% if patient.missing_info? %>
-      <%= label_tag t(:incomplete), :red %>
-    <% else %>
-      <%= label_tag t(:active), :green %>
-    <% end %>
-  </td>
   <td class="text-muted" data-label="<%= t :last_visit %>">
     <%= patient.last_visit_at.present? ? l(patient.last_visit_at.to_date, format: :short) : t(:never) %>
   </td>
