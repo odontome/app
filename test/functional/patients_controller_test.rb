@@ -360,9 +360,10 @@ class PatientsControllerTest < ActionController::TestCase
     assert_nil patient.reload.date_of_birth
   end
 
-  test 'patient list has no completeness status and allows payments without a birthday' do
+  test 'patient list has no completeness status and allows payments for ready clinics without a birthday' do
     patient = patients(:one)
     patient.update_column(:date_of_birth, nil)
+    assert practices(:complete).connect_account_complete?
 
     get :index, params: { letter: patient.firstname[0] }
 
@@ -370,6 +371,24 @@ class PatientsControllerTest < ActionController::TestCase
     assert_select 'th', text: I18n.t(:status), count: 0
     assert_select "td[data-label='#{I18n.t(:status)}']", count: 0
     assert_select "a[href='#{new_payment_path(patient_id: patient.id)}']", count: 1
+  end
+
+  {
+    'no connected account' => { stripe_account_id: nil },
+    'charges disabled' => { connect_charges_enabled: false },
+    'payouts disabled' => { connect_payouts_enabled: false }
+  }.each do |state, attributes|
+    test "patient payment option is hidden when the clinic has #{state}" do
+      patient = patients(:one)
+      practices(:complete).update!(attributes)
+
+      get :index, params: { letter: patient.firstname[0] }
+
+      assert_response :success
+      assert_select "a[href='#{new_payment_path(patient_id: patient.id)}']", count: 0
+      assert_select "a.dropdown-item[href='#{patient_path(patient)}']", count: 1
+      assert_select "a[href='#{edit_patient_path(patient)}']", count: 1
+    end
   end
 
   test 'patient can be created with blank birthday selectors' do
