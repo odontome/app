@@ -6,6 +6,7 @@ class DoctorsController < ApplicationController
 
   def index
     @doctors = Doctor.with_practice(current_user.practice_id)
+                     .reorder('doctors.is_active DESC NULLS LAST, doctors.firstname ASC, doctors.lastname ASC')
   end
 
   def show
