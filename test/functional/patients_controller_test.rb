@@ -339,6 +339,120 @@ class PatientsControllerTest < ActionController::TestCase
   test 'should get new' do
     get :new
     assert_response :success
+    assert_select 'select.date-select', count: 3 do |selects|
+      selects.each do |select|
+        assert_equal '', select.css('option').first['value']
+        assert_empty select.css('option[selected]').reject { |option| option['value'].blank? }
+      end
+    end
+  end
+
+  test 'quick entry patient can use the profile without a birthday or assumed age' do
+    patient = Patient.find(Patient.find_or_create_from('Quick Entry'.dup, practices(:complete).id))
+
+    get :show, params: { id: patient.id }
+
+    assert_response :success
+    assert_select '.page-title', text: patient.fullname
+    assert_select '[data-odontogram-summary]', count: 1
+    assert_select "a[href='#{patient_balances_path(patient)}']", count: 1
+    assert_select '.page-header', text: /#{Regexp.escape(I18n.t(:years_old).downcase)}/, count: 0
+    assert_nil patient.reload.date_of_birth
+  end
+
+  test 'patient list has no completeness status and allows payments for ready clinics without a birthday' do
+    patient = patients(:one)
+    patient.update_column(:date_of_birth, nil)
+    assert practices(:complete).connect_account_complete?
+
+    get :index, params: { letter: patient.firstname[0] }
+
+    assert_response :success
+    assert_select 'th', text: I18n.t(:status), count: 0
+    assert_select "td[data-label='#{I18n.t(:status)}']", count: 0
+    assert_select "a[href='#{new_payment_path(patient_id: patient.id)}']", count: 1
+  end
+
+  {
+    'no connected account' => { stripe_account_id: nil },
+    'charges disabled' => { connect_charges_enabled: false },
+    'payouts disabled' => { connect_payouts_enabled: false }
+  }.each do |state, attributes|
+    test "patient payment option is hidden when the clinic has #{state}" do
+      patient = patients(:one)
+      practices(:complete).update!(attributes)
+
+      get :index, params: { letter: patient.firstname[0] }
+
+      assert_response :success
+      assert_select "a[href='#{new_payment_path(patient_id: patient.id)}']", count: 0
+      assert_select "a.dropdown-item[href='#{patient_path(patient)}']", count: 1
+      assert_select "a[href='#{edit_patient_path(patient)}']", count: 1
+    end
+  end
+
+  test 'patient can be created with blank birthday selectors' do
+    attributes = @new_patient.except(:date_of_birth).merge(
+      'date_of_birth(1i)' => '', 'date_of_birth(2i)' => '', 'date_of_birth(3i)' => '')
+
+    assert_difference 'Patient.count', 1 do
+      post :create, params: { patient: attributes }
+    end
+
+    patient = assigns(:patient)
+    assert_redirected_to patient_path(patient)
+    assert_nil patient.reload.date_of_birth
+  end
+
+  test 'editing a quick entry patient leaves birthday selectors blank and saves other information' do
+    patient = Patient.find(Patient.find_or_create_from('Quick Entry'.dup, practices(:complete).id))
+    get :edit, params: { id: patient.id }
+
+    assert_response :success
+    assert_select 'select.date-select', count: 3 do |selects|
+      selects.each do |select|
+        assert_equal '', select.css('option').first['value']
+        assert_empty select.css('option[selected]').reject { |option| option['value'].blank? }
+      end
+    end
+
+    put :update, params: { id: patient.id, patient: { telephone: '5551234567',
+      'date_of_birth(1i)' => '', 'date_of_birth(2i)' => '', 'date_of_birth(3i)' => '' } }
+
+    assert_redirected_to patient_path(patient)
+    assert_equal '5551234567', patient.reload.telephone
+    assert_nil patient.date_of_birth
+  end
+
+  test 'birthday can be entered explicitly and cleared without choosing a replacement' do
+    patient = patients(:one)
+    put :update, params: { id: patient.id, patient: {
+      'date_of_birth(1i)' => '1987', 'date_of_birth(2i)' => '6', 'date_of_birth(3i)' => '14' } }
+
+    assert_redirected_to patient_path(patient)
+    assert_equal Date.new(1987, 6, 14), patient.reload.date_of_birth
+
+    get :edit, params: { id: patient.id }
+    %w[1987 6 14].each_with_index do |value, index|
+      assert_select "#patient_date_of_birth_#{index + 1}i option[selected][value='#{value}']", count: 1
+    end
+
+    put :update, params: { id: patient.id, patient: {
+      'date_of_birth(1i)' => '', 'date_of_birth(2i)' => '', 'date_of_birth(3i)' => '' } }
+
+    assert_redirected_to patient_path(patient)
+    assert_nil patient.reload.date_of_birth
+  end
+
+  test 'partially entered birthdays never fill in missing date components' do
+    patient = patients(:one)
+    [%w[1987 6], ['1987', '', '14'], ['', '6', '14']].each do |year, month, day|
+      put :update, params: { id: patient.id, patient: {
+        'date_of_birth(1i)' => year, 'date_of_birth(2i)' => month, 'date_of_birth(3i)' => day.to_s } }
+
+      assert_redirected_to patient_path(patient)
+      assert_nil patient.reload.date_of_birth
+    end
   end
 
   test 'should create patient' do

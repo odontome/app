@@ -10,7 +10,6 @@ class PatientTest < ActiveSupport::TestCase
     assert patient.errors[:practice_id].any?
     assert patient.errors[:firstname].any?
     assert patient.errors[:lastname].any?
-    assert patient.errors[:date_of_birth].any?
   end
 
   test 'patient is not valid without an unique uid in the same practice' do
@@ -143,11 +142,13 @@ class PatientTest < ActiveSupport::TestCase
     assert patient.age.positive?
   end
 
-  test 'patient is invalid if it has no date of birth' do
+  test 'patient can be saved without a date of birth and has no assumed age' do
     patient = patients(:one)
     patient.date_of_birth = nil
 
-    assert patient.invalid?
+    assert patient.save
+    assert_nil patient.reload.date_of_birth
+    assert_nil patient.age
   end
 
   test 'patient firstname, and lastname will be squished' do
@@ -199,6 +200,9 @@ class PatientTest < ActiveSupport::TestCase
 
     assert_equal 'Maria', patient.firstname
     assert_equal 'Garcia', patient.lastname
+    %w[date_of_birth uid email telephone mobile address allergies].each do |attribute|
+      assert_nil patient.public_send(attribute), "Quick entry must leave #{attribute} unset"
+    end
     assert_equal 'm', patient.firstname_initial, 'firstname_initial should be set for index lookup'
     assert_equal 'maria garcia', patient.fullname_search, 'fullname_search should be set for search'
   end

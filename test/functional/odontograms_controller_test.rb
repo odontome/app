@@ -49,6 +49,18 @@ class OdontogramsControllerTest < ActionController::TestCase
     assert_in_delta Time.current, entry.created_at, 5
   end
 
+  test 'quick entry patient can record chart entries without a birthday' do
+    patient = Patient.find(Patient.find_or_create_from('Quick Entry'.dup, @practice.id))
+
+    assert_difference ['OdontogramEntry.count', 'OdontogramChange.count'], 1 do
+      post :create, params: { patient_id: patient.id, odontogram_entry: @attributes }, as: :json
+    end
+
+    assert_response :created
+    assert_equal 1, patient.reload.odontogram_revision
+    assert_nil patient.date_of_birth
+  end
+
   test 'an open editor loses write access when impersonation begins' do
     get :show, params: { patient_id: @patient.id }, as: :html
     assert_response :success

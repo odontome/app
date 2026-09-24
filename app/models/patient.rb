@@ -111,7 +111,7 @@ class Patient < ApplicationRecord
   validates_uniqueness_of :email, scope: :practice_id, allow_nil: true, allow_blank: true
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, allow_nil: true,
                     allow_blank: true
-  validates_presence_of :practice_id, :firstname, :lastname, :date_of_birth
+  validates_presence_of :practice_id, :firstname, :lastname
 
   validates_numericality_of :cigarettes_per_day, :drinks_per_day, only_integer: true,
                                                                   greater_than_or_equal_to: 0, allow_blank: true
@@ -140,16 +140,9 @@ class Patient < ApplicationRecord
   end
 
   def age
-    if !missing_info?
-      (Time.now.year - date_of_birth.year) - (Time.now.yday < date_of_birth.yday ? 1 : 0)
-    else
-      0
-    end
-  end
+    return if date_of_birth.nil?
 
-  # this functions checks if the user was created from the datebook (skipped all validation, so most of the data is invalid)
-  def missing_info?
-    date_of_birth.nil?
+    (Time.now.year - date_of_birth.year) - (Time.now.yday < date_of_birth.yday ? 1 : 0)
   end
 
   # this function tries to find a patient by an ID or it's NAME, otherwise it creates one

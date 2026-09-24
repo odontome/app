@@ -493,8 +493,6 @@ pt:
   "yes": Sim
   "no": "Não"
   help:
-    patients:
-      status: Pacientes sem as informações obrigatórias do perfil são marcados como "incompletos".
     datebooks:
       status: Agendas inativas não têm agendamentos programados. Apenas agendas inativas podem ser deletadas.
     doctors:
@@ -504,7 +502,6 @@ pt:
       status: Pagamentos com status "Requer Método de Pagamento" estão incompletos e não podem ser processados até que um método de pagamento válido seja anexado a eles.
       charge_status: O status do cargo indica o estado atual do processo de pagamento. Pagamentos que não estão "Bem-sucedidos" podem requerer ação adicional para completar.
   inactive: Inativo
-  incomplete: Incompleto
   instructions:
     datebooks: <p>Agendas são a base de toda clínica.</p> <p>Como você
       já pode filtrar suas agendas por médico, um uso comum é criar uma
