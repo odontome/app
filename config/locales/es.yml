@@ -1,9 +1,6 @@
 es:
   announcements:
     dismiss: Cerrar anuncio
-    odontogram_launch:
-      message: >-
-        <p><strong>Ya puedes usar odontogramas.</strong> <a href="/patients">Abre el perfil de cualquier paciente</a> para verlos en acción.</p>
   odontogram:
     teeth: "Dientes %{numbers}"
     title: Odontograma
