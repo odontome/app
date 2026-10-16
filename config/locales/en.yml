@@ -1,9 +1,6 @@
 en:
   announcements:
     dismiss: Dismiss announcement
-    odontogram_launch:
-      message: >-
-        <p><strong>Odontograms are now supported.</strong> <a href="/patients">Open any patient profile</a> to see them in action.</p>
   odontogram:
     teeth: "Teeth %{numbers}"
     title: Odontogram
