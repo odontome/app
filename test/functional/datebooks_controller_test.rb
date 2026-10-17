@@ -119,6 +119,15 @@ class DatebooksControllerTest < ActionController::TestCase
     assert_redirected_to datebooks_url
   end
 
+  test 'should not move datebook to another practice on update' do
+    datebook = datebooks(:playa_del_carmen)
+    original_practice_id = datebook.practice_id
+
+    put :update, params: { id: datebook.to_param, datebook: { practice_id: practices(:trialing_practice).id } }
+
+    assert_equal original_practice_id, datebook.reload.practice_id
+  end
+
   test 'should destroy datebook without appointments' do
     assert_difference('Datebook.count', -1) do
       delete :destroy, params: { id: datebooks(:without_appointments).to_param }

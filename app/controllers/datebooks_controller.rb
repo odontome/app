@@ -78,6 +78,6 @@ class DatebooksController < ApplicationController
   private
 
   def datebook_params
-    params.require(:datebook).permit(:name, :starts_at, :ends_at, :practice_id)
+    params.require(:datebook).permit(:name, :starts_at, :ends_at)
   end
 end

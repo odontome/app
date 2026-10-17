@@ -123,6 +123,15 @@ class DoctorsControllerTest < ActionController::TestCase
     assert_redirected_to doctors_url
   end
 
+  test 'should not move doctor to another practice on update' do
+    doctor = doctors(:rebecca)
+    original_practice_id = doctor.practice_id
+
+    put :update, params: { id: doctor.to_param, doctor: { practice_id: practices(:trialing_practice).id } }
+
+    assert_equal original_practice_id, doctor.reload.practice_id
+  end
+
   test 'should destroy doctor' do
     assert_difference('Doctor.count', -1) do
       delete :destroy, params: { id: doctors(:perishable).to_param }
