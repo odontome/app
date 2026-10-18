@@ -57,4 +57,29 @@ class ReviewsControllerTest < ActionController::TestCase
     assert_response :success
     # assert_redirected_to review_path(assigns(:review))
   end
+
+  test 'index escapes HTML in review comments' do
+    Review.create!(appointment_id: appointments(:unreviewed).id, score: 5, comment: '<script>alert(1)</script>')
+
+    get :index
+    assert_response :success
+    assert_includes response.body, '&lt;script&gt;alert(1)&lt;/script&gt;'
+    assert_not_includes response.body, '<script>alert(1)</script>'
+  end
+
+  test 'index escapes HTML in the custom review url message' do
+    users(:founder).practice.update_column(:custom_review_url, '<img src=x onerror=alert(1)> http://a.co')
+
+    get :index
+    assert_response :success
+    assert_includes response.body, '&lt;img src=x onerror=alert(1)&gt;'
+    assert_not_includes response.body, '<img src=x onerror=alert(1)>'
+  end
+
+  test 'should not create review with a score outside 1 to 5' do
+    assert_no_difference('Review.count') do
+      post :create,
+           params: { review: { appointment_id: appointments(:unreviewed).ciphered_id, comment: 'Hi', score: 2_000_000_000 } }, format: :js
+    end
+  end
 end

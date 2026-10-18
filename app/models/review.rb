@@ -13,7 +13,8 @@ class Review < ApplicationRecord
 
   # validations
   validates_presence_of :score
-  validates_numericality_of :score, :appointment_id
+  validates_numericality_of :appointment_id
+  validates :score, numericality: { only_integer: true }, inclusion: { in: 1..5 }
   validates_uniqueness_of :appointment_id
   validates :comment, length: { within: 0..255 }
 end
