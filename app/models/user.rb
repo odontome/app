@@ -38,6 +38,7 @@ class User < ApplicationRecord
   before_save :rotate_session_token, if: :will_save_change_to_password_digest?
   before_destroy :check_if_admin
   after_update :clear_remember_tokens_on_password_change
+  after_update :revoke_agent_oauth_credentials, if: :saved_change_to_password_digest?
 
   def fullname
     [firstname, lastname].join(' ')
@@ -145,6 +146,16 @@ class User < ApplicationRecord
     self.remember_token_digest = nil
     self.remember_token_expires_at = nil
     update_columns(remember_token_digest: nil, remember_token_expires_at: nil)
+  end
+
+  # A new password also disconnects this user's AI apps. The practice is
+  # locked first, like every other credential change, so a refresh running
+  # at the same moment can't issue a token after this.
+  def revoke_agent_oauth_credentials
+    practice.with_lock do
+      agent_oauth_access_tokens.where(revoked_at: nil).update_all(revoked_at: Time.current)
+      agent_oauth_authorizations.where(consumed_at: nil).delete_all
+    end
   end
 
   def prevent_superadmin_elevation
