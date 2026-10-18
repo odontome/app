@@ -57,10 +57,13 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.with_practice(current_user.practice_id).find(params[:id])
-    @user.destroy
 
     respond_to do |format|
-      format.html { redirect_to(users_url) }
+      if @user.destroy
+        format.html { redirect_to(users_url) }
+      else
+        format.html { redirect_to(users_url, alert: I18n.t(:user_deleted_admin_error_message)) }
+      end
     end
   end
 

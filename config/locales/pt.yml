@@ -766,6 +766,7 @@ pt:
   user: Usuário
   user_created_success_message: O usuário foi criado com sucesso
   user_updated_success_message: O usuário foi atualizado com sucesso
+  user_deleted_admin_error_message: Usuários administradores não podem ser excluídos
   users: Usuários
   tutorial:
     pretitle: Configure sua clínica
