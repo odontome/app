@@ -64,9 +64,9 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to users_path
   end
 
-  test 'should not destroy an admin user' do
+  test 'admin cannot delete their own account' do
     assert_no_difference('User.count') do
-      delete :destroy, params: { id: users(:non_migrated_user).to_param }
+      delete :destroy, params: { id: users(:founder).to_param }
     end
 
     assert_redirected_to users_path
