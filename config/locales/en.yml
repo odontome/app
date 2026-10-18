@@ -775,6 +775,7 @@ en:
   user: User
   user_created_success_message: The user was created successfully
   user_updated_success_message: The user was updated successfully
+  user_deleted_admin_error_message: Admin users can't be deleted
   users: Users
   tutorial:
     pretitle: Set up your practice

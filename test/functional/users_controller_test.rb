@@ -63,4 +63,13 @@ class UsersControllerTest < ActionController::TestCase
 
     assert_redirected_to users_path
   end
+
+  test 'should not destroy an admin user' do
+    assert_no_difference('User.count') do
+      delete :destroy, params: { id: users(:non_migrated_user).to_param }
+    end
+
+    assert_redirected_to users_path
+    assert_equal I18n.t(:user_deleted_admin_error_message), flash[:alert]
+  end
 end

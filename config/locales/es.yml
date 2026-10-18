@@ -728,6 +728,7 @@ es:
   user: Usuario
   user_created_success_message: El usuario ha sido creado con éxito.
   user_updated_success_message: El usuario ha sido actualizado con éxito.
+  user_deleted_admin_error_message: Los usuarios administradores no se pueden eliminar.
   users: Usuarios
   week: Semana
   tutorial:
