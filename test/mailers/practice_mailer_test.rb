@@ -83,4 +83,18 @@ class PracticeMailerTest < ActionMailer::TestCase
     assert_equal ['hello@odonto.me'], mail.from
     assert_match 'View more at', mail.body.encoded
   end
+
+  test 'new_review_notification escapes HTML in the comment in every locale' do
+    review = reviews(:valid)
+    review.update_column(:comment, '<script>alert(1)</script>')
+    practice = review.appointment.datebook.practice
+
+    %w[en es pt].each do |locale|
+      practice.update_column(:locale, locale)
+
+      html = PracticeMailer.new_review_notification(review).html_part.body.decoded
+      assert_includes html, '&lt;script&gt;alert(1)&lt;/script&gt;', "comment not escaped for #{locale}"
+      assert_not_includes html, '<script>alert(1)</script>', "raw script found for #{locale}"
+    end
+  end
 end

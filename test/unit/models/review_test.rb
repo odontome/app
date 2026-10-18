@@ -26,4 +26,19 @@ class ReviewTest < ActiveSupport::TestCase
 
     assert review.appointment = appointments(:first_visit)
   end
+
+  test 'review score must be an integer between 1 and 5' do
+    review = Review.new(appointment_id: appointments(:unreviewed).id, comment: 'Nice')
+
+    [0, 6, 2_000_000_000, 2.5].each do |score|
+      review.score = score
+      assert review.invalid?, "score #{score} should be invalid"
+      assert review.errors[:score].any?
+    end
+
+    [1, 5].each do |score|
+      review.score = score
+      assert review.valid?, "score #{score} should be valid"
+    end
+  end
 end

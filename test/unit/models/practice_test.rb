@@ -178,4 +178,27 @@ class PracticeTest < ActiveSupport::TestCase
     assert practice.invalid?
     assert practice.errors[:custom_review_url].any?
   end
+
+  test 'practice rejects custom_review_url with HTML or extra text around the url' do
+    practice = practices(:complete)
+
+    practice.custom_review_url = '<img src=x onerror=alert(1)> http://a.co'
+    assert practice.invalid?
+    assert practice.errors[:custom_review_url].any?
+
+    practice.custom_review_url = 'javascript:alert(1)//http://a.co'
+    assert practice.invalid?
+
+    practice.custom_review_url = 'https://g.page/r/my-practice/review'
+    assert practice.valid?
+  end
+
+  test 'practice keeps saving when an existing custom_review_url is unchanged' do
+    practice = practices(:complete)
+    practice.update_column(:custom_review_url, 'see http://a.co')
+    practice.reload
+
+    practice.name = 'Renamed practice'
+    assert practice.valid?
+  end
 end

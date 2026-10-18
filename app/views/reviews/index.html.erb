@@ -32,7 +32,7 @@
   <% else %>
     <% if @custom_review_url.present? %>
       <div class="alert alert-info">
-        <%= t(:custom_review_url_usage_message, url: @custom_review_url).html_safe %>
+        <%= t(:custom_review_url_usage_message, url: h(@custom_review_url)).html_safe %>
       </div>
     <% end %>
 
