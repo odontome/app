@@ -4,7 +4,7 @@ class NotesController < ApplicationController
   before_action :require_user
 
   def create
-    @noteable = find_noteable
+    @noteable = find_patient
     @note = @noteable.notes.build(note_params)
     @note.user_id = current_user.id
 
@@ -20,7 +20,7 @@ class NotesController < ApplicationController
   end
 
   def destroy
-    @noteable = find_noteable
+    @noteable = find_patient
     @note = @noteable.notes.find(params[:id])
     @note.destroy
 
@@ -31,11 +31,8 @@ class NotesController < ApplicationController
 
   private
 
-  def find_noteable
-    params.each do |name, value|
-      return Regexp.last_match(1).classify.constantize.find(value) if name =~ /(.+)_id$/
-    end
-    nil
+  def find_patient
+    Patient.with_practice(current_user.practice_id).find(params[:patient_id])
   end
 
   def note_params

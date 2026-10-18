@@ -33,6 +33,25 @@ class NotesControllerTest < ActionController::TestCase
     end
   end
 
+  test 'should not create a note for a patient from another practice' do
+    assert_no_difference 'Note.count' do
+      assert_raises ActiveRecord::RecordNotFound do
+        post :create, params: { patient_id: patients(:three).id, note: { notes: 'Not my patient' }, format: :js }
+      end
+    end
+  end
+
+  test 'should not destroy a note from a patient in another practice' do
+    note = Note.create!(notes: 'Other practice note', user: users(:user_in_yet_another_practice),
+                        noteable: patients(:three))
+
+    assert_no_difference 'Note.count' do
+      assert_raises ActiveRecord::RecordNotFound do
+        delete :destroy, params: { patient_id: patients(:three).id, id: note.id, format: :js }
+      end
+    end
+  end
+
   test 'requires authentication' do
     @controller.session['user'] = nil
 

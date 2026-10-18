@@ -234,4 +234,37 @@ class AppointmentsControllerTest < ActionController::TestCase
       # see Patient.find_or_create_from to understand the 'as_values_patient_id' property
     end
   end
+
+  test 'should not move an appointment into another practice datebook' do
+    appointment = appointments(:first_visit)
+    foreign_datebook = Datebook.create!(name: 'Foreign', practice_id: 3)
+    foreign_doctor = Doctor.create!(firstname: 'Foreign', lastname: 'Doctor', practice_id: 3)
+
+    put :update, params: {
+      datebook_id: appointment.datebook_id, id: appointment.id,
+      appointment: { datebook_id: foreign_datebook.id, doctor_id: foreign_doctor.id, patient_id: patients(:three).id }
+    }, format: :js
+
+    appointment.reload
+    assert_equal datebooks(:playa_del_carmen).id, appointment.datebook_id
+    assert_equal doctors(:rebecca).id, appointment.doctor_id
+    assert_equal patients(:four).id, appointment.patient_id
+    assert_equal 0, foreign_datebook.appointments.count
+  end
+
+  test 'should not create an appointment in another practice datebook' do
+    foreign_datebook = Datebook.create!(name: 'Foreign', practice_id: 3)
+    foreign_doctor = Doctor.create!(firstname: 'Foreign', lastname: 'Doctor', practice_id: 3)
+    appointment = {
+      datebook_id: foreign_datebook.id,
+      doctor_id: foreign_doctor.id,
+      patient_id: patients(:three).id,
+      starts_at: '2014-01-04 14:00:00 +0000'
+    }
+
+    assert_no_difference 'Appointment.count' do
+      post :create, params: { appointment: appointment, datebook_id: foreign_datebook.id }, format: :js
+    end
+    assert_equal 0, foreign_datebook.appointments.count
+  end
 end

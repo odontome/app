@@ -506,6 +506,15 @@ class PatientsControllerTest < ActionController::TestCase
     assert_redirected_to patient_path(assigns(:patient))
   end
 
+  test 'should not move patient to another practice on update' do
+    patient = patients(:one)
+    original_practice_id = patient.practice_id
+
+    put :update, params: { id: patient.to_param, patient: { practice_id: practices(:trialing_practice).id } }
+
+    assert_equal original_practice_id, patient.reload.practice_id
+  end
+
   test 'should destroy patient' do
     assert_difference('Patient.count', -1) do
       delete :destroy, params: { id: patients(:one).to_param }

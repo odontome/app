@@ -28,7 +28,46 @@ class Api::Webhooks::StripeControllerTest < ActionController::TestCase
     assert_response :bad_request
   end
 
+  test 'records a balance when the paid patient belongs to the practice' do
+    patient = patients(:one)
+
+    assert_difference -> { Balance.where(patient: patient).count }, 1 do
+      post_signed_event payment_succeeded_event(practice_id: patient.practice_id, patient_id: patient.id)
+    end
+
+    assert_response :ok
+  end
+
+  test 'skips the balance when the paid patient belongs to another practice' do
+    other_patient = patients(:three)
+
+    assert_no_difference -> { Balance.count } do
+      post_signed_event payment_succeeded_event(practice_id: practices(:complete).id, patient_id: other_patient.id)
+    end
+
+    # 200 so Stripe doesn't keep retrying an event we will never accept
+    assert_response :ok
+  end
+
   private
+
+  def payment_succeeded_event(practice_id:, patient_id:)
+    {
+      id: 'evt_test_2',
+      object: 'event',
+      type: 'payment_intent.succeeded',
+      data: {
+        object: {
+          id: 'pi_test_1',
+          object: 'payment_intent',
+          amount_received: 1000,
+          currency: 'usd',
+          metadata: { practice_id: practice_id.to_s, patient_id: patient_id.to_s, patient_name: 'Someone' }
+        }
+      }
+    }.to_json
+  end
+
 
   # customer.subscription.updated exercises update_database_subscription — the
   # same method the invoice.* events reach — without needing to stub the
