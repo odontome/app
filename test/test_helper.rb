@@ -22,6 +22,9 @@ module ActiveSupport
     fixtures :all
 
     ActiveModel::SecurePassword.min_cost = true
+
+    # Controllers set I18n.locale globally; don't let it leak between tests
+    teardown { I18n.locale = I18n.default_locale }
   end
 end
 
