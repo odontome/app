@@ -15,7 +15,7 @@ class ImpersonationControllerTest < ActionController::TestCase
   test 'superadmin can impersonate a practice admin and is redirected to practice dashboard' do
     post :impersonate, params: { id: @practice.id }
     assert_redirected_to practice_path
-    assert_equal @admin.practice_id, @controller.session['user']['practice_id']
+    assert_equal @admin.id, @controller.session['user']['id']
     assert @controller.session['impersonator_id'].present?
   end
 
@@ -78,5 +78,36 @@ class ImpersonationControllerTest < ActionController::TestCase
     # GET requests should be allowed
     get :practices
     assert_response :success
+  end
+
+  test 'impersonation stores the target user id and session token' do
+    @admin.update_columns(session_token: 'admin-token')
+
+    post :impersonate, params: { id: @practice.id }
+
+    assert_equal({ 'id' => @admin.id, 'session_token' => 'admin-token' }, @controller.session['user'])
+  end
+
+  test 'stop impersonating restores the superadmin with their current session token' do
+    @superadmin.update_columns(session_token: 'superadmin-token')
+    @controller.session['user'] = { 'id' => @superadmin.id, 'session_token' => 'superadmin-token' }
+
+    post :impersonate, params: { id: @practice.id }
+    delete :stop_impersonating
+
+    assert_equal({ 'id' => @superadmin.id, 'session_token' => 'superadmin-token' }, @controller.session['user'])
+  end
+
+  test 'stop impersonating does not restore a superadmin whose password changed meanwhile' do
+    @superadmin.update_columns(session_token: 'superadmin-token')
+    @controller.session['user'] = { 'id' => @superadmin.id, 'session_token' => 'superadmin-token' }
+    post :impersonate, params: { id: @practice.id }
+
+    @superadmin.update_columns(session_token: 'rotated-token')
+    delete :stop_impersonating
+
+    assert_redirected_to root_path
+    assert_nil @controller.session['impersonator_id']
+    assert_not_equal @superadmin.id, @controller.session['user']&.dig('id')
   end
 end

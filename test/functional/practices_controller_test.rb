@@ -67,7 +67,7 @@ class PracticesControllerTest < ActionController::TestCase
     assert_equal I18n.t('mailers.practice.welcome.subject'), welcome_email.subject
     assert_match(/Welcome to Odonto.me/, welcome_email.encoded)
 
-    assert_equal @controller.session['user'].email, practice[:users_attributes]['0']['email']
+    assert_equal practice[:users_attributes]['0']['email'], User.find(@controller.session['user']['id']).email
     assert_redirected_to practice_path(ref: 'signup')
 
     # Verify consent records were created

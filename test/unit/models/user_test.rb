@@ -180,4 +180,51 @@ class UserTest < ActiveSupport::TestCase
     end
     assert_equal I18n.t('errors.messages.unauthorised'), admin.errors[:base].first
   end
+
+  test 'changing the password gives the user a new session token' do
+    user = users(:founder)
+    user.update_columns(session_token: 'old-token')
+
+    user.update!(password: 'brand-new-pass', password_confirmation: 'brand-new-pass')
+
+    assert user.reload.session_token.present?
+    assert_not_equal 'old-token', user.session_token
+  end
+
+  test 'updating other details keeps the session token' do
+    user = users(:founder)
+    user.update_columns(session_token: 'old-token')
+
+    user.update!(firstname: 'Raulito')
+
+    assert_equal 'old-token', user.reload.session_token
+  end
+
+  test 'session_token_matches? compares against the current token' do
+    user = users(:founder)
+    user.update_columns(session_token: 'current-token')
+
+    assert user.session_token_matches?('current-token')
+    assert_not user.session_token_matches?('old-token')
+    assert_not user.session_token_matches?(nil)
+  end
+
+  test 'session_token_matches? accepts sessions of users who have no token yet' do
+    user = users(:founder)
+    user.update_columns(session_token: nil)
+
+    assert user.session_token_matches?(nil)
+  end
+
+  test 'ensure_session_token! only fills in a missing token' do
+    user = users(:founder)
+    user.update_columns(session_token: nil)
+
+    user.ensure_session_token!
+    token = user.reload.session_token
+    assert token.present?
+
+    user.ensure_session_token!
+    assert_equal token, user.reload.session_token
+  end
 end

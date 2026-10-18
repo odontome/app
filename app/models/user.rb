@@ -3,7 +3,7 @@
 class User < ApplicationRecord
   # audit logging
   has_paper_trail meta: { practice_id: lambda(&:practice_id) },
-                  skip: %i[password_digest perishable_token remember_token remember_token_expires_at]
+                  skip: %i[password_digest perishable_token remember_token remember_token_expires_at session_token]
 
   # concerns
   include Initials
@@ -35,6 +35,7 @@ class User < ApplicationRecord
   # callbacks
   before_create :set_admin_role_for_first_user
   before_update :reset_perishable_token
+  before_save :rotate_session_token, if: :will_save_change_to_password_digest?
   before_destroy :check_if_admin
   after_update :clear_remember_tokens_on_password_change
 
@@ -80,6 +81,20 @@ class User < ApplicationRecord
     remember_token.present? && remember_token_expires_at.present? && Time.current < remember_token_expires_at
   end
 
+  # Every signed-in session stores this token; changing the password replaces
+  # it, which signs out every other browser that still holds the old one.
+  def ensure_session_token!
+    update_column(:session_token, SecureRandom.urlsafe_base64(32)) if session_token.blank?
+  end
+
+  def session_token_matches?(token)
+    # Users who haven't signed in since session tokens were added have none
+    # yet; their sessions stay valid until they sign in or change password.
+    return true if session_token.blank?
+
+    token.present? && ActiveSupport::SecurityUtils.secure_compare(session_token, token)
+  end
+
   private
 
   def validate_password?
@@ -99,6 +114,10 @@ class User < ApplicationRecord
 
   def reset_perishable_token
     self.perishable_token = SecureRandom.urlsafe_base64(15)
+  end
+
+  def rotate_session_token
+    self.session_token = SecureRandom.urlsafe_base64(32)
   end
 
   def reset_perishable_token!

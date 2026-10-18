@@ -48,6 +48,8 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update(user_params)
+        # A new password signs out other browsers; keep this one signed in
+        store_user_in_session(@user) if @user.id == current_user.id && @user.saved_change_to_session_token?
         format.html { redirect_to(@user, notice: I18n.t(:user_updated_success_message)) }
       else
         format.html { render action: 'edit' }
