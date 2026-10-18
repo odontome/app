@@ -34,6 +34,8 @@ class PaymentsController < ApplicationController
     amount_cents = (params[:amount].to_f * 100).to_i
     application_fee_cents = (amount_cents * 0.01).to_i # 1% platform fee
 
+    patient = Patient.with_practice(current_user.practice_id).find_by(id: params[:patient_id])
+
     begin
       flash.clear
       intent = Stripe::PaymentIntent.create({
@@ -48,7 +50,7 @@ class PaymentsController < ApplicationController
                                               metadata: {
                                                 practice_id: @practice.id.to_s,
                                                 practice_name: @practice.name,
-                                                patient_id: params[:patient_id],
+                                                patient_id: patient&.id&.to_s,
                                                 patient_name: params[:patient_name]
                                               }
                                             })
@@ -161,15 +163,8 @@ class PaymentsController < ApplicationController
     []
   end
 
+  # Payment links are always created for the user's own practice
   def find_practice
-    @practice = if params[:practice_id]
-                  Practice.find(params[:practice_id])
-                else
-                  current_user.practice
-                end
-  rescue ActiveRecord::RecordNotFound
-    @practice = nil
-    flash[:error] = 'Practice not found'
-    redirect_to root_path
+    @practice = current_user.practice
   end
 end

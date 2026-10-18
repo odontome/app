@@ -97,10 +97,16 @@ module Api::Webhooks
     def handle_payment_succeeded(event)
       payment_intent = event.data.object
       notes = payment_intent.metadata&.patient_name
-      # practice_id = payment_intent.metadata&.practice_id
+      practice_id = payment_intent.metadata&.practice_id
       patient_id = payment_intent.metadata&.patient_id
 
       return unless patient_id
+
+      # Only write to the ledger of a patient that belongs to the paid practice
+      unless Patient.with_practice(practice_id).exists?(id: patient_id)
+        Rails.logger.warn "Stripe webhooks - patient #{patient_id} does not belong to practice #{practice_id}, skipping balance"
+        return
+      end
 
       Balance.create!(
         amount: payment_intent.amount_received / 100.0,
