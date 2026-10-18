@@ -63,6 +63,31 @@ class AgentOauthCredentialTest < ActiveSupport::TestCase
     assert_not AgentOauthAuthorization.exists?(authorization.id)
   end
 
+  test 'changing a password revokes that user\'s tokens and removes their pending authorizations' do
+    create_ai_consent(@user)
+    authorization = create_authorization
+    token = create_access_token
+    teammate_token = create_access_token(user: users(:founder))
+
+    change_password(@user)
+
+    assert token.reload.revoked_at.present?
+    assert_not AgentOauthAuthorization.exists?(authorization.id)
+    assert_nil teammate_token.reload.revoked_at
+  end
+
+  test 'updating other user details keeps AI connections' do
+    create_ai_consent(@user)
+    authorization = create_authorization
+    token = create_access_token
+
+    give_unique_email(@user)
+    @user.update!(firstname: 'Estebancito')
+
+    assert_nil token.reload.revoked_at
+    assert AgentOauthAuthorization.exists?(authorization.id)
+  end
+
   test 'deleting a user cascades OAuth credentials' do
     authorization = create_authorization
     token = create_access_token
@@ -125,13 +150,24 @@ class AgentOauthCredentialTest < ActiveSupport::TestCase
     )
   end
 
-  def create_access_token
+  def create_access_token(user: @user)
     AgentOauthAccessToken.create!(
-      user: @user,
+      user: user,
       practice: @practice,
       token_digest: AgentOauthAccessToken.digest(SecureRandom.hex(24)),
       resource: 'https://my.odonto.me/api/agent/mcp',
       expires_at: 1.hour.from_now
     )
+  end
+
+  # The perishable fixture shares its email with another fixture, so it can't
+  # be saved with validations until it has its own.
+  def give_unique_email(user)
+    user.update_columns(email: 'unique-perishable@bokanova.mx')
+  end
+
+  def change_password(user)
+    give_unique_email(user)
+    user.update!(password: 'brand-new-pass', password_confirmation: 'brand-new-pass')
   end
 end

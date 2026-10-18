@@ -81,31 +81,62 @@ class ApplicationController < ActionController::Base
   def current_user
     return @current_user if defined?(@current_user)
 
-    # First, try to find user from session
-    @current_user ||= User.find(session[:user]['id']) if session[:user]
-    
-    # If no session user, check for remember token in cookies
-    if @current_user.nil? && cookies[:remember_token].present?
-      user = User.find_by(remember_token: cookies[:remember_token])
-      if user&.remember_token_valid?
-        # Extend the remember token and set session
-        user.remember_me!
-        session[:user] = user
-        cookies[:remember_token] = { 
-          value: user.remember_token, 
-          expires: user.remember_token_expires_at,
-          secure: Rails.application.config.force_ssl,
-          httponly: true,
-          same_site: :lax
-        }
-        @current_user = user
-      else
-        # Clear invalid remember token
-        cookies.delete(:remember_token)
-      end
+    @current_user = user_from_session || user_from_remember_token
+  end
+
+  def user_from_session
+    return unless session[:user]
+
+    user = User.find_by(id: session[:user]['id'])
+    return user if user&.session_token_matches?(session[:user]['session_token'])
+
+    # The password changed since this session started (or the user is gone)
+    session.delete(:user)
+    session.delete(:impersonator_id)
+    session.delete(:impersonator_session_token)
+    nil
+  end
+
+  def user_from_remember_token
+    return if cookies[:remember_token].blank?
+
+    user = User.find_by_remember_token(cookies[:remember_token])
+    unless user&.remember_token_valid?
+      cookies.delete(:remember_token)
+      return
     end
-    
-    @current_user
+
+    # Extend the remember token and set session
+    user.remember_me!
+    start_user_session(user)
+    set_remember_token_cookie(user)
+    user
+  end
+
+  # Starts a fresh session for the user, so a session id planted before
+  # sign-in is never reused. Only the post-login redirect carries over.
+  def start_user_session(user)
+    return_to = session[:return_to]
+    reset_session
+    session[:return_to] = return_to if return_to
+    user.ensure_session_token!
+    store_user_in_session(user)
+  end
+
+  # Keep the cookie small: only what's needed to find the user and check the
+  # session hasn't been revoked by a password change.
+  def store_user_in_session(user)
+    session[:user] = { 'id' => user.id, 'session_token' => user.session_token }
+  end
+
+  def set_remember_token_cookie(user)
+    cookies[:remember_token] = {
+      value: user.remember_token,
+      expires: user.remember_token_expires_at,
+      secure: Rails.application.config.force_ssl,
+      httponly: true,
+      same_site: :lax
+    }
   end
 
   def user_is_admin?(user = current_user)
@@ -215,7 +246,8 @@ class ApplicationController < ActionController::Base
     return @impersonator_user if defined?(@impersonator_user)
     return @impersonator_user = nil if session[:impersonator_id].blank?
 
-    @impersonator_user = User.find_by(id: session[:impersonator_id])
+    user = User.find_by(id: session[:impersonator_id])
+    @impersonator_user = user if user&.session_token_matches?(session[:impersonator_session_token])
   end
 
   def impersonating?
@@ -232,21 +264,14 @@ class ApplicationController < ActionController::Base
       # Update the last time this person was seen online (only for existing users)
       user.update(last_login_at: user.current_login_at, current_login_at: Time.now) if user.persisted?
       
-      # Save the user in that user's session cookie:
-      session[:user] = user
-      
+      start_user_session(user)
+
       # Set remember token if remember_me is checked
       if remember_me
         user.remember_me!
-        cookies[:remember_token] = { 
-          value: user.remember_token, 
-          expires: user.remember_token_expires_at,
-          secure: Rails.application.config.force_ssl,
-          httponly: true,
-          same_site: :lax
-        }
+        set_remember_token_cookie(user)
       end
-      
+
       true
     else
       false

@@ -72,4 +72,27 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to users_path
     assert_equal I18n.t(:user_deleted_admin_error_message), flash[:alert]
   end
+
+  test 'changing your own password keeps you signed in on this device' do
+    founder = users(:founder)
+    founder.update_columns(session_token: 'old-token')
+    @controller.session['user'] = { 'id' => founder.id, 'session_token' => 'old-token' }
+
+    put :update, params: { id: founder.to_param, user: { password: 'brand-new-pass', password_confirmation: 'brand-new-pass' } }
+
+    assert_redirected_to user_url(founder)
+    assert_not_equal 'old-token', founder.reload.session_token
+    assert_equal founder.session_token, @controller.session['user']['session_token']
+  end
+
+  test 'an admin changing a teammate password signs that teammate out' do
+    teammate = users(:perishable)
+    teammate.update_columns(session_token: 'old-token', email: 'teammate@bokanova.mx')
+
+    put :update, params: { id: teammate.to_param, user: { password: 'brand-new-pass', password_confirmation: 'brand-new-pass' } }
+
+    assert_not_equal 'old-token', teammate.reload.session_token
+    # The admin's own session is left alone
+    assert_equal users(:founder).id, @controller.session['user']['id']
+  end
 end

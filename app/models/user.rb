@@ -3,7 +3,7 @@
 class User < ApplicationRecord
   # audit logging
   has_paper_trail meta: { practice_id: lambda(&:practice_id) },
-                  skip: %i[password_digest perishable_token remember_token remember_token_expires_at]
+                  skip: %i[password_digest perishable_token remember_token_digest remember_token_expires_at session_token]
 
   # concerns
   include Initials
@@ -35,8 +35,10 @@ class User < ApplicationRecord
   # callbacks
   before_create :set_admin_role_for_first_user
   before_update :reset_perishable_token
+  before_save :rotate_session_token, if: :will_save_change_to_password_digest?
   before_destroy :check_if_admin
   after_update :clear_remember_tokens_on_password_change
+  after_update :revoke_agent_oauth_credentials, if: :saved_change_to_password_digest?
 
   def fullname
     [firstname, lastname].join(' ')
@@ -63,21 +65,49 @@ class User < ApplicationRecord
     UserConsent.accepted?(self, "privacy")
   end
 
-  # Remember token functionality for persistent login
+  # Remember token functionality for persistent login. Only a digest is
+  # stored, so the database alone can't be used to sign in; the raw token is
+  # kept in memory just long enough to write the cookie.
+  attr_reader :remember_token
+
+  def self.digest_remember_token(token)
+    Digest::SHA256.hexdigest(token)
+  end
+
+  def self.find_by_remember_token(token)
+    find_by(remember_token_digest: digest_remember_token(token)) if token.present?
+  end
+
   def remember_me!
-    self.remember_token = SecureRandom.urlsafe_base64(32)
+    @remember_token = SecureRandom.urlsafe_base64(32)
+    self.remember_token_digest = self.class.digest_remember_token(remember_token)
     self.remember_token_expires_at = 2.weeks.from_now
     save!(validate: false)
   end
 
   def forget_me!
-    self.remember_token = nil
+    @remember_token = nil
+    self.remember_token_digest = nil
     self.remember_token_expires_at = nil
     save!(validate: false)
   end
 
   def remember_token_valid?
-    remember_token.present? && remember_token_expires_at.present? && Time.current < remember_token_expires_at
+    remember_token_digest.present? && remember_token_expires_at.present? && Time.current < remember_token_expires_at
+  end
+
+  # Every signed-in session stores this token; changing the password replaces
+  # it, which signs out every other browser that still holds the old one.
+  def ensure_session_token!
+    update_column(:session_token, SecureRandom.urlsafe_base64(32)) if session_token.blank?
+  end
+
+  def session_token_matches?(token)
+    # Users who haven't signed in since session tokens were added have none
+    # yet; their sessions stay valid until they sign in or change password.
+    return true if session_token.blank?
+
+    token.present? && ActiveSupport::SecurityUtils.secure_compare(session_token, token)
   end
 
   private
@@ -101,6 +131,10 @@ class User < ApplicationRecord
     self.perishable_token = SecureRandom.urlsafe_base64(15)
   end
 
+  def rotate_session_token
+    self.session_token = SecureRandom.urlsafe_base64(32)
+  end
+
   def reset_perishable_token!
     update_attribute(:perishable_token, SecureRandom.urlsafe_base64(15))
   end
@@ -108,9 +142,20 @@ class User < ApplicationRecord
   def clear_remember_tokens_on_password_change
     return unless saved_change_to_password_digest?
 
-    self.remember_token = nil
+    @remember_token = nil
+    self.remember_token_digest = nil
     self.remember_token_expires_at = nil
-    update_columns(remember_token: nil, remember_token_expires_at: nil)
+    update_columns(remember_token_digest: nil, remember_token_expires_at: nil)
+  end
+
+  # A new password also disconnects this user's AI apps. The practice is
+  # locked first, like every other credential change, so a refresh running
+  # at the same moment can't issue a token after this.
+  def revoke_agent_oauth_credentials
+    practice.with_lock do
+      agent_oauth_access_tokens.where(revoked_at: nil).update_all(revoked_at: Time.current)
+      agent_oauth_authorizations.where(consumed_at: nil).delete_all
+    end
   end
 
   def prevent_superadmin_elevation

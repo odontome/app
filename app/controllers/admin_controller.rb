@@ -51,9 +51,10 @@ class AdminController < ApplicationController
 
     # Store the superadmin id to allow reverting
     session[:impersonator_id] = current_user.id
+    session[:impersonator_session_token] = current_user.session_token
 
     # Switch session to target user (do not copy cookies or remember tokens)
-    session[:user] = target_user
+    store_user_in_session(target_user)
 
     flash.discard
     redirect_to practice_path,
@@ -65,12 +66,14 @@ class AdminController < ApplicationController
 
     unless impersonating? && admin.present?
       session.delete(:impersonator_id)
+      session.delete(:impersonator_session_token)
       redirect_to root_path, alert: I18n.t('errors.messages.unauthorised')
       return
     end
 
     session.delete(:impersonator_id)
-    session[:user] = admin
+    session.delete(:impersonator_session_token)
+    store_user_in_session(admin)
     redirect_to practices_admin_path, notice: I18n.t(:impersonation_stopped, default: 'Stopped impersonation.')
   end
 
