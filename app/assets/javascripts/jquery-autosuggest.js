@@ -42,7 +42,8 @@ $(function() {
   })
   .autocomplete("instance")
   ._renderItem = function(ul, item) {
-    var item = $('<a href="" class="dropdown-item" data-theme="none">' + item.fullname + '</a>')
-    return $("<li data-theme='none'>").append(item).appendTo(ul);
+    // .text() keeps patient names from being parsed as HTML
+    var link = $('<a>').attr({ href: '', class: 'dropdown-item', 'data-theme': 'none' }).text(item.fullname);
+    return $("<li data-theme='none'>").append(link).appendTo(ul);
   }
 });
