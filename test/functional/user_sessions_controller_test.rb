@@ -74,7 +74,7 @@ class UserSessionsControllerTest < ActionController::TestCase
     
     # Check that remember token was set
     users(:founder).reload
-    assert users(:founder).remember_token.present?
+    assert users(:founder).remember_token_digest.present?
     assert users(:founder).remember_token_expires_at.present?
     assert users(:founder).remember_token_valid?
     
@@ -90,7 +90,7 @@ class UserSessionsControllerTest < ActionController::TestCase
     
     # Check that remember token was not set
     users(:founder).reload
-    assert users(:founder).remember_token.blank?
+    assert users(:founder).remember_token_digest.blank?
     assert users(:founder).remember_token_expires_at.blank?
     
     # Check that cookie was not set
@@ -105,7 +105,7 @@ class UserSessionsControllerTest < ActionController::TestCase
     delete :destroy
 
     user.reload
-    assert user.remember_token.blank?
+    assert user.remember_token_digest.blank?
     assert user.remember_token_expires_at.blank?
     assert_redirected_to root_url
   end
@@ -123,9 +123,8 @@ class UserSessionsControllerTest < ActionController::TestCase
 
   test 'should handle login with expired remember token gracefully' do
     user = users(:founder)
-    user.remember_token = 'expired_token'
-    user.remember_token_expires_at = 1.day.ago
-    user.save!(validate: false)
+    user.update_columns(remember_token_digest: User.digest_remember_token('expired_token'),
+                        remember_token_expires_at: 1.day.ago)
     
     # Simulate having an expired remember token cookie
     @request.cookies[:remember_token] = 'expired_token'
@@ -209,5 +208,23 @@ class UserSessionsControllerTest < ActionController::TestCase
     delete :destroy
 
     assert_equal 'existing-token', user.reload.session_token
+  end
+
+  test 'the remember cookie holds the raw token, never the stored digest' do
+    post :create, params: { signin: { email: users(:founder).email, password: '1234567890', remember_me: '1' } }
+
+    user = users(:founder).reload
+    assert_equal User.digest_remember_token(@response.cookies['remember_token']), user.remember_token_digest
+  end
+
+  test 'a remember token copied from the database does not sign anyone in' do
+    user = users(:founder)
+    user.remember_me!
+    @request.cookies[:remember_token] = user.reload.remember_token_digest
+
+    get :show
+
+    assert_redirected_to signin_path
+    assert_nil @controller.session['user']
   end
 end

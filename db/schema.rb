@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_130000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -325,14 +325,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_120000) do
     t.string "password_digest"
     t.string "perishable_token", default: "", null: false
     t.integer "practice_id"
-    t.string "remember_token"
+    t.string "remember_token_digest"
     t.datetime "remember_token_expires_at"
     t.string "roles", default: "user"
     t.string "session_token"
     t.boolean "subscribed_to_digest", default: true
     t.datetime "updated_at", precision: nil, null: false
     t.index ["perishable_token"], name: "index_users_on_perishable_token"
-    t.index ["remember_token"], name: "index_users_on_remember_token"
+    t.index ["remember_token_digest"], name: "index_users_on_remember_token_digest"
   end
 
   create_table "versions", force: :cascade do |t|

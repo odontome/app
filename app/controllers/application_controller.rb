@@ -100,7 +100,7 @@ class ApplicationController < ActionController::Base
   def user_from_remember_token
     return if cookies[:remember_token].blank?
 
-    user = User.find_by(remember_token: cookies[:remember_token])
+    user = User.find_by_remember_token(cookies[:remember_token])
     unless user&.remember_token_valid?
       cookies.delete(:remember_token)
       return

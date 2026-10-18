@@ -92,7 +92,7 @@ class UserTest < ActiveSupport::TestCase
 
   test 'remember_me! sets remember token and expiration' do
     user = users(:founder)
-    assert user.remember_token.blank?
+    assert user.remember_token_digest.blank?
     assert user.remember_token_expires_at.blank?
 
     user.remember_me!
@@ -111,25 +111,23 @@ class UserTest < ActiveSupport::TestCase
 
     user.forget_me!
 
-    assert user.remember_token.blank?
+    assert user.remember_token_digest.blank?
     assert user.remember_token_expires_at.blank?
     assert_not user.remember_token_valid?
   end
 
   test 'remember_token_valid? returns false for expired tokens' do
     user = users(:founder)
-    user.remember_token = 'valid_token'
-    user.remember_token_expires_at = 1.day.ago
-    user.save!(validate: false)
+    user.update_columns(remember_token_digest: User.digest_remember_token('valid_token'),
+                        remember_token_expires_at: 1.day.ago)
 
     assert_not user.remember_token_valid?
   end
 
   test 'remember_token_valid? returns true for valid tokens' do
     user = users(:founder)
-    user.remember_token = 'valid_token'
-    user.remember_token_expires_at = 1.day.from_now
-    user.save!(validate: false)
+    user.update_columns(remember_token_digest: User.digest_remember_token('valid_token'),
+                        remember_token_expires_at: 1.day.from_now)
 
     assert user.remember_token_valid?
   end
@@ -147,7 +145,7 @@ class UserTest < ActiveSupport::TestCase
 
     # Reload to get fresh data
     user.reload
-    assert user.remember_token.blank?
+    assert user.remember_token_digest.blank?
     assert user.remember_token_expires_at.blank?
   end
 
@@ -226,5 +224,27 @@ class UserTest < ActiveSupport::TestCase
 
     user.ensure_session_token!
     assert_equal token, user.reload.session_token
+  end
+
+  test 'remember_me! stores only a digest of the token' do
+    user = users(:founder)
+
+    user.remember_me!
+    raw_token = user.remember_token
+
+    stored = User.find(user.id)
+    assert_nil stored.remember_token
+    assert_equal User.digest_remember_token(raw_token), stored.remember_token_digest
+    assert_not_equal raw_token, stored.remember_token_digest
+  end
+
+  test 'find_by_remember_token finds the user by the raw token only' do
+    user = users(:founder)
+    user.remember_me!
+    raw_token = user.remember_token
+
+    assert_equal user, User.find_by_remember_token(raw_token)
+    assert_nil User.find_by_remember_token(user.reload.remember_token_digest)
+    assert_nil User.find_by_remember_token(nil)
   end
 end

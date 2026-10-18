@@ -3,7 +3,7 @@
 class User < ApplicationRecord
   # audit logging
   has_paper_trail meta: { practice_id: lambda(&:practice_id) },
-                  skip: %i[password_digest perishable_token remember_token remember_token_expires_at session_token]
+                  skip: %i[password_digest perishable_token remember_token_digest remember_token_expires_at session_token]
 
   # concerns
   include Initials
@@ -64,21 +64,35 @@ class User < ApplicationRecord
     UserConsent.accepted?(self, "privacy")
   end
 
-  # Remember token functionality for persistent login
+  # Remember token functionality for persistent login. Only a digest is
+  # stored, so the database alone can't be used to sign in; the raw token is
+  # kept in memory just long enough to write the cookie.
+  attr_reader :remember_token
+
+  def self.digest_remember_token(token)
+    Digest::SHA256.hexdigest(token)
+  end
+
+  def self.find_by_remember_token(token)
+    find_by(remember_token_digest: digest_remember_token(token)) if token.present?
+  end
+
   def remember_me!
-    self.remember_token = SecureRandom.urlsafe_base64(32)
+    @remember_token = SecureRandom.urlsafe_base64(32)
+    self.remember_token_digest = self.class.digest_remember_token(remember_token)
     self.remember_token_expires_at = 2.weeks.from_now
     save!(validate: false)
   end
 
   def forget_me!
-    self.remember_token = nil
+    @remember_token = nil
+    self.remember_token_digest = nil
     self.remember_token_expires_at = nil
     save!(validate: false)
   end
 
   def remember_token_valid?
-    remember_token.present? && remember_token_expires_at.present? && Time.current < remember_token_expires_at
+    remember_token_digest.present? && remember_token_expires_at.present? && Time.current < remember_token_expires_at
   end
 
   # Every signed-in session stores this token; changing the password replaces
@@ -127,9 +141,10 @@ class User < ApplicationRecord
   def clear_remember_tokens_on_password_change
     return unless saved_change_to_password_digest?
 
-    self.remember_token = nil
+    @remember_token = nil
+    self.remember_token_digest = nil
     self.remember_token_expires_at = nil
-    update_columns(remember_token: nil, remember_token_expires_at: nil)
+    update_columns(remember_token_digest: nil, remember_token_expires_at: nil)
   end
 
   def prevent_superadmin_elevation

@@ -9,6 +9,8 @@ class SessionSecurityTest < ActionDispatch::IntegrationTest
 
   setup do
     @user = users(:founder)
+    # These tests sign in several times from one IP; keep the login throttle out of it
+    Rack::Attack.reset!
   end
 
   test 'a copied session cookie stops working after a password reset' do
@@ -44,6 +46,20 @@ class SessionSecurityTest < ActionDispatch::IntegrationTest
 
     travel(idle_limit - 1.minute) { assert_signed_in_with copied_cookie }
     travel(idle_limit + 1.minute) { assert_signed_out_with copied_cookie }
+  end
+
+  test 'using the app keeps pushing the idle limit forward' do
+    device = signed_in_session
+    idle_limit = Rails.application.config.session_options[:expire_after]
+
+    start = Time.current
+    # A click every 6 hours: each gap is under the limit, the total (24h) is well over it
+    1.upto(4) do |click|
+      travel_to(start + (idle_limit / 2) * click) do
+        device.get '/user_session'
+        device.assert_redirected_to root_url
+      end
+    end
   end
 
   private
