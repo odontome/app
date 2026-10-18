@@ -124,7 +124,7 @@ class AppointmentsController < ApplicationController
   private
 
   def appointment_params
-    attributes = params.require(:appointment).permit(:datebook_id, :doctor_id, :patient_id, :starts_at, :ends_at, :notes, :status)
+    attributes = params.require(:appointment).permit(:doctor_id, :patient_id, :starts_at, :ends_at, :notes, :status)
     %i[starts_at ends_at].each do |key|
       attributes[key] = calendar_time(attributes[key]) if attributes.key?(key)
     end
