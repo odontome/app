@@ -73,6 +73,31 @@ class RackAttackTest < ActionDispatch::IntegrationTest
     assert_response 429, '6th email login attempt should be throttled'
   end
 
+  test 'should throttle password reset requests by IP address' do
+    ip_address = '192.168.1.150'
+
+    10.times do |i|
+      post '/password_resets', params: { email: "nobody#{i}@example.com" }, headers: { 'REMOTE_ADDR' => ip_address }
+      assert_response :success, "Password reset request #{i + 1} should be allowed"
+    end
+
+    post '/password_resets', params: { email: 'nobody-else@example.com' }, headers: { 'REMOTE_ADDR' => ip_address }
+    assert_response 429, '11th password reset request should be throttled'
+  end
+
+  test 'should throttle password reset requests by email' do
+    email = users(:founder).email
+
+    3.times do |i|
+      post '/password_resets', params: { email: email }, headers: { 'REMOTE_ADDR' => "192.168.2.#{100 + i}" }
+      assert_redirected_to root_path, "Password reset request #{i + 1} should be allowed"
+    end
+
+    # Same address with different casing and spacing, from another IP
+    post '/password_resets', params: { email: " #{email.upcase} " }, headers: { 'REMOTE_ADDR' => '192.168.2.200' }
+    assert_response 429, '4th password reset request for the same email should be throttled'
+  end
+
   test 'should block suspicious practice sign up requests' do
     # Practice name with single word and multiple uppercase characters should be blocked
     suspicious_name = 'SpAmPrAcTiCe'

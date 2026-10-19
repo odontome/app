@@ -89,6 +89,24 @@ class Rack::Attack
       req.params.dig('signin', 'email').to_s.downcase.gsub(/\s+/, '').presence
     end
   end
+
+  # Throttle POST requests to /password_resets by IP address
+  #
+  # Key: "rack::attack:#{Time.now.to_i/:period}:password_resets/ip:#{req.ip}"
+  throttle('password_resets/ip', limit: 10, period: 15.minutes) do |req|
+    req.ip if req.path == '/password_resets' && req.post?
+  end
+
+  # Throttle POST requests to /password_resets by email param, so nobody can
+  # flood someone's inbox. Each request also replaces the previous reset link,
+  # so this keeps a real reset link from being invalidated over and over.
+  #
+  # Key: "rack::attack:#{Time.now.to_i/:period}:password_resets/email:#{normalized_email}"
+  throttle('password_resets/email', limit: 3, period: 15.minutes) do |req|
+    if req.path == '/password_resets' && req.post?
+      req.params['email'].to_s.downcase.gsub(/\s+/, '').presence
+    end
+  end
 end
 
 # Block suspicious requests for sign ups.
