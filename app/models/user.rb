@@ -39,6 +39,7 @@ class User < ApplicationRecord
   before_destroy :check_if_admin
   after_update :clear_remember_tokens_on_password_change
   after_update :revoke_agent_oauth_credentials, if: :saved_change_to_password_digest?
+  after_update_commit :notify_previous_email, if: :saved_change_to_email?
 
   def fullname
     [firstname, lastname].join(' ')
@@ -156,6 +157,10 @@ class User < ApplicationRecord
       agent_oauth_access_tokens.where(revoked_at: nil).update_all(revoked_at: Time.current)
       agent_oauth_authorizations.where(consumed_at: nil).delete_all
     end
+  end
+
+  def notify_previous_email
+    NotifierMailer.email_changed(self, email_before_last_save).deliver_now
   end
 
   def prevent_superadmin_elevation

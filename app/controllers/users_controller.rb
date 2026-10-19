@@ -3,6 +3,7 @@
 class UsersController < ApplicationController
   before_action :require_user
   before_action :require_practice_admin, except: %i[show edit update]
+  before_action :require_self_or_practice_admin, only: %i[show edit update]
 
   def index
     @users = User.with_practice(current_user.practice_id)
@@ -40,12 +41,6 @@ class UsersController < ApplicationController
   def update
     @user = User.with_practice(current_user.practice_id).find(params[:id])
 
-    # prevent normal users from changing admins
-    if @user.roles.include?('admin') && !current_user.roles.include?('admin')
-      redirect_back_or_default('/401', I18n.t('errors.messages.unauthorised'))
-      return
-    end
-
     respond_to do |format|
       if @user.update(user_params)
         # A new password signs out other browsers; keep this one signed in
@@ -70,6 +65,13 @@ class UsersController < ApplicationController
   end
 
   private
+
+  # admins can manage everyone in their practice, everybody else only themselves
+  def require_self_or_practice_admin
+    return if user_is_admin?(current_user) || params[:id].to_i == current_user.id
+
+    redirect_back_or_default('/401', I18n.t('errors.messages.unauthorised'))
+  end
 
   def user_params
     params.require(:user).permit(:firstname, :lastname, :email, :password, :password_confirmation)

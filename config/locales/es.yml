@@ -522,6 +522,8 @@ es:
     notifier:
       password_reset:
         subject: Tu petición de cambio de contraseña
+      email_changed:
+        subject: Tu correo electrónico de Odonto.me fue cambiado
     patient:
       appointment_soon_email:
         subject: Tu cita con %{practice_name} se acerca

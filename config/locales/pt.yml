@@ -534,6 +534,8 @@ pt:
     notifier:
       password_reset:
         subject: Sua solicitação de redefinição de senha
+      email_changed:
+        subject: Seu e-mail do Odonto.me foi alterado
     patient:
       appointment_soon_email:
         subject: Seu agendamento com %{practice_name} está próximo

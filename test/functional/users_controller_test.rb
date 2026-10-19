@@ -56,6 +56,55 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to '/401'
   end
 
+  test 'should allow a non-admin to update themselves' do
+    @controller.session['user'] = users(:perishable)
+    user = users(:perishable)
+
+    put :update, params: { id: user.to_param, user: { firstname: 'Updated' } }
+
+    assert_equal 'Updated', user.reload.firstname
+    assert_redirected_to user_url(user)
+  end
+
+  test 'should allow an admin to update another user' do
+    user = users(:perishable)
+
+    put :update, params: { id: user.to_param, user: { email: 'new-address@bokanova.mx' } }
+
+    assert_equal 'new-address@bokanova.mx', user.reload.email
+    assert_redirected_to user_url(user)
+  end
+
+  test 'should not allow a non-admin to update another non-admin' do
+    teammate = User.create!(practice_id: 1, firstname: 'Ana', lastname: 'Lopez', roles: 'user',
+                            email: 'ana@bokanova.mx', password: '12345678', password_confirmation: '12345678')
+    @controller.session['user'] = users(:perishable)
+
+    put :update, params: { id: teammate.to_param,
+                           user: { email: 'attacker@example.com', password: 'hijacked1', password_confirmation: 'hijacked1' } }
+
+    teammate.reload
+    assert_equal 'ana@bokanova.mx', teammate.email
+    assert teammate.authenticate('12345678')
+    assert_redirected_to '/401'
+  end
+
+  test 'should not allow a non-admin to edit or view another user' do
+    @controller.session['user'] = users(:perishable)
+
+    get :edit, params: { id: users(:founder).to_param }
+    assert_redirected_to '/401'
+
+    get :show, params: { id: users(:founder).to_param }
+    assert_redirected_to '/401'
+  end
+
+  test 'should not allow an admin to update a user from another practice' do
+    assert_raises(ActiveRecord::RecordNotFound) do
+      put :update, params: { id: users(:user_in_yet_another_practice).to_param, user: { firstname: 'Hacked' } }
+    end
+  end
+
   test 'should destroy user' do
     assert_difference('User.count', -1) do
       delete :destroy, params: { id: users(:perishable).to_param }
