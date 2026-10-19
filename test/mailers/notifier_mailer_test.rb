@@ -29,4 +29,24 @@ class NotifierMailerTest < ActionMailer::TestCase
     expected_subject = I18n.with_locale(:es) { I18n.t('mailers.notifier.password_reset.subject') }
     assert_equal expected_subject, email.subject
   end
+
+  test 'email changed notice goes to the previous address' do
+    user = users(:founder)
+
+    email = NotifierMailer.email_changed(user, 'old-address@odonto.me').deliver_now
+
+    assert_equal ['old-address@odonto.me'], email.to
+    assert_equal I18n.t('mailers.notifier.email_changed.subject'), email.subject
+    assert_match user.email, email.body.encoded
+  end
+
+  test 'email changed notice uses the practice locale' do
+    user = users(:user_in_yet_another_practice)
+    user.practice.update!(locale: 'pt')
+
+    email = NotifierMailer.email_changed(user, 'old-address@odonto.me').deliver_now
+
+    expected_subject = I18n.with_locale(:pt) { I18n.t('mailers.notifier.email_changed.subject') }
+    assert_equal expected_subject, email.subject
+  end
 end

@@ -247,4 +247,23 @@ class UserTest < ActiveSupport::TestCase
     assert_nil User.find_by_remember_token(user.reload.remember_token_digest)
     assert_nil User.find_by_remember_token(nil)
   end
+
+  test 'changing the email notifies the previous address' do
+    user = users(:founder)
+    previous_email = user.email
+
+    assert_difference('ActionMailer::Base.deliveries.size', 1) do
+      user.update!(email: 'new-address@odonto.me')
+    end
+
+    assert_equal [previous_email], ActionMailer::Base.deliveries.last.to
+  end
+
+  test 'updating other fields does not send an email changed notice' do
+    user = users(:founder)
+
+    assert_no_difference('ActionMailer::Base.deliveries.size') do
+      user.update!(firstname: 'Raúl')
+    end
+  end
 end

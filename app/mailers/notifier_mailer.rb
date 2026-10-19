@@ -12,4 +12,14 @@ class NotifierMailer < ApplicationMailer
            subject: I18n.t('mailers.notifier.password_reset.subject'))
     end
   end
+
+  # sent to the old address so the owner notices a change they didn't make
+  def email_changed(user, previous_email)
+    @user = user
+
+    I18n.with_locale(@user.practice.locale) do
+      mail(to: previous_email,
+           subject: I18n.t('mailers.notifier.email_changed.subject'))
+    end
+  end
 end

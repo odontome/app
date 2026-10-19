@@ -539,6 +539,8 @@ en:
     notifier:
       password_reset:
         subject: Your password reset request
+      email_changed:
+        subject: Your Odonto.me email address was changed
     patient:
       appointment_soon_email:
         subject: Your appointment with %{practice_name} is soon
