@@ -2,6 +2,7 @@
 
 class TreatmentsController < ApplicationController
   before_action :require_user
+  before_action :require_not_impersonating, only: :predefined_treatments
   around_action :lock_odontogram_configuration, only: %i[create update]
 
   def index

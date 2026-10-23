@@ -67,11 +67,13 @@ class PaymentsController < ApplicationController
 
   # PHASE 2: Patient completes payment (public, no auth)
   def pay
-    @client_secret = params[:client_secret]
+    @client_secret = params[:client_secret].to_s
 
     # Retrieve payment intent to get patient info and amount
     begin
       @payment_intent = Stripe::PaymentIntent.retrieve(@client_secret.split('_secret_').first)
+      raise ActiveRecord::RecordNotFound unless client_secret_matches?(@payment_intent, @client_secret)
+
       @practice = Practice.find(@payment_intent.metadata.practice_id)
     rescue Stripe::StripeError, ActiveRecord::RecordNotFound
       render :expired, layout: 'simple'
@@ -97,6 +99,11 @@ class PaymentsController < ApplicationController
 
     begin
       @payment_intent = Stripe::PaymentIntent.retrieve(@payment_intent_id)
+      unless client_secret_matches?(@payment_intent, params[:payment_intent_client_secret].to_s)
+        render action: :failed, layout: 'simple'
+        return
+      end
+
       @practice_id = @payment_intent.metadata&.practice_id
       @practice = Practice.find(@practice_id) if @practice_id
 
@@ -118,6 +125,13 @@ class PaymentsController < ApplicationController
   end
 
   private
+
+  # The client secret is the only proof the visitor was handed this payment
+  # link; the intent id alone appears in URLs and receipts.
+  def client_secret_matches?(payment_intent, client_secret)
+    client_secret.present? &&
+      ActiveSupport::SecurityUtils.secure_compare(payment_intent.client_secret.to_s, client_secret)
+  end
 
   def get_payments_with_transfers
     search_params = {

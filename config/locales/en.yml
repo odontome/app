@@ -365,6 +365,7 @@ en:
       review: Review
   additional_notes: Additional notes
   address: Address
+  impersonation_mutation_blocked: Data modification is not allowed while impersonating.
   admin_credentials_required:
     You need to be the administrator of the practice to
     do this
@@ -1069,6 +1070,7 @@ en:
         request_too_large: "Request body is too large."
         invalid_date_range: "Start date must be before end date."
         invalid_schedule_dates: "Please provide valid dates in the start and end fields for list_appointments. Use ISO 8601 in the practice timezone; starts_at and ends_at are for appointment changes."
+        invalid_appointment_times: "Please provide valid starts_at and ends_at times in ISO 8601 in the practice timezone."
         date_range_too_wide: "Date range cannot exceed %{max} days. Please use a narrower range."
         appointment_conflict: "This doctor already has an appointment during that time. Please choose another time."
         outside_working_hours: "The full appointment must fit within working hours, %{start}–%{end} (%{timezone}), on the same day."

@@ -61,7 +61,7 @@ class DoctorsControllerTest < ActionController::TestCase
 
   test 'should get calendar subscription' do
     doctor = doctors(:rebecca)
-    ciphered_url_encoded_id = Cipher.encode(doctor.id.to_s)
+    ciphered_url_encoded_id = Cipher.encode(doctor.id.to_s, purpose: :doctor_feed)
 
     get :appointments, params: { doctor_id: ciphered_url_encoded_id }, format: :ics
     assert_response :success
@@ -69,7 +69,7 @@ class DoctorsControllerTest < ActionController::TestCase
 
   test 'appointments calendar responds with valid ics payload' do
     doctor = doctors(:rebecca)
-    ciphered_url_encoded_id = Cipher.encode(doctor.id.to_s)
+    ciphered_url_encoded_id = Cipher.encode(doctor.id.to_s, purpose: :doctor_feed)
 
     get :appointments, params: { doctor_id: ciphered_url_encoded_id }, format: :ics
 
@@ -100,7 +100,7 @@ class DoctorsControllerTest < ActionController::TestCase
 
   test 'appointments with nonexistent doctor returns 404' do
     # Test with valid encryption but nonexistent doctor ID
-    nonexistent_id = Cipher.encode('999999')
+    nonexistent_id = Cipher.encode('999999', purpose: :doctor_feed)
 
     get :appointments, params: { doctor_id: nonexistent_id }, format: :ics
 
@@ -111,7 +111,7 @@ class DoctorsControllerTest < ActionController::TestCase
     # Create an inactive doctor
     doctor = doctors(:rebecca)
     doctor.update(is_active: false)
-    ciphered_url_encoded_id = Cipher.encode(doctor.id.to_s)
+    ciphered_url_encoded_id = Cipher.encode(doctor.id.to_s, purpose: :doctor_feed)
 
     get :appointments, params: { doctor_id: ciphered_url_encoded_id }, format: :ics
 

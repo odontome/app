@@ -56,6 +56,5 @@ module Odontome
 
     # enable custom error pages
     config.exceptions_app = routes
-    config.action_controller.permit_all_parameters = true
   end
 end
