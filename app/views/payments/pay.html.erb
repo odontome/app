@@ -149,7 +149,8 @@ function showSuccess(paymentIntent) {
   
   // Redirect to success page
   setTimeout(() => {
-    window.location.href = '<%= success_payments_path %>?payment_intent=' + paymentIntent.id;
+    window.location.href = '<%= success_payments_path %>?payment_intent=' + encodeURIComponent(paymentIntent.id) +
+      '&payment_intent_client_secret=' + encodeURIComponent(clientSecret);
   }, 2000);
 }
 

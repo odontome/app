@@ -39,7 +39,7 @@ class ReviewsController < ApplicationController
 
     begin
       # check that this appointment is reviewable
-      deciphered_appointment_id = Cipher.decode params[:appointment_id]
+      deciphered_appointment_id = Cipher.decode(params[:appointment_id], purpose: :review)
       @appointment = Appointment.where(id: deciphered_appointment_id).includes(:doctor, datebook: [:practice]).first
 
       if Review.where(appointment_id: deciphered_appointment_id).exists?
@@ -61,10 +61,10 @@ class ReviewsController < ApplicationController
 
   def create
     @review = Review.new(review_params)
-    @review.appointment_id = Cipher.decode(review_params[:appointment_id])
+    @review.appointment_id = decode_review_token(review_params[:appointment_id])
 
     respond_to do |format|
-      if @review.save
+      if @review.appointment_id && @review.save
         # email the admin about this review
         PracticeMailer.new_review_notification(@review).deliver_now
         format.js {} # create.js.erb
@@ -77,6 +77,13 @@ class ReviewsController < ApplicationController
   end
 
   private
+
+  # nil when the token is malformed or was made for another link
+  def decode_review_token(token)
+    Cipher.decode(token.to_s, purpose: :review)
+  rescue ArgumentError, RuntimeError, Gibberish::AES::DecryptionError
+    nil
+  end
 
   def review_params
     params.require(:review).permit(:appointment_id, :score, :comment)

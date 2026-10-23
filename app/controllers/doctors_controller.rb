@@ -65,9 +65,9 @@ class DoctorsController < ApplicationController
 
   def appointments
     begin
-      doctor_id_deciphered = Cipher.decode(params[:doctor_id])
-    rescue ArgumentError, RuntimeError => e
-      # Invalid base64 or decryption failed
+      doctor_id_deciphered = Cipher.decode(params[:doctor_id], purpose: :doctor_feed)
+    rescue ArgumentError, RuntimeError, Gibberish::AES::DecryptionError
+      # Invalid base64, tampered token, or a token made for another link
       head :not_found
       return
     end
