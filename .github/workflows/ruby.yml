@@ -8,6 +8,9 @@ on:
     branches:
       - 'master'
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,15 +30,23 @@ jobs:
           - 5432:5432
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: ruby/setup-ruby@v1
+      - uses: ruby/setup-ruby@26e5b7d197ebf60545ee9667bcbace0be11ccaec # v1.334.0
         with:
           ruby-version: 3.2.3
           bundler-cache: true
 
+      # Fails the build when a gem in Gemfile.lock has a known vulnerability.
+      # css_parser's fixes need Ruby 3.3+; premailer only parses CSS from our
+      # own email templates. Remove these ignores after the Ruby upgrade.
+      - name: Audit gems for known vulnerabilities
+        run: |
+          gem install bundler-audit -v 0.9.3 --no-document
+          bundle-audit check --update --ignore GHSA-9pmc-p236-855h GHSA-84w7-hpvm-rxx2 GHSA-w3mx-4vv9-hjpg
+
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: package.json
 

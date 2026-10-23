@@ -4,8 +4,12 @@ on:
   pull_request_target:
     types: [ opened, edited ]
 name: conventional-release-labels
+permissions: {}
 jobs:
   label:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
     steps:
-      - uses: bcoe/conventional-release-labels@v1
+      - uses: bcoe/conventional-release-labels@886f696738527c7be444262c327c89436dfb95a8 # v1.3.1
