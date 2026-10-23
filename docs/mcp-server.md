@@ -118,6 +118,7 @@ Book a new patient appointment. You can reference an existing patient by ID or p
 - Times must fall within the datebook's working hours.
 - Use `list_appointments` with the selected doctor and exact time range before booking. The server rejects an agent request that overlaps a non-cancelled appointment for that doctor in the selected datebook.
 - Confirm the exact patient, doctor, datebook, date, and time with the user before booking. Search for an existing patient before supplying `patient_name`, because that value creates a new record.
+- Unparseable `starts_at` or `ends_at` values return an MCP tool error (`isError: true`) rather than an HTTP 500. A non-string `patient_name` is treated as its text form.
 
 ---
 
@@ -135,7 +136,7 @@ Modify an existing appointment — reschedule, reassign to a different doctor, c
 
 **Returns:** Structured content `{ appointment: { id, start, end, doctor_id, doctor_name, datebook_id, datebook_name, patient_id, patient_name, status } }`.
 
-**Notes:** Confirm the exact change with the user before calling this tool. Before rescheduling or reassigning, check the selected doctor's availability with `list_appointments`; the server rejects an overlap with a non-cancelled appointment for that doctor in the datebook.
+**Notes:** Confirm the exact change with the user before calling this tool. Before rescheduling or reassigning, check the selected doctor's availability with `list_appointments`; the server rejects an overlap with a non-cancelled appointment for that doctor in the datebook. Unparseable `starts_at` or `ends_at` values return an MCP tool error (`isError: true`) rather than an HTTP 500.
 
 ---
 

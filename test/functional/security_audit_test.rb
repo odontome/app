@@ -78,6 +78,53 @@ class SecurityAuditSuperadminTakeoverTest < ActionController::TestCase
   end
 end
 
+class SecurityAuditAnonymousSubscriptionsTest < ActionController::TestCase
+  tests SubscriptionsController
+
+  test 'subscription actions require a signed-in user' do
+    post :create
+    assert_redirected_to signin_path
+
+    patch :update
+    assert_redirected_to signin_path
+  end
+end
+
+class SecurityAuditImpersonatedTreatmentsTest < ActionController::TestCase
+  tests TreatmentsController
+
+  test 'predefined treatments are not loaded while impersonating' do
+    @controller.session['user'] = users(:founder)
+    @controller.session['impersonator_id'] = users(:superadmin).id
+    Treatment.with_practice(practices(:complete).id).delete_all
+
+    assert_no_difference('Treatment.count') do
+      get :predefined_treatments
+    end
+    assert_response :redirect
+    assert_match(/not allowed while impersonating/, flash[:alert])
+  end
+
+end
+
+class SecurityAuditImpersonatedConnectOnboardingTest < ActionController::TestCase
+  tests ConnectAccountsController
+
+  test 'stripe connect onboarding cannot be started while impersonating' do
+    @controller.session['user'] = users(:founder)
+    @controller.session['impersonator_id'] = users(:superadmin).id
+
+    called = false
+    Stripe::AccountLink.stub(:create, ->(*) { called = true; Struct.new(:url).new('https://connect.stripe.com/x') }) do
+      get :onboarding
+    end
+
+    assert_not called, 'an onboarding link was created while impersonating'
+    assert_response :redirect
+    assert_match(/not allowed while impersonating/, flash[:alert])
+  end
+end
+
 class SecurityAuditPublicPaymentPageTest < ActionController::TestCase
   tests PaymentsController
 

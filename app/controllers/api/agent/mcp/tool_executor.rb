@@ -90,8 +90,9 @@ module Api
               doctor_id: args["doctor_id"]
             )
 
-            appointment.starts_at = normalize_time(args["starts_at"]) if args["starts_at"].present?
-            appointment.ends_at = normalize_time(args["ends_at"]) if args["ends_at"].present?
+            error = assign_times(appointment, args)
+            return error if error
+
             appointment.patient_id = find_patient_id(args["patient_id"], args["patient_name"])
 
             error = validate_working_hours(datebook, appointment) || validate_availability(datebook, appointment)
@@ -127,8 +128,8 @@ module Api
             end
             appointment.assign_attributes(attrs) if attrs.any?
 
-            appointment.starts_at = normalize_time(args["starts_at"]) if args["starts_at"].present?
-            appointment.ends_at = normalize_time(args["ends_at"]) if args["ends_at"].present?
+            error = assign_times(appointment, args)
+            return error if error
 
             error = validate_working_hours(datebook, appointment) || validate_availability(datebook, appointment)
             return error if error
@@ -161,6 +162,15 @@ module Api
           end
 
           nil
+        end
+
+        # Unparseable times are a tool error for the agent, not a server crash.
+        def assign_times(appointment, args)
+          appointment.starts_at = normalize_time(args["starts_at"]) if args["starts_at"].present?
+          appointment.ends_at = normalize_time(args["ends_at"]) if args["ends_at"].present?
+          nil
+        rescue ArgumentError, TypeError
+          error_result(I18n.t("agents.mcp.errors.invalid_appointment_times"))
         end
 
         def validate_working_hours(datebook, appointment)
@@ -233,7 +243,7 @@ module Api
           end
 
           if patient_name.present?
-            result_id = Patient.find_or_create_from(patient_name, @practice.id)
+            result_id = Patient.find_or_create_from(patient_name.to_s, @practice.id)
             # find_or_create_from is practice-scoped, so this is a second line of
             # defence on a tenant boundary rather than the only one.
             return result_id if result_id && Patient.with_practice(@practice.id).where(id: result_id).exists?

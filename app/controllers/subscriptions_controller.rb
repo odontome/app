@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class SubscriptionsController < ApplicationController
+  before_action :require_user
   before_action :require_practice_admin
   skip_before_action :check_subscription_status
   skip_before_action :check_consent_status

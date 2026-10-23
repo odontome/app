@@ -264,6 +264,51 @@ class Api::Agent::McpControllerTest < ActionController::TestCase
     assert_equal 'POST, DELETE, OPTIONS', @response.headers['Allow']
   end
 
+  # --- tools/call: malformed arguments ---
+
+  test 'create_appointment returns a tool error for unparseable times' do
+    raw_token = enable_agent_access(@practice)
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+
+    post_mcp(method: 'tools/call', id: 40, params: { name: 'create_appointment', arguments: {
+      datebook_id: @datebook.id, doctor_id: @doctor.id, patient_id: @patient.id,
+      starts_at: '2026-13-45T09:00:00', ends_at: '2026-01-05T10:00:00'
+    } })
+
+    assert_response :success
+    result = JSON.parse(@response.body)['result']
+    assert result['isError']
+    assert_equal I18n.t('agents.mcp.errors.invalid_appointment_times'), result['content'].first['text']
+  end
+
+  test 'update_appointment returns a tool error for unparseable times' do
+    raw_token = enable_agent_access(@practice)
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+
+    post_mcp(method: 'tools/call', id: 41, params: { name: 'update_appointment', arguments: {
+      appointment_id: appointments(:first_visit).id, starts_at: '2026-13-45T09:00:00'
+    } })
+
+    assert_response :success
+    result = JSON.parse(@response.body)['result']
+    assert result['isError']
+    assert_equal I18n.t('agents.mcp.errors.invalid_appointment_times'), result['content'].first['text']
+  end
+
+  test 'create_appointment treats a non-string patient_name as text instead of crashing' do
+    raw_token = enable_agent_access(@practice)
+    @request.headers['Authorization'] = "Bearer #{raw_token}"
+
+    # A bare number is read as a patient id, like the string form, so no patient exists
+    post_mcp(method: 'tools/call', id: 42, params: { name: 'create_appointment', arguments: {
+      datebook_id: @datebook.id, doctor_id: @doctor.id, patient_name: 12345,
+      starts_at: '2026-01-05T09:00:00', ends_at: '2026-01-05T10:00:00'
+    } })
+
+    assert_response :success
+    assert JSON.parse(@response.body)['result']['isError']
+  end
+
   # --- tools/call: list_datebooks ---
 
   test 'should call list_datebooks' do
