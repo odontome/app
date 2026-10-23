@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 require 'test_helper'
-require 'benchmark'
 
 class OdontogramReadPerformanceTest < ActionController::TestCase
   tests OdontogramsController
@@ -11,14 +10,14 @@ class OdontogramReadPerformanceTest < ActionController::TestCase
 
   def measure(label)
     sql = []
-    elapsed = Benchmark.realtime do
-      ActiveRecord::Base.uncached do
-        subscriber = ->(_name, start, finish, _id, payload) do
-          sql << { sql: payload[:sql], milliseconds: (finish - start) * 1000 } if payload[:name] != 'SCHEMA' && payload[:sql].match?(/\ASELECT/i) && payload[:sql].match?(/odontogram_|"treatments"/)
-        end
-        ActiveSupport::Notifications.subscribed(subscriber, 'sql.active_record') { yield }
+    started_at = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    ActiveRecord::Base.uncached do
+      subscriber = ->(_name, start, finish, _id, payload) do
+        sql << { sql: payload[:sql], milliseconds: (finish - start) * 1000 } if payload[:name] != 'SCHEMA' && payload[:sql].match?(/\ASELECT/i) && payload[:sql].match?(/odontogram_|"treatments"/)
       end
+      ActiveSupport::Notifications.subscribed(subscriber, 'sql.active_record') { yield }
     end
+    elapsed = Process.clock_gettime(Process::CLOCK_MONOTONIC) - started_at
     puts "#{label}: #{sql.size} SELECTs, #{sql.sum { |query| query[:milliseconds] }.round(1)} ms SQL, #{(elapsed * 1000).round(1)} ms request" if ENV['ODONTOGRAM_PROFILE'] == '1'
     sql
   end
