@@ -3,7 +3,7 @@
 module DoctorsHelper
   def link_to_suspend_or_delete(doctor, options)
     if (doctor.is_deleteable || doctor.is_active) && options.dig(:class)&.exclude?("btn")
-      options.dig(:class).concat(' text-red')
+      options = options.merge(class: "#{options[:class]} text-red")
     end
 
     if doctor.is_deleteable

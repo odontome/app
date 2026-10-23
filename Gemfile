@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '3.2.3'
+ruby '3.4.11'
 
 gem 'aws-sdk-s3', '~> 1.145'
 gem 'bcrypt', '~> 3.1', '>= 3.1.20'

@@ -59,7 +59,7 @@ AGENT_COVERAGE=1 bin/rails test test/functional/api/agent test/models/agent_oaut
 node --test test/javascript/ai_test.js
 ```
 
-This checkout uses Ruby 3.2.3. If the shell selects a different Ruby, run the Rails commands with `/Users/raulriera/.rbenv/versions/3.2.3/bin/ruby bin/rails`.
+This checkout uses Ruby 3.4.11. If the shell selects a different Ruby, run the Rails commands with `/Users/raulriera/.rbenv/versions/3.4.11/bin/ruby bin/rails`.
 
 Verified results:
 
