@@ -3,6 +3,7 @@
 class ConnectAccountsController < ApplicationController
   before_action :require_user
   before_action :require_practice_admin
+  before_action :require_not_impersonating, only: :onboarding
 
   def show
     @practice = current_user.practice

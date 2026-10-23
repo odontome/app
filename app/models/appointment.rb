@@ -149,11 +149,11 @@ class Appointment < ApplicationRecord
   end
 
   def ciphered_id
-    Cipher.encode(id.to_s)
+    Cipher.encode(id.to_s, purpose: :review)
   end
 
   def self.ciphered_review_url_for_id(appointment_id)
-    encoded_appointment_id = Cipher.encode(appointment_id.to_s)
+    encoded_appointment_id = Cipher.encode(appointment_id.to_s, purpose: :review)
     "https://my.odonto.me/reviews/new/?appointment_id=#{encoded_appointment_id}"
   end
 

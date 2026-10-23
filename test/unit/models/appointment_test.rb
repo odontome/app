@@ -102,7 +102,7 @@ class AppointmentTest < ActiveSupport::TestCase
     
     # Verify the encoded id can be decoded back to the original
     encoded_id = ciphered_url.match(/appointment_id=(.+)$/)[1]
-    decoded_id = Cipher.decode(encoded_id)
+    decoded_id = Cipher.decode(encoded_id, purpose: :review)
     assert_equal appointment_id.to_s, decoded_id
   end
 

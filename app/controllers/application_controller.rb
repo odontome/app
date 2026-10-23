@@ -189,14 +189,18 @@ class ApplicationController < ActionController::Base
   end
 
   def require_practice_admin
-    if current_user
-      unless user_is_admin?(current_user)
-        redirect_back_or_default('/401', I18n.t(:admin_credentials_required))
-        false
-      end
-    else
-      false
-    end
+    return require_user unless current_user
+    return if user_is_admin?(current_user)
+
+    redirect_back_or_default('/401', I18n.t(:admin_credentials_required))
+  end
+
+  # For GET actions that still change data; prevent_impersonation_mutations
+  # only looks at the HTTP verb.
+  def require_not_impersonating
+    return unless impersonating?
+
+    redirect_back_or_default(request.referer || root_path, I18n.t(:impersonation_mutation_blocked))
   end
 
   def render_ujs_error(object, message)
@@ -227,13 +231,13 @@ class ApplicationController < ActionController::Base
     
     respond_to do |format|
       format.html { 
-        redirect_back_or_default(request.referer || root_path, I18n.t(:impersonation_mutation_blocked, default: 'Data modification is not allowed while impersonating.'))
+        redirect_back_or_default(request.referer || root_path, I18n.t(:impersonation_mutation_blocked))
       }
       format.json { 
-        render json: { error: I18n.t(:impersonation_mutation_blocked, default: 'Data modification is not allowed while impersonating.') }, status: :forbidden 
+        render json: { error: I18n.t(:impersonation_mutation_blocked) }, status: :forbidden 
       }
       format.js { 
-        render json: { error: I18n.t(:impersonation_mutation_blocked, default: 'Data modification is not allowed while impersonating.') }, status: :forbidden 
+        render json: { error: I18n.t(:impersonation_mutation_blocked) }, status: :forbidden 
       }
     end
   end

@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :require_user
   before_action :require_practice_admin, except: %i[show edit update]
   before_action :require_self_or_practice_admin, only: %i[show edit update]
+  before_action :protect_superadmin_account, only: %i[edit update destroy]
 
   def index
     @users = User.with_practice(current_user.practice_id)
@@ -69,6 +70,15 @@ class UsersController < ApplicationController
   # admins can manage everyone in their practice, everybody else only themselves
   def require_self_or_practice_admin
     return if user_is_admin?(current_user) || params[:id].to_i == current_user.id
+
+    redirect_back_or_default('/401', I18n.t('errors.messages.unauthorised'))
+  end
+
+  # a superadmin account is changed only by that superadmin, never by the
+  # admins of the practice it happens to live in
+  def protect_superadmin_account
+    user = User.with_practice(current_user.practice_id).find(params[:id])
+    return unless user.roles.include?('superadmin') && user.id != current_user.id
 
     redirect_back_or_default('/401', I18n.t('errors.messages.unauthorised'))
   end
