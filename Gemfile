@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '3.2.3'
+ruby '3.4.11'
 
 gem 'aws-sdk-s3', '~> 1.145'
 gem 'bcrypt', '~> 3.1', '>= 3.1.20'
 gem 'bugsnag', '~> 6.28'
+gem 'csv', '~> 3.3'
 gem 'gibberish', '~> 2.1.0'
 gem 'icalendar', '~> 2.12.0'
 gem 'image_processing', '~> 1.2'

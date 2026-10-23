@@ -18,7 +18,7 @@ xcode-select --install
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-### 2. Ruby 3.2.3
+### 2. Ruby 3.4.11
 
 We recommend using rbenv for Ruby version management:
 
@@ -30,12 +30,12 @@ brew install rbenv ruby-build
 echo 'if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi' >> ~/.zshrc
 source ~/.zshrc
 
-# Install Ruby 3.2.3
-rbenv install 3.2.3
-rbenv global 3.2.3
+# Install Ruby 3.4.11
+rbenv install 3.4.11
+rbenv global 3.4.11
 
 # Verify installation
-ruby --version  # Should show ruby 3.2.3
+ruby --version  # Should show ruby 3.4.11
 ```
 
 ### 3. PostgreSQL
