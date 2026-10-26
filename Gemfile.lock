@@ -323,7 +323,9 @@ GEM
       sprockets (>= 3.0.0)
     ssrf_filter (1.6.0)
     stringio (3.2.0)
-    stripe (5.53.0)
+    stripe (20.0.0)
+      bigdecimal
+      logger
     thor (1.5.0)
     timeout (0.6.0)
     tsort (0.2.0)
@@ -373,7 +375,7 @@ DEPENDENCIES
   ruby-lsp
   simplecov
   sprockets-rails (~> 3.5.2)
-  stripe (~> 5.53.0)
+  stripe (~> 20.0.0)
   uglifier (~> 4.2)
 
 RUBY VERSION
