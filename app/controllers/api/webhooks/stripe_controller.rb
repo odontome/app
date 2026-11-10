@@ -69,9 +69,7 @@ module Api::Webhooks
     # Stripe Subscription
 
     def update_database_subscription(stripe_sub)
-      # The first payment never went through, so this subscription never
-      # started; whatever the practice had before (often its trial) still stands.
-      return if stripe_sub.status.to_s.start_with?('incomplete')
+      return if Subscription::NEVER_STARTED_STATUSES.include?(stripe_sub.status)
 
       practice = Practice.find_by!(stripe_customer_id: stripe_sub.customer)
       subscription = practice.subscription

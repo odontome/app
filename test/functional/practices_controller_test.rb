@@ -320,7 +320,7 @@ class PracticesControllerTest < ActionController::TestCase
 
   test 'settings sends unpaid and paused practices to manage their subscription, not to a new one' do
     %w[unpaid paused].each do |status|
-      subscriptions(:trialing).update_columns(status: status)
+      users(:founder).practice.subscription.update_columns(status: status)
 
       get :settings
 

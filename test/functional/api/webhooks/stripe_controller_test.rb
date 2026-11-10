@@ -9,10 +9,12 @@ class Api::Webhooks::StripeControllerTest < ActionController::TestCase
   end
 
   test 'updates the subscription from a subscription event' do
-    post_signed_event subscription_event(customer: 'cus_odontome_2', status: 'past_due')
+    %w[past_due unpaid paused].each do |status|
+      post_signed_event subscription_event(customer: 'cus_odontome_2', status: status)
 
-    assert_response :ok
-    assert_equal 'past_due', @practice.subscription.reload.status
+      assert_response :ok
+      assert_equal status, @practice.subscription.reload.status
+    end
   end
 
   test 'responds with not found when no practice matches the stripe customer' do
@@ -58,15 +60,6 @@ class Api::Webhooks::StripeControllerTest < ActionController::TestCase
     end
 
     assert_response :ok
-  end
-
-  test 'records unpaid and paused subscriptions' do
-    %w[unpaid paused].each do |status|
-      post_signed_event subscription_event(customer: 'cus_odontome_2', status: status)
-
-      assert_response :ok
-      assert_equal status, @practice.subscription.reload.status
-    end
   end
 
   test 'a subscription whose first payment never went through leaves the practice as it was' do

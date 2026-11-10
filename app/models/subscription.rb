@@ -16,6 +16,9 @@ class Subscription < ApplicationRecord
   # The Stripe subscription still exists, so it is fixed in the billing portal
   # rather than by starting a new one.
   BILLING_UPDATE_STATUSES = ['past_due', 'unpaid', 'paused']
+  # Stripe statuses for a subscription whose first payment never went through.
+  # It never started, so whatever the practice had before (often its trial) stands.
+  NEVER_STARTED_STATUSES = ['incomplete', 'incomplete_expired']
 
   scope :active_or_trialing, -> { where(status: ACCESS_GRANTING_STATUSES) }
   scope :recent, -> { order("current_period_end DESC NULLS LAST") }
