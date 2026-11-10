@@ -60,12 +60,22 @@ class Api::Webhooks::StripeControllerTest < ActionController::TestCase
     assert_response :ok
   end
 
-  test 'accepts every subscription status Stripe sends' do
-    %w[incomplete incomplete_expired unpaid paused].each do |status|
+  test 'records unpaid and paused subscriptions' do
+    %w[unpaid paused].each do |status|
       post_signed_event subscription_event(customer: 'cus_odontome_2', status: status)
 
       assert_response :ok
       assert_equal status, @practice.subscription.reload.status
+    end
+  end
+
+  test 'a subscription whose first payment never went through leaves the practice as it was' do
+    %w[incomplete incomplete_expired].each do |status|
+      assert_no_changes -> { @practice.subscription.reload.attributes } do
+        post_signed_event subscription_event(customer: 'cus_odontome_2', status: status)
+      end
+
+      assert_response :ok
     end
   end
 

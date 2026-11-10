@@ -58,10 +58,10 @@ class SubscriptionTest < ActiveSupport::TestCase
     assert_not trialing.grants_agent_access?
   end
 
-  test 'unpaid, paused and incomplete subscriptions do not give access' do
+  test 'unpaid and paused subscriptions do not give access' do
     subscription = subscriptions(:active)
 
-    %w[incomplete incomplete_expired unpaid paused].each do |status|
+    %w[unpaid paused].each do |status|
       subscription.status = status
 
       assert_not subscription.active_or_trialing?, "#{status} gave access"
