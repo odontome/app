@@ -136,11 +136,20 @@ class DatebooksControllerTest < ActionController::TestCase
     assert_redirected_to datebooks_url
   end
 
-  # test "should not destroy datebook with appointments" do
-  #   assert_no_difference('Datebook.count') do
-  #     delete :destroy, params: {id: datebooks(:playa_del_carmen).to_param}
-  #   end
+  test 'should not destroy datebook with appointments' do
+    datebook = datebooks(:playa_del_carmen)
+    appointment_ids = datebook.appointments.pluck(:id)
+    assert appointment_ids.any?
 
-  #   assert_redirected_to datebooks_url
-  # end
+    assert_no_difference('Datebook.count') do
+      delete :destroy, params: { id: datebook.to_param }
+    end
+
+    assert Datebook.exists?(datebook.id)
+    Appointment.where(id: appointment_ids).each do |appointment|
+      assert_equal datebook, appointment.datebook
+    end
+    assert_redirected_to datebooks_url
+    assert_equal I18n.t('errors.messages.has_appointments'), flash[:error]
+  end
 end

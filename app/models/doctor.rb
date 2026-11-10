@@ -51,9 +51,10 @@ class Doctor < ApplicationRecord
   private
 
   def check_if_is_deleteable
-    return if is_deleteable
+    # Deleting a whole practice removes its doctors and their appointments together
+    return if is_deleteable || destroyed_by_association
 
-    errors[:base] << I18n.t('errors.messages.has_appointments_or_treatments')
-    false
+    errors.add(:base, I18n.t('errors.messages.has_appointments_or_treatments'))
+    throw :abort
   end
 end
