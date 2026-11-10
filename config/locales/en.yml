@@ -741,6 +741,8 @@ en:
       active: "active"
       past_due: "past due"
       canceled: "canceled"
+      unpaid: "unpaid"
+      paused: "paused"
     cta:
       active: manage your subscription
       expired: subscribe

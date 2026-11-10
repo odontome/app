@@ -42,7 +42,7 @@
                 <p><%= raw t('subscriptions.message_to_admin.trialing', price: Rails.configuration.stripe[:price_display], stripe_url: link_to(t('subscriptions.cta.trialing'), subscriptions_url, method: :post).html_safe) %></p>
               <% elsif @practice.has_linked_subscription? && @practice.has_active_subscription? %>
                 <%= raw t('subscriptions.message_to_admin.active', status: @subscription.status, stripe_url: link_to(t('subscriptions.cta.active'), subscriptions_url, method: :put).html_safe) %>
-              <% elsif @subscription.status == 'past_due' %>
+              <% elsif @subscription.needs_billing_update? %>
                 <%= raw t('subscriptions.message_to_admin.past_due', stripe_url: link_to(t('subscriptions.cta.active'), subscriptions_url, method: :put).html_safe) %>
               <% else %>
                 <%= raw t('subscriptions.message_to_admin.expired', stripe_url: link_to(t('subscriptions.cta.expired'), subscriptions_url, method: :post).html_safe) %>

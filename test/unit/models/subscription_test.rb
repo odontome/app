@@ -58,6 +58,25 @@ class SubscriptionTest < ActiveSupport::TestCase
     assert_not trialing.grants_agent_access?
   end
 
+  test 'unpaid and paused subscriptions do not give access' do
+    subscription = subscriptions(:active)
+
+    %w[unpaid paused].each do |status|
+      subscription.status = status
+
+      assert_not subscription.active_or_trialing?, "#{status} gave access"
+      assert_not subscription.grants_agent_access?, "#{status} gave AI app access"
+    end
+  end
+
+  test 'every subscription status has a label in every locale' do
+    Subscription.statuses.each_key do |status|
+      %i[en es pt].each do |locale|
+        assert I18n.exists?("subscriptions.status.#{status}", locale), "missing #{locale} label for #{status}"
+      end
+    end
+  end
+
   test 'trial is expiring inside 7 days' do
     subscription = subscriptions(:trialing)
     subscription.update_columns(current_period_end: 6.days.from_now)

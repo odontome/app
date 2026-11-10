@@ -8,15 +8,27 @@ class Subscription < ApplicationRecord
     active: 'active',
     past_due: 'past_due',
     canceled: 'canceled',
+    unpaid: 'unpaid',
+    paused: 'paused',
   }
 
   ACCESS_GRANTING_STATUSES = ['trialing', 'active', 'past_due']
+  # The Stripe subscription still exists, so it is fixed in the billing portal
+  # rather than by starting a new one.
+  BILLING_UPDATE_STATUSES = ['past_due', 'unpaid', 'paused']
+  # Stripe statuses for a subscription whose first payment never went through.
+  # It never started, so whatever the practice had before (often its trial) stands.
+  NEVER_STARTED_STATUSES = ['incomplete', 'incomplete_expired']
 
   scope :active_or_trialing, -> { where(status: ACCESS_GRANTING_STATUSES) }
   scope :recent, -> { order("current_period_end DESC NULLS LAST") }
 
   def active_or_trialing?
     ACCESS_GRANTING_STATUSES.include?(status)
+  end
+
+  def needs_billing_update?
+    BILLING_UPDATE_STATUSES.include?(status)
   end
 
   def grants_agent_access?

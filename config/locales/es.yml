@@ -693,6 +693,8 @@ es:
       active: "activa"
       past_due: "vencida"
       canceled: "cancelada"
+      unpaid: "sin pagar"
+      paused: "pausada"
     cta:
       active: gestionar tu subscripción
       expired: subscríbete

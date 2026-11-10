@@ -318,6 +318,18 @@ class PracticesControllerTest < ActionController::TestCase
     end
   end
 
+  test 'settings sends unpaid and paused practices to manage their subscription, not to a new one' do
+    %w[unpaid paused].each do |status|
+      users(:founder).practice.subscription.update_columns(status: status)
+
+      get :settings
+
+      assert_response :success
+      assert_select "a[data-method='put'][href='#{subscriptions_url}']"
+      assert_select "a[data-method='post'][href='#{subscriptions_url}']", count: 0
+    end
+  end
+
   test 'settings keeps subscription and payments after AI moves to its own section' do
     get :settings
 
