@@ -465,8 +465,8 @@ es:
     messages:
       invalid_date_range: Las fechas son invalidas.
       different_practice: Debe pertenecer a esta clínica
-      has_appointments: Esta agenda todavía tiene citas, así que no se puede borrar.
-      has_appointments_or_treatments: Este doctor todavía tiene citas, así que no se puede borrar.
+      datebook_has_appointments: Esta agenda todavía tiene citas, así que no se puede borrar.
+      doctor_has_appointments: Este doctor todavía tiene citas, así que no se puede borrar.
       invalid_email_format: Formato invalido.
       unauthorised: No posees los permisos necesarios para hacer esto.
       not_found: Puede ser que haya sido borrado o nunca existió

@@ -46,7 +46,7 @@ class Datebook < ApplicationRecord
   def check_if_is_deleteable
     return if is_deleteable
 
-    errors.add(:base, I18n.t('errors.messages.has_appointments'))
+    errors.add(:base, I18n.t('errors.messages.datebook_has_appointments'))
     throw :abort
   end
 end

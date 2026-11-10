@@ -478,8 +478,8 @@ class PatientsControllerTest < ActionController::TestCase
   end
 
   test 'appointment list escapes html in the patient name and keeps it bold' do
-    id = Patient.find_or_create_from(+'<img/src=x/onerror=alert(1)> Smith', 1)
-    Appointment.create!(datebook_id: 1, doctor_id: 1, patient_id: id,
+    id = Patient.find_or_create_from(+'<img/src=x/onerror=alert(1)> Smith', practices(:complete).id)
+    Appointment.create!(datebook: datebooks(:playa_del_carmen), doctor: doctors(:rebecca), patient_id: id,
       starts_at: 1.day.from_now, ends_at: 1.day.from_now + 1.hour)
 
     get :show, params: { id: id }

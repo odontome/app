@@ -467,8 +467,8 @@ en:
     messages:
       invalid_date_range: The chosen dates are invalid
       different_practice: Must belong to this practice
-      has_appointments: This datebook still has appointments, so it can't be deleted.
-      has_appointments_or_treatments: This doctor still has appointments, so they can't be deleted.
+      datebook_has_appointments: This datebook still has appointments, so it can't be deleted.
+      doctor_has_appointments: This doctor still has appointments, so they can't be deleted.
       invalid_email_format: Invalid format
       unauthorised: You don't have permission to do this
       not_found: It may have been deleted or never existed

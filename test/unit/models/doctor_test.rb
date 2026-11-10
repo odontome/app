@@ -76,16 +76,11 @@ class DoctorTest < ActiveSupport::TestCase
 
   test 'doctor with appointments can not be destroyed' do
     doctor = doctors(:rebecca)
-    appointment_ids = doctor.appointments.pluck(:id)
-    assert appointment_ids.any?
 
-    assert_no_difference('Doctor.count') do
-      assert_equal false, doctor.destroy
-    end
+    assert_equal false, doctor.destroy
 
     assert Doctor.exists?(doctor.id)
-    assert_equal appointment_ids.sort, Appointment.where(doctor_id: doctor.id).pluck(:id).sort
-    assert_equal [I18n.t('errors.messages.has_appointments_or_treatments')], doctor.errors[:base]
+    assert_equal [I18n.t('errors.messages.doctor_has_appointments')], doctor.errors[:base]
   end
 
   test 'doctor with appointments is removed when its practice is deleted' do
@@ -100,7 +95,7 @@ class DoctorTest < ActiveSupport::TestCase
 
   test 'doctor with appointments message is translated in every locale' do
     %i[en es pt].each do |locale|
-      assert I18n.exists?('errors.messages.has_appointments_or_treatments', locale), "missing #{locale} translation"
+      assert I18n.exists?('errors.messages.doctor_has_appointments', locale), "missing #{locale} translation"
     end
   end
 

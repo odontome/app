@@ -465,8 +465,8 @@ pt:
     messages:
       invalid_date_range: As datas escolhidas são inválidas
       different_practice: Deve pertencer a esta clínica
-      has_appointments: Esta agenda ainda tem agendamentos, então não pode ser deletada.
-      has_appointments_or_treatments: Este médico ainda tem agendamentos, então não pode ser deletado.
+      datebook_has_appointments: Esta agenda ainda tem agendamentos, então não pode ser deletada.
+      doctor_has_appointments: Este médico ainda tem agendamentos, então não pode ser deletado.
       invalid_email_format: Formato inválido
       unauthorised: Você não tem permissão para fazer isso
       not_found: Pode ter sido deletado ou nunca existiu
