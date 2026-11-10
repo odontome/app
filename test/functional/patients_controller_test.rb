@@ -467,6 +467,28 @@ class PatientsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'appointment list escapes html in the doctor name' do
+    doctors(:rebecca).update!(firstname: '<script>alert(document.cookie)</script>')
+
+    get :show, params: { id: patients(:four).id }
+
+    assert_response :success
+    assert_not_includes response.body, '<script>alert(document.cookie)</script>'
+    assert_includes response.body, '&lt;script&gt;alert(document.cookie)&lt;/script&gt;'
+  end
+
+  test 'appointment list escapes html in the patient name and keeps it bold' do
+    id = Patient.find_or_create_from(+'<img/src=x/onerror=alert(1)> Smith', 1)
+    Appointment.create!(datebook_id: 1, doctor_id: 1, patient_id: id,
+      starts_at: 1.day.from_now, ends_at: 1.day.from_now + 1.hour)
+
+    get :show, params: { id: id }
+
+    assert_response :success
+    assert_not_includes response.body, '<strong><img/src=x/onerror=alert(1)>'
+    assert_includes response.body, '<strong>&lt;img/src=x/onerror=alert(1)&gt;</strong>'
+  end
+
   test 'should get edit' do
     get :edit, params: { id: patients(:one).to_param }
     assert_response :success

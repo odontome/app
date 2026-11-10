@@ -262,8 +262,8 @@ pt:
 
   appointment: Agendamento
   appointment_visit:
-    past_tense: <strong>%{patient_name}</strong> visitou %{doctor_fullname}
-    future_tense: <strong>%{patient_name}</strong> visitará %{doctor_fullname}
+    past_tense_html: <strong>%{patient_name}</strong> visitou %{doctor_fullname}
+    future_tense_html: <strong>%{patient_name}</strong> visitará %{doctor_fullname}
   review: Avaliação
   no_comment: Nenhum comentário foi fornecido
   showing_all_reviews: Mostrando todas as avaliações
