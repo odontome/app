@@ -70,7 +70,7 @@ class DatebooksController < ApplicationController
       if @datebook.destroy
         format.html { redirect_to(datebooks_url) }
       else
-        format.html { redirect_to(datebooks_url, flash: { error: I18n.t('errors.messages.has_appointments') }) }
+        format.html { redirect_to(datebooks_url, flash: { error: @datebook.errors.full_messages.to_sentence }) }
       end
     end
   end
