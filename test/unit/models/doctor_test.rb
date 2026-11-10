@@ -74,6 +74,31 @@ class DoctorTest < ActiveSupport::TestCase
     assert !doctor.is_deleteable
   end
 
+  test 'doctor with appointments can not be destroyed' do
+    doctor = doctors(:rebecca)
+
+    assert_equal false, doctor.destroy
+
+    assert Doctor.exists?(doctor.id)
+    assert_equal [I18n.t('errors.messages.doctor_has_appointments')], doctor.errors[:base]
+  end
+
+  test 'doctor with appointments is removed when its practice is deleted' do
+    doctor = doctors(:rebecca)
+    assert doctor.appointments.exists?
+
+    assert doctor.practice.destroy
+
+    assert_not Doctor.exists?(doctor.id)
+    assert_not Appointment.exists?(doctor_id: doctor.id)
+  end
+
+  test 'doctor with appointments message is translated in every locale' do
+    %i[en es pt].each do |locale|
+      assert I18n.exists?('errors.messages.doctor_has_appointments', locale), "missing #{locale} translation"
+    end
+  end
+
   test 'doctor name can be used as initials' do
     doctor = Doctor.new(firstname: 'Ruth', lastname: 'Roberts')
 

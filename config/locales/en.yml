@@ -262,8 +262,8 @@ en:
 
   appointment: Appointment
   appointment_visit:
-    past_tense: <strong>%{patient_name}</strong> visited %{doctor_fullname}
-    future_tense: <strong>%{patient_name}</strong> will visit %{doctor_fullname}
+    past_tense_html: <strong>%{patient_name}</strong> visited %{doctor_fullname}
+    future_tense_html: <strong>%{patient_name}</strong> will visit %{doctor_fullname}
   review: Review
   no_comment: No comment was provided
   showing_all_reviews: Showing all reviews
@@ -467,6 +467,8 @@ en:
     messages:
       invalid_date_range: The chosen dates are invalid
       different_practice: Must belong to this practice
+      datebook_has_appointments: This datebook still has appointments, so it can't be deleted.
+      doctor_has_appointments: This doctor still has appointments, so they can't be deleted.
       invalid_email_format: Invalid format
       unauthorised: You don't have permission to do this
       not_found: It may have been deleted or never existed

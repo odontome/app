@@ -67,4 +67,19 @@ class DatebookTest < ActiveSupport::TestCase
     assert !datebook.save
     assert_equal I18n.t('errors.messages.too_long', count: 100), datebook.errors[:name].join('; ')
   end
+
+  test 'datebook with appointments can not be destroyed' do
+    datebook = datebooks(:playa_del_carmen)
+
+    assert_equal false, datebook.destroy
+
+    assert Datebook.exists?(datebook.id)
+    assert_equal [I18n.t('errors.messages.datebook_has_appointments')], datebook.errors[:base]
+  end
+
+  test 'datebook with appointments message is translated in every locale' do
+    %i[en es pt].each do |locale|
+      assert I18n.exists?('errors.messages.datebook_has_appointments', locale), "missing #{locale} translation"
+    end
+  end
 end

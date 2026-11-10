@@ -32,7 +32,8 @@ class Doctor < ApplicationRecord
                     allow_blank: true
 
   # callbacks
-  before_destroy :check_if_is_deleteable
+  # Deleting a whole practice removes its doctors and their appointments together
+  before_destroy :check_if_is_deleteable, unless: :destroyed_by_association
 
   def fullname
     [gender === 'female' || gender === 'mujer' ? I18n.t(:female_doctor_prefix) : I18n.t(:male_doctor_prefix), firstname,
@@ -53,7 +54,7 @@ class Doctor < ApplicationRecord
   def check_if_is_deleteable
     return if is_deleteable
 
-    errors[:base] << I18n.t('errors.messages.has_appointments_or_treatments')
-    false
+    errors.add(:base, I18n.t('errors.messages.doctor_has_appointments'))
+    throw :abort
   end
 end

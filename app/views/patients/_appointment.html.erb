@@ -13,9 +13,9 @@
   <div class="col">
     <div class="text-truncate">
       <% if !past_tense %>
-        <%= raw t('appointment_visit.future_tense', doctor_fullname: doctor.fullname, patient_name: patient.firstname) %>
+        <%= t('appointment_visit.future_tense_html', doctor_fullname: doctor.fullname, patient_name: patient.firstname) %>
       <% else %>
-        <%= raw t('appointment_visit.past_tense', doctor_fullname: doctor.fullname, patient_name: patient.firstname) %>
+        <%= t('appointment_visit.past_tense_html', doctor_fullname: doctor.fullname, patient_name: patient.firstname) %>
       <% end %>
     </div>
     <div class="text-muted">
