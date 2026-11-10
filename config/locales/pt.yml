@@ -732,6 +732,10 @@ pt:
       active: "ativo"
       past_due: "vencido"
       canceled: "cancelado"
+      incomplete: "pagamento pendente"
+      incomplete_expired: "pagamento não concluído"
+      unpaid: "não pago"
+      paused: "pausado"
     cta:
       active: gerenciar sua assinatura
       expired: assinar

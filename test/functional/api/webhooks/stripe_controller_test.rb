@@ -38,6 +38,37 @@ class Api::Webhooks::StripeControllerTest < ActionController::TestCase
     assert_response :ok
   end
 
+  test 'records one balance when the same payment event arrives twice' do
+    patient = patients(:one)
+    event = payment_succeeded_event(practice_id: patient.practice_id, patient_id: patient.id)
+
+    assert_difference -> { Balance.where(patient: patient).count }, 1 do
+      2.times { post_signed_event event }
+    end
+
+    assert_response :ok
+  end
+
+  test 'records the balance when the patient name is longer than a note allows' do
+    patient = patients(:one)
+
+    assert_difference -> { Balance.where(patient: patient).count }, 1 do
+      post_signed_event payment_succeeded_event(practice_id: patient.practice_id, patient_id: patient.id,
+                                                patient_name: 'x' * 200)
+    end
+
+    assert_response :ok
+  end
+
+  test 'accepts every subscription status Stripe sends' do
+    %w[incomplete incomplete_expired unpaid paused].each do |status|
+      post_signed_event subscription_event(customer: 'cus_odontome_2', status: status)
+
+      assert_response :ok
+      assert_equal status, @practice.subscription.reload.status
+    end
+  end
+
   test 'skips the balance when the paid patient belongs to another practice' do
     other_patient = patients(:three)
 
@@ -51,7 +82,7 @@ class Api::Webhooks::StripeControllerTest < ActionController::TestCase
 
   private
 
-  def payment_succeeded_event(practice_id:, patient_id:)
+  def payment_succeeded_event(practice_id:, patient_id:, patient_name: 'Someone')
     {
       id: 'evt_test_2',
       object: 'event',
@@ -62,7 +93,7 @@ class Api::Webhooks::StripeControllerTest < ActionController::TestCase
           object: 'payment_intent',
           amount_received: 1000,
           currency: 'usd',
-          metadata: { practice_id: practice_id.to_s, patient_id: patient_id.to_s, patient_name: 'Someone' }
+          metadata: { practice_id: practice_id.to_s, patient_id: patient_id.to_s, patient_name: patient_name }
         }
       }
     }.to_json

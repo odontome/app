@@ -3,6 +3,8 @@
 class Balance < ApplicationRecord
   has_paper_trail meta: { practice_id: ->(balance) { balance.patient.practice_id } }
 
+  NOTES_MAX_LENGTH = 160
+
   # associations
   belongs_to :patient
 
@@ -17,5 +19,5 @@ class Balance < ApplicationRecord
   # validations
   validates_presence_of :amount, :patient_id
   validates_numericality_of :amount
-  validates :notes, length: 0..160, presence: false
+  validates :notes, length: 0..NOTES_MAX_LENGTH, presence: false
 end

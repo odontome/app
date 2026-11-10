@@ -108,12 +108,14 @@ module Api::Webhooks
         return
       end
 
-      Balance.create!(
-        amount: payment_intent.amount_received / 100.0,
-        currency: payment_intent.currency,
-        notes: notes,
-        patient_id: patient_id
-      )
+      # Stripe can deliver the same event more than once; the payment intent id
+      # is unique, so a repeat finds the existing row instead of adding another.
+      Balance.create_or_find_by!(stripe_payment_intent_id: payment_intent.id) do |balance|
+        balance.amount = payment_intent.amount_received / 100.0
+        balance.currency = payment_intent.currency
+        balance.notes = notes&.truncate(Balance::NOTES_MAX_LENGTH)
+        balance.patient_id = patient_id
+      end
     end
   end
 end
